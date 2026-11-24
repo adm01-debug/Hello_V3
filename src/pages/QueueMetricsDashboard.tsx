@@ -35,12 +35,12 @@ const QueueMetricsDashboard = () => {
 
   return (
     <div className="space-y-6">
-      <div className="flex items-center justify-between">
+      <div className="flex flex-wrap items-center justify-between gap-4">
         <div>
           <h1 className="text-3xl font-bold text-foreground">Dashboard de Métricas</h1>
           <p className="text-muted-foreground mt-1">Monitoramento em tempo real da fila</p>
         </div>
-        <div className="flex items-center gap-4">
+        <div className="flex flex-wrap items-center gap-4">
           <div className="text-sm text-muted-foreground">Última atualização: {format(q.lastUpdate, 'HH:mm:ss')}</div>
           <Button onClick={q.runGoalsCheck} disabled={q.checkingGoals} size="sm" variant="outline">
             <Zap className={`h-4 w-4 mr-2 ${q.checkingGoals ? 'animate-pulse' : ''}`} />Verificar Metas
@@ -65,7 +65,7 @@ const QueueMetricsDashboard = () => {
       )}
 
       <Tabs value={q.activeTab} onValueChange={q.setActiveTab}>
-        <TabsList>
+        <TabsList className="w-full justify-start overflow-x-auto">
           <TabsTrigger value="dashboard" className="flex items-center gap-2"><Activity className="h-4 w-4" />Dashboard</TabsTrigger>
           <TabsTrigger value="goals" className="flex items-center gap-2">
             <Target className="h-4 w-4" />Metas

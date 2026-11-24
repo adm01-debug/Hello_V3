@@ -69,7 +69,7 @@ export default function CallHistory() {
      <div className="space-y-6 relative">
        <div className="fixed inset-0 pointer-events-none gradient-mesh-intense opacity-30" />
        <div className="relative space-y-6">
-         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+         <div className="flex flex-col sm:flex-row sm:flex-wrap sm:items-center justify-between gap-4">
            <div>
              <h1 className="text-2xl sm:text-3xl font-bold tracking-tight text-gradient">Histórico de Chamadas</h1>
              <p className="text-muted-foreground">Visualize transcrições e análises detalhadas</p>
@@ -93,7 +93,7 @@ export default function CallHistory() {
          </div>
  
          {/* KPI Cards */}
-         <div className="grid gap-4 grid-cols-1 sm:grid-cols-3">
+         <div className="grid gap-4 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
            <Card variant="neon-interactive">
              <CardContent className="p-4">
                <p className="text-xs uppercase tracking-wider text-muted-foreground">Total (filtros)</p>
@@ -115,7 +115,7 @@ export default function CallHistory() {
          </div>
 
       <div className="space-y-4">
-        <div className="flex gap-4">
+        <div className="flex flex-wrap gap-4">
           <SearchInput
             value={searchInput}
             onValueChange={setSearchInput}

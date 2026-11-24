@@ -45,7 +45,7 @@ const Calls = () => {
         </div>
       </div>
 
-      <div className="grid gap-6 lg:grid-cols-2">
+      <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
         {/* Softphone Principal */}
         <div>
           <UnifiedSoftphone 
@@ -73,7 +73,7 @@ const Calls = () => {
               <CardTitle className="text-lg">Estatísticas de Hoje</CardTitle>
             </CardHeader>
             <CardContent>
-              <div className="grid grid-cols-4 gap-4 text-center">
+              <div className="grid grid-cols-2 gap-4 text-center sm:grid-cols-4">
                 <div>
                   <p className="text-2xl font-bold text-primary">{callStats.today}</p>
                   <p className="text-xs text-muted-foreground">Total</p>
@@ -102,12 +102,12 @@ const Calls = () => {
             </CardHeader>
             <CardContent className="space-y-3">
               {/* WebRTC / SIP */}
-              <div className={`flex items-center gap-3 p-3 rounded-lg border ${sip.isRegistered ? 'bg-success/5 border-success/20' : ''}`}>
+              <div className={`flex flex-wrap items-center gap-3 p-3 rounded-lg border ${sip.isRegistered ? 'bg-success/5 border-success/20' : ''}`}>
                 <div className="p-2 rounded-lg bg-info/10">
                   <Radio className="h-5 w-5 text-info" />
                 </div>
-                <div className="flex-1">
-                  <div className="flex items-center gap-2">
+                <div className="min-w-0 flex-1">
+                  <div className="flex flex-wrap items-center gap-2">
                     <p className="font-medium">WebRTC / SIP</p>
                     <Badge
                       variant={sip.isRegistered ? 'default' : sip.error ? 'destructive' : 'outline'}
@@ -131,12 +131,12 @@ const Calls = () => {
               </div>
 
               {/* Wavoip */}
-              <div className="flex items-center gap-3 p-3 rounded-lg border">
+              <div className="flex flex-wrap items-center gap-3 p-3 rounded-lg border">
                 <div className="p-2 rounded-lg bg-success/10">
                   <MessageCircle className="h-5 w-5 text-success" />
                 </div>
-                <div className="flex-1">
-                  <div className="flex items-center gap-2">
+                <div className="min-w-0 flex-1">
+                  <div className="flex flex-wrap items-center gap-2">
                     <p className="font-medium">Wavoip</p>
                     <Badge variant="outline" className="text-xs">Pendente</Badge>
                   </div>
@@ -147,12 +147,12 @@ const Calls = () => {
               </div>
 
               {/* SIP */}
-              <div className="flex items-center gap-3 p-3 rounded-lg border">
+              <div className="flex flex-wrap items-center gap-3 p-3 rounded-lg border">
                 <div className="p-2 rounded-lg bg-pending/10">
                   <Headphones className="h-5 w-5 text-pending" />
                 </div>
-                <div className="flex-1">
-                  <div className="flex items-center gap-2">
+                <div className="min-w-0 flex-1">
+                  <div className="flex flex-wrap items-center gap-2">
                     <p className="font-medium">SIP Genérico</p>
                     <Badge variant="outline" className="text-xs">Pendente</Badge>
                   </div>

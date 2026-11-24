@@ -39,29 +39,29 @@ interface AppLayoutProps {
       <div className="flex min-h-screen w-full bg-background">
         <AppSidebar />
         
-        <div className="flex flex-1 flex-col">
+        <div className="flex min-w-0 flex-1 flex-col">
           {/* Header — glass morphism */}
-          <header className="sticky top-0 z-40 flex h-16 items-center justify-between border-b border-border/30 px-4 md:px-6 glass">
-            <div className="flex items-center gap-2 md:gap-4">
+          <header className="sticky top-0 z-40 flex h-16 min-w-0 items-center justify-between gap-2 border-b border-border/30 px-4 md:px-6 glass">
+            <div className="flex min-w-0 flex-1 items-center gap-2 md:gap-4">
               <SidebarTrigger className="-ml-2 text-muted-foreground hover:text-primary transition-colors" />
               
               {/* Back button */}
               <BackButton />
               
               {/* Breadcrumb compact on mobile */}
-              <div className="block lg:hidden">
+              <div className="block min-w-0 overflow-hidden lg:hidden">
                 <BreadcrumbCompact />
               </div>
               
               {/* Breadcrumb full on desktop */}
-              <div className="hidden lg:block">
+              <div className="hidden min-w-0 overflow-hidden lg:block">
                 <BreadcrumbNav />
               </div>
               
               {/* Search trigger — opens Command Palette */}
               <button
                 onClick={() => document.dispatchEvent(new KeyboardEvent('keydown', { key: 'k', metaKey: true }))}
-                className="hidden md:flex items-center gap-2 lg:ml-4 w-64 lg:w-80 pl-3 pr-3 h-9 rounded-md bg-muted/50 border border-border/50 text-sm text-muted-foreground hover:border-primary/40 hover:shadow-[0_0_15px_hsl(var(--primary)/0.15)] transition-all cursor-pointer"
+                className="hidden md:flex items-center gap-2 lg:ml-4 w-40 shrink-0 pl-3 pr-3 h-9 lg:w-64 xl:w-80 rounded-md bg-muted/50 border border-border/50 text-sm text-muted-foreground hover:border-primary/40 hover:shadow-[0_0_15px_hsl(var(--primary)/0.15)] transition-all cursor-pointer"
                 aria-label="Buscar no sistema (Ctrl+K)"
               >
                 <Search className="h-4 w-4" />
@@ -72,7 +72,7 @@ interface AppLayoutProps {
               </button>
             </div>
 
-              <div className="flex items-center gap-2 md:gap-3">
+              <div className="flex shrink-0 items-center gap-2 md:gap-3">
                 <TooltipProvider>
                   <NetworkStatusIndicator />
                 </TooltipProvider>
@@ -85,7 +85,7 @@ interface AppLayoutProps {
           <ActiveCallBar />
 
           {/* Main Content with page transition */}
-          <main id="main-content" className="flex-1 overflow-auto scrollbar-thin pb-16 md:pb-0" tabIndex={-1}>
+          <main id="main-content" className="min-w-0 flex-1 overflow-auto scrollbar-thin pb-16 md:pb-0" tabIndex={-1}>
             <PageTransition>
               <div className="container max-w-7xl py-6">
                 {children}
