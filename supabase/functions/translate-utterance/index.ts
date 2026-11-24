@@ -1,6 +1,7 @@
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.45.0';
 import { buildCorsHeaders } from '../_shared/cors.ts';
 import { fetchComPrazo } from "../_shared/resilience.ts";
+import { getCorrelationId, internalErrorResponse } from "../_shared/errors.ts";
 
 interface Body {
   callSessionId: string;
@@ -93,7 +94,6 @@ Deno.serve(async (req) => {
       headers: { ...cors, 'Content-Type': 'application/json' },
     });
   } catch (e) {
-    console.error('translate-utterance error', e);
-    return new Response(JSON.stringify({ error: e instanceof Error ? e.message : 'Unknown error' }), { status: 500, headers: { ...cors, 'Content-Type': 'application/json' } });
+    return internalErrorResponse(e, getCorrelationId(req), cors, { fn: 'translate-utterance' });
   }
 });
