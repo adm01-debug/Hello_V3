@@ -2,6 +2,7 @@
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
 import { Client } from "https://esm.sh/ldapts@9.3.1";
 import { buildCorsHeaders } from "../_shared/cors.ts";
+import { GENERIC_INTERNAL_MESSAGE, getCorrelationId, internalErrorResponse } from '../_shared/errors.ts';
 
 const SERVICE_KEY = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY") ?? "fallback-key";
 const SETTINGS_KEY = "ldap_config";
@@ -227,7 +228,7 @@ serve(async (req) => {
         );
         return json({ ok: true, entriesVisible: searchEntries.length, latencyMs: Date.now() - started }, cors);
       } catch (error) {
-        return json({ ok: false, error: error instanceof Error ? error.message : String(error) }, cors);
+        return json({ ok: false, code: 'internal_error', message: GENERIC_INTERNAL_MESSAGE, correlation_id: getCorrelationId(req) }, cors);
       } finally {
         if (client) await client.unbind().catch(() => {});
       }
@@ -347,7 +348,7 @@ serve(async (req) => {
       } catch (error) {
         const message = error instanceof Error ? error.message : String(error);
         await recordAudit(admin, user.id, user.email ?? null, "error", counters, Date.now() - started, message);
-        return json({ ok: false, error: message, ...counters }, cors, 502);
+        return json({ ok: false, code: 'internal_error', message: GENERIC_INTERNAL_MESSAGE, correlation_id: getCorrelationId(req), ...counters }, cors, 502);
       } finally {
         if (client) await client.unbind().catch(() => {});
       }
@@ -361,6 +362,6 @@ serve(async (req) => {
     return json({ error: `Ação desconhecida: ${action}` }, cors, 400);
   } catch (error) {
     console.error("ldap-sync error:", error);
-    return json({ error: "Erro interno", detail: error instanceof Error ? error.message : String(error) }, cors, 500);
+    return internalErrorResponse(error, getCorrelationId(req), cors, { fn: 'ldap-sync' });
   }
 });

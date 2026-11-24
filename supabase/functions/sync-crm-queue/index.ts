@@ -1,7 +1,7 @@
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
 import { buildCorsHeaders } from "../_shared/cors.ts";
-import { getCorrelationId, internalErrorResponse } from '../_shared/errors.ts';
+import { GENERIC_INTERNAL_MESSAGE, getCorrelationId, internalErrorResponse } from '../_shared/errors.ts';
 
 serve(async (req) => {
   const cors = buildCorsHeaders(req);
@@ -80,7 +80,8 @@ serve(async (req) => {
         results.push({
           id: item.id,
           status: "failed",
-          error: error instanceof Error ? error.message : "erro desconhecido",
+          code: 'internal_error',
+          message: "Falha ao sincronizar este item",
         });
       }
     }

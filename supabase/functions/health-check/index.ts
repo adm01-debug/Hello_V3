@@ -3,6 +3,7 @@ import { buildCorsHeaders } from '../_shared/cors.ts';
 import { createClient } from 'npm:@supabase/supabase-js@2';
 import { withRequestLog, logError } from '../_shared/observability.ts';
 import { budget } from './slo-budget.ts';
+import { GENERIC_INTERNAL_MESSAGE, getCorrelationId } from '../_shared/errors.ts';
 
 export const handler = async (req: Request): Promise<Response> => {
   const corsHeaders = buildCorsHeaders(req);
@@ -132,9 +133,8 @@ export const handler = async (req: Request): Promise<Response> => {
       status: 200,
     });
   } catch (err) {
-    const message = err instanceof Error ? err.message : String(err);
     logError('health_check_failed', err);
-    return new Response(JSON.stringify({ status: 'unknown', error: message }), {
+    return new Response(JSON.stringify({ status: 'unknown', code: 'internal_error', message: GENERIC_INTERNAL_MESSAGE, correlation_id: getCorrelationId(req) }), {
       headers: { ...corsHeaders, 'Content-Type': 'application/json' },
       status: 500,
     });

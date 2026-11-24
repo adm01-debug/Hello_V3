@@ -7,6 +7,7 @@ import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
 import { buildCorsHeaders } from "../_shared/cors.ts";
 import { validate, string, optional } from "../_shared/validate.ts";
 import { checkRateLimitDB, getClientIp } from "../_shared/rate-limit.ts";
+import { GENERIC_INTERNAL_MESSAGE, getCorrelationId } from '../_shared/errors.ts';
 
 function base64Url(bytes: Uint8Array): string {
   let bin = "";
@@ -78,6 +79,6 @@ Deno.serve(async (req) => {
     );
   } catch (err) {
     console.error("webauthn-challenge error:", err);
-    return json({ success: false, error: err instanceof Error ? err.message : String(err) }, 500, req);
+    return json({ success: false, code: 'internal_error', message: GENERIC_INTERNAL_MESSAGE, correlation_id: getCorrelationId(req) }, 500, req);
   }
 });

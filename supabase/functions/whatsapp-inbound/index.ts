@@ -5,6 +5,7 @@ import { buildCorsHeaders } from '../_shared/cors.ts';
 import { validateBody, createErrorResponse } from '../_shared/validator.ts';
 import { WhatsAppInboundV1Schema, WhatsAppInboundV2Schema } from './schema.ts';
 import { detectReplay, normalizePhone } from './idempotency.ts';
+import { GENERIC_INTERNAL_MESSAGE, getCorrelationId } from '../_shared/errors.ts';
 
 Deno.serve(async (req) => {
   const cors = buildCorsHeaders(req);
@@ -174,7 +175,9 @@ Deno.serve(async (req) => {
     );
   } catch (error) {
     console.error('whatsapp-inbound error:', error);
-    return createErrorResponse(error instanceof Error ? error.message : 'Erro interno', 'INTERNAL_ERROR', undefined, 500, cors);
+    const correlationId = getCorrelationId(req);
+    console.error('[whatsapp-inbound] erro interno', { correlation_id: correlationId, error });
+    return createErrorResponse(GENERIC_INTERNAL_MESSAGE, 'INTERNAL_ERROR', undefined, 500, cors);
   }
 });
 

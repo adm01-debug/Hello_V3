@@ -5,7 +5,7 @@ import { buildCorsHeaders } from "../_shared/cors.ts";
 import { createClient, type SupabaseClient } from "npm:@supabase/supabase-js@2";
 import { logError, withRequestLog } from "../_shared/observability.ts";
 import { mesmaString } from "../_shared/constant-time.ts";
-import { getCorrelationId, internalErrorResponse } from '../_shared/errors.ts';
+import { GENERIC_INTERNAL_MESSAGE, getCorrelationId, internalErrorResponse } from '../_shared/errors.ts';
 
 type Dataset = "call_sessions" | "call_summaries" | "deals";
 const DATASETS: Dataset[] = ["call_sessions", "call_summaries", "deals"];
@@ -172,7 +172,9 @@ async function flushDataset(
         completed_at: new Date().toISOString(),
       })
       .eq("id", job.id);
-    return { dataset, job_id: job.id, error: message };
+    const correlationId = crypto.randomUUID();
+    console.error('[data-lake-flush] flush falhou', { dataset, correlation_id: correlationId, error: message });
+    return { dataset, job_id: job.id, code: 'internal_error', message: 'Falha no flush deste dataset', correlation_id: correlationId };
   }
 }
 
