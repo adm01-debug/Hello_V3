@@ -224,7 +224,7 @@
 - [ ] **171** — Resolver as duas estruturas paralelas de recuperação de senha e verificação de e-mail — onda 4 — Média — Banco + Documentação
 - [ ] **172** — Parar de contar "features de segurança" a partir de um array literal — onda 4 — Média — Frontend
 - [x] **173** — Dar estados e defesa ao gráfico de espera do dashboard — onda 4 — Alta — Frontend
-- [ ] **174** — Fazer o painel de conflitos de concorrência mostrar conflitos — onda 4 — Média — Frontend
+- [x] **174** — Fazer o painel de conflitos de concorrência mostrar conflitos — onda 4 — Média — Frontend
 - [ ] **175** — Completar o CRUD da lista DNC — onda 4 — Média — Frontend 🔒
 - [ ] **176** — Fazer a remediação de anomalia atualizar a lista — onda 4 — Média — Hooks
 - [ ] **177** — Parar de responder "aplicado" sem aplicar nada — onda 4 — Alta — Edge Function 🔒
