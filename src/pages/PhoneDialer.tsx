@@ -253,7 +253,7 @@ const PhoneDialer = () => {
       </header>
 
       <div className="grid gap-6 lg:grid-cols-[minmax(0,420px)_minmax(0,1fr)]">
-        <PhoneFrame>
+        <PhoneFrame className="min-w-0">
           {current ? (
             <PhoneCallScreen
               phoneNumber={current.phoneNumber ?? ''}
@@ -290,7 +290,7 @@ const PhoneDialer = () => {
                     onClick={() => call.setActiveChannel(id)}
                     aria-pressed={call.activeChannel === id}
                     className={cn(
-                      'flex items-center gap-1.5 rounded-full border border-border/50 px-3 py-1.5 text-xs transition-colors max-md:h-11 max-md:px-4',
+                      'flex items-center gap-1.5 rounded-full border border-border/50 px-3 py-1.5 text-xs transition-colors max-md:h-11',
                       'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring',
                       call.activeChannel === id
                         ? 'bg-primary text-primary-foreground'
@@ -313,7 +313,7 @@ const PhoneDialer = () => {
           )}
         </PhoneFrame>
 
-        <div className="min-h-[400px]">
+        <div className="min-h-[400px] min-w-0">
           <PhoneQuickAccess
             recents={recents}
             favorites={favorites}

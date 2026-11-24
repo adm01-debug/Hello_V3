@@ -85,7 +85,7 @@ export function VoicePreferencesPanel() {
             type="button"
             variant="outline"
             size="sm"
-            className="h-7 max-md:h-11 px-3 text-[11px]"
+            className="h-7 max-md:h-11 max-md:min-w-11 px-3 text-[11px]"
             disabled={!supported}
             onClick={() => cycleRate()}
             aria-label={`Alterar velocidade da fala. Atual: ${formatTtsRate(ttsRate)}`}
