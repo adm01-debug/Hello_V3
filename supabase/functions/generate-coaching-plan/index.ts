@@ -2,6 +2,7 @@
 import { buildCorsHeaders } from "../_shared/cors.ts";
 import { createClient } from 'npm:@supabase/supabase-js@2';
 import { fetchComPrazo } from "../_shared/resilience.ts";
+import { getCorrelationId, internalErrorResponse } from '../_shared/errors.ts';
 
 interface CallSummary {
   agent_performance_score: number | null;
@@ -110,8 +111,7 @@ Responda em Markdown estruturado, tom motivador e direto.`;
       generated_at: new Date().toISOString(),
     });
   } catch (err) {
-    const message = err instanceof Error ? err.message : String(err);
-    return json({ error: message }, 500);
+    return internalErrorResponse(err, getCorrelationId(req), corsHeaders, { fn: 'generate-coaching-plan' });
   }
 });
 

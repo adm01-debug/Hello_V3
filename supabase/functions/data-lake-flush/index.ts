@@ -5,6 +5,7 @@ import { buildCorsHeaders } from "../_shared/cors.ts";
 import { createClient, type SupabaseClient } from "npm:@supabase/supabase-js@2";
 import { logError, withRequestLog } from "../_shared/observability.ts";
 import { mesmaString } from "../_shared/constant-time.ts";
+import { getCorrelationId, internalErrorResponse } from '../_shared/errors.ts';
 
 type Dataset = "call_sessions" | "call_summaries" | "deals";
 const DATASETS: Dataset[] = ["call_sessions", "call_summaries", "deals"];
@@ -66,9 +67,7 @@ function json(payload: unknown, status = 200): Response {
 
     return json({ status: "ok", results, ran_at: new Date().toISOString() });
   } catch (err) {
-    const message = err instanceof Error ? err.message : String(err);
-    logError("flush_failed", err, { fn: "data-lake-flush" });
-    return json({ error: message }, 500);
+    return internalErrorResponse(err, getCorrelationId(req), corsHeaders, { fn: 'data-lake-flush' });
   }
 }));
 

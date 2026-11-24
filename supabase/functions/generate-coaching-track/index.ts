@@ -3,6 +3,7 @@ import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
 import { buildCorsHeaders } from "../_shared/cors.ts";
 import { mesmaString } from "../_shared/constant-time.ts";
 import {
+import { getCorrelationId, internalErrorResponse } from '../_shared/errors.ts';
   buildTrackCandidates,
   CallSession,
   TrackResult,
@@ -147,11 +148,7 @@ serve(async (req) => {
     };
     return json(result, 200, req);
   } catch (err) {
-    return json(
-      { error: err instanceof Error ? err.message : "unknown" },
-      500,
-      req,
-    );
+    return internalErrorResponse(err, getCorrelationId(req), buildCorsHeaders(req), { fn: 'generate-coaching-track' });
   }
 });
 

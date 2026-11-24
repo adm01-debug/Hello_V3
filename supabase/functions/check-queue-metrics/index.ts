@@ -1,6 +1,7 @@
 import { serve } from "https://deno.land/std@0.190.0/http/server.ts";
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
 import { buildCorsHeaders } from "../_shared/cors.ts";
+import { getCorrelationId, internalErrorResponse } from '../_shared/errors.ts';
 
 
 // Default thresholds (used as fallback)
@@ -232,11 +233,7 @@ serve(async (req) => {
       headers: { ...buildCorsHeaders(req), 'Content-Type': 'application/json' },
     });
   } catch (error: unknown) {
-    const errorMessage = error instanceof Error ? error.message : 'Unknown error';
     console.error('Error in check-queue-metrics:', error);
-    return new Response(JSON.stringify({ error: 'Erro interno', details: errorMessage }), {
-      status: 500, 
-      headers: { ...buildCorsHeaders(req), 'Content-Type': 'application/json' },
-    });
+    return internalErrorResponse(error, getCorrelationId(req), buildCorsHeaders(req), { fn: 'check-queue-metrics' });
   }
 });

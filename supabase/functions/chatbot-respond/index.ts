@@ -13,6 +13,7 @@ interface ChatbotPayload {
   visitor_token?: string;
 }
 import { fetchComPrazo } from "../_shared/resilience.ts";
+import { getCorrelationId, internalErrorResponse } from '../_shared/errors.ts';
 
 
  const DEFAULT_THRESHOLD = 0.7;
@@ -278,10 +279,7 @@ Responda de forma clara, cordial e objetiva. Use markdown leve quando útil.`;
     );
   } catch (error) {
     console.error('chatbot-respond error:', error);
-    return new Response(
-      JSON.stringify({ error: error instanceof Error ? error.message : 'Erro interno' }),
-      { status: 500, headers: { ...cors, 'Content-Type': 'application/json' } }
-    );
+    return internalErrorResponse(error, getCorrelationId(req), cors, { fn: 'chatbot-respond' });
   }
 }
 

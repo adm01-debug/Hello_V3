@@ -1,6 +1,7 @@
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
 import { buildCorsHeaders } from "../_shared/cors.ts";
+import { getCorrelationId, internalErrorResponse } from '../_shared/errors.ts';
 
 // Cifragem simétrica simples (XOR + base64) usando segredo do servidor.
 // Nunca trafega senha em claro fora do Edge.
@@ -190,8 +191,7 @@ serve(async (req) => {
 
     return json({ error: "Ação inválida" }, cors, 400);
   } catch (err) {
-    const message = err instanceof Error ? err.message : "Erro desconhecido";
-    return json({ error: message }, buildCorsHeaders(req), 500);
+    return internalErrorResponse(err, getCorrelationId(req), buildCorsHeaders(req), { fn: 'voip-trunks-manage' });
   }
 });
 

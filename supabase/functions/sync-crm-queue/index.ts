@@ -1,6 +1,7 @@
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
 import { buildCorsHeaders } from "../_shared/cors.ts";
+import { getCorrelationId, internalErrorResponse } from '../_shared/errors.ts';
 
 serve(async (req) => {
   const cors = buildCorsHeaders(req);
@@ -89,12 +90,7 @@ serve(async (req) => {
     });
   } catch (error) {
     console.error("sync-crm-queue error:", error);
-    return new Response(
-      JSON.stringify({
-        error: error instanceof Error ? error.message : "erro desconhecido",
-      }),
-      { status: 500, headers: { ...cors, "Content-Type": "application/json" } },
-    );
+    return internalErrorResponse(error, getCorrelationId(req), cors, { fn: 'sync-crm-queue' });
   }
 });
 
