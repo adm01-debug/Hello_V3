@@ -58,6 +58,71 @@ function stripLineComments(src: string): string {
     .join("\n");
 }
 
+/**
+ * Índice do delimitador que fecha o que abre em `start` (`{`/`}` ou `(`/`)`),
+ * ignorando chaves e parênteses dentro de string/template. Devolve -1 se não
+ * fechar. Heurística suficiente para localizar o corpo de um laço: o objetivo é
+ * achar `await supabase.from(...)` DENTRO do corpo, não fazer parsing de TS.
+ */
+function matchDelimiter(code: string, start: number): number {
+  const open = code[start];
+  const close = open === "{" ? "}" : ")";
+  let depth = 0;
+  let quote: string | null = null;
+  for (let i = start; i < code.length; i++) {
+    const ch = code[i];
+    if (quote) {
+      if (ch === "\\") i++;
+      else if (ch === quote) quote = null;
+      continue;
+    }
+    if (ch === '"' || ch === "'" || ch === "`") {
+      quote = ch;
+      continue;
+    }
+    if (ch === open) depth++;
+    else if (ch === close) {
+      depth--;
+      if (depth === 0) return i;
+    }
+  }
+  return -1;
+}
+
+interface Escopo {
+  inicio: number;
+  fim: number;
+}
+
+/** Corpos de `for`, `for await` e `while`, mais os callbacks de array. */
+function escoposDeLaco(code: string): Escopo[] {
+  const out: Escopo[] = [];
+  const laco = /(for\s+await\s*\(|for\s*\(|while\s*\()/g;
+  let m: RegExpExecArray | null;
+  while ((m = laco.exec(code))) {
+    const abreParen = code.indexOf("(", m.index);
+    const fechaParen = matchDelimiter(code, abreParen);
+    if (fechaParen === -1) continue;
+    let i = fechaParen + 1;
+    while (i < code.length && /\s/.test(code[i])) i++;
+    if (code[i] === "{") {
+      const fim = matchDelimiter(code, i);
+      if (fim !== -1) out.push({ inicio: i, fim });
+    } else {
+      // corpo de uma linha só: vai até o `;`
+      const fim = code.indexOf(";", i);
+      out.push({ inicio: i, fim: fim === -1 ? code.length : fim });
+    }
+  }
+  const callback = /(?<![\w.])(map|forEach|flatMap|reduce|filter)\s*\(/g;
+  while ((m = callback.exec(code))) {
+    const abreParen = m.index + m[0].length - 1;
+    const fechaParen = matchDelimiter(code, abreParen);
+    if (fechaParen !== -1) out.push({ inicio: abreParen, fim: fechaParen });
+  }
+  return out;
+}
+
 const SECRET_PATTERNS: Array<{ re: RegExp; label: string }> = [
   { re: /eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9\.[A-Za-z0-9_-]{10,}/, label: "JWT hardcoded" },
   { re: /sk-or-v1-[a-f0-9]{20,}/, label: "chave OpenRouter hardcoded" },
@@ -137,6 +202,31 @@ for (const file of entrypoints) {
       "declara ação e devolve `success: true` sem fetch: resposta fabricada (use // edge-stub-ok se intencional)",
     );
   }
+
+  // R10 — N+1: ida ao banco (from/rpc) aguardada DENTRO do corpo de um laço ou de um
+  // callback de array. Três N+1 reais foram achados por detector ad hoc (etapas 247, 248
+  // e 249) e o guard existe para o próximo não passar. É `warn` porque a taxa de falso
+  // positivo da heurística é real: acumular em array e fazer UM insert depois do laço é
+  // legítimo (check-contact-alerts, check-hold-alerts, voip-failover-notifier,
+  // detect-key-moments) e por isso o corpo do laço é extraído por chaves, não por janela
+  // de linhas — o insert que vem DEPOIS do laço fica fora do escopo. `// n+1-ok` silencia
+  // o caso intencional; esta regra NAO entra no baseline de propósito (warn silenciado
+  // nunca é lido).
+  if (!/n\+1-ok/.test(raw)) {
+    const acessos = /await[^;]*?\b(supabase|supabaseClient|client|db)\s*\.\s*(from|rpc)\s*\(/;
+    for (const escopo of escoposDeLaco(code)) {
+      const corpo = code.slice(escopo.inicio, escopo.fim);
+      if (acessos.test(corpo)) {
+        const linha = code.slice(0, escopo.inicio).split("\n").length;
+        report(
+          "warn",
+          "R10-n-plus-1",
+          rel,
+          `ida ao banco dentro de laço (linha ${linha}): 1 consulta por item (silencio: // n+1-ok)`,
+        );
+      }
+    }
+  }
 }
 
 function keyOf(f: Finding): string {
@@ -158,7 +248,8 @@ if (UPDATE) {
   process.exit(0);
 }
 
-const fresh = findings.filter((f) => !baselineSet.has(keyOf(f)));
+const NAO_BASELINEAVEIS = new Set(["R10-n-plus-1"]);
+const fresh = findings.filter((f) => NAO_BASELINEAVEIS.has(f.rule) || !baselineSet.has(keyOf(f)));
 const errors = findings.filter((f) => f.severity === "error");
 const freshErrors = fresh.filter((f) => f.severity === "error");
 
