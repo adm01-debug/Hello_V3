@@ -1,6 +1,6 @@
 # 07 · REGRAS DE NEGÓCIO
 
-> Gerado automaticamente por AI Context Sync v1.3.2 · commit `55b1736818` · branch `main` · 2026-11-24 07:55 UTC
+> Gerado automaticamente por AI Context Sync v1.3.2 · commit `94ed302379` · branch `main` · 2026-11-24 08:01 UTC
 > Não edite à mão — regras humanas vão em `manual/`.
 
 ## A. Regras escritas por humanos (`manual/` — prioridade máxima, nunca sobrescrito)
@@ -2632,7 +2632,7 @@ _nenhum item encontrado_
 | `admin` | `supabase/functions/data-lake-flush/index.ts` |
 | `admin` | `supabase/migrations/20261123000200_fix_has_role_oracle_and_debug_tables.sql` |
 
-## K. Testes como especificação (4356 testes em 386 arquivos — nomes completos em `context.json`)
+## K. Testes como especificação (4357 testes em 386 arquivos — nomes completos em `context.json`)
 
 | Arquivo | Testes | Exemplos do que o sistema DEVE fazer |
 |---|---|---|
@@ -2882,6 +2882,7 @@ _nenhum item encontrado_
 | `src/components/calls/__tests__/CrmSuggestionsCard.test.tsx` | 5 | CrmSuggestionsCard · explica o vazio em vez de sumir da tela · mostra carregando enquanto a consulta roda · mostra o erro da consulta … |
 | `src/components/calls/__tests__/UnifiedSoftphone.falhas.test.tsx` | 5 | UnifiedSoftphone — estados de falha (etapa 233) · mostra o estado do registro SIP da propria linha no cabecalho · mostra o motivo da falha e tenta de novo quando o operador clica em Tentar agora · repete o registro automaticamente com espera crescente … |
 | `src/components/supervisor/panel/__tests__/TrendChartToggle.test.tsx` | 5 | TrendChartToggle · não monta o gráfico antes do primeiro clique · conserva o gráfico montado ao fechar, para o histórico não zerar · não reinicia o gráfico quando o pai reflete o fechamento … |
+| `src/hooks/__tests__/useActiveCallsRealtime.coverage.test.tsx` | 5 | useActiveCallsRealtime (coverage) · loads active calls and holds, computes derived data · filters by selected agent and hold status · starts a tick interval when there are active calls … |
 | `src/hooks/__tests__/useAnimatedCounter.coverage.test.tsx` | 5 | useAnimatedCounter · returns 0 initially and animates toward the end value · respects decimals option · early-returns when diff is zero … |
 | `src/hooks/__tests__/useBlockedAccessLogs.coverage.test.tsx` | 5 | useBlockedAccessLogs · fetches logs and processes stats · handles fetch error · filters logs by search, country, reason; clears filters … |
 | `src/hooks/__tests__/useConsent.coverage.test.tsx` | 5 | useConsent · carrega registros sem contactId · carrega registros filtrando por contactId · registra consentimento com sucesso … |
@@ -2927,7 +2928,6 @@ _nenhum item encontrado_
 | `src/hooks/__tests__/callLifecycle-integration.test.tsx` | 4 | Ciclo de vida da chamada — integracao (E064) · INSERT em call_sessions ao ficar ativa com campos corretos · UPDATE em call_sessions ao encerrar chamada · sem INSERT se chamada for encerrada antes de ficar ativa |
 | `src/hooks/__tests__/use-mobile.coverage.test.tsx` | 4 | useIsMobile · returns false for desktop width · returns true for mobile width and reacts to change · cleans up listener on unmount |
 | `src/hooks/__tests__/useAccounts.test.ts` | 4 | useAccounts · loads accounts on mount · recomputes health via edge function · triggers churn detection |
-| `src/hooks/__tests__/useActiveCallsRealtime.coverage.test.tsx` | 4 | useActiveCallsRealtime (coverage) · loads active calls and holds, computes derived data · filters by selected agent and hold status · starts a tick interval when there are active calls |
 | `src/hooks/__tests__/useCallRecording.test.ts` | 4 | useCallRecording · inicia a captura e persiste o audio ao parar · devolve null e nao grava quando o microfone e negado · devolve null quando o audio sobe mas a gravacao nao e registrada no banco |
 | `src/hooks/__tests__/useCallScoring.coverage.test.tsx` | 4 | useCallScoring · expõe o estado inicial · calcula score com sucesso · lança erro quando a edge function falha |
 | `src/hooks/__tests__/useContactInsights.coverage.test.tsx` | 4 | useContactInsights · returns empty metrics with no contacts · computes distributions across varied personality profiles · handles fetch error gracefully |

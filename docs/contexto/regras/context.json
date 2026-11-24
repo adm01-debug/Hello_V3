@@ -1,15 +1,15 @@
 {
  "meta": {
-  "sha": "55b1736818028ed58b528221ad259e1ab2e81a8d",
+  "sha": "94ed3023790bad630edd91d6f5a7a235137f85e2",
   "branch": "main",
   "remote": "https://github.com/adm01-debug/Hello_V3",
-  "generated_at": "2026-11-24 07:55 UTC",
+  "generated_at": "2026-11-24 08:01 UTC",
   "files_total": 1780,
   "code_files": 1576,
-  "code_lines": 195369
+  "code_lines": 195379
  },
  "version": "1.3.2",
- "facts_hash": "cfd14bccbcfd071e",
+ "facts_hash": "813ea40ed2f6d67e",
  "stack": {
   "frameworks": [
    "React + Vite",
@@ -33594,7 +33594,7 @@
   {
    "module": "src/hooks",
    "files": 354,
-   "lines": 47299,
+   "lines": 47309,
    "tables": [
     "accounts",
     "active_sessions",
@@ -58188,6 +58188,10 @@
    {
     "file": "src/hooks/__tests__/useActiveCallsRealtime.coverage.test.tsx",
     "name": "starts a tick interval when there are active calls"
+   },
+   {
+    "file": "src/hooks/__tests__/useActiveCallsRealtime.coverage.test.tsx",
+    "name": "monta e desmonta 50 vezes sem acumular canal de realtime"
    },
    {
     "file": "src/hooks/__tests__/useAdherence.test.tsx",
@@ -106355,13 +106359,14 @@
   },
   "src/hooks/__tests__/useActiveCallsRealtime.coverage.test.tsx": {
    "path": "src/hooks/__tests__/useActiveCallsRealtime.coverage.test.tsx",
-   "lines": 79,
+   "lines": 89,
    "is_test": true,
    "tests": [
     "useActiveCallsRealtime (coverage)",
     "loads active calls and holds, computes derived data",
     "filters by selected agent and hold status",
-    "starts a tick interval when there are active calls"
+    "starts a tick interval when there are active calls",
+    "monta e desmonta 50 vezes sem acumular canal de realtime"
    ]
   },
   "src/hooks/__tests__/useAdherence.test.tsx": {
@@ -126887,10 +126892,20 @@
   }
  },
  "git": {
-  "sha": "55b1736818028ed58b528221ad259e1ab2e81a8d",
+  "sha": "94ed3023790bad630edd91d6f5a7a235137f85e2",
   "branch": "main",
   "remote": "https://github.com/adm01-debug/Hello_V3",
   "commits": [
+   {
+    "sha": "94ed302",
+    "date": "2026-11-24",
+    "author": "adm01-debug",
+    "subject": "chore: verificacao dos timers de realtime nos hooks (etapa 216) (#266)",
+    "files": [
+     "docs/qa/05-PROGRESSO.md",
+     "src/hooks/__tests__/useActiveCallsRealtime.coverage.test.tsx"
+    ]
+   },
    {
     "sha": "55b1736",
     "date": "2026-11-24",
@@ -127315,28 +127330,6 @@
      "supabase/functions/voip-sla-report/index.ts",
      "supabase/functions/voip-trunks-manage/index.ts"
     ]
-   },
-   {
-    "sha": "48a60a2",
-    "date": "2026-11-24",
-    "author": "adm01-debug",
-    "subject": "fix: onda 2 da E050 - nao vazar erro interno em mais 13 edges (#231)",
-    "files": [
-     "docs/qa/05-PROGRESSO.md",
-     "supabase/functions/analyze-talk-ratio/index.ts",
-     "supabase/functions/check-calling-hours/index.ts",
-     "supabase/functions/check-dnc/index.ts",
-     "supabase/functions/compute-best-time/index.ts",
-     "supabase/functions/dialer-pacing-tick/index.ts",
-     "supabase/functions/embed-kb-article/index.ts",
-     "supabase/functions/export-data-lake/index.ts",
-     "supabase/functions/fuzz-test-runner/index.ts",
-     "supabase/functions/record-consent/index.ts",
-     "supabase/functions/score-call-attempt/index.ts",
-     "supabase/functions/search-calls/index.ts",
-     "supabase/functions/translate-summary/index.ts",
-     "supabase/functions/voip-failover-notifier/index.ts"
-    ]
    }
   ],
   "hot_files": [
@@ -127354,10 +127347,6 @@
    ],
    [
     "supabase/functions/sync-crm-queue/index.ts",
-    3
-   ],
-   [
-    "supabase/functions/voip-failover-notifier/index.ts",
     3
    ],
    [
@@ -127389,15 +127378,15 @@
     2
    ],
    [
+    "supabase/functions/voip-failover-notifier/index.ts",
+    2
+   ],
+   [
     "supabase/functions/voip-load-test/index.ts",
     2
    ],
    [
     "supabase/functions/chatbot-respond/index.ts",
-    2
-   ],
-   [
-    "supabase/functions/record-consent/index.ts",
     2
    ],
    [
@@ -127413,11 +127402,15 @@
     2
    ],
    [
-    "supabase/functions/check-calling-hours/index.ts",
+    "supabase/functions/ldap-sync/index.ts",
     2
    ],
    [
-    "supabase/functions/check-dnc/index.ts",
+    "supabase/functions/generate-coaching-plan/index.ts",
+    2
+   ],
+   [
+    "supabase/functions/generate-meeting-summary/index.ts",
     2
    ]
   ]

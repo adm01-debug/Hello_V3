@@ -1,17 +1,17 @@
 # Graph Report - Hello_V3  (2026-11-24)
 
 ## Corpus Check
-- 1767 files · ~1,011,374 words
+- 1767 files · ~1,011,564 words
 - Verdict: corpus is large enough that graph structure adds value.
 - Unclassified: 11 file(s) not represented in the graph (top: (none) 4, .lock 2, .example 1)
 
 ## Summary
-- 10154 nodes · 26737 edges · 774 communities (477 shown, 297 thin omitted)
-- Extraction: 94% EXTRACTED · 6% INFERRED · 0% AMBIGUOUS · INFERRED: 1703 edges (avg confidence: 0.94)
+- 10154 nodes · 26740 edges · 776 communities (479 shown, 297 thin omitted)
+- Extraction: 94% EXTRACTED · 6% INFERRED · 0% AMBIGUOUS · INFERRED: 1705 edges (avg confidence: 0.94)
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `55b17368`
+- Built from commit: `94ed3023`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -21,18 +21,18 @@
 - vitest
 - react
 - traceHeaders
-- usePageTitle.ts
+- protectedRoutes.tsx
 - cn
 - utils.ts
 - @tanstack/react-query
 - snapshot.py
-- protectedRoutes.tsx
-- safe-date.ts
+- usePageTitle
 - buildCorsHeaders
 - 5. Em uso por rota
+- safe-date.ts
 - dependencies
 - validator.ts
-- usePageTitle
+- safeFormatDistanceToNow
 - gerar.mjs
 - ONDA 1 — Segurança e risco de perda de dado (001–055)
 - Rotas protegidas sem `roles:` (etapa 090)
@@ -40,13 +40,13 @@
 - external-payload-schemas.ts
 - generate.py
 - App.tsx
+- Index.tsx
 - useChurnRisk
 - useMultiChannelCall.ts
-- PredictiveDialerPanel.tsx
 - package.json
+- PasskeyManager.tsx
 - ref_https
-- VoipRecommendationsPanel.tsx
-- button.tsx
+- supabase/types.ts
 - queue-audio.ts
 - UnifiedSoftphone.tsx
 - sidebar.tsx
@@ -73,7 +73,6 @@
 - safeParseInt
 - 20260416234921_cc18cae3-c0a2-4ffd-a96e-7bc43be82ec5.sql
 - voip-recommendation-insights/index.ts
-- useMeetingSummary.ts
 - voip-executive-summary/index.ts
 - AppSidebar
 - 20260416235642_e9fe6fa3-4307-49a3-9253-09718c07703d.sql
@@ -87,7 +86,6 @@
 - security-advanced.test.ts
 - test_snapshot.py
 - useExecutiveDashboard.ts
-- QualityForecastCard.tsx
 - hooks/use-toast.ts
 - SecurityAlerts.tsx
 - ring-group.ts
@@ -99,6 +97,7 @@
 - 20260711194619_238a08b8-a42e-49cd-8856-32a4c1db5c50.sql
 - ref_pg
 - WebhookConfigDialog.tsx
+- useCallHistory.ts
 - useBitrix.ts
 - security-infrastructure.test.ts
 - security-alerts-webhook-queue.ts
@@ -107,12 +106,14 @@
 - security/index.ts
 - 20260417000338_f03874c1-f8d9-4f2d-bf5c-20ad794cce6f.sql
 - useContacts
+- useMeetingSummary.ts
 - ONDA 4 — Funcionalidades incompletas (151–195)
 - gerar-banco.mjs
+- AgentRanking.tsx
+- QueueMetricsAlertSettings.tsx
 - useLiveTranslation.ts
 - RecommendationInsightsCard
 - Lote M1 — Camada de dados
-- useShifts.ts
 - 20260416225701_7a49a0bb-be31-4054-98f2-87f16a3fcbe8.sql
 - ErrorBoundary
 - ref_node_fs
@@ -120,12 +121,12 @@
 - web-vitals.ts
 - Tabela de funcionalidades
 - 20260713124157_1ec9c862-55e8-4a14-a1d0-1f50e3273191.sql
-- CallingHoursConfig.tsx
 - compilerOptions
 - VoipHealthScoreCard
 - 03-ACHADOS.md
-- Login.tsx
+- CallingHoursConfig.tsx
 - gerar-rotas.mjs
+- useAnomalyRemediation.ts
 - safe-number.ts
 - fixes-exhaustive.test.ts
 - 20260103145030_b2c1f366-245b-4264-9139-4def0d930fd6.sql
@@ -148,7 +149,6 @@
 - ONDA 7 — Experiência de uso e consistência (259–281)
 - 20260726202218_619850bb-a4f2-4112-96d7-872649f70b37.sql
 - useWebAuthn.ts
-- Contacts.tsx
 - useSessionManager.ts
 - 20260417110551_0cb1418b-1c9a-4cf2-9164-7d7f523213d8.sql
 - ADR 015 — Outbound Compliance & Predictive Engagement Suite
@@ -162,6 +162,7 @@
 - 20260711153050_e3d3822b-d711-42cf-8514-1f348c336641.sql
 - audit-edge-functions.ts
 - call-park.ts
+- useCallRecording.ts
 - compilerOptions
 - components.json
 - VoipVoiceQAPanel
@@ -174,7 +175,6 @@
 - SnapshotDBStatsTests
 - useVoipQualityMonitor.ts
 - Contact
-- useAlerts.coverage.test.tsx
 - useDashboardData.ts
 - useSipCall.coverage.test.tsx
 - Scorecard — Maturidade Técnica (re-avaliação E2)
@@ -196,10 +196,10 @@
 - security-alerts-export.ts
 - readText
 - gerar-hooks-dormentes.mjs
-- useCallHistory.ts
 - ParkOrbitCard.tsx
 - useConsent.coverage.test.tsx
 - useSupervisorPanel.coverage.test.tsx
+- useVoiceBiometrics.ts
 - 20260417113024_b37afec8-ce2c-47c3-9009-50ef0e86b65c.sql
 - Decisão
 - ADR-032 — Onda 17: Auto-Apply Programado e Histórico Auditável de Recomendações VoIP
@@ -210,8 +210,8 @@
 - form.tsx
 - InsightPanels.tsx
 - useLiveSentiment.coverage.test.tsx
-- HoldAlertsTable.tsx
 - navigation-progress-store.ts
+- ExecutiveReportExport.tsx
 - useCallSession.ts
 - 20260418141900_bac7392a-79fd-4a8d-8497-2144c6f23337.sql
 - ADR 010 — Customer Success & Retention Intelligence Suite
@@ -222,7 +222,6 @@
 - useCallPark.ts
 - useExtensionsOverview.ts
 - useQualityAlerts.coverage.test.tsx
-- Roles.tsx
 - voip-recommendation-simulate/index.ts
 - 20251223013407_14e5788a-757b-4c1a-b447-ee6048bee1b3.sql
 - 20260417113731_0610041c-71b2-497f-974e-2f62b20b3415.sql
@@ -240,6 +239,7 @@
 - CurrentSqlSourcesTests
 - ReconcileDNCDialog.test.tsx
 - security-alerts-presets.ts
+- SloDashboard.tsx
 - 20251231132751_524f6c03-6c9f-4b16-aae7-d38bb6903fda.sql
 - 20260315194850_5c156b99-5d85-4b43-9e09-74edf363cd91.sql
 - ADR-018 — Onda 3: Refatoração, Testes RLS e Tracing Aplicado
@@ -259,11 +259,10 @@
 - useLDAPSync.ts
 - HoldTrendChart.test.tsx
 - ConversationIntelligenceCard.test.tsx
+- useSLA.coverage.test.tsx
 - chart.tsx
 - useRealtimeHoldAlerts.ts
-- useCallRecording.ts
 - useGamification.coverage.test.tsx
-- useSLA.ts
 - useTimeOff.coverage.test.tsx
 - outbound-scoring.ts
 - 20241231000000_saved_filters.sql
@@ -304,9 +303,10 @@
 - callHistoryCsv.ts
 - 20251224124237_40fde4e2-d0ab-4b62-8898-4171393988c4.sql
 - manifest.json
-- useRecordings.ts
+- useAlerts.coverage.test.tsx
 - reportCsv.ts
 - hsts-headers.ts
+- RoleAuditTrail.tsx
 - publicRoutes.tsx
 - 20251222153717_0868819c-c2a1-4f51-abcd-34ae49b599ed.sql
 - 20251225185236_a4c86a9f-4ff8-4f94-b7a7-3970e2787ae0.sql
@@ -326,11 +326,12 @@
 - predictive-pace.property.test.ts
 - Monitoramento de Rede e Qualidade VoIP (Ondas 9 + 10)
 - Onda 12 — Auto-Remediação e Alertas Persistentes VoIP
+- useTelemetry.coverage.test.tsx
 - publish.sh
 - WebRTCMetricsPanel.tsx
 - reconcile.ts
-- KeyMomentsTimeline.tsx
 - useCoachingAssignments.coverage.test.tsx
+- useScheduledCallbacks.coverage.test.tsx
 - useSurveys.coverage.test.tsx
 - useTrunkRealtimeMetrics.ts
 - useVoiceCommand.coverage.test.tsx
@@ -374,6 +375,7 @@
 - NextBestActionPanel.tsx
 - SoundProfileManager.tsx
 - useContactAlerts.coverage.test.tsx
+- Login.lockout.test.tsx
 - compilerOptions
 - public.contact_alerts
 - 20251224023654_29935900-12bb-4c40-bb31-a061340c76eb.sql
@@ -405,7 +407,6 @@
 - 20260712220518_9adabae5-b93f-4fba-8720-d433d1af9f9d.sql
 - 20260522194835_bedfae5d-959f-47e1-be6a-e9bb2bbe380e.sql
 - 20261122290000_sync_profile_role_from_user_roles.sql
-- useVoipAutoRemediation.coverage.test.tsx
 - Pricing.tsx
 - VsThreeCPlus.tsx
 - supabase.ts
@@ -431,6 +432,7 @@
 - 20260522152441_40b20906-baeb-4a9d-b7eb-d230a616e845.sql
 - security-alerts-webhook.property.test.ts
 - LazyComponent.tsx
+- useSecurityHooks.test.ts
 - useVoipQualityMonitor.coverage.test.tsx
 - public.entity_versions
 - public.call_alerts
@@ -693,31 +695,31 @@
 ## Import Cycles
 - None detected.
 
-## Communities (774 total, 297 thin omitted)
+## Communities (776 total, 297 thin omitted)
 
 ### Community 0 - "lucide-react"
-Cohesion: 0.03
-Nodes (181): lucide-react, react-markdown, recharts, SEVERITY_VARIANT, FIELDS, Period, PERIOD_LABELS, TrunkMetricsTab() (+173 more)
+Cohesion: 0.02
+Nodes (185): lucide-react, recharts, SEVERITY_VARIANT, FIELDS, Period, PERIOD_LABELS, Props, BargeInNotificationProps (+177 more)
 
 ### Community 1 - "client.ts"
 Cohesion: 0.02
-Nodes (170): sonner, @supabase/supabase-js, web-vitals, HealthFilter, CheckResult, log, timeForDB(), useCallingHoursManager() (+162 more)
+Nodes (152): @lovable.dev/cloud-auth-js, sonner, @supabase/supabase-js, HealthFilter, LoginBranding(), CheckResult, log, timeForDB() (+144 more)
 
 ### Community 2 - "vitest"
 Cohesion: 0.01
-Nodes (111): @testing-library/react, vitest, perms, base, estado, rules, navigate, OmnichannelCard() (+103 more)
+Nodes (102): @testing-library/react, vitest, perms, base, estado, rules, navigate, { orderMock } (+94 more)
 
 ### Community 3 - "react"
 Cohesion: 0.07
-Nodes (93): react, Props, Trunk, AnalysisResult, exampleTranscripts, PasskeyLoginProps, ReauthDialogProps, CoachingTs (+85 more)
+Nodes (102): react, Props, Trunk, ExtensionsFiltersProps, PasskeyLoginProps, ReauthDialogProps, ScheduleCallbackDialogProps, AudioOutputSelectorProps (+94 more)
 
 ### Community 4 - "traceHeaders"
 Cohesion: 0.02
-Nodes (118): 🟠 Onda 2 — Engenharia (concluída), 2. Tracing distribuído aplicado, 1. Tracing distribuído estendido, 2. Tracing 100% nos hooks de invoke, Arquivos-chave, Contexto, Tracing distribuído estendido, Decisões (+110 more)
+Nodes (116): 🟠 Onda 2 — Engenharia (concluída), 2. Tracing distribuído aplicado, 1. Tracing distribuído estendido, 2. Tracing 100% nos hooks de invoke, Arquivos-chave, Contexto, Tracing distribuído estendido, Decisões (+108 more)
 
-### Community 5 - "usePageTitle.ts"
-Cohesion: 0.05
-Nodes (86): ExtensionsFiltersProps, AlertStatsCards(), AlertData, AlertsTrendChart(), ChartDataPoint, AudioOutputSelectorProps, PERIOD_SECONDS, PeriodFilter (+78 more)
+### Community 5 - "protectedRoutes.tsx"
+Cohesion: 0.02
+Nodes (123): BulkActionsBar(), BulkActionsBarProps, actionMeta, Props, ExtensionsFilters(), ExtensionsTable(), StatCard(), StatCardProps (+115 more)
 
 ### Community 6 - "cn"
 Cohesion: 0.03
@@ -725,31 +727,31 @@ Nodes (105): Cobertura, input-otp, @radix-ui/react-accordion, @radix-ui/react-co
 
 ### Community 7 - "utils.ts"
 Cohesion: 0.04
-Nodes (74): BargeInNotification(), CallSimulation(), ActiveCallsRealtime(), Agent, AgentItem(), AgentsList(), getInitials(), statusConfig (+66 more)
+Nodes (83): date-fns, react-markdown, react-router-dom, WhisperMessage, WhisperNotificationProps, TranscriptPreview(), CallAlertsList(), getSeverityBadge() (+75 more)
 
 ### Community 8 - "@tanstack/react-query"
 Cohesion: 0.02
-Nodes (69): @tanstack/react-query, baseInput, invoke, plan, invokeMock, result, invoke, sampleResponse (+61 more)
+Nodes (68): Qualidade dos testes deste lote, @tanstack/react-query, invokeMock, result, invoke, sampleResponse, deleteEq, updateEq (+60 more)
 
 ### Community 9 - "snapshot.py"
 Cohesion: 0.06
 Nodes (99): Any, Connection, decimal, Exception, hashlib, psycopg, psycopg_rows, api() (+91 more)
 
-### Community 10 - "protectedRoutes.tsx"
-Cohesion: 0.02
-Nodes (88): CoachingCopilotCard(), CoachingPlan, SUPPORTED_LANGS, ErrorBudget, HealthResponse, SLO_TARGETS, SloDashboard(), statusBorder() (+80 more)
+### Community 10 - "usePageTitle"
+Cohesion: 0.04
+Nodes (84): Rotas protegidas — `admin` apenas, Rotas protegidas — `supervisor` + `admin`, class-variance-authority, WhisperNotification(), QualityTrunkDashboard(), NeonPageHeader(), NeonPageHeaderProps, ExecutiveSummaryDialog() (+76 more)
 
-### Community 11 - "safe-date.ts"
-Cohesion: 0.05
-Nodes (69): date-fns, react-router-dom, actionMeta, Props, WhisperMessage, WhisperNotification(), WhisperNotificationProps, TranscriptPreview() (+61 more)
-
-### Community 12 - "buildCorsHeaders"
+### Community 11 - "buildCorsHeaders"
 Cohesion: 0.05
 Nodes (40): Onda 1 — Segurança e risco de perda de dado (001–055, 55 etapas), AIScore, Criterion, json(), ContactAlert, json(), DashboardGoal, Metrics (+32 more)
 
-### Community 13 - "5. Em uso por rota"
+### Community 12 - "5. Em uso por rota"
 Cohesion: 0.06
 Nodes (87): Ordem de implementação, 1. Erradicação total de `as any`/`as never` em hooks, Tabela de funcionalidades, Tabela de funcionalidades, 2. Roadmap de produto declarado × medição, 5. Em uso por rota, 1. ✅ RESOLVIDO (PR #120) — Botão em produção grava dados fabricados com `Math.random()` em tabelas reais, B) Funcionalidade com dado fabricado gravado em tabela real (+79 more)
+
+### Community 13 - "safe-date.ts"
+Cohesion: 0.08
+Nodes (59): 3. Refatoração modular, LDAPLogsTab(), statusIcon(), ComplianceSettings(), ConsentHistoryViewer(), DNCImportLogs(), statusConfig, HolidaysManager() (+51 more)
 
 ### Community 14 - "dependencies"
 Cohesion: 0.02
@@ -759,9 +761,9 @@ Nodes (82): dependencies, autoprefixer, class-variance-authority, clsx, cmdk, da
 Cohesion: 0.05
 Nodes (50): A-129 — 37 das 94 edges usam o corpo do request sem nenhuma validação, CallSummary, TOOL_SCHEMA, computeWeightedTotal(), criteria, GenerateCoachingBodySchema, GenerateCoachingPlanBodySchema, GenerateMeetingSummaryBodySchema (+42 more)
 
-### Community 16 - "usePageTitle"
-Cohesion: 0.04
-Nodes (75): 3. Refatoração modular, Rotas protegidas — `admin` apenas, Rotas protegidas — `supervisor` + `admin`, Etapa 203 — Estados de carregamento e vazio nas telas de operação, LDAPConfigTab(), LDAPLogsTab(), statusIcon(), LDAPMappingTab() (+67 more)
+### Community 16 - "safeFormatDistanceToNow"
+Cohesion: 0.05
+Nodes (59): AlertsDropdown(), CallbackCard(), CallbackCardProps, itemVariants, ContactHistoryTab(), AddContactsDialog(), DialerControlPanel(), formatTimer() (+51 more)
 
 ### Community 17 - "gerar.mjs"
 Cohesion: 0.03
@@ -791,33 +793,33 @@ Nodes (71): collections, analyze_code_file(), balanced(), build_access(), build_
 Cohesion: 0.05
 Nodes (54): 1. Cron pg_cron semanal, 2. Trigger de hotspot, 3. Badge contador no sidebar, Decisão, 1. Sem nenhum consumidor de produção, 3. Têm consumidor vivo, mas nenhuma rota nem o shell alcança, 4. Alcançados apenas pelo shell do app (layout, providers, serviços globais), Como foi verificado (+46 more)
 
-### Community 24 - "useChurnRisk"
+### Community 24 - "Index.tsx"
+Cohesion: 0.05
+Nodes (53): Implementação, Etapa 203 — Estados de carregamento e vazio nas telas de operação, ExtensionDetailsDrawer(), Props, ExtensionsTableProps, ExtensionStatusBadge(), MAP, TrunkHealthBadge() (+45 more)
+
+### Community 25 - "useChurnRisk"
 Cohesion: 0.05
 Nodes (58): 2. Métrica de espera (hold) grava sempre nula, 🔴 Dois botões que gravam dados fictícios em produção, 🔴 Dois fios de dados quebrados — leia antes de "consertar métrica", Funcionalidades provisionadas e dormentes, KPI que mede não-ação, O que é real e o que não é, Painéis com número inventado — não alimente, Rotas do domínio (+50 more)
 
-### Community 25 - "useMultiChannelCall.ts"
+### Community 26 - "useMultiChannelCall.ts"
 Cohesion: 0.06
 Nodes (45): J4 — Ligar para um contato (`/`, `PhoneDialer`), ActiveCallsIndicatorProps, ConferenceSectionProps, ActiveCallDisplayProps, channelColors, channelIcons, dialPadButtons, formatCallDuration() (+37 more)
-
-### Community 26 - "PredictiveDialerPanel.tsx"
-Cohesion: 0.06
-Nodes (49): BulkActionsBar(), BulkActionsBarProps, Props, ExtensionsFilters(), ExtensionsTable(), ExtensionsTableProps, StatCard(), StatCardProps (+41 more)
 
 ### Community 27 - "package.json"
 Cohesion: 0.04
 Nodes (54): name, private, type, version, autoprefixer, clsx, @dnd-kit/core, @dnd-kit/sortable (+46 more)
 
-### Community 28 - "ref_https"
+### Community 28 - "PasskeyManager.tsx"
+Cohesion: 0.09
+Nodes (40): VoipTrunkFormDrawer(), AddDNCDialog(), getReasonLabel(), getReasonVariant(), DNCStats(), DNCItem, DNCTable(), Props (+32 more)
+
+### Community 29 - "ref_https"
 Cohesion: 0.05
 Nodes (23): ref_https, AnalyzeCall, AnalyzeCallSchema, ChatWidgetSession, ChatWidgetSessionSchema, EmailInbound, EmailInboundSchema, base (+15 more)
 
-### Community 29 - "VoipRecommendationsPanel.tsx"
-Cohesion: 0.06
-Nodes (46): Implementação, ExtensionDetailsDrawer(), ExtensionStatusBadge(), MAP, TrunkHealthBadge(), Props, Props, VoipTrunkFormDrawer() (+38 more)
-
-### Community 30 - "button.tsx"
-Cohesion: 0.11
-Nodes (36): class-variance-authority, AddDNCDialog(), getReasonLabel(), getReasonVariant(), DNCStats(), DNCItem, DNCTable(), Props (+28 more)
+### Community 30 - "supabase/types.ts"
+Cohesion: 0.04
+Nodes (36): fromMock, rpcMock, channelObj, fromMock, invokeMock, profileRow, state, Deal (+28 more)
 
 ### Community 31 - "queue-audio.ts"
 Cohesion: 0.07
@@ -923,141 +925,141 @@ Nodes (39): idx_cadence_steps_cadence, idx_call_sessions_deal, idx_deals_contact
 Cohesion: 0.08
 Nodes (31): Re-verificação Onda 14 (2026-04-17), Achados de segurança, Achados graves, Cobertura, Funções sem chamador identificado (padrões testados), Integrações de terceiros observadas, Lote F2 — supabase/functions (parte 2), Tabela de funcionalidades (+23 more)
 
-### Community 57 - "useMeetingSummary.ts"
-Cohesion: 0.07
-Nodes (27): Módulos mortos (zero consumidores, inclusive testes à parte), Frontend, buildList(), channelObj, invoke, listRows, QueryResult, summaryRow (+19 more)
-
-### Community 58 - "voip-executive-summary/index.ts"
+### Community 57 - "voip-executive-summary/index.ts"
 Cohesion: 0.06
 Nodes (27): Auto-apply, Drawer, Edge function `voip-recommendation-history`, Tabela `voip_recommendation_actions`, oneOf(), AnomalyKind, AnomalyMetric, idempotencyKey() (+19 more)
 
-### Community 59 - "AppSidebar"
+### Community 58 - "AppSidebar"
 Cohesion: 0.06
 Nodes (33): Achados graves, Bloco `src/components/ui/*` (shadcn — fora do manifesto C3, incluído por instrução), Cobertura, Integrações de terceiros observadas, Lote C3 — src/components (parte 3), Observações menores (não bloqueantes), #1 (CRÍTICO) — `hold_events` recebe registros permanentemente incompletos e nunca encerrados, #2 (GRAVE) — `useSecurityHardening.test.ts`: 863 linhas de garantia de segurança sem código sob teste (+25 more)
 
-### Community 60 - "20260416235642_e9fe6fa3-4307-49a3-9253-09718c07703d.sql"
+### Community 59 - "20260416235642_e9fe6fa3-4307-49a3-9253-09718c07703d.sql"
 Cohesion: 0.10
 Nodes (35): idx_accounts_churn, idx_accounts_csm, idx_accounts_health, idx_accounts_status, idx_churn_signals_account, idx_churn_signals_active, idx_contacts_account, idx_journey_history_account (+27 more)
 
-### Community 61 - "WebhookHealth.tsx"
+### Community 60 - "WebhookHealth.tsx"
 Cohesion: 0.12
 Nodes (26): EndpointSparkline, EndpointSparklineProps, EndpointList(), Props, EndpointsToolbar(), Props, HealthHeatmap(), Props (+18 more)
 
-### Community 62 - "security-alerts-webhook.ts"
+### Community 61 - "security-alerts-webhook.ts"
 Cohesion: 0.13
 Nodes (31): useWebhookConfig(), generateRequestId(), WebhookAttemptDetail, hmacSha256Hex(), isRetriableStatus(), isValidHttpUrl(), loadIntClamped(), loadWebhookBaseDelayMs() (+23 more)
 
-### Community 63 - "webauthn-authenticate/index.ts"
+### Community 62 - "webauthn-authenticate/index.ts"
 Cohesion: 0.09
 Nodes (21): capturarHandler(), Handler, serveOriginal, b64url(), Chamada, comStub(), criarAssercao(), Stub (+13 more)
 
-### Community 64 - "Auditoria Back-End Sênior — 2026-07-12"
+### Community 63 - "Auditoria Back-End Sênior — 2026-07-12"
 Cohesion: 0.06
 Nodes (33): 10. Benchmarking, 1. Sumário Executivo, 2.1 Banco (RLS), 2.2 Autenticação, 2.3 Edge Functions (92 funções), 2.4 OWASP Top 10 (aplicabilidade), 2. Segurança, 3.1 Pontos fortes (+25 more)
 
-### Community 65 - "LiveTranscription.tsx"
+### Community 64 - "LiveTranscription.tsx"
 Cohesion: 0.10
 Nodes (24): Achados graves, Etapa 061 — Religar a transcrição ao vivo, AudioOutputSelector(), getUserMediaMock, MockMediaRecorder, RecorderEvents, Props, TranscriptionHeader() (+16 more)
 
-### Community 66 - "Tabela de funcionalidades"
+### Community 65 - "Tabela de funcionalidades"
 Cohesion: 0.10
 Nodes (29): Achados graves, Cobertura, Lote C4 — src/components (parte 4), Tabela de funcionalidades, FloatingParticles, FloatingParticlesProps, lerp(), Particle (+21 more)
 
-### Community 67 - "blf.ts"
+### Community 66 - "blf.ts"
 Cohesion: 0.13
 Nodes (29): BlfLampCard(), BlfLampCardProps, initials(), STATE_STYLES, BlfSummaryBar(), ITEMS, fetchBoard(), agentKey() (+21 more)
 
-### Community 68 - "security-advanced.test.ts"
+### Community 67 - "security-advanced.test.ts"
 Cohesion: 0.10
 Nodes (26): ApiKeyConfig, createKeyConfig(), DEFAULT_ROTATION_INTERVAL_DAYS, generateRotationSchedule(), isKeyExpired(), shouldRotateKey(), generateCSRFToken(), getOrCreateCSRFToken() (+18 more)
 
-### Community 69 - "test_snapshot.py"
+### Community 68 - "test_snapshot.py"
 Cohesion: 0.10
 Nodes (28): argparse, contextlib, copy, datetime, importlib_util, io, json, os (+20 more)
 
-### Community 70 - "useExecutiveDashboard.ts"
+### Community 69 - "useExecutiveDashboard.ts"
 Cohesion: 0.09
 Nodes (25): axisTickStyle, CallsVolumeChart(), COLORS, HoldByAgentChart(), SatisfactionChart(), SentimentChart(), tooltipStyle, TopAgentsChart() (+17 more)
 
-### Community 71 - "QualityForecastCard.tsx"
-Cohesion: 0.09
-Nodes (22): formatTs(), log, QualityForecastCard(), SEV_COLORS, capacity, { insertMock, getUserMock }, SessionResult, state (+14 more)
-
-### Community 72 - "hooks/use-toast.ts"
+### Community 70 - "hooks/use-toast.ts"
 Cohesion: 0.11
 Nodes (26): @radix-ui/react-toast, Toast, ToastAction, ToastActionElement, ToastClose, ToastDescription, ToastProps, src_components_ui_toast_toastprovider (+18 more)
 
-### Community 73 - "SecurityAlerts.tsx"
+### Community 71 - "SecurityAlerts.tsx"
 Cohesion: 0.10
 Nodes (26): @tanstack/react-virtual, AlertDetailsDialog(), AlertDetailsDialogProps, AlertsFilterBar(), AlertsTimelineCard(), AlertsTimelineCardProps, KpiStrip(), normalizeSeverity() (+18 more)
 
-### Community 74 - "ring-group.ts"
+### Community 72 - "ring-group.ts"
 Cohesion: 0.13
 Nodes (28): RingGroupCard(), RingGroupCardProps, RingGroupFormDialog(), RingGroupFormDialogProps, GROUPS_KEY, log, MEMBERS_KEY, RingGroupAgentOption (+20 more)
 
-### Community 75 - "ReauthContext.tsx"
+### Community 73 - "ReauthContext.tsx"
 Cohesion: 0.12
 Nodes (26): clearGrant(), grantPayload(), PendingCallback, readGrant(), REAUTH_GRANT_TTL_MS, REAUTH_TIMEOUT_MS, ReauthAction, ReauthContext (+18 more)
 
-### Community 76 - "sync-history.ts"
+### Community 74 - "sync-history.ts"
 Cohesion: 0.17
 Nodes (21): RFC-4180, SyncHistoryPanel(), listeners, notify(), useSyncHistory(), appendEntry(), buildSyncHistoryCsv(), buildSyncHistoryKey() (+13 more)
 
-### Community 77 - "adr/README.md"
+### Community 75 - "adr/README.md"
 Cohesion: 0.07
 Nodes (24): ADR-001: Supabase as Backend via Lovable Cloud, Consequences, Decision, Rationale, ADR-007: Lazy Routing and Bundle Code Splitting, Consequences, Decision, Rationale (+16 more)
 
-### Community 78 - "ESTADO_ATUAL.md"
+### Community 76 - "ESTADO_ATUAL.md"
 Cohesion: 0.07
 Nodes (23): Lote C1 — src/components (parte 1), 1. Onde o "planejado" está registrado neste repositório, 4. Plano da "Onda 39" (`.lovable/plan.md`) × medição, 6. Rotas ativas sem caminho de navegação, 7. Módulos que existiam apenas como fachada — status após 21/11, 8. Resumo: o que responder ao dono, Funcionalidades Sugeridas e Planejadas × Estado Real, Cobertura (+15 more)
 
-### Community 79 - "utilities-comprehensive.test.ts"
+### Community 77 - "utilities-comprehensive.test.ts"
 Cohesion: 0.11
 Nodes (22): 3. Camada `src/lib/{mfa,session,audit,notifications,password}` — extração para lib nunca adotada; hooks seguem sendo o caminho real, Barris `audit / mfa / notifications / password / session` — escritos, testados, não adotados, AuditAction, AuditEvent, formatBackupCode(), generateBackupCodes(), getMFAStatus(), MFAStatus (+14 more)
 
-### Community 80 - "20260711194619_238a08b8-a42e-49cd-8856-32a4c1db5c50.sql"
+### Community 78 - "20260711194619_238a08b8-a42e-49cd-8856-32a4c1db5c50.sql"
 Cohesion: 0.07
 Nodes (28): public.geo_access_logs, public.login_attempts, idx_audit_logs_created_brin, idx_call_control_audit_logs_created_brin, idx_call_quality_metrics_created_brin, idx_call_sessions_active_partial, idx_coaching_assignments_pending, idx_dialer_queue_pending (+20 more)
 
-### Community 81 - "ref_pg"
+### Community 79 - "ref_pg"
 Cohesion: 0.07
 Nodes (15): ref_pg, client, clientConfig, client, clientConfig, client, clientConfig, client (+7 more)
 
-### Community 82 - "WebhookConfigDialog.tsx"
+### Community 80 - "WebhookConfigDialog.tsx"
 Cohesion: 0.12
 Nodes (24): inputErrorClass(), WebhookConfigDialog(), WebhookConfigDialogProps, hasBlockingErrors(), validateInt(), validateSecret(), validateUrl(), validateWebhookConfig() (+16 more)
 
-### Community 83 - "useBitrix.ts"
+### Community 81 - "useCallHistory.ts"
+Cohesion: 0.10
+Nodes (21): Props, Props, Props, rpcMock, sampleRow, { invokeMock, createSignedUrlMock, removeMock, orderMock, deleteEqMock }, rows, AuditAction (+13 more)
+
+### Community 82 - "useBitrix.ts"
 Cohesion: 0.12
 Nodes (23): BitrixContact, BitrixDeal, BitrixLead, useBitrix(), breaker, BreakerConfig, BreakerInternal, CircuitState (+15 more)
 
-### Community 84 - "security-infrastructure.test.ts"
+### Community 83 - "security-infrastructure.test.ts"
 Cohesion: 0.12
 Nodes (19): buildCSPHeader(), CSPDirectives, DEFAULT_CSP_DIRECTIVES, buildCORSHeaders(), CORSConfig, DEFAULT_CORS_CONFIG, applyMetaTags(), DEFAULT_SECURITY_HEADERS (+11 more)
 
-### Community 85 - "security-alerts-webhook-queue.ts"
+### Community 84 - "security-alerts-webhook-queue.ts"
 Cohesion: 0.18
 Nodes (19): Tabela de funcionalidades (módulos), useWebhookQueue(), clearWebhookQueue(), enqueueWebhook(), flushWebhookQueue(), hashEndpoint(), installWebhookQueueAutoFlush(), Listener (+11 more)
 
-### Community 86 - "20251231115936_0cbef64e-8440-4db5-8f3d-164a7da98921.sql"
+### Community 85 - "20251231115936_0cbef64e-8440-4db5-8f3d-164a7da98921.sql"
 Cohesion: 0.14
 Nodes (25): public.update_security_updated_at, idx_active_sessions_token, idx_active_sessions_user, idx_rate_limit_logs_created, idx_rate_limit_logs_ip, idx_user_roles_role, idx_user_roles_user_id, public.active_sessions (+17 more)
 
-### Community 87 - "cenarios.mjs"
+### Community 86 - "cenarios.mjs"
 Cohesion: 0.08
 Nodes (21): base(), comp(), fails, GERADOR, JS, KEEP, PKG(), scenarios (+13 more)
 
-### Community 88 - "security/index.ts"
+### Community 87 - "security/index.ts"
 Cohesion: 0.20
 Nodes (20): escapeHTML(), HTML_ENTITIES, isValidURL(), sanitizeEmail(), sanitizeInput(), sanitizePhoneNumber(), sanitizeSearchQuery(), stripHTMLTags() (+12 more)
 
-### Community 89 - "20260417000338_f03874c1-f8d9-4f2d-bf5c-20ad794cce6f.sql"
+### Community 88 - "20260417000338_f03874c1-f8d9-4f2d-bf5c-20ad794cce6f.sql"
 Cohesion: 0.13
 Nodes (26): idx_agent_shifts_agent_date, idx_agent_shifts_date, idx_agent_skills_agent, idx_coaching_assignments_agent, idx_coaching_assignments_status, idx_learning_completions_agent, idx_time_off_agent, idx_time_off_status (+18 more)
 
-### Community 90 - "useContacts"
+### Community 89 - "useContacts"
 Cohesion: 0.10
 Nodes (23): 1. Optimistic Locking em entidades críticas, 2. Vitest coverage gate, ADR-039 — Onda 24/25: Optimistic Locking + CI Coverage Gate, Consequências, Decisão, Rollback, ADR-041 — Onda 27: Cobertura Defensiva Final do Optimistic Locking, Consequências (+15 more)
+
+### Community 90 - "useMeetingSummary.ts"
+Cohesion: 0.13
+Nodes (21): Módulos mortos (zero consumidores, inclusive testes à parte), Frontend, buildList(), channelObj, invoke, listRows, QueryResult, summaryRow (+13 more)
 
 ### Community 91 - "ONDA 4 — Funcionalidades incompletas (151–195)"
 Cohesion: 0.08
@@ -1067,53 +1069,53 @@ Nodes (26): Etapa 151 — Ligar o enforcement de SLA à interface, Etapa 154 —
 Cohesion: 0.12
 Nodes (25): CAMPO_TODO, chamarApi(), compararEdges(), conferirOrigem(), contarUsoNoCodigo(), edgesNoRepo(), extrairInventario(), LEDGER_TOLERANCIA (+17 more)
 
-### Community 93 - "useLiveTranslation.ts"
+### Community 93 - "AgentRanking.tsx"
+Cohesion: 0.13
+Nodes (20): RankedAgent, AgentGoalsGrid(), Props, AgentPodium(), getInitials(), Props, Props, AgentSummaryStats() (+12 more)
+
+### Community 94 - "QueueMetricsAlertSettings.tsx"
+Cohesion: 0.18
+Nodes (18): AbandonmentRateCard(), Props, CheckIntervalCard(), Props, Props, ServiceLevelCard(), Props, StatusToggleCard() (+10 more)
+
+### Community 95 - "useLiveTranslation.ts"
 Cohesion: 0.14
 Nodes (18): Frontend, Etapa 161 — Decidir o destino de `translate-summary` e `sync-crm-queue`, Etapa 269 — Remover o que promete internacionalização e não entrega, MultilingualDashboardCard(), LiveTranslationPanel(), orderResult, CulturalHint, useCulturalHints() (+10 more)
 
-### Community 94 - "RecommendationInsightsCard"
+### Community 96 - "RecommendationInsightsCard"
 Cohesion: 0.10
 Nodes (20): ADR-033 — Onda 18: Coaching inteligente pós-ação + insights preditivos de recomendações VoIP, Alternativas descartadas, Componentes, Consequências, Decisão, 1. Classificação de anomalias (client-side determinístico), 2. Edge function `voip-anomaly-remediation`, 3. Auto-remediação opt-in (+12 more)
 
-### Community 95 - "Lote M1 — Camada de dados"
+### Community 97 - "Lote M1 — Camada de dados"
 Cohesion: 0.08
 Nodes (24): 1. Timestamp duplicado — colisão de ordem, 2. Oito migrations fora do padrão de nomenclatura, 3. `20260805130000_fix_user_profiles_recursion.sql` — investigação específica, 4. `IF NOT EXISTS` mascarando divergência — 13 tabelas recriadas, 5. DROPs, 6. Funções `SECURITY DEFINER` sem `SET search_path` — 4 de 73, 7. Geração dinâmica de políticas em runtime, (A) Em `types.ts` SEM migration correspondente — 3 (+16 more)
 
-### Community 96 - "useShifts.ts"
-Cohesion: 0.09
-Nodes (15): Qualidade dos testes deste lote, ChainResult, mutationResult, shiftsResult, templatesResult, insertResult, QueryResult, responses (+7 more)
-
-### Community 97 - "20260416225701_7a49a0bb-be31-4054-98f2-87f16a3fcbe8.sql"
+### Community 98 - "20260416225701_7a49a0bb-be31-4054-98f2-87f16a3fcbe8.sql"
 Cohesion: 0.13
 Nodes (23): public.update_transcript_search_vector, idx_battle_card_triggers_card, idx_battle_card_triggers_keyword, idx_call_recordings_source, idx_coaching_ts_agent, idx_coaching_ts_session, idx_key_moments_session, idx_key_moments_type (+15 more)
 
-### Community 98 - "ErrorBoundary"
+### Community 99 - "ErrorBoundary"
 Cohesion: 0.10
 Nodes (8): ref_fs, ref_path, @vitejs/plugin-react-swc, client, clientConfig, sql, ErrorBoundary, file()
 
-### Community 99 - "ref_node_fs"
+### Community 100 - "ref_node_fs"
 Cohesion: 0.10
 Nodes (18): ref_node_child_process, ref_node_fs, ref_node_os, atual, base, CONJUNTO_RAIZ, missing, REQUIRED_SECTIONS (+10 more)
 
-### Community 100 - "usePredictiveDialer.ts"
+### Community 101 - "usePredictiveDialer.ts"
 Cohesion: 0.19
 Nodes (22): CreateCampaignDialog(), DialerControlPanelProps, apiAddToQueue(), apiCreateCampaign(), apiDeleteCampaign(), apiFetchCampaigns(), apiFetchQueue(), apiMarkSkipped() (+14 more)
 
-### Community 101 - "web-vitals.ts"
+### Community 102 - "web-vitals.ts"
 Cohesion: 0.15
 Nodes (17): Props, getLatestVitals, getWebVitals, useWebVitals(), CapturedObserver, MockPerformanceObserver, observers, addMetric() (+9 more)
 
-### Community 102 - "Tabela de funcionalidades"
+### Community 103 - "Tabela de funcionalidades"
 Cohesion: 0.18
 Nodes (21): Tabela de funcionalidades, 2. Só existem dentro de componente órfão (componente que nada importa), TrunkAssignmentsTab(), ScheduleCallbackDialog(), WebRTCCall(), invokeMock, useAudioOutputDevices(), formatScheduledAt() (+13 more)
 
-### Community 103 - "20260713124157_1ec9c862-55e8-4a14-a1d0-1f50e3273191.sql"
+### Community 104 - "20260713124157_1ec9c862-55e8-4a14-a1d0-1f50e3273191.sql"
 Cohesion: 0.09
 Nodes (23): public.call_transcripts_searchable, public.churn_risk_signals, public.deal_revenue_snapshots, public.renewals, public.voip_trunk_health_checks, idx_agent_badges_agent_id, idx_barge_in_sessions_call_session_id, idx_call_transcripts_searchable_call_session_id (+15 more)
-
-### Community 104 - "CallingHoursConfig.tsx"
-Cohesion: 0.16
-Nodes (20): Props, RegionFormDialog(), fmt(), Props, RegionsTable(), Props, StatusCheckCard(), CallingHoursDraft (+12 more)
 
 ### Community 105 - "compilerOptions"
 Cohesion: 0.08
@@ -1127,105 +1129,105 @@ Nodes (20): ADR-030: Cockpit Executivo VoIP e Health Score Consolidado, Arquivos
 Cohesion: 0.09
 Nodes (22): 03 — Achados, agrupados por causa raiz, A-057 — O discador reivindica o contato sem claim atômico: o mesmo cliente é discado duas vezes, A-058 — O locking otimista está inerte: nenhum chamador envia `version`, A-059 — Gamificação: soma semanal calculada no cliente, com `UNIQUE` e erro descartado, A-060 — `beforeunload` assíncrono: o agente nunca fica offline ao fechar a aba, A-061 — Histórico de chamadas: corrida entre "carregar mais" e troca de filtro, A-062 — Transcrições só entram na análise pós-chamada se a gravação tiver dado certo, A-063 — Favoritos: o histórico registra a reordenação antes de ela ser persistida (+14 more)
 
-### Community 108 - "Login.tsx"
-Cohesion: 0.12
-Nodes (15): @lovable.dev/cloud-auth-js, LoginBranding(), rpc, RpcResult, LockoutStatus, useLoginLockout(), lovable, lovableAuth (+7 more)
+### Community 108 - "CallingHoursConfig.tsx"
+Cohesion: 0.14
+Nodes (20): Props, RegionFormDialog(), fmt(), Props, RegionsTable(), Props, StatusCheckCard(), CallingHoursDraft (+12 more)
 
 ### Community 109 - "gerar-rotas.mjs"
 Cohesion: 0.17
 Nodes (19): ARQUIVOS_DE_ROTA, constantesDeString(), ehTeste(), EXTENSOES, extrairChamadas(), fechoDaTela(), gerarRotas(), lerEntradas() (+11 more)
 
-### Community 110 - "safe-number.ts"
+### Community 110 - "useAnomalyRemediation.ts"
+Cohesion: 0.12
+Nodes (16): baseInput, invoke, plan, invokeMock, log, RemediationInput, RemediationPlan, RemediationResponse (+8 more)
+
+### Community 111 - "safe-number.ts"
 Cohesion: 0.14
 Nodes (19): clamp(), ClampResult, CoerceResult, coerceToNumber(), counters, emit(), getSafeNumberMetrics(), NumericInput (+11 more)
 
-### Community 111 - "fixes-exhaustive.test.ts"
+### Community 112 - "fixes-exhaustive.test.ts"
 Cohesion: 0.12
 Nodes (11): decodeJWTPayload(), getTimeUntilExpiration(), getTokenExpirationDate(), isTokenExpired(), JWTPayload, NOTE: Never validate JWTs client-side for security decisions., CapturedObserver, MockPerformanceObserver (+3 more)
 
-### Community 112 - "20260103145030_b2c1f366-245b-4264-9139-4def0d930fd6.sql"
+### Community 113 - "20260103145030_b2c1f366-245b-4264-9139-4def0d930fd6.sql"
 Cohesion: 0.14
 Nodes (21): idx_calling_hours_region, idx_consent_contact, idx_consent_phone, idx_dnc_active, idx_dnc_phone_normalized, idx_holidays_date, public.add_to_dnc(), public.calling_hours_config (+13 more)
 
-### Community 113 - "allowed-hosts.ts"
+### Community 114 - "allowed-hosts.ts"
 Cohesion: 0.18
 Nodes (16): RFC-1918, assertSafeOutboundUrl(), classifyHost(), inBlock(), INTERNAL_SUFFIXES, IPV4_BLOCKS, IPV4_PRIVATE_BLOCKS, ipv4ToInt() (+8 more)
 
-### Community 114 - "useOptimisticLockConflicts.ts"
+### Community 115 - "useOptimisticLockConflicts.ts"
 Cohesion: 0.11
 Nodes (15): ADR-043 — Onda 29: Observabilidade de Conflitos + Retenção Automática, Consequências, Correção (22/11), Decisão, eqSpy, rows, state, ConflictPeriod (+7 more)
 
-### Community 115 - "voipRecommendationCoaching.ts"
+### Community 116 - "voipRecommendationCoaching.ts"
 Cohesion: 0.16
 Nodes (15): Re-verificação Onda 16 (2026-04-18), loadJsonMap(), saveJsonMap(), VoipRecommendationsPanel(), limitMock, builder, CoachingItem, fetchAvgMos() (+7 more)
 
-### Community 116 - "@playwright/test"
+### Community 117 - "@playwright/test"
 Cohesion: 0.19
 Nodes (8): @playwright/test, context(), extractRef(), seedAdminSession(), SeedAdminSessionOptions, hasAdminCredentials(), shouldSkipNoSession(), seededEntry
 
-### Community 117 - "SupervisorPanel.tsx"
+### Community 118 - "SupervisorPanel.tsx"
 Cohesion: 0.14
 Nodes (15): 🔴 R3 — Painéis de saúde e performance com dados fabricados, @radix-ui/react-collapsible, ActiveCallsList(), BargeInBanner(), CallActionTabs(), PanelHeader(), QueueMetricsGrid(), chartMounts (+7 more)
 
-### Community 118 - "useQueueMetrics.ts"
+### Community 119 - "useQueueMetrics.ts"
 Cohesion: 0.10
 Nodes (16): src_components_dashboard_dashboardgoalssettings_dashboardgoal, Props, Result, sampleGoal, activeCallsData, agentsData, goalsData, invokeResult (+8 more)
 
-### Community 119 - "useHoldSoundAlert.ts"
+### Community 120 - "useHoldSoundAlert.ts"
 Cohesion: 0.11
 Nodes (14): calls, channelObj, fromMock, holds, channelObj, MockAudioContext, ActiveCall, ActiveHoldEvent (+6 more)
 
-### Community 120 - "security-alerts-webhook-history.ts"
+### Community 121 - "security-alerts-webhook-history.ts"
 Cohesion: 0.22
 Nodes (16): UseTestWebhookOptions, WebhookValidation, useWebhookHistory(), appendWebhookHistory(), clearWebhookHistory(), csvEscape(), downloadWebhookHistoryCSV(), downloadWebhookHistoryNDJSON() (+8 more)
 
-### Community 121 - "track-engine.ts"
+### Community 122 - "track-engine.ts"
 Cohesion: 0.16
 Nodes (18): json(), TrackRow, AgentStat, aggregateStats(), buildTrackCandidates(), CallSession, CallSummary, COACHING_RULES (+10 more)
 
-### Community 122 - "20250103000000_triggers.sql"
+### Community 123 - "20250103000000_triggers.sql"
 Cohesion: 0.15
 Nodes (20): audit_trigger_func(), calculate_call_duration(), calculate_call_duration_trigger, calls_audit_trigger, calls_update_timestamp, cascade_user_deletion(), cascade_user_deletion_trigger, contacts_email_validation (+12 more)
 
-### Community 123 - "compilerOptions"
+### Community 124 - "compilerOptions"
 Cohesion: 0.10
 Nodes (20): compilerOptions, allowImportingTsExtensions, isolatedModules, jsx, lib, module, moduleDetection, moduleResolution (+12 more)
 
-### Community 124 - "Tabela de funcionalidades (módulos)"
+### Community 125 - "Tabela de funcionalidades (módulos)"
 Cohesion: 0.10
 Nodes (19): 1. Web Vitals — implementação manual (antiga, **ainda importada**) vs. pacote `web-vitals` (nova), 2. Schemas de contato — `createContactSchema` (schemas.ts) vs. `contactInputSchema` (contact-schema.ts), 4. Espelhos de lógica servidor→cliente (variante do mesmo padrão), Admin / webhook health, Auditoria de testes, Bloco `src/lib/security/*` — escrito, testado, **nunca ligado à aplicação**, Cobertura, Integrações de terceiros observadas (+11 more)
 
-### Community 125 - "PermissionGate.tsx"
+### Community 126 - "PermissionGate.tsx"
 Cohesion: 0.12
 Nodes (16): Bloqueio global, Itens verificados como GAP real (código, sem banco), Ordem de execução (fundação → dependentes), Auditoria e segurança, Cron e data lake, Edge functions e IA, Frontend, Regras de negócio verificadas (Hello_V3, 2026-11-21) (+8 more)
 
-### Community 126 - "02 — Matriz de cenários por jornada"
+### Community 127 - "02 — Matriz de cenários por jornada"
 Cohesion: 0.10
 Nodes (19): 02 — Matriz de cenários por jornada, Cenários transversais executados antes da matriz, Como ler as marcas, J10 — Avaliar agente (scorecard e coaching), J11 — Painel executivo e relatórios, J12 — Administrar papéis e permissões, J13 — Administrar troncos e ramais, J14 — Segurança e auditoria (admin) (+11 more)
 
-### Community 127 - "device-identity.ts"
+### Community 128 - "device-identity.ts"
 Cohesion: 0.23
 Nodes (16): Etapa 207 — Registrar a reordenação de favoritos só depois de persistir, RemoteOriginNotice(), RemoteOriginNoticeProps, log, useDeviceLabel(), trackFavoriteChange(), pushSyncEvent(), detectDeviceLabel() (+8 more)
 
-### Community 128 - "ONDA 6 — Performance (236–258)"
+### Community 129 - "ONDA 6 — Performance (236–258)"
 Cohesion: 0.10
 Nodes (20): Etapa 236 — Paginação nas listagens do histórico e das gravações, Etapa 239 — Agregar no banco as métricas de insights de contato, Etapa 240 — Paginar as duas consultas da página pública de status, Etapa 241 — Índice em `call_sessions.created_at`, Etapa 242 — Índices derivados do uso real, não do palpite, Etapa 243 — Índices para as buscas por texto que existirem, Etapa 244 — Reduzir a tempestade de consultas do painel de fila, Etapa 245 — Parar o laço de re-render de 1 Hz do lembrete de espera (+12 more)
 
-### Community 129 - "ONDA 7 — Experiência de uso e consistência (259–281)"
+### Community 130 - "ONDA 7 — Experiência de uso e consistência (259–281)"
 Cohesion: 0.10
 Nodes (20): Etapa 259 — Rótulo acessível nos botões-ícone do discador e da chamada, Etapa 260 — Rótulo acessível nos botões-ícone de contatos, Etapa 261 — Rótulo acessível na navegação da transcrição, Etapa 262 — Rótulo acessível nos botões de exclusão, Etapa 263 — Varrer os botões-ícone restantes, começando pelo cadastro, Etapa 264 — Regra de lint para botão-ícone sem nome acessível, Etapa 266 — Resolver a duplicata `/history` e `/call-history`, Etapa 267 — Padronizar as mensagens de confirmação de sucesso (+12 more)
 
-### Community 130 - "20260726202218_619850bb-a4f2-4112-96d7-872649f70b37.sql"
+### Community 131 - "20260726202218_619850bb-a4f2-4112-96d7-872649f70b37.sql"
 Cohesion: 0.15
 Nodes (18): public.queue_audio_prompts, public.validate_park_orbit, public.validate_parked_call, idx_call_park_orbits_active, idx_parked_calls_orbit, idx_parked_calls_parked_by, idx_parked_calls_session, idx_parked_calls_status (+10 more)
 
-### Community 131 - "useWebAuthn.ts"
+### Community 132 - "useWebAuthn.ts"
 Cohesion: 0.26
 Nodes (15): PasskeyLogin(), getDefaultFriendlyName(), getDeviceType(), log, Passkey, useWebAuthn(), AuthenticationOptions, base64UrlToBuffer() (+7 more)
-
-### Community 132 - "Contacts.tsx"
-Cohesion: 0.16
-Nodes (15): ContactFilters(), Props, ContactFiltersState, ContactSort, ContactSourceFilter, defaultContactFilters, ContactPagination(), CreateContactDialog() (+7 more)
 
 ### Community 133 - "useSessionManager.ts"
 Cohesion: 0.13
@@ -1279,57 +1281,57 @@ Nodes (14): BASELINE_PATH, baselineSet, entrypoints, errors, Finding, findings, 
 Cohesion: 0.18
 Nodes (17): ParkOrbitFormDialog(), clampBounds(), cleanAction(), cleanBoolean(), cleanNullableText(), cleanText(), cleanUuid(), DEFAULT_ORBIT_DRAFT (+9 more)
 
-### Community 146 - "compilerOptions"
+### Community 146 - "useCallRecording.ts"
+Cohesion: 0.11
+Nodes (8): FakeMediaRecorder, h, FakeMediaRecorder, insert, upload, log, Recording, SaveRecordingOptions
+
+### Community 147 - "compilerOptions"
 Cohesion: 0.11
 Nodes (17): compilerOptions, allowImportingTsExtensions, composite, declaration, emitDeclarationOnly, isolatedModules, lib, module (+9 more)
 
-### Community 147 - "components.json"
+### Community 148 - "components.json"
 Cohesion: 0.12
 Nodes (16): aliases, components, hooks, lib, ui, utils, rsc, $schema (+8 more)
 
-### Community 148 - "VoipVoiceQAPanel"
+### Community 149 - "VoipVoiceQAPanel"
 Cohesion: 0.12
 Nodes (15): 1. `voip-diagnostic-voice-qa`, 2. `voip-executive-narrative`, 3. UI, 4. Hooks, ADR-035 — Onda 20: Voice Q&A Conversacional + Resumo Executivo Auto-Narrado, Consequências, Decisão, Loop completo (Ondas 9→20) (+7 more)
 
-### Community 149 - "CR-7 — Os gates de qualidade estão desarmados por construção"
+### Community 150 - "CR-7 — Os gates de qualidade estão desarmados por construção"
 Cohesion: 0.12
 Nodes (16): Playwright: o que realmente testa, A-040 — O guard de edge functions tem 51 achados congelados e a regra de autorização é só aviso, A-041 — O job "Security audit" não reprova nada, A-042 — Repositório público com secret scanning, push protection e Dependabot desligados, A-043 — `main` não tem nenhuma regra de proteção, A-044 — O guard de integridade do `AGENTS.md` é inócuo justamente no push para `main`, A-045 — A cobertura de 75% mede 2 das 5 pastas de `src`, A-046 — O ESLint não olha as edge functions, os arquivos de config nem os scripts (+8 more)
 
-### Community 150 - "01 — Inventário do sistema e registro de cobertura"
+### Community 151 - "01 — Inventário do sistema e registro de cobertura"
 Cohesion: 0.12
 Nodes (16): 01 — Inventário do sistema e registro de cobertura, 0. Suposições declaradas (o campo `<contexto>` do pedido veio vazio), 1. Stack, entrada, build e deploy, 2. Inventário quantitativo (contagem mecânica própria, 2026-11-22), 3. Atores, papéis e jornadas, 4. Regras de negócio localizadas, 5. O que foi EXECUTADO nesta auditoria, 6. Registro de cobertura — o que ficou de fora e por quê (+8 more)
 
-### Community 151 - "useContacts.ts"
+### Community 152 - "useContacts.ts"
 Cohesion: 0.28
 Nodes (12): 2.1 Property-Based Testing (`fast-check`), ContactHistoryTabProps, ContactInteraction, log, normalizePhoneForStorage(), isE164(), maskPhone(), normalizeBrPhone() (+4 more)
 
-### Community 152 - "agent-assist-utils.ts"
+### Community 153 - "agent-assist-utils.ts"
 Cohesion: 0.20
 Nodes (14): Bug 2 — `matchesKeywords` falhava em keywords compostas, AgentAssistDashboardCard(), useAgentAssistHistory(), buildRecentContext(), calculateAcceptanceRate(), countByIntent(), INTENT_COLORS, INTENT_LABELS (+6 more)
 
-### Community 153 - "scripts"
+### Community 154 - "scripts"
 Cohesion: 0.12
 Nodes (17): scripts, build, build:dev, contexto:banco, contexto:banco:test, contexto:ia, contexto:ia:test, contexto:regras (+9 more)
 
-### Community 154 - "uniq"
+### Community 155 - "uniq"
 Cohesion: 0.20
 Nodes (17): baseOf(), byCount(), convencoes, flags, git(), gitInfo, gitInfoCommit(), graphify (+9 more)
 
-### Community 155 - "SnapshotDBStatsTests"
+### Community 156 - "SnapshotDBStatsTests"
 Cohesion: 0.21
 Nodes (4): OfflineConnection, Catálogo e resultados sintéticos; nenhum driver, socket ou banco real., SnapshotDBStatsTests, query()
 
-### Community 156 - "useVoipQualityMonitor.ts"
+### Community 157 - "useVoipQualityMonitor.ts"
 Cohesion: 0.16
 Nodes (11): Aggregates, PostCallSummaryData, calculateMos(), labelFromMos(), log, QualityLabel, VoipQualityMonitor, VoipQualitySample (+3 more)
 
-### Community 157 - "Contact"
+### Community 158 - "Contact"
 Cohesion: 0.15
 Nodes (13): ContactCard(), ContactCardProps, getInitials(), ContactDetailSheetProps, ContactGrid(), containerVariants, Props, CreateContactDialogProps (+5 more)
-
-### Community 158 - "useAlerts.coverage.test.tsx"
-Cohesion: 0.11
-Nodes (14): callAlertsData, channelObj, contactAlertsData, invokeResult, limitResult, mutationOk, QueryResult, countResult (+6 more)
 
 ### Community 159 - "useDashboardData.ts"
 Cohesion: 0.14
@@ -1415,21 +1417,21 @@ Nodes (15): allMatches(), changelogTopo, composes, countLines(), dockerfiles, do
 Cohesion: 0.24
 Nodes (14): alcancePorArquivo(), coletarAcesso(), ehTeste(), existe(), EXT, fechamento(), listarArquivos(), main() (+6 more)
 
-### Community 180 - "useCallHistory.ts"
-Cohesion: 0.20
-Nodes (12): Props, Props, rpcMock, sampleRow, Analysis, CallSession, CallSummary, DateRangePreset (+4 more)
-
-### Community 181 - "ParkOrbitCard.tsx"
+### Community 180 - "ParkOrbitCard.tsx"
 Cohesion: 0.24
 Nodes (12): ParkOrbitCard(), ACTIONS_REQUIRING_TARGET, clampInt(), formatCountdown(), formatTimeout(), maskPhone(), PARK_LIMITS, PARK_TIMEOUT_ACTIONS (+4 more)
 
-### Community 182 - "useConsent.coverage.test.tsx"
+### Community 181 - "useConsent.coverage.test.tsx"
 Cohesion: 0.14
 Nodes (11): invokeMock, makeBuilder(), b, queryResult, sample, ThenableBuilder, ConsentChannel, ConsentRecord (+3 more)
 
-### Community 183 - "useSupervisorPanel.coverage.test.tsx"
+### Community 182 - "useSupervisorPanel.coverage.test.tsx"
 Cohesion: 0.14
 Nodes (8): activeCall, fromMock, listResults, makeBuilder(), builder, singleResults, TableResult, TestAudioContext
+
+### Community 183 - "useVoiceBiometrics.ts"
+Cohesion: 0.18
+Nodes (12): captureVoiceSampleMock, deleteEqMock, invokeMock, orderMock, FraudSignal, log, useFraudSignals(), useLiveVoiceVerification() (+4 more)
 
 ### Community 184 - "20260417113024_b37afec8-ce2c-47c3-9009-50ef0e86b65c.sql"
 Cohesion: 0.21
@@ -1471,13 +1473,13 @@ Nodes (11): LatestInsightPanel(), RiskAlert(), emotionIcons, getSentimentColor()
 Cohesion: 0.14
 Nodes (13): Props, base, channel, channelObj, eq, from, insert, on (+5 more)
 
-### Community 194 - "HoldAlertsTable.tsx"
-Cohesion: 0.18
-Nodes (12): HoldAlertsFilters(), HoldAlertsFiltersValue, HoldAlertRow, HoldAlertsTable(), Props, severityConfig, HoldAlertStatsCards(), AgentRankingTable() (+4 more)
-
-### Community 195 - "navigation-progress-store.ts"
+### Community 194 - "navigation-progress-store.ts"
 Cohesion: 0.31
 Nodes (10): NavigationProgress(), NavigationProgressMarker(), emit(), finishNavigation(), getServerSnapshot(), isNavigating(), Listener, listeners (+2 more)
+
+### Community 195 - "ExecutiveReportExport.tsx"
+Cohesion: 0.16
+Nodes (10): log, Props, ReportRow, Props, invokeMock, ExecutiveAgentStat, ExecutiveBreakdown, ExecutivePeriod (+2 more)
 
 ### Community 196 - "useCallSession.ts"
 Cohesion: 0.15
@@ -1519,73 +1521,73 @@ Nodes (10): removeChannelMock, results, subscribeMock, AgentRow, AgentStatus, As
 Cohesion: 0.17
 Nodes (7): QueryResult, responses, QueryResult, responses, QualityMetric, TrunkUsageMetric, useTrunkUsageMetrics()
 
-### Community 206 - "Roles.tsx"
-Cohesion: 0.27
-Nodes (9): AddRoleDialog(), Roles(), Props, RolesTable(), Props, RoleStatsCards(), ROLE_LABELS, UserRoleRow (+1 more)
-
-### Community 207 - "voip-recommendation-simulate/index.ts"
+### Community 206 - "voip-recommendation-simulate/index.ts"
 Cohesion: 0.24
 Nodes (9): classifyMos(), isPoorMos(), MOS_THRESHOLDS, MosLabel, AlertRow, projectImpact(), QualityRow, SimulationDelta (+1 more)
 
-### Community 208 - "20251223013407_14e5788a-757b-4c1a-b447-ee6048bee1b3.sql"
+### Community 207 - "20251223013407_14e5788a-757b-4c1a-b447-ee6048bee1b3.sql"
 Cohesion: 0.26
 Nodes (12): idx_call_sessions_contact, idx_contact_interactions_contact, idx_contact_interactions_created, idx_contact_interactions_type, idx_contacts_email, idx_contacts_external_id, idx_contacts_phone, public.contact_interactions (+4 more)
 
-### Community 209 - "20260417113731_0610041c-71b2-497f-974e-2f62b20b3415.sql"
+### Community 208 - "20260417113731_0610041c-71b2-497f-974e-2f62b20b3415.sql"
 Cohesion: 0.26
 Nodes (12): idx_consent_records_channel_type, idx_consent_records_contact, idx_consent_records_granted, idx_consent_records_phone, idx_engagement_patterns_answer_rate, idx_engagement_patterns_contact, public.consent_records, public.contact_engagement_patterns (+4 more)
 
-### Community 210 - "20260515170309_98507006-514f-467b-b3e7-a1f30f5377d4.sql"
+### Community 209 - "20260515170309_98507006-514f-467b-b3e7-a1f30f5377d4.sql"
 Cohesion: 0.29
 Nodes (12): public.agent_trunk_assignments, public.agents, public.call_control_audit_logs, public.call_quality_metrics, public.call_sessions, public.hold_events, public.is_admin(), public.user_profiles (+4 more)
 
-### Community 211 - "safeParseFloat"
+### Community 210 - "safeParseFloat"
 Cohesion: 0.17
 Nodes (10): Commits, Código, Hello V3 — convenções, Commits, Código, Hello V3 — convenções, 🔴 R2 — CI vermelho em 100% das execuções recentes, StatsCard (+2 more)
 
-### Community 212 - "ADR 012: Meeting Summary AI (Notas Executivas Pós-Call)"
+### Community 211 - "ADR 012: Meeting Summary AI (Notas Executivas Pós-Call)"
 Cohesion: 0.17
 Nodes (11): 1. Tool calling em vez de JSON parsing, 2. Trigger automático condicionado, 3. Idempotência via upsert, 4. RLS por participação na chamada, 5. Realtime para UX responsiva, ADR 012: Meeting Summary AI (Notas Executivas Pós-Call), Alternativas Consideradas, Consequências (+3 more)
 
-### Community 213 - "Pendências 2026-07 — Rastreamento das Melhorias do Plano Exaustivo"
+### Community 212 - "Pendências 2026-07 — Rastreamento das Melhorias do Plano Exaustivo"
 Cohesion: 0.17
 Nodes (10): Bloco C — 🔵 Desejável (Observabilidade / Custo), Bloco D — 🚀 Produto, Bloco E — Encerramento, Data Lake validado ponta a ponta, O gateway valida o JWT antes da edge rodar, Onda A1 — Log de execução (2026-07-15), Onda A2 — Log de execução (2026-11-22), Pendências 2026-07 — Rastreamento das Melhorias do Plano Exaustivo (+2 more)
 
-### Community 214 - "AchievementCelebration.tsx"
+### Community 213 - "AchievementCelebration.tsx"
 Cohesion: 0.18
 Nodes (10): AchievementCelebration(), AchievementCelebrationProps, tierColors, tierGlowColors, BadgeCard(), BadgeCardProps, BadgesShowcaseProps, BadgeNotification (+2 more)
 
-### Community 215 - "00 — Resumo para o dono"
+### Community 214 - "00 — Resumo para o dono"
 Cohesion: 0.17
 Nodes (11): 00 — Resumo para o dono, 1. Em uma frase, 2. O que eu encontrei de mais importante, 3. Os 10 maiores riscos, em ordem, 4. Contagem, 5. Vale dizer: muita coisa melhorou desde agosto, 6. O que eu não consegui verificar, 6b. Uma correção na própria auditoria (+3 more)
 
-### Community 216 - "CR-6 — A mesma regra de negócio com duas fórmulas"
+### Community 215 - "CR-6 — A mesma regra de negócio com duas fórmulas"
 Cohesion: 0.17
 Nodes (12): A-028 — "Nível de serviço" tem dois limiares em produção: 20 s e 30 s, com duas janelas, A-029 — O score do scorecard é calculado de dois jeitos; um pode passar de 100%, A-030 — Limiar de "qualidade ruim" é 3,5 em quatro lugares e 3,6 em dois, A-032 — `talkRatio` diverge no caso vazio e elogia chamada sem áudio, A-033 — "Melhor hora para contatar" calculada em UTC e exibida como hora local, A-034 — Vocabulário de status de agente incompatível entre front, SQL e CHECK, A-035 — Limite de chamadas simultâneas existe só no navegador, A-036 — `callback` reagenda em 1 h fixa, ignorando a configuração da campanha (+4 more)
 
-### Community 217 - "CR-15 — Ambiente não reconstruível e drift entre repositório e banco"
+### Community 216 - "CR-15 — Ambiente não reconstruível e drift entre repositório e banco"
 Cohesion: 0.17
 Nodes (12): A-091 — Três tabelas em uso sem `CREATE TABLE` em nenhuma das 241 migrations, A-092 — Drift inverso: 6 tabelas criadas por migration não existem no schema real, e a correção de LGPD depende de uma delas, A-093 — O ledger de migrations registra 84 versões; o repositório tem 241 arquivos, A-094 — Dois pares de migrations com o mesmo timestamp, A-095 — Migrations não reaplicáveis: não há como levantar uma cópia do banco para testar, A-096 — `config.toml` versiona 5 `verify_jwt`; dez funções dependem de configuração que não está no repositório, A-097 — 24 variáveis de ambiente usadas e não documentadas; 28 documentadas que não existem, A-098 — Projeto Supabase e chave embutidos em 7 definições de cron/trigger (+4 more)
 
-### Community 218 - "Onda 38 — Auditoria Massiva End-to-End + Correção de Gaps"
+### Community 217 - "Onda 38 — Auditoria Massiva End-to-End + Correção de Gaps"
 Cohesion: 0.17
 Nodes (11): 1. Bugs reais descobertos e corrigidos, 2. Inventário da auditoria, 3. Linter Supabase, 4. Validação final, 5. Checklist "Pronto para produção", 6. Itens deferidos para ondas futuras, 7. ADR & Memória, Bug 1 — `rankSignals` violava a precedência de severidade (+3 more)
 
-### Community 219 - "📞 Bitrix Call Connect - VoIP Enterprise & AI Intelligence"
+### Community 218 - "📞 Bitrix Call Connect - VoIP Enterprise & AI Intelligence"
 Cohesion: 0.17
 Nodes (11): 1. **Core VoIP & Softphone**, 2. **AI Intelligence (Powered by Lovable & Gemini)**, 3. **Segurança & Resiliência**, 4. **Gestão Operacional & Gamificação**, 📞 Bitrix Call Connect - VoIP Enterprise & AI Intelligence, 🛠️ Como Rodar Localmente, Passo a Passo, 🏗️ Principais Módulos (+3 more)
 
-### Community 220 - "check-bundle-budget.mjs"
+### Community 219 - "check-bundle-budget.mjs"
 Cohesion: 0.18
 Nodes (11): ref_node_zlib, argv, assets, BUDGET_PATH, chunkKey(), DEFAULT_LIMITS, DIST, rows (+3 more)
 
-### Community 222 - "ReconcileDNCDialog.test.tsx"
+### Community 221 - "ReconcileDNCDialog.test.tsx"
 Cohesion: 0.18
 Nodes (4): consulta(), builder, { fromMock, naLista, resendMock }, builder
 
-### Community 223 - "security-alerts-presets.ts"
+### Community 222 - "security-alerts-presets.ts"
 Cohesion: 0.38
 Nodes (9): AlertsFilterBarProps, PresetsMenuProps, UseAlertPresetsOptions, addPreset(), AlertFilterPreset, isValidPreset(), loadPresets(), removePreset() (+1 more)
+
+### Community 223 - "SloDashboard.tsx"
+Cohesion: 0.18
+Nodes (6): ErrorBudget, HealthResponse, SLO_TARGETS, SloDashboard(), statusBorder(), SloDashboard
 
 ### Community 224 - "20251231132751_524f6c03-6c9f-4b16-aae7-d38bb6903fda.sql"
 Cohesion: 0.24
@@ -1659,197 +1661,197 @@ Nodes (4): consulta(), builder, canal, { warnMock, fromMock, resultados }
 Cohesion: 0.24
 Nodes (7): ConversationIntelligenceCard(), fromMock, TableRows, classifyTalkRatio(), computeTalkRatio(), TalkRatioComputation, TalkRatioSegment
 
-### Community 243 - "chart.tsx"
+### Community 243 - "useSLA.coverage.test.tsx"
+Cohesion: 0.22
+Nodes (8): OmnichannelCard(), conversationRows, policyRows, state, useSlaCompliance(), useSlaPolicies(), useUpsertSlaPolicy(), SLAPolicies()
+
+### Community 244 - "chart.tsx"
 Cohesion: 0.25
 Nodes (9): ChartConfig, ChartContainer, ChartContext, ChartContextProps, ChartLegendContent, ChartTooltipContent, getPayloadConfigFromPayload(), THEMES (+1 more)
 
-### Community 244 - "useRealtimeHoldAlerts.ts"
+### Community 245 - "useRealtimeHoldAlerts.ts"
 Cohesion: 0.18
 Nodes (4): createUrgentSound(), loadSavedEnabled(), log, RealtimeHoldAlert
-
-### Community 245 - "useCallRecording.ts"
-Cohesion: 0.18
-Nodes (5): FakeMediaRecorder, h, log, Recording, SaveRecordingOptions
 
 ### Community 246 - "useGamification.coverage.test.tsx"
 Cohesion: 0.24
 Nodes (8): defaultResult, fromMock, makeBuilder(), builder, nextResult(), QueryResult, tableResults, writes
 
-### Community 247 - "useSLA.ts"
-Cohesion: 0.27
-Nodes (8): conversationRows, policyRows, state, SlaPolicy, useSlaCompliance(), useSlaPolicies(), useUpsertSlaPolicy(), SLAPolicies()
-
-### Community 248 - "useTimeOff.coverage.test.tsx"
+### Community 247 - "useTimeOff.coverage.test.tsx"
 Cohesion: 0.18
 Nodes (9): eq, from, insert, insertSelect, order, select, single, update (+1 more)
 
-### Community 249 - "outbound-scoring.ts"
+### Community 248 - "outbound-scoring.ts"
 Cohesion: 0.27
 Nodes (9): computeAttemptScore(), DAY_NAMES, EngagementPattern, formatBestWindow(), recommendationColor(), recommendationLabel(), ScoreInput, ScoreResult (+1 more)
 
-### Community 250 - "20241231000000_saved_filters.sql"
+### Community 249 - "20241231000000_saved_filters.sql"
 Cohesion: 0.29
 Nodes (10): ensure_single_default_filter(), idx_saved_filters_default, idx_saved_filters_entity_type, idx_saved_filters_user_entity, idx_saved_filters_user_id, public.saved_filters, auth.users, trigger_saved_filters_updated_at (+2 more)
 
-### Community 251 - "20250102000000_hello_production.sql"
+### Community 250 - "20250102000000_hello_production.sql"
 Cohesion: 0.29
 Nodes (10): idx_calls_contact, idx_calls_timestamp, idx_contacts_favorite, idx_contacts_phone, idx_queue_status, public.agents, public.call_records, public.contacts (+2 more)
 
-### Community 252 - "20251224023203_b0186fe4-1181-4b5d-a9cc-460f3738b952.sql"
+### Community 251 - "20251224023203_b0186fe4-1181-4b5d-a9cc-460f3738b952.sql"
 Cohesion: 0.29
 Nodes (10): idx_dialer_campaigns_status, idx_dialer_queue_campaign_id, idx_dialer_queue_next_attempt, idx_dialer_queue_status, public.dialer_campaigns, public.dialer_queue, public.contacts, public.update_updated_at_column (+2 more)
 
-### Community 253 - "public.meeting_summaries"
+### Community 252 - "public.meeting_summaries"
 Cohesion: 0.25
 Nodes (10): idx_meeting_summaries_followup, idx_meeting_summaries_generated_at, idx_meeting_summaries_session, idx_meeting_summaries_status, public.meeting_summaries, auth.users, public, public.call_sessions (+2 more)
 
-### Community 254 - "20260726201157_da4cb47a-5f61-4783-9786-eb99a7ee6bfc.sql"
+### Community 253 - "20260726201157_da4cb47a-5f61-4783-9786-eb99a7ee6bfc.sql"
 Cohesion: 0.25
 Nodes (9): idx_call_queues_greeting_prompt, idx_call_queues_moh_prompt, idx_call_queues_overflow_prompt, idx_call_queues_periodic_prompt, idx_queue_audio_prompts_kind_active, public.queue_audio_prompts, public.call_queues, public.update_updated_at_column (+1 more)
 
-### Community 255 - "AGENTS.md — Hello V3"
+### Community 254 - "AGENTS.md — Hello V3"
 Cohesion: 0.20
 Nodes (9): AGENTS.md — Hello V3, Banco — ler `docs/agentes/banco.md` antes de SQL, migration ou deploy, Bugs e funcionalidades, Comunicação, Fluxo Git — detalhe em `docs/agentes/github-ci.md`, Onde olhar primeiro, Postura, Serviços (+1 more)
 
-### Community 256 - "ADR-016: Multilingual Real-Time Translation & Localization Suite"
+### Community 255 - "ADR-016: Multilingual Real-Time Translation & Localization Suite"
 Cohesion: 0.20
 Nodes (9): ADR-016: Multilingual Real-Time Translation & Localization Suite, Banco de dados, Contexto, Decisão, Edge Functions, Métricas de sucesso, RLS, Status (+1 more)
 
-### Community 257 - "useQualityTrendAnalyzer"
+### Community 256 - "useQualityTrendAnalyzer"
 Cohesion: 0.27
 Nodes (10): Decisão, Decisão, Re-verificação Onda 11 (2026-04-17), Re-verificação Onda 12 (2026-04-17), QualityAlertsCard(), delta(), SlaReportCards(), persistAlert() (+2 more)
 
-### Community 258 - "isPoorMos"
+### Community 257 - "isPoorMos"
 Cohesion: 0.27
 Nodes (10): 1. Heatmap temporal 7×24, 2. Drill-down por agente (24h), 3. Bridge automático para notificações, Decision, Re-verificação Onda 13 (2026-04-17), Etapa 238 — Paginação nas listagens administrativas e de auditoria, AgentQualityRanking(), colorFor() (+2 more)
 
-### Community 259 - "ADR-037 — Onda 22: Forecasting Preditivo de Qualidade VoIP + Capacity Planning"
+### Community 258 - "ADR-037 — Onda 22: Forecasting Preditivo de Qualidade VoIP + Capacity Planning"
 Cohesion: 0.20
 Nodes (9): ADR-037 — Onda 22: Forecasting Preditivo de Qualidade VoIP + Capacity Planning, Consequências, Contexto, Decisão, Loop completo 360°, Por que determinístico, `QualityForecastCard`, Testes (+1 more)
 
-### Community 260 - "ADR-047 — Onda 33: Failover automático e métricas de uso por trunk VoIP"
+### Community 259 - "ADR-047 — Onda 33: Failover automático e métricas de uso por trunk VoIP"
 Cohesion: 0.20
 Nodes (9): ADR-047 — Onda 33: Failover automático e métricas de uso por trunk VoIP, Alternativas consideradas, Consequências, Contexto, Decisão, Failover em `sip-config`, Hook `useTrunkUsageReporter`, Tabela `voip_trunk_usage_metrics` (+1 more)
 
-### Community 261 - "Banco de dados — referência para agentes"
+### Community 260 - "Banco de dados — referência para agentes"
 Cohesion: 0.20
 Nodes (9): Acesso ao banco — limite real, não opcional, Banco de dados — referência para agentes, Banco OFICIAL, Bancos que NÃO são deste projeto (não escrever neles), 🔴 Chave `service_role` de produção versionada, Estrutura medida (a partir do repositório, 2026-11-08), Onde se trabalha, Regras de migration (+1 more)
 
-### Community 262 - "Integrações de Terceiros — Implementadas, Parciais e Planejadas"
+### Community 261 - "Integrações de Terceiros — Implementadas, Parciais e Planejadas"
 Cohesion: 0.20
 Nodes (9): 1. Hosts externos efetivamente chamados no código, 2. Segredos exigidos pelas Edge Functions, 3. Catálogo de integrações, 4. Riscos específicos das integrações, 5. Resumo, 🟨 Implementadas com ressalva, ✅ Implementadas e ligadas, Integrações de Terceiros — Implementadas, Parciais e Planejadas (+1 more)
 
-### Community 263 - "Achados graves"
+### Community 262 - "Achados graves"
 Cohesion: 0.20
 Nodes (10): 1. LDAPSync é uma simulação completa apresentada como funcionalidade admin, 2. Botão de geração de dados sintéticos exposto em produção (AgentRanking), 3. Rota duplicada com rótulos contraditórios, 4. Configuração global sem restrição de role, 5. Estado não persistido apresentado como progresso (Onboarding), 6. Simulação hardcoded na aba padrão do Assistente IA, 7. Catálogo de integrações estático (Marketplace), 8. `src/data/mockData.ts` (311 linhas) é código morto de produção (+2 more)
 
-### Community 264 - "Status.tsx"
+### Community 263 - "Status.tsx"
 Cohesion: 0.27
 Nodes (9): J17 — Página pública de status (`/status`) — **EXECUTADA EM NAVEGADOR**, Etapa 092 — `/status`: dizer "sem medição" em vez de 100%, computeUptime(), DailySample, groupByDay(), ServiceStatus, Status(), statusColor() (+1 more)
 
-### Community 265 - "CR-18 — Código morto, dependências e configuração inerte"
+### Community 264 - "CR-18 — Código morto, dependências e configuração inerte"
 Cohesion: 0.20
 Nodes (10): A-114 — Cinco componentes órfãos, 1.094 linhas, A-115 — 15 scripts órfãos, quatro deles destrutivos com o host de produção como padrão, A-116 — `xlsx` 0.18.5: duas vulnerabilidades altas sem correção, e o pacote não é usado, A-117 — `react-router-dom` 7.13.1: open redirect com correção disponível, A-118 — Três lockfiles divergentes; o que o CI usa está preso a um registry privado de terceiro, A-119 — Ferramental de desenvolvimento declarado como dependência de produção, A-120 — `tsconfig.app.json` e `tsconfig.node.json` são configuração morta e divergente, A-121 — `preview.historyApiFallback` não é opção do Vite (+2 more)
 
-### Community 266 - "04-PLANO.md"
+### Community 265 - "04-PLANO.md"
 Cohesion: 0.20
 Nodes (9): 04 — Plano de correção em 300 etapas, Comandos do repositório, Formato de cada etapa, Instruções para o agente executor, Mapa das ondas, O que não está verificável nesta sessão (e provavelmente nem na sua), Padrões do repositório que você deve seguir, Regras de execução (+1 more)
 
-### Community 267 - "regras_negocio — regras de negócio para agentes de IA"
+### Community 266 - "regras_negocio — regras de negócio para agentes de IA"
 Cohesion: 0.20
 Nodes (9): Etapa 071 — Parar de afirmar "Chamada salva" quando a gravação falhou, ok(), Arquivos, Fontes SQL, Regras humanas, regras_negocio — regras de negócio para agentes de IA, Rodar local, Testes de regressão (+1 more)
 
-### Community 268 - "Runbook — Resposta a Incidentes"
+### Community 267 - "Runbook — Resposta a Incidentes"
 Cohesion: 0.20
 Nodes (9): 1. Falha de Edge Function, 2. Degradação de Banco de Dados, 3. Spike de IPs Bloqueados, 4. Violação de Rate Limit, 5. Falha em Compliance (DNC / Calling Hours), Contatos, Pós-incidente, Runbook — Resposta a Incidentes (+1 more)
 
-### Community 269 - "Workforce Management & Operational Excellence Suite"
+### Community 268 - "Workforce Management & Operational Excellence Suite"
 Cohesion: 0.20
 Nodes (9): Acesso (RLS), Arquivos chave, Edge Functions (2), Heurísticas (sem custo de IA), Integração no Executive Dashboard, Páginas (3), Tabelas (9), Testes (+1 more)
 
-### Community 270 - "ref_node_path"
+### Community 269 - "ref_node_path"
 Cohesion: 0.24
 Nodes (9): ref_node_path, ALLOW_NUMBER_MEMBERS, CHECK, files, lineOf(), report, scanFile(), stripCommentsAndStrings() (+1 more)
 
-### Community 271 - "useAgentRanking.coverage.test.tsx"
+### Community 270 - "useAgentRanking.coverage.test.tsx"
 Cohesion: 0.22
 Nodes (6): fromMock, makeBuilder(), builder, singleResults, TableResult, tableResults
 
-### Community 272 - "useBitrix.coverage.test.tsx"
+### Community 271 - "useBitrix.coverage.test.tsx"
 Cohesion: 0.20
 Nodes (8): insertMock, insertResult, invokeMock, invokeQueue, InvokeResult, updateMock, upsertMock, BitrixCallData
 
-### Community 273 - "useGeoBlocking.ts"
+### Community 272 - "useGeoBlocking.ts"
 Cohesion: 0.22
 Nodes (5): fromMock, invokeMock, GeoRestriction, GeoSettings, COUNTRIES
 
-### Community 274 - "useGoalViolations.ts"
+### Community 273 - "useGoalViolations.ts"
 Cohesion: 0.22
 Nodes (7): channelMock, Result, sample, DailyTrend, GoalViolation, METRIC_LABELS, MetricViolations
 
-### Community 275 - "useWebAuthn.coverage.test.tsx"
+### Community 274 - "useWebAuthn.coverage.test.tsx"
 Cohesion: 0.20
 Nodes (7): AuthState, getUserMock, invokeMock, QueryResult, tableResponses, utilsMock, verifyOtpMock
 
-### Community 276 - "queue.ts"
+### Community 275 - "queue.ts"
 Cohesion: 0.33
 Nodes (7): ABANDONADAS, abandonmentRate(), ATENDIDAS, averageWaitTime(), espera(), QueueCallSample, serviceLevel()
 
-### Community 277 - "session/index.ts"
+### Community 276 - "session/index.ts"
 Cohesion: 0.29
 Nodes (7): getActiveSessions(), getSessionTimeout(), SessionInfo, terminateAllOtherSessions(), terminateSession(), builder, from
 
-### Community 278 - "voipProactiveSnapshot.ts"
+### Community 277 - "voipProactiveSnapshot.ts"
 Cohesion: 0.31
 Nodes (8): toastWarning, compareSnapshotAndNotify(), CriticalRec, isProactiveEnabled(), log, setProactiveEnabled(), shouldRunProactiveCheck(), Snapshot
 
-### Community 279 - "queue-metrics.ts"
+### Community 278 - "queue-metrics.ts"
 Cohesion: 0.33
 Nodes (7): ABANDONADAS, abandonmentRate(), ATENDIDAS, averageWaitTime(), espera(), QueueCallSample, serviceLevel()
 
-### Community 280 - "20260315144312_5b41e5e7-ff57-40a1-ad7e-68133720c86c.sql"
+### Community 279 - "20260315144312_5b41e5e7-ff57-40a1-ad7e-68133720c86c.sql"
 Cohesion: 0.31
 Nodes (9): idx_notifications_category, idx_notifications_created_at, idx_notifications_user_id, idx_notifications_user_unread, public.notification_preferences, public.notifications, update_notification_preferences_updated_at, update_notifications_updated_at (+1 more)
 
-### Community 281 - "Decisões"
+### Community 280 - "Decisões"
 Cohesion: 0.22
 Nodes (8): 1. Tipagem residual em components, 2. `as any` aceitos como dívida documentada, 3. Testes Deno para 4 edge functions críticas, 4. Re-auditoria de segurança, ADR-021 — Onda 6: Hardening Final pós-10/10, Consequências, Decisões, Resultado
 
-### Community 282 - "ADR-024 — Onda 9: Monitoramento de Rede e Qualidade VoIP"
+### Community 281 - "ADR-024 — Onda 9: Monitoramento de Rede e Qualidade VoIP"
 Cohesion: 0.22
 Nodes (8): ADR-024 — Onda 9: Monitoramento de Rede e Qualidade VoIP, Alternativas consideradas, Consequências, Contexto, Decisão, Tabela `call_quality_metrics`, `useNetworkMonitor`, `useVoipQualityMonitor`
 
-### Community 283 - "Lovable e deploy — referência para agentes"
+### Community 282 - "Lovable e deploy — referência para agentes"
 Cohesion: 0.22
 Nodes (8): 🔴 A trilha Vercel bloqueia deployment por autor de commit, CORS — furo conhecido, Dependências e lockfile, Deploy e edge functions, Duas trilhas de publicação — resolver antes de prometer deploy, Lovable e deploy — referência para agentes, `.lovable/` e `mem/` — o que são, Segredos do lado Lovable
 
-### Community 284 - "CR-13 — Fios não ligados: construído, pago e inalcançável"
+### Community 283 - "CR-13 — Fios não ligados: construído, pago e inalcançável"
 Cohesion: 0.22
 Nodes (9): A-077 — A telefonia do Bitrix — o produto — nunca é chamada, A-078 — Cadências: cria, inscreve e nunca executa, A-079 — Oito hooks completos, com backend pronto, sem nenhum consumidor, A-080 — Quatro edge functions sem nenhum chamador, A-082 — Botão "Transferir" do softphone, na chamada ativa, sem handler, A-083 — Botões "Exportar" mortos no histórico e nos relatórios, A-084 — Nove botões e um item de menu sem nenhum handler, A-085 — Wavoip é fabricado e o softphone abre no canal errado como "configurado" (+1 more)
 
-### Community 285 - "callHistoryCsv.ts"
+### Community 284 - "callHistoryCsv.ts"
 Cohesion: 0.36
 Nodes (7): Etapa 277 — Formato único para número, data e duração, buildCallHistoryCsv(), CallHistoryCsvRow, downloadCallHistoryCsv(), escapeCsv(), formatDate(), formatDuration()
 
-### Community 286 - "20251224124237_40fde4e2-d0ab-4b62-8898-4171393988c4.sql"
+### Community 285 - "20251224124237_40fde4e2-d0ab-4b62-8898-4171393988c4.sql"
 Cohesion: 0.22
 Nodes (7): public.handle_new_user, on_auth_user_created, public.user_profiles, auth.users, public.agents, public.update_updated_at_column, update_user_profiles_updated_at
 
-### Community 287 - "manifest.json"
+### Community 286 - "manifest.json"
 Cohesion: 0.22
 Nodes (8): background_color, description, display, icons, name, short_name, start_url, theme_color
 
-### Community 288 - "useRecordings.ts"
-Cohesion: 0.28
-Nodes (6): Props, { invokeMock, createSignedUrlMock, removeMock, orderMock, deleteEqMock }, rows, Recording, SentimentAnalysis, TranscriptionSegment
+### Community 287 - "useAlerts.coverage.test.tsx"
+Cohesion: 0.22
+Nodes (7): callAlertsData, channelObj, contactAlertsData, invokeResult, limitResult, mutationOk, QueryResult
 
-### Community 289 - "reportCsv.ts"
+### Community 288 - "reportCsv.ts"
 Cohesion: 0.33
 Nodes (7): buildReportCsv(), downloadReportCsv(), escapeCsv(), ReportAgentRow, ReportKpis, ReportVolumeRow, section()
 
-### Community 290 - "hsts-headers.ts"
+### Community 289 - "hsts-headers.ts"
 Cohesion: 0.33
 Nodes (6): buildHSTSHeader(), DEFAULT_HSTS_CONFIG, enforceHTTPS(), HSTSConfig, isSecureConnection(), MockLocation
+
+### Community 290 - "RoleAuditTrail.tsx"
+Cohesion: 0.36
+Nodes (8): AuditEntry, describeChange(), operationMeta(), PERIOD_HOURS, PeriodFilter, RESOURCE_LABEL, RoleAuditTrail(), toCsv()
 
 ### Community 291 - "publicRoutes.tsx"
 Cohesion: 0.22
@@ -1927,679 +1929,687 @@ Nodes (7): ADRs, Backend, Como usar, Componentes UI, Hooks, Monitoramento de Red
 Cohesion: 0.25
 Nodes (7): ADR, Backend, Como usa, Edge Function, Hooks, Onda 12 — Auto-Remediação e Alertas Persistentes VoIP, UI
 
-### Community 310 - "publish.sh"
+### Community 310 - "useTelemetry.coverage.test.tsx"
+Cohesion: 0.29
+Nodes (4): web-vitals, insertMock, mockUser, registered
+
+### Community 311 - "publish.sh"
 Cohesion: 0.46
 Nodes (7): assert_no_foreign_staged_changes(), discard_generated_output_commit(), generated_commit_is_head(), generated_output_conflict_is_recoverable(), remember_generated_head(), publish.sh script, stage()
 
-### Community 311 - "WebRTCMetricsPanel.tsx"
+### Community 312 - "WebRTCMetricsPanel.tsx"
 Cohesion: 0.39
 Nodes (7): Props, colorForConcealment(), colorForLoss(), fmt(), Props, WebRTCMetricsPanel(), VoipQualityState
 
-### Community 312 - "reconcile.ts"
+### Community 313 - "reconcile.ts"
 Cohesion: 0.46
 Nodes (6): buscarNormalizados(), ReconcileDNCDialog(), lotesParaConsulta(), normalizarTelefone(), ReconciliacaoDNC, reconciliarDNC()
-
-### Community 313 - "KeyMomentsTimeline.tsx"
-Cohesion: 0.32
-Nodes (7): COLORS, fmt(), ICONS, KeyMomentsTimeline(), LABELS, Props, KeyMoment
 
 ### Community 314 - "useCoachingAssignments.coverage.test.tsx"
 Cohesion: 0.25
 Nodes (5): ListBuilder, listResult, MutationBuilder, mutationResult, sample
 
-### Community 315 - "useSurveys.coverage.test.tsx"
+### Community 315 - "useScheduledCallbacks.coverage.test.tsx"
+Cohesion: 0.25
+Nodes (7): countResult, deleteResult, insertResult, QueryResult, sampleCb, selectResult, updateResult
+
+### Community 316 - "useSurveys.coverage.test.tsx"
 Cohesion: 0.25
 Nodes (6): invokeMock, makeBuilder(), builder, queryResult, sample, ThenableBuilder
 
-### Community 316 - "useTrunkRealtimeMetrics.ts"
+### Community 317 - "useTrunkRealtimeMetrics.ts"
 Cohesion: 0.25
 Nodes (6): channelObj, QueryResult, responses, ActiveCallRow, TrunkPerformance, TrunkRow
 
-### Community 317 - "useVoiceCommand.coverage.test.tsx"
+### Community 318 - "useVoiceCommand.coverage.test.tsx"
 Cohesion: 0.25
 Nodes (3): invokeMock, MockFileReader, MockMediaRecorder
 
-### Community 318 - "encryption.ts"
+### Community 319 - "encryption.ts"
 Cohesion: 0.50
 Nodes (6): arrayBufferToBase64(), base64ToArrayBuffer(), decryptData(), encryptData(), generateEncryptionKey(), hashData()
 
-### Community 319 - "SecurityReport.test.tsx"
+### Community 320 - "SecurityReport.test.tsx"
 Cohesion: 0.29
 Nodes (5): SecurityDecision, securityDecisions, SecurityFeature, securityFeatures, { rpcMock }
 
-### Community 320 - "Landing.tsx"
+### Community 321 - "Landing.tsx"
 Cohesion: 0.25
 Nodes (6): differentials, faqs, solutions, stats, testimonials, Landing
 
-### Community 321 - "20251224022711_bcf91fc6-4c52-42e8-b02c-c63b4f495a64.sql"
+### Community 322 - "20251224022711_bcf91fc6-4c52-42e8-b02c-c63b4f495a64.sql"
 Cohesion: 0.36
 Nodes (7): idx_scheduled_callbacks_contact_id, idx_scheduled_callbacks_scheduled_at, idx_scheduled_callbacks_status, public.scheduled_callbacks, public.contacts, public.update_updated_at_column, update_scheduled_callbacks_updated_at
 
-### Community 322 - "20251231125803_b47a2b11-3915-463a-9c94-57b741b7e4ab.sql"
+### Community 323 - "20251231125803_b47a2b11-3915-463a-9c94-57b741b7e4ab.sql"
 Cohesion: 0.39
 Nodes (6): idx_user_passkeys_credential_id, idx_user_passkeys_user_id, idx_webauthn_challenges_expires, public.user_passkeys, public.webauthn_challenges, auth.users
 
-### Community 323 - "20260417164448_f2a7d0e1-ed11-4f31-9ec2-8717486ecf5d.sql"
+### Community 324 - "20260417164448_f2a7d0e1-ed11-4f31-9ec2-8717486ecf5d.sql"
 Cohesion: 0.36
 Nodes (7): idx_cqm_agent, idx_cqm_call_session, idx_cqm_created, public.call_quality_metrics, public.call_sessions, public.update_updated_at_column, update_call_quality_metrics_updated_at
 
-### Community 324 - "20260418132329_194c7950-0787-43d5-a46a-f204640ee74a.sql"
+### Community 325 - "20260418132329_194c7950-0787-43d5-a46a-f204640ee74a.sql"
 Cohesion: 0.36
 Nodes (6): enforce_optimistic_lock_accounts, enforce_optimistic_lock_success_plans, idx_olc_table_time, idx_olc_user_time, public.optimistic_lock_conflicts, public.enforce_optimistic_lock
 
-### Community 325 - "20260516121853_6c77ecf2-fa8d-4077-af53-504bb6ba9577.sql"
+### Community 326 - "20260516121853_6c77ecf2-fa8d-4077-af53-504bb6ba9577.sql"
 Cohesion: 0.25
 Nodes (6): idx_call_quality_created_at, idx_perf_metrics_created_at, idx_voip_usage_started_at, public.call_quality_metrics, public.performance_metrics, public.voip_trunk_usage_metrics
 
-### Community 326 - "ADR-002: RBAC with Separate Roles Table"
+### Community 327 - "ADR-002: RBAC with Separate Roles Table"
 Cohesion: 0.29
 Nodes (6): ADR-002: RBAC with Separate Roles Table, Consequences, Decision, Helper Functions (SECURITY DEFINER), Rationale, Schema
 
-### Community 327 - "ADR-005: Origin-Validated CORS in Edge Functions"
+### Community 328 - "ADR-005: Origin-Validated CORS in Edge Functions"
 Cohesion: 0.29
 Nodes (6): ADR-005: Origin-Validated CORS in Edge Functions, Allowed Origins, Consequences, Decision, Implementation, Rationale
 
-### Community 328 - "ADR-017: Security Hardening + Roadmap rumo ao 10/10"
+### Community 329 - "ADR-017: Security Hardening + Roadmap rumo ao 10/10"
 Cohesion: 0.29
 Nodes (6): ADR-017: Security Hardening + Roadmap rumo ao 10/10, Consequências, Decisão, 🔴 Onda 1 — Security Hardening (concluída), 🟡 Onda 3 — Observabilidade & Qualidade, Referências
 
-### Community 329 - "Decisão"
+### Community 330 - "Decisão"
 Cohesion: 0.29
 Nodes (6): 2. Suite RLS estendida (3 novos arquivos), 4. Exceção documentada: `src/components/ui/sidebar.tsx`, ADR-019 — Onda 4: Fechamento 10/10, Consequências, Decisão, Validação
 
-### Community 330 - "ADR-020 — Onda 5: Polimento Pós-10/10"
+### Community 331 - "ADR-020 — Onda 5: Polimento Pós-10/10"
 Cohesion: 0.29
 Nodes (6): 3. Suíte RLS declarativa estendida, ADR-020 — Onda 5: Polimento Pós-10/10, Alternativas consideradas, Consequências, Decisão, Referências
 
-### Community 331 - "ADR-031 — Onda 16: Recomendações Acionáveis e Playbooks de Remediação VoIP"
+### Community 332 - "ADR-031 — Onda 16: Recomendações Acionáveis e Playbooks de Remediação VoIP"
 Cohesion: 0.29
 Nodes (6): ADR-031 — Onda 16: Recomendações Acionáveis e Playbooks de Remediação VoIP, Componentes, Consequências, Decisão, Métricas, Regras de priorização
 
-### Community 332 - "ADR-040 — Onda 26: Optimistic Locking expandido + Testes defensivos"
+### Community 333 - "ADR-040 — Onda 26: Optimistic Locking expandido + Testes defensivos"
 Cohesion: 0.29
 Nodes (6): 1. Locking expandido para 3 entidades adicionais, 2. Teste defensivo de conflito, ADR-040 — Onda 26: Optimistic Locking expandido + Testes defensivos, Consequências, Decisão, Rollback
 
-### Community 333 - "ADR-049 — Onda 35: Bulk Operations + Health Score por Ramal"
+### Community 334 - "ADR-049 — Onda 35: Bulk Operations + Health Score por Ramal"
 Cohesion: 0.29
 Nodes (6): ADR-049 — Onda 35: Bulk Operations + Health Score por Ramal, Alternativas consideradas, Consequências, Contexto, Referências, Status
 
-### Community 334 - "Mapa do repositório — referência para agentes"
+### Community 335 - "Mapa do repositório — referência para agentes"
 Cohesion: 0.29
 Nodes (6): Automações, Comandos, Mapa do repositório — referência para agentes, O que está sólido (para não reescrever sem motivo), Onde olhar primeiro, Qualidade dos testes — o que não protege
 
-### Community 335 - "Catálogo de edge functions"
+### Community 336 - "Catálogo de edge functions"
 Cohesion: 0.29
 Nodes (6): Catálogo, Catálogo de edge functions, Colunas, Funções públicas que usam `service_role`, Funções sem chamador no repositório, Resumo
 
-### Community 336 - "SLI_SLO.md"
+### Community 337 - "SLI_SLO.md"
 Cohesion: 0.29
 Nodes (6): Alerta, Como ler os logs em produção, Error budget, Instrumentação existente, SLIs, SLOs
 
-### Community 337 - "Inventário de itens auditados (docs/estado/funcionalidades-planejadas.md) — reverificado"
+### Community 338 - "Inventário de itens auditados (docs/estado/funcionalidades-planejadas.md) — reverificado"
 Cohesion: 0.29
 Nodes (6): §5 — Componentes/hooks com backend pronto, sem consumidor, §6 — Rotas ativas sem menu (defasado — já ligadas nesta semana), §7 — Fachadas, Build / typecheck / lint / testes (main @ 91e0da88), Decisões, Inventário de itens auditados (docs/estado/funcionalidades-planejadas.md) — reverificado
 
-### Community 338 - "_relatorio.md"
+### Community 339 - "_relatorio.md"
 Cohesion: 0.29
 Nodes (6): Atualização 21/11 — seed + remoção SecurityDashboard + validação O2O, BLOQUEIO GLOBAL, Gap real identificado, Linha de base (NÃO VERIFICÁVEL agora, herdada), Próximos passos (persistentes), Work products
 
-### Community 339 - "VERIFICADO no banco vivo (service_role, 2026-11-20)"
+### Community 340 - "VERIFICADO no banco vivo (service_role, 2026-11-20)"
 Cohesion: 0.29
 Nodes (6): Conclusao, Edge functions "sem index", RLS — bug A1 do audit JA MITIGADO no banco vivo, Rotas §6, Seed aplicado em 20/11 — tabelas dos features alimentadas, VERIFICADO no banco vivo (service_role, 2026-11-20)
 
-### Community 340 - "CR-2 — Indicadores que tratam "sem dado" como "tudo bem""
+### Community 341 - "CR-2 — Indicadores que tratam "sem dado" como "tudo bem""
 Cohesion: 0.29
 Nodes (7): A-005 — Três painéis de saúde sem nenhuma fonte de dados, A-006 — Score de saúde VoIP devolve 83/100 "SAUDÁVEL" com zero medição, A-008 — `voip-anomaly-remediation` responde `applied: true` e grava `auto_applied` sem executar ação nenhuma, A-009 — 32 hooks descartam o `error` da consulta: o painel mostra zero em vez de falhar, A-010 — Relatório de conformidade com contagem fixa e errada por ordem de grandeza, A-011 — Meta de SLO divergente entre a tela (99,9%) e o cálculo (99%), CR-2 — Indicadores que tratam "sem dado" como "tudo bem"
 
-### Community 341 - "CR-20 — Achados da verificação em navegador (2026-11-23)"
+### Community 342 - "CR-20 — Achados da verificação em navegador (2026-11-23)"
 Cohesion: 0.29
 Nodes (7): A-134 — Toda página pública consulta `call_quality_metrics` e abre um canal de realtime, duas vezes, A-135 — A tela de login chama um terceiro de geolocalização direto do navegador, A-136 — Os dois botões de "mostrar senha" do cadastro não têm nome acessível, e a tela ao lado tem, A-137 — Resultado positivo: nenhuma das 10 rotas públicas quebra em largura de celular, A-138 — Nenhum agente nesta configuração consegue verificar deploy, cabeçalhos ou logs de runtime, Contagem, CR-20 — Achados da verificação em navegador (2026-11-23)
 
-### Community 342 - "Reporting a Vulnerability"
+### Community 343 - "Reporting a Vulnerability"
 Cohesion: 0.29
 Nodes (6): Reporting a Vulnerability, Response Time, Security Policy, Supported Versions, What Happens Next, What to Include
 
-### Community 343 - "Hello_V3 — Regras da Casa (Hermes) — suplemento"
+### Community 344 - "Hello_V3 — Regras da Casa (Hermes) — suplemento"
 Cohesion: 0.29
 Nodes (6): Barreiras (cadeado físico), Comandos usuais, Hello_V3 — Regras da Casa (Hermes) — suplemento, Identidade, Padrão de Chat (Hermes) — subpasta por sessão, Regra de Ouro (casa do Joaquim)
 
-### Community 344 - "Omnichannel Suite (ADR 012)"
+### Community 345 - "Omnichannel Suite (ADR 012)"
 Cohesion: 0.29
 Nodes (6): Edge functions, Integrações, Omnichannel Suite (ADR 012), Páginas, RLS, Tabelas
 
-### Community 345 - "VoIP — Inteligência Preditiva de Qualidade"
+### Community 346 - "VoIP — Inteligência Preditiva de Qualidade"
 Cohesion: 0.29
 Nodes (6): Calibração, Cards SLA na UI, Detecção preditiva de degradação, Edge function `voip-sla-report`, Performance, VoIP — Inteligência Preditiva de Qualidade
 
-### Community 346 - "public.check_idle_indexes"
+### Community 347 - "public.check_idle_indexes"
 Cohesion: 0.29
 Nodes (6): pg_index, public.check_idle_indexes(), public.notify_idle_indexes(), pg_stat_user_indexes, public.notifications, public.user_profiles
 
-### Community 347 - "20260723125329_cfbefc57-81be-44d7-a62b-adf192232b7a.sql"
+### Community 348 - "20260723125329_cfbefc57-81be-44d7-a62b-adf192232b7a.sql"
 Cohesion: 0.33
 Nodes (5): public.audit_role_change, idx_audit_logs_resource_type_created, public.audit_logs, trg_audit_role_permissions, trg_audit_user_roles
 
-### Community 348 - "auth.users"
+### Community 349 - "auth.users"
 Cohesion: 0.29
 Nodes (7): public.entity_versions, auth.users, public.kb_article_history, public.performance_metrics, public.rate_limit_alerts, public.rate_limit_logs, public.user_roles
 
-### Community 349 - "20260507221454_8ee1f1c8-e52c-42d1-93f5-136662aa8772.sql"
+### Community 350 - "20260507221454_8ee1f1c8-e52c-42d1-93f5-136662aa8772.sql"
 Cohesion: 0.29
 Nodes (5): public.handle_kb_article_history, kb_article_history_trigger, public.kb_article_history, auth.users, public.kb_articles
 
-### Community 350 - "public.notify_lock_conflict_hotspot"
+### Community 351 - "public.notify_lock_conflict_hotspot"
 Cohesion: 0.29
 Nodes (6): public.notify_lock_conflict_hotspot, public.notify_lock_conflict_hotspot(), public.notifications, public.optimistic_lock_conflicts, public.user_profiles, trg_notify_lock_conflict_hotspot
 
-### Community 351 - "public.notify_webhook_failure_spike"
+### Community 352 - "public.notify_webhook_failure_spike"
 Cohesion: 0.29
 Nodes (6): public.notify_webhook_failure_spike, public.notify_webhook_failure_spike(), public.notifications, public.user_profiles, public.webhook_flush_metrics, trg_webhook_failure_spike
 
-### Community 352 - "20260722213827_7ee185db-587f-4046-8507-474be04327a8.sql"
+### Community 353 - "20260722213827_7ee185db-587f-4046-8507-474be04327a8.sql"
 Cohesion: 0.38
 Nodes (6): public.trg_recalc_deals_on_interaction, public.recalc_deal_health(), public.snapshot_deals_daily(), public.trg_recalc_deals_on_interaction(), public.deals, trg_interactions_recalc_deals
 
-### Community 353 - "setup.ts"
+### Community 354 - "setup.ts"
 Cohesion: 0.29
 Nodes (3): @testing-library/jest-dom, localStorageMock, MockNotification
 
-### Community 354 - "PasswordStrength.tsx"
+### Community 355 - "PasswordStrength.tsx"
 Cohesion: 0.38
 Nodes (6): checkPasswordLeaked(), PasswordStrength(), PasswordStrengthProps, Requirement, usePasswordStrength(), Register()
 
-### Community 355 - "NextBestActionPanel.tsx"
+### Community 356 - "NextBestActionPanel.tsx"
 Cohesion: 0.29
 Nodes (5): ICONS, NextBestActionPanelProps, severityClasses(), estado, LiveAssistSignal
 
-### Community 356 - "SoundProfileManager.tsx"
+### Community 357 - "SoundProfileManager.tsx"
 Cohesion: 0.38
 Nodes (6): AlertSoundSettingsProps, PROFILES, SoundProfile, SoundProfileManager(), SoundProfileManagerProps, AlertSoundConfig
 
-### Community 357 - "useContactAlerts.coverage.test.tsx"
+### Community 358 - "useContactAlerts.coverage.test.tsx"
 Cohesion: 0.29
 Nodes (3): makeDeleteChain(), Result, state
 
-### Community 358 - "compilerOptions"
+### Community 359 - "Login.lockout.test.tsx"
+Cohesion: 0.29
+Nodes (5): rpc, signIn, signOut, submit(), toastError
+
+### Community 360 - "compilerOptions"
 Cohesion: 0.29
 Nodes (6): compilerOptions, allowJs, lib, strict, imports, std/
 
-### Community 359 - "public.contact_alerts"
+### Community 361 - "public.contact_alerts"
 Cohesion: 0.48
 Nodes (6): idx_contact_alerts_contact, idx_contact_alerts_created, idx_contact_alerts_type, idx_contact_alerts_unread, public.contact_alerts, public.contacts
 
-### Community 360 - "20251224023654_29935900-12bb-4c40-bb31-a061340c76eb.sql"
+### Community 362 - "20251224023654_29935900-12bb-4c40-bb31-a061340c76eb.sql"
 Cohesion: 0.38
 Nodes (6): public.agent_badges, public.agent_weekly_stats, public.badges, public.agents, public.update_updated_at_column, update_agent_weekly_stats_updated_at
 
-### Community 361 - "20260712115343_8332dd3d-29a2-4017-954c-edc625f7029b.sql"
+### Community 363 - "20260712115343_8332dd3d-29a2-4017-954c-edc625f7029b.sql"
 Cohesion: 0.33
 Nodes (5): idx_index_drop_audit_created_at, public.index_drop_audit, public.log_index_drop_copy(), pg_class, pg_namespace
 
-### Community 362 - "imports"
+### Community 364 - "imports"
 Cohesion: 0.33
 Nodes (5): imports, https://esm.sh/fast-check, https://esm.sh/@supabase/supabase-js@2, https://esm.sh/zod, lock
 
-### Community 363 - "ADR-003: SECURITY DEFINER for RLS Helper Functions"
+### Community 365 - "ADR-003: SECURITY DEFINER for RLS Helper Functions"
 Cohesion: 0.33
 Nodes (5): ADR-003: SECURITY DEFINER for RLS Helper Functions, Consequences, Decision, Functions, Rationale
 
-### Community 364 - "ADR-006: Centralized Structured Logger with Request ID"
+### Community 366 - "ADR-006: Centralized Structured Logger with Request ID"
 Cohesion: 0.33
 Nodes (5): ADR-006: Centralized Structured Logger with Request ID, Consequences, Decision, Log Format, Rationale
 
-### Community 365 - "ADR 012 — Suíte Omnichannel (Inbox, Knowledge Base, Roteamento, SLA, Chatbot)"
+### Community 367 - "ADR 012 — Suíte Omnichannel (Inbox, Knowledge Base, Roteamento, SLA, Chatbot)"
 Cohesion: 0.33
 Nodes (5): ADR 012 — Suíte Omnichannel (Inbox, Knowledge Base, Roteamento, SLA, Chatbot), Consequências, Contexto, Decisão, Padrões mantidos
 
-### Community 366 - "ADR-023: Onda 8 — Resiliência Operacional"
+### Community 368 - "ADR-023: Onda 8 — Resiliência Operacional"
 Cohesion: 0.33
 Nodes (5): ADR-023: Onda 8 — Resiliência Operacional, Consequências, Decisão, Findings residuais, Métricas
 
-### Community 367 - "ADR-026 — Onda 11: Inteligência Preditiva de Qualidade VoIP"
+### Community 369 - "ADR-026 — Onda 11: Inteligência Preditiva de Qualidade VoIP"
 Cohesion: 0.33
 Nodes (5): ADR-026 — Onda 11: Inteligência Preditiva de Qualidade VoIP, Alternativas consideradas, Arquivos, Consequências, Performance
 
-### Community 368 - "ADR-038: Onda 23 — RLS Hardening Final + HIBP + Type Safety"
+### Community 370 - "ADR-038: Onda 23 — RLS Hardening Final + HIBP + Type Safety"
 Cohesion: 0.33
 Nodes (5): ADR-038: Onda 23 — RLS Hardening Final + HIBP + Type Safety, Decisões, Referências, Resultado, Segurança
 
-### Community 369 - "ADR-042 — Onda 28: Blindagem de Concorrência Final"
+### Community 371 - "ADR-042 — Onda 28: Blindagem de Concorrência Final"
 Cohesion: 0.33
 Nodes (5): ADR-042 — Onda 28: Blindagem de Concorrência Final, Consequências, Decisão, Resultado, Reversibilidade
 
-### Community 370 - "ADR-048 — Onda 34: Painel Unificado de Gestão de Ramais"
+### Community 372 - "ADR-048 — Onda 34: Painel Unificado de Gestão de Ramais"
 Cohesion: 0.33
 Nodes (5): ADR-048 — Onda 34: Painel Unificado de Gestão de Ramais, Alternativas, Consequências, Contexto, Decisão
 
-### Community 371 - "(E) Objetos declarados em `types.ts`"
+### Community 373 - "(E) Objetos declarados em `types.ts`"
 Cohesion: 0.33
 Nodes (6): `CompositeTypes:` — **0**, (E) Objetos declarados em `types.ts`, `Enums:` — **2**, `Functions:` — **54**, `Tables:` — **159**, `Views:` — **1**
 
-### Community 372 - "Achados fora de escopo (Hello_V3, 2026-11-21)"
+### Community 374 - "Achados fora de escopo (Hello_V3, 2026-11-21)"
 Cohesion: 0.33
 Nodes (5): Achados fora de escopo (Hello_V3, 2026-11-21), Banco / dados, Código, Docs, Segredos / infra
 
-### Community 373 - "CR-5 — Regras de compliance que falham liberando"
+### Community 375 - "CR-5 — Regras de compliance que falham liberando"
 Cohesion: 0.33
 Nodes (6): A-023 — A tela `/calls` disca sem checar lista "não perturbe" nem horário permitido, A-024 — A checagem de DNC e de horário libera quando dá erro — em três camadas, A-025 — Importação em lote de DNC conta sucesso mesmo quando o banco rejeita, A-026 — Três das seis regras de compliance são configuráveis e nunca aplicadas; o intervalo mínimo tem duas unidades, A-027 — A taxa de abandono do freio do discador usa definição diferente da dos painéis, CR-5 — Regras de compliance que falham liberando
 
-### Community 374 - "CR-8 — Escrita cujo erro ninguém vê"
+### Community 376 - "CR-8 — Escrita cujo erro ninguém vê"
 Cohesion: 0.33
 Nodes (6): A-052 — 35 gravações no banco sem verificar o resultado, A-053 — 52 blocos `catch` escondem falha de escrita e seguem como se tivesse dado certo, A-054 — Fim de chamada: erro engolido e o agente vê "Chamada salva", A-055 — Lead criado com o Bitrix fora do ar é perdido em silêncio: a RLS barra a fila de reenvio, A-056 — Alerta de meta atingida é pendurado numa chamada arbitrária, e o insert não é verificado, CR-8 — Escrita cujo erro ninguém vê
 
-### Community 375 - "CR-10 — A policy não cobre a operação que o código faz"
+### Community 377 - "CR-10 — A policy não cobre a operação que o código faz"
 Cohesion: 0.33
 Nodes (6): A-065 — `rate_limit_logs` sem policy de UPDATE nem DELETE: dois botões de segurança mentem "sucesso", A-066 — `crm_sync_queue` sem policy de UPDATE, e a edge processadora nunca é invocada, A-067 — `learning_completions` sem policy de UPDATE, mas o front faz `upsert`, A-068 — As escritas da tela de bloqueio geográfico não têm policy, A-069 — 263 das 464 policies vivas não declaram `TO`, e a segurança de 114 tabelas depende de um acoplamento frágil, CR-10 — A policy não cobre a operação que o código faz
 
-### Community 376 - "CR-14 — Autorização só na rota, nem no menu nem no papel"
+### Community 378 - "CR-14 — Autorização só na rota, nem no menu nem no papel"
 Cohesion: 0.33
 Nodes (6): A-086 — O menu não filtra por papel: 49 dos 93 links levam a "sem permissão", A-087 — O papel `viewer` existe no enum e não restringe nada, A-088 — Metade da superfície autenticada não declara papel na rota, A-089 — A eficácia da RLS por papel não é verificável, e os testes que a declaram não tocam o banco, A-090 — Três das funções que governam 270 policies são `VOLATILE`, o que anula a otimização aplicada na véspera, CR-14 — Autorização só na rota, nem no menu nem no papel
 
-### Community 377 - "dedupeSignals"
+### Community 379 - "dedupeSignals"
 Cohesion: 0.33
 Nodes (5): Bug 3 — `dedupeSignals` descartava sinais legítimos fora da janela, Comandos, Convenções, Marcos, dedupeSignals()
 
-### Community 378 - "Meeting Summary AI"
+### Community 380 - "Meeting Summary AI"
 Cohesion: 0.33
 Nodes (5): Edge function `generate-meeting-summary`, Meeting Summary AI, Saída estruturada (tool: save_meeting_summary), Tabela `meeting_summaries`, Trigger automático
 
-### Community 379 - "Onda 4 — Fechamento 10/10"
+### Community 381 - "Onda 4 — Fechamento 10/10"
 Cohesion: 0.33
 Nodes (5): Documentação, Onda 4 — Fechamento 10/10, Refatoração, Resultado da auditoria, Suite RLS expandida
 
-### Community 380 - "Onda 6 — Hardening Final (pós-10/10)"
+### Community 382 - "Onda 6 — Hardening Final (pós-10/10)"
 Cohesion: 0.33
 Nodes (5): Onda 6 — Hardening Final (pós-10/10), Re-auditoria, Status, Testes Deno (Edge Functions), Tipagem
 
-### Community 381 - "Security Hardening + Roadmap 10/10 (ADR-017)"
+### Community 383 - "Security Hardening + Roadmap 10/10 (ADR-017)"
 Cohesion: 0.33
 Nodes (5): Auth, Como aplicar, Próximos passos (Onda 3 incremental), RLS corrigidas, Security Hardening + Roadmap 10/10 (ADR-017)
 
-### Community 382 - "Onda 13 — Inteligência Executiva VoIP"
+### Community 384 - "Onda 13 — Inteligência Executiva VoIP"
 Cohesion: 0.33
 Nodes (5): ADR, Backend, Onda 13 — Inteligência Executiva VoIP, Padrões aplicados, UI (todos em `/network-diagnostics`)
 
-### Community 383 - "public.notify_bloat_hotspots"
+### Community 385 - "public.notify_bloat_hotspots"
 Cohesion: 0.33
 Nodes (5): pg_stat_user_tables, public.check_table_bloat(), public.notify_bloat_hotspots(), public.notifications, public.user_profiles
 
-### Community 384 - "20260515173641_1acef862-aca2-4f33-8dfa-1b4a506b9a2b.sql"
+### Community 386 - "20260515173641_1acef862-aca2-4f33-8dfa-1b4a506b9a2b.sql"
 Cohesion: 0.47
 Nodes (4): public.audit_table_change, audit_permissions_changes, audit_user_profiles_changes, audit_user_roles_changes
 
-### Community 385 - "20251225192806_31f73fb3-ef04-442d-b4bd-cc6cce94cdb8.sql"
+### Community 387 - "20251225192806_31f73fb3-ef04-442d-b4bd-cc6cce94cdb8.sql"
 Cohesion: 0.33
 Nodes (5): public.check_suspicious_activity, check_suspicious_activity_trigger, public.check_suspicious_activity(), public.security_alerts, public.audit_logs
 
-### Community 386 - "20260712220518_9adabae5-b93f-4fba-8720-d433d1af9f9d.sql"
+### Community 388 - "20260712220518_9adabae5-b93f-4fba-8720-d433d1af9f9d.sql"
 Cohesion: 0.40
 Nodes (5): public.index_drop_audit, idx_index_drop_audit_admin_time, idx_notifications_source_debounce, idx_notifications_source_type_time, public.notifications
 
-### Community 387 - "20260522194835_bedfae5d-959f-47e1-be6a-e9bb2bbe380e.sql"
+### Community 389 - "20260522194835_bedfae5d-959f-47e1-be6a-e9bb2bbe380e.sql"
 Cohesion: 0.47
 Nodes (4): public.log_critical_rls_event, audit_call_recordings_delete, audit_user_profiles_change, audit_voip_trunks_change
 
-### Community 388 - "20261122290000_sync_profile_role_from_user_roles.sql"
+### Community 390 - "20261122290000_sync_profile_role_from_user_roles.sql"
 Cohesion: 0.33
 Nodes (4): public.sync_profile_role_from_user_roles, public.sync_profile_role_from_user_roles(), public.user_roles, trg_sync_profile_role
 
-### Community 389 - "useVoipAutoRemediation.coverage.test.tsx"
-Cohesion: 0.33
-Nodes (5): ToastAction, toastError, toastInfo, ToastOpts, toastSuccess
-
-### Community 390 - "Pricing.tsx"
+### Community 391 - "Pricing.tsx"
 Cohesion: 0.33
 Nodes (4): MarketingLayout(), comparisonRows, plans, Pricing
 
-### Community 391 - "VsThreeCPlus.tsx"
+### Community 392 - "VsThreeCPlus.tsx"
 Cohesion: 0.33
 Nodes (3): Row, rows, VsThreeCPlus
 
-### Community 392 - "supabase.ts"
+### Community 393 - "supabase.ts"
 Cohesion: 0.33
 Nodes (4): createQueryBuilder(), builder, mockQueryBuilder, mockSupabase
 
-### Community 393 - "deals.test.ts"
+### Community 394 - "deals.test.ts"
 Cohesion: 0.33
 Nodes (3): ALL_DEALS, MockDeal, Role
 
-### Community 394 - "learning-completions.test.ts"
+### Community 395 - "learning-completions.test.ts"
 Cohesion: 0.33
 Nodes (3): Completion, Role, ROWS
 
-### Community 395 - "20250101000000_versioning.sql"
+### Community 396 - "20250101000000_versioning.sql"
 Cohesion: 0.60
 Nodes (5): apply_migration(), migration_rollbacks, migration_status, rollback_migration(), schema_migrations
 
-### Community 396 - "20251225183119_7313996d-e875-4c04-a6ff-89415df9f212.sql"
+### Community 397 - "20251225183119_7313996d-e875-4c04-a6ff-89415df9f212.sql"
 Cohesion: 0.40
 Nodes (4): public.get_user_agent_id(), public.get_user_agent_name(), public.agents, public.user_profiles
 
-### Community 397 - "public.check_rls_enabled"
+### Community 398 - "public.check_rls_enabled"
 Cohesion: 0.33
 Nodes (5): public.check_rls_enabled(), public.is_admin(), pg_class, pg_namespace, user_roles
 
-### Community 398 - "20260523172256_ea1ae0b2-2688-4a63-aaf0-242d16a570e9.sql"
+### Community 399 - "20260523172256_ea1ae0b2-2688-4a63-aaf0-242d16a570e9.sql"
 Cohesion: 0.47
 Nodes (5): idx_audit_logs_action, idx_audit_logs_created_at, idx_audit_logs_user_id, public.webhook_secrets, public.audit_logs
 
-### Community 399 - "20261122260000_is_admin_user_and_get_role_use_user_roles.sql"
+### Community 400 - "20261122260000_is_admin_user_and_get_role_use_user_roles.sql"
 Cohesion: 0.53
 Nodes (5): public.get_profile_role(), public.get_user_role(), public.is_admin_user(), public.user_profiles, public.user_roles
 
-### Community 400 - "ADR-027: Onda 12 — Auto-Remediação e Alertas Persistentes VoIP"
+### Community 401 - "ADR-027: Onda 12 — Auto-Remediação e Alertas Persistentes VoIP"
 Cohesion: 0.40
 Nodes (4): ADR-027: Onda 12 — Auto-Remediação e Alertas Persistentes VoIP, Alternativas descartadas, Consequências, Contexto
 
-### Community 401 - "ADR-028: Onda 13 — Inteligência Executiva e Drill-Down VoIP"
+### Community 402 - "ADR-028: Onda 13 — Inteligência Executiva e Drill-Down VoIP"
 Cohesion: 0.40
 Nodes (4): ADR-028: Onda 13 — Inteligência Executiva e Drill-Down VoIP, Consequences, Files, Rationale
 
-### Community 402 - "CR-4 — Poder concedido a quem não tem login"
+### Community 403 - "CR-4 — Poder concedido a quem não tem login"
 Cohesion: 0.40
 Nodes (5): A-019 — Qualquer visitante pode bloquear ou destravar a conta de qualquer operador, A-020 — O bloqueio de login falha aberto no cliente, A-021 — Enumeração de usuários no pedido de reset de senha, A-022 — `webauthn-authenticate`: contador do autenticador lido e descartado, e sem rate limit, CR-4 — Poder concedido a quem não tem login
 
-### Community 403 - "apiMarkDialing"
+### Community 404 - "apiMarkDialing"
 Cohesion: 0.50
 Nodes (5): Etapa 079 — Reivindicação atômica do contato no discador, Etapa 080 — Verificar o erro nas escritas do discador, Etapa 163 — Ligar "Priorizar" no discador preditivo, apiGetNextContact(), apiMarkDialing()
 
-### Community 404 - "2. Detalhamento por Suíte"
+### Community 405 - "2. Detalhamento por Suíte"
 Cohesion: 0.40
 Nodes (5): 2.2 Fuzz Testing — Edge Functions, 2.3 Cenários Reais — Painel de Ramais, 2.4 Stress & Performance, 2.5 E2E (Playwright), 2. Detalhamento por Suíte
 
-### Community 405 - "public.get_database_health_snapshot"
+### Community 406 - "public.get_database_health_snapshot"
 Cohesion: 0.40
 Nodes (3): extensions.pg_stat_statements, pg_database, public.get_database_health_snapshot()
 
-### Community 406 - "Onda 23 — Hardening Final (ADR-038)"
+### Community 407 - "Onda 23 — Hardening Final (ADR-038)"
 Cohesion: 0.40
 Nodes (4): Estado, Onda 23 — Hardening Final (ADR-038), Segurança, Tipagem
 
-### Community 407 - "onda-24-25-fechamento.md"
+### Community 408 - "onda-24-25-fechamento.md"
 Cohesion: 0.40
 Nodes (4): ADR, Como rodar, Coverage Gate, Optimistic Locking
 
-### Community 408 - "onda-26-locking-expandido.md"
+### Community 409 - "onda-26-locking-expandido.md"
 Cohesion: 0.40
 Nodes (4): ADR, Locking expandido (5 entidades agora cobertas), Para expandir a novas tabelas, Teste defensivo
 
-### Community 409 - "Onda 7 — Manutenção Contínua"
+### Community 410 - "Onda 7 — Manutenção Contínua"
 Cohesion: 0.40
 Nodes (4): Decisão arquitetural, Entregas, Onda 7 — Manutenção Contínua, Status
 
-### Community 410 - "pg_stat_statements"
+### Community 411 - "pg_stat_statements"
 Cohesion: 0.60
 Nodes (4): pg_stat_statements, idx_queries_calls, idx_queries_duration, slow_queries
 
-### Community 411 - "public.goal_violations"
+### Community 412 - "public.goal_violations"
 Cohesion: 0.60
 Nodes (4): public.dashboard_goals, idx_goal_violations_created_at, idx_goal_violations_goal_id, public.goal_violations
 
-### Community 412 - "20260522152441_40b20906-baeb-4a9d-b7eb-d230a616e845.sql"
+### Community 413 - "20260522152441_40b20906-baeb-4a9d-b7eb-d230a616e845.sql"
 Cohesion: 0.50
 Nodes (3): public.process_audit_log, audit_agents_trigger, audit_contacts_trigger
 
-### Community 413 - "security-alerts-webhook.property.test.ts"
+### Community 414 - "security-alerts-webhook.property.test.ts"
 Cohesion: 0.40
 Nodes (3): ref_node_crypto, basePayload, fastOpts
 
-### Community 414 - "LazyComponent.tsx"
+### Community 415 - "LazyComponent.tsx"
 Cohesion: 0.50
 Nodes (3): createLazyComponent(), GlobalLoading(), GlobalLoadingProps
 
-### Community 416 - "public.entity_versions"
+### Community 416 - "useSecurityHooks.test.ts"
+Cohesion: 0.40
+Nodes (4): mockChannel, mockFrom, mockRemoveChannel, mockRpc
+
+### Community 418 - "public.entity_versions"
 Cohesion: 0.60
 Nodes (4): idx_versions_date, idx_versions_entity, public.entity_versions, auth.users
 
-### Community 417 - "public.call_alerts"
+### Community 419 - "public.call_alerts"
 Cohesion: 0.60
 Nodes (4): idx_call_alerts_created_at, idx_call_alerts_is_read, public.call_alerts, public.call_sessions
 
-### Community 418 - "20251222172653_e31b25fa-1495-47dc-a70e-59351aae7386.sql"
+### Community 420 - "20251222172653_e31b25fa-1495-47dc-a70e-59351aae7386.sql"
 Cohesion: 0.40
 Nodes (3): public.agent_goals, public.update_updated_at_column, update_agent_goals_updated_at
 
-### Community 419 - "public.voip_quality_alerts"
+### Community 421 - "public.voip_quality_alerts"
 Cohesion: 0.60
 Nodes (4): idx_voip_quality_alerts_created_user, idx_voip_quality_alerts_unack, public.voip_quality_alerts, public.call_sessions
 
-### Community 420 - "20260418125824_ffc6f214-6d47-4a13-b234-cfa8c460ec61.sql"
+### Community 422 - "20260418125824_ffc6f214-6d47-4a13-b234-cfa8c460ec61.sql"
 Cohesion: 0.50
 Nodes (3): contacts_optimistic_lock, deals_optimistic_lock, public.enforce_optimistic_lock
 
-### Community 421 - "20260418143532_ce6a3be9-4e9b-4d97-85ba-276c8ee1354c.sql"
+### Community 423 - "20260418143532_ce6a3be9-4e9b-4d97-85ba-276c8ee1354c.sql"
 Cohesion: 0.50
 Nodes (3): idx_trunk_health_trunk_time, public.voip_trunk_health_checks, public.voip_trunks
 
-### Community 422 - "20260507220616_3feba3f7-8e03-47ff-b2a3-b4e860beb5e0.sql"
+### Community 424 - "20260507220616_3feba3f7-8e03-47ff-b2a3-b4e860beb5e0.sql"
 Cohesion: 0.50
 Nodes (4): idx_crm_sync_queue_status_retry, public.crm_sync_queue, public.update_updated_at_column, update_crm_sync_queue_updated_at
 
-### Community 423 - "public.shift_swap_suggestions"
+### Community 425 - "public.shift_swap_suggestions"
 Cohesion: 0.40
 Nodes (5): idx_shift_swap_suggestions_from_agent_id, idx_shift_swap_suggestions_from_shift_id, idx_shift_swap_suggestions_to_agent_id, idx_shift_swap_suggestions_to_shift_id, public.shift_swap_suggestions
 
-### Community 424 - "public.voip_trunk_usage_metrics"
+### Community 426 - "public.voip_trunk_usage_metrics"
 Cohesion: 0.40
 Nodes (5): idx_voip_trunk_usage_metrics_agent_id, idx_voip_trunk_usage_metrics_call_session_id, idx_voip_trunk_usage_metrics_original_trunk_id, idx_voip_trunk_usage_metrics_trunk_id, public.voip_trunk_usage_metrics
 
-### Community 425 - "20260717133840_fbddc254-bbd8-43ff-ad12-74c7a9dec44a.sql"
+### Community 427 - "20260717133840_fbddc254-bbd8-43ff-ad12-74c7a9dec44a.sql"
 Cohesion: 0.60
 Nodes (4): idx_call_sessions_agent_name_trgm, idx_call_sessions_caller_name_trgm, idx_call_sessions_caller_phone_trgm, public.call_sessions
 
-### Community 426 - "20260726160049_14fac8e9-52d1-4daf-b825-2005ac32e981.sql"
+### Community 428 - "20260726160049_14fac8e9-52d1-4daf-b825-2005ac32e981.sql"
 Cohesion: 0.50
 Nodes (4): idx_dialer_favorites_user, public.dialer_favorites, public.update_updated_at_column, update_dialer_favorites_updated_at
 
-### Community 427 - "public.notify_lock_conflict_hotspot"
+### Community 429 - "public.notify_lock_conflict_hotspot"
 Cohesion: 0.40
 Nodes (4): public.notify_lock_conflict_hotspot(), public.notifications, public.optimistic_lock_conflicts, public.user_roles
 
-### Community 428 - "Onda 27 — Cobertura Defensiva Final"
+### Community 430 - "Onda 27 — Cobertura Defensiva Final"
 Cohesion: 0.50
 Nodes (3): Entregas, Estado final, Onda 27 — Cobertura Defensiva Final
 
-### Community 429 - "onda-8-resiliencia.md"
+### Community 431 - "onda-8-resiliencia.md"
 Cohesion: 0.50
 Nodes (3): Entregas, Padrões reforçados, Status
 
-### Community 430 - "public.dialer_campaigns"
+### Community 432 - "public.dialer_campaigns"
 Cohesion: 0.67
 Nodes (3): public.dialer_campaigns, public.apply_predictive_pacing(), public.calculate_predictive_pace()
 
-### Community 433 - "isSrc"
+### Community 435 - "isSrc"
 Cohesion: 0.50
 Nodes (4): appFiles, envUsadas, isSrc(), routeFiles
 
-### Community 434 - "20250102000000_performance_indexes.sql"
+### Community 436 - "20250102000000_performance_indexes.sql"
 Cohesion: 0.67
 Nodes (3): index_usage, pg_stat_user_indexes, unused_indexes
 
-### Community 435 - "20251223203745_ffdf3a72-6756-465c-9e63-fa079846be95.sql"
+### Community 437 - "20251223203745_ffdf3a72-6756-465c-9e63-fa079846be95.sql"
 Cohesion: 0.50
 Nodes (3): public.agents, public.update_updated_at_column, update_agents_updated_at
 
-### Community 436 - "20251223220228_f4ebbaa7-ea1c-447d-a07b-e1c0f583963d.sql"
+### Community 438 - "20251223220228_f4ebbaa7-ea1c-447d-a07b-e1c0f583963d.sql"
 Cohesion: 0.50
 Nodes (3): public.hold_alert_settings, public.update_updated_at_column, update_hold_alert_settings_updated_at
 
-### Community 437 - "20251224124524_38968a99-a0bc-4cff-a5c2-2fd2590d2e8e.sql"
+### Community 439 - "20251224124524_38968a99-a0bc-4cff-a5c2-2fd2590d2e8e.sql"
 Cohesion: 0.67
 Nodes (3): public.get_user_role(), public.is_admin_or_supervisor(), public.user_profiles
 
-### Community 438 - "20251224134826_e7324447-c07d-4e94-b603-52bf4efa2773.sql"
+### Community 440 - "20251224134826_e7324447-c07d-4e94-b603-52bf4efa2773.sql"
 Cohesion: 0.50
 Nodes (3): public.queue_metrics_settings, public.update_updated_at_column, update_queue_metrics_settings_updated_at
 
-### Community 439 - "20251224142716_d2c04aae-f048-4e7c-b447-1d6e3a840412.sql"
+### Community 441 - "20251224142716_d2c04aae-f048-4e7c-b447-1d6e3a840412.sql"
 Cohesion: 0.50
 Nodes (3): public.dashboard_goals, public.update_updated_at_column, update_dashboard_goals_updated_at
 
-### Community 440 - "20251231131323_f5848ea5-ae7d-4e46-ac63-aba88d5f35bc.sql"
+### Community 442 - "20251231131323_f5848ea5-ae7d-4e46-ac63-aba88d5f35bc.sql"
 Cohesion: 0.83
 Nodes (3): idx_password_reset_requests_status, idx_password_reset_requests_user_id, public.password_reset_requests
 
-### Community 441 - "20260326182838_760cfe64-1c2a-4917-8d2b-ffb9a9d84706.sql"
+### Community 443 - "20260326182838_760cfe64-1c2a-4917-8d2b-ffb9a9d84706.sql"
 Cohesion: 0.67
 Nodes (3): public.get_profile_role(), public.is_admin_user(), public.user_profiles
 
-### Community 442 - "public.is_active_agent"
+### Community 444 - "public.is_active_agent"
 Cohesion: 0.50
 Nodes (3): public.is_active_agent(), public.agents, public.user_profiles
 
-### Community 443 - "public.get_user_agent_id"
+### Community 445 - "public.get_user_agent_id"
 Cohesion: 0.50
 Nodes (3): public.get_user_agent_id(), public.agents, public.user_profiles
 
-### Community 444 - "20260418011716_3af60ac2-4c97-49a3-9070-de71020046dd.sql"
+### Community 446 - "20260418011716_3af60ac2-4c97-49a3-9070-de71020046dd.sql"
 Cohesion: 0.83
 Nodes (3): idx_voip_rec_actions_cat_outcome, idx_voip_rec_actions_user_time, public.voip_recommendation_actions
 
-### Community 445 - "20260418130219_e51ae5d5-32fe-4148-be46-9111af2221f0.sql"
+### Community 447 - "20260418130219_e51ae5d5-32fe-4148-be46-9111af2221f0.sql"
 Cohesion: 0.67
 Nodes (3): agents_optimistic_lock, cadences_optimistic_lock, public.enforce_optimistic_lock
 
-### Community 446 - "public.get_dashboard_stats"
+### Community 448 - "public.get_dashboard_stats"
 Cohesion: 0.50
 Nodes (3): public.get_dashboard_stats(), public.agents, public.call_sessions
-
-### Community 447 - "public.get_dashboard_stats"
-Cohesion: 0.50
-Nodes (3): public.get_dashboard_stats(), public.agents, public.call_sessions
-
-### Community 448 - "public.get_queue_stats"
-Cohesion: 0.50
-Nodes (3): public.get_queue_stats(), public.call_sessions, public.hold_events
 
 ### Community 449 - "public.get_dashboard_stats"
 Cohesion: 0.50
 Nodes (3): public.get_dashboard_stats(), public.agents, public.call_sessions
 
-### Community 450 - "public.get_agent_performance"
+### Community 450 - "public.get_queue_stats"
+Cohesion: 0.50
+Nodes (3): public.get_queue_stats(), public.call_sessions, public.hold_events
+
+### Community 451 - "public.get_dashboard_stats"
+Cohesion: 0.50
+Nodes (3): public.get_dashboard_stats(), public.agents, public.call_sessions
+
+### Community 452 - "public.get_agent_performance"
 Cohesion: 0.50
 Nodes (3): public.get_agent_performance(), public.call_sessions, public.call_summaries
 
-### Community 451 - "public.get_call_history_with_summaries"
+### Community 453 - "public.get_call_history_with_summaries"
 Cohesion: 0.50
 Nodes (3): public.get_call_history_with_summaries(), public.call_sessions, public.call_summaries
 
-### Community 452 - "public.get_agents_with_active_calls"
+### Community 454 - "public.get_agents_with_active_calls"
 Cohesion: 0.50
 Nodes (3): public.get_agents_with_active_calls(), public.agents, public.call_sessions
 
-### Community 454 - "20260515171135_134e605d-28e8-4d47-9aa1-1e7c4247c819.sql"
+### Community 456 - "20260515171135_134e605d-28e8-4d47-9aa1-1e7c4247c819.sql"
 Cohesion: 0.50
 Nodes (3): public.bitrix_departments, public.bitrix_users, public.system_settings
 
-### Community 457 - "public.webhook_flush_metrics"
+### Community 459 - "public.webhook_flush_metrics"
 Cohesion: 0.67
 Nodes (3): idx_webhook_flush_metrics_created_at, public.webhook_flush_metrics, auth.users
 
-### Community 458 - "public.get_agent_financial_leaderboard"
+### Community 460 - "public.get_agent_financial_leaderboard"
 Cohesion: 0.50
 Nodes (3): public.get_agent_financial_leaderboard(), public.call_sessions, public.deals
 
-### Community 459 - "public.get_agent_financial_leaderboard"
+### Community 461 - "public.get_agent_financial_leaderboard"
 Cohesion: 0.50
 Nodes (3): public.get_agent_financial_leaderboard(), public.call_sessions, public.deals
 
-### Community 460 - "public.cadence_enrollments"
+### Community 462 - "public.cadence_enrollments"
 Cohesion: 0.50
 Nodes (4): idx_cadence_enrollments_cadence_id, idx_cadence_enrollments_contact_id, idx_cadence_enrollments_deal_id, public.cadence_enrollments
 
-### Community 461 - "public.meeting_summaries"
+### Community 463 - "public.meeting_summaries"
 Cohesion: 0.50
 Nodes (4): idx_meeting_summaries_call_session_id, idx_meeting_summaries_edited_by, idx_meeting_summaries_generated_by, public.meeting_summaries
 
-### Community 463 - "20261122280000_is_admin_and_supervisor_honor_expiry.sql"
+### Community 465 - "20261122280000_is_admin_and_supervisor_honor_expiry.sql"
 Cohesion: 0.67
 Nodes (3): public.is_admin(), public.is_supervisor(), public.user_roles
-
-### Community 464 - "public.check_calling_hours"
-Cohesion: 0.50
-Nodes (3): public.check_calling_hours(), public.calling_hours_config, public.holidays
-
-### Community 465 - "public.check_calling_hours"
-Cohesion: 0.50
-Nodes (3): public.check_calling_hours(), public.calling_hours_config, public.holidays
 
 ### Community 466 - "public.check_calling_hours"
 Cohesion: 0.50
 Nodes (3): public.check_calling_hours(), public.calling_hours_config, public.holidays
 
-### Community 467 - "public.sync_profile_role_from_user_roles"
+### Community 467 - "public.check_calling_hours"
+Cohesion: 0.50
+Nodes (3): public.check_calling_hours(), public.calling_hours_config, public.holidays
+
+### Community 468 - "public.check_calling_hours"
+Cohesion: 0.50
+Nodes (3): public.check_calling_hours(), public.calling_hours_config, public.holidays
+
+### Community 469 - "public.sync_profile_role_from_user_roles"
 Cohesion: 0.50
 Nodes (3): public.sync_profile_role_from_user_roles(), auth.users, public.user_roles
 
-### Community 471 - "engines"
+### Community 473 - "engines"
 Cohesion: 0.67
 Nodes (3): engines, node, npm
 
-### Community 472 - "public.crm_field_suggestions"
+### Community 474 - "public.crm_field_suggestions"
 Cohesion: 0.67
 Nodes (3): public.crm_field_suggestions, idx_crm_field_suggestions_call_session_id, idx_crm_field_suggestions_contact_id
 
-### Community 474 - "public.tracker_matches"
+### Community 476 - "public.tracker_matches"
 Cohesion: 0.67
 Nodes (3): public.tracker_matches, idx_tracker_matches_call_session_id, idx_tracker_matches_tracker_id
 
-### Community 495 - "idx_kb_article_history_article_id"
+### Community 497 - "idx_kb_article_history_article_id"
 Cohesion: 0.67
 Nodes (3): idx_kb_article_history_article_id, idx_kb_article_history_changed_by, public.kb_article_history
 
-### Community 496 - "idx_meeting_summaries_edited_by"
+### Community 498 - "idx_meeting_summaries_edited_by"
 Cohesion: 0.67
 Nodes (3): idx_meeting_summaries_edited_by, idx_meeting_summaries_generated_by, public.meeting_summaries
 
-### Community 497 - "idx_rate_limit_alerts_resolved_by"
+### Community 499 - "idx_rate_limit_alerts_resolved_by"
 Cohesion: 0.67
 Nodes (3): idx_rate_limit_alerts_resolved_by, idx_rate_limit_alerts_user_id, public.rate_limit_alerts
 
-### Community 498 - "idx_survey_responses_call_session_id"
+### Community 500 - "idx_survey_responses_call_session_id"
 Cohesion: 0.67
 Nodes (3): idx_survey_responses_call_session_id, idx_survey_responses_contact_id, public.survey_responses
 
-### Community 499 - "idx_voip_trunk_usage_metrics_call_session_id"
+### Community 501 - "idx_voip_trunk_usage_metrics_call_session_id"
 Cohesion: 0.67
 Nodes (3): idx_voip_trunk_usage_metrics_call_session_id, idx_voip_trunk_usage_metrics_original_trunk_id, public.voip_trunk_usage_metrics
 
-### Community 501 - "idx_call_scorecards_call_session_id"
+### Community 503 - "idx_call_scorecards_call_session_id"
 Cohesion: 0.67
 Nodes (3): idx_call_scorecards_call_session_id, idx_call_scorecards_template_id, public.call_scorecards
 
-### Community 502 - "idx_call_sessions_contact_id"
+### Community 504 - "idx_call_sessions_contact_id"
 Cohesion: 0.67
 Nodes (3): idx_call_sessions_contact_id, idx_call_sessions_deal_id, public.call_sessions
 
-### Community 503 - "idx_contact_interactions_call_session_id"
+### Community 505 - "idx_contact_interactions_call_session_id"
 Cohesion: 0.67
 Nodes (3): idx_contact_interactions_call_session_id, idx_contact_interactions_contact_id, public.contact_interactions
 
-### Community 504 - "idx_conversations_account_id"
+### Community 506 - "idx_conversations_account_id"
 Cohesion: 0.67
 Nodes (3): idx_conversations_account_id, idx_conversations_contact_id, public.conversations
 
-### Community 505 - "idx_dialer_queue_campaign_id"
+### Community 507 - "idx_dialer_queue_campaign_id"
 Cohesion: 0.67
 Nodes (3): idx_dialer_queue_campaign_id, idx_dialer_queue_contact_id, public.dialer_queue
 
-### Community 506 - "idx_kb_article_history_article_id"
+### Community 508 - "idx_kb_article_history_article_id"
 Cohesion: 0.67
 Nodes (3): idx_kb_article_history_article_id, idx_kb_article_history_changed_by, public.kb_article_history
 
-### Community 507 - "idx_kb_article_views_article_id"
+### Community 509 - "idx_kb_article_views_article_id"
 Cohesion: 0.67
 Nodes (3): idx_kb_article_views_article_id, idx_kb_article_views_conversation_id, public.kb_article_views
 
-### Community 508 - "idx_rate_limit_alerts_resolved_by"
+### Community 510 - "idx_rate_limit_alerts_resolved_by"
 Cohesion: 0.67
 Nodes (3): idx_rate_limit_alerts_resolved_by, idx_rate_limit_alerts_user_id, public.rate_limit_alerts
 
-### Community 509 - "idx_scorecard_responses_criterion_id"
+### Community 511 - "idx_scorecard_responses_criterion_id"
 Cohesion: 0.67
 Nodes (3): idx_scorecard_responses_criterion_id, idx_scorecard_responses_scorecard_id, public.scorecard_responses
 
-### Community 510 - "idx_user_roles_granted_by"
+### Community 512 - "idx_user_roles_granted_by"
 Cohesion: 0.67
 Nodes (3): idx_user_roles_granted_by, idx_user_roles_user_id, public.user_roles
 
@@ -2611,17 +2621,17 @@ Nodes (3): idx_user_roles_granted_by, idx_user_roles_user_id, public.user_roles
 ## Suggested Questions
 _Questions this graph is uniquely positioned to answer:_
 
-- **Why does `vitest` connect `vitest` to `client.ts`, `traceHeaders`, `cn`, `utils.ts`, `@tanstack/react-query`, `safe-date.ts`, `ONDA 1 — Segurança e risco de perda de dado (001–055)`, `App.tsx`, `useChurnRisk`, `useMultiChannelCall.ts`, `package.json`, `queue-audio.ts`, `UnifiedSoftphone.tsx`, `sidebar.tsx`, `mensagemDeErro`, `ActiveCallsIndicator.tsx`, `Memories`, `ONDA 2 — Fluxos principais quebrados (056–100)`, `VoiceAssistantDialog.tsx`, `useRingtoneSettings.ts`, `PhoneDialer.tsx`, `useAuth`, `PhoneQuickAccess.tsx`, `schemas.ts`, `Onda 5 — Robustez: erros, estados, concorrência (181–235, 55 etapas)`, `safeParseInt`, `useMeetingSummary.ts`, `WebhookHealth.tsx`, `security-alerts-webhook.ts`, `LiveTranscription.tsx`, `blf.ts`, `security-advanced.test.ts`, `useExecutiveDashboard.ts`, `QualityForecastCard.tsx`, `hooks/use-toast.ts`, `ring-group.ts`, `ReauthContext.tsx`, `sync-history.ts`, `utilities-comprehensive.test.ts`, `WebhookConfigDialog.tsx`, `security-infrastructure.test.ts`, `security-alerts-webhook-queue.ts`, `security/index.ts`, `useLiveTranslation.ts`, `useShifts.ts`, `ErrorBoundary`, `ref_node_fs`, `web-vitals.ts`, `Tabela de funcionalidades`, `Login.tsx`, `safe-number.ts`, `fixes-exhaustive.test.ts`, `useOptimisticLockConflicts.ts`, `voipRecommendationCoaching.ts`, `SupervisorPanel.tsx`, `useQueueMetrics.ts`, `useHoldSoundAlert.ts`, `security-alerts-webhook-history.ts`, `device-identity.ts`, `useWebAuthn.ts`, `useSessionManager.ts`, `voice-biometrics.coverage.test.ts`, `useContacts.ts`, `agent-assist-utils.ts`, `useVoipQualityMonitor.ts`, `Contact`, `useAlerts.coverage.test.tsx`, `useDashboardData.ts`, `useSipCall.coverage.test.tsx`, `error-tracking.ts`, `useKnowledgeBase.coverage.test.tsx`, `fast-check`, `mock-data-integrity.test.ts`, `useCrmFieldSuggestions.coverage.test.tsx`, `usePredictiveDialer.coverage.test.tsx`, `security-alerts-export.ts`, `useCallHistory.ts`, `ParkOrbitCard.tsx`, `useConsent.coverage.test.tsx`, `useSupervisorPanel.coverage.test.tsx`, `rls-policies.test.ts`, `useLiveSentiment.coverage.test.tsx`, `navigation-progress-store.ts`, `useCallSession.ts`, `export/index.ts`, `useExtensionsOverview.ts`, `useQualityAlerts.coverage.test.tsx`, `ReconcileDNCDialog.test.tsx`, `security-alerts-presets.ts`, `useTrunkHealth.ts`, `HoldTrendChart.test.tsx`, `ConversationIntelligenceCard.test.tsx`, `useRealtimeHoldAlerts.ts`, `useCallRecording.ts`, `useGamification.coverage.test.tsx`, `useSLA.ts`, `useTimeOff.coverage.test.tsx`, `outbound-scoring.ts`, `useAgentRanking.coverage.test.tsx`, `useBitrix.coverage.test.tsx`, `useGeoBlocking.ts`, `useGoalViolations.ts`, `useWebAuthn.coverage.test.tsx`, `queue.ts`, `session/index.ts`, `voipProactiveSnapshot.ts`, `callHistoryCsv.ts`, `useRecordings.ts`, `reportCsv.ts`, `hsts-headers.ts`, `predictive-pace.property.test.ts`, `reconcile.ts`, `useCoachingAssignments.coverage.test.tsx`, `useSurveys.coverage.test.tsx`, `useTrunkRealtimeMetrics.ts`, `useVoiceCommand.coverage.test.tsx`, `encryption.ts`, `SecurityReport.test.tsx`, `setup.ts`, `NextBestActionPanel.tsx`, `useContactAlerts.coverage.test.tsx`, `useVoipAutoRemediation.coverage.test.tsx`, `supabase.ts`, `deals.test.ts`, `learning-completions.test.ts`, `security-alerts-webhook.property.test.ts`, `useVoipQualityMonitor.coverage.test.tsx`?**
+- **Why does `vitest` connect `vitest` to `client.ts`, `traceHeaders`, `cn`, `@tanstack/react-query`, `usePageTitle`, `ONDA 1 — Segurança e risco de perda de dado (001–055)`, `App.tsx`, `useChurnRisk`, `useMultiChannelCall.ts`, `package.json`, `supabase/types.ts`, `queue-audio.ts`, `UnifiedSoftphone.tsx`, `sidebar.tsx`, `mensagemDeErro`, `ActiveCallsIndicator.tsx`, `Memories`, `ONDA 2 — Fluxos principais quebrados (056–100)`, `VoiceAssistantDialog.tsx`, `useRingtoneSettings.ts`, `PhoneDialer.tsx`, `useAuth`, `PhoneQuickAccess.tsx`, `schemas.ts`, `Onda 5 — Robustez: erros, estados, concorrência (181–235, 55 etapas)`, `safeParseInt`, `WebhookHealth.tsx`, `security-alerts-webhook.ts`, `LiveTranscription.tsx`, `blf.ts`, `security-advanced.test.ts`, `useExecutiveDashboard.ts`, `hooks/use-toast.ts`, `ring-group.ts`, `ReauthContext.tsx`, `sync-history.ts`, `utilities-comprehensive.test.ts`, `WebhookConfigDialog.tsx`, `useCallHistory.ts`, `security-infrastructure.test.ts`, `security-alerts-webhook-queue.ts`, `security/index.ts`, `useMeetingSummary.ts`, `useLiveTranslation.ts`, `ErrorBoundary`, `ref_node_fs`, `web-vitals.ts`, `Tabela de funcionalidades`, `useAnomalyRemediation.ts`, `safe-number.ts`, `fixes-exhaustive.test.ts`, `useOptimisticLockConflicts.ts`, `voipRecommendationCoaching.ts`, `SupervisorPanel.tsx`, `useQueueMetrics.ts`, `useHoldSoundAlert.ts`, `security-alerts-webhook-history.ts`, `device-identity.ts`, `useWebAuthn.ts`, `useSessionManager.ts`, `voice-biometrics.coverage.test.ts`, `useCallRecording.ts`, `useContacts.ts`, `agent-assist-utils.ts`, `useVoipQualityMonitor.ts`, `Contact`, `useDashboardData.ts`, `useSipCall.coverage.test.tsx`, `error-tracking.ts`, `useKnowledgeBase.coverage.test.tsx`, `fast-check`, `mock-data-integrity.test.ts`, `useCrmFieldSuggestions.coverage.test.tsx`, `usePredictiveDialer.coverage.test.tsx`, `security-alerts-export.ts`, `ParkOrbitCard.tsx`, `useConsent.coverage.test.tsx`, `useSupervisorPanel.coverage.test.tsx`, `useVoiceBiometrics.ts`, `rls-policies.test.ts`, `useLiveSentiment.coverage.test.tsx`, `navigation-progress-store.ts`, `ExecutiveReportExport.tsx`, `useCallSession.ts`, `export/index.ts`, `useExtensionsOverview.ts`, `useQualityAlerts.coverage.test.tsx`, `ReconcileDNCDialog.test.tsx`, `security-alerts-presets.ts`, `useTrunkHealth.ts`, `HoldTrendChart.test.tsx`, `ConversationIntelligenceCard.test.tsx`, `useSLA.coverage.test.tsx`, `useRealtimeHoldAlerts.ts`, `useGamification.coverage.test.tsx`, `useTimeOff.coverage.test.tsx`, `outbound-scoring.ts`, `useAgentRanking.coverage.test.tsx`, `useBitrix.coverage.test.tsx`, `useGeoBlocking.ts`, `useGoalViolations.ts`, `useWebAuthn.coverage.test.tsx`, `queue.ts`, `session/index.ts`, `voipProactiveSnapshot.ts`, `callHistoryCsv.ts`, `useAlerts.coverage.test.tsx`, `reportCsv.ts`, `hsts-headers.ts`, `predictive-pace.property.test.ts`, `useTelemetry.coverage.test.tsx`, `reconcile.ts`, `useCoachingAssignments.coverage.test.tsx`, `useScheduledCallbacks.coverage.test.tsx`, `useSurveys.coverage.test.tsx`, `useTrunkRealtimeMetrics.ts`, `useVoiceCommand.coverage.test.tsx`, `encryption.ts`, `SecurityReport.test.tsx`, `setup.ts`, `NextBestActionPanel.tsx`, `useContactAlerts.coverage.test.tsx`, `Login.lockout.test.tsx`, `supabase.ts`, `deals.test.ts`, `learning-completions.test.ts`, `security-alerts-webhook.property.test.ts`, `useSecurityHooks.test.ts`, `useVoipQualityMonitor.coverage.test.tsx`?**
   _High betweenness centrality (0.131) - this node is a cross-community bridge._
-- **Why does `react` connect `react` to `lucide-react`, `client.ts`, `vitest`, `traceHeaders`, `usePageTitle.ts`, `cn`, `utils.ts`, `@tanstack/react-query`, `protectedRoutes.tsx`, `safe-date.ts`, `5. Em uso por rota`, `usePageTitle`, `App.tsx`, `useChurnRisk`, `useMultiChannelCall.ts`, `PredictiveDialerPanel.tsx`, `package.json`, `VoipRecommendationsPanel.tsx`, `button.tsx`, `UnifiedSoftphone.tsx`, `sidebar.tsx`, `mensagemDeErro`, `ActiveCallsIndicator.tsx`, `Memories`, `VoiceAssistantDialog.tsx`, `useRingtoneSettings.ts`, `PhoneDialer.tsx`, `useAuth`, `PhoneQuickAccess.tsx`, `AppLayout.tsx`, `Onda 5 — Robustez: erros, estados, concorrência (181–235, 55 etapas)`, `safeParseInt`, `useMeetingSummary.ts`, `WebhookHealth.tsx`, `security-alerts-webhook.ts`, `LiveTranscription.tsx`, `Tabela de funcionalidades`, `blf.ts`, `useExecutiveDashboard.ts`, `QualityForecastCard.tsx`, `hooks/use-toast.ts`, `SecurityAlerts.tsx`, `ring-group.ts`, `ReauthContext.tsx`, `sync-history.ts`, `useBitrix.ts`, `security-alerts-webhook-queue.ts`, `useLiveTranslation.ts`, `ErrorBoundary`, `usePredictiveDialer.ts`, `web-vitals.ts`, `CallingHoursConfig.tsx`, `Login.tsx`, `useOptimisticLockConflicts.ts`, `SupervisorPanel.tsx`, `useQueueMetrics.ts`, `useHoldSoundAlert.ts`, `security-alerts-webhook-history.ts`, `PermissionGate.tsx`, `device-identity.ts`, `useWebAuthn.ts`, `Contacts.tsx`, `useSessionManager.ts`, `useContacts.ts`, `useVoipQualityMonitor.ts`, `Contact`, `useKnowledgeBase.coverage.test.tsx`, `useCrmFieldSuggestions.coverage.test.tsx`, `carousel.tsx`, `useCallHistory.ts`, `ParkOrbitCard.tsx`, `useConsent.coverage.test.tsx`, `form.tsx`, `InsightPanels.tsx`, `HoldAlertsTable.tsx`, `navigation-progress-store.ts`, `useCallSession.ts`, `useCallPark.ts`, `useExtensionsOverview.ts`, `useQualityAlerts.coverage.test.tsx`, `Roles.tsx`, `AchievementCelebration.tsx`, `security-alerts-presets.ts`, `useLDAPSync.ts`, `chart.tsx`, `useRealtimeHoldAlerts.ts`, `useCallRecording.ts`, `useSLA.ts`, `Status.tsx`, `useGeoBlocking.ts`, `useGoalViolations.ts`, `useRecordings.ts`, `publicRoutes.tsx`, `useCoachingAssignments.coverage.test.tsx`, `useTrunkRealtimeMetrics.ts`, `PasswordStrength.tsx`, `NextBestActionPanel.tsx`, `LazyComponent.tsx`?**
+- **Why does `react` connect `react` to `lucide-react`, `client.ts`, `vitest`, `traceHeaders`, `protectedRoutes.tsx`, `cn`, `utils.ts`, `@tanstack/react-query`, `usePageTitle`, `5. Em uso por rota`, `safe-date.ts`, `safeFormatDistanceToNow`, `App.tsx`, `Index.tsx`, `useChurnRisk`, `useMultiChannelCall.ts`, `package.json`, `PasskeyManager.tsx`, `supabase/types.ts`, `UnifiedSoftphone.tsx`, `sidebar.tsx`, `mensagemDeErro`, `ActiveCallsIndicator.tsx`, `Memories`, `VoiceAssistantDialog.tsx`, `useRingtoneSettings.ts`, `PhoneDialer.tsx`, `useAuth`, `PhoneQuickAccess.tsx`, `AppLayout.tsx`, `Onda 5 — Robustez: erros, estados, concorrência (181–235, 55 etapas)`, `safeParseInt`, `WebhookHealth.tsx`, `security-alerts-webhook.ts`, `LiveTranscription.tsx`, `Tabela de funcionalidades`, `blf.ts`, `useExecutiveDashboard.ts`, `hooks/use-toast.ts`, `SecurityAlerts.tsx`, `ring-group.ts`, `ReauthContext.tsx`, `sync-history.ts`, `useCallHistory.ts`, `useBitrix.ts`, `security-alerts-webhook-queue.ts`, `useMeetingSummary.ts`, `AgentRanking.tsx`, `QueueMetricsAlertSettings.tsx`, `useLiveTranslation.ts`, `ErrorBoundary`, `usePredictiveDialer.ts`, `web-vitals.ts`, `CallingHoursConfig.tsx`, `useAnomalyRemediation.ts`, `useOptimisticLockConflicts.ts`, `SupervisorPanel.tsx`, `useQueueMetrics.ts`, `useHoldSoundAlert.ts`, `security-alerts-webhook-history.ts`, `PermissionGate.tsx`, `device-identity.ts`, `useWebAuthn.ts`, `useSessionManager.ts`, `useCallRecording.ts`, `useContacts.ts`, `useVoipQualityMonitor.ts`, `Contact`, `useKnowledgeBase.coverage.test.tsx`, `useCrmFieldSuggestions.coverage.test.tsx`, `carousel.tsx`, `ParkOrbitCard.tsx`, `useConsent.coverage.test.tsx`, `useVoiceBiometrics.ts`, `form.tsx`, `InsightPanels.tsx`, `navigation-progress-store.ts`, `ExecutiveReportExport.tsx`, `useCallSession.ts`, `useCallPark.ts`, `useExtensionsOverview.ts`, `useQualityAlerts.coverage.test.tsx`, `AchievementCelebration.tsx`, `security-alerts-presets.ts`, `SloDashboard.tsx`, `useLDAPSync.ts`, `useSLA.coverage.test.tsx`, `chart.tsx`, `useRealtimeHoldAlerts.ts`, `Status.tsx`, `useGeoBlocking.ts`, `useGoalViolations.ts`, `RoleAuditTrail.tsx`, `publicRoutes.tsx`, `useTelemetry.coverage.test.tsx`, `useCoachingAssignments.coverage.test.tsx`, `useTrunkRealtimeMetrics.ts`, `PasswordStrength.tsx`, `NextBestActionPanel.tsx`, `LazyComponent.tsx`?**
   _High betweenness centrality (0.103) - this node is a cross-community bridge._
-- **Why does `cn()` connect `cn` to `lucide-react`, `client.ts`, `vitest`, `react`, `isPoorMos`, `usePageTitle.ts`, `useQualityTrendAnalyzer`, `Achados graves`, `utils.ts`, `Contacts.tsx`, `Status.tsx`, `safe-date.ts`, `5. Em uso por rota`, `usePageTitle`, `Rotas protegidas sem `roles:` (etapa 090)`, `VoipVoiceQAPanel`, `useMultiChannelCall.ts`, `PredictiveDialerPanel.tsx`, `package.json`, `VoipRecommendationsPanel.tsx`, `Contact`, `button.tsx`, `UnifiedSoftphone.tsx`, `sidebar.tsx`, `Scorecard — Maturidade Técnica (re-avaliação E2)`, `queue-audio.ts`, `ActiveCallsIndicator.tsx`, `Memories`, `AnomalyDetectionCard`, `PhoneDialer.tsx`, `PhoneQuickAccess.tsx`, `AppLayout.tsx`, `carousel.tsx`, `Onda 5 — Robustez: erros, estados, concorrência (181–235, 55 etapas)`, `safeParseInt`, `WebRTCMetricsPanel.tsx`, `ParkOrbitCard.tsx`, `Decisão`, `KeyMomentsTimeline.tsx`, `AppSidebar`, `form.tsx`, `InsightPanels.tsx`, `blf.ts`, `hooks/use-toast.ts`, `sync-history.ts`, `WebhookConfigDialog.tsx`, `safeParseFloat`, `AchievementCelebration.tsx`, `useLiveTranslation.ts`, `RecommendationInsightsCard`, `PasswordStrength.tsx`, `NextBestActionPanel.tsx`, `VoipHealthScoreCard`, `voipRecommendationCoaching.ts`, `chart.tsx`, `SupervisorPanel.tsx`?**
+- **Why does `cn()` connect `cn` to `lucide-react`, `client.ts`, `isPoorMos`, `react`, `useQualityTrendAnalyzer`, `protectedRoutes.tsx`, `Achados graves`, `utils.ts`, `Status.tsx`, `usePageTitle`, `5. Em uso por rota`, `safe-date.ts`, `safeFormatDistanceToNow`, `Rotas protegidas sem `roles:` (etapa 090)`, `VoipVoiceQAPanel`, `Index.tsx`, `useMultiChannelCall.ts`, `package.json`, `PasskeyManager.tsx`, `Contact`, `queue-audio.ts`, `UnifiedSoftphone.tsx`, `sidebar.tsx`, `Scorecard — Maturidade Técnica (re-avaliação E2)`, `RoleAuditTrail.tsx`, `ActiveCallsIndicator.tsx`, `Memories`, `AnomalyDetectionCard`, `PhoneDialer.tsx`, `PhoneQuickAccess.tsx`, `AppLayout.tsx`, `carousel.tsx`, `ParkOrbitCard.tsx`, `Onda 5 — Robustez: erros, estados, concorrência (181–235, 55 etapas)`, `safeParseInt`, `WebRTCMetricsPanel.tsx`, `Decisão`, `AppSidebar`, `form.tsx`, `InsightPanels.tsx`, `blf.ts`, `hooks/use-toast.ts`, `sync-history.ts`, `WebhookConfigDialog.tsx`, `safeParseFloat`, `AchievementCelebration.tsx`, `AgentRanking.tsx`, `QueueMetricsAlertSettings.tsx`, `useLiveTranslation.ts`, `RecommendationInsightsCard`, `PasswordStrength.tsx`, `NextBestActionPanel.tsx`, `VoipHealthScoreCard`, `useSLA.coverage.test.tsx`, `voipRecommendationCoaching.ts`, `chart.tsx`, `SupervisorPanel.tsx`?**
   _High betweenness centrality (0.070) - this node is a cross-community bridge._
 - **Are the 2 inferred relationships involving `cn()` (e.g. with `Auditoria de testes` and `Núcleo de utilidades e observabilidade`) actually correct?**
   _`cn()` has 2 INFERRED edges - model-reasoned connections that need verification._
 - **What connects `$schema`, `style`, `rsc` to the rest of the system?**
   _3097 weakly-connected nodes found - possible documentation gaps or missing edges._
 - **Should `lucide-react` be split into smaller, more focused modules?**
-  _Cohesion score 0.025261984392419175 - nodes in this community are weakly interconnected._
+  _Cohesion score 0.024460742018981883 - nodes in this community are weakly interconnected._
 - **Should `client.ts` be split into smaller, more focused modules?**
-  _Cohesion score 0.0168993168993169 - nodes in this community are weakly interconnected._
+  _Cohesion score 0.018450976185367948 - nodes in this community are weakly interconnected._

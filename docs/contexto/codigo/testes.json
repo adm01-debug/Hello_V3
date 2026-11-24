@@ -450,11 +450,12 @@
   {
    "arquivo": "src/hooks/__tests__/useActiveCallsRealtime.coverage.test.tsx",
    "tipo": "unit",
-   "linhas": 79,
+   "linhas": 89,
    "testa": [
-    "src/hooks/useActiveCallsRealtime.ts"
+    "src/hooks/useActiveCallsRealtime.ts",
+    "src/integrations/supabase/client.ts"
    ],
-   "casos": 3
+   "casos": 4
   },
   {
    "arquivo": "src/hooks/__tests__/useAdherence.test.tsx",
@@ -3753,7 +3754,7 @@
   "src/hooks/useWebAuthn.ts": 2,
   "src/hooks/useWebVitals.ts": 1,
   "src/hooks/useWhatsappRewrite.ts": 1,
-  "src/integrations/supabase/client.ts": 30,
+  "src/integrations/supabase/client.ts": 31,
   "src/lib/a11y-clickable.ts": 1,
   "src/lib/agent-assist-utils.ts": 2,
   "src/lib/audio/deviceTest.ts": 1,

@@ -353,7 +353,7 @@
     "pages/admin",
     "pages/roles"
    ],
-   "coberto_por_testes": 30,
+   "coberto_por_testes": 31,
    "orfao": false
   },
   {

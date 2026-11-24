@@ -58,11 +58,11 @@
  "commits": {
   "convencao": "conventional commits (observado)",
   "exemplos": [
+   "chore: verificacao dos timers de realtime nos hooks (etapa 216) (#266)",
    "fix: avisar quando o alerta de contato nao foi gravado (etapa 189) (#259)",
    "fix: prazo de resposta nas edges de e-mail e integracao (etapa 210) (#264)",
    "fix: consultas cegas restantes e estado de erro padronizado (etapas 201-202) (#263)",
-   "docs: etapas 191-193 verificadas (ja corrigidas por #180 e #170) (#261)",
-   "fix: edges de infra registram falha de gravacao em vez de ignora-la (etapa 188) (#257)"
+   "docs: etapas 191-193 verificadas (ja corrigidas por #180 e #170) (#261)"
   ]
  },
  "pr_template": null,
