@@ -65,7 +65,7 @@ const QueueMetricsDashboard = () => {
       )}
 
       <Tabs value={q.activeTab} onValueChange={q.setActiveTab}>
-        <TabsList>
+        <TabsList className="w-full justify-start overflow-x-auto">
           <TabsTrigger value="dashboard" className="flex items-center gap-2"><Activity className="h-4 w-4" />Dashboard</TabsTrigger>
           <TabsTrigger value="goals" className="flex items-center gap-2">
             <Target className="h-4 w-4" />Metas

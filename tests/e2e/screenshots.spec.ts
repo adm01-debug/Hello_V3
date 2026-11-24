@@ -29,6 +29,10 @@ interface ElementoCulpado {
   fronteira: boolean;
   /** já está dentro de algo que recorta (uma rolagem proposital, por exemplo) */
   recortado: boolean;
+  /** largura medida da caixa */
+  largura: number;
+  /** começo do texto do elemento: identifica o culpado sem abrir o print */
+  texto: string;
   ancestrais: string[];
 }
 
@@ -37,6 +41,10 @@ interface Area {
   clientWidth: number;
   transbordoPx: number;
   culpados: ElementoCulpado[];
+  /** texto solto que passa da borda sem elemento dono (texto em <td>, por exemplo) */
+  textos: string[];
+  /** elementos cujo conteúdo passa sem recorte: eles esticam o <main> */
+  semRecorte: string[];
 }
 
 interface Captura {
@@ -49,6 +57,7 @@ interface Captura {
   clientWidth: number;
   transbordoPx: number;
   culpados: ElementoCulpado[];
+  textos: string[];
   conteudo: Area | null;
 }
 
@@ -143,11 +152,28 @@ test.describe('Etapa 270/271 — telas internas em largura de celular', () => {
               .map(({ elemento, caixa }) => {
                 const pai = elemento.parentElement;
                 const fimDoPai = pai ? pai.getBoundingClientRect().right : caixa.right;
-                return { elemento, direita: caixa.right, fronteira: fimDoPai <= limite + 1 };
+                let profundidade = 0;
+                for (let no: Element | null = elemento; no && no !== escopo; no = no.parentElement) {
+                  profundidade += 1;
+                }
+                return {
+                  elemento,
+                  caixa,
+                  direita: caixa.right,
+                  fronteira: fimDoPai <= limite + 1,
+                  profundidade,
+                };
               })
-              .sort((a, b) => Number(b.fronteira) - Number(a.fronteira) || b.direita - a.direita)
-              .slice(0, 4)
-              .map(({ elemento, fronteira }) => {
+              // Fronteira primeiro (quem estica é culpado, quem foi esticado é vítima);
+              // entre iguais, o mais fundo — o culpado real fica no fim da cadeia.
+              .sort(
+                (a, b) =>
+                  Number(b.fronteira) - Number(a.fronteira) ||
+                  b.profundidade - a.profundidade ||
+                  b.direita - a.direita,
+              )
+              .slice(0, 8)
+              .map(({ elemento, caixa, fronteira }) => {
                 const ancestrais: string[] = [];
                 let pai = elemento.parentElement;
                 while (pai && ancestrais.length < 5) {
@@ -158,9 +184,45 @@ test.describe('Etapa 270/271 — telas internas em largura de celular', () => {
                   el: descrever(elemento),
                   fronteira,
                   recortado: recortadoPor(elemento, escopo === document.body ? null : escopo),
+                  texto: (elemento.textContent ?? '').trim().replace(/\s+/g, ' ').slice(0, 40),
                   ancestrais,
+                  largura: Math.round(caixa.width),
                 };
               });
+
+          // Texto sem elemento dono: um <td> com nowrap estica a página sem que
+          // nenhuma caixa passe da borda, e o relatório acima ficaria vazio.
+          const textosDe = (escopo: Element, limite: number) => {
+            const achados: string[] = [];
+            const caminhante = document.createTreeWalker(escopo, NodeFilter.SHOW_TEXT);
+            for (let no = caminhante.nextNode(); no && achados.length < 3; no = caminhante.nextNode()) {
+              const conteudo = (no.textContent ?? '').trim();
+              if (!conteudo) continue;
+              const faixa = document.createRange();
+              faixa.selectNodeContents(no);
+              const caixa = faixa.getBoundingClientRect();
+              if (caixa.width > 0 && caixa.right > limite + 1) {
+                const dono = no.parentElement ?? escopo;
+                achados.push(
+                  `${descrever(dono)} "${conteudo.replace(/\s+/g, ' ').slice(0, 40)}" ` +
+                    `[${Math.round(caixa.left)}..${Math.round(caixa.right)}]`,
+                );
+              }
+            }
+            return achados;
+          };
+
+          // Quem estica o <main> é o elemento cujo conteúdo passa dele mesmo sem
+          // rolagem (overflow-x visível): a rolagem proposital fica de fora.
+          const semRecorte = (escopo: Element) =>
+            Array.from(escopo.querySelectorAll('*'))
+              .filter((elemento) => {
+                if (elemento.clientWidth <= 0) return false;
+                if (getComputedStyle(elemento).overflowX !== 'visible') return false;
+                return elemento.scrollWidth > elemento.clientWidth + 1;
+              })
+              .slice(0, 4)
+              .map((elemento) => `${descrever(elemento)} sw=${elemento.scrollWidth}`);
 
           const principal = document.querySelector('main');
           const conteudo = principal
@@ -169,6 +231,8 @@ test.describe('Etapa 270/271 — telas internas em largura de celular', () => {
                 clientWidth: principal.clientWidth,
                 transbordoPx: Math.max(0, principal.scrollWidth - principal.clientWidth),
                 culpados: culpadosDe(principal, principal.getBoundingClientRect().right),
+                textos: textosDe(principal, principal.getBoundingClientRect().right),
+                semRecorte: semRecorte(principal),
               }
             : null;
 
@@ -176,6 +240,7 @@ test.describe('Etapa 270/271 — telas internas em largura de celular', () => {
             scrollWidth: raiz.scrollWidth,
             clientWidth: viewport,
             culpados: culpadosDe(document.body, viewport),
+            textos: textosDe(document.body, viewport),
             conteudo,
             titulo: (document.querySelector('h1')?.textContent ?? '').trim(),
           };
@@ -212,6 +277,8 @@ test.describe('Etapa 270/271 — telas internas em largura de celular', () => {
           pagina: c.transbordoPx,
           conteudo: c.conteudo?.transbordoPx ?? 0,
           culpados: [...c.culpados, ...(c.conteudo?.culpados ?? [])].filter((k) => k.fronteira),
+          textos: [...c.textos, ...(c.conteudo?.textos ?? [])],
+          semRecorte: c.conteudo?.semRecorte ?? [],
         })),
       'transbordo horizontal: a página ou o conteúdo passou da largura da tela',
     ).toEqual([]);
