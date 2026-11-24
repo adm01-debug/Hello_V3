@@ -5,6 +5,20 @@ import { withRequestLog, logError } from '../_shared/observability.ts';
 import { budget } from './slo-budget.ts';
 import { GENERIC_INTERNAL_MESSAGE, getCorrelationId } from '../_shared/errors.ts';
 
+/**
+ * Meta unica do SLO. O contrato publico (`src/pages/Status.tsx` anuncia
+ * "SLA contratual: 99,9% mensal") e a referencia; o painel admin nao declara
+ * meta propria, ele exibe o que este objeto devolve em `slo_targets`.
+ * Mudar a meta aqui muda, de uma vez, o que o painel exibe e o que o calculo
+ * de error budget usa para decidir.
+ */
+export const SLO_TARGETS = {
+  trunk_uptime_pct: 99.9,
+  webhook_error_rate_pct: 1,
+  webhook_p95_latency_ms: 2000,
+  window_minutes: 15,
+} as const;
+
 export const handler = async (req: Request): Promise<Response> => {
   const corsHeaders = buildCorsHeaders(req);
   if (req.method === 'OPTIONS') return new Response('ok', { headers: corsHeaders });
@@ -15,7 +29,7 @@ export const handler = async (req: Request): Promise<Response> => {
       Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!,
     );
 
-    const since = new Date(Date.now() - 15 * 60 * 1000).toISOString();
+    const since = new Date(Date.now() - SLO_TARGETS.window_minutes * 60 * 1000).toISOString();
 
     const [trunksRes, webhookRes, dbRes] = await Promise.allSettled([
       supabase
@@ -60,12 +74,12 @@ export const handler = async (req: Request): Promise<Response> => {
     const trunkBudget = budget({
       total: trunkTotal,
       bad: trunkTotal - trunkReachable,
-      targetPct: 99,
+      targetPct: SLO_TARGETS.trunk_uptime_pct,
     });
     const webhookBudget = budget({
       total: webhookTotal,
       bad: webhookFailed,
-      targetPct: 99,
+      targetPct: 100 - SLO_TARGETS.webhook_error_rate_pct,
     });
 
     // Banco: medido de verdade. Falha na query ou latência > 2000ms => degraded.
@@ -79,7 +93,7 @@ export const handler = async (req: Request): Promise<Response> => {
     const components = {
       trunks: {
         status: trunkUptimePct === null ? 'unknown'
-          : trunkUptimePct >= 99 ? 'operational'
+          : trunkUptimePct >= SLO_TARGETS.trunk_uptime_pct ? 'operational'
           : trunkUptimePct >= 95 ? 'degraded' : 'outage',
         uptime_pct: trunkUptimePct === null ? null : Number(trunkUptimePct.toFixed(2)),
         checks_15min: trunkTotal,
@@ -87,7 +101,7 @@ export const handler = async (req: Request): Promise<Response> => {
       },
       webhooks: {
         status: webhookErrorRate === null ? 'unknown'
-          : webhookErrorRate < 1 ? 'operational'
+          : webhookErrorRate < SLO_TARGETS.webhook_error_rate_pct ? 'operational'
           : webhookErrorRate < 5 ? 'degraded' : 'outage',
         error_rate_pct: webhookErrorRate === null ? null : Number(webhookErrorRate.toFixed(2)),
         p95_latency_ms: webhookP95Latency,
@@ -127,7 +141,8 @@ export const handler = async (req: Request): Promise<Response> => {
       status: overall,
       components,
       checked_at: new Date().toISOString(),
-      window_minutes: 15,
+      window_minutes: SLO_TARGETS.window_minutes,
+      slo_targets: SLO_TARGETS,
     }), {
       headers: { ...corsHeaders, 'Content-Type': 'application/json' },
       status: 200,

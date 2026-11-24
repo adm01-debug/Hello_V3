@@ -6,11 +6,11 @@
 
 | Marca | Significado |
 |---|---|
-| `[ ]` | **157** |
+| `[ ]` | **156** |
 | `[>]` | em andamento (branch criada) |
 | `[P]` | 0 |
 | `[~]` | 1 |
-| `[x]` | 142 |
+| `[x]` | 143 |
 | `[-]` | 0 |
 
 **`[x]` exige evidência.** Escreva ao lado, entre parênteses, o comando ou a consulta que você rodou e o resultado. Sem isso, a marca é `[~]`.
@@ -24,11 +24,11 @@
 | | Quantidade |
 |---|---:|
 | Total de etapas | 300 |
-| `[x]` concluídas | 142 |
+| `[x]` concluídas | 143 |
 | `[P]` aguardando o dono | 0 |
 | `[~]` parciais | 1 |
 | `[-]` descartadas | 0 |
-| `[ ]` não iniciadas | **157** |
+| `[ ]` não iniciadas | **156** |
 
 *Atualize esta tabela ao fim de cada onda.*
 
@@ -220,7 +220,7 @@
 - [x] **167** — Ligar "Ver Alertas" do painel de limite de requisições — onda 4 — Baixa — Frontend · (evidência: `src/pages/RateLimitDashboard.tsx` — `Tabs` deixou de ser não-controlado (`defaultValue="logs"`) e virou `value={tab} onValueChange={setTab}`, com `useState` novo; o botão do alerta de incidente (`:52`, que não tinha `onClick`) passou a `onClick={() => setTab('alerts')}` — abre a lista de alertas **na mesma tela**, como o plano recomendava, em vez de navegar para `/admin/security-alerts` e perder o contexto do incidente; a lista de alertas já existia na aba "alerts" (`rate_limit_alerts`) e passou a ser alcançável. Armadilha do plano conferida: os três botões que podiam mentir sucesso em `src/hooks/useRateLimitData.ts` checam `error` e lançam antes do `toast.success` (`resolveAlert` `:89-96`, `unblockIP` `:98-105`, `cleanOldLogs` `:107-116`) — a correção da etapa 029 está aplicada, nada a fazer. Teste novo `src/pages/__tests__/RateLimitDashboard.alerts.test.tsx` (mocka `useRateLimitData`/`usePageTitle`/`recharts`): antes do clique a tabela de alertas não está no DOM e, após "Ver Alertas", aparece o card "Alertas de Rate Limit" com o IP do alerta — `bunx vitest run` 1 passed; `bunx tsc --noEmit` rc=0; `bunx eslint` nos 2 arquivos rc=0. Não verificado: sem acesso a banco nesta sessão, a tela nunca foi aberta com `rate_limit_alerts` reais.)
 - [x] **168** — Ligar os botões "Configurar" e os testes de áudio — onda 4 — Baixa — Frontend · (achado A-084: em `src/pages/Calls.tsx` o "Configurar" do **SIP Genérico** (`:157`) não tinha `onClick` e o do **Wavoip** (`:137`) apontava para um canal stub (etapa 100, `wavoip-call` responde sucesso sem chamada), e em `src/pages/Settings.tsx` "Testar microfone" e "Testar áudio" também eram botões mortos. Novo `src/lib/audio/deviceTest.ts`: `startMicLevel()` abre `navigator.mediaDevices.getUserMedia({audio:true})`, liga o stream a um `AnalyserNode` e reporta o nível 0..1 por `requestAnimationFrame`; `stop()` cancela o quadro, desconecta o source, para **todas** as tracks e fecha o `AudioContext` — o microfone volta para o sistema. `playTestTone()` toca um tom de 440 Hz com rampa de ganho e fecha o contexto. Recusa de permissão, dispositivo ausente, dispositivo ocupado e ausência de Web Audio viram mensagens distintas (`AudioTestError`), sem prometer sucesso. `Settings.tsx` ganhou os handlers, um medidor de nível visível enquanto o teste roda ("Parar teste") e um `useEffect` que libera o stream se a tela for abandonada com o teste aberto — em vez de só um toast, o agente vê a barra reagir à própria voz, que é a verificação útil antes do turno. Em `Calls.tsx` o SIP Genérico passou a usar `navigate('/admin/voip-trunks')` (rota `protectedRoutes.tsx:195`, já era o destino do SIP de navegador) e o botão do Wavoip foi **removido**, com o texto do cartão dizendo "integração ainda não disponível" — a opção "remover" do plano, porque o canal é stub e um botão que não faz nada é pior que a ausência dele. Evidência: `bunx tsc --noEmit` rc=0; `bunx eslint` rc=0 nos 4 arquivos; novo `src/lib/audio/__tests__/deviceTest.test.ts` com 5 testes (permissão negada, nível medido + track parada, microfone ausente, tom tocado com contexto fechado, ausência de Web Audio) — **5 passed / 0 failed**. O que **não** foi verificado: o áudio de verdade num navegador humano (não há microfone nem saída neste ambiente headless); os testes cobrem a API com `AudioContext`/`getUserMedia` simulados)
 - [x] **169** — Explicar na tela a regra do coaching automático — onda 4 — Baixa — Frontend · (o motor já tinha `MIN_SAMPLES`/`SCORE_THRESHOLD`/`WINDOW_DAYS`, mas a edge devolvia só `skipped` e o `/coaching` não tinha como explicar o vazio. Agora `track-engine.ts` exporta `COACHING_RULES` (fonte única) e a edge devolve `rules: {min_samples, score_threshold, window_days}` em toda resposta; o `14` que estava escrito à mão no `since` da consulta passou a usar `WINDOW_DAYS`. No front, `useCoachingTrack` expõe `rules` (cache React Query semeado pela resposta) e `lastResult`, e o toast que dizia "últimas 14d" passou a usar `rules.window_days`. `CoachingAssignmentsPanel` (o vazio real do `/coaching`, usado por `Coaching.tsx`) agora escreve "são necessárias N avaliações com nota abaixo de X nos últimos D dias" com os números da edge e lista, por agente, o motivo de ter ficado de fora. Evidência: `deno check index.ts track-engine.ts` rc=0, `deno test -A track-engine_test.ts` 8 passed/0 failed, `bun scripts/guard-edge-numeric.mjs --check` 98 arquivos/0 violações, `bunx tsc --noEmit` rc=0, `bunx eslint` rc=0 nos 3 arquivos, `src/components/coaching/__tests__/CoachingAssignmentsPanel.rules.test.tsx` (3 testes, usando 4/2.5/30 de propósito para quebrar se a tela voltar a fixar 3/3.0/14) — 3 passed) — onda 4 — Baixa — Frontend
-- [ ] **170** — Alinhar a meta de SLO entre a tela e o cálculo — onda 4 — Média — Frontend + Edge Function
+- [x] **170** — Alinhar a meta de SLO entre a tela e o cálculo — onda 4 — Média — Frontend + Edge Function · (meta unica: `SLO_TARGETS` exportado em `health-check/index.ts` = uptime 99,9% / erro 1% / p95 2000ms / janela 15min, devolvido na resposta como `slo_targets`; decisao 99,9% porque e o SLA contratual publicado (`src/pages/Status.tsx:229`), a edge estava frouxa em 99%; `SloDashboard` perdeu a constante local e le `data.slo_targets` com fallback documentado; deno test 3/3 (`supabase/functions/health-check/__tests__/slo-targets_test.ts`), vitest 2/2 (`src/pages/admin/__tests__/SloDashboard.meta.test.tsx`), tsc=0, eslint=0; prova negativa: alvo 99 na edge derruba 2/3 testes e a tela da main falha o teste de meta vinda do servidor)
 - [ ] **171** — Resolver as duas estruturas paralelas de recuperação de senha e verificação de e-mail — onda 4 — Média — Banco + Documentação
 - [x] **172** — Parar de contar "features de segurança" a partir de um array literal — onda 4 — Média — Frontend
 - [x] **173** — Dar estados e defesa ao gráfico de espera do dashboard — onda 4 — Alta — Frontend
@@ -420,7 +420,7 @@ Várias etapas dependem de uma escolha de negócio. Registre cada resposta aqui,
 | 149 | As 4 tabelas sem uso podem ser removidas? | | |
 | 154 | Resumo automático em toda chamada (custo de IA) ou sob demanda? | | |
 | 155 | Há base legal e aviso ao cliente para biometria de voz? | | |
-| 170 | A meta de disponibilidade é 99% ou 99,9%? | | |
+| 170 | A meta de disponibilidade é 99% ou 99,9%? | 99,9% — é o SLA contratual publicado na página de status; 99% era divergência da edge | 2026-11-24 |
 | 177 | A remediação de anomalia deve executar de verdade ou virar sugestão? | | |
 | 255 | Por quanto tempo guardar `audit_logs`? | | |
 | 280 | O que ajustar nas páginas públicas que prometem mais do que o sistema faz? | | |
