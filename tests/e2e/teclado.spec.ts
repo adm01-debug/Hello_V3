@@ -66,6 +66,19 @@ async function lerFoco(page: Page, ordem: number): Promise<Parada | null> {
 }
 
 test.describe('Etapa 273 - navegacao por teclado no fluxo de chamada', () => {
+  test.beforeEach(async ({ context }) => {
+    // O tour de onboarding (OnboardingWizard) abre sozinho 2 s depois do mount e
+    // move o foco para o proprio botao "Pular tour". Sem isso o teste mede o tour,
+    // nao a navegacao do disco - foi a causa do foco lido fora do gatilho.
+    await context.addInitScript(() => {
+      try {
+        window.localStorage.setItem('voip-onboarding-seen', 'true');
+      } catch {
+        /* about:blank sem localStorage */
+      }
+    });
+  });
+
   test('percorre o discador com Tab e mede o foco', async ({ page, context }) => {
     test.setTimeout(300_000);
 
