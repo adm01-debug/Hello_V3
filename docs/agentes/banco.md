@@ -113,6 +113,32 @@ via `format('CREATE POLICY %I …')` (`supabase/migrations/20260711192700_…`).
    (`grep -rn "ON public.<tabela>" supabase/migrations/`): há tabelas com várias rodadas de reescrita, e a
    última a rodar é a que vale.
 
+## Exclusão de conta (LGPD) — apurado em 2026-11-24
+
+Etapa 132 do plano. Desfecho **(a)**: a correção de FK de
+`supabase/migrations/20261123010000_fix_user_delete_cascade.sql` **está aplicada** no projeto oficial
+(`cfmlmcdyjuotqobjapng`). O que sobra do A-092 é só `src/integrations/supabase/types.ts` — etapa 136.
+
+| Verificação | Resultado |
+|---|---|
+| `to_regclass` das 6 tabelas do A-092 (`call_records`, `entity_versions`, `migration_rollbacks`, `queue_items`, `saved_filters`, `schema_migrations`) | todas existem em `public` |
+| `SELECT version FROM supabase_migrations.schema_migrations WHERE version='20261123010000'` | `20261123010000` presente no ledger |
+| FK de `saved_filters` para `auth.users` | `saved_filters_user_id_fkey` com `ON DELETE CASCADE` |
+| FK de `entity_versions` para `auth.users` | `entity_versions_changed_by_fkey` com `ON DELETE SET NULL` |
+| `auth.users` | 10 usuários (baseline antes e depois do teste) |
+
+Teste funcional do caminho de exclusão — usuário de teste `4a56062b-1fdb-42e2-bce4-e158d75b3bb5` com
+1 `user_profiles`, 1 `saved_filters` e 1 `entity_versions.changed_by` apontando para ele:
+
+1. `DELETE FROM auth.users WHERE id = …` → **sem erro** (não devolve 500);
+2. depois: `auth.users` 0, `user_profiles` **0** e `saved_filters` **0** (CASCADE), e a linha de
+   `entity_versions` **sobreviveu** com `changed_by IS NULL` (SET NULL — a trilha de auditoria é
+   preservada, que é o comportamento desejado);
+3. linhas de teste apagadas e baseline restaurado (10 usuários, 5 perfis, 0 versões de teste).
+
+Consultas feitas pela Management API (`POST /v1/projects/<ref>/database/query`), que roda sem RLS. Esta
+apuração libera as etapas 133 e 136.
+
 ## Testes de RLS — não confie nos que existem
 
 `src/__tests__/rls/` (7 arquivos) **não toca banco nem mock de PostgREST**: declara uma matriz literal e
