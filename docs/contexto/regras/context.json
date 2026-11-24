@@ -1,15 +1,15 @@
 {
  "meta": {
-  "sha": "711098f57e0965798e7a4e0f70e7741db595fbbf",
+  "sha": "fa17b61efec8d2e1c4fd64bc7f34aca844a7b72a",
   "branch": "main",
   "remote": "https://github.com/adm01-debug/Hello_V3",
-  "generated_at": "2026-11-24 13:32 UTC",
+  "generated_at": "2026-11-24 13:53 UTC",
   "files_total": 1792,
   "code_files": 1588,
-  "code_lines": 197546
+  "code_lines": 197583
  },
  "version": "1.3.2",
- "facts_hash": "6a16182756192ab1",
+ "facts_hash": "701f9cb610f169f1",
  "stack": {
   "frameworks": [
    "React + Vite",
@@ -33496,7 +33496,7 @@
   {
    "module": "src/components",
    "files": 372,
-   "lines": 44234,
+   "lines": 44271,
    "tables": [
     "accounts",
     "agent_goals",
@@ -58402,6 +58402,22 @@
    {
     "file": "src/components/layout/__tests__/AppSidebar.test.tsx",
     "name": "admin vê Executivo e Logs de Auditoria"
+   },
+   {
+    "file": "src/components/layout/__tests__/AppSidebar.test.tsx",
+    "name": "cobertura de menu das rotas protegidas (E265)"
+   },
+   {
+    "file": "src/components/layout/__tests__/AppSidebar.test.tsx",
+    "name": "toda rota protegida tem item de menu, ou esta registrada como link direto"
+   },
+   {
+    "file": "src/components/layout/__tests__/AppSidebar.test.tsx",
+    "name": "os links diretos registrados continuam existindo como rota"
+   },
+   {
+    "file": "src/components/layout/__tests__/AppSidebar.test.tsx",
+    "name": "nenhum item de menu aponta para rota inexistente nem se repete"
    },
    {
     "file": "src/components/network/__tests__/QualityForecastCard.test.tsx",
@@ -97280,8 +97296,9 @@
   },
   "src/components/layout/AppSidebar.tsx": {
    "path": "src/components/layout/AppSidebar.tsx",
-   "lines": 382,
+   "lines": 395,
    "exports": [
+    "const sidebarNavItems",
     "function AppSidebar"
    ],
    "status_values": [
@@ -97362,10 +97379,13 @@
   },
   "src/components/layout/__tests__/AppSidebar.test.tsx": {
    "path": "src/components/layout/__tests__/AppSidebar.test.tsx",
-   "lines": 88,
+   "lines": 112,
    "is_test": true,
    "role_checks": [
     "authMock"
+   ],
+   "rule_comments": [
+    "pelo deep link de `src/pages/CallLibrary.tsx` -> nao precisa (nem deve ter) item de menu."
    ],
    "tests": [
     "routeRoles (E088)",
@@ -97373,7 +97393,11 @@
     "AppSidebar — filtro por papel (E089)",
     "agente não vê itens de rota com roles (Executivo, Logs de Auditoria)",
     "supervisor vê Executivo mas não Logs de Auditoria",
-    "admin vê Executivo e Logs de Auditoria"
+    "admin vê Executivo e Logs de Auditoria",
+    "cobertura de menu das rotas protegidas (E265)",
+    "toda rota protegida tem item de menu, ou esta registrada como link direto",
+    "os links diretos registrados continuam existindo como rota",
+    "nenhum item de menu aponta para rota inexistente nem se repete"
    ]
   },
   "src/components/lazy/LazyComponent.tsx": {
@@ -127831,10 +127855,22 @@
   }
  },
  "git": {
-  "sha": "711098f57e0965798e7a4e0f70e7741db595fbbf",
+  "sha": "fa17b61efec8d2e1c4fd64bc7f34aca844a7b72a",
   "branch": "main",
   "remote": "https://github.com/adm01-debug/Hello_V3",
   "commits": [
+   {
+    "sha": "fa17b61",
+    "date": "2026-11-24",
+    "author": "adm01-debug",
+    "subject": "chore: registra cobertura de menu das rotas protegidas (etapa 265) (#286)",
+    "files": [
+     "docs/agentes/mapa-repo.md",
+     "docs/qa/05-PROGRESSO.md",
+     "src/components/layout/AppSidebar.tsx",
+     "src/components/layout/__tests__/AppSidebar.test.tsx"
+    ]
+   },
    {
     "sha": "711098f",
     "date": "2026-11-24",
@@ -128280,17 +128316,6 @@
      "supabase/functions/voip-trunks-healthcheck/index.ts",
      "supabase/functions/voip-trunks-manage/index.ts"
     ]
-   },
-   {
-    "sha": "3c97282",
-    "date": "2026-11-24",
-    "author": "adm01-debug",
-    "subject": "fix: update de conversa sem linhas afetadas deixa de passar como sucesso (etapa 184) (#251)",
-    "files": [
-     "docs/qa/05-PROGRESSO.md",
-     "src/hooks/__tests__/useConversations.coverage.test.tsx",
-     "src/hooks/useConversations.ts"
-    ]
    }
   ],
   "hot_files": [
@@ -128299,15 +128324,15 @@
     28
    ],
    [
+    "docs/agentes/mapa-repo.md",
+    4
+   ],
+   [
     "src/hooks/useContacts.ts",
     3
    ],
    [
     "docs/estado/funcionalidades-planejadas.md",
-    3
-   ],
-   [
-    "docs/agentes/mapa-repo.md",
     3
    ],
    [
@@ -128359,19 +128384,19 @@
     2
    ],
    [
+    "src/components/layout/AppSidebar.tsx",
+    1
+   ],
+   [
+    "src/components/layout/__tests__/AppSidebar.test.tsx",
+    1
+   ],
+   [
     "src/hooks/__tests__/useAccounts.coverage.test.tsx",
     1
    ],
    [
     "src/hooks/__tests__/useAccounts.test.ts",
-    1
-   ],
-   [
-    "src/hooks/__tests__/useCadences.coverage.test.tsx",
-    1
-   ],
-   [
-    "src/hooks/__tests__/useDeals.conflict.test.ts",
     1
    ]
   ]

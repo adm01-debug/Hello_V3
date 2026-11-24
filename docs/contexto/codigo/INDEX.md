@@ -1,7 +1,7 @@
 # Contexto do projeto para agentes de IA
 
 GERADO AUTOMATICAMENTE por scripts/ai-context/gerar.mjs — não editar à mão; será sobrescrito.
-Publicado em `docs/contexto/codigo/` na branch `contexto` (gerada, nunca abra PR dela) a cada push em `main` e a cada 10 minutos pelo workflow `contexto.yml`; índice único das três fontes em `docs/contexto/00-INDEX.md`. Gere local com `node scripts/ai-context/gerar.mjs`. Commit-base: `711098f57e0965798e7a4e0f70e7741db595fbbf` (2026-11-24T10:31:53-03:00).
+Publicado em `docs/contexto/codigo/` na branch `contexto` (gerada, nunca abra PR dela) a cada push em `main` e a cada 10 minutos pelo workflow `contexto.yml`; índice único das três fontes em `docs/contexto/00-INDEX.md`. Gere local com `node scripts/ai-context/gerar.mjs`. Commit-base: `fa17b61efec8d2e1c4fd64bc7f34aca844a7b72a` (2026-11-24T10:52:38-03:00).
 
 ## Como usar (leia antes de planejar ou executar qualquer tarefa)
 1. **Tela/rota/menu** → `rotas.json` (url/vista/menu → arquivo → hooks → tabelas → edges; `rotas_http_backend` para APIs) e `modulos.json` (módulo inteiro + dependências entre módulos).
@@ -36,7 +36,7 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 |---|---|
 | arquivos_total | 1745 |
 | arquivos_codigo | 1342 |
-| linhas_codigo | 181534 |
+| linhas_codigo | 181571 |
 | rotas | 106 |
 | rotas_http_backend | 12 |
 | vistas_por_id | 0 |
@@ -371,27 +371,27 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 - possiveis_segredos_no_codigo: 4 — ex.: scripts/ai-context/cenarios.mjs:103, src/lib/__tests__/security-advanced.test.ts:203, src/lib/__tests__/security-advanced.test.ts:208
 
 ## Grafo de código (graphify)
-- 10215 nós · 26962 arestas · 780 comunidades · grafo do commit `711098f5`
-- comunidades maiores: lucide-react (272), client.ts (212), vitest (205), protectedRoutes.tsx (165), buildCorsHeaders (157), select.tsx (156), button.tsx (150), usePageTitle (141), @tanstack/react-query (125), cn (117), ONDA 2 — Fluxos principais quebrados (056–100) (98), validate.ts (97)
+- 10219 nós · 26970 arestas · 778 comunidades · grafo do commit `fa17b61e`
+- comunidades maiores: lucide-react (322), react (199), vitest (189), usePageTitle (151), @tanstack/react-query (127), client.ts (126), 5. Em uso por rota (124), buildCorsHeaders (124), logger.ts (120), cn (115), protectedRoutes.tsx (111), utils.ts (110)
 - símbolos mais chamados: cn() (src/lib/utils.ts), usePageTitle() (src/hooks/usePageTitle.ts), safeFormatDatePtBR() (src/lib/safe-date.ts), q() (scripts/supabase_snapshot/snapshot.py), safeFormatDistanceToNow() (src/lib/safe-date.ts), useAuthContext() (src/contexts/AuthContext.tsx), traceHeaders() (src/lib/tracing.ts), withTrace() (src/lib/tracing.ts), formatDuration() (src/lib/utils.ts), safeToLocaleString() (src/lib/safe-date.ts), .collect() (scripts/supabase_snapshot/test_snapshot.py), buildCorsHeaders() (supabase/functions/_shared/cors.ts)
 - consulta local: `graphify query "<pergunta>"`, `graphify path "<A>" "<B>"`, `graphify explain "<X>"`
 
 ## Hotspots (arquivos mais alterados, 90 dias)
-- docs/qa/05-PROGRESSO.md (109)
+- docs/qa/05-PROGRESSO.md (110)
 - docs/estado/funcionalidades-planejadas.md (30)
+- src/components/layout/AppSidebar.tsx (10)
 - src/hooks/useMultiChannelCall.ts (10)
 - docs/audits/pendencias-2026-07.md (9)
-- src/components/layout/AppSidebar.tsx (9)
 - supabase/functions/data-lake-flush/index.ts (9)
 - src/components/layout/CommandPalette.tsx (8)
 - .github/workflows/ci.yml (7)
 - docs/edge-functions/README.md (7)
 - src/components/calls/UnifiedSoftphone.tsx (7)
 - .github/workflows/contexto.yml (6)
+- docs/agentes/mapa-repo.md (6)
 - src/hooks/__tests__/useQueueMetrics.coverage.test.tsx (6)
 - src/hooks/useQueueMetrics.ts (6)
 - src/routes/protectedRoutes.tsx (6)
-- supabase/functions/chatbot-respond/index.ts (6)
 
 ## Workflows
 - `ci.yml` — CI (pull_request, push)
@@ -430,6 +430,7 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 
 
 ## Últimos commits
+- 2026-11-24 `fa17b61` chore: registra cobertura de menu das rotas protegidas (etapa 265) (#286)
 - 2026-11-24 `711098f` feat: pagina contatos, negocios e contas de 50 em 50 (etapa 237) (#285)
 - 2026-11-24 `d32534f` chore: fixa o orcamento de bundle a mao a partir da meta (etapa 252) (#284)
 - 2026-11-24 `cf8c57b` feat: reduz o chunk de entrada do front em ~15% (etapa 251) (#283)
@@ -444,7 +445,6 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 - 2026-11-24 `9b4d4b9` fix: pagina a lista de gravacoes e limita as consultas do painel (etapa 236) (#273)
 - 2026-11-24 `a7041fc` chore: regenera types.ts a partir do schema de producao (etapa 136) (#272)
 - 2026-11-24 `2772bab` docs: registra o desfecho da apuracao de exclusao de conta LGPD (etapa 132) (#271)
-- 2026-11-24 `b887757` fix: validate-geo e a tela de geo honram o modo allowlist/blocklist (etapa 141) (#270)
 
 ## Arquivos deste diretório
 - `docs/contexto/codigo/rotas.json`

@@ -368,13 +368,13 @@
   {
    "arquivo": "src/components/layout/__tests__/AppSidebar.test.tsx",
    "tipo": "unit",
-   "linhas": 88,
+   "linhas": 112,
    "testa": [
     "src/components/layout/AppSidebar.tsx",
     "src/components/ui/sidebar.tsx",
     "src/routes/protectedRoutes.tsx"
    ],
-   "casos": 4
+   "casos": 7
   },
   {
    "arquivo": "src/components/network/__tests__/QualityForecastCard.test.tsx",
