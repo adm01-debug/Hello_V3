@@ -161,7 +161,9 @@ serve(async (req) => {
       }
 
       if (transcriptionEntries.length > 0) {
-        await supabaseAdmin.from('call_transcriptions').insert(transcriptionEntries);
+        const { error: entriesErr } = await supabaseAdmin.from('call_transcriptions').insert(transcriptionEntries);
+        // Essencial: sem os trechos a transcricao fica inutilizavel na tela.
+        if (entriesErr) throw entriesErr;
       }
     }
 

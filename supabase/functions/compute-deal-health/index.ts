@@ -97,11 +97,12 @@ function json(body: unknown, status = 200) {
       days_since_last_call: Math.round(recencyDays),
     };
 
-    await supabase.from("deals").update({
+    const { error: dealHealthErr } = await supabase.from("deals").update({
       health_score: healthScore,
       health_factors: factors,
       health_updated_at: new Date().toISOString(),
     }).eq("id", dealId);
+    if (dealHealthErr) console.error('compute-deal-health: falha ao gravar saude do negocio', dealHealthErr);
 
     return json({ healthScore, factors });
   } catch (e) {
