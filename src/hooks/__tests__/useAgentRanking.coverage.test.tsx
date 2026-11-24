@@ -144,7 +144,7 @@ describe('useAgentRanking (coverage)', () => {
     await waitFor(() => expect(result.current.isLoading).toBe(false));
 
     await act(async () => { await result.current.saveGoals(); });
-    expect(toast.success).not.toHaveBeenCalledWith('Metas salvas com sucesso!');
+    expect(toast.success).not.toHaveBeenCalledWith('Metas salvas', expect.anything());
 
     act(() => result.current.setEditingGoals({
       agent_name: 'Alice', calls_target: 10, satisfaction_target: 5, performance_target: 5,
@@ -152,7 +152,9 @@ describe('useAgentRanking (coverage)', () => {
     await waitFor(() => expect(result.current.editingGoals).not.toBeNull());
 
     await act(async () => { await result.current.saveGoals(); });
-    expect(toast.success).toHaveBeenCalledWith('Metas salvas com sucesso!');
+    expect(toast.success).toHaveBeenCalledWith('Metas salvas', {
+      description: 'Alice: 10 chamadas, nota 5, performance 5',
+    });
     await waitFor(() => expect(result.current.goalsDialogOpen).toBe(false));
   });
 
@@ -181,7 +183,7 @@ describe('useAgentRanking (coverage)', () => {
     const { result } = renderHook(() => useAgentRanking());
     await waitFor(() => expect(result.current.isLoading).toBe(false));
     await act(async () => { await result.current.createTestData(); });
-    expect(toast.success).toHaveBeenCalledWith('Dados de teste criados com sucesso!');
+    expect(toast.success).toHaveBeenCalledWith('Dados de teste criados');
     rnd.mockRestore();
   });
 

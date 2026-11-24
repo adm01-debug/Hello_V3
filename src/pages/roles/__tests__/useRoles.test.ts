@@ -140,7 +140,7 @@ describe('useRoles', () => {
     await act(async () => { ok = await result.current.addRole('a@b.com', 'admin'); });
 
     expect(ok).toBe(true);
-    expect(toast.success).toHaveBeenCalledWith('Role adicionada com sucesso!');
+    expect(toast.success).toHaveBeenCalledWith('Role adicionada', { description: 'admin' });
   });
 
   it('removeRole exibe sucesso', async () => {

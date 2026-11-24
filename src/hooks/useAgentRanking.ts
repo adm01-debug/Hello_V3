@@ -145,7 +145,9 @@ export function useAgentRanking() {
     }, { onConflict: 'agent_name' });
 
     if (error) { toast.error('Erro ao salvar metas'); logger.error('Error saving goals:', error); return; }
-    toast.success('Metas salvas com sucesso!');
+    toast.success('Metas salvas', {
+      description: `${editingGoals.agent_name}: ${editingGoals.calls_target} chamadas, nota ${editingGoals.satisfaction_target}, performance ${editingGoals.performance_target}`,
+    });
     fetchAgentGoals();
     setGoalsDialogOpen(false);
     setEditingGoals(null);
@@ -324,7 +326,7 @@ export function useAgentRanking() {
           }
         }
       }
-      toast.success('Dados de teste criados com sucesso!');
+      toast.success('Dados de teste criados');
       fetchAgentStats();
     } catch (error) {
       logger.error('Error creating test data:', error);

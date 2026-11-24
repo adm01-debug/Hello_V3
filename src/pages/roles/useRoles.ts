@@ -79,7 +79,7 @@ export function useRoles(currentUserId: string | undefined) {
       return false;
     }
 
-    toast.success('Role adicionada com sucesso!');
+    toast.success('Role adicionada', { description: role });
     await loadUserRoles();
     return true;
   }, [currentUserId, loadUserRoles]);
