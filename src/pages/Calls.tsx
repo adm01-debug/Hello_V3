@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Radio, MessageCircle, Headphones, Info, ExternalLink } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
@@ -14,6 +15,7 @@ import { usePageTitle } from '@/hooks/usePageTitle';
 const Calls = () => {
   usePageTitle('Chamadas');
   const sip = useSipCall();
+  const navigate = useNavigate();
 
   const [callStats] = useState({
     today: 12,
@@ -131,13 +133,9 @@ const Calls = () => {
                     <Badge variant="outline" className="text-xs">Pendente</Badge>
                   </div>
                   <p className="text-xs text-muted-foreground">
-                    Chamadas de voz via WhatsApp
+                    Chamadas de voz via WhatsApp — integração ainda não disponível
                   </p>
                 </div>
-                <Button variant="outline" size="sm" className="gap-1">
-                  <ExternalLink className="h-3 w-3" />
-                  Configurar
-                </Button>
               </div>
 
               {/* SIP */}
@@ -154,7 +152,12 @@ const Calls = () => {
                     Servidor SIP próprio ou operadora
                   </p>
                 </div>
-                <Button variant="outline" size="sm" className="gap-1">
+                <Button
+                  variant="outline"
+                  size="sm"
+                  className="gap-1"
+                  onClick={() => navigate('/admin/voip-trunks')}
+                >
                   <ExternalLink className="h-3 w-3" />
                   Configurar
                 </Button>
