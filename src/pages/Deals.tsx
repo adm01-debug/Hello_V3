@@ -30,7 +30,7 @@ function healthClass(score: number | null) {
 
 export default function Deals() {
   usePageTitle("Oportunidades");
-  const { deals, loading, createDeal, updateStage, computeHealth } = useDeals();
+  const { deals, loading, totalCount, hasMore, loadingMore, loadMore, createDeal, updateStage, computeHealth } = useDeals();
   const [open, setOpen] = useState(false);
   const [form, setForm] = useState({ name: "", value: "", stage: "prospecting", probability: "10" });
 
@@ -138,6 +138,16 @@ export default function Deals() {
               </CardContent>
             </Card>
           ))}
+        </div>
+      )}
+      {hasMore && (
+        <div className="text-center">
+          <Button variant="outline" size="sm" onClick={loadMore} disabled={loadingMore}>
+            {loadingMore ? "Carregando..." : "Carregar mais oportunidades"}
+          </Button>
+          <p className="mt-2 text-xs text-muted-foreground">
+            {deals.length} de {totalCount ?? deals.length} oportunidades carregadas — colunas e totais consideram apenas o que ja foi carregado.
+          </p>
         </div>
       )}
     </NeonPageLayout>

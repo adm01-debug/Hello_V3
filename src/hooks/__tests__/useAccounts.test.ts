@@ -20,6 +20,7 @@ vi.mock('@/integrations/supabase/client', () => {
     builder.update = vi.fn().mockReturnValue(builder);
     builder.eq = vi.fn().mockReturnValue(builder);
     builder.order = vi.fn().mockReturnValue(builder);
+    builder.range = vi.fn().mockResolvedValue({ ...result, count: 1 });
     builder.single = vi.fn().mockResolvedValue(singleResult);
     builder.then = (resolve: (v: typeof result) => unknown) => Promise.resolve(result).then(resolve);
     return builder;

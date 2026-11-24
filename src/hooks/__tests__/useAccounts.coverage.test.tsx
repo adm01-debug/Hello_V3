@@ -8,6 +8,7 @@ const state = {
   updateError: null as unknown,
   invokeError: null as unknown,
   invokeData: { signals_persisted: 2 } as unknown,
+  rows: null as unknown[] | null,
 };
 
 const account = {
@@ -27,7 +28,15 @@ vi.mock('@/integrations/supabase/client', () => ({
       builder.insert = vi.fn(() => builder);
       builder.update = vi.fn(() => builder);
       builder.eq = vi.fn(() => Promise.resolve({ data: null, error: state.updateError }));
-      builder.order = vi.fn(() => Promise.resolve({ data: [account], error: state.loadError }));
+      // A lista passou a ser paginada com .range(): o mock precisa cortar por
+      // `from` e devolver `count` como o PostgREST faz.
+      const allRows = () => state.rows ?? [account];
+      builder.order = vi.fn(() => builder);
+      builder.range = vi.fn((from: number) => Promise.resolve({
+        data: allRows().slice(from, from + 50), error: state.loadError, count: allRows().length,
+      }));
+      builder.then = (res: (v: unknown) => unknown) =>
+        Promise.resolve({ data: allRows(), error: state.loadError, count: allRows().length }).then(res);
       builder.single = vi.fn(() => Promise.resolve({ data: account, error: state.insertError }));
       return builder;
     }),
@@ -49,6 +58,7 @@ beforeEach(() => {
   state.updateError = null;
   state.invokeError = null;
   state.invokeData = { signals_persisted: 2 };
+  state.rows = null;
   vi.clearAllMocks();
 });
 
@@ -127,5 +137,21 @@ describe('useAccounts coverage', () => {
     await waitFor(() => expect(result.current.loading).toBe(false));
     await act(async () => { await result.current.refresh(); });
     expect(result.current.accounts.length).toBe(1);
+  });
+
+  it('pagina de 50 em 50 sem repetir e informa o total', async () => {
+    state.rows = Array.from({ length: 55 }, (_, i) => ({ ...account, id: `a${i}`, name: `Conta ${i}` }));
+    const { result } = renderHook(() => useAccounts());
+    await waitFor(() => expect(result.current.loading).toBe(false));
+
+    expect(result.current.accounts).toHaveLength(50);
+    expect(result.current.hasMore).toBe(true);
+    expect(result.current.totalCount).toBe(55);
+
+    await act(async () => { await result.current.loadMore(); });
+
+    expect(result.current.accounts).toHaveLength(55);
+    expect(new Set(result.current.accounts.map((a) => a.id)).size).toBe(55);
+    expect(result.current.hasMore).toBe(false);
   });
 });

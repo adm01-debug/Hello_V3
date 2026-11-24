@@ -47,7 +47,7 @@ const Contacts = () => {
   const [page, setPage] = useState(1);
   const [pageSize, setPageSize] = useState<PageSize>(DEFAULT_PAGE_SIZE);
 
-  const { contacts, isLoading, fetchContacts, deleteContact, createContact } = useContacts();
+  const { contacts, isLoading, totalCount, hasMore, loadingMore, loadMore, fetchContacts, deleteContact, createContact } = useContacts();
   const { syncWithBitrix, isSyncing, bitrixLoading } = useBitrixSync({
     contacts,
     createContact,
@@ -313,6 +313,16 @@ const Contacts = () => {
                   onPageChange={setPage}
                   onPageSizeChange={setPageSize}
                 />
+              )}
+              {hasMore && (
+                <div className="text-center">
+                  <Button variant="outline" size="sm" onClick={loadMore} disabled={loadingMore}>
+                    {loadingMore ? 'Carregando...' : 'Carregar mais contatos'}
+                  </Button>
+                  <p className="mt-2 text-xs text-muted-foreground">
+                    {contacts.length} de {totalCount ?? contacts.length} contatos carregados — busca, filtros e favoritos consideram apenas o que ja foi carregado.
+                  </p>
+                </div>
               )}
             </>
           )}

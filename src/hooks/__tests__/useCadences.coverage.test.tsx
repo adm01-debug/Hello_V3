@@ -13,7 +13,12 @@ let insertResult: QueryResult = { data: { id: 'new' }, error: null };
 const makeQuery = (table: string) => {
   const q: Record<string, unknown> = {
     select: vi.fn(() => q),
-    order: vi.fn(() => (table === 'cadence_enrollments' ? q : Promise.resolve(responses[table]))),
+    order: vi.fn(() => q),
+    range: vi.fn(() => Promise.resolve({
+      ...responses[table],
+      count: Array.isArray(responses[table].data) ? (responses[table].data as unknown[]).length : null,
+    })),
+    in: vi.fn(() => q),
     eq: vi.fn(() => q),
     insert: vi.fn(() => ({ select: vi.fn(() => ({ single: vi.fn(() => Promise.resolve(insertResult)) })) })),
     then: (res: (v: QueryResult) => unknown) => Promise.resolve(responses[table]).then(res),

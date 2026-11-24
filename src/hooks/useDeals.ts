@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { logger } from "@/lib/logger";
 import { traceHeaders, withTrace } from "@/lib/tracing";
@@ -38,22 +38,57 @@ export const DEAL_STAGES = [
   { id: "closed_lost", label: "Perdida" },
 ] as const;
 
+const DEALS_PAGE_SIZE = 50;
+
 export function useDeals() {
   const [deals, setDeals] = useState<Deal[]>([]);
   const [loading, setLoading] = useState(true);
+  const [totalCount, setTotalCount] = useState<number | null>(null);
+  const [hasMore, setHasMore] = useState(false);
+  const [loadingMore, setLoadingMore] = useState(false);
+  const pageRef = useRef(0);
 
-  const fetchDeals = useCallback(async () => {
-    setLoading(true);
-    const { data, error } = await supabase
-      .from("deals").select("*").order("updated_at", { ascending: false });
+  // Paginas de 50 + desempate por id: o kanban nao pode receber o corte de 1000
+  // linhas do PostgREST como se fosse o funil completo.
+  const fetchPage = useCallback(async (pageToFetch: number) => {
+    const from = pageToFetch * DEALS_PAGE_SIZE;
+    const { data, error, count } = await supabase
+      .from("deals")
+      .select("*", pageToFetch === 0 ? { count: "exact" } : undefined)
+      .order("updated_at", { ascending: false })
+      .order("id", { ascending: false })
+      .range(from, from + DEALS_PAGE_SIZE - 1);
     if (error) {
       logger.error("fetchDeals", error);
       toast.error("Erro ao carregar oportunidades");
-    } else {
-      setDeals(((data as DealRow[] | null) ?? []) as unknown as Deal[]);
+      return;
     }
-    setLoading(false);
+    const rows = ((data as DealRow[] | null) ?? []) as unknown as Deal[];
+    if (pageToFetch === 0 && typeof count === "number") setTotalCount(count);
+    setHasMore(rows.length === DEALS_PAGE_SIZE);
+    setDeals((prev) => (pageToFetch === 0 ? rows : [...prev, ...rows]));
   }, []);
+
+  const fetchDeals = useCallback(async () => {
+    setLoading(true);
+    pageRef.current = 0;
+    try {
+      await fetchPage(0);
+    } finally {
+      setLoading(false);
+    }
+  }, [fetchPage]);
+
+  const loadMore = useCallback(async () => {
+    if (!hasMore || loadingMore) return;
+    setLoadingMore(true);
+    try {
+      pageRef.current += 1;
+      await fetchPage(pageRef.current);
+    } finally {
+      setLoadingMore(false);
+    }
+  }, [fetchPage, hasMore, loadingMore]);
 
   useEffect(() => { fetchDeals(); }, [fetchDeals]);
 
@@ -107,5 +142,8 @@ export function useDeals() {
     });
   }, []);
 
-  return { deals, loading, refresh: fetchDeals, createDeal, updateDeal, updateStage, computeHealth };
+  return {
+    deals, loading, totalCount, hasMore, loadingMore, loadMore,
+    refresh: fetchDeals, createDeal, updateDeal, updateStage, computeHealth,
+  };
 }

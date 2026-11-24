@@ -18,7 +18,7 @@ function healthVariant(score: number): 'default' | 'secondary' | 'destructive' {
 
 export default function Accounts() {
   usePageTitle('Customer Success — Contas');
-  const { accounts, loading, recomputeHealth, detectChurn } = useAccounts();
+  const { accounts, loading, totalCount, hasMore, loadingMore, loadMore, recomputeHealth, detectChurn } = useAccounts();
   const [filter, setFilter] = useState('');
   const [statusFilter, setStatusFilter] = useState<string>('all');
 
@@ -129,6 +129,16 @@ export default function Accounts() {
                   </Button>
                 </div>
               ))}
+              {hasMore && (
+                <div className="pt-2 text-center">
+                  <Button variant="outline" size="sm" onClick={loadMore} disabled={loadingMore}>
+                    {loadingMore ? 'Carregando...' : 'Carregar mais contas'}
+                  </Button>
+                  <p className="mt-2 text-xs text-muted-foreground">
+                    {accounts.length} de {totalCount ?? accounts.length} contas carregadas — filtros e totais consideram apenas o que ja foi carregado.
+                  </p>
+                </div>
+              )}
             </div>
           )}
         </CardContent>

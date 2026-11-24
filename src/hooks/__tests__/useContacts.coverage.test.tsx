@@ -18,14 +18,15 @@ describe('useContacts (coverage)', () => {
     vi.clearAllMocks();
     // default: list returns one contact (order is awaitable directly when no search)
     fromMock.mockReturnValue({
-      select: vi.fn(() => ({
-        order: vi.fn(() => {
-          const p: Promise<{ data: unknown[]; error: null }> & { or?: unknown } =
-            Promise.resolve({ data: [contact], error: null }) as Promise<{ data: unknown[]; error: null }> & { or?: unknown };
-          (p as { or: () => Promise<{ data: unknown[]; error: null }> }).or = () => Promise.resolve({ data: [contact], error: null });
-          return p;
-        }),
-      })),
+      select: vi.fn(() => {
+        const res = { data: [contact], error: null, count: 1 };
+        const q: Record<string, unknown> = {};
+        q.order = vi.fn(() => q);
+        q.or = vi.fn(() => q);
+        q.range = vi.fn(() => Promise.resolve(res));
+        q.then = (r: (v: unknown) => unknown) => Promise.resolve(res).then(r);
+        return q;
+      }),
     });
   });
 
