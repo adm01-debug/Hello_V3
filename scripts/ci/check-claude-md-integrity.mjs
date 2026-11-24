@@ -67,7 +67,7 @@ function bytesNaBase(base) {
   const tamanho = (path) => {
     try {
       const out = execSync(`git cat-file -s ${base}:${path}`, { encoding: 'utf8', stdio: ['ignore', 'pipe', 'ignore'] });
-      porArquivo.set(path, Number.parseInt(out.trim(), 10) || 0);
+      porArquivo.set(path, Number(out.trim()) || 0);
     } catch {
       /* nao existe na base */
     }

@@ -1,6 +1,6 @@
 import { Client } from 'pg';
 
-const ANON_KEY = process.env.SUPABASE_ANON_KEY ?? (() => { throw new Error('Credencial ausente: defina SUPABASE_ANON_KEY no ambiente.'); })();
+const _ANON_KEY = process.env.SUPABASE_ANON_KEY ?? (() => { throw new Error('Credencial ausente: defina SUPABASE_ANON_KEY no ambiente.'); })();
 
 // Teste via cliente postgres direto simulando o que o frontend faz via Supabase JS client
 const clientConfig = (() => {

@@ -157,7 +157,7 @@ export function tabelasDeTypesTs(texto) {
   let fim = fimViews > 0 ? fimViews : fimFunctions;
   if (fim <= 0) fim = texto.indexOf('\n    }', i);
   const bloco = texto.slice(i, fim > 0 ? fim : undefined);
-  return [...bloco.matchAll(/\n      ([a-z][A-Za-z0-9_]*): \{/g)].map((m) => m[1]).sort();
+  return [...bloco.matchAll(/\n {6}([a-z][A-Za-z0-9_]*): \{/g)].map((m) => m[1]).sort();
 }
 const tabelasDoManifesto = (raiz) => {
   const manifesto = path.join(raiz, 'supabase/schema-manifest.json');

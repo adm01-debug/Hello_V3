@@ -1,7 +1,7 @@
 // Testa exatamente as chamadas que o frontend faz via supabase-js client
 const SUPABASE_URL = process.env.SUPABASE_URL ?? 'https://cfmlmcdyjuotqobjapng.supabase.co';
 const ANON_KEY = process.env.SUPABASE_ANON_KEY ?? (() => { throw new Error('Credencial ausente: defina SUPABASE_ANON_KEY no ambiente.'); })();
-const SERVICE_KEY = process.env.SUPABASE_SERVICE_ROLE_KEY ?? (() => { throw new Error('Credencial ausente: defina SUPABASE_SERVICE_ROLE_KEY no ambiente.'); })();
+const _SERVICE_KEY = process.env.SUPABASE_SERVICE_ROLE_KEY ?? (() => { throw new Error('Credencial ausente: defina SUPABASE_SERVICE_ROLE_KEY no ambiente.'); })();
 
 const tests = [
   // 1. SELECT como ANON (sem login) - geralmente bloqueado por RLS
@@ -21,7 +21,7 @@ for (const t of tests) {
     const res = await fetch(t.url, { method: 'GET', headers: t.headers });
     const text = await res.text();
     let body = text;
-    try { body = JSON.stringify(JSON.parse(text), null, 2).slice(0, 500); } catch {}
+    try { body = JSON.stringify(JSON.parse(text), null, 2).slice(0, 500); } catch { /* corpo nao e JSON */ }
     console.log(`\n=== ${t.name} ===`);
     console.log(`Status: ${res.status}`);
     console.log(`Body: ${body}`);

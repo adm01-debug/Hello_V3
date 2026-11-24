@@ -25,7 +25,7 @@ if (loginRes.status !== 200) {
 }
 
 // Tentar com token manual (user_id + role embutido no JWT)
-const { importPKCS8, SignJWT } = await import('jose');
+const { importPKCS8: _importPKCS8, SignJWT: _SignJWT } = await import('jose');
 
 console.log('\n=== ETAPA 2: Verificar com service_role que dados existem ===\n');
 
