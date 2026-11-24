@@ -82,6 +82,7 @@ export function useCallSession() {
       if (error) throw error;
       log.info(`Saved ${transcriptsToSave.length} transcripts`);
     } catch (error) {
+      // Nada e perdido: os trechos voltam para a fila e sao reenviados (E072).
       log.error('Error saving transcripts', error);
       pendingTranscriptsRef.current = [...transcriptsToSave, ...pendingTranscriptsRef.current];
     }

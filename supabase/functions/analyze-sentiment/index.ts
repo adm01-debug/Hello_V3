@@ -73,12 +73,13 @@ serve(async (req) => {
 
     if (callSessionId) {
       const supabaseAdmin = createClient(supabaseUrl, Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!);
-      await supabaseAdmin.from('call_summaries').upsert({
+      const { error: summaryErr } = await supabaseAdmin.from('call_summaries').upsert({
         call_session_id: callSessionId,
         overall_sentiment: result.overall_sentiment,
         customer_satisfaction: result.customer_satisfaction_estimate,
         summary: result.summary,
       }, { onConflict: 'call_session_id' });
+      if (summaryErr) console.error('analyze-sentiment: falha ao salvar resumo do sentimento', summaryErr);
     }
 
     return new Response(JSON.stringify({ success: true, ...result }), { headers: { ...cors, 'Content-Type': 'application/json' } });

@@ -34,6 +34,8 @@ export function useExtensionAudit() {
       });
       if (error) logger.error('extension-audit:bulk', error);
     } catch (err) {
+      // Auditoria e acessoria: a acao em lote ja foi aplicada. Devolver erro aqui
+      // faria o admin repetir o lote por causa do log, nao do efeito.
       logger.error('extension-audit:bulk:exception', err);
     }
   }, []);
