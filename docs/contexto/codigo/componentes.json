@@ -2716,7 +2716,7 @@
     "OnboardingWizard"
    ],
    "export_default": null,
-   "linhas": 134,
+   "linhas": 124,
    "dominio": "components/layout",
    "hooks_locais": [],
    "tabelas": [],
@@ -2774,7 +2774,7 @@
     "NavigationProgress"
    ],
    "export_default": null,
-   "linhas": 38,
+   "linhas": 28,
    "dominio": "components/navigation",
    "hooks_locais": [],
    "tabelas": [],
@@ -2788,7 +2788,7 @@
     "PageTransition"
    ],
    "export_default": null,
-   "linhas": 56,
+   "linhas": 26,
    "dominio": "components/navigation",
    "hooks_locais": [],
    "tabelas": [],

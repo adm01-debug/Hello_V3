@@ -1,15 +1,15 @@
 {
  "meta": {
-  "sha": "9ad7ed6bc187b358f63662d35a1fc592a62f79a8",
+  "sha": "cf8c57b9b5ed67225b6718313bb1e813475a68a4",
   "branch": "main",
   "remote": "https://github.com/adm01-debug/Hello_V3",
-  "generated_at": "2026-11-24 12:34 UTC",
+  "generated_at": "2026-11-24 13:03 UTC",
   "files_total": 1792,
   "code_files": 1588,
-  "code_lines": 197261
+  "code_lines": 197306
  },
  "version": "1.3.2",
- "facts_hash": "1c8a82cf558b08bc",
+ "facts_hash": "b3338bf123f6d43a",
  "stack": {
   "frameworks": [
    "React + Vite",
@@ -28536,7 +28536,7 @@
     ],
     "invokes_transitive": [],
     "rpc_transitive": [],
-    "deps_count": 16
+    "deps_count": 15
    },
    {
     "path": "",
@@ -28596,7 +28596,7 @@
      "check_dnc",
      "record_trunk_usage"
     ],
-    "deps_count": 39
+    "deps_count": 38
    },
    {
     "path": "",
@@ -33320,7 +33320,7 @@
   {
    "module": "scripts",
    "files": 36,
-   "lines": 10089,
+   "lines": 10180,
    "tables": [
     "a",
     "contacts",
@@ -33496,7 +33496,7 @@
   {
    "module": "src/components",
    "files": 372,
-   "lines": 44284,
+   "lines": 44234,
    "tables": [
     "accounts",
     "agent_goals",
@@ -33753,7 +33753,7 @@
   {
    "module": "src/hooks",
    "files": 355,
-   "lines": 47803,
+   "lines": 47807,
    "tables": [
     "accounts",
     "active_sessions",
@@ -42917,6 +42917,10 @@
     "text": "e usa `location.pathname` apenas para reiniciar a animação ao trocar de página."
    },
    {
+    "file": "src/components/navigation/PageTransition.tsx",
+    "text": "entrada (etapa 251) e segue sendo carregada apenas pelas rotas lazy que a usam."
+   },
+   {
     "file": "src/components/network/AgentQualityRanking.tsx",
     "text": "Total alerts (não distribuímos por agente — apenas total para contexto)"
    },
@@ -52061,12 +52065,6 @@
     "field": "role",
     "value": "admin",
     "kind": "compara"
-   },
-   {
-    "file": "src/components/layout/OnboardingWizard.tsx",
-    "field": "type",
-    "value": "spring",
-    "kind": "escreve"
    },
    {
     "file": "src/components/network/NetworkStatusIndicator.tsx",
@@ -85167,14 +85165,13 @@
      "react-component": [
       "escreve:src/components/error-boundary/ErrorBoundary.tsx"
      ],
-     "spring": [
-      "escreve:src/components/layout/OnboardingWizard.tsx",
-      "escreve:src/components/voice/VoiceAssistantDialog.tsx",
-      "escreve:src/components/voice/overlay/VoiceOrb.tsx"
-     ],
      "error": [
       "compara:src/components/observability/ErrorsTab.tsx",
       "escreve:src/lib/error-tracking.ts"
+     ],
+     "spring": [
+      "escreve:src/components/voice/VoiceAssistantDialog.tsx",
+      "escreve:src/components/voice/overlay/VoiceOrb.tsx"
      ],
      "outgoing": [
       "escreve:src/data/mockData.ts"
@@ -92448,9 +92445,10 @@
   },
   "scripts/audit-edge-functions.ts": {
    "path": "scripts/audit-edge-functions.ts",
-   "lines": 177,
+   "lines": 268,
    "rule_comments": [
-    "R3 — service_role sem validação do chamador. Webhooks e crons são legítimos:"
+    "R3 — service_role sem validação do chamador. Webhooks e crons são legítimos:",
+    "o caso intencional; esta regra NAO entra no baseline de propósito (warn silenciado"
    ],
    "doc": "!/usr/bin/env bun",
    "uses_service_role": true
@@ -97319,14 +97317,7 @@
   },
   "src/components/layout/OnboardingWizard.tsx": {
    "path": "src/components/layout/OnboardingWizard.tsx",
-   "lines": 134,
-   "status_values": [
-    {
-     "field": "type",
-     "value": "spring",
-     "kind": "escreve"
-    }
-   ],
+   "lines": 124,
    "temporal": [
     "const timer = setTimeout(() => setOpen(true), 2000);"
    ]
@@ -97380,7 +97371,7 @@
   },
   "src/components/navigation/NavigationProgress.tsx": {
    "path": "src/components/navigation/NavigationProgress.tsx",
-   "lines": 38,
+   "lines": 28,
    "exports": [
     "function NavigationProgress"
    ],
@@ -97397,9 +97388,12 @@
   },
   "src/components/navigation/PageTransition.tsx": {
    "path": "src/components/navigation/PageTransition.tsx",
-   "lines": 56,
+   "lines": 26,
    "exports": [
     "function PageTransition"
+   ],
+   "rule_comments": [
+    "entrada (etapa 251) e segue sendo carregada apenas pelas rotas lazy que a usam."
    ]
   },
   "src/components/network/AgentQualityRanking.tsx": {
@@ -101467,7 +101461,7 @@
   },
   "src/hooks/useContacts.ts": {
    "path": "src/hooks/useContacts.ts",
-   "lines": 375,
+   "lines": 379,
    "exports": [
     "interface Contact",
     "interface ContactInteraction",
@@ -127773,10 +127767,35 @@
   }
  },
  "git": {
-  "sha": "9ad7ed6bc187b358f63662d35a1fc592a62f79a8",
+  "sha": "cf8c57b9b5ed67225b6718313bb1e813475a68a4",
   "branch": "main",
   "remote": "https://github.com/adm01-debug/Hello_V3",
   "commits": [
+   {
+    "sha": "cf8c57b",
+    "date": "2026-11-24",
+    "author": "adm01-debug",
+    "subject": "feat: reduz o chunk de entrada do front em ~15% (etapa 251) (#283)",
+    "files": [
+     "docs/qa/05-PROGRESSO.md",
+     "src/components/layout/OnboardingWizard.tsx",
+     "src/components/navigation/NavigationProgress.tsx",
+     "src/components/navigation/PageTransition.tsx",
+     "src/hooks/useContacts.ts",
+     "src/index.css"
+    ]
+   },
+   {
+    "sha": "43fa2c8",
+    "date": "2026-11-24",
+    "author": "adm01-debug",
+    "subject": "feat: guard de CI contra N+1 em edge function (etapa 250) (#282)",
+    "files": [
+     "docs/estado/funcionalidades-planejadas.md",
+     "docs/qa/05-PROGRESSO.md",
+     "scripts/audit-edge-functions.ts"
+    ]
+   },
    {
     "sha": "9ad7ed6",
     "date": "2026-11-24",
@@ -128204,30 +128223,6 @@
      "supabase/functions/webhook-handler/index.ts",
      "supabase/functions/whatsapp-inbound/index.ts"
     ]
-   },
-   {
-    "sha": "e08bab6",
-    "date": "2026-11-24",
-    "author": "adm01-debug",
-    "subject": "fix: remocao de audio de fila checa storage antes do banco (etapa 186) (#253)",
-    "files": [
-     "docs/qa/05-PROGRESSO.md",
-     "src/hooks/__tests__/useQueueAudioPrompts.storage.test.tsx",
-     "src/hooks/useQueueAudioPrompts.ts"
-    ]
-   },
-   {
-    "sha": "3717f08",
-    "date": "2026-11-24",
-    "author": "adm01-debug",
-    "subject": "fix: falha em sessao e passkey passa a ser visivel (etapa 183) (#250)",
-    "files": [
-     "docs/qa/05-PROGRESSO.md",
-     "src/hooks/__tests__/useSessionManager.coverage.test.tsx",
-     "src/hooks/__tests__/useWebAuthn.coverage.test.tsx",
-     "src/hooks/useSessionManager.ts",
-     "src/hooks/useWebAuthn.ts"
-    ]
    }
   ],
   "hot_files": [
@@ -128238,6 +128233,14 @@
    [
     "docs/agentes/mapa-repo.md",
     3
+   ],
+   [
+    "src/hooks/useContacts.ts",
+    2
+   ],
+   [
+    "docs/estado/funcionalidades-planejadas.md",
+    2
    ],
    [
     "src/components/layout/CommandPalette.tsx",
@@ -128284,31 +128287,23 @@
     2
    ],
    [
-    "src/hooks/useSessionManager.ts",
-    2
-   ],
-   [
-    "docs/estado/funcionalidades-planejadas.md",
+    "src/components/layout/OnboardingWizard.tsx",
     1
    ],
    [
-    "src/routes/CallHistoryAlias.tsx",
+    "src/components/navigation/NavigationProgress.tsx",
     1
    ],
    [
-    "src/routes/__tests__/callHistoryAlias.test.tsx",
+    "src/components/navigation/PageTransition.tsx",
     1
    ],
    [
-    "src/routes/protectedRoutes.tsx",
+    "src/index.css",
     1
    ],
    [
-    "src/App.tsx",
-    1
-   ],
-   [
-    "src/hooks/__tests__/pageVisibility.gating.test.tsx",
+    "scripts/audit-edge-functions.ts",
     1
    ]
   ]

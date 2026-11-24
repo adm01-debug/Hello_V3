@@ -1749,7 +1749,7 @@
    "hooks_exportados": [
     "useContacts"
    ],
-   "linhas": 375,
+   "linhas": 379,
    "dominio": "hooks",
    "tabelas": [
     "contact_interactions",

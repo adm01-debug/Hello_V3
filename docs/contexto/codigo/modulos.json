@@ -1559,7 +1559,7 @@
    "modulo": "components/layout",
    "arquivos": 9,
    "testes": 1,
-   "linhas": 1031,
+   "linhas": 1021,
    "itens_menu": [],
    "telas": [],
    "rotas_http": [],
@@ -2128,7 +2128,6 @@
    ],
    "pacotes_externos": [
     "@tanstack/react-query",
-    "framer-motion",
     "lucide-react",
     "react-router-dom",
     "sonner"
@@ -2200,7 +2199,7 @@
    "modulo": "components/navigation",
    "arquivos": 4,
    "testes": 0,
-   "linhas": 153,
+   "linhas": 113,
    "itens_menu": [],
    "telas": [],
    "rotas_http": [],
@@ -2230,7 +2229,6 @@
     "lib"
    ],
    "pacotes_externos": [
-    "framer-motion",
     "lucide-react",
     "react-router-dom"
    ]
@@ -3498,7 +3496,7 @@
    "modulo": "hooks",
    "arquivos": 168,
    "testes": 0,
-   "linhas": 21438,
+   "linhas": 21442,
    "itens_menu": [],
    "telas": [],
    "rotas_http": [],

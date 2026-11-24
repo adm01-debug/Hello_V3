@@ -1,6 +1,6 @@
 # 07 · REGRAS DE NEGÓCIO
 
-> Gerado automaticamente por AI Context Sync v1.3.2 · commit `9ad7ed6bc1` · branch `main` · 2026-11-24 12:34 UTC
+> Gerado automaticamente por AI Context Sync v1.3.2 · commit `cf8c57b9b5` · branch `main` · 2026-11-24 13:03 UTC
 > Não edite à mão — regras humanas vão em `manual/`.
 
 ## A. Regras escritas por humanos (`manual/` — prioridade máxima, nunca sobrescrito)
@@ -986,7 +986,7 @@ _nenhum mapa explícito encontrado — transições só existem implicitamente n
 | `type` | `sentiment_negative` | compara | `src/components/contacts/ContactAlertsDropdown.tsx` |
 | `type` | `signup` | escreve | `src/pages/VerifyEmail.tsx` |
 | `type` | `sla_breach` | escreve | `supabase/functions/enforce-sla/index.ts` |
-| `type` | `spring` | escreve | `src/components/layout/OnboardingWizard.tsx`<br>`src/components/voice/VoiceAssistantDialog.tsx`<br>`src/components/voice/overlay/VoiceOrb.tsx` |
+| `type` | `spring` | escreve | `src/components/voice/VoiceAssistantDialog.tsx`<br>`src/components/voice/overlay/VoiceOrb.tsx` |
 | `type` | `start` | escreve | `src/pages/CallFlowDesigner.tsx` |
 | `type` | `string` | compara, escreve | `src/lib/queue-audio.ts`<br>`supabase/functions/chatbot-respond/index.ts`<br>`supabase/functions/detect-key-moments/index.ts`<br>`supabase/functions/extract-crm-fields/index.ts`<br>`supabase/functions/generate-meeting-summary/index.ts` |
 | `type` | `text` | escreve | `supabase/functions/ocr-virtual-fax/index.ts` |
@@ -3112,6 +3112,7 @@ _nenhum item encontrado_
 | não carrega (profile === null), mantém apenas os itens sem `roles`, | `src/components/layout/AppSidebar.tsx` |
 | não carrega, cada grupo mantém apenas os itens sem `roles` (menu mínimo). | `src/components/layout/AppSidebar.tsx` |
 | e usa `location.pathname` apenas para reiniciar a animação ao trocar de página. | `src/components/navigation/NavigationProgress.tsx` |
+| entrada (etapa 251) e segue sendo carregada apenas pelas rotas lazy que a usam. | `src/components/navigation/PageTransition.tsx` |
 | Total alerts (não distribuímos por agente — apenas total para contexto) | `src/components/network/AgentQualityRanking.tsx` |
 | Lógica de auto-apply: apenas critical + function (categoria infra implícita) | `src/components/network/VoipRecommendationsPanel.tsx` |
 | Uma faixa desativada depois de salva não pode permanecer selecionada. | `src/components/queues/QueueAudioSlotSelect.tsx` |
