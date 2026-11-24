@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Phone, Plus, Users, Target, TrendingUp, List, MoreHorizontal, Trash2, CheckCircle, XCircle, Voicemail, PhoneMissed, PhoneOff, RotateCcw, SkipForward } from 'lucide-react';
+import { Phone, Plus, Users, Target, TrendingUp, List, MoreHorizontal, Trash2, CheckCircle, XCircle, Voicemail, PhoneMissed, PhoneOff, RotateCcw, SkipForward, Loader2 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
@@ -92,7 +92,7 @@ export function PredictiveDialerPanel() {
   // A barreira de DNC/horario e injetada no discador: sem isto o laco
   // automatico discaria para a fila inteira sem nenhuma checagem.
   const { preDialCheck } = useDNCCompliance();
-  const { campaigns, queue, isDialing, currentCall, fetchQueue, startCampaign, pauseCampaign, completeCall, deleteCampaign, removeFromQueue, setActiveCampaign } = usePredictiveDialer(preDialCheck);
+  const { campaigns, queue, isDialing, currentCall, isLoading, fetchQueue, startCampaign, pauseCampaign, completeCall, deleteCampaign, removeFromQueue, setActiveCampaign } = usePredictiveDialer(preDialCheck);
   const [selectedCampaignId, setSelectedCampaignId] = useState<string>('');
   const [callTimer, setCallTimer] = useState(0);
 
@@ -185,7 +185,11 @@ export function PredictiveDialerPanel() {
           <CardHeader><CardTitle>Todas as Campanhas</CardTitle></CardHeader>
           <CardContent>
             {campaigns.length === 0 ? (
-              <div className="flex flex-col items-center justify-center py-12 text-muted-foreground"><Phone className="h-12 w-12 mb-4 opacity-50" /><p className="text-sm">Nenhuma campanha criada</p><CreateCampaignDialog trigger={<Button className="mt-4 gap-2"><Plus className="h-4 w-4" />Criar Primeira Campanha</Button>} /></div>
+              isLoading ? (
+                <div className="flex flex-col items-center justify-center py-12 text-muted-foreground"><Loader2 className="h-8 w-8 mb-4 animate-spin opacity-50" /><p className="text-sm">Carregando campanhas…</p></div>
+              ) : (
+                <div className="flex flex-col items-center justify-center py-12 text-muted-foreground"><Phone className="h-12 w-12 mb-4 opacity-50" /><p className="text-sm">Nenhuma campanha criada</p><CreateCampaignDialog trigger={<Button className="mt-4 gap-2"><Plus className="h-4 w-4" />Criar Primeira Campanha</Button>} /></div>
+              )
             ) : (
               <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
                 {campaigns.map(c => (

@@ -21,7 +21,7 @@ export default function CallHistory() {
   usePageTitle('Histórico de Chamadas');
 
    const {
-     sessions, isLoading, searchQuery, setSearchQuery,
+     sessions, isLoading, error, searchQuery, setSearchQuery,
      selectedSession, setSelectedSession, sessionTranscripts, sessionAnalyses, sessionSummary,
      isLoadingDetails, showFilters, setShowFilters, dateRangePreset, setDateRangePreset,
      customDateFrom, setCustomDateFrom, customDateTo, setCustomDateTo,
@@ -203,7 +203,7 @@ export default function CallHistory() {
         )}
       </div>
 
-      <CallSessionsList sessions={sessions} isLoading={isLoading} activeFiltersCount={activeFiltersCount} onSessionClick={handleSessionClick} onClearFilters={clearFilters} onLoadMore={loadMore} hasMore={hasMore} />
+      <CallSessionsList sessions={sessions} isLoading={isLoading} error={error} activeFiltersCount={activeFiltersCount} onSessionClick={handleSessionClick} onClearFilters={clearFilters} onLoadMore={loadMore} hasMore={hasMore} />
 
        <CallDetailDialog selectedSession={selectedSession} onClose={() => setSelectedSession(null)}
          isLoadingDetails={isLoadingDetails} sessionTranscripts={sessionTranscripts}

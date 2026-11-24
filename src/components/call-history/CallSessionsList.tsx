@@ -3,6 +3,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { cn, formatDuration } from '@/lib/utils';
+import { EmptyErrorState } from '@/components/ui/empty-state';
 
 import { SessionWithSummary } from '@/hooks/useCallHistory';
 import { VirtualList } from '@/components/ui/VirtualList';
@@ -12,6 +13,7 @@ import { activateOnKey } from "../../lib/a11y-clickable";
 interface Props {
   sessions: SessionWithSummary[];
   isLoading: boolean;
+  error?: string | null;
   activeFiltersCount: number;
   onSessionClick: (session: SessionWithSummary) => void;
   onClearFilters: () => void;
@@ -34,7 +36,7 @@ const getSentimentBadge = (sentiment: string | null | undefined) => {
   );
 };
 
-export function CallSessionsList({ sessions, isLoading, activeFiltersCount, onSessionClick, onClearFilters, onLoadMore, hasMore }: Props) {
+export function CallSessionsList({ sessions, isLoading, error, activeFiltersCount, onSessionClick, onClearFilters, onLoadMore, hasMore }: Props) {
   const renderSessionItem = (session: SessionWithSummary) => (
 <div
       role="button"
@@ -94,6 +96,13 @@ export function CallSessionsList({ sessions, isLoading, activeFiltersCount, onSe
       <CardContent>
         {isLoading ? (
           <div className="flex items-center justify-center py-12"><Loader2 className="h-8 w-8 animate-spin text-muted-foreground" /></div>
+        ) : error ? (
+          <EmptyErrorState
+            title="Não foi possível carregar as chamadas"
+            description="A leitura do histórico falhou — não é o mesmo que não haver chamada."
+            hint={error}
+            size="sm"
+          />
         ) : sessions.length === 0 ? (
           <div className="flex flex-col items-center justify-center py-12 text-center">
             <Phone className="h-12 w-12 text-muted-foreground/50 mb-4" />

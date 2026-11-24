@@ -75,6 +75,8 @@ describe('useCallHistory', () => {
     const { result } = renderHook(() => useCallHistory());
     await waitFor(() => expect(result.current.isLoading).toBe(false));
     expect(result.current.sessions).toHaveLength(0);
+    // A-009: lista vazia por falha de leitura precisa ser distinguivel.
+    expect(result.current.error).toBe('boom');
   });
 
   it('exercises filters, setters, presets and clearFilters', async () => {

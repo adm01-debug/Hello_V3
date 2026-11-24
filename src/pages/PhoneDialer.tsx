@@ -45,7 +45,7 @@ const PhoneDialer = () => {
   usePageTitle('Discador');
   const navigate = useNavigate();
   const call = useCallContext();
-  const { sessions, isLoading } = useCallHistory();
+  const { sessions, isLoading, error: historyError } = useCallHistory();
   const sip = useSipCall();
   const { preDialCheck } = useDNCCompliance();
   const { favorites: savedFavorites, isFavorite, toggleFavorite, moveFavorite, setFavoriteTag } =
@@ -309,6 +309,7 @@ const PhoneDialer = () => {
             recents={recents}
             favorites={favorites}
             isLoading={isLoading}
+            error={historyError}
             onSelect={(phone, name) => {
               setInput(sanitizeDialInput(phone));
               if (name) toast.info(name, { description: 'Número carregado no discador' });
