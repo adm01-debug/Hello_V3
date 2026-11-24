@@ -18,7 +18,7 @@ interface AnalysisResult {
   agentPerformance: { clarity: number; empathy: number; resolution: number };
 }
 
-serve(withRequestLog('analyze-call', async (req) => {
+export const handler = withRequestLog('analyze-call', async (req: Request) => {
   const cors = buildCorsHeaders(req);
   if (req.method === 'OPTIONS') return new Response(null, { headers: cors });
 
@@ -146,6 +146,6 @@ ${transcript.slice(0, 10000)}`;
     logError('request_failed', error, { fn: 'analyze-call' });
     return createErrorResponse('Erro interno', 'INTERNAL_ERROR', undefined, 500, cors);
   }
-}));
+});
 
-
+serve(handler);
