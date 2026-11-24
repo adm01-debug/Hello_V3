@@ -22,7 +22,7 @@
    "scripts/regras_negocio (2)"
   ],
   "testes": [
-   "co-localizado (__tests__) (360)",
+   "co-localizado (__tests__) (361)",
    "e2e/ (7)",
    "tests/ (6)"
   ],
@@ -59,11 +59,11 @@
  "commits": {
   "convencao": "conventional commits (observado)",
   "exemplos": [
+   "fix: separa o cache de notificacoes por usuario (etapa 221) (#293)",
    "fix: invalida cache depois de salvar artigo e verificar voz (etapa 219) (#292)",
    "fix: bloqueia duplo clique nas acoes de escrita que duplicavam registro (etapa 218) (#291)",
    "fix: remove 13 testes-espelho de hooks e de cache (etapa 284 parte 2) (#290)",
-   "fix: remove 5 testes-espelho e cobre crypto.getRandomValues no useMFA (etapa 284 parcial) (#289)",
-   "fix: revisa os 41 disables de dependencia de efeito e zera o exhaustive-deps (etapa 217) (#288)"
+   "fix: remove 5 testes-espelho e cobre crypto.getRandomValues no useMFA (etapa 284 parcial) (#289)"
   ]
  },
  "pr_template": null,

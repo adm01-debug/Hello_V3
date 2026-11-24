@@ -2,11 +2,16 @@
  "aviso": "GERADO AUTOMATICAMENTE por scripts/ai-context/gerar.mjs — não editar à mão; será sobrescrito.",
  "format_version": 2,
  "git": {
-  "commit": "07dfba7a26cd628b69df224cc58f1eef70092674",
+  "commit": "48f36449ddaf678714048481818d9e34080a3d95",
   "branch": "main",
-  "data_commit": "2026-11-24T12:52:40-03:00",
+  "data_commit": "2026-11-24T13:05:47-03:00",
   "remote": "https://github.com/adm01-debug/Hello_V3",
   "ultimos_commits": [
+   {
+    "sha": "48f3644",
+    "data": "2026-11-24",
+    "assunto": "fix: separa o cache de notificacoes por usuario (etapa 221) (#293)"
+   },
    {
     "sha": "07dfba7",
     "data": "2026-11-24",
@@ -126,14 +131,9 @@
     "sha": "c771af6",
     "data": "2026-11-24",
     "assunto": "fix: rótulo acessível nos botões-ícone restantes (etapas 262 e 263) (#268)"
-   },
-   {
-    "sha": "46cc92e",
-    "data": "2026-11-24",
-    "assunto": "chore: painel de traducao sob demanda tira a rota Calls do teto do bundle (#269)"
    }
   ],
-  "arquivos_mudados_7d": 1231,
+  "arquivos_mudados_7d": 1233,
   "pastas_mais_mudadas_30d": [
    {
     "pasta": "covout/lcov-report/hooks",
@@ -141,7 +141,7 @@
    },
    {
     "pasta": "docs/qa/05-PROGRESSO.md",
-    "mudancas": 116
+    "mudancas": 117
    },
    {
     "pasta": "src/hooks/__tests__",
@@ -199,7 +199,7 @@
   "arquivos_mais_mudados_90d": [
    {
     "arquivo": "docs/qa/05-PROGRESSO.md",
-    "mudancas": 116
+    "mudancas": 117
    },
    {
     "arquivo": "docs/estado/funcionalidades-planejadas.md",
@@ -301,7 +301,7 @@
   "autores_30d": [
    {
     "autor": "adm01-debug",
-    "commits": 271
+    "commits": 272
    },
    {
     "autor": "Joaquim Ataides",
@@ -314,9 +314,9 @@
   ]
  },
  "contagens": {
-  "arquivos_total": 1728,
-  "arquivos_codigo": 1324,
-  "linhas_codigo": 176522,
+  "arquivos_total": 1729,
+  "arquivos_codigo": 1325,
+  "linhas_codigo": 176585,
   "rotas": 106,
   "rotas_http_backend": 11,
   "vistas_por_id": 0,
@@ -328,7 +328,7 @@
   "tabelas": 169,
   "migrations": 243,
   "cron_jobs": 11,
-  "testes": 384,
+  "testes": 385,
   "workflows": 3,
   "scripts": 35,
   "docs_md": 121
@@ -479,8 +479,8 @@
    "linhas": 450
   },
   "src/components": {
-   "arquivos": 372,
-   "linhas": 44286
+   "arquivos": 373,
+   "linhas": 44349
   },
   "src/contexts": {
    "arquivos": 4,

@@ -5,17 +5,17 @@
   "vitest",
   "playwright"
  ],
- "total": 384,
+ "total": 385,
  "por_tipo": {
   "contrato": 1,
   "e2e": 13,
   "pytest": 2,
-  "unit": 367
+  "unit": 368
  },
  "onde_ficam": [
   {
    "padrao": "co-localizado (__tests__)",
-   "arquivos": 360
+   "arquivos": 361
   },
   {
    "padrao": "e2e/",
@@ -384,6 +384,15 @@
     "src/components/network/QualityForecastCard.tsx"
    ],
    "casos": 3
+  },
+  {
+   "arquivo": "src/components/notification-center/__tests__/useNotificationCenter.cache.test.tsx",
+   "tipo": "unit",
+   "linhas": 60,
+   "testa": [
+    "src/components/notification-center/useNotificationCenter.ts"
+   ],
+   "casos": 2
   },
   {
    "arquivo": "src/components/recordings/__tests__/TranscriptionDialog.a11y.test.tsx",
@@ -3535,6 +3544,7 @@
   "src/components/gamification/WeeklyRanking.tsx": 1,
   "src/components/layout/AppSidebar.tsx": 1,
   "src/components/network/QualityForecastCard.tsx": 1,
+  "src/components/notification-center/useNotificationCenter.ts": 1,
   "src/components/recordings/TranscriptionDialog.tsx": 1,
   "src/components/supervisor/panel/TrendChartToggle.tsx": 1,
   "src/components/supervisor/panel/types.ts": 1,
@@ -3927,7 +3937,6 @@
    "src/components/auth/PasswordStrength.tsx",
    "src/components/compliance/calling-hours/useCallingHoursManager.ts",
    "src/components/contacts/useBitrixSync.ts",
-   "src/components/notification-center/useNotificationCenter.ts",
    "src/components/queue-alerts/useQueueMetricsSettings.ts",
    "src/components/ui/form.tsx",
    "src/components/ui/keyboard-navigation.tsx",
