@@ -20,7 +20,7 @@ serve(async (req) => {
     const supabaseServiceKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!;
     const supabase = createClient(supabaseUrl, supabaseServiceKey);
 
-    await supabase.from('audit_logs').insert({
+    const { error: auditError } = await supabase.from('audit_logs').insert({
       action: 'WEBHOOK_SIGNATURE_FAILURE',
       resource_type: 'webhook',
       resource_id: 'generic-handler',
@@ -31,6 +31,8 @@ serve(async (req) => {
         request_id: requestId,
       }
     });
+    // A rejeicao vale mesmo sem a trilha; a falha fica registrada no log da funcao.
+    if (auditError) console.error('webhook-handler: falha ao auditar assinatura invalida', auditError);
 
     return new Response(JSON.stringify({ error: 'Invalid signature', request_id: requestId }), {
       status: 401,

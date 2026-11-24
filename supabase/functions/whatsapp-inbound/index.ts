@@ -143,13 +143,15 @@ Deno.serve(async (req) => {
       if (convErr) throw convErr;
       conversationId = newConv.id;
     } else {
-      await supabase
+      // Best-effort: a mensagem logo abaixo e a fonte da verdade.
+      const { error: touchErr } = await supabase
         .from('conversations')
         .update({
           last_message_at: new Date().toISOString(),
           status: 'open',
         })
         .eq('id', conversationId);
+      if (touchErr) console.error('whatsapp-inbound: falha ao atualizar conversa existente', touchErr);
     }
 
     // Inserir mensagem

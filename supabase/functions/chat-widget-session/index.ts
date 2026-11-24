@@ -123,19 +123,23 @@ Deno.serve(async (req) => {
         if (convErr) throw convErr;
         conversationId = newConv.id;
 
-        await supabase
+        // Essencial: sem o vinculo a proxima mensagem abriria uma conversa duplicada.
+        const { error: linkErr } = await supabase
           .from('chat_sessions')
           .update({ conversation_id: conversationId, last_seen_at: new Date().toISOString() })
           .eq('id', session.id);
+        if (linkErr) throw linkErr;
       } else {
-        await supabase
+        const { error: seenErr } = await supabase
           .from('chat_sessions')
           .update({ last_seen_at: new Date().toISOString() })
           .eq('id', session.id);
-        await supabase
+        if (seenErr) console.error('chat-widget-session: falha ao atualizar last_seen_at', seenErr);
+        const { error: touchErr } = await supabase
           .from('conversations')
           .update({ last_message_at: new Date().toISOString(), status: 'open' })
           .eq('id', conversationId);
+        if (touchErr) console.error('chat-widget-session: falha ao atualizar conversa', touchErr);
       }
 
       const { error: msgErr } = await supabase.from('conversation_messages').insert({
