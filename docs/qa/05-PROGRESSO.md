@@ -6,11 +6,11 @@
 
 | Marca | Significado |
 |---|---|
-| `[ ]` | **158** |
+| `[ ]` | **157** |
 | `[>]` | em andamento (branch criada) |
 | `[P]` | 0 |
 | `[~]` | 1 |
-| `[x]` | 141 |
+| `[x]` | 142 |
 | `[-]` | 0 |
 
 **`[x]` exige evidência.** Escreva ao lado, entre parênteses, o comando ou a consulta que você rodou e o resultado. Sem isso, a marca é `[~]`.
@@ -24,11 +24,11 @@
 | | Quantidade |
 |---|---:|
 | Total de etapas | 300 |
-| `[x]` concluídas | 141 |
+| `[x]` concluídas | 142 |
 | `[P]` aguardando o dono | 0 |
 | `[~]` parciais | 1 |
 | `[-]` descartadas | 0 |
-| `[ ]` não iniciadas | **158** |
+| `[ ]` não iniciadas | **157** |
 
 *Atualize esta tabela ao fim de cada onda.*
 
@@ -288,7 +288,7 @@
 - [ ] **231** — Avisar quando um cron falha — onda 5 — Alta — Banco 🔒
 - [ ] **232** — Vigiar as filas que podem encher — onda 5 — Média — Banco 🔒
 - [x] **233** — Estados de falha visíveis no softphone — onda 5 — Alta — Frontend · (evidência: `src/components/calls/UnifiedSoftphone.tsx` — (a) o cabeçalho passou a mostrar `SipConnectionStatus` (`:285`) com o estado da **própria** instância do hook: a página usa outra (`Calls.tsx:18` e `UnifiedSoftphone.tsx:56` chamam `useSipCall()` separadamente), então o badge do header da página não refletia esta linha; (b) banner destrutivo (`Alert`) sempre que `!isRegistered && (status === "error" || "disconnected")`, com o motivo vindo de `sipCall.error`, título "A chamada caiu — a linha SIP saiu do ar" quando há chamada SIP ativa, instrução de cadastro de tronco quando `!isConfigured`, e botão "Tentar agora" → `sipConnect()`; (c) reconexão automática com espera crescente (`sipRetryDelayMs`: imediata, 5s, 10s, 20s, teto 30s) substituindo a tentativa única e muda que existia na antiga linha 57, com reset ao registrar; `sipConnect` (`useSipCall.ts:131-250`, `useCallback` com `[]`) entrou nas dependências, o que **removeu** o `eslint-disable` daquele efeito (o `useSipCall` não foi alterado — só consumido); (d) `getUserMedia` saiu do `try` do token para um `try/catch` próprio, com `describeMicError` (`src/lib/audio/deviceTest.ts:26`) no toast e no banner "Microfone bloqueado" (instrução do cadeado na barra de endereço) e devolução do agente para Disponível quando não há chamada. Teste novo `src/components/calls/__tests__/UnifiedSoftphone.falhas.test.tsx` 4/4: badge "Linha SIP ativa"; motivo "Registro falhou: 403 Forbidden" + "Tentar agora" chamando `connect` 1×; backoff (em 4.999ms ainda 1 chamada, em 5.000ms a 2ª); microfone negado (`DOMException NotAllowedError`) exibindo a instrução. Regressão: `bunx vitest run src/components/calls src/pages/__tests__` → 21 arquivos / 65 testes passed; `bunx tsc --noEmit` rc=0; `bunx eslint` nos 2 arquivos rc=0. Não verificado: não há SIP nem rede reais neste ambiente — o cenário "desligar a rede" do plano foi simulado pelo estado do hook, não com UA JsSIP de verdade; `status === "connecting"` travado (invoke que nunca resolve) ficou sem watchdog.)
-- [ ] **234** — Teste de resiliência das edges contra upstream fora do ar — onda 5 — Média — Testes
+- [x] **234** — Teste de resiliência das edges contra upstream fora do ar — onda 5 — Média — Testes · (harness novo `supabase/functions/_shared/testing/backend-falso.ts`: troca o `fetch` global por um roteador que responde `/auth/v1/user`, as RPCs de rate limit e as tabelas, e injeta falha por trecho de URL (`timeout`, `abort`, `corpo-invalido`, status+corpo); o fetch original volta no `finally` e toda chamada fica registrada. 26 testes novos em 5 arquivos `*/__tests__/upstream-falha.test.ts`, cada caso com prova negativa de que nada é gravado pela metade (`escritasDeNegocio` conta POST/PATCH/PUT/DELETE em `/rest/v1/` fora das RPCs de controle): `notify-new-device` (timeout/429/500/corpo inválido → 5xx com `emailSent:false` e 1 chamada ao Resend), `chatbot-respond` (timeout/429/500 → 503 e corpo inválido → 500, nenhuma mensagem gravada), `auto-scorecard` (timeout/429/500 → 503, `call_scorecards` e `scorecard_responses` ficam vazios), `analyze-call` (timeout → 503 AI_UNAVAILABLE, 429/500 → 503 AI_SERVICE_UNAVAILABLE, corpo inválido → 500 INTERNAL_ERROR) e `bitrix-api` (500/429 → 502 depois de 1 tentativa + 2 reenvios, timeout → 504, resposta não-JSON → 503 "Configuração inválida do webhook", e `get_user` degrada para 200 `configured:false` em vez de derrubar a tela). Refactor mínimo de 2 linhas em duas edges para o teste chamar o handler direto: `analyze-call` e `auto-scorecard` passaram a exportar `handler` e a chamar `serve(handler)`/`Deno.serve(handler)` — comportamento inalterado. Evidência: `deno test -A supabase/functions/` → **495 passed / 0 failed / 10 ignored** (eram 469 testes antes), `deno check` rc=0 nos 2 arquivos alterados, `deno lint` sem aviso novo; o cenário é de bancada com fetch falso, não tráfego real de produção.)
 - [ ] **235** — Fechar a onda 5 com um levantamento do que o sistema passou a reportar — onda 5 — Média — Documentação
 
 

@@ -19,7 +19,7 @@ interface AIScore {
   comment: string;
 }
 
-Deno.serve(async (req) => {
+export const handler = async (req: Request): Promise<Response> => {
   const corsHeaders = buildCorsHeaders(req);
 
 function json(payload: unknown, status = 200): Response {
@@ -183,7 +183,9 @@ function json(payload: unknown, status = 200): Response {
       fn: 'auto-scorecard',
     });
   }
-});
+};
+
+Deno.serve(handler);
 
 function buildPrompt(summary: {
   summary: string | null;
