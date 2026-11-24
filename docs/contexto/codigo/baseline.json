@@ -2,11 +2,16 @@
  "aviso": "GERADO AUTOMATICAMENTE por scripts/ai-context/gerar.mjs — não editar à mão; será sobrescrito.",
  "format_version": 2,
  "git": {
-  "commit": "695f5efe79ca11bd81a2a6307adbee6f2ef5acaf",
+  "commit": "890ceeb52fcb7503ad136c839a44a3b3fcbcd6ef",
   "branch": "main",
-  "data_commit": "2026-11-24T00:44:44-03:00",
+  "data_commit": "2026-11-24T00:46:37-03:00",
   "remote": "https://github.com/adm01-debug/Hello_V3",
   "ultimos_commits": [
+   {
+    "sha": "890ceeb",
+    "data": "2026-11-24",
+    "assunto": "fix: descarta pagina do historico que chega depois da troca de filtro (#225)"
+   },
    {
     "sha": "695f5ef",
     "data": "2026-11-24",
@@ -126,11 +131,6 @@
     "sha": "5eb9695",
     "data": "2026-11-23",
     "assunto": "feat: barreira de DNC e horario legal dentro de initiateCall (#202)"
-   },
-   {
-    "sha": "adaa1e7",
-    "data": "2026-11-23",
-    "assunto": "fix: webauthn-authenticate valida o contador do autenticador e ganha rate limit (#201)"
    }
   ],
   "arquivos_mudados_7d": 1063,
@@ -140,16 +140,16 @@
     "mudancas": 143
    },
    {
+    "pasta": "docs/qa/05-PROGRESSO.md",
+    "mudancas": 56
+   },
+   {
     "pasta": "covout/lcov-report/lib",
     "mudancas": 55
    },
    {
-    "pasta": "docs/qa/05-PROGRESSO.md",
-    "mudancas": 55
-   },
-   {
     "pasta": "src/hooks/__tests__",
-    "mudancas": 52
+    "mudancas": 53
    },
    {
     "pasta": "src/lib/__tests__",
@@ -199,7 +199,7 @@
   "arquivos_mais_mudados_90d": [
    {
     "arquivo": "docs/qa/05-PROGRESSO.md",
-    "mudancas": 55
+    "mudancas": 56
    },
    {
     "arquivo": "docs/estado/funcionalidades-planejadas.md",
@@ -301,7 +301,7 @@
   "autores_30d": [
    {
     "autor": "adm01-debug",
-    "commits": 204
+    "commits": 205
    },
    {
     "autor": "Joaquim Ataides",
@@ -316,7 +316,7 @@
  "contagens": {
   "arquivos_total": 1708,
   "arquivos_codigo": 1306,
-  "linhas_codigo": 176393,
+  "linhas_codigo": 176436,
   "rotas": 106,
   "rotas_http_backend": 12,
   "vistas_por_id": 0,
@@ -492,7 +492,7 @@
   },
   "src/hooks": {
    "arquivos": 355,
-   "linhas": 46948
+   "linhas": 46991
   },
   "src/integrations": {
    "arquivos": 3,

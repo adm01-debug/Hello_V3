@@ -601,12 +601,12 @@
   {
    "arquivo": "src/hooks/__tests__/useCallHistory.coverage.test.tsx",
    "tipo": "unit",
-   "linhas": 189,
+   "linhas": 226,
    "testa": [
     "src/hooks/useCallHistory.ts",
     "src/integrations/supabase/client.ts"
    ],
-   "casos": 6
+   "casos": 7
   },
   {
    "arquivo": "src/hooks/__tests__/useCallPlaylists.coverage.test.tsx",

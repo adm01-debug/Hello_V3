@@ -58,11 +58,11 @@
  "commits": {
   "convencao": "conventional commits (observado)",
   "exemplos": [
+   "fix: descarta pagina do historico que chega depois da troca de filtro (#225)",
    "feat: prazo de fetch nas chamadas externas das edges (#226)",
    "fix: confirma o retorno agendado com a data gravada e nao reporta escrita que nao gravou nada (#223)",
    "chore: suite de testes roda sem .env e sem configuracao manual (#224)",
-   "fix: agente fica offline ao fechar o navegador (etapa 204) (#222)",
-   "fix: telas do fluxo central distinguem falha de leitura de lista vazia (etapa 203) (#221)"
+   "fix: agente fica offline ao fechar o navegador (etapa 204) (#222)"
   ]
  },
  "pr_template": null,

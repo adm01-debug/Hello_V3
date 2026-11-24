@@ -1,6 +1,6 @@
 # 07 · REGRAS DE NEGÓCIO
 
-> Gerado automaticamente por AI Context Sync v1.3.2 · commit `695f5efe79` · branch `main` · 2026-11-24 03:45 UTC
+> Gerado automaticamente por AI Context Sync v1.3.2 · commit `890ceeb52f` · branch `main` · 2026-11-24 03:47 UTC
 > Não edite à mão — regras humanas vão em `manual/`.
 
 ## A. Regras escritas por humanos (`manual/` — prioridade máxima, nunca sobrescrito)
@@ -2467,7 +2467,7 @@ _nenhum item encontrado_
 | `admin` | `supabase/functions/data-lake-flush/index.ts` |
 | `admin` | `supabase/migrations/20261123000200_fix_has_role_oracle_and_debug_tables.sql` |
 
-## K. Testes como especificação (4304 testes em 375 arquivos — nomes completos em `context.json`)
+## K. Testes como especificação (4305 testes em 375 arquivos — nomes completos em `context.json`)
 
 | Arquivo | Testes | Exemplos do que o sistema DEVE fazer |
 |---|---|---|
@@ -2621,6 +2621,7 @@ _nenhum item encontrado_
 | `src/hooks/__tests__/useAchievementNotifications.coverage.test.tsx` | 8 | useAchievementNotifications (coverage) · não injeta badge inválida quando o enriquecimento falha · subscribes to channels and exposes initial state · handles a new badge award and shows a toast (no agent filter) … |
 | `src/hooks/__tests__/useAgentStatus.coverage.test.tsx` | 8 | useAgentStatus (coverage) · fetches agents on mount · setAgent selects and toasts; clearAgent clears · updateStatus returns false without selected agent … |
 | `src/hooks/__tests__/useAuth.coverage.test.tsx` | 8 | useAuth · calls getSession on mount and exposes API · hasRole false without profile, true with matching role · handles SIGNED_OUT auth state change … |
+| `src/hooks/__tests__/useCallHistory.coverage.test.tsx` | 8 | useCallHistory · fetches sessions on mount and maps summary · handles fetch error branch · exercises filters, setters, presets and clearFilters … |
 | `src/hooks/__tests__/useCallRecording.coverage.test.tsx` | 8 | useCallRecording · starts recording successfully · handles start recording failure · stopAndSaveRecording returns null when no recorder … |
 | `src/hooks/__tests__/useExecutiveDashboard.coverage.test.tsx` | 8 | useExecutiveDashboard helpers · getPeriodLabel covers all periods and fallback · formatDuration formats minutes and seconds · useExecutiveDashboardData … |
 | `src/hooks/__tests__/useSecurityMonitoringData.coverage.test.tsx` | 8 | useSecurityMonitoringData · fetches logs, alerts and computes stats · erro de leitura vira alarme, nao tranquilidade · limpa o erro na leitura seguinte bem-sucedida … |
@@ -2647,7 +2648,6 @@ _nenhum item encontrado_
 | `src/hooks/__tests__/use-toast.coverage.test.tsx` | 7 | use-toast (coverage) · adds a toast and exposes state via useToast · dismisses a toast and removes it after delay · updates a toast in place … |
 | `src/hooks/__tests__/useAlertHistory.coverage.test.tsx` | 7 | useAlertHistory · loads with empty stats when there are no alerts · computes severity counts, read rate, types and daily stats · applies search, severity and type filters … |
 | `src/hooks/__tests__/useBestTimeToContact.coverage.test.tsx` | 7 | useBestTimeToContact (coverage) · loads pattern and top patterns when contactId provided · does not query single pattern when no contactId (disabled) · recompute success path … |
-| `src/hooks/__tests__/useCallHistory.coverage.test.tsx` | 7 | useCallHistory · fetches sessions on mount and maps summary · handles fetch error branch · exercises filters, setters, presets and clearFilters … |
 | `src/hooks/__tests__/useCallTransfer.coverage.test.tsx` | 7 | useCallTransfer · blind transfer stays pending until confirmed instead of auto-completing on a timer · attended transfer puts call on hold and does not auto-complete · completeTransfer returns early when call not found … |
 | `src/hooks/__tests__/useDashboardLayout.coverage.test.tsx` | 7 | useDashboardLayout · initializes with default layout when nothing stored · initializes from stored layout · saves a new layout and persists to localStorage … |
 | `src/hooks/__tests__/useDeviceDetection.coverage.test.tsx` | 7 | useDeviceDetection · returns device info helpers · detects new device when existing sessions and new IP · no notification when no existing sessions … |
@@ -2934,6 +2934,7 @@ _nenhum item encontrado_
 | Total alerts (não distribuímos por agente — apenas total para contexto) | `src/components/network/AgentQualityRanking.tsx` |
 | Lógica de auto-apply: apenas critical + function (categoria infra implícita) | `src/components/network/VoipRecommendationsPanel.tsx` |
 | Uma faixa desativada depois de salva não pode permanecer selecionada. | `src/components/queues/QueueAudioSlotSelect.tsx` |
+| trocar o filtro durante um "carregar mais" nao pode anexar a pagina antiga na lista nova. | `src/hooks/useCallHistory.ts` |
 | * - Digitar rapidamente atualiza `inputValue` imediatamente e enfileira apenas | `src/hooks/useDebouncedSearchParam.ts` |
 | ').limit(1).maybeSingle(); | `src/hooks/useGeoBlocking.ts` |
 | ').order('created_at', { ascending: false }).limit(50); | `src/hooks/useGeoBlocking.ts` |
