@@ -6,6 +6,7 @@ import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.45.0';
 import { buildCorsHeaders } from '../_shared/cors.ts';
 import { validate, string, oneOf, optional } from '../_shared/validate.ts';
 import { getCorrelationId, internalErrorResponse } from '../_shared/errors.ts';
+import { fetchComPrazo } from '../_shared/resilience.ts';
 
 const PERIOD_DAYS: Record<string, number> = { day: 1, week: 7, month: 30 };
 const AI_GATEWAY = 'https://openrouter.ai/api/v1/chat/completions';
@@ -140,7 +141,8 @@ Deno.serve(async (req) => {
       return new Response(JSON.stringify({ error: 'AI gateway não configurado', requestId }), { status: 500, headers });
     }
 
-    const aiRes = await fetch(AI_GATEWAY, {
+    let aiRes: Response;
+    try { aiRes = await fetchComPrazo(AI_GATEWAY, {
       method: 'POST',
       headers: { 'Authorization': `Bearer ${apiKey}`, 'Content-Type': 'application/json' },
       body: JSON.stringify({
@@ -150,7 +152,10 @@ Deno.serve(async (req) => {
           { role: 'user', content: `<contexto>\nPeríodo: ${period} (desde ${since})\n${contextBlock}\n</contexto>\n\nPergunta: ${validation.data.question}` },
         ],
       }),
-    });
+    }); } catch (err) {
+      console.error('[voip-diagnostic-voice-qa] IA sem resposta no prazo:', err);
+      return new Response(JSON.stringify({ error: 'Serviço de IA indisponível', requestId }), { status: 503, headers });
+    }
 
     if (aiRes.status === 429) {
       return new Response(JSON.stringify({ error: 'Limite de requisições atingido. Tente novamente em instantes.', requestId }), { status: 429, headers });
