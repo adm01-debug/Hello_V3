@@ -1244,7 +1244,7 @@
    "hooks_exportados": [
     "useCallHistory"
    ],
-   "linhas": 230,
+   "linhas": 233,
    "dominio": "hooks",
    "tabelas": [
     "call_analyses",
@@ -2189,7 +2189,7 @@
    "hooks_exportados": [
     "useExecutiveDashboardData"
    ],
-   "linhas": 268,
+   "linhas": 275,
    "dominio": "hooks",
    "tabelas": [
     "agent_goals",

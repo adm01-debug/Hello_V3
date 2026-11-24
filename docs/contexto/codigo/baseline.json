@@ -2,11 +2,16 @@
  "aviso": "GERADO AUTOMATICAMENTE por scripts/ai-context/gerar.mjs — não editar à mão; será sobrescrito.",
  "format_version": 2,
  "git": {
-  "commit": "85a73de58e92c32fafe025b2aaac50d952589eb3",
+  "commit": "d2f80cb2e9b962aa998439c4729e164d4ee6614d",
   "branch": "main",
-  "data_commit": "2026-11-23T23:54:51-03:00",
+  "data_commit": "2026-11-24T00:07:31-03:00",
   "remote": "https://github.com/adm01-debug/Hello_V3",
   "ultimos_commits": [
+   {
+    "sha": "d2f80cb",
+    "data": "2026-11-24",
+    "assunto": "fix: telas do fluxo central distinguem falha de leitura de lista vazia (etapa 203) (#221)"
+   },
    {
     "sha": "85a73de",
     "data": "2026-11-23",
@@ -126,14 +131,9 @@
     "sha": "4e8548e",
     "data": "2026-11-23",
     "assunto": "fix: email-inbound idempotente para parar o laco de 500 e a conversa duplicada (#197)"
-   },
-   {
-    "sha": "7375845",
-    "data": "2026-11-23",
-    "assunto": "chore: migrar 15 edges para buildCorsHeaders(req) e remover export deprecated (#196)"
    }
   ],
-  "arquivos_mudados_7d": 1048,
+  "arquivos_mudados_7d": 1055,
   "pastas_mais_mudadas_30d": [
    {
     "pasta": "covout/lcov-report/hooks",
@@ -145,11 +145,11 @@
    },
    {
     "pasta": "docs/qa/05-PROGRESSO.md",
-    "mudancas": 50
+    "mudancas": 51
    },
    {
     "pasta": "src/hooks/__tests__",
-    "mudancas": 49
+    "mudancas": 50
    },
    {
     "pasta": "src/lib/__tests__",
@@ -185,7 +185,7 @@
    },
    {
     "pasta": "src/pages/__tests__",
-    "mudancas": 11
+    "mudancas": 12
    },
    {
     "pasta": "src/components/dashboard",
@@ -199,7 +199,7 @@
   "arquivos_mais_mudados_90d": [
    {
     "arquivo": "docs/qa/05-PROGRESSO.md",
-    "mudancas": 50
+    "mudancas": 51
    },
    {
     "arquivo": "docs/estado/funcionalidades-planejadas.md",
@@ -282,6 +282,10 @@
     "mudancas": 4
    },
    {
+    "arquivo": "src/pages/PhoneDialer.tsx",
+    "mudancas": 4
+   },
+   {
     "arquivo": "supabase/functions/dialer-pacing-tick/index.ts",
     "mudancas": 4
    },
@@ -292,16 +296,12 @@
    {
     "arquivo": "supabase/functions/health-check/index.ts",
     "mudancas": 4
-   },
-   {
-    "arquivo": "supabase/functions/score-call/index.ts",
-    "mudancas": 4
    }
   ],
   "autores_30d": [
    {
     "autor": "adm01-debug",
-    "commits": 199
+    "commits": 200
    },
    {
     "autor": "Joaquim Ataides",
@@ -314,9 +314,9 @@
   ]
  },
  "contagens": {
-  "arquivos_total": 1706,
-  "arquivos_codigo": 1304,
-  "linhas_codigo": 176038,
+  "arquivos_total": 1708,
+  "arquivos_codigo": 1306,
+  "linhas_codigo": 176156,
   "rotas": 106,
   "rotas_http_backend": 12,
   "vistas_por_id": 0,
@@ -328,7 +328,7 @@
   "tabelas": 169,
   "migrations": 242,
   "cron_jobs": 11,
-  "testes": 383,
+  "testes": 385,
   "workflows": 3,
   "scripts": 34,
   "docs_md": 120
@@ -479,8 +479,8 @@
    "linhas": 450
   },
   "src/components": {
-   "arquivos": 363,
-   "linhas": 43405
+   "arquivos": 364,
+   "linhas": 43455
   },
   "src/contexts": {
    "arquivos": 4,
@@ -492,7 +492,7 @@
   },
   "src/hooks": {
    "arquivos": 355,
-   "linhas": 46798
+   "linhas": 46810
   },
   "src/integrations": {
    "arquivos": 3,
@@ -507,8 +507,8 @@
    "linhas": 44
   },
   "src/pages": {
-   "arquivos": 141,
-   "linhas": 21794
+   "arquivos": 142,
+   "linhas": 21850
   },
   "src/routes": {
    "arquivos": 2,
@@ -637,7 +637,7 @@
    "linhas": 352
   },
   {
-   "arquivo": "src/pages/CallFlowDesigner.tsx",
+   "arquivo": "src/components/dialer/phone/PhoneQuickAccess.tsx",
    "linhas": 351
   }
  ],

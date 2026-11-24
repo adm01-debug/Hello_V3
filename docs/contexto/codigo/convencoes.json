@@ -21,7 +21,7 @@
    "scripts/regras_negocio (2)"
   ],
   "testes": [
-   "co-localizado (__tests__) (359)",
+   "co-localizado (__tests__) (361)",
    "e2e/ (7)",
    "tests/ (6)"
   ],
@@ -58,11 +58,11 @@
  "commits": {
   "convencao": "conventional commits (observado)",
   "exemplos": [
+   "fix: telas do fluxo central distinguem falha de leitura de lista vazia (etapa 203) (#221)",
    "feat: padronizar o estado de erro das telas com o EmptyErrorState (etapa 202) (#220)",
    "fix: whitelist de IPs avisa quando a leitura falha em vez de parecer vazia (#216)",
    "fix: registrar falha de leitura onde o erro era descartado (#219)",
-   "fix: nao gravar dado derivado quando a leitura falha (#218)",
-   "fix: ranking, scorecards e planos de sucesso distinguem erro de leitura de lista vazia (#217)"
+   "fix: nao gravar dado derivado quando a leitura falha (#218)"
   ]
  },
  "pr_template": null,

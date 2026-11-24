@@ -462,8 +462,8 @@
   {
    "modulo": "components/call-history",
    "arquivos": 2,
-   "testes": 0,
-   "linhas": 407,
+   "testes": 1,
+   "linhas": 416,
    "itens_menu": [],
    "telas": [],
    "rotas_http": [],
@@ -512,7 +512,8 @@
    ],
    "flags": [],
    "papeis": [
-    "button"
+    "button",
+    "status"
    ],
    "diretos": {
     "edges": [],
@@ -1170,7 +1171,7 @@
    "modulo": "components/dialer",
    "arquivos": 16,
    "testes": 1,
-   "linhas": 2238,
+   "linhas": 2247,
    "itens_menu": [],
    "telas": [],
    "rotas_http": [],
@@ -3488,7 +3489,7 @@
    "modulo": "hooks",
    "arquivos": 169,
    "testes": 0,
-   "linhas": 21119,
+   "linhas": 21129,
    "itens_menu": [],
    "telas": [],
    "rotas_http": [],
@@ -5599,7 +5600,7 @@
    "modulo": "pages",
    "arquivos": 93,
    "testes": 0,
-   "linhas": 16752,
+   "linhas": 16767,
    "itens_menu": [
     "Acessos Bloqueados",
     "Agent Assist",
@@ -6393,7 +6394,7 @@
   {
    "modulo": "pages/__tests__",
    "arquivos": 0,
-   "testes": 10,
+   "testes": 11,
    "linhas": 0,
    "itens_menu": [],
    "telas": [],

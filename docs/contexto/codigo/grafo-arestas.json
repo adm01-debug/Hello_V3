@@ -340,6 +340,7 @@
    "src/components/ui/badge.tsx",
    "src/components/ui/button.tsx",
    "src/components/ui/card.tsx",
+   "src/components/ui/empty-state.tsx",
    "src/hooks/useCallHistory.ts",
    "src/lib/a11y-clickable.ts",
    "src/lib/safe-date.ts",
@@ -3475,6 +3476,7 @@
    "src/components/executive/OutboundComplianceCard.tsx",
    "src/components/executive/PendingFollowupsCard.tsx",
    "src/components/executive/VolumeForecastCard.tsx",
+   "src/components/ui/empty-state.tsx",
    "src/components/ui/select.tsx",
    "src/hooks/useExecutiveDashboard.ts",
    "src/hooks/usePageTitle.ts"

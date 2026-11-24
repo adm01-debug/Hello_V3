@@ -755,7 +755,7 @@
     "CallSessionsList"
    ],
    "export_default": null,
-   "linhas": 133,
+   "linhas": 142,
    "dominio": "components/call-history",
    "hooks_locais": [],
    "tabelas": [],
@@ -2067,7 +2067,7 @@
     "QuickAccessEntry"
    ],
    "export_default": null,
-   "linhas": 346,
+   "linhas": 351,
    "dominio": "components/dialer",
    "hooks_locais": [
     "usePersistedTagFilter"
@@ -2146,7 +2146,7 @@
     "PredictiveDialerPanel"
    ],
    "export_default": null,
-   "linhas": 215,
+   "linhas": 219,
    "dominio": "components/dialer",
    "hooks_locais": [
     "useDNCCompliance",
@@ -4409,7 +4409,7 @@
    "hooks_locais": [],
    "tabelas": [],
    "edges": [],
-   "usado_por": 19,
+   "usado_por": 21,
    "orfao": false
   },
   {
@@ -5972,7 +5972,7 @@
     "ExecutiveDashboard"
    ],
    "export_default": "ExecutiveDashboard",
-   "linhas": 101,
+   "linhas": 115,
    "dominio": "pages",
    "hooks_locais": [
     "useExecutiveDashboardData",
@@ -6570,7 +6570,7 @@
     "PhoneDialer"
    ],
    "export_default": "PhoneDialer",
-   "linhas": 346,
+   "linhas": 347,
    "dominio": "pages",
    "hooks_locais": [
     "useCallContext",

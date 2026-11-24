@@ -1,15 +1,15 @@
 {
  "meta": {
-  "sha": "85a73de58e92c32fafe025b2aaac50d952589eb3",
+  "sha": "d2f80cb2e9b962aa998439c4729e164d4ee6614d",
   "branch": "main",
   "remote": "https://github.com/adm01-debug/Hello_V3",
-  "generated_at": "2026-11-24 02:55 UTC",
-  "files_total": 1753,
-  "code_files": 1550,
-  "code_lines": 192050
+  "generated_at": "2026-11-24 03:09 UTC",
+  "files_total": 1755,
+  "code_files": 1552,
+  "code_lines": 192168
  },
  "version": "1.3.2",
- "facts_hash": "580634dad69d58f8",
+ "facts_hash": "ba5c13867ff97b95",
  "stack": {
   "frameworks": [
    "React + Vite",
@@ -154,7 +154,7 @@
   "package_manager": "bun",
   "languages": {
    ".ts": 644,
-   ".tsx": 627,
+   ".tsx": 629,
    ".sql": 245,
    ".mjs": 27,
    ".py": 5,
@@ -28218,7 +28218,7 @@
      "get_call_history_with_summaries",
      "log_audit_event"
     ],
-    "deps_count": 40
+    "deps_count": 41
    },
    {
     "path": "",
@@ -28478,7 +28478,7 @@
      "generate-meeting-summary"
     ],
     "rpc_transitive": [],
-    "deps_count": 38
+    "deps_count": 39
    },
    {
     "path": "",
@@ -32188,7 +32188,7 @@
     "file": ".github/workflows/inventario-estado-semanal.yml"
    }
   ],
-  "components_count": 363,
+  "components_count": 364,
   "hooks": [
    {
     "name": "useContacts",
@@ -33337,8 +33337,8 @@
   },
   {
    "module": "src/components",
-   "files": 363,
-   "lines": 43405,
+   "files": 364,
+   "lines": 43455,
    "tables": [
     "accounts",
     "agent_goals",
@@ -33515,6 +33515,7 @@
     "src/components/blf/BlfSummaryBar.tsx",
     "src/components/call-history/CallDetailDialog.tsx",
     "src/components/call-history/CallSessionsList.tsx",
+    "src/components/call-history/__tests__/CallSessionsList.test.tsx",
     "src/components/call-library/CallPlaylistsPanel.tsx",
     "src/components/call-library/SurveysPanel.tsx",
     "src/components/callbacks/ScheduleCallbackDialog.tsx",
@@ -33541,8 +33542,7 @@
     "src/components/calls/__tests__/CrmSuggestionsCard.test.tsx",
     "src/components/calls/__tests__/NextBestActionPanel.test.tsx",
     "src/components/calls/__tests__/PostCallSummary.test.tsx",
-    "src/components/calls/__tests__/WebRTCCall.test.tsx",
-    "src/components/calls/live-transcription/TranscriptList.tsx"
+    "src/components/calls/__tests__/WebRTCCall.test.tsx"
    ]
   },
   {
@@ -33595,7 +33595,7 @@
   {
    "module": "src/hooks",
    "files": 355,
-   "lines": 46798,
+   "lines": 46810,
    "tables": [
     "accounts",
     "active_sessions",
@@ -34072,8 +34072,8 @@
   },
   {
    "module": "src/pages",
-   "files": 141,
-   "lines": 21794,
+   "files": 142,
+   "lines": 21850,
    "tables": [
     "audit_logs",
     "battle_card_triggers",
@@ -57168,6 +57168,18 @@
     "name": "usa requireAll na checagem por lista de permissoes"
    },
    {
+    "file": "src/components/call-history/__tests__/CallSessionsList.test.tsx",
+    "name": "CallSessionsList"
+   },
+   {
+    "file": "src/components/call-history/__tests__/CallSessionsList.test.tsx",
+    "name": "avisa que a leitura falhou em vez de dizer que nao ha chamada"
+   },
+   {
+    "file": "src/components/call-history/__tests__/CallSessionsList.test.tsx",
+    "name": "mostra o vazio normal quando a leitura funcionou"
+   },
+   {
     "file": "src/components/calls/__tests__/AudioOutputSelector.test.tsx",
     "name": "AudioOutputSelector"
    },
@@ -72490,6 +72502,14 @@
    {
     "file": "src/pages/__tests__/ConcurrencyConflicts.test.tsx",
     "name": "diz quantos conflitos estao sendo mostrados quando passa de 50"
+   },
+   {
+    "file": "src/pages/__tests__/ExecutiveDashboard.test.tsx",
+    "name": "ExecutiveDashboard"
+   },
+   {
+    "file": "src/pages/__tests__/ExecutiveDashboard.test.tsx",
+    "name": "alarma quando a leitura das metricas falha, sem zerar os numeros"
    },
    {
     "file": "src/pages/__tests__/IPWhitelist.test.tsx",
@@ -93377,7 +93397,7 @@
   },
   "src/components/call-history/CallSessionsList.tsx": {
    "path": "src/components/call-history/CallSessionsList.tsx",
-   "lines": 133,
+   "lines": 142,
    "exports": [
     "function CallSessionsList"
    ],
@@ -93392,6 +93412,16 @@
      "value": "completed",
      "kind": "compara"
     }
+   ]
+  },
+  "src/components/call-history/__tests__/CallSessionsList.test.tsx": {
+   "path": "src/components/call-history/__tests__/CallSessionsList.test.tsx",
+   "lines": 32,
+   "is_test": true,
+   "tests": [
+    "CallSessionsList",
+    "avisa que a leitura falhou em vez de dizer que nao ha chamada",
+    "mostra o vazio normal quando a leitura funcionou"
    ]
   },
   "src/components/call-library/CallPlaylistsPanel.tsx": {
@@ -95131,7 +95161,7 @@
   },
   "src/components/dialer/PredictiveDialerPanel.tsx": {
    "path": "src/components/dialer/PredictiveDialerPanel.tsx",
-   "lines": 215,
+   "lines": 219,
    "exports": [
     "function PredictiveDialerPanel"
    ],
@@ -95256,7 +95286,7 @@
   },
   "src/components/dialer/phone/PhoneQuickAccess.tsx": {
    "path": "src/components/dialer/phone/PhoneQuickAccess.tsx",
-   "lines": 346,
+   "lines": 351,
    "exports": [
     "interface QuickAccessEntry",
     "function PhoneQuickAccess"
@@ -99213,7 +99243,7 @@
   },
   "src/hooks/useCallHistory.ts": {
    "path": "src/hooks/useCallHistory.ts",
-   "lines": 230,
+   "lines": 233,
    "exports": [
     "interface CallSession",
     "interface SessionWithSummary",
@@ -100730,7 +100760,7 @@
   },
   "src/hooks/useExecutiveDashboard.ts": {
    "path": "src/hooks/useExecutiveDashboard.ts",
-   "lines": 268,
+   "lines": 275,
    "exports": [
     "interface DashboardMetrics",
     "interface CallsByDay",
@@ -106132,7 +106162,7 @@
   },
   "src/hooks/__tests__/useCallHistory.coverage.test.tsx": {
    "path": "src/hooks/__tests__/useCallHistory.coverage.test.tsx",
-   "lines": 187,
+   "lines": 189,
    "is_test": true,
    "tests": [
     "useCallHistory",
@@ -114874,7 +114904,7 @@
   },
   "src/pages/ExecutiveDashboard.tsx": {
    "path": "src/pages/ExecutiveDashboard.tsx",
-   "lines": 101,
+   "lines": 115,
    "exports": [
     "function ExecutiveDashboard"
    ]
@@ -115506,7 +115536,7 @@
   },
   "src/pages/PhoneDialer.tsx": {
    "path": "src/pages/PhoneDialer.tsx",
-   "lines": 346,
+   "lines": 347,
    "exports": [
     "default PhoneDialer"
    ],
@@ -116486,6 +116516,15 @@
     "diz que nao houve conflito no periodo em vez de deixar a tela em branco",
     "explica a origem dos dados e a retencao de 90 dias",
     "diz quantos conflitos estao sendo mostrados quando passa de 50"
+   ]
+  },
+  "src/pages/__tests__/ExecutiveDashboard.test.tsx": {
+   "path": "src/pages/__tests__/ExecutiveDashboard.test.tsx",
+   "lines": 41,
+   "is_test": true,
+   "tests": [
+    "ExecutiveDashboard",
+    "alarma quando a leitura das metricas falha, sem zerar os numeros"
    ]
   },
   "src/pages/__tests__/IPWhitelist.test.tsx": {
@@ -125586,10 +125625,30 @@
   }
  },
  "git": {
-  "sha": "85a73de58e92c32fafe025b2aaac50d952589eb3",
+  "sha": "d2f80cb2e9b962aa998439c4729e164d4ee6614d",
   "branch": "main",
   "remote": "https://github.com/adm01-debug/Hello_V3",
   "commits": [
+   {
+    "sha": "d2f80cb",
+    "date": "2026-11-24",
+    "author": "adm01-debug",
+    "subject": "fix: telas do fluxo central distinguem falha de leitura de lista vazia (etapa 203) (#221)",
+    "files": [
+     "docs/qa/05-PROGRESSO.md",
+     "src/components/call-history/CallSessionsList.tsx",
+     "src/components/call-history/__tests__/CallSessionsList.test.tsx",
+     "src/components/dialer/PredictiveDialerPanel.tsx",
+     "src/components/dialer/phone/PhoneQuickAccess.tsx",
+     "src/hooks/__tests__/useCallHistory.coverage.test.tsx",
+     "src/hooks/useCallHistory.ts",
+     "src/hooks/useExecutiveDashboard.ts",
+     "src/pages/CallHistory.tsx",
+     "src/pages/ExecutiveDashboard.tsx",
+     "src/pages/PhoneDialer.tsx",
+     "src/pages/__tests__/ExecutiveDashboard.test.tsx"
+    ]
+   },
    {
     "sha": "85a73de",
     "date": "2026-11-23",
@@ -125990,17 +126049,6 @@
      "docs/qa/05-PROGRESSO.md",
      "supabase/functions/request-password-reset/index.ts"
     ]
-   },
-   {
-    "sha": "a5e32de",
-    "date": "2026-11-23",
-    "author": "adm01-debug",
-    "subject": "fix: chatbot-respond amarra visitor_token a conversa e exige sessao da equipe (E007) (#191)",
-    "files": [
-     "docs/qa/05-PROGRESSO.md",
-     "supabase/functions/chatbot-respond/__tests__/index.test.ts",
-     "supabase/functions/chatbot-respond/index.ts"
-    ]
    }
   ],
   "hot_files": [
@@ -126011,6 +126059,14 @@
    [
     "src/hooks/useMultiChannelCall.ts",
     3
+   ],
+   [
+    "src/components/dialer/PredictiveDialerPanel.tsx",
+    2
+   ],
+   [
+    "src/pages/PhoneDialer.tsx",
+    2
    ],
    [
     "src/pages/AgentRanking.tsx",
@@ -126061,27 +126117,19 @@
     2
    ],
    [
-    "src/components/auth/PermissionGate.tsx",
+    "src/components/call-history/CallSessionsList.tsx",
     1
    ],
    [
-    "src/components/auth/__tests__/PermissionGate.test.tsx",
+    "src/components/call-history/__tests__/CallSessionsList.test.tsx",
     1
    ],
    [
-    "src/components/ui/empty-state.tsx",
+    "src/components/dialer/phone/PhoneQuickAccess.tsx",
     1
    ],
    [
-    "src/hooks/__tests__/useIPWhitelist.coverage.test.tsx",
-    1
-   ],
-   [
-    "src/hooks/useIPWhitelist.ts",
-    1
-   ],
-   [
-    "src/pages/__tests__/IPWhitelist.test.tsx",
+    "src/hooks/__tests__/useCallHistory.coverage.test.tsx",
     1
    ]
   ]
