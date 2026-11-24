@@ -296,20 +296,25 @@ test.describe('Etapa 273 - navegacao por teclado no fluxo de chamada', () => {
     const lerFocoFinal = () =>
       page.evaluate(() => {
         const el = document.activeElement as HTMLElement | null;
-        if (!el) return false;
-        const texto = `${el.getAttribute('aria-label') ?? ''} ${el.textContent ?? ''}`;
-        return (
-          el.getAttribute('data-marco273') === 'gatilho' ||
-          texto.replace(/\s+/g, ' ').trim().toLowerCase().includes('assistente de voz')
-        );
+        if (!el) return { ok: false, ativo: 'null' };
+        const texto = `${el.getAttribute('aria-label') ?? ''} ${el.textContent ?? ''}`
+          .replace(/\s+/g, ' ')
+          .trim()
+          .toLowerCase();
+        return {
+          ok: el.getAttribute('data-marco273') === 'gatilho' || texto.includes('assistente de voz'),
+          ativo: `${el.tagName.toLowerCase()}#${el.id}.${String(el.className).slice(0, 40)}`,
+        };
       });
 
-    let devolveu = false;
+    let leitura = { ok: false, ativo: 'nao lido' };
     const limiteFoco = Date.now() + 5_000;
-    while (!devolveu && Date.now() < limiteFoco) {
-      devolveu = await comPrazo(lerFocoFinal(), 15_000, 'ler-foco-final');
-      if (!devolveu) await new Promise((seguir) => setTimeout(seguir, 100));
+    while (!leitura.ok && Date.now() < limiteFoco) {
+      leitura = await comPrazo(lerFocoFinal(), 15_000, 'ler-foco-final');
+      process.stdout.write(`FOCO-273 ativo=${leitura.ativo} gatilho=${leitura.ok}\n`);
+      if (!leitura.ok) await new Promise((seguir) => setTimeout(seguir, 100));
     }
+    const devolveu = leitura.ok;
     process.stdout.write(`ESC-273 dialogoFechou=true focoNoGatilho=${devolveu}\n`);
     expect(devolveu, 'o foco nao voltou ao gatilho depois de fechar com Esc').toBe(true);
     marco('fim');

@@ -203,13 +203,21 @@ export function VoiceAssistantDialog({ open, onOpenChange, onIntent }: VoiceAssi
       const alvo = returnFocusRef.current;
       returnFocusRef.current = null;
       if (alvo && document.contains(alvo)) alvo.focus();
-      // O conteudo do dialogo ainda sai do DOM durante a animacao de fechamento.
-      // Se o foco estava dentro dele, o navegador joga para o body e o gatilho
-      // perde o foco: devolve quando o overlay termina de sair.
+      // O conteudo do dialogo ainda sai do DOM durante a animacao de fechamento e o
+      // foco pode parar no body ou num no removido. Devolve ao gatilho quando o
+      // overlay termina de sair; um clique do usuario cancela a devolucao.
+      const desistir = () => {
+        if (restoreTimerRef.current !== null) {
+          window.clearTimeout(restoreTimerRef.current);
+          restoreTimerRef.current = null;
+        }
+      };
+      document.addEventListener('pointerdown', desistir, { capture: true, once: true });
       if (restoreTimerRef.current !== null) window.clearTimeout(restoreTimerRef.current);
       restoreTimerRef.current = window.setTimeout(() => {
+        document.removeEventListener('pointerdown', desistir, { capture: true });
         restoreTimerRef.current = null;
-        if (alvo && document.contains(alvo) && document.activeElement === document.body) alvo.focus();
+        if (alvo && document.contains(alvo) && document.activeElement !== alvo) alvo.focus();
       }, 400);
     };
   }, [open]);
