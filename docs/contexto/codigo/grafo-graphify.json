@@ -4,11 +4,11 @@
  "presente": true,
  "como_gerar": "uvx --from \"graphifyy[sql]\" graphify update .  (ou: bun run graph:update); saída em graphify-out/ — graph.json e graph.html NÃO são versionados (dezenas de MB); use `graphify query/path/explain` localmente",
  "relatorio": null,
- "commit_do_grafo": "521541455224ef08b6dc103b3fc9c324e7fed88d",
+ "commit_do_grafo": "df0b30e806e3bf7fe83e7d210fb7a6edfd75f7b5",
  "grafo_atual": true,
  "nos": 10152,
- "arestas": 26705,
- "comunidades_total": 777,
+ "arestas": 26706,
+ "comunidades_total": 781,
  "relacoes": {
   "calls": 2507,
   "cites": 9,
@@ -17,7 +17,7 @@
   "dynamic_import": 159,
   "implements": 1,
   "imports": 7121,
-  "imports_from": 6339,
+  "imports_from": 6340,
   "indexes": 419,
   "indirect_call": 145,
   "inherits": 12,
@@ -29,7 +29,7 @@
   "triggers": 113
  },
  "origem": {
-  "EXTRACTED": 25012,
+  "EXTRACTED": 25013,
   "INFERRED": 1693
  },
  "comunidades": [
@@ -53,26 +53,26 @@
   {
    "id": 1,
    "nome": "react",
-   "nos": 209,
-   "callables": 93,
-   "arquivos": 79,
+   "nos": 222,
+   "callables": 99,
+   "arquivos": 81,
    "exemplos_arquivos": [
     "package.json",
     "src/components/ai/live-call/useLiveInsights.ts",
+    "src/components/calls/__tests__/AudioOutputSelector.test.tsx",
     "src/components/compliance/calling-hours/useCallingHoursManager.ts",
     "src/components/conversation-intelligence/BattleCardAlert.tsx",
     "src/components/notification-center/useNotificationCenter.ts",
     "src/components/queue-alerts/useQueueMetricsSettings.ts",
-    "src/components/recordings/TranscriptionDialog.tsx",
     "src/hooks/__tests__/useAccounts.test.ts"
    ]
   },
   {
    "id": 2,
    "nome": "vitest",
-   "nos": 195,
-   "callables": 49,
-   "arquivos": 75,
+   "nos": 200,
+   "callables": 50,
+   "arquivos": 78,
    "exemplos_arquivos": [
     "package.json",
     "react-router-dom",
@@ -121,9 +121,9 @@
   {
    "id": 5,
    "nome": "traceHeaders",
-   "nos": 165,
-   "callables": 82,
-   "arquivos": 46,
+   "nos": 169,
+   "callables": 83,
+   "arquivos": 47,
    "exemplos_arquivos": [
     "docs/adr/017-security-hardening-and-roadmap-10-10.md",
     "docs/adr/018-onda-3-refactor-rls-tracing.md",
@@ -171,6 +171,23 @@
   },
   {
    "id": 8,
+   "nome": "@tanstack/react-query",
+   "nos": 126,
+   "callables": 54,
+   "arquivos": 32,
+   "exemplos_arquivos": [
+    "docs/estado/hooks-parte4.md",
+    "package.json",
+    "src/hooks/__tests__/useAnomalyRemediation.coverage.test.tsx",
+    "src/hooks/__tests__/useChatbot.coverage.test.tsx",
+    "src/hooks/__tests__/useDashboardData.coverage.test.tsx",
+    "src/hooks/__tests__/useExtensionsOverview.coverage.test.tsx",
+    "src/hooks/__tests__/useHoldMetrics.coverage.test.tsx",
+    "src/hooks/__tests__/useLearning.coverage.test.tsx"
+   ]
+  },
+  {
+   "id": 9,
    "nome": "cn",
    "nos": 124,
    "callables": 41,
@@ -184,23 +201,6 @@
     "src/components/call-history/CallDetailDialog.tsx",
     "src/components/calls/SipConnectionStatus.tsx",
     "src/components/calls/live-transcription/TranscriptList.tsx"
-   ]
-  },
-  {
-   "id": 9,
-   "nome": "@tanstack/react-query",
-   "nos": 111,
-   "callables": 47,
-   "arquivos": 28,
-   "exemplos_arquivos": [
-    "package.json",
-    "src/hooks/__tests__/useAnomalyRemediation.coverage.test.tsx",
-    "src/hooks/__tests__/useCallScoring.coverage.test.tsx",
-    "src/hooks/__tests__/useComplianceRules.coverage.test.tsx",
-    "src/hooks/__tests__/useDashboardData.coverage.test.tsx",
-    "src/hooks/__tests__/useExtensionsOverview.coverage.test.tsx",
-    "src/hooks/__tests__/useHoldMetrics.coverage.test.tsx",
-    "src/hooks/__tests__/useLiveAssist.coverage.test.tsx"
    ]
   },
   {
@@ -354,23 +354,6 @@
   },
   {
    "id": 20,
-   "nome": "sonner",
-   "nos": 75,
-   "callables": 29,
-   "arquivos": 17,
-   "exemplos_arquivos": [
-    "package.json",
-    "src/components/calls/__tests__/AudioOutputSelector.test.tsx",
-    "src/hooks/__tests__/useAchievementNotifications.coverage.test.tsx",
-    "src/hooks/__tests__/useAlerts.coverage.test.tsx",
-    "src/hooks/__tests__/useChatbot.coverage.test.tsx",
-    "src/hooks/__tests__/useCoachingAssignments.coverage.test.tsx",
-    "src/hooks/__tests__/useContactAlerts.coverage.test.tsx",
-    "src/hooks/__tests__/useGoalViolations.coverage.test.tsx"
-   ]
-  },
-  {
-   "id": 21,
    "nome": "ONDA 1 — Segurança e risco de perda de dado (001–055)",
    "nos": 73,
    "callables": 17,
@@ -385,7 +368,7 @@
    ]
   },
   {
-   "id": 22,
+   "id": 21,
    "nome": "Index.tsx",
    "nos": 73,
    "callables": 43,
@@ -402,7 +385,7 @@
    ]
   },
   {
-   "id": 23,
+   "id": 22,
    "nome": "generate.py",
    "nos": 72,
    "callables": 63,
@@ -412,7 +395,7 @@
    ]
   },
   {
-   "id": 24,
+   "id": 23,
    "nome": "useQueueMetrics.ts",
    "nos": 72,
    "callables": 25,
@@ -429,7 +412,7 @@
    ]
   },
   {
-   "id": 25,
+   "id": 24,
    "nome": "AppLayout.tsx",
    "nos": 71,
    "callables": 32,
@@ -446,7 +429,7 @@
    ]
   },
   {
-   "id": 26,
+   "id": 25,
    "nome": "ReauthContext.tsx",
    "nos": 70,
    "callables": 44,
@@ -463,7 +446,7 @@
    ]
   },
   {
-   "id": 27,
+   "id": 26,
    "nome": "PredictiveDialerPanel.tsx",
    "nos": 69,
    "callables": 30,
@@ -480,7 +463,7 @@
    ]
   },
   {
-   "id": 28,
+   "id": 27,
    "nome": "Tabela de funcionalidades",
    "nos": 64,
    "callables": 27,
@@ -497,7 +480,7 @@
    ]
   },
   {
-   "id": 29,
+   "id": 28,
    "nome": "ref_https",
    "nos": 64,
    "callables": 18,
@@ -514,7 +497,7 @@
    ]
   },
   {
-   "id": 30,
+   "id": 29,
    "nome": "queue-audio.ts",
    "nos": 62,
    "callables": 39,
@@ -531,7 +514,7 @@
    ]
   },
   {
-   "id": 31,
+   "id": 30,
    "nome": "external-payload-schemas.ts",
    "nos": 59,
    "callables": 34,
@@ -548,7 +531,7 @@
    ]
   },
   {
-   "id": 32,
+   "id": 31,
    "nome": "UnifiedSoftphone.tsx",
    "nos": 59,
    "callables": 29,
@@ -565,7 +548,7 @@
    ]
   },
   {
-   "id": 33,
+   "id": 32,
    "nome": "useSipCall",
    "nos": 58,
    "callables": 15,
@@ -582,7 +565,7 @@
    ]
   },
   {
-   "id": 34,
+   "id": 33,
    "nome": "mesmaString",
    "nos": 56,
    "callables": 25,
@@ -599,7 +582,7 @@
    ]
   },
   {
-   "id": 35,
+   "id": 34,
    "nome": "PasskeyManager.tsx",
    "nos": 55,
    "callables": 17,
@@ -616,7 +599,7 @@
    ]
   },
   {
-   "id": 36,
+   "id": 35,
    "nome": "package.json",
    "nos": 53,
    "callables": 0,
@@ -629,7 +612,7 @@
    ]
   },
   {
-   "id": 37,
+   "id": 36,
    "nome": "sidebar.tsx",
    "nos": 52,
    "callables": 12,
@@ -646,7 +629,7 @@
    ]
   },
   {
-   "id": 38,
+   "id": 37,
    "nome": "useBitrix.ts",
    "nos": 52,
    "callables": 31,
@@ -663,7 +646,7 @@
    ]
   },
   {
-   "id": 39,
+   "id": 38,
    "nome": "Tabela de funcionalidades",
    "nos": 51,
    "callables": 34,
@@ -680,7 +663,7 @@
    ]
   },
   {
-   "id": 40,
+   "id": 39,
    "nome": "security-alerts-webhook.ts",
    "nos": 51,
    "callables": 24,
@@ -696,7 +679,7 @@
    ]
   },
   {
-   "id": 41,
+   "id": 40,
    "nome": "numeric-body-schemas.ts",
    "nos": 51,
    "callables": 16,
@@ -713,7 +696,7 @@
    ]
   },
   {
-   "id": 42,
+   "id": 41,
    "nome": "Tabela de funcionalidades",
    "nos": 49,
    "callables": 19,
@@ -730,7 +713,7 @@
    ]
   },
   {
-   "id": 43,
+   "id": 42,
    "nome": "ONDA 3 — Integridade de dados e regras de negócio (101–150)",
    "nos": 49,
    "callables": 0,
@@ -740,7 +723,7 @@
    ]
   },
   {
-   "id": 44,
+   "id": 43,
    "nome": "Onda 4 — Funcionalidades incompletas (151–180, 30 etapas)",
    "nos": 45,
    "callables": 24,
@@ -757,7 +740,7 @@
    ]
   },
   {
-   "id": 45,
+   "id": 44,
    "nome": "usePredictiveDialer.ts",
    "nos": 45,
    "callables": 25,
@@ -773,7 +756,7 @@
    ]
   },
   {
-   "id": 46,
+   "id": 45,
    "nome": "Register.tsx",
    "nos": 45,
    "callables": 13,
@@ -790,7 +773,7 @@
    ]
   },
   {
-   "id": 47,
+   "id": 46,
    "nome": "ESTADO_ATUAL.md",
    "nos": 44,
    "callables": 2,
@@ -807,7 +790,7 @@
    ]
   },
   {
-   "id": 48,
+   "id": 47,
    "nome": "useConversations.ts",
    "nos": 44,
    "callables": 20,
@@ -824,7 +807,7 @@
    ]
   },
   {
-   "id": 49,
+   "id": 48,
    "nome": "20260417001411_2f77b480-8ec1-46a5-af32-2904e651a55a.sql",
    "nos": 43,
    "callables": 0,
@@ -834,7 +817,7 @@
    ]
   },
   {
-   "id": 50,
+   "id": 49,
    "nome": "schemas.ts",
    "nos": 42,
    "callables": 16,
@@ -847,7 +830,7 @@
    ]
   },
   {
-   "id": 51,
+   "id": 50,
    "nome": ".collect",
    "nos": 40,
    "callables": 38,
@@ -857,7 +840,7 @@
    ]
   },
   {
-   "id": 52,
+   "id": 51,
    "nome": "20260416234921_cc18cae3-c0a2-4ffd-a96e-7bc43be82ec5.sql",
    "nos": 40,
    "callables": 0,
@@ -867,7 +850,7 @@
    ]
   },
   {
-   "id": 53,
+   "id": 52,
    "nome": "useAuth",
    "nos": 39,
    "callables": 15,
@@ -884,7 +867,7 @@
    ]
   },
   {
-   "id": 54,
+   "id": 53,
    "nome": "usePersistedTagFilter.ts",
    "nos": 39,
    "callables": 25,
@@ -901,7 +884,7 @@
    ]
   },
   {
-   "id": 55,
+   "id": 54,
    "nome": "SecurityAlerts.tsx",
    "nos": 39,
    "callables": 26,
@@ -918,7 +901,7 @@
    ]
   },
   {
-   "id": 56,
+   "id": 55,
    "nome": "voip-recommendation-insights/index.ts",
    "nos": 38,
    "callables": 18,
@@ -935,7 +918,7 @@
    ]
   },
   {
-   "id": 57,
+   "id": 56,
    "nome": "useHoldReminder.ts",
    "nos": 38,
    "callables": 15,
@@ -949,6 +932,23 @@
     "src/hooks/useHoldReminder.ts",
     "src/lib/__tests__/holdReminderSounds.coverage.test.tsx",
     "src/lib/holdReminderSounds.ts"
+   ]
+  },
+  {
+   "id": 57,
+   "nome": "supabase/types.ts",
+   "nos": 38,
+   "callables": 20,
+   "arquivos": 11,
+   "exemplos_arquivos": [
+    "sonner",
+    "src/hooks/__tests__/useDeals.test.ts",
+    "src/hooks/__tests__/useMeetingSummary.test.ts",
+    "src/hooks/useDeals.ts",
+    "src/hooks/useKeyMoments.ts",
+    "src/hooks/useLiveSentiment.ts",
+    "src/integrations/supabase/types.ts",
+    "src/lib/audit/__tests__/index.coverage.test.ts"
    ]
   },
   {
@@ -969,23 +969,6 @@
   },
   {
    "id": 59,
-   "nome": "useSipCall.ts",
-   "nos": 38,
-   "callables": 20,
-   "arquivos": 10,
-   "exemplos_arquivos": [
-    "src/components/calls/PostCallSummary.tsx",
-    "src/components/calls/__tests__/PostCallSummary.test.tsx",
-    "src/hooks/__tests__/useVoipAutoRemediation.coverage.test.tsx",
-    "src/hooks/__tests__/useVoipQualityMonitor.coverage.test.tsx",
-    "src/hooks/useQualityTrendAnalyzer.ts",
-    "src/hooks/useSipCall.ts",
-    "src/hooks/useVoipAutoRemediation.ts",
-    "src/hooks/useVoipQualityMonitor.ts"
-   ]
-  },
-  {
-   "id": 60,
    "nome": "ONDA 2 — Fluxos principais quebrados (056–100)",
    "nos": 37,
    "callables": 1,
@@ -997,7 +980,7 @@
    ]
   },
   {
-   "id": 61,
+   "id": 60,
    "nome": "adr/README.md",
    "nos": 36,
    "callables": 0,
@@ -1013,7 +996,7 @@
    ]
   },
   {
-   "id": 62,
+   "id": 61,
    "nome": "Rotas protegidas sem `roles:` (etapa 090)",
    "nos": 36,
    "callables": 14,
@@ -1030,7 +1013,7 @@
    ]
   },
   {
-   "id": 63,
+   "id": 62,
    "nome": "20260416235642_e9fe6fa3-4307-49a3-9253-09718c07703d.sql",
    "nos": 36,
    "callables": 0,
@@ -1040,7 +1023,7 @@
    ]
   },
   {
-   "id": 64,
+   "id": 63,
    "nome": "Scorecard — Maturidade Técnica (re-avaliação E2)",
    "nos": 35,
    "callables": 6,
@@ -1056,7 +1039,7 @@
    ]
   },
   {
-   "id": 65,
+   "id": 64,
    "nome": "security-advanced.test.ts",
    "nos": 35,
    "callables": 22,
@@ -1073,7 +1056,7 @@
    ]
   },
   {
-   "id": 66,
+   "id": 65,
    "nome": "gerar-catalogo-edges.mjs",
    "nos": 35,
    "callables": 8,
@@ -1087,7 +1070,7 @@
    ]
   },
   {
-   "id": 67,
+   "id": 66,
    "nome": "webauthn-authenticate/index.ts",
    "nos": 35,
    "callables": 26,
@@ -1104,7 +1087,7 @@
    ]
   },
   {
-   "id": 68,
+   "id": 67,
    "nome": "test_snapshot.py",
    "nos": 34,
    "callables": 10,
@@ -1116,7 +1099,7 @@
    ]
   },
   {
-   "id": 69,
+   "id": 68,
    "nome": "LiveTranscription.tsx",
    "nos": 33,
    "callables": 23,
@@ -1133,7 +1116,7 @@
    ]
   },
   {
-   "id": 70,
+   "id": 69,
    "nome": "NextBestActionPanel.tsx",
    "nos": 32,
    "callables": 14,
@@ -1150,7 +1133,7 @@
    ]
   },
   {
-   "id": 71,
+   "id": 70,
    "nome": "webhook-health-utils.ts",
    "nos": 31,
    "callables": 17,
@@ -1167,7 +1150,7 @@
    ]
   },
   {
-   "id": 72,
+   "id": 71,
    "nome": "PhoneQuickAccess.tsx",
    "nos": 31,
    "callables": 21,
@@ -1182,7 +1165,7 @@
    ]
   },
   {
-   "id": 73,
+   "id": 72,
    "nome": "sync-history.ts",
    "nos": 30,
    "callables": 22,
@@ -1195,7 +1178,7 @@
    ]
   },
   {
-   "id": 74,
+   "id": 73,
    "nome": "Memories",
    "nos": 30,
    "callables": 10,
@@ -1212,7 +1195,7 @@
    ]
   },
   {
-   "id": 75,
+   "id": 74,
    "nome": "voip-executive-summary/index.ts",
    "nos": 30,
    "callables": 18,
@@ -1227,7 +1210,7 @@
    ]
   },
   {
-   "id": 76,
+   "id": 75,
    "nome": "hooks/use-toast.ts",
    "nos": 30,
    "callables": 13,
@@ -1241,7 +1224,7 @@
    ]
   },
   {
-   "id": 77,
+   "id": 76,
    "nome": "ring-group.ts",
    "nos": 30,
    "callables": 18,
@@ -1255,7 +1238,7 @@
    ]
   },
   {
-   "id": 78,
+   "id": 77,
    "nome": "20260711194619_238a08b8-a42e-49cd-8856-32a4c1db5c50.sql",
    "nos": 29,
    "callables": 0,
@@ -1265,7 +1248,7 @@
    ]
   },
   {
-   "id": 79,
+   "id": 78,
    "nome": "ref_pg",
    "nos": 29,
    "callables": 7,
@@ -1278,6 +1261,20 @@
     "scripts/fix-user-profile.mjs",
     "scripts/inspect-schema.mjs",
     "scripts/test-rls-access.mjs"
+   ]
+  },
+  {
+   "id": 79,
+   "nome": "computeHealth",
+   "nos": 28,
+   "callables": 7,
+   "arquivos": 5,
+   "exemplos_arquivos": [
+    "docs/adr/051-onda-37-property-based-fuzz-testing.md",
+    "docs/qa/onda-37-relatorio-massivo.md",
+    "src/hooks/__tests__/useExtensionsOverview.scenarios.test.ts",
+    "src/lib/__tests__/health-score.property.test.ts",
+    "src/lib/health-score.ts"
    ]
   }
  ],
@@ -1356,8 +1353,8 @@
    "id": "ref_sonner",
    "rotulo": "sonner",
    "arquivo": "package.json",
-   "grau": 222,
-   "comunidade": "sonner"
+   "grau": 223,
+   "comunidade": "react"
   },
   {
    "id": "src_lib_logger",
@@ -2204,7 +2201,7 @@
   "docs/estado/hooks-parte1.md": "5. Em uso por rota",
   "docs/estado/hooks-parte2.md": "5. Em uso por rota",
   "docs/estado/hooks-parte3.md": "5. Em uso por rota",
-  "docs/estado/hooks-parte4.md": "useShifts.ts",
+  "docs/estado/hooks-parte4.md": "Integrações de terceiros observadas",
   "docs/estado/infra-ci-rotas-integracoes.md": "(C) Segredos e variáveis de ambiente",
   "docs/estado/integracoes.md": "Integrações de Terceiros — Implementadas, Parciais e Planejadas",
   "docs/estado/lib-parte1.md": "ESTADO_ATUAL.md",
@@ -2337,7 +2334,7 @@
   "scripts/test-dashboard-rpcs.mjs": "test-dashboard-rpcs.mjs",
   "scripts/test-rls-access.mjs": "ref_pg",
   "scripts/test-validate-ip.mjs": "test-validate-ip.mjs",
-  "sonner": "useMeetingSummary.test.ts",
+  "sonner": "supabase/types.ts",
   "src/App.tsx": "error-tracking.ts",
   "src/__tests__/rls/audit-logs.test.ts": "vitest",
   "src/__tests__/rls/contacts.test.ts": "rls-policies.test.ts",
@@ -2417,17 +2414,17 @@
   "src/components/calls/MeetingSummaryCard.tsx": "protectedRoutes.tsx",
   "src/components/calls/NetworkStatusBadge.tsx": "AppLayout.tsx",
   "src/components/calls/NextBestActionPanel.tsx": "NextBestActionPanel.tsx",
-  "src/components/calls/PostCallSummary.tsx": "AppLayout.tsx",
+  "src/components/calls/PostCallSummary.tsx": "useVoipQualityMonitor.ts",
   "src/components/calls/SipConnectionStatus.tsx": "AppLayout.tsx",
   "src/components/calls/TransferCallDialog.tsx": "AppLayout.tsx",
   "src/components/calls/UnifiedSoftphone.tsx": "UnifiedSoftphone.tsx",
   "src/components/calls/VoipQualityIndicator.tsx": "AppLayout.tsx",
   "src/components/calls/WebRTCCall.tsx": "Tabela de funcionalidades",
   "src/components/calls/WebRTCMetricsPanel.tsx": "WebRTCMetricsPanel.tsx",
-  "src/components/calls/__tests__/AudioOutputSelector.test.tsx": "sonner",
+  "src/components/calls/__tests__/AudioOutputSelector.test.tsx": "react",
   "src/components/calls/__tests__/CrmSuggestionsCard.test.tsx": "vitest",
   "src/components/calls/__tests__/NextBestActionPanel.test.tsx": "NextBestActionPanel.tsx",
-  "src/components/calls/__tests__/PostCallSummary.test.tsx": "useSipCall.ts",
+  "src/components/calls/__tests__/PostCallSummary.test.tsx": "useVoipQualityMonitor.ts",
   "src/components/calls/__tests__/UnifiedSoftphone.falhas.test.tsx": "UnifiedSoftphone.tsx",
   "src/components/calls/__tests__/WebRTCCall.test.tsx": "Tabela de funcionalidades",
   "src/components/calls/live-transcription/TranscriptList.tsx": "lucide-react",
@@ -2619,7 +2616,7 @@
   "src/components/ranking/AgentSummaryStats.tsx": "card.tsx",
   "src/components/ranking/GoalsConfigDialog.tsx": "card.tsx",
   "src/components/ranking/PerformanceEvolutionChart.tsx": "card.tsx",
-  "src/components/recordings/TranscriptionDialog.tsx": "react",
+  "src/components/recordings/TranscriptionDialog.tsx": "useRecordings.ts",
   "src/components/ringgroups/RingGroupCard.tsx": "ring-group.ts",
   "src/components/ringgroups/RingGroupFormDialog.tsx": "button.tsx",
   "src/components/scheduling/AdherencePanel.tsx": "Onda 4 — Funcionalidades incompletas (151–180, 30 etapas)",
@@ -2729,14 +2726,14 @@
   "src/hooks/__tests__/use-toast.coverage.test.tsx": "vitest",
   "src/hooks/__tests__/useAccounts.coverage.test.tsx": "vitest",
   "src/hooks/__tests__/useAccounts.test.ts": "react",
-  "src/hooks/__tests__/useAchievementNotifications.coverage.test.tsx": "sonner",
+  "src/hooks/__tests__/useAchievementNotifications.coverage.test.tsx": "useAchievementNotifications.coverage.test.tsx",
   "src/hooks/__tests__/useActiveCallsRealtime.coverage.test.tsx": "useHoldSoundAlert.ts",
   "src/hooks/__tests__/useAdherence.test.tsx": "react",
   "src/hooks/__tests__/useAgentRanking.coverage.test.tsx": "useAgentRanking.coverage.test.tsx",
   "src/hooks/__tests__/useAgentStatus.coverage.test.tsx": "vitest",
   "src/hooks/__tests__/useAlertHistory.coverage.test.tsx": "vitest",
   "src/hooks/__tests__/useAlertSoundAndNotifications.test.ts": "vitest",
-  "src/hooks/__tests__/useAlerts.coverage.test.tsx": "sonner",
+  "src/hooks/__tests__/useAlerts.coverage.test.tsx": "useAlerts.coverage.test.tsx",
   "src/hooks/__tests__/useAlertsExport.test.ts": "SecurityAlerts.tsx",
   "src/hooks/__tests__/useAnimatedCounter.coverage.test.tsx": "safeParseFloat",
   "src/hooks/__tests__/useAnomalyRemediation.coverage.test.tsx": "@tanstack/react-query",
@@ -2749,30 +2746,30 @@
   "src/hooks/__tests__/useBestTimeToContact.coverage.test.tsx": "traceHeaders",
   "src/hooks/__tests__/useBitrix.coverage.test.tsx": "useBitrix.ts",
   "src/hooks/__tests__/useBitrixAndWebAuthn.test.ts": "useBitrix.ts",
-  "src/hooks/__tests__/useBlockedAccessLogs.coverage.test.tsx": "vitest",
-  "src/hooks/__tests__/useBusinessLogic.test.ts": "useRealtimeHoldAlerts.ts",
+  "src/hooks/__tests__/useBlockedAccessLogs.coverage.test.tsx": "react",
+  "src/hooks/__tests__/useBusinessLogic.test.ts": "react",
   "src/hooks/__tests__/useCadences.coverage.test.tsx": "vitest",
   "src/hooks/__tests__/useCallAnalytics.coverage.test.tsx": "vitest",
   "src/hooks/__tests__/useCallHistory.coverage.test.tsx": "useCallHistory.ts",
   "src/hooks/__tests__/useCallPlaylists.coverage.test.tsx": "vitest",
   "src/hooks/__tests__/useCallRecording.coverage.test.tsx": "vitest",
-  "src/hooks/__tests__/useCallRecording.test.ts": "vitest",
-  "src/hooks/__tests__/useCallScoring.coverage.test.tsx": "@tanstack/react-query",
+  "src/hooks/__tests__/useCallRecording.test.ts": "useCallRecording.test.ts",
+  "src/hooks/__tests__/useCallScoring.coverage.test.tsx": "useCallScoring.ts",
   "src/hooks/__tests__/useCallSearch.test.ts": "react",
   "src/hooks/__tests__/useCallSession.coverage.test.tsx": "useCallSession.ts",
   "src/hooks/__tests__/useCallSession.test.ts": "vitest",
   "src/hooks/__tests__/useCallTimers.coverage.test.tsx": "UnifiedSoftphone.tsx",
   "src/hooks/__tests__/useCallTransfer.coverage.test.tsx": "UnifiedSoftphone.tsx",
-  "src/hooks/__tests__/useChatbot.coverage.test.tsx": "sonner",
+  "src/hooks/__tests__/useChatbot.coverage.test.tsx": "@tanstack/react-query",
   "src/hooks/__tests__/useChurnRisk.test.ts": "react",
   "src/hooks/__tests__/useCoaching.coverage.test.tsx": "vitest",
   "src/hooks/__tests__/useCoachingAndRecording.test.ts": "vitest",
-  "src/hooks/__tests__/useCoachingAssignments.coverage.test.tsx": "sonner",
-  "src/hooks/__tests__/useComplianceRules.coverage.test.tsx": "@tanstack/react-query",
+  "src/hooks/__tests__/useCoachingAssignments.coverage.test.tsx": "useCoachingAssignments.coverage.test.tsx",
+  "src/hooks/__tests__/useComplianceRules.coverage.test.tsx": "vitest",
   "src/hooks/__tests__/useComprehensive.test.ts": "vitest",
   "src/hooks/__tests__/useConferenceRecording.coverage.test.tsx": "UnifiedSoftphone.tsx",
   "src/hooks/__tests__/useConsent.coverage.test.tsx": "useConsent.coverage.test.tsx",
-  "src/hooks/__tests__/useContactAlerts.coverage.test.tsx": "sonner",
+  "src/hooks/__tests__/useContactAlerts.coverage.test.tsx": "react",
   "src/hooks/__tests__/useContactInsights.coverage.test.tsx": "vitest",
   "src/hooks/__tests__/useContacts.conflict.test.ts": "vitest",
   "src/hooks/__tests__/useContacts.coverage.test.tsx": "useContacts.ts",
@@ -2780,14 +2777,14 @@
   "src/hooks/__tests__/useConversations.coverage.test.tsx": "useConversations.ts",
   "src/hooks/__tests__/useCriticalAlertNotifications.coverage.test.tsx": "vitest",
   "src/hooks/__tests__/useCrmFieldSuggestions.coverage.test.tsx": "useCrmFieldSuggestions.coverage.test.tsx",
-  "src/hooks/__tests__/useCulturalHints.coverage.test.tsx": "react",
+  "src/hooks/__tests__/useCulturalHints.coverage.test.tsx": "vitest",
   "src/hooks/__tests__/useDNCCompliance.coverage.test.tsx": "useBitrix.ts",
   "src/hooks/__tests__/useDashboardData.coverage.test.tsx": "@tanstack/react-query",
   "src/hooks/__tests__/useDashboardGoals.coverage.test.tsx": "useQueueMetrics.ts",
   "src/hooks/__tests__/useDashboardLayout.coverage.test.tsx": "vitest",
   "src/hooks/__tests__/useDealForecast.test.ts": "traceHeaders",
   "src/hooks/__tests__/useDeals.conflict.test.ts": "vitest",
-  "src/hooks/__tests__/useDeals.test.ts": "react",
+  "src/hooks/__tests__/useDeals.test.ts": "supabase/types.ts",
   "src/hooks/__tests__/useDebouncedSearchParam.test.tsx": "protectedRoutes.tsx",
   "src/hooks/__tests__/useDeviceAndSecurity.test.ts": "vitest",
   "src/hooks/__tests__/useDeviceDetection.coverage.test.tsx": "useSessionManager.ts",
@@ -2803,7 +2800,7 @@
   "src/hooks/__tests__/useGamification.coverage.test.tsx": "useGamification.coverage.test.tsx",
   "src/hooks/__tests__/useGamificationAndCallbacks.test.ts": "vitest",
   "src/hooks/__tests__/useGeoBlocking.coverage.test.tsx": "useGeoBlocking.ts",
-  "src/hooks/__tests__/useGoalViolations.coverage.test.tsx": "sonner",
+  "src/hooks/__tests__/useGoalViolations.coverage.test.tsx": "useGoalViolations.ts",
   "src/hooks/__tests__/useHealthCheck.coverage.test.tsx": "traceHeaders",
   "src/hooks/__tests__/useHoldMetrics.coverage.test.tsx": "@tanstack/react-query",
   "src/hooks/__tests__/useHoldReminder.coverage.test.tsx": "UnifiedSoftphone.tsx",
@@ -2813,16 +2810,16 @@
   "src/hooks/__tests__/useIPWhitelist.coverage.test.tsx": "useQueueMetrics.ts",
   "src/hooks/__tests__/useKeyMoments.coverage.test.tsx": "vitest",
   "src/hooks/__tests__/useKnowledgeBase.coverage.test.tsx": "useKnowledgeBase.coverage.test.tsx",
-  "src/hooks/__tests__/useLearning.coverage.test.tsx": "sonner",
+  "src/hooks/__tests__/useLearning.coverage.test.tsx": "@tanstack/react-query",
   "src/hooks/__tests__/useLiveAssist.coverage.test.tsx": "@tanstack/react-query",
   "src/hooks/__tests__/useLiveSentiment.coverage.test.tsx": "useLiveSentiment.coverage.test.tsx",
   "src/hooks/__tests__/useLiveTranslation.coverage.test.tsx": "traceHeaders",
   "src/hooks/__tests__/useLoginLockout.coverage.test.tsx": "useAuthContext",
-  "src/hooks/__tests__/useLoginLockout.test.ts": "react",
+  "src/hooks/__tests__/useLoginLockout.test.ts": "vitest",
   "src/hooks/__tests__/useMFA.coverage.test.tsx": "useAuthContext",
   "src/hooks/__tests__/useMFA.test.ts": "vitest",
   "src/hooks/__tests__/useMeetingSummary.coverage.test.tsx": "traceHeaders",
-  "src/hooks/__tests__/useMeetingSummary.test.ts": "useMeetingSummary.test.ts",
+  "src/hooks/__tests__/useMeetingSummary.test.ts": "supabase/types.ts",
   "src/hooks/__tests__/useMultiChannelCall.compliance.test.tsx": "UnifiedSoftphone.tsx",
   "src/hooks/__tests__/useMultiChannelCall.coverage.test.tsx": "UnifiedSoftphone.tsx",
   "src/hooks/__tests__/useMultiChannelCall.test.ts": "vitest",
@@ -2841,15 +2838,15 @@
   "src/hooks/__tests__/useQualityTrendAnalyzer.coverage.test.tsx": "vitest",
   "src/hooks/__tests__/useQueueAudioPrompts.storage.test.tsx": "vitest",
   "src/hooks/__tests__/useQueueMetrics.coverage.test.tsx": "useQueueMetrics.ts",
-  "src/hooks/__tests__/useRateLimitData.coverage.test.tsx": "useRateLimitData.ts",
-  "src/hooks/__tests__/useRealtimeHoldAlerts.coverage.test.tsx": "useRealtimeHoldAlerts.ts",
+  "src/hooks/__tests__/useRateLimitData.coverage.test.tsx": "vitest",
+  "src/hooks/__tests__/useRealtimeHoldAlerts.coverage.test.tsx": "vitest",
   "src/hooks/__tests__/useReauth.coverage.test.tsx": "ReauthContext.tsx",
   "src/hooks/__tests__/useReauth.grant.test.tsx": "ReauthContext.tsx",
-  "src/hooks/__tests__/useRecordings.coverage.test.tsx": "vitest",
+  "src/hooks/__tests__/useRecordings.coverage.test.tsx": "useRecordings.ts",
   "src/hooks/__tests__/useRenewals.test.ts": "react",
   "src/hooks/__tests__/useRoutingRules.coverage.test.tsx": "useConversations.ts",
   "src/hooks/__tests__/useSLA.coverage.test.tsx": "useConversations.ts",
-  "src/hooks/__tests__/useScheduledCallbacks.coverage.test.tsx": "sonner",
+  "src/hooks/__tests__/useScheduledCallbacks.coverage.test.tsx": "useScheduledCallbacks.coverage.test.tsx",
   "src/hooks/__tests__/useScorecards.coverage.test.tsx": "useQueueMetrics.ts",
   "src/hooks/__tests__/useSecurityDashboard.coverage.test.tsx": "useQueueMetrics.ts",
   "src/hooks/__tests__/useSecurityHardening.test.ts": "vitest",
@@ -2858,17 +2855,17 @@
   "src/hooks/__tests__/useSecurityNotifications.coverage.test.tsx": "useAuthContext",
   "src/hooks/__tests__/useSessionAndAgent.test.ts": "vitest",
   "src/hooks/__tests__/useSessionManager.coverage.test.tsx": "useSessionManager.ts",
-  "src/hooks/__tests__/useShifts.coverage.test.tsx": "useShifts.ts",
-  "src/hooks/__tests__/useShifts.test.tsx": "vitest",
+  "src/hooks/__tests__/useShifts.coverage.test.tsx": "@tanstack/react-query",
+  "src/hooks/__tests__/useShifts.test.tsx": "@tanstack/react-query",
   "src/hooks/__tests__/useSipCall.coverage.test.tsx": "useSipCall.coverage.test.tsx",
-  "src/hooks/__tests__/useSkills.coverage.test.tsx": "useShifts.ts",
-  "src/hooks/__tests__/useSkills.test.tsx": "useShifts.ts",
+  "src/hooks/__tests__/useSkills.coverage.test.tsx": "@tanstack/react-query",
+  "src/hooks/__tests__/useSkills.test.tsx": "@tanstack/react-query",
   "src/hooks/__tests__/useSuccessPlans.coverage.test.tsx": "useQueueMetrics.ts",
   "src/hooks/__tests__/useSupervisorPanel.coverage.test.tsx": "useSupervisorPanel.coverage.test.tsx",
   "src/hooks/__tests__/useSurveys.coverage.test.tsx": "useSurveys.coverage.test.tsx",
-  "src/hooks/__tests__/useTalkRatio.test.ts": "react",
+  "src/hooks/__tests__/useTalkRatio.test.ts": "vitest",
   "src/hooks/__tests__/useTimeOff.coverage.test.tsx": "useTimeOff.coverage.test.tsx",
-  "src/hooks/__tests__/useTrackers.coverage.test.tsx": "vitest",
+  "src/hooks/__tests__/useTrackers.coverage.test.tsx": "react",
   "src/hooks/__tests__/useTrunkFailoverMonitor.coverage.test.tsx": "vitest",
   "src/hooks/__tests__/useTrunkHealth.coverage.test.tsx": "vitest",
   "src/hooks/__tests__/useTrunkMetrics.coverage.test.tsx": "@tanstack/react-query",
@@ -2879,15 +2876,15 @@
   "src/hooks/__tests__/useVoiceBiometrics.coverage.test.tsx": "useVoiceBiometrics.ts",
   "src/hooks/__tests__/useVoiceCommand.coverage.test.tsx": "useVoiceCommand.coverage.test.tsx",
   "src/hooks/__tests__/useVoipAnomalies.coverage.test.tsx": "@tanstack/react-query",
-  "src/hooks/__tests__/useVoipAutoRemediation.coverage.test.tsx": "useSipCall.ts",
+  "src/hooks/__tests__/useVoipAutoRemediation.coverage.test.tsx": "vitest",
   "src/hooks/__tests__/useVoipCapacityRecommendations.coverage.test.tsx": "traceHeaders",
   "src/hooks/__tests__/useVoipDiagnosticVoiceQA.coverage.test.tsx": "traceHeaders",
   "src/hooks/__tests__/useVoipExecutiveNarrative.coverage.test.tsx": "traceHeaders",
   "src/hooks/__tests__/useVoipExecutiveSummary.coverage.test.tsx": "ExecutiveReportExport.tsx",
-  "src/hooks/__tests__/useVoipMonitoringSettings.coverage.test.tsx": "@tanstack/react-query",
-  "src/hooks/__tests__/useVoipQualityAlertsSummary.coverage.test.tsx": "vitest",
+  "src/hooks/__tests__/useVoipMonitoringSettings.coverage.test.tsx": "vitest",
+  "src/hooks/__tests__/useVoipQualityAlertsSummary.coverage.test.tsx": "traceHeaders",
   "src/hooks/__tests__/useVoipQualityForecast.coverage.test.tsx": "traceHeaders",
-  "src/hooks/__tests__/useVoipQualityMonitor.coverage.test.tsx": "useSipCall.ts",
+  "src/hooks/__tests__/useVoipQualityMonitor.coverage.test.tsx": "useVoipQualityMonitor.ts",
   "src/hooks/__tests__/useVoipRecommendationHistory.coverage.test.tsx": "traceHeaders",
   "src/hooks/__tests__/useVoipRecommendationInsights.coverage.test.tsx": "vitest",
   "src/hooks/__tests__/useVoipRecommendationSimulate.coverage.test.tsx": "traceHeaders",
@@ -2916,7 +2913,7 @@
   "src/hooks/useAchievementNotifications.ts": "AchievementCelebration.tsx",
   "src/hooks/useActiveCallsRealtime.ts": "useHoldSoundAlert.ts",
   "src/hooks/useAdherence.ts": "react",
-  "src/hooks/useAgentFinancialLeaderboard.ts": "react",
+  "src/hooks/useAgentFinancialLeaderboard.ts": "@tanstack/react-query",
   "src/hooks/useAgentRanking.ts": "card.tsx",
   "src/hooks/useAgentStatus.ts": "react",
   "src/hooks/useAlertHistory.ts": "react",
@@ -2926,7 +2923,7 @@
   "src/hooks/useAnimatedCounter.ts": "safeParseFloat",
   "src/hooks/useAnomalyRemediation.ts": "@tanstack/react-query",
   "src/hooks/useAudioOutputDevices.ts": "react",
-  "src/hooks/useAuditLog.ts": "react",
+  "src/hooks/useAuditLog.ts": "useRecordings.ts",
   "src/hooks/useAuth.ts": "useAuth",
   "src/hooks/useAvatar.ts": "useAuthContext",
   "src/hooks/useBattleCardDetection.ts": "react",
@@ -2941,25 +2938,25 @@
   "src/hooks/useCallPlaylists.ts": "react",
   "src/hooks/useCallQueues.ts": "react",
   "src/hooks/useCallRecording.ts": "react",
-  "src/hooks/useCallScoring.ts": "@tanstack/react-query",
+  "src/hooks/useCallScoring.ts": "useCallScoring.ts",
   "src/hooks/useCallSearch.ts": "react",
   "src/hooks/useCallSession.ts": "useCallSession.ts",
   "src/hooks/useCallTimers.ts": "UnifiedSoftphone.tsx",
   "src/hooks/useCallTransfer.ts": "5. Em uso por rota",
-  "src/hooks/useChatbot.ts": "sonner",
+  "src/hooks/useChatbot.ts": "@tanstack/react-query",
   "src/hooks/useChurnRisk.ts": "react",
   "src/hooks/useCoaching.ts": "react",
-  "src/hooks/useCoachingAssignments.ts": "sonner",
+  "src/hooks/useCoachingAssignments.ts": "react",
   "src/hooks/useCoachingTrack.ts": "react",
-  "src/hooks/useComplianceRules.ts": "@tanstack/react-query",
+  "src/hooks/useComplianceRules.ts": "react",
   "src/hooks/useConferenceRecording.ts": "AppLayout.tsx",
   "src/hooks/useConsent.ts": "useConsent.coverage.test.tsx",
-  "src/hooks/useContactAlerts.ts": "sonner",
+  "src/hooks/useContactAlerts.ts": "react",
   "src/hooks/useContactInsights.ts": "react",
   "src/hooks/useContacts.ts": "Contact",
   "src/hooks/useConversations.ts": "lucide-react",
   "src/hooks/useCriticalAlertNotifications.ts": "react",
-  "src/hooks/useCrmFieldSuggestions.ts": "useCrmFieldSuggestions.coverage.test.tsx",
+  "src/hooks/useCrmFieldSuggestions.ts": "react",
   "src/hooks/useCulturalHints.ts": "react",
   "src/hooks/useDNCCompliance.ts": "useBitrix.ts",
   "src/hooks/useDashboardData.ts": "Index.tsx",
@@ -2967,7 +2964,7 @@
   "src/hooks/useDashboardLayout.ts": "Index.tsx",
   "src/hooks/useDataLakeExports.ts": "useDataLakeExports.ts",
   "src/hooks/useDealForecast.ts": "traceHeaders",
-  "src/hooks/useDeals.ts": "react",
+  "src/hooks/useDeals.ts": "supabase/types.ts",
   "src/hooks/useDebouncedSearchParam.ts": "protectedRoutes.tsx",
   "src/hooks/useDeviceDetection.ts": "useSessionManager.ts",
   "src/hooks/useDeviceLabel.ts": "usePersistedTagFilter.ts",
@@ -2981,19 +2978,19 @@
   "src/hooks/useForecastVolume.ts": "traceHeaders",
   "src/hooks/useGamification.ts": "react",
   "src/hooks/useGeoBlocking.ts": "useGeoBlocking.ts",
-  "src/hooks/useGoalViolations.ts": "sonner",
+  "src/hooks/useGoalViolations.ts": "useGoalViolations.ts",
   "src/hooks/useHealthCheck.ts": "traceHeaders",
   "src/hooks/useHoldMetrics.ts": "@tanstack/react-query",
   "src/hooks/useHoldReminder.ts": "useHoldReminder.ts",
   "src/hooks/useHoldSoundAlert.ts": "useHoldSoundAlert.ts",
   "src/hooks/useIPValidation.ts": "traceHeaders",
   "src/hooks/useIPWhitelist.ts": "useQueueMetrics.ts",
-  "src/hooks/useKeyMoments.ts": "react",
+  "src/hooks/useKeyMoments.ts": "KeyMomentsTimeline.tsx",
   "src/hooks/useKnowledgeBase.ts": "useKnowledgeBase.coverage.test.tsx",
   "src/hooks/useLDAPSync.ts": "useLDAPSync.ts",
-  "src/hooks/useLearning.ts": "sonner",
+  "src/hooks/useLearning.ts": "react",
   "src/hooks/useLiveAssist.ts": "react",
-  "src/hooks/useLiveSentiment.ts": "react",
+  "src/hooks/useLiveSentiment.ts": "useLiveSentiment.coverage.test.tsx",
   "src/hooks/useLiveTranslation.ts": "traceHeaders",
   "src/hooks/useLoginLockout.ts": "useAuthContext",
   "src/hooks/useMFA.ts": "useAuthContext",
@@ -3013,13 +3010,13 @@
   "src/hooks/useProfile.ts": "useAuthContext",
   "src/hooks/useQualityAlerts.ts": "Tabela de funcionalidades",
   "src/hooks/useQualityMetrics.ts": "@tanstack/react-query",
-  "src/hooks/useQualityTrendAnalyzer.ts": "useSipCall.ts",
+  "src/hooks/useQualityTrendAnalyzer.ts": "useVoipQualityMonitor.ts",
   "src/hooks/useQueueAudioPrompts.ts": "queue-audio.ts",
   "src/hooks/useQueueMetrics.ts": "card.tsx",
-  "src/hooks/useRateLimitData.ts": "useRateLimitData.ts",
-  "src/hooks/useRealtimeHoldAlerts.ts": "useRealtimeHoldAlerts.ts",
+  "src/hooks/useRateLimitData.ts": "react",
+  "src/hooks/useRealtimeHoldAlerts.ts": "react",
   "src/hooks/useReauth.ts": "Tabela de funcionalidades",
-  "src/hooks/useRecordings.ts": "react",
+  "src/hooks/useRecordings.ts": "useRecordings.ts",
   "src/hooks/useRenewals.ts": "react",
   "src/hooks/useRingGroups.ts": "ring-group.ts",
   "src/hooks/useRingtoneSettings.ts": "useRingtoneSettings.ts",
@@ -3027,15 +3024,15 @@
   "src/hooks/useSLA.ts": "button.tsx",
   "src/hooks/useScheduledCallbacks.ts": "PredictiveDialerPanel.tsx",
   "src/hooks/useScorecards.ts": "useQueueMetrics.ts",
-  "src/hooks/useSecurityAlertNotifications.ts": "sonner",
+  "src/hooks/useSecurityAlertNotifications.ts": "react",
   "src/hooks/useSecurityDashboard.ts": "useQueueMetrics.ts",
   "src/hooks/useSecurityMonitoringData.ts": "useQueueMetrics.ts",
   "src/hooks/useSecurityNotifications.ts": "useAuthContext",
   "src/hooks/useSessionManager.ts": "useSessionManager.ts",
-  "src/hooks/useShiftSwapSuggestions.ts": "sonner",
-  "src/hooks/useShifts.ts": "useShifts.ts",
-  "src/hooks/useSipCall.ts": "AppLayout.tsx",
-  "src/hooks/useSkills.ts": "useShifts.ts",
+  "src/hooks/useShiftSwapSuggestions.ts": "react",
+  "src/hooks/useShifts.ts": "@tanstack/react-query",
+  "src/hooks/useSipCall.ts": "react",
+  "src/hooks/useSkills.ts": "@tanstack/react-query",
   "src/hooks/useSuccessPlans.ts": "useQueueMetrics.ts",
   "src/hooks/useSupervisorPanel.ts": "react",
   "src/hooks/useSurveys.ts": "react",
@@ -3055,15 +3052,15 @@
   "src/hooks/useVoiceCommand.ts": "react",
   "src/hooks/useVoicePreferences.ts": "useVoicePreferences.ts",
   "src/hooks/useVoipAnomalies.ts": "@tanstack/react-query",
-  "src/hooks/useVoipAutoRemediation.ts": "useSipCall.ts",
+  "src/hooks/useVoipAutoRemediation.ts": "react",
   "src/hooks/useVoipCapacityRecommendations.ts": "traceHeaders",
   "src/hooks/useVoipDiagnosticVoiceQA.ts": "traceHeaders",
   "src/hooks/useVoipExecutiveNarrative.ts": "traceHeaders",
   "src/hooks/useVoipExecutiveSummary.ts": "ExecutiveReportExport.tsx",
-  "src/hooks/useVoipMonitoringSettings.ts": "@tanstack/react-query",
+  "src/hooks/useVoipMonitoringSettings.ts": "react",
   "src/hooks/useVoipQualityAlertsSummary.ts": "traceHeaders",
   "src/hooks/useVoipQualityForecast.ts": "traceHeaders",
-  "src/hooks/useVoipQualityMonitor.ts": "AppLayout.tsx",
+  "src/hooks/useVoipQualityMonitor.ts": "useVoipQualityMonitor.ts",
   "src/hooks/useVoipRecommendationActions.ts": "react",
   "src/hooks/useVoipRecommendationHistory.ts": "traceHeaders",
   "src/hooks/useVoipRecommendationInsights.ts": "card.tsx",
@@ -3080,7 +3077,7 @@
   "src/hooks/useWhatsappRewrite.ts": "react",
   "src/integrations/lovable/index.ts": "useAuthContext",
   "src/integrations/supabase/client.ts": "react",
-  "src/integrations/supabase/types.ts": "react",
+  "src/integrations/supabase/types.ts": "useQueueMetrics",
   "src/lib/__tests__/a11y-clickable.test.ts": "vitest",
   "src/lib/__tests__/accessibility-improvements.test.ts": "ErrorBoundary",
   "src/lib/__tests__/agent-assist-utils.test.ts": "NextBestActionPanel.tsx",
@@ -3162,7 +3159,7 @@
   "src/lib/agent-assist-utils.ts": "NextBestActionPanel.tsx",
   "src/lib/audio/__tests__/deviceTest.test.ts": "deviceTest.ts",
   "src/lib/audio/deviceTest.ts": "deviceTest.ts",
-  "src/lib/audit/__tests__/index.coverage.test.ts": "react",
+  "src/lib/audit/__tests__/index.coverage.test.ts": "supabase/types.ts",
   "src/lib/audit/index.ts": "utilities-comprehensive.test.ts",
   "src/lib/bitrix/circuit-breaker.ts": "useBitrix.ts",
   "src/lib/bitrix/sync-log.ts": "useBitrix.ts",
@@ -3190,8 +3187,8 @@
   "src/lib/language-detection.ts": "traceHeaders",
   "src/lib/logger.ts": "react",
   "src/lib/meeting-summary-utils.ts": "meeting-summary-utils.ts",
-  "src/lib/metrics/__tests__/mos.test.ts": "useSipCall.ts",
-  "src/lib/metrics/mos.ts": "useSipCall.ts",
+  "src/lib/metrics/__tests__/mos.test.ts": "useVoipQualityMonitor.ts",
+  "src/lib/metrics/mos.ts": "useVoipQualityMonitor.ts",
   "src/lib/metrics/queue.ts": "queue.ts",
   "src/lib/mfa/__tests__/index.coverage.test.ts": "mfa/index.ts",
   "src/lib/mfa/index.ts": "mfa/index.ts",
@@ -3405,7 +3402,7 @@
   "src/pages/roles/RoleAuditTrail.tsx": "lucide-react",
   "src/pages/roles/RoleStatsCards.tsx": "usePageTitle",
   "src/pages/roles/RolesTable.tsx": "usePageTitle",
-  "src/pages/roles/__tests__/useRoles.test.ts": "useMeetingSummary.test.ts",
+  "src/pages/roles/__tests__/useRoles.test.ts": "supabase/types.ts",
   "src/pages/roles/types.ts": "usePageTitle",
   "src/pages/roles/useRoles.ts": "usePageTitle",
   "src/pages/two-factor/BackupCodesCard.tsx": "PasskeyManager.tsx",
@@ -3805,7 +3802,7 @@
   "supabase/migrations/20260713105943_b2f9b04c-7571-47f3-8b80-5a4fc5e40844.sql": "public.get_agent_financial_leaderboard",
   "supabase/migrations/20260713123720_67f0e2ad-4146-47ff-8972-4597117ba0b5.sql": "public.get_agent_financial_leaderboard",
   "supabase/migrations/20260713123946_193787d1-fb4d-439d-8a14-717204104f63.sql": "20260713123946_193787d1-fb4d-439d-8a14-717204104f63.sql",
-  "supabase/migrations/20260713124157_1ec9c862-55e8-4a14-a1d0-1f50e3273191.sql": "20260713124157_1ec9c862-55e8-4a14-a1d0-1f50e3273191.sql",
+  "supabase/migrations/20260713124157_1ec9c862-55e8-4a14-a1d0-1f50e3273191.sql": "public.shift_swap_suggestions",
   "supabase/migrations/20260713124320_8c06f72e-9dc6-4dd7-89ea-0aff99f5aa92.sql": "20260713124320_8c06f72e-9dc6-4dd7-89ea-0aff99f5aa92.sql",
   "supabase/migrations/20260713124448_2dbeaa00-a7ba-4c4e-a7c2-a4166a3a3abc.sql": "20260713124448_2dbeaa00-a7ba-4c4e-a7c2-a4166a3a3abc.sql",
   "supabase/migrations/20260715141253_a5cfef74-6f5c-4161-bd7e-14e9a50354d7.sql": "20260715141253_a5cfef74-6f5c-4161-bd7e-14e9a50354d7.sql",

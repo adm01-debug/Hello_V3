@@ -2,11 +2,16 @@
  "aviso": "GERADO AUTOMATICAMENTE por scripts/ai-context/gerar.mjs — não editar à mão; será sobrescrito.",
  "format_version": 2,
  "git": {
-  "commit": "521541455224ef08b6dc103b3fc9c324e7fed88d",
+  "commit": "df0b30e806e3bf7fe83e7d210fb7a6edfd75f7b5",
   "branch": "main",
-  "data_commit": "2026-11-24T04:28:14-03:00",
+  "data_commit": "2026-11-24T04:33:23-03:00",
   "remote": "https://github.com/adm01-debug/Hello_V3",
   "ultimos_commits": [
+   {
+    "sha": "df0b30e",
+    "data": "2026-11-24",
+    "assunto": "fix: gravacoes cegas em hooks de dados passam a reportar erro (etapa 187) (#254)"
+   },
    {
     "sha": "5215414",
     "data": "2026-11-24",
@@ -126,14 +131,9 @@
     "sha": "668bf69",
     "data": "2026-11-24",
     "assunto": "fix: nao vazar mensagem de erro interna nas edges (E050 onda 1) (#230)"
-   },
-   {
-    "sha": "ea6b0f0",
-    "data": "2026-11-24",
-    "assunto": "fix: checar erro nas escritas do discador e parar a campanha quando o claim falha (etapa 080) (#229)"
    }
   ],
-  "arquivos_mudados_7d": 1118,
+  "arquivos_mudados_7d": 1122,
   "pastas_mais_mudadas_30d": [
    {
     "pasta": "covout/lcov-report/hooks",
@@ -145,7 +145,7 @@
    },
    {
     "pasta": "src/hooks/__tests__",
-    "mudancas": 63
+    "mudancas": 65
    },
    {
     "pasta": "covout/lcov-report/lib",
@@ -301,7 +301,7 @@
   "autores_30d": [
    {
     "autor": "adm01-debug",
-    "commits": 232
+    "commits": 233
    },
    {
     "autor": "Joaquim Ataides",
@@ -316,7 +316,7 @@
  "contagens": {
   "arquivos_total": 1732,
   "arquivos_codigo": 1329,
-  "linhas_codigo": 179112,
+  "linhas_codigo": 179186,
   "rotas": 106,
   "rotas_http_backend": 12,
   "vistas_por_id": 0,
@@ -492,7 +492,7 @@
   },
   "src/hooks": {
    "arquivos": 354,
-   "linhas": 47151
+   "linhas": 47225
   },
   "src/integrations": {
    "arquivos": 3,

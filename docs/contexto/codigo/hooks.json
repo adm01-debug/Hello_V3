@@ -746,7 +746,7 @@
    "hooks_exportados": [
     "useAgentRanking"
    ],
-   "linhas": 336,
+   "linhas": 338,
    "dominio": "hooks",
    "tabelas": [
     "agent_goals",
@@ -1032,7 +1032,7 @@
    "hooks_exportados": [
     "useAvatar"
    ],
-   "linhas": 147,
+   "linhas": 156,
    "dominio": "hooks",
    "tabelas": [
     "user_profiles"
@@ -1108,7 +1108,7 @@
    "hooks_exportados": [
     "useBitrix"
    ],
-   "linhas": 312,
+   "linhas": 332,
    "dominio": "hooks",
    "tabelas": [
     "bitrix_departments",
@@ -2717,7 +2717,7 @@
     "useAgentAssistHistory",
     "useLiveAssist"
    ],
-   "linhas": 158,
+   "linhas": 163,
    "dominio": "hooks",
    "tabelas": [
     "live_assist_signals"
@@ -2801,7 +2801,7 @@
    "hooks_exportados": [
     "useLoginLockout"
    ],
-   "linhas": 117,
+   "linhas": 120,
    "dominio": "hooks",
    "tabelas": [],
    "rpcs": [
@@ -4111,7 +4111,7 @@
     "useTrackerMatches",
     "useTrackers"
    ],
-   "linhas": 79,
+   "linhas": 87,
    "dominio": "hooks",
    "tabelas": [
     "tracker_matches",

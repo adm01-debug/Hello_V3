@@ -592,11 +592,11 @@
   {
    "arquivo": "src/hooks/__tests__/useBitrix.coverage.test.tsx",
    "tipo": "unit",
-   "linhas": 247,
+   "linhas": 261,
    "testa": [
     "src/hooks/useBitrix.ts"
    ],
-   "casos": 16
+   "casos": 17
   },
   {
    "arquivo": "src/hooks/__tests__/useBitrixAndWebAuthn.test.ts",
@@ -1686,12 +1686,12 @@
   {
    "arquivo": "src/hooks/__tests__/useTrackers.coverage.test.tsx",
    "tipo": "unit",
-   "linhas": 123,
+   "linhas": 136,
    "testa": [
     "src/hooks/useTrackers.ts",
     "src/integrations/supabase/client.ts"
    ],
-   "casos": 8
+   "casos": 9
   },
   {
    "arquivo": "src/hooks/__tests__/useTrunkFailoverMonitor.coverage.test.tsx",
