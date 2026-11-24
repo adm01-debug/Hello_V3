@@ -58,6 +58,8 @@ export function VoiceAssistantDialog({ open, onOpenChange, onIntent }: VoiceAssi
     clearHistory,
   } = useVoicePreferences();
   const textInputRef = useRef<HTMLInputElement>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
+  const returnFocusRef = useRef<HTMLElement | null>(null);
   const wasOpenRef = useRef(false);
   const ttsEnabledRef = useRef(ttsEnabled);
   ttsEnabledRef.current = ttsEnabled;
@@ -171,6 +173,20 @@ export function VoiceAssistantDialog({ open, onOpenChange, onIntent }: VoiceAssi
     return () => window.clearTimeout(timer);
   }, [open, isBooting]);
 
+  // Foco no dialogo: sem isso o Tab continuava percorrendo a tela atras do
+  // overlay e, ao fechar, o foco ficava perdido no body.
+  useEffect(() => {
+    if (!open) return;
+    const anterior = document.activeElement;
+    returnFocusRef.current = anterior instanceof HTMLElement ? anterior : null;
+    containerRef.current?.focus();
+    return () => {
+      const alvo = returnFocusRef.current;
+      returnFocusRef.current = null;
+      if (alvo && document.contains(alvo)) alvo.focus();
+    };
+  }, [open]);
+
   // Atalhos de teclado
   useEffect(() => {
     if (!open) return;
@@ -181,7 +197,38 @@ export function VoiceAssistantDialog({ open, onOpenChange, onIntent }: VoiceAssi
       }
       const target = event.target;
       const typing = target instanceof HTMLInputElement || target instanceof HTMLTextAreaElement;
-      if (event.key === ' ' && !typing) {
+      const emControle =
+        target instanceof HTMLElement &&
+        target.closest('button,a[href],input,textarea,select,[role="button"],[role="tab"]') !== null;
+      if (event.key === 'Tab') {
+        const container = containerRef.current;
+        if (!container) return;
+        const focaveis = Array.from(
+          container.querySelectorAll<HTMLElement>(
+            'a[href],button:not([disabled]),input:not([disabled]),textarea:not([disabled]),select:not([disabled]),[tabindex]:not([tabindex="-1"])',
+          ),
+        ).filter((el) => el.offsetParent !== null || el === document.activeElement || el === container);
+        if (focaveis.length === 0) {
+          event.preventDefault();
+          container.focus();
+          return;
+        }
+        const primeiro = focaveis[0];
+        const ultimo = focaveis[focaveis.length - 1];
+        const atual = document.activeElement;
+        if (event.shiftKey && (atual === primeiro || atual === container || !container.contains(atual))) {
+          event.preventDefault();
+          ultimo.focus();
+        } else if (!event.shiftKey && (atual === ultimo || !container.contains(atual))) {
+          event.preventDefault();
+          primeiro.focus();
+        }
+        return;
+      }
+      // Espaco num controle focado pertence ao controle (WCAG 2.1.1): sem
+      // esta guarda o dialogo tratava o espaco e o botao tambem, alternando
+      // o microfone duas vezes - ou seja, nenhuma.
+      if (event.key === ' ' && !typing && !emControle) {
         event.preventDefault();
         toggleListening();
       }
@@ -213,14 +260,16 @@ export function VoiceAssistantDialog({ open, onOpenChange, onIntent }: VoiceAssi
     <AnimatePresence>
       {open && (
         <motion.div
+          ref={containerRef}
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
           transition={{ duration: 0.3 }}
-          className="fixed inset-0 z-50"
+          className="fixed inset-0 z-50 outline-none"
           role="dialog"
           aria-modal="true"
           aria-label="Assistente de Voz"
+          tabIndex={-1}
         >
           {/* Fundo glass pulsante */}
           <motion.div
@@ -288,7 +337,10 @@ export function VoiceAssistantDialog({ open, onOpenChange, onIntent }: VoiceAssi
                   }
                   tabIndex={0}
                   onKeyDown={(event) => {
-                    if (event.key === 'Enter' || event.key === ' ') toggleListening();
+                    if (event.key === 'Enter' || event.key === ' ') {
+                      event.preventDefault();
+                      toggleListening();
+                    }
                   }}
                 >
                   <VoiceOrb phase={phase} isBooting={showBooting} />
