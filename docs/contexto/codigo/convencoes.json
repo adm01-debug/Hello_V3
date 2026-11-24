@@ -21,7 +21,7 @@
    "scripts/regras_negocio (2)"
   ],
   "testes": [
-   "co-localizado (__tests__) (354)",
+   "co-localizado (__tests__) (356)",
    "e2e/ (7)",
    "tests/ (6)"
   ],
@@ -58,11 +58,11 @@
  "commits": {
   "convencao": "conventional commits (observado)",
   "exemplos": [
+   "fix: paineis de seguranca alarmam quando a leitura falha (#215)",
    "fix: painel de fila mostra erro de leitura em vez de zeros (#214)",
    "fix: recomendacao de capacity registra leitura em vez de fingir aplicacao (#213)",
    "Catalogo de seguranca declara a origem de cada estado (remove KPI literal) (#212)",
-   "fix: tela de conflitos de concorrencia explica o vazio e a retencao (#211)",
-   "fix: remediacao de anomalia atualiza a lista (#210)"
+   "fix: tela de conflitos de concorrencia explica o vazio e a retencao (#211)"
   ]
  },
  "pr_template": null,

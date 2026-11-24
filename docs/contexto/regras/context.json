@@ -1,15 +1,15 @@
 {
  "meta": {
-  "sha": "d674460c346569b3b6e19322c82e683d11ea0286",
+  "sha": "747a1613ecd33196fd1c2e688f861106d7c47f50",
   "branch": "main",
   "remote": "https://github.com/adm01-debug/Hello_V3",
-  "generated_at": "2026-11-24 01:59 UTC",
-  "files_total": 1748,
-  "code_files": 1545,
-  "code_lines": 191329
+  "generated_at": "2026-11-24 02:13 UTC",
+  "files_total": 1750,
+  "code_files": 1547,
+  "code_lines": 191524
  },
  "version": "1.3.2",
- "facts_hash": "caa6e20046f1d00b",
+ "facts_hash": "b66c0b5268034d79",
  "stack": {
   "frameworks": [
    "React + Vite",
@@ -154,7 +154,7 @@
   "package_manager": "bun",
   "languages": {
    ".ts": 644,
-   ".tsx": 622,
+   ".tsx": 624,
    ".sql": 245,
    ".mjs": 27,
    ".py": 5,
@@ -29135,7 +29135,7 @@
      "notify-new-device"
     ],
     "rpc_transitive": [],
-    "deps_count": 23
+    "deps_count": 24
    },
    {
     "path": "",
@@ -29149,7 +29149,7 @@
     ],
     "invokes_transitive": [],
     "rpc_transitive": [],
-    "deps_count": 19
+    "deps_count": 20
    },
    {
     "path": "",
@@ -33595,7 +33595,7 @@
   {
    "module": "src/hooks",
    "files": 355,
-   "lines": 46479,
+   "lines": 46543,
    "tables": [
     "accounts",
     "active_sessions",
@@ -34072,8 +34072,8 @@
   },
   {
    "module": "src/pages",
-   "files": 137,
-   "lines": 21505,
+   "files": 139,
+   "lines": 21636,
    "tables": [
     "audit_logs",
     "battle_card_triggers",
@@ -63933,6 +63933,10 @@
    },
    {
     "file": "src/hooks/__tests__/useSecurityDashboard.coverage.test.tsx",
+    "name": "falha de leitura publica erro e nao fabrica pontuacao"
+   },
+   {
+    "file": "src/hooks/__tests__/useSecurityDashboard.coverage.test.tsx",
     "name": "exposes session manager and mfa fields"
    },
    {
@@ -64337,7 +64341,11 @@
    },
    {
     "file": "src/hooks/__tests__/useSecurityMonitoringData.coverage.test.tsx",
-    "name": "handles null data from queries"
+    "name": "erro de leitura vira alarme, nao tranquilidade"
+   },
+   {
+    "file": "src/hooks/__tests__/useSecurityMonitoringData.coverage.test.tsx",
+    "name": "limpa o erro na leitura seguinte bem-sucedida"
    },
    {
     "file": "src/hooks/__tests__/useSecurityMonitoringData.coverage.test.tsx",
@@ -72438,6 +72446,30 @@
    {
     "file": "src/pages/__tests__/QueueMetricsDashboard.test.tsx",
     "name": "nao mostra erro quando a leitura funciona"
+   },
+   {
+    "file": "src/pages/__tests__/SecurityDashboard.test.tsx",
+    "name": "SecurityDashboard"
+   },
+   {
+    "file": "src/pages/__tests__/SecurityDashboard.test.tsx",
+    "name": "alarma "
+   },
+   {
+    "file": "src/pages/__tests__/SecurityDashboard.test.tsx",
+    "name": "mostra a pontuacao normal quando a leitura funciona"
+   },
+   {
+    "file": "src/pages/__tests__/SecurityMonitoring.test.tsx",
+    "name": "SecurityMonitoring"
+   },
+   {
+    "file": "src/pages/__tests__/SecurityMonitoring.test.tsx",
+    "name": "distingue "
+   },
+   {
+    "file": "src/pages/__tests__/SecurityMonitoring.test.tsx",
+    "name": "mostra os estados vazios normais quando a leitura funciona"
    },
    {
     "file": "src/pages/__tests__/SecurityReport.test.tsx",
@@ -103447,7 +103479,7 @@
   },
   "src/hooks/useSecurityDashboard.ts": {
    "path": "src/hooks/useSecurityDashboard.ts",
-   "lines": 88,
+   "lines": 104,
    "exports": [
     "interface SecurityAlert",
     "function useSecurityDashboard"
@@ -103494,7 +103526,7 @@
   },
   "src/hooks/useSecurityMonitoringData.ts": {
    "path": "src/hooks/useSecurityMonitoringData.ts",
-   "lines": 108,
+   "lines": 120,
    "exports": [
     "interface AuditLog",
     "interface SecurityAlertItem",
@@ -108002,7 +108034,7 @@
   },
   "src/hooks/__tests__/useSecurityDashboard.coverage.test.tsx": {
    "path": "src/hooks/__tests__/useSecurityDashboard.coverage.test.tsx",
-   "lines": 159,
+   "lines": 181,
    "is_test": true,
    "tests": [
     "useSecurityDashboard",
@@ -108012,6 +108044,7 @@
     "sessions score tier 15 (2-3) and recentActivity 5 (>2 alerts)",
     "sessions score tier 10 (4-5)",
     "manual loadSecurityData call",
+    "falha de leitura publica erro e nao fabrica pontuacao",
     "exposes session manager and mfa fields"
    ]
   },
@@ -108277,12 +108310,13 @@
   },
   "src/hooks/__tests__/useSecurityMonitoringData.coverage.test.tsx": {
    "path": "src/hooks/__tests__/useSecurityMonitoringData.coverage.test.tsx",
-   "lines": 140,
+   "lines": 154,
    "is_test": true,
    "tests": [
     "useSecurityMonitoringData",
     "fetches logs, alerts and computes stats",
-    "handles null data from queries",
+    "erro de leitura vira alarme, nao tranquilidade",
+    "limpa o erro na leitura seguinte bem-sucedida",
     "processes realtime log and alert insert payloads",
     "does not subscribe when not live",
     "resolves an alert successfully",
@@ -115676,7 +115710,7 @@
   },
   "src/pages/SecurityDashboard.tsx": {
    "path": "src/pages/SecurityDashboard.tsx",
-   "lines": 172,
+   "lines": 185,
    "exports": [
     "function SecurityDashboard"
    ],
@@ -115692,7 +115726,7 @@
   },
   "src/pages/SecurityMonitoring.tsx": {
    "path": "src/pages/SecurityMonitoring.tsx",
-   "lines": 203,
+   "lines": 216,
    "exports": [
     "default SecurityMonitoring"
    ],
@@ -116343,6 +116377,29 @@
     "avisa que nada foi lido e nao desenha numeros quando a leitura falhou",
     "mantem os numeros anteriores rotulados quando a atualizacao falha",
     "nao mostra erro quando a leitura funciona"
+   ]
+  },
+  "src/pages/__tests__/SecurityDashboard.test.tsx": {
+   "path": "src/pages/__tests__/SecurityDashboard.test.tsx",
+   "lines": 55,
+   "is_test": true,
+   "tests": [
+    "SecurityDashboard",
+    "alarma ",
+    "mostra a pontuacao normal quando a leitura funciona"
+   ]
+  },
+  "src/pages/__tests__/SecurityMonitoring.test.tsx": {
+   "path": "src/pages/__tests__/SecurityMonitoring.test.tsx",
+   "lines": 50,
+   "is_test": true,
+   "rule_comments": [
+    "A-009: lista vazia por falha de consulta nao pode ser lida como"
+   ],
+   "tests": [
+    "SecurityMonitoring",
+    "distingue ",
+    "mostra os estados vazios normais quando a leitura funciona"
    ]
   },
   "src/pages/__tests__/SecurityReport.test.tsx": {
@@ -125365,10 +125422,27 @@
   }
  },
  "git": {
-  "sha": "d674460c346569b3b6e19322c82e683d11ea0286",
+  "sha": "747a1613ecd33196fd1c2e688f861106d7c47f50",
   "branch": "main",
   "remote": "https://github.com/adm01-debug/Hello_V3",
   "commits": [
+   {
+    "sha": "747a161",
+    "date": "2026-11-23",
+    "author": "adm01-debug",
+    "subject": "fix: paineis de seguranca alarmam quando a leitura falha (#215)",
+    "files": [
+     "docs/qa/05-PROGRESSO.md",
+     "src/hooks/__tests__/useSecurityDashboard.coverage.test.tsx",
+     "src/hooks/__tests__/useSecurityMonitoringData.coverage.test.tsx",
+     "src/hooks/useSecurityDashboard.ts",
+     "src/hooks/useSecurityMonitoringData.ts",
+     "src/pages/SecurityDashboard.tsx",
+     "src/pages/SecurityMonitoring.tsx",
+     "src/pages/__tests__/SecurityDashboard.test.tsx",
+     "src/pages/__tests__/SecurityMonitoring.test.tsx"
+    ]
+   },
    {
     "sha": "d674460",
     "date": "2026-11-23",
@@ -125742,17 +125816,6 @@
      "supabase/functions/_shared/__tests__/auth_test.ts",
      "supabase/functions/_shared/auth.ts"
     ]
-   },
-   {
-    "sha": "ba0ddcf",
-    "date": "2026-11-23",
-    "author": "adm01-debug",
-    "subject": "fix: search-calls exige autenticacao e deixa de usar a service_role (E004) (#185)",
-    "files": [
-     "docs/qa/05-PROGRESSO.md",
-     "supabase/functions/search-calls/__tests__/index.test.ts",
-     "supabase/functions/search-calls/index.ts"
-    ]
    }
   ],
   "hot_files": [
@@ -125801,39 +125864,39 @@
     2
    ],
    [
-    "supabase/functions/search-calls/__tests__/index.test.ts",
-    2
+    "src/hooks/__tests__/useSecurityDashboard.coverage.test.tsx",
+    1
+   ],
+   [
+    "src/hooks/__tests__/useSecurityMonitoringData.coverage.test.tsx",
+    1
+   ],
+   [
+    "src/hooks/useSecurityDashboard.ts",
+    1
+   ],
+   [
+    "src/hooks/useSecurityMonitoringData.ts",
+    1
+   ],
+   [
+    "src/pages/SecurityDashboard.tsx",
+    1
+   ],
+   [
+    "src/pages/SecurityMonitoring.tsx",
+    1
+   ],
+   [
+    "src/pages/__tests__/SecurityDashboard.test.tsx",
+    1
+   ],
+   [
+    "src/pages/__tests__/SecurityMonitoring.test.tsx",
+    1
    ],
    [
     "src/hooks/__tests__/useQueueMetrics.coverage.test.tsx",
-    1
-   ],
-   [
-    "src/hooks/useQueueMetrics.ts",
-    1
-   ],
-   [
-    "src/pages/QueueMetricsDashboard.tsx",
-    1
-   ],
-   [
-    "src/pages/__tests__/QueueMetricsDashboard.test.tsx",
-    1
-   ],
-   [
-    "src/components/network/QualityForecastCard.tsx",
-    1
-   ],
-   [
-    "src/components/network/VoipRecommendationsPanel.tsx",
-    1
-   ],
-   [
-    "src/components/network/__tests__/QualityForecastCard.test.tsx",
-    1
-   ],
-   [
-    "src/hooks/useVoipRecommendationActions.ts",
     1
    ]
   ]

@@ -2762,11 +2762,13 @@
    "src/hooks/useMFA.ts",
    "src/hooks/useSessionManager.ts",
    "src/integrations/supabase/client.ts",
+   "src/lib/error-message.ts",
    "src/lib/logger.ts"
   ],
   "src/hooks/useSecurityMonitoringData.ts": [
    "src/hooks/usePageVisibility.ts",
-   "src/integrations/supabase/client.ts"
+   "src/integrations/supabase/client.ts",
+   "src/lib/error-message.ts"
   ],
   "src/hooks/useSecurityNotifications.ts": [
    "src/contexts/AuthContext.tsx",

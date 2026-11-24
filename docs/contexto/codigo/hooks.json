@@ -3699,7 +3699,7 @@
    "hooks_exportados": [
     "useSecurityDashboard"
    ],
-   "linhas": 88,
+   "linhas": 104,
    "dominio": "hooks",
    "tabelas": [
     "blocked_access_logs",
@@ -3726,7 +3726,7 @@
    "hooks_exportados": [
     "useSecurityMonitoringData"
    ],
-   "linhas": 108,
+   "linhas": 120,
    "dominio": "hooks",
    "tabelas": [
     "audit_logs",

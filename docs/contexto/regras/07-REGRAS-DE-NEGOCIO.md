@@ -1,6 +1,6 @@
 # 07 · REGRAS DE NEGÓCIO
 
-> Gerado automaticamente por AI Context Sync v1.3.2 · commit `d674460c34` · branch `main` · 2026-11-24 01:59 UTC
+> Gerado automaticamente por AI Context Sync v1.3.2 · commit `747a1613ec` · branch `main` · 2026-11-24 02:13 UTC
 > Não edite à mão — regras humanas vão em `manual/`.
 
 ## A. Regras escritas por humanos (`manual/` — prioridade máxima, nunca sobrescrito)
@@ -2466,7 +2466,7 @@ _nenhum item encontrado_
 | `admin` | `supabase/functions/data-lake-flush/index.ts` |
 | `admin` | `supabase/migrations/20261123000200_fix_has_role_oracle_and_debug_tables.sql` |
 
-## K. Testes como especificação (4258 testes em 368 arquivos — nomes completos em `context.json`)
+## K. Testes como especificação (4266 testes em 370 arquivos — nomes completos em `context.json`)
 
 | Arquivo | Testes | Exemplos do que o sistema DEVE fazer |
 |---|---|---|
@@ -2601,6 +2601,7 @@ _nenhum item encontrado_
 | `src/hooks/__tests__/useRecordings.coverage.test.tsx` | 9 | useRecordings · fetches recordings and filters · handles fetch error · plays, toggles pause/play, seeks, skips … |
 | `src/hooks/__tests__/useSLA.coverage.test.tsx` | 9 | useSLA · useSlaPolicies loads policies · useSlaPolicies surfaces error · useSlaCompliance computes compliance … |
 | `src/hooks/__tests__/useScheduledCallbacks.coverage.test.tsx` | 9 | useScheduledCallbacks · loads pending callbacks and upcoming count on mount · fetchCallbacks with status filter and error branch · fetchUpcomingCount error branch … |
+| `src/hooks/__tests__/useSecurityDashboard.coverage.test.tsx` | 9 | useSecurityDashboard · returns early without userId · loads data and computes full score · computes lower score branches (no mfa, many sessions, ip off, no alerts) … |
 | `src/hooks/__tests__/useShifts.coverage.test.tsx` | 9 | useShifts coverage · loads shifts and templates without weekStart · loads shifts with weekStart (gte/lt branch) · exposes CRUD mutations and runs createShift success … |
 | `src/hooks/__tests__/useSuccessPlans.coverage.test.tsx` | 9 | useSuccessPlans · loads plans and milestones with accountId · loads plans without accountId · handles empty plans (no milestone fetch) … |
 | `src/lib/__tests__/device-identity.test.ts` | 9 | device-identity · sanitize sempre respeita o CHECK do banco (trim + limite) · sanitize é idempotente · sanitize rejeita não-strings … |
@@ -2618,7 +2619,7 @@ _nenhum item encontrado_
 | `src/hooks/__tests__/useExecutiveDashboard.coverage.test.tsx` | 8 | useExecutiveDashboard helpers · getPeriodLabel covers all periods and fallback · formatDuration formats minutes and seconds · useExecutiveDashboardData … |
 | `src/hooks/__tests__/useIPWhitelist.coverage.test.tsx` | 8 | useIPWhitelist · does not fetch when not admin · fetches data when admin · validates IP format on addGlobalIP … |
 | `src/hooks/__tests__/useScorecards.coverage.test.tsx` | 8 | useScorecards · loads templates and criteria without callSessionId · loads scorecards and responses with callSessionId · clears responses when no scorecards … |
-| `src/hooks/__tests__/useSecurityDashboard.coverage.test.tsx` | 8 | useSecurityDashboard · returns early without userId · loads data and computes full score · computes lower score branches (no mfa, many sessions, ip off, no alerts) … |
+| `src/hooks/__tests__/useSecurityMonitoringData.coverage.test.tsx` | 8 | useSecurityMonitoringData · fetches logs, alerts and computes stats · erro de leitura vira alarme, nao tranquilidade · limpa o erro na leitura seguinte bem-sucedida … |
 | `src/hooks/__tests__/useSecurityNotifications.coverage.test.tsx` | 8 | useSecurityNotifications · detects support and initial permission · requestPermission granted path · requestPermission denied path … |
 | `src/hooks/__tests__/useSessionManager.coverage.test.tsx` | 8 | useSessionManager · loads sessions and creates current session · revokes a non-current session · revokes the current session and signs out … |
 | `src/hooks/__tests__/useVoipQualityMonitor.coverage.test.tsx` | 8 | useVoipQualityMonitor · returns unknown state when no peer connection · collects stats and computes MOS for a good connection · uses candidate-pair RTT fallback and tolerates packet loss … |
@@ -2655,7 +2656,6 @@ _nenhum item encontrado_
 | `src/hooks/__tests__/usePermissions.coverage.test.tsx` | 7 | usePermissions (coverage) · loads permissions for active roles · returns empty when no user · returns empty when user has no roles … |
 | `src/hooks/__tests__/useRealtimeHoldAlerts.coverage.test.tsx` | 7 | useRealtimeHoldAlerts · initializes and fetches unread count · toggles notifications on and off · requests browser notification permission … |
 | `src/hooks/__tests__/useRoutingRules.coverage.test.tsx` | 7 | useRoutingRules (coverage) · loads rules · rules fetch error · upsert success … |
-| `src/hooks/__tests__/useSecurityMonitoringData.coverage.test.tsx` | 7 | useSecurityMonitoringData · fetches logs, alerts and computes stats · handles null data from queries · processes realtime log and alert insert payloads … |
 | `src/hooks/__tests__/useTimeOff.coverage.test.tsx` | 7 | useTimeOff · lists requests on success · list error leaves requests empty · create success shows toast … |
 | `src/hooks/__tests__/useVoipQualityForecast.coverage.test.tsx` | 7 | useVoipQualityForecast · returns forecast payload via functions.invoke · throws on invoke error · useVoipQualityForecastFetch … |
 | `src/lib/__tests__/csv-export.property.test.ts` | 7 | exportToCSV — property-based (500 runs) · escapa aspas duplas conforme RFC 4180 · preserva conteúdo (round-trip de aspas) · aceita quebras de linha nos dados sem corromper estrutura … |
@@ -2770,7 +2770,7 @@ _nenhum item encontrado_
 | `src/hooks/__tests__/useVoipDiagnosticVoiceQA.coverage.test.tsx` | 4 | useVoipDiagnosticVoiceQA · resolves answer on success (default period) · passes explicit period · throws on error branch |
 | `src/hooks/__tests__/useVoipExecutiveSummary.coverage.test.tsx` | 4 | useVoipExecutiveSummary (coverage) · fetches summary with default period · fetches summary with explicit day period · throws on invoke error |
 | `src/hooks/__tests__/useVoipQualityAlertsSummary.coverage.test.tsx` | 4 | useVoipQualityAlertsSummary · carrega o resumo com sucesso (default week) · aceita período day e month (querystring no nome da function, não em  · propaga erro da edge function |
-| … +68 linhas — lista completa em `context.json` | | |
+| … +70 linhas — lista completa em `context.json` | | |
 
 ## L. Eventos de webhook tratados (contratos com sistemas externos)
 

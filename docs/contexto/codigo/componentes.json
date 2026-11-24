@@ -6899,7 +6899,7 @@
     "SecurityDashboard"
    ],
    "export_default": "SecurityDashboard",
-   "linhas": 172,
+   "linhas": 185,
    "dominio": "pages",
    "hooks_locais": [
     "useAuthContext",
@@ -6917,7 +6917,7 @@
     "SecurityMonitoring"
    ],
    "export_default": "SecurityMonitoring",
-   "linhas": 203,
+   "linhas": 216,
    "dominio": "pages",
    "hooks_locais": [
     "useAuth",

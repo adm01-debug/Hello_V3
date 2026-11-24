@@ -5,17 +5,17 @@
   "vitest",
   "playwright"
  ],
- "total": 378,
+ "total": 380,
  "por_tipo": {
   "contrato": 1,
   "e2e": 13,
   "pytest": 2,
-  "unit": 361
+  "unit": 363
  },
  "onde_ficam": [
   {
    "padrao": "co-localizado (__tests__)",
-   "arquivos": 354
+   "arquivos": 356
   },
   {
    "padrao": "e2e/",
@@ -1462,11 +1462,11 @@
   {
    "arquivo": "src/hooks/__tests__/useSecurityDashboard.coverage.test.tsx",
    "tipo": "unit",
-   "linhas": 159,
+   "linhas": 181,
    "testa": [
     "src/hooks/useSecurityDashboard.ts"
    ],
-   "casos": 7
+   "casos": 8
   },
   {
    "arquivo": "src/hooks/__tests__/useSecurityHardening.test.ts",
@@ -1487,11 +1487,11 @@
   {
    "arquivo": "src/hooks/__tests__/useSecurityMonitoringData.coverage.test.tsx",
    "tipo": "unit",
-   "linhas": 140,
+   "linhas": 154,
    "testa": [
     "src/hooks/useSecurityMonitoringData.ts"
    ],
-   "casos": 6
+   "casos": 7
   },
   {
    "arquivo": "src/hooks/__tests__/useSecurityNotifications.coverage.test.tsx",
@@ -2805,6 +2805,24 @@
    "casos": 3
   },
   {
+   "arquivo": "src/pages/__tests__/SecurityDashboard.test.tsx",
+   "tipo": "unit",
+   "linhas": 55,
+   "testa": [
+    "src/pages/SecurityDashboard.tsx"
+   ],
+   "casos": 2
+  },
+  {
+   "arquivo": "src/pages/__tests__/SecurityMonitoring.test.tsx",
+   "tipo": "unit",
+   "linhas": 50,
+   "testa": [
+    "src/pages/SecurityMonitoring.tsx"
+   ],
+   "casos": 2
+  },
+  {
    "arquivo": "src/pages/__tests__/SecurityReport.test.tsx",
    "tipo": "unit",
    "linhas": 51,
@@ -3657,6 +3675,8 @@
   "src/pages/Login.tsx": 2,
   "src/pages/PhoneDialer.tsx": 1,
   "src/pages/QueueMetricsDashboard.tsx": 1,
+  "src/pages/SecurityDashboard.tsx": 1,
+  "src/pages/SecurityMonitoring.tsx": 1,
   "src/pages/SecurityReport.tsx": 1,
   "src/pages/Status.tsx": 1,
   "src/pages/roles/useRoles.ts": 1,
@@ -3771,8 +3791,6 @@
    "src/pages/SLAPolicies.tsx",
    "src/pages/Scheduling.tsx",
    "src/pages/Scorecards.tsx",
-   "src/pages/SecurityDashboard.tsx",
-   "src/pages/SecurityMonitoring.tsx",
    "src/pages/SessionManagement.tsx",
    "src/pages/Settings.tsx",
    "src/pages/ShiftSwapSuggestions.tsx",
