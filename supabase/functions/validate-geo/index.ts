@@ -110,7 +110,7 @@ Deno.serve(async (req) => {
 
     if (isAllowed) {
       if (settings.log_blocked_attempts) {
-        await supabase.from('geo_access_logs').insert({
+        const { error: geoAllowErr } = await supabase.from('geo_access_logs').insert({
           action: 'allowed',
           ip_address: clientIp || 'unknown',
           country_code: countryCode,
@@ -122,6 +122,7 @@ Deno.serve(async (req) => {
           user_agent: req.headers.get('user-agent'),
           reason: 'Country in allowlist'
         });
+        if (geoAllowErr) console.error('validate-geo: falha ao registrar acesso permitido', geoAllowErr);
       }
 
       return new Response(
@@ -132,7 +133,7 @@ Deno.serve(async (req) => {
 
     // Country not in allowlist - block
     if (settings.log_blocked_attempts) {
-      await supabase.from('geo_access_logs').insert({
+      const { error: geoBlockErr } = await supabase.from('geo_access_logs').insert({
         action: 'blocked',
         ip_address: clientIp || 'unknown',
         country_code: countryCode,
@@ -144,10 +145,11 @@ Deno.serve(async (req) => {
         user_agent: req.headers.get('user-agent'),
         reason: 'Country not in allowlist'
       });
+      if (geoBlockErr) console.error('validate-geo: falha ao registrar acesso bloqueado', geoBlockErr);
     }
 
     if (settings.notify_on_block) {
-      await supabase.from('security_alerts').insert({
+      const { error: geoNotifyErr } = await supabase.from('security_alerts').insert({
         alert_type: 'geo_blocked',
         severity: 'warning',
         title: 'Acesso Geográfico Bloqueado',
@@ -162,6 +164,7 @@ Deno.serve(async (req) => {
           region
         }
       });
+      if (geoNotifyErr) console.error('validate-geo: falha ao criar alerta geografico', geoNotifyErr);
     }
 
     return new Response(

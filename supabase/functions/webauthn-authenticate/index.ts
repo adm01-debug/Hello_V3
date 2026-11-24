@@ -105,8 +105,13 @@ Deno.serve(async (req) => {
       throw new Error(`Passkey invalida (${codigo})`);
     }
 
-    // Consome o desafio: uso unico.
-    await supabaseAdmin.from('webauthn_challenges').delete().eq('id', desafio.id);
+    // Consome o desafio: uso unico. Se nao for consumido, o mesmo desafio
+    // continua valido para replay ate expirar - por isso a falha aborta.
+    const { error: challengeErr } = await supabaseAdmin.from('webauthn_challenges').delete().eq('id', desafio.id);
+    if (challengeErr) {
+      console.error('webauthn-authenticate: falha ao consumir o desafio', challengeErr);
+      throw new Error('Falha ao consumir o desafio');
+    }
 
     // Generate a magic link token for the user
     // O e-mail NAO pode vir do corpo do request: a edge e publica, e um
@@ -142,7 +147,7 @@ Deno.serve(async (req) => {
         counterAnterior,
         signCount,
       );
-      await supabaseAdmin.from('audit_logs').insert({
+      const { error: cloneAuditErr } = await supabaseAdmin.from('audit_logs').insert({
         user_id: userId,
         user_email: emailDoDono,
         action: 'webauthn_possible_clone',
@@ -153,6 +158,7 @@ Deno.serve(async (req) => {
           sign_count: signCount,
         },
       });
+      if (cloneAuditErr) console.error('webauthn-authenticate: falha ao auditar possivel clonagem', cloneAuditErr);
       return new Response(
         JSON.stringify({
           success: false,
@@ -187,7 +193,7 @@ Deno.serve(async (req) => {
     }
 
     // Log successful authentication
-    await supabaseAdmin.from('audit_logs').insert({
+    const { error: loginAuditErr } = await supabaseAdmin.from('audit_logs').insert({
       user_id: userId,
       user_email: emailDoDono,
       action: 'webauthn_login',
@@ -197,6 +203,7 @@ Deno.serve(async (req) => {
         method: 'passkey',
       },
     });
+    if (loginAuditErr) console.error('webauthn-authenticate: falha ao auditar login por passkey', loginAuditErr);
     return new Response(
       JSON.stringify({
         success: true,

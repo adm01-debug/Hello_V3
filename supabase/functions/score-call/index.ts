@@ -105,7 +105,7 @@ Responda em JSON: {"responses":[{"criterion_id":"<id>","score":<num>,"comment":"
     if (scErr) return json({ error: scErr.message }, 500);
 
     if (validResponses.length) {
-      await supabase.from("scorecard_responses").insert(
+      const { error: responsesErr } = await supabase.from("scorecard_responses").insert(
         validResponses.map((r) => ({
           scorecard_id: scorecard.id,
           criterion_id: r.criterion_id,
@@ -113,6 +113,10 @@ Responda em JSON: {"responses":[{"criterion_id":"<id>","score":<num>,"comment":"
           comment: r.comment ?? null,
         })),
       );
+      if (responsesErr) {
+        console.error('score-call: falha ao gravar respostas do scorecard', responsesErr);
+        return json({ error: responsesErr.message }, 500);
+      }
     }
 
     return json({ scorecard, responses: validResponses });
