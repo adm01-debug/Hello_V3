@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { useAuth } from "@/hooks/useAuth";
 import { supabase } from "@/integrations/supabase/client";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { EmptyErrorState, EmptyState } from "@/components/ui/empty-state";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { ScrollArea } from "@/components/ui/scroll-area";
@@ -108,7 +109,17 @@ const SecurityMonitoring = () => {
             <CardContent>
               <ScrollArea className="h-[500px]">
                 <div className="space-y-2">
-                  {recentLogs.length === 0 ? <div className="text-center py-8 text-muted-foreground">{error ? 'Não foi possível carregar os eventos — não é o mesmo que não haver evento' : 'Nenhum evento registrado'}</div> : recentLogs.map((log) => (
+                  {recentLogs.length === 0 ? (
+                    error ? (
+                      <EmptyErrorState
+                        title="Não foi possível carregar os eventos"
+                        description="A leitura dos eventos falhou — não é o mesmo que não haver evento."
+                        size="sm"
+                      />
+                    ) : (
+                      <EmptyState iconType="default" title="Nenhum evento registrado" size="sm" />
+                    )
+                  ) : recentLogs.map((log) => (
                     <div key={log.id} className="flex items-center gap-4 p-3 rounded-lg border bg-card hover:bg-accent/50 transition-colors">
                       <div className="flex items-center justify-center w-8 h-8 rounded-full bg-muted">{getActionIcon(log.action)}</div>
                       <div className="flex-1 min-w-0">
@@ -130,7 +141,17 @@ const SecurityMonitoring = () => {
             <CardContent>
               <ScrollArea className="h-[500px]">
                 <div className="space-y-3">
-                  {alerts.length === 0 ? <div className="text-center py-8 text-muted-foreground">{error ? (<><XCircle className="h-12 w-12 mx-auto mb-2 text-destructive/50" /><p>Não foi possível carregar os alertas</p></>) : (<><CheckCircle2 className="h-12 w-12 mx-auto mb-2 text-success/50" /><p>Nenhum alerta</p></>)}</div> : alerts.map((alert) => (
+                  {alerts.length === 0 ? (
+                    error ? (
+                      <EmptyErrorState
+                        title="Não foi possível carregar os alertas"
+                        description="A leitura dos alertas falhou — não é o mesmo que não haver alerta."
+                        size="sm"
+                      />
+                    ) : (
+                      <EmptyState iconType="success" title="Nenhum alerta" size="sm" />
+                    )
+                  ) : alerts.map((alert) => (
                     <div key={alert.id} className={`p-4 rounded-lg border ${alert.is_resolved ? 'bg-muted/50 opacity-60' : alert.severity === 'critical' ? 'border-destructive/50 bg-destructive/5' : 'border-warning/50 bg-warning/5'}`}>
                       <div className="flex items-start justify-between">
                         <div className="flex items-start gap-3">

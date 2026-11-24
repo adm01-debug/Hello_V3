@@ -7,6 +7,7 @@ import { useGamification } from '@/hooks/useGamification';
 import { useAgentStatus } from '@/hooks/useAgentStatus';
 import { useAgentRanking } from '@/hooks/useAgentRanking';
 import { usePageTitle } from '@/hooks/usePageTitle';
+import { EmptyErrorState } from '@/components/ui/empty-state';
 import { AgentSummaryStats } from '@/components/ranking/AgentSummaryStats';
 import { PerformanceEvolutionChart } from '@/components/ranking/PerformanceEvolutionChart';
 import { AgentPodium } from '@/components/ranking/AgentPodium';
@@ -72,11 +73,12 @@ export default function AgentRanking() {
        />
  
        {error && (
-        <div className="rounded-xl border border-destructive/40 bg-destructive/10 p-4">
-          <p className="font-medium text-destructive">Não foi possível carregar o ranking de agentes</p>
-          <p className="mt-1 text-sm text-muted-foreground">{error}</p>
-          <p className="mt-1 text-xs text-muted-foreground">Ranking vazio não significa "nenhum agente produziu nada" — a leitura das chamadas falhou.</p>
-        </div>
+        <EmptyErrorState
+          title="Não foi possível carregar o ranking de agentes"
+          description={error}
+          hint={'Ranking vazio não significa "nenhum agente produziu nada": a leitura das chamadas falhou.'}
+          size="sm"
+        />
       )}
       {!error && (
         <>

@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useAuthContext } from '@/contexts/AuthContext';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
+import { EmptyErrorState } from '@/components/ui/empty-state';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -66,15 +67,11 @@ export default function IPWhitelist() {
       </div>
 
       {error && (
-        <Card className="border-destructive bg-destructive/5">
-          <CardHeader className="pb-2">
-            <CardTitle className="flex items-center gap-2 text-lg text-destructive"><AlertTriangle className="h-5 w-5" />Não foi possível carregar a whitelist</CardTitle>
-            <CardDescription>{error}</CardDescription>
-          </CardHeader>
-          <CardContent>
-            <p className="text-sm text-muted-foreground">Não conclua que não existe restrição configurada: esta tela não conseguiu ler as tabelas. Recarregue antes de mexer em qualquer regra de acesso.</p>
-          </CardContent>
-        </Card>
+        <EmptyErrorState
+          title="Não foi possível carregar a whitelist"
+          description={error}
+          hint="Não conclua que não existe restrição configurada: esta tela não conseguiu ler as tabelas. Recarregue antes de mexer em qualquer regra de acesso."
+        />
       )}
 
       <Tabs defaultValue="global" className="space-y-4">
