@@ -104,6 +104,35 @@ supervisor a ignorá-lo. O desenho usado em `src/hooks/useQueueMetrics.ts` (`che
 245), aviso ao entrar em aviso/crítico, aviso de normalização na volta, e intervalo mínimo de 15 min por
 meta para métrica que oscila em cima do limiar.
 
+## Consulta periódica × aba oculta (etapa 253)
+
+Regra: **poll de painel só com a aba visível**; `src/hooks/usePageVisibility.ts` é a fonte, e o padrão é
+`const isVisible = usePageVisibility(); refetchInterval: isVisible ? N : false`. Aplicado em
+`useQualityMetrics`, `useTrunkUsageMetrics`, `useVoipAnomalies`, `useAdherence` e nos cinco hooks de
+`useDashboardData` (`useDashboardStats`, `useAgentsListData`, `useRecentCallsData`, `useCallVolumeData`,
+`useQueueStatsData`). Antes disso só `useBlfBoard`, `useQueueMetrics`, `useExtensionsOverview` e
+`useSecurityMonitoringData` respeitavam a visibilidade — num call center isso é dezenas de abas
+consultando o banco sem ninguém olhando.
+
+**Hooks que NÃO devem pausar, e por quê:**
+
+| Hook | Por que continua rodando com a aba oculta |
+|---|---|
+| `useSipCall`, `useMultiChannelCall`, `useWavoipCall` | A ligação não para porque o agente trocou de aba: pausar o canal derruba o áudio e perde o evento de desligamento. |
+| `useActiveCallsRealtime`, `useCallTimers`, `useHoldReminder`, `useHoldSoundAlert` | Cronômetro e alerta de espera de uma chamada **em curso**; congelar o contador enquanto o cliente espera é erro de negócio. |
+| `useSessionManager` | Renovação de sessão/token — pausar derruba o login de quem voltou para a aba. |
+| `useVoipQualityMonitor` | Amostra de MOS/jitter da chamada ativa; sem amostra no meio da ligação o relatório de qualidade fica cego. |
+
+`useQueueMetrics` já resolve o caso com o poll de 60 s guardado por visibilidade (etapa 244), e o realtime
+dele continua ativo — realtime não é poll.
+
+**Monitoramento fora das páginas públicas (A-134):** `<GlobalServices />` (troncos + alertas de qualidade)
+estava acima do `BrowserRouter` em `src/App.tsx`, então cada visita anônima a `/landing`, `/pricing` ou
+`/login` abria um canal de realtime em `voip_trunks` e disparava
+`GET /rest/v1/call_quality_metrics` — a cada 5 s, pelo `refetchInterval` do `useQualityMetrics`. Agora ele
+monta **dentro** do `ProtectedRoute`, junto do `AppLayout`, e a consulta pede as colunas usadas em vez de
+`select('*')`. Teste de guarda: `src/hooks/__tests__/pageVisibility.gating.test.tsx`.
+
 ## Rotas protegidas sem `roles:` (etapa 090)
 
 **Estado em 24/11/2026** (verificado no arquivo, nao no relatorio antigo): `src/routes/protectedRoutes.tsx` tem **95 rotas**, das quais **49 declaram `roles:` e 46 nao declaram** (45 telas + o catch-all `*`). O plano (A-088) falava em 49 sem papel no momento da auditoria; entre a auditoria e hoje 3 rotas passaram a declarar papel.

@@ -1,5 +1,10 @@
 import { useQuery } from '@tanstack/react-query';
 import { supabase } from '@/integrations/supabase/client';
+import { usePageVisibility } from '@/hooks/usePageVisibility';
+
+const COLUNAS_QUALIDADE =
+  'id, call_session_id, agent_name, mos_avg, jitter_avg_ms, packet_loss_pct, rtt_avg_ms, quality_label, created_at';
+const COLUNAS_TRONCO = 'id, trunk_id, duration_seconds, was_failover, created_at';
 
 export interface QualityMetric {
   id: string;
@@ -22,35 +27,39 @@ export interface TrunkUsageMetric {
 }
 
 export function useQualityMetrics() {
+  const isVisible = usePageVisibility();
   return useQuery({
     queryKey: ['call-quality-metrics'],
     queryFn: async () => {
       const { data, error } = await supabase
         .from('call_quality_metrics')
-        .select('*')
+        .select(COLUNAS_QUALIDADE)
         .order('created_at', { ascending: false })
         .limit(50);
       
       if (error) throw error;
-      return data as QualityMetric[];
+      return data as unknown as QualityMetric[];
     },
-    refetchInterval: 5000,
+    // Aba oculta: sem poll. `refetchIntervalInBackground` sozinho nao basta —
+    // ele nao impede o intervalo, so o refetch de query sem observer focado.
+    refetchInterval: isVisible ? 5000 : false,
   });
 }
 
 export function useTrunkUsageMetrics() {
+  const isVisible = usePageVisibility();
   return useQuery({
     queryKey: ['voip-trunk-usage-metrics'],
     queryFn: async () => {
       const { data, error } = await supabase
         .from('voip_trunk_usage_metrics')
-        .select('*')
+        .select(COLUNAS_TRONCO)
         .order('created_at', { ascending: false })
         .limit(50);
       
       if (error) throw error;
-      return data as TrunkUsageMetric[];
+      return data as unknown as TrunkUsageMetric[];
     },
-    refetchInterval: 10000,
+    refetchInterval: isVisible ? 10000 : false,
   });
 }
