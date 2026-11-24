@@ -23,10 +23,18 @@ describe('CallSessionsList', () => {
     expect(screen.queryByText('Nenhuma chamada encontrada')).toBeNull();
   });
 
-  it('mostra o vazio normal quando a leitura funcionou', () => {
+  it('explica o vazio quando a leitura funcionou', () => {
     render(<CallSessionsList {...base} error={null} />);
 
-    expect(screen.getByText('Nenhuma chamada encontrada')).toBeInTheDocument();
+    expect(screen.getByText('Nenhuma chamada no período')).toBeInTheDocument();
+    expect(screen.getByText(/assim que a primeira ligação termina/)).toBeInTheDocument();
     expect(screen.queryByText('Não foi possível carregar as chamadas')).toBeNull();
+  });
+
+  it('com filtros aplicados, diz que o filtro esconde resultados e oferece limpar', () => {
+    render(<CallSessionsList {...base} error={null} activeFiltersCount={2} />);
+
+    expect(screen.getByText('Nenhuma chamada com esses filtros')).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: 'Limpar filtros' })).toBeInTheDocument();
   });
 });
