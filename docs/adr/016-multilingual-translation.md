@@ -28,6 +28,19 @@ Implementar a **Multilingual Real-Time Translation & Localization Suite** reapro
 - `call_translations`: agente da chamada + supervisor + admin podem ler; INSERT por usuário autenticado.
 - `cultural_hints`: leitura pública para autenticados; gestão restrita a admin.
 
+## Nota de escopo — localização da interface (2026-11-24, etapa 269)
+O título deste ADR cobre **duas** entregas, e só uma foi construída:
+
+- **Tradução em tempo real** (tabelas `call_translations` / `cultural_hints`, edges `translate-utterance` / `translate-summary`,
+  `useLiveTranslation`, `useCulturalHints`, `LiveTranslationPanel`, `/translation-center`): **real e em uso**.
+- **Localização da interface** (i18n): **não foi construída**. Existiam apenas `i18n.json` (3 locales declarados,
+  `defaultLocale: "en"`) e `public/locales/en/common.json` (10 strings), com **zero consumidores** — nada em `src/`,
+  `vite.config.ts`, `package.json` ou workflows lia esses arquivos, e não há biblioteca de i18n instalada. A interface
+  é hardcoded em português. Os dois arquivos foram **removidos** para não sugerir metade do caminho feito.
+
+Localizar a interface de verdade é um projeto próprio (biblioteca, extração de strings, revisão de texto por locale),
+não um arquivo de configuração. Quem retomar deve abrir ADR novo em vez de ressuscitar `i18n.json`.
+
 ## Trade-offs aceitos
 - Detecção client-side é heurística (bom o suficiente para roteamento UI). LLM faz a tradução final com idioma detectado.
 - Throttle de 1.5s + cache por idioma de resumo evita custos excessivos.
