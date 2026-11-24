@@ -68,8 +68,8 @@
 - [ ] **029** — Policies de UPDATE e DELETE para `rate_limit_logs` — onda 1 — Alta — Banco 🔒
 - [ ] **030** — Descobrir e documentar qual trilha serve produção — onda 1 — Média — Infraestrutura
 - [x] **031** — Parar de revelar a existência da conta no pedido de reset de senha — onda 1 — Baixa — Edge Function
-- [ ] **032** — Verificar e atualizar o contador do autenticador no login por passkey — onda 1 — Baixa — Edge Function
-- [ ] **033** — Rate limit no login por passkey — onda 1 — Baixa — Edge Function
+- [x] **032** — Verificar e atualizar o contador do autenticador no login por passkey — onda 1 — Baixa — Edge Function
+- [x] **033** — Rate limit no login por passkey — onda 1 — Baixa — Edge Function
 - [ ] **034** — Mover a checagem de DNC e horário para dentro de `initiateCall` — onda 1 — Crítica — Hooks
 - [ ] **035** — Fazer a checagem de DNC e horário falhar fechado nos três níveis — onda 1 — Crítica — Hooks + Banco 🔒
 - [ ] **036** — Barreira de compliance no discador preditivo — onda 1 — Crítica — Hooks

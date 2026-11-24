@@ -1,5 +1,6 @@
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
 import { buildCorsHeaders } from "../_shared/cors.ts";
+import { checkRateLimitDB, getClientIp } from "../_shared/rate-limit.ts";
 import { verificarAssercao, WebAuthnError } from "./verify.ts";
 
 
@@ -21,6 +22,24 @@ Deno.serve(async (req) => {
   }
 
   try {
+    // Freio tambem na verificacao, nao so na emissao do desafio (a irma
+    // webauthn-challenge ja tinha). Fail-open de proposito: este e o caminho de
+    // login, e negar por erro de banco trancaria o acesso de todos.
+    const rate = await checkRateLimitDB(getClientIp(req), 'webauthn-authenticate');
+    if (!rate.allowed) {
+      return new Response(
+        JSON.stringify({
+          success: false,
+          error: 'Muitas tentativas. Tente novamente mais tarde.',
+          retryAfter: rate.retryAfter,
+        }),
+        {
+          headers: { ...buildCorsHeaders(req), 'Content-Type': 'application/json' },
+          status: 429,
+        },
+      );
+    }
+
     const { credentialId, clientDataJSON, authenticatorData, signature } =
       await req.json() as AuthRequest;
     if (!credentialId || !clientDataJSON || !authenticatorData || !signature) {
@@ -76,15 +95,16 @@ Deno.serve(async (req) => {
       .map((o) => o.trim())
       .filter(Boolean);
 
+    let signCount: number;
     try {
-      await verificarAssercao({
+      ({ signCount } = await verificarAssercao({
         clientDataJSON,
         authenticatorData,
         signature,
         challengeEsperado: desafio.challenge,
         publicKey: passkey.public_key as string,
         origensPermitidas,
-      });
+      }));
     } catch (erroVerificacao) {
       const codigo = erroVerificacao instanceof WebAuthnError
         ? erroVerificacao.code
@@ -106,6 +126,58 @@ Deno.serve(async (req) => {
     if (donoError || !emailDoDono) {
       console.error('Dono da passkey sem e-mail:', donoError);
       throw new Error('Failed to resolve passkey owner');
+    }
+
+    // O contador de assinaturas do autenticador e monotonico e e o sinal
+    // anti-clonagem do WebAuthn: sem compara-lo, um autenticador clonado
+    // entra na conta. A coluna era lida e nunca usada.
+    // safe-numeric-ok: `counter` e coluna integer do banco, nao entrada do usuario.
+    const counterAnterior = Number(passkey.counter ?? 0);
+    if (signCount === 0) {
+      // Excecao contraintuitiva e intencional: alguns Apple/Windows Hello
+      // devolvem sempre 0. Nao ha contador confiavel nesses autenticadores, e
+      // comparar trancaria esses usuarios para sempre. Neste caso nao
+      // comparamos - apenas registramos.
+      console.warn(
+        'webauthn-authenticate: autenticador sem contador (signCount=0), comparacao ignorada',
+        credentialId,
+      );
+    } else if (counterAnterior !== 0 && signCount <= counterAnterior) {
+      console.error(
+        'webauthn-authenticate: contador nao avancou (possivel clonagem)',
+        credentialId,
+        counterAnterior,
+        signCount,
+      );
+      await supabaseAdmin.from('audit_logs').insert({
+        user_id: userId,
+        user_email: emailDoDono,
+        action: 'webauthn_possible_clone',
+        resource_type: 'authentication',
+        details: {
+          credential_id: credentialId,
+          counter_anterior: counterAnterior,
+          sign_count: signCount,
+        },
+      });
+      return new Response(
+        JSON.stringify({
+          success: false,
+          error: 'Passkey recusada: contador de assinaturas nao avancou.',
+        }),
+        {
+          headers: { ...buildCorsHeaders(req), 'Content-Type': 'application/json' },
+          status: 401,
+        },
+      );
+    } else if (signCount > counterAnterior) {
+      const { error: counterError } = await supabaseAdmin
+        .from('user_passkeys')
+        .update({ counter: signCount })
+        .eq('id', passkey.id);
+      if (counterError) {
+        console.error('webauthn-authenticate: falha ao atualizar o contador', counterError);
+      }
     }
 
     const { data: linkData, error: linkError } = await supabaseAdmin.auth.admin.generateLink({
