@@ -1,4 +1,5 @@
 import { useState, useCallback, useRef, useEffect } from 'react';
+import { toast } from 'sonner';
 import { supabase } from '@/integrations/supabase/client';
 import { logger } from '@/lib/logger';
 import { useCallTimers } from './useCallTimers';
@@ -63,13 +64,27 @@ export interface ChannelConfig {
 
 const MAX_SIMULTANEOUS_CALLS = 3;
 
+/** Checagem de compliance (DNC + horario legal) antes de discar. */
+export type PreDialCheck = (
+  phone: string,
+  regionCode?: string,
+) => Promise<{ canDial: boolean; reasons: string[] }>;
+
+export interface InitiateCallOptions {
+  /**
+   * Chamada recebida: DNC e horario legal governam a discagem, nao o
+   * atendimento. Sem isto, um telefone da DNC nao conseguiria nem atender.
+   */
+  skipComplianceCheck?: boolean;
+}
+
 const AVAILABLE_CHANNELS: ChannelConfig[] = [
   { id: 'webrtc', name: 'WebRTC', enabled: false, configured: false, icon: 'Radio', description: 'Chamadas via navegador com IA (requer configuração)' },
   { id: 'wavoip', name: 'Wavoip', enabled: false, configured: false, icon: 'MessageCircle', description: 'Chamadas via WhatsApp (requer configuração)' },
   { id: 'sip', name: 'SIP Genérico', enabled: true, configured: true, icon: 'Headphones', description: 'Servidor SIP próprio (Bitrix)' },
 ];
 
-export function useMultiChannelCall() {
+export function useMultiChannelCall(preDialCheck?: PreDialCheck) {
   const [activeChannel, setActiveChannel] = useState<CallChannel>('sip');
   const [activeCalls, setActiveCalls] = useState<CallSession[]>([]);
   const [activeCallId, setActiveCallId] = useState<string | null>(null);
@@ -88,8 +103,32 @@ export function useMultiChannelCall() {
 
   const currentCall = activeCalls.find(c => c.id === activeCallId) || null;
 
-  const initiateCall = useCallback((channel: CallChannel, phoneNumber?: string, contactName?: string): CallSession | null => {
+  const initiateCall = useCallback(async (
+    channel: CallChannel,
+    phoneNumber?: string,
+    contactName?: string,
+    options?: InitiateCallOptions,
+  ): Promise<CallSession | null> => {
     if (activeCalls.length >= MAX_SIMULTANEOUS_CALLS) return null;
+
+    // Barreira de compliance no ponto unico por onde a discagem passa. Antes
+    // o bloqueio existia so em PhoneDialer, e /calls discava para numero da
+    // DNC e fora do horario legal sem nenhuma checagem.
+    if (phoneNumber && !options?.skipComplianceCheck && preDialCheck) {
+      try {
+        const { canDial, reasons } = await preDialCheck(phoneNumber);
+        if (!canDial) {
+          log.warn(`Discagem bloqueada por compliance: ${reasons.join(' · ')}`);
+          toast.error('Chamada bloqueada por compliance', { description: reasons.join(' · ') });
+          return null;
+        }
+      } catch (error) {
+        // Fail-open por enquanto: tornar isto fail-closed e a etapa 035, que
+        // mexe na funcao do banco e depende de decisao do dono.
+        log.error('preDialCheck falhou; discagem liberada', error);
+      }
+    }
+
     const newCall: CallSession = {
       id: `call-${Date.now()}-${Math.random().toString(36).slice(2, 8)}`, channel, status: 'connecting', direction: 'outbound',
       phoneNumber, contactName, startedAt: new Date(), duration: 0, totalHoldTime: 0,
@@ -99,7 +138,7 @@ export function useMultiChannelCall() {
     setActiveCallId(newCall.id);
     setActiveChannel(channel);
     return newCall;
-  }, [activeCalls.length]);
+  }, [activeCalls.length, preDialCheck]);
 
   const switchToCall = useCallback((callId: string) => {
     const call = activeCalls.find(c => c.id === callId);

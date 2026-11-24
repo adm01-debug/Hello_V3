@@ -87,7 +87,7 @@ export function UnifiedSoftphone({ onCallStart, onCallEnd, onTranscript }: Unifi
     if (activeChannel === 'webrtc') {
       try {
         await navigator.mediaDevices.getUserMedia({ audio: true });
-        const call = initiateCall('webrtc', undefined, 'Agente IA');
+        const call = await initiateCall('webrtc', undefined, 'Agente IA');
         if (!call) { toast.error('Não foi possível iniciar a chamada'); if (activeCalls.length === 0) setStatusAvailable(); return; }
         onCallStart?.(call);
         const { data, error } = await supabase.functions.invoke('elevenlabs-conversation-token', { body: { useDefaultAgent: true } });
@@ -96,15 +96,18 @@ export function UnifiedSoftphone({ onCallStart, onCallEnd, onTranscript }: Unifi
       } catch (error) { logger.error('Failed to start WebRTC call:', error); toast.error(error instanceof Error ? error.message : 'Falha ao iniciar chamada'); endCall(); }
     } else if (activeChannel === 'wavoip') {
       if (!phoneNumber) { toast.error('Digite um número WhatsApp para ligar'); return; }
-      const call = initiateCall('wavoip', phoneNumber, `WhatsApp ${phoneNumber}`);
-      if (!call) { toast.error('Não foi possível iniciar a chamada'); return; }
+      const call = await initiateCall('wavoip', phoneNumber, `WhatsApp ${phoneNumber}`);
+      // Sem call aqui o motivo ja foi dito ao operador: limite de linhas no
+      // guard do inicio, ou compliance dentro do proprio initiateCall.
+      if (!call) return;
       onCallStart?.(call);
       const success = await wavoip.startCall(phoneNumber);
       if (success) updateCallStatus('active', call.id); else endCall(call.id);
     } else if (activeChannel === 'sip') {
       if (!phoneNumber) { toast.error('Digite um número para ligar'); return; }
-      const call = initiateCall('sip', phoneNumber);
-      if (!call) { toast.error('Não foi possível iniciar a chamada'); return; }
+      const call = await initiateCall('sip', phoneNumber);
+      // Idem: o motivo da recusa ja foi comunicado.
+      if (!call) return;
       onCallStart?.(call);
       if (!sipCall.isRegistered) {
         updateCallStatus('connecting', call.id);

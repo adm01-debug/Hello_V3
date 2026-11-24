@@ -48,43 +48,43 @@ describe('useMultiChannelCall', () => {
     vi.restoreAllMocks();
   });
 
-  it('initiates calls, enforces MAX_SIMULTANEOUS_CALLS, switches and ends', () => {
+  it('initiates calls, enforces MAX_SIMULTANEOUS_CALLS, switches and ends', async () => {
     const { result } = renderHook(() => useMultiChannelCall());
 
     let id1 = '';
     let id2 = '';
-    act(() => {
-      const c1 = result.current.initiateCall('webrtc', '111', 'Alice');
+    await act(async () => {
+      const c1 = (await result.current.initiateCall('webrtc', '111', 'Alice'));
       id1 = c1!.id;
     });
     expect(result.current.activeCalls).toHaveLength(1);
     expect(result.current.isInCall).toBe(true);
 
     // ensure unique ids by advancing time via fake Date
-    act(() => {
-      const c2 = result.current.initiateCall('sip', '222', 'Bob');
+    await act(async () => {
+      const c2 = (await result.current.initiateCall('sip', '222', 'Bob'));
       id2 = c2!.id;
     });
-    act(() => {
-      result.current.initiateCall('wavoip', '333');
+    await act(async () => {
+      (await result.current.initiateCall('wavoip', '333'));
     });
     expect(result.current.activeCalls.length).toBeLessThanOrEqual(3);
 
     // Hit the max limit -> returns null
     let overflow: unknown;
-    act(() => {
-      overflow = result.current.initiateCall('webrtc', '444');
+    await act(async () => {
+      overflow = (await result.current.initiateCall('webrtc', '444'));
     });
     expect(overflow).toBeNull();
     expect(result.current.canAddCall).toBe(false);
     expect(result.current.maxCalls).toBe(3);
 
     // switch to call (existing and non-existing)
-    act(() => {
+    await act(async () => {
       result.current.switchToCall(id1);
     });
     expect(result.current.activeCallId).toBe(id1);
-    act(() => {
+    await act(async () => {
       result.current.switchToCall('does-not-exist');
     });
     expect(result.current.activeCallId).toBe(id1);
@@ -94,75 +94,75 @@ describe('useMultiChannelCall', () => {
     expect(result.current.getCallById('nope')).toBeNull();
 
     // end a specific call
-    act(() => {
+    await act(async () => {
       result.current.endCall(id2);
     });
     expect(result.current.activeCalls.find((c) => c.id === id2)).toBeUndefined();
     expect(result.current.callHistory.length).toBeGreaterThan(0);
   });
 
-  it('updateCallStatus active starts timer, toggles mute/hold/recording, addTranscript', () => {
+  it('updateCallStatus active starts timer, toggles mute/hold/recording, addTranscript', async () => {
     vi.useFakeTimers();
     const { result } = renderHook(() => useMultiChannelCall());
 
     let id = '';
-    act(() => {
-      id = result.current.initiateCall('webrtc', '111', 'Alice')!.id;
+    await act(async () => {
+      id = (await result.current.initiateCall('webrtc', '111', 'Alice'))!.id;
     });
 
-    act(() => {
+    await act(async () => {
       result.current.setCallDbSession(id, 'db-1', 'AgentX');
     });
     expect(result.current.getCallById(id)?.dbSessionId).toBe('db-1');
 
-    act(() => {
+    await act(async () => {
       result.current.updateCallStatus('active', id);
     });
     expect(result.current.getCallById(id)?.status).toBe('active');
 
     // duration timer ticks
-    act(() => {
+    await act(async () => {
       vi.advanceTimersByTime(2000);
     });
     expect(result.current.getCallById(id)!.duration).toBeGreaterThanOrEqual(1);
 
-    act(() => {
+    await act(async () => {
       result.current.toggleMute(id);
     });
     expect(result.current.getCallById(id)?.isMuted).toBe(true);
 
-    act(() => {
+    await act(async () => {
       result.current.toggleRecording(id);
     });
     expect(result.current.getCallById(id)?.isRecording).toBe(true);
 
     // toggle hold on then off (exercises persistHoldEvent both branches)
-    act(() => {
+    await act(async () => {
       result.current.toggleHold(id);
     });
     expect(result.current.getCallById(id)?.isOnHold).toBe(true);
-    act(() => {
+    await act(async () => {
       result.current.toggleHold(id);
     });
     expect(result.current.getCallById(id)?.isOnHold).toBe(false);
 
-    act(() => {
+    await act(async () => {
       result.current.addTranscript('user', 'hello', id);
     });
-    act(() => {
+    await act(async () => {
       result.current.addTranscript('agent', 'hi');
     });
     expect(result.current.getCallById(id)!.transcripts.length).toBeGreaterThan(0);
 
     // updateCallStatus with no target id when none active still safe
-    act(() => {
+    await act(async () => {
       result.current.updateCallStatus('idle', undefined);
     });
   });
 
-  it('handles no-op branches when no active call id', () => {
+  it('handles no-op branches when no active call id', async () => {
     const { result } = renderHook(() => useMultiChannelCall());
-    act(() => {
+    await act(async () => {
       result.current.toggleMute();
       result.current.toggleHold();
       result.current.toggleRecording();
@@ -173,102 +173,102 @@ describe('useMultiChannelCall', () => {
     expect(result.current.activeCalls).toHaveLength(0);
   });
 
-  it('configures channels and endAllCalls', () => {
+  it('configures channels and endAllCalls', async () => {
     const { result } = renderHook(() => useMultiChannelCall());
-    act(() => {
+    await act(async () => {
       result.current.configureChannel('wavoip', { enabled: true, configured: true });
     });
     expect(result.current.channels.find((c) => c.id === 'wavoip')?.enabled).toBe(true);
 
-    act(() => {
-      result.current.initiateCall('webrtc', '111');
+    await act(async () => {
+      (await result.current.initiateCall('webrtc', '111'));
     });
-    act(() => {
-      result.current.initiateCall('sip', '222');
+    await act(async () => {
+      (await result.current.initiateCall('sip', '222'));
     });
     expect(result.current.activeCalls.length).toBeGreaterThan(0);
 
-    act(() => {
+    await act(async () => {
       result.current.endAllCalls();
     });
     expect(result.current.activeCalls).toHaveLength(0);
     expect(result.current.activeCallId).toBeNull();
     expect(result.current.callHistory.length).toBeGreaterThan(0);
 
-    act(() => {
+    await act(async () => {
       result.current.setActiveChannel('sip' as CallChannel);
     });
     expect(result.current.activeChannel).toBe('sip');
   });
 
-  it('runs full conference lifecycle', () => {
+  it('runs full conference lifecycle', async () => {
     vi.useFakeTimers();
     const { result } = renderHook(() => useMultiChannelCall());
 
     const ids: string[] = [];
-    act(() => {
-      ids.push(result.current.initiateCall('webrtc', '111')!.id);
+    await act(async () => {
+      ids.push((await result.current.initiateCall('webrtc', '111'))!.id);
     });
-    act(() => {
-      ids.push(result.current.initiateCall('sip', '222')!.id);
+    await act(async () => {
+      ids.push((await result.current.initiateCall('sip', '222'))!.id);
     });
-    act(() => {
-      ids.push(result.current.initiateCall('webrtc', '333')!.id);
+    await act(async () => {
+      ids.push((await result.current.initiateCall('webrtc', '333'))!.id);
     });
 
     // make calls active so they appear available for conference
-    act(() => {
+    await act(async () => {
       ids.forEach((id) => result.current.updateCallStatus('active', id));
     });
     expect(result.current.getCallsAvailableForConference().length).toBeGreaterThanOrEqual(2);
 
     // startConference needs >= 2
     let confNull: unknown;
-    act(() => {
+    await act(async () => {
       confNull = result.current.startConference([ids[0]]);
     });
     expect(confNull).toBeNull();
 
-    act(() => {
+    await act(async () => {
       result.current.startConference([ids[0], ids[1]]);
     });
     expect(result.current.conference).not.toBeNull();
 
-    act(() => {
+    await act(async () => {
       vi.advanceTimersByTime(2000);
     });
     expect(result.current.conference!.duration).toBeGreaterThanOrEqual(1);
 
-    act(() => {
+    await act(async () => {
       result.current.addToConference(ids[2]);
     });
     expect(result.current.conference!.participantIds).toContain(ids[2]);
 
-    act(() => {
+    await act(async () => {
       result.current.toggleConferenceRecording();
     });
-    act(() => {
+    await act(async () => {
       result.current.toggleConferenceRecording();
     });
 
     // remove one, still >=2 participants
-    act(() => {
+    await act(async () => {
       result.current.removeFromConference(ids[2]);
     });
     expect(result.current.conference!.participantIds).not.toContain(ids[2]);
 
     // remove until <2 -> auto endConference
-    act(() => {
+    await act(async () => {
       result.current.removeFromConference(ids[1]);
     });
     expect(result.current.conference).toBeNull();
   });
 
-  it('E057: dbSessionId é preenchido após setCallDbSession', () => {
+  it('E057: dbSessionId é preenchido após setCallDbSession', async () => {
     const { result } = renderHook(() => useMultiChannelCall());
     let callId = '';
-    act(() => { callId = result.current.initiateCall('webrtc', '111', 'Alice')!.id; });
-    act(() => { result.current.setCallDbSession(callId, 'db-uuid-123', 'Agente Teste'); });
+    await act(async () => { callId = (await result.current.initiateCall('webrtc', '111', 'Alice'))!.id; });
+    await act(async () => { result.current.setCallDbSession(callId, 'db-uuid-123', 'Agente Teste'); });
     const call = result.current.activeCalls.find(c => c.id === callId);
     expect(call?.dbSessionId).toBe('db-uuid-123');
     expect(call?.agentName).toBe('Agente Teste');
@@ -277,7 +277,7 @@ describe('useMultiChannelCall', () => {
   it('E058: updateCallStatus para active muda o status da chamada sem crash', async () => {
     const { result } = renderHook(() => useMultiChannelCall());
     let callId = '';
-    act(() => { callId = result.current.initiateCall('webrtc', '111', 'Alice')!.id; });
+    await act(async () => { callId = (await result.current.initiateCall('webrtc', '111', 'Alice'))!.id; });
     await act(async () => { result.current.updateCallStatus('active', callId); });
     expect(result.current.activeCalls.find(c => c.id === callId)?.status).toBe('active');
   });
@@ -285,19 +285,19 @@ describe('useMultiChannelCall', () => {
   it('E059: endCall com chamada active termina sem crash e remove da lista', async () => {
     const { result } = renderHook(() => useMultiChannelCall());
     let callId = '';
-    act(() => { callId = result.current.initiateCall('webrtc', '111', 'Alice')!.id; });
+    await act(async () => { callId = (await result.current.initiateCall('webrtc', '111', 'Alice'))!.id; });
     await act(async () => { result.current.updateCallStatus('active', callId); });
     await act(async () => { result.current.endCall(callId); });
     expect(result.current.activeCalls.find(c => c.id === callId)).toBeUndefined();
     expect(result.current.isInCall).toBe(false);
   });
 
-  it('endConference directly and conference no-op guards', () => {
+  it('endConference directly and conference no-op guards', async () => {
     vi.useFakeTimers();
     const { result } = renderHook(() => useMultiChannelCall());
 
     // conference no-ops when no conference exists
-    act(() => {
+    await act(async () => {
       result.current.addToConference('x');
       result.current.removeFromConference('x');
       result.current.endConference();
@@ -306,16 +306,16 @@ describe('useMultiChannelCall', () => {
     expect(result.current.conference).toBeNull();
 
     const ids: string[] = [];
-    act(() => {
-      ids.push(result.current.initiateCall('webrtc', '111')!.id);
+    await act(async () => {
+      ids.push((await result.current.initiateCall('webrtc', '111'))!.id);
     });
-    act(() => {
-      ids.push(result.current.initiateCall('sip', '222')!.id);
+    await act(async () => {
+      ids.push((await result.current.initiateCall('sip', '222'))!.id);
     });
-    act(() => {
+    await act(async () => {
       result.current.startConference([ids[0], ids[1]]);
     });
-    act(() => {
+    await act(async () => {
       result.current.endConference();
     });
     expect(result.current.conference).toBeNull();

@@ -70,7 +70,7 @@
 - [x] **031** — Parar de revelar a existência da conta no pedido de reset de senha — onda 1 — Baixa — Edge Function
 - [x] **032** — Verificar e atualizar o contador do autenticador no login por passkey — onda 1 — Baixa — Edge Function
 - [x] **033** — Rate limit no login por passkey — onda 1 — Baixa — Edge Function
-- [ ] **034** — Mover a checagem de DNC e horário para dentro de `initiateCall` — onda 1 — Crítica — Hooks
+- [x] **034** — Mover a checagem de DNC e horário para dentro de `initiateCall` — onda 1 — Crítica — Hooks
 - [ ] **035** — Fazer a checagem de DNC e horário falhar fechado nos três níveis — onda 1 — Crítica — Hooks + Banco 🔒
 - [ ] **036** — Barreira de compliance no discador preditivo — onda 1 — Crítica — Hooks
 - [ ] **037** — Barreira de compliance no servidor, não só no cliente — onda 1 — Crítica — Edge Function + Banco 🔒

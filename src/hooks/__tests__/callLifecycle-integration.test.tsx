@@ -90,8 +90,8 @@ describe('Ciclo de vida da chamada — integracao (E064)', () => {
     const { result } = renderHook(() => useMultiChannelCall());
 
     let callId = '';
-    act(() => {
-      const call = result.current.initiateCall('webrtc', '+5511999990001', 'Cliente Teste');
+    await act(async () => {
+      const call = await result.current.initiateCall('webrtc', '+5511999990001', 'Cliente Teste');
       callId = call!.id;
     });
     expect(result.current.activeCalls).toHaveLength(1);
@@ -122,8 +122,8 @@ describe('Ciclo de vida da chamada — integracao (E064)', () => {
     const { result } = renderHook(() => useMultiChannelCall());
 
     let callId = '';
-    act(() => {
-      const call = result.current.initiateCall('webrtc', '+5511999990002', 'Cliente B');
+    await act(async () => {
+      const call = await result.current.initiateCall('webrtc', '+5511999990002', 'Cliente B');
       callId = call!.id;
     });
 
@@ -150,8 +150,8 @@ describe('Ciclo de vida da chamada — integracao (E064)', () => {
     const { result } = renderHook(() => useMultiChannelCall());
 
     let callId = '';
-    act(() => {
-      const call = result.current.initiateCall('webrtc', '+5511000000003', 'Desligou cedo');
+    await act(async () => {
+      const call = await result.current.initiateCall('webrtc', '+5511000000003', 'Desligou cedo');
       callId = call!.id;
     });
 

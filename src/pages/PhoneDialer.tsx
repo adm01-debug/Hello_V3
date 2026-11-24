@@ -67,15 +67,27 @@ const PhoneDialer = () => {
   useEffect(() => {
     const incoming = sip.incomingCall;
     if (incoming && !incomingSessionIdRef.current) {
-      const session = call.initiateCall('sip', incoming.from || 'desconhecido', incoming.displayName ?? undefined);
-      if (!session) {
-        // Sem linha livre: rejeita para não deixar o chamador em espera indefinida.
-        sip.rejectCall();
-        toast.warning('Chamada recebida recusada', { description: 'Limite de linhas simultâneas atingido.' });
-        return;
-      }
-      incomingSessionIdRef.current = session.id;
-      call.updateCallStatus('ringing', session.id);
+      // Marca a linha antes do await: sem isso um re-render durante a criacao
+      // da sessao abriria uma segunda sessao para o mesmo convite.
+      incomingSessionIdRef.current = 'pendente';
+      void (async () => {
+        const session = await call.initiateCall(
+          'sip',
+          incoming.from || 'desconhecido',
+          incoming.displayName ?? undefined,
+          // Chamada recebida: DNC e horario legal valem para discar, nao para atender.
+          { skipComplianceCheck: true },
+        );
+        if (!session) {
+          // Sem linha livre: rejeita para não deixar o chamador em espera indefinida.
+          incomingSessionIdRef.current = null;
+          sip.rejectCall();
+          toast.warning('Chamada recebida recusada', { description: 'Limite de linhas simultâneas atingido.' });
+          return;
+        }
+        incomingSessionIdRef.current = session.id;
+        call.updateCallStatus('ringing', session.id);
+      })();
     }
     if (!incoming && incomingSessionIdRef.current) {
       const pendingId = incomingSessionIdRef.current;
@@ -145,7 +157,7 @@ const PhoneDialer = () => {
         return;
       }
 
-      const session = call.initiateCall(call.activeChannel, number, contactName);
+      const session = await call.initiateCall(call.activeChannel, number, contactName);
       if (!session) {
         toast.error('Limite de chamadas simultâneas atingido');
         return;
