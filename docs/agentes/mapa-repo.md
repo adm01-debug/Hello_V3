@@ -93,3 +93,72 @@ instala mais pacotes que `bun install` em ambiente sem credencial da Lovable.
 - **Roteamento:** 100% lazy-loaded com code splitting; 103 de 129 páginas roteadas, 1 órfã real.
 - Os 4 testes vermelhos conhecidos estão em `src/hooks/__tests__/useSessionManager.coverage.test.tsx`
   (reproduzível em isolamento — **não é flaky**).
+
+## Rotas protegidas sem `roles:` (etapa 090)
+
+**Estado em 24/11/2026** (verificado no arquivo, nao no relatorio antigo): `src/routes/protectedRoutes.tsx` tem **95 rotas**, das quais **49 declaram `roles:` e 46 nao declaram** (45 telas + o catch-all `*`). O plano (A-088) falava em 49 sem papel no momento da auditoria; entre a auditoria e hoje 3 rotas passaram a declarar papel.
+
+Esta tabela **nao** declara papel nenhum — e insumo para a decisao. "O que a tela faz" foi derivado do codigo da tela (`usePageTitle` e os hooks que ela consome), nao do nome da rota. `sim` na coluna *Confirmar com o dono* significa que declarar o papel hoje pode tirar acesso de alguem que usa a tela.
+
+| Rota | Componente (`src/pages/`) | O que a tela faz (derivado do codigo) | Papel minimo proposto | Confirmar com o dono |
+|---|---|---|---|---|
+| `/` | `PhoneDialer` | Discador com DNC, favoritos e historico proprio (`useDialerFavorites`, `useDNCCompliance`) | `agent` | nao |
+| `/dashboard` | `Index` | Painel inicial do usuario; le `useDashboardData`/`useDashboardStats` e o proprio layout | `agent` | nao |
+| `/onboarding` | `Onboarding` | Configuracao inicial da operacao (checklist de implantacao) | `admin` | sim |
+| `/calls` | `Calls` | Central de chamadas do atendente (`useSipCall`) com registro no historico | `agent` | nao |
+| `/contacts` | `Contacts` | Cadastro/consulta de contatos, sync Bitrix (`useBitrixSync`) | `agent` | nao |
+| `/call-park` | `CallPark` | Estacionamento de chamadas do ramal (`useCallPark`) | `agent` | nao |
+| `/blf` | `BlfBoard` | Painel de status dos ramais da equipe (`useBlfBoard`) — expoe presenca de colegas | `agent` | sim |
+| `/contacts/insights` | `ContactInsights` | Insights agregados de contatos/leads (`useContactInsights`) | `supervisor` | sim |
+| `/history` | `CallHistory` | Historico de chamadas do proprio atendente | `agent` | nao |
+| `/call-history` | `CallHistory` | Mesma tela de `/history` (rota duplicada — ver Observacoes) | `agent` | nao |
+| `/analytics` | `CallAnalytics` | Analytics agregado de chamadas da operacao | `supervisor` | nao |
+| `/alerts` | `Alerts` | Central de alertas (fila, espera, sentimento) de toda a operacao | `supervisor` | sim |
+| `/alert-history` | `AlertHistory` | Historico dos alertas da operacao (`useAlertHistory`) | `supervisor` | nao |
+| `/ranking` | `AgentRanking` | Ranking/gamificacao entre agentes — exposicao de desempenho de colegas | `supervisor` | sim |
+| `/ai` | `AIAssistant` | Assistente de IA de uso livre pelo atendente | `agent` | nao |
+| `/reports` | `Reports` | Relatorios agregados de volume e desempenho | `supervisor` | nao |
+| `/recordings` | `Recordings` | Escuta/download de gravacoes — inclui chamadas de outros atendentes | `supervisor` | sim |
+| `/hold-metrics` | `HoldMetrics` | Metricas de tempo de espera da operacao (`useHoldMetrics`) | `supervisor` | nao |
+| `/hold-alerts` | `HoldAlerts` | Alertas de espera disparados por limiar | `supervisor` | nao |
+| `/hold-settings` | `HoldAlertSettings` | Define os limiares de alerta de espera (afeta a operacao inteira) | `admin` | sim |
+| `/callbacks` | `Callbacks` | Fila de retornos agendados do atendente | `agent` | nao |
+| `/coaching` | `Coaching` | Coaching por IA do proprio atendente — confirmar se mostra a equipe | `agent` | sim |
+| `/settings` | `Settings` | Configuracoes do produto (inclui os switches da etapa 077) | `admin` | sim |
+| `/notifications` | `NotificationCenter` | Central de notificacoes do proprio usuario (`useNotificationCenter`) | `agent` | nao |
+| `/two-factor-auth` | `TwoFactorAuth` | Ativa/gerencia o 2FA do proprio usuario (`useMFA`) | `agent` | nao |
+| `/passkeys` | `Passkeys` | Gerencia as passkeys do proprio usuario | `agent` | nao |
+| `/sessions` | `SessionManagement` | Sessoes ativas (`useSessionManager`) — confirmar se lista sessoes de outros usuarios | `agent` | sim |
+| `/security` | `SecurityDashboard` | Recomendacoes de seguranca da propria conta (`useSecurityDashboard`) | `agent` | nao |
+| `/voicemail` | `Voicemail` | Correio de voz — confirmar se o atendente ve apenas a propria caixa | `agent` | sim |
+| `/video-conference` | `VideoConference` | Salas de videoconferencia da equipe | `agent` | nao |
+| `/hot-desking` | `HotDesking` | Troca de posto/ramal entre atendentes — mexe na configuracao de terceiros | `supervisor` | sim |
+| `/virtual-fax` | `VirtualFax` | Envio e recebimento de fax com OCR (`useVirtualFaxOcr`) | `agent` | nao |
+| `/multi-device-ring` | `MultiDeviceRing` | Toque simultaneo em varios dispositivos (`useMultiDeviceRing`), do proprio usuario | `agent` | nao |
+| `/call-library` | `CallLibrary` | Busca em biblioteca de chamadas gravadas (`useCallSearch`) — conteudo de terceiros | `supervisor` | sim |
+| `/deals` | `Deals` | Pipeline de oportunidades do atendente (`useDeals`) | `agent` | nao |
+| `/accounts` | `Accounts` | Carteiras de Customer Success (`useAccounts`) | `agent` | nao |
+| `/renewals` | `Renewals` | Pipeline de renovacoes (`useRenewals`) | `agent` | nao |
+| `/success-plans` | `SuccessPlans` | Planos de sucesso por conta (`useSuccessPlans`) | `agent` | nao |
+| `/learning` | `Learning` | Biblioteca de aprendizagem (`useLearning`) | `agent` | nao |
+| `/meeting-summaries` | `MeetingSummaries` | Resumos de reuniao gerados por IA — confirmar se sao so as proprias reunioes | `agent` | sim |
+| `/agent-assist` | `AgentAssist` | Assistencia em tempo real e objecoes durante a chamada (`useLiveAssist`) | `agent` | nao |
+| `/voice-security` | `VoiceSecurity` | Biometria de voz, deteccao de fraude e redacao de audio — dado sensivel | `admin` | sim |
+| `/translation-center` | `TranslationCenter` | Traducao de conversas — confirmar se alcanca conversas de outros atendentes | `agent` | sim |
+| `/inbox` | `Inbox` | Inbox omnichannel (WhatsApp/chat) do atendente (`useConversations`) | `agent` | nao |
+| `/knowledge` | `Knowledge` | Base de conhecimento: leitura pelo atendente; edicao de artigo pode exigir supervisor | `agent` | sim |
+| `*` | `NotFound` | Catch-all 404 (`NotFound`) — nao e tela de negocio | `agent (autenticado)` | nao |
+
+### Decisoes que voltam para o dono
+
+17 das 46 rotas ficaram marcadas com `sim`. O agrupamento por motivo:
+
+- **Expoe dado de terceiros** (`/recordings`, `/call-library`, `/ranking`, `/blf`, `/contacts/insights`, `/analytics` como consequencia): hoje qualquer `agent` autenticado chega nelas; a RLS e a unica barreira (A-089).
+- **Mexe na operacao inteira** (`/hold-settings`, `/settings`, `/hot-desking`): mudanca de limiar, de produto ou de posto afeta quem nao esta na tela.
+- **Dado sensivel** (`/voice-security`, `/sessions`, `/translation-center`, `/meeting-summaries`, `/voicemail`, `/coaching`, `/knowledge`, `/onboarding`).
+
+### Observacoes que sairam deste levantamento
+
+- `/history` e `/call-history` apontam para o **mesmo componente** (`CallHistory`): e uma rota duplicada, nao duas telas.
+- `/dashboard` (`Index`) e `/` (`PhoneDialer`) coexistem: a raiz autenticada e o discador, e o menu aponta para `/dashboard`.
+- O catch-all `*` (`NotFound`) nao deve receber `roles:`: precisa continuar acessivel a qualquer sessao autenticada.
