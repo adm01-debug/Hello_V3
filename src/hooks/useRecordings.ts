@@ -29,6 +29,10 @@ export interface SentimentAnalysis {
 export function useRecordings() {
   const { logCallRecordingDownload, logCallTranscriptionAccess } = useAuditLog();
   const [recordings, setRecordings] = useState<Recording[]>([]);
+  const [totalCount, setTotalCount] = useState<number | null>(null);
+  const [hasMore, setHasMore] = useState(true);
+  const [loadingMore, setLoadingMore] = useState(false);
+  const pageRef = useRef(0);
   const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState('');
   const [playingId, setPlayingId] = useState<string | null>(null);
@@ -48,13 +52,32 @@ export function useRecordings() {
   useEffect(() => { fetchRecordings(); }, []);
   useEffect(() => { if (audioRef.current) audioRef.current.volume = isMuted ? 0 : volume; }, [volume, isMuted]);
 
-  const fetchRecordings = async () => {
+  // Paginas de 50: sem .range() o PostgREST corta em 1000 linhas e a tela mostra
+  // "X gravacoes" mentindo sobre o que existe de fato.
+  const PAGE_SIZE = 50;
+
+  const fetchRecordings = async (pageToFetch = 0) => {
     try {
-      const { data, error } = await supabase.from('call_recordings').select('*').order('recorded_at', { ascending: false });
+      const from = pageToFetch * PAGE_SIZE;
+      const { data, error, count } = await supabase
+        .from('call_recordings')
+        .select('*', pageToFetch === 0 ? { count: 'exact' } : undefined)
+        .order('recorded_at', { ascending: false })
+        .range(from, from + PAGE_SIZE - 1);
       if (error) throw error;
-      setRecordings(data || []);
+      const rows = (data || []) as Recording[];
+      if (pageToFetch === 0 && typeof count === 'number') setTotalCount(count);
+      setHasMore(rows.length === PAGE_SIZE);
+      setRecordings(prev => (pageToFetch === 0 ? rows : [...prev, ...rows]));
     } catch (error) { logger.error('Error fetching recordings:', error); toast.error('Erro ao carregar gravações'); }
-    finally { setLoading(false); }
+    finally { if (pageToFetch === 0) setLoading(false); }
+  };
+
+  const loadMore = async () => {
+    if (!hasMore || loadingMore) return;
+    setLoadingMore(true);
+    try { await fetchRecordings(pageRef.current + 1); pageRef.current += 1; }
+    finally { setLoadingMore(false); }
   };
 
   const getSignedUrl = async (filePath: string): Promise<string | null> => {
@@ -155,7 +178,8 @@ export function useRecordings() {
   const currentRecording = recordings.find(r => r.id === playingId);
 
   return {
-    recordings: filteredRecordings, allRecordingsCount: recordings.length, loading, searchTerm, setSearchTerm,
+    recordings: filteredRecordings, allRecordingsCount: recordings.length, totalCount, hasMore, loadingMore, loadMore,
+    loading, searchTerm, setSearchTerm,
     playingId, isPlaying, currentTime, duration, volume, setVolume, isMuted, setIsMuted, transcribing,
     analyzingSentiment, transcriptionDialog, setTranscriptionDialog, currentTranscription, currentRecording,
     handlePlay, handleSeek, handleSkip, handleDownload, handleDelete, handleTranscribe, handleAnalyzeSentiment,

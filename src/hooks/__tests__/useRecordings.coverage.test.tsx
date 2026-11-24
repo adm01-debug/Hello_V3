@@ -1,11 +1,11 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { renderHook, act, waitFor } from '@testing-library/react';
 
-const { invokeMock, createSignedUrlMock, removeMock, orderMock, deleteEqMock } = vi.hoisted(() => ({
+const { invokeMock, createSignedUrlMock, removeMock, rangeMock, deleteEqMock } = vi.hoisted(() => ({
   invokeMock: vi.fn(),
   createSignedUrlMock: vi.fn(),
   removeMock: vi.fn(),
-  orderMock: vi.fn(),
+  rangeMock: vi.fn(),
   deleteEqMock: vi.fn(),
 }));
 
@@ -28,7 +28,7 @@ vi.mock('@/hooks/useAuditLog', () => ({
 vi.mock('@/integrations/supabase/client', () => ({
   supabase: {
     from: vi.fn(() => ({
-      select: vi.fn(() => ({ order: orderMock })),
+      select: vi.fn(() => ({ order: vi.fn(() => ({ range: rangeMock })) })),
       delete: vi.fn(() => ({ eq: deleteEqMock })),
     })),
     storage: {
@@ -50,7 +50,7 @@ const rows = [
 ];
 
 beforeEach(() => {
-  orderMock.mockResolvedValue({ data: rows, error: null });
+  rangeMock.mockResolvedValue({ data: rows, error: null, count: rows.length });
   createSignedUrlMock.mockResolvedValue({ data: { signedUrl: 'http://x/file' }, error: null });
   removeMock.mockResolvedValue({ error: null });
   deleteEqMock.mockResolvedValue({ error: null });
@@ -80,10 +80,33 @@ describe('useRecordings', () => {
   });
 
   it('handles fetch error', async () => {
-    orderMock.mockResolvedValueOnce({ data: null, error: { message: 'boom' } });
+    rangeMock.mockResolvedValueOnce({ data: null, error: { message: 'boom' } });
     const { result } = renderHook(() => useRecordings());
     await waitFor(() => expect(result.current.loading).toBe(false));
     expect(toast.error).toHaveBeenCalledWith('Erro ao carregar gravações');
+  });
+
+  it('pagina as gravacoes em blocos de 50 e carrega a proxima pagina', async () => {
+    const page1 = Array.from({ length: 50 }, (_, i) => ({ ...rows[0], id: `p1-${i}` }));
+    rangeMock.mockResolvedValueOnce({ data: page1, error: null, count: 120 });
+
+    const { result } = renderHook(() => useRecordings());
+    await waitFor(() => expect(result.current.loading).toBe(false));
+    expect(rangeMock).toHaveBeenCalledWith(0, 49);
+    expect(result.current.allRecordingsCount).toBe(50);
+    expect(result.current.totalCount).toBe(120);
+    expect(result.current.hasMore).toBe(true);
+
+    rangeMock.mockResolvedValueOnce({ data: [{ ...rows[1], id: 'p2-0' }], error: null, count: null });
+    await act(async () => { await result.current.loadMore(); });
+    expect(rangeMock).toHaveBeenLastCalledWith(50, 99);
+    expect(result.current.allRecordingsCount).toBe(51);
+    expect(result.current.hasMore).toBe(false);
+
+    // Sem mais paginas, loadMore nao volta a consultar o banco.
+    const calls = rangeMock.mock.calls.length;
+    await act(async () => { await result.current.loadMore(); });
+    expect(rangeMock.mock.calls.length).toBe(calls);
   });
 
   it('plays, toggles pause/play, seeks, skips', async () => {

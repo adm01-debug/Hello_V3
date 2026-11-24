@@ -1,4 +1,4 @@
-import { Play, Pause, Download, Disc, Volume2, VolumeX, SkipBack, SkipForward, Loader2, Calendar, Clock, Users, Trash2, FileText } from 'lucide-react';
+import { Play, Pause, Download, Disc, Volume2, VolumeX, SkipBack, SkipForward, Loader2, Calendar, Clock, Users, Trash2, FileText, ChevronDown } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
@@ -24,7 +24,7 @@ export default function Recordings() {
   usePageTitle('Gravações');
 
   const {
-    recordings, allRecordingsCount, loading, searchTerm, setSearchTerm,
+    recordings, allRecordingsCount, totalCount, hasMore, loadingMore, loadMore, loading, searchTerm, setSearchTerm,
     playingId, isPlaying, currentTime, duration, volume, setVolume, isMuted, setIsMuted,
     transcribing, analyzingSentiment, transcriptionDialog, setTranscriptionDialog, currentTranscription,
     currentRecording, handlePlay, handleSeek, handleSkip, handleDownload, handleDelete, handleTranscribe, handleAnalyzeSentiment,
@@ -48,7 +48,7 @@ export default function Recordings() {
           <h1 className="text-3xl font-bold text-foreground">Gravações</h1>
           <p className="text-muted-foreground">Gerencie e reproduza gravações de chamadas</p>
         </div>
-        <Badge variant="secondary" className="text-lg px-4 py-2"><Disc className="h-4 w-4 mr-2" />{allRecordingsCount} gravações</Badge>
+        <Badge variant="secondary" className="text-lg px-4 py-2"><Disc className="h-4 w-4 mr-2" />{allRecordingsCount}{totalCount !== null && totalCount !== allRecordingsCount ? ` de ${totalCount}` : ''} gravações</Badge>
       </div>
 
       {playingId && currentRecording && (
@@ -128,6 +128,19 @@ export default function Recordings() {
                 ))}
               </TableBody>
             </Table>
+          )}
+          {recordings.length > 0 && hasMore && (
+            <div className="flex flex-col items-center gap-2 pt-4">
+              <Button variant="outline" onClick={loadMore} disabled={loadingMore}>
+                {loadingMore ? <Loader2 className="mr-2 h-4 w-4 animate-spin" aria-hidden="true" /> : <ChevronDown className="mr-2 h-4 w-4" aria-hidden="true" />}
+                Carregar mais gravações
+              </Button>
+              <p className="text-xs text-muted-foreground">
+                {searchTerm
+                  ? 'A busca considera apenas as gravações já carregadas.'
+                  : `Mostrando ${allRecordingsCount}${totalCount ? ` de ${totalCount}` : ''} gravações, das mais recentes para as mais antigas.`}
+              </p>
+            </div>
           )}
         </CardContent>
       </Card>
