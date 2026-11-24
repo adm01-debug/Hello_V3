@@ -85,7 +85,21 @@ export function HistoryTab({ callHistory, onSelectNumber }: HistoryTabProps) {
                   {formatCallDuration(call.duration)}
                 </p>
               </div>
-              <Button variant="ghost" size="icon" className="h-8 w-8">
+              <Button
+                variant="ghost"
+                size="icon"
+                className="h-8 w-8"
+                aria-label={
+                  call.phoneNumber
+                    ? `Ligar de volta para ${call.contactName || call.phoneNumber}`
+                    : 'Chamada sem número registrado'
+                }
+                disabled={!call.phoneNumber}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  if (call.phoneNumber) onSelectNumber(call.phoneNumber);
+                }}
+              >
                 <Phone className="h-4 w-4" />
               </Button>
             </div>
