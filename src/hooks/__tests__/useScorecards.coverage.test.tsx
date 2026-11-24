@@ -10,6 +10,7 @@ const respRow = { id: 'r1', scorecard_id: 'sc1', criterion_id: 'cr1', score: 4, 
 const state = {
   scorecards: [scRow] as unknown[],
   invokeError: null as unknown,
+  tplError: null as unknown,
 };
 
 vi.mock('@/integrations/supabase/client', () => ({
@@ -18,7 +19,7 @@ vi.mock('@/integrations/supabase/client', () => ({
       const builder: Record<string, unknown> = {};
       builder.select = vi.fn(() => builder);
       if (table === 'scorecard_templates') {
-        builder.eq = vi.fn(() => Promise.resolve({ data: [tplRow], error: null }));
+        builder.eq = vi.fn(() => Promise.resolve({ data: [tplRow], error: state.tplError }));
       } else if (table === 'scorecard_criteria') {
         builder.order = vi.fn(() => Promise.resolve({ data: [critRow], error: null }));
       } else if (table === 'call_scorecards') {
@@ -44,6 +45,7 @@ vi.mock('@/lib/logger', () => {
 beforeEach(() => {
   state.scorecards = [scRow];
   state.invokeError = null;
+  state.tplError = null;
   vi.clearAllMocks();
 });
 
@@ -54,6 +56,26 @@ describe('useScorecards', () => {
     expect(result.current.templates.length).toBe(1);
     expect(result.current.criteria.length).toBe(1);
     expect(result.current.scorecards.length).toBe(0);
+  });
+
+  it('exposes the template read error instead of an empty model list', async () => {
+    state.tplError = { message: 'permission denied' };
+    const { result } = renderHook(() => useScorecards());
+    await waitFor(() => expect(result.current.loading).toBe(false));
+    expect(result.current.error).toBe('permission denied');
+    expect(result.current.templates).toEqual([]);
+    expect(result.current.criteria).toEqual([]);
+  });
+
+  it('clears the template error on the next successful read', async () => {
+    state.tplError = { message: 'permission denied' };
+    const { result } = renderHook(() => useScorecards());
+    await waitFor(() => expect(result.current.error).toBe('permission denied'));
+
+    state.tplError = null;
+    await act(async () => { await result.current.refresh(); });
+    expect(result.current.error).toBeNull();
+    expect(result.current.templates.length).toBe(1);
   });
 
   it('loads scorecards and responses with callSessionId', async () => {

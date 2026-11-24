@@ -25,7 +25,7 @@ const STATUS_VARIANT: Record<CallScorecard["status"], "secondary" | "default" | 
 
 export default function Scorecards() {
   usePageTitle("Avaliações de Chamada");
-  const { templates, updateStatus, createTemplate, generateAIScorecard } = useScorecards();
+  const { templates, error, updateStatus, createTemplate, generateAIScorecard } = useScorecards();
   const [templateId, setTemplateId] = useState("");
   const [callId, setCallId] = useState("");
   const [generating, setGenerating] = useState(false);
@@ -105,6 +105,12 @@ export default function Scorecards() {
         </div>
       </div>
 
+      {error && (
+        <div className="rounded-lg border border-destructive/40 bg-destructive/10 p-3 text-sm text-destructive">
+          Não foi possível ler os modelos de avaliação e os critérios: {error}
+        </div>
+      )}
+
       <Card>
         <CardHeader>
           <CardTitle className="flex items-center gap-2 text-base">
@@ -112,7 +118,9 @@ export default function Scorecards() {
           </CardTitle>
         </CardHeader>
         <CardContent className="space-y-4">
-          {templates.length === 0 ? (
+          {error ? (
+            <p className="text-sm text-destructive">A lista de modelos não pôde ser lida — não crie um modelo novo por causa disso.</p>
+          ) : templates.length === 0 ? (
             <div className="space-y-3">
               <p className="text-sm text-muted-foreground">
                 Nenhum modelo ativo. Crie o primeiro abaixo — os critérios já vêm pré-preenchidos e podem ser editados.

@@ -4,6 +4,7 @@ import { toast } from 'sonner';
 import { format, subDays, eachDayOfInterval } from 'date-fns';
 import { ptBR } from 'date-fns/locale';
 import { logger } from '@/lib/logger';
+import { mensagemDeErro } from '@/lib/error-message';
 import { safeFormatDate } from "@/lib/safe-date";
 
 export interface AgentStats {
@@ -51,6 +52,7 @@ export function useAgentRanking() {
   const [agentGoals, setAgentGoals] = useState<Map<string, AgentGoals>>(new Map());
   const [notifiedAgents, setNotifiedAgents] = useState<Set<string>>(new Set());
   const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
   const [sortBy, setSortBy] = useState<string>('score');
   const [period, setPeriod] = useState<string>('all');
   const [editingGoals, setEditingGoals] = useState<AgentGoals | null>(null);
@@ -160,10 +162,22 @@ export function useAgentRanking() {
     }
 
     const { data: sessions, error: sessionsError } = await sessionsQuery;
-    if (sessionsError) { logger.error('Error fetching sessions:', sessionsError); toast.error('Erro ao carregar dados dos agentes'); setIsLoading(false); return; }
+    if (sessionsError) { logger.error('Error fetching sessions:', sessionsError); setError(mensagemDeErro(sessionsError)); toast.error('Erro ao carregar dados dos agentes'); setIsLoading(false); return; }
 
-    const { data: summaries } = await supabase.from('call_summaries').select('call_session_id, customer_satisfaction, agent_performance_score');
-    const { data: sessionIds } = await supabase.from('call_sessions').select('id, agent_name');
+    const [{ data: summaries, error: summariesError }, { data: sessionIds, error: sessionIdsError }] = await Promise.all([
+      supabase.from('call_summaries').select('call_session_id, customer_satisfaction, agent_performance_score'),
+      supabase.from('call_sessions').select('id, agent_name'),
+    ]);
+    // Ranking vazio por falha de leitura vira "nenhum agente produziu nada".
+    if (summariesError || sessionIdsError) {
+      const falha = summariesError ?? sessionIdsError;
+      logger.error('Error fetching ranking complements:', falha);
+      setError(mensagemDeErro(falha));
+      toast.error('Erro ao carregar dados dos agentes');
+      setIsLoading(false);
+      return;
+    }
+    setError(null);
     const sessionAgentMap = new Map(sessionIds?.map(s => [s.id, s.agent_name]) || []);
 
     const agentMap = new Map<string, { totalCalls: number; totalDuration: number; completedCalls: number; satisfactionSum: number; satisfactionCount: number; performanceSum: number; performanceCount: number }>();
@@ -311,7 +325,7 @@ export function useAgentRanking() {
   };
 
   return {
-    agents, performanceData, isLoading, sortBy, setSortBy, period, setPeriod,
+    agents, performanceData, isLoading, error, sortBy, setSortBy, period, setPeriod,
     editingGoals, setEditingGoals, goalsDialogOpen, setGoalsDialogOpen,
     getGoalsForAgent, saveGoals, createTestData,
   };

@@ -2,6 +2,7 @@ import { useCallback, useEffect, useState } from 'react';
 import { supabase } from '@/integrations/supabase/client';
 import { logger } from '@/lib/logger';
 import { toast } from 'sonner';
+import { mensagemDeErro } from '@/lib/error-message';
 
 export interface SuccessPlan {
   id: string;
@@ -35,6 +36,7 @@ export function useSuccessPlans(accountId?: string) {
   const [plans, setPlans] = useState<SuccessPlan[]>([]);
   const [milestones, setMilestones] = useState<Record<string, SuccessMilestone[]>>({});
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
   const load = useCallback(async () => {
     setLoading(true);
@@ -45,12 +47,14 @@ export function useSuccessPlans(accountId?: string) {
       if (error) throw error;
       const list = (planRows ?? []) as unknown as SuccessPlan[];
       setPlans(list);
+      setError(null);
 
       if (list.length > 0) {
-        const { data: ms } = await supabase
+        const { data: ms, error: msError } = await supabase
           .from('success_plan_milestones').select('*')
           .in('success_plan_id', list.map((p) => p.id))
           .order('display_order', { ascending: true });
+        if (msError) throw msError;
         const grouped: Record<string, SuccessMilestone[]> = {};
         (ms ?? []).forEach((m) => {
           const row = m as unknown as SuccessMilestone;
@@ -62,6 +66,7 @@ export function useSuccessPlans(accountId?: string) {
       }
     } catch (err) {
       logger.error('useSuccessPlans load failed', err);
+      setError(mensagemDeErro(err));
       toast.error('Falha ao carregar planos de sucesso');
     } finally { setLoading(false); }
   }, [accountId]);
@@ -97,5 +102,5 @@ export function useSuccessPlans(accountId?: string) {
 
   useEffect(() => { load(); }, [load]);
 
-  return { plans, milestones, loading, refresh: load, createPlan, toggleMilestone };
+  return { plans, milestones, loading, error, refresh: load, createPlan, toggleMilestone };
 }
