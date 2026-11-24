@@ -8,12 +8,12 @@ import { Textarea } from '@/components/ui/textarea';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from '@/components/ui/dialog';
+import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogFooter } from '@/components/ui/dialog';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { EmptyState } from '@/components/ui/empty-state';
 import { Skeleton } from '@/components/ui/skeleton';
 import { usePageTitle } from '@/hooks/usePageTitle';
-import { useKbCategories, useKbArticles, useUpsertArticle, type KbArticle } from '@/hooks/useKnowledgeBase';
+import { useKbCategories, useKbArticles, useKbArticle, useUpsertArticle, type KbArticle } from '@/hooks/useKnowledgeBase';
 import { useAuthContext } from '@/contexts/AuthContext';
 
 import { ptBR } from 'date-fns/locale';
@@ -27,6 +27,7 @@ export default function Knowledge() {
   const [search, setSearch] = useState('');
   const [categoryId, setCategoryId] = useState<string>('all');
   const [editing, setEditing] = useState<Partial<KbArticle> | null>(null);
+  const [viewingId, setViewingId] = useState<string | null>(null);
 
   const { data: categories = [] } = useKbCategories();
   const { data: articles = [], isLoading } = useKbArticles({
@@ -36,6 +37,8 @@ export default function Knowledge() {
   });
 
   const upsert = useUpsertArticle();
+  // Detalhe do artigo: a lista só trazia o excerpt, então nem agente nem editor liam o conteúdo.
+  const articleQuery = useKbArticle(viewingId);
 
   const handleSave = () => {
     if (!editing?.title || !editing?.content) return;
@@ -114,7 +117,7 @@ export default function Knowledge() {
                key={a.id}
                variant="neon-interactive"
                className="p-4"
-               onClick={() => isEditor && setEditing(a)}
+               onClick={() => (isEditor ? setEditing(a) : setViewingId(a.id))}
              >
               <div className="flex items-start justify-between gap-2 mb-2">
                 <h3 className="font-semibold line-clamp-2">{a.title}</h3>
@@ -143,6 +146,15 @@ export default function Knowledge() {
                   ))}
                 </div>
               )}
+              <Button
+                variant="ghost"
+                size="sm"
+                className="mt-2 w-full justify-start gap-1 text-xs"
+                aria-label={`Ler artigo ${a.title}`}
+                onClick={(e) => { e.stopPropagation(); setViewingId(a.id); }}
+              >
+                <Eye className="h-3 w-3" /> Ler artigo
+              </Button>
             </Card>
           ))}
         </div>
@@ -221,6 +233,73 @@ export default function Knowledge() {
               Salvar
             </Button>
           </DialogFooter>
+        </DialogContent>
+      </Dialog>
+
+      <Dialog open={!!viewingId} onOpenChange={(o) => !o && setViewingId(null)}>
+        <DialogContent className="max-w-3xl max-h-[90vh] overflow-hidden flex flex-col">
+          <DialogHeader>
+            <DialogTitle>{articleQuery.data?.title ?? 'Artigo da base'}</DialogTitle>
+            <DialogDescription>
+              {articleQuery.data?.excerpt ?? 'Leitura do artigo selecionado na base de conhecimento.'}
+            </DialogDescription>
+          </DialogHeader>
+
+          {articleQuery.isLoading ? (
+            <div className="space-y-2" aria-busy="true" aria-label="Carregando artigo">
+              <Skeleton className="h-4 w-2/3" />
+              <Skeleton className="h-4 w-full" />
+              <Skeleton className="h-4 w-5/6" />
+            </div>
+          ) : articleQuery.isError ? (
+            <div className="space-y-3">
+              <p className="text-sm text-destructive">Não foi possível carregar o artigo.</p>
+              <Button variant="outline" size="sm" onClick={() => void articleQuery.refetch()}>
+                Tentar de novo
+              </Button>
+            </div>
+          ) : !articleQuery.data ? (
+            <EmptyState
+              icon={<FileText />}
+              title="Artigo não encontrado"
+              description="Ele pode ter sido removido ou arquivado."
+            />
+          ) : (
+            <>
+              <ScrollArea className="flex-1 pr-3">
+                <div className="space-y-3">
+                  <div className="flex flex-wrap items-center gap-2">
+                    <Badge variant={articleQuery.data.status === 'published' ? 'default' : 'outline'} className="text-[10px]">
+                      {articleQuery.data.status}
+                    </Badge>
+                    {articleQuery.data.tags?.map((t) => (
+                      <Badge key={t} variant="outline" className="text-[10px] h-4 px-1.5">
+                        {t}
+                      </Badge>
+                    ))}
+                  </div>
+                  <p className="text-sm whitespace-pre-wrap leading-relaxed">{articleQuery.data.content}</p>
+                </div>
+              </ScrollArea>
+              <DialogFooter>
+                <Button variant="outline" onClick={() => setViewingId(null)}>
+                  Fechar
+                </Button>
+                {isEditor && (
+                  <Button
+                    onClick={() => {
+                      const article = articleQuery.data;
+                      if (!article) return;
+                      setViewingId(null);
+                      setEditing(article);
+                    }}
+                  >
+                    Editar artigo
+                  </Button>
+                )}
+              </DialogFooter>
+            </>
+          )}
         </DialogContent>
       </Dialog>
     </NeonPageLayout>
