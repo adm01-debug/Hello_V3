@@ -1,6 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
 import { supabase } from '@/integrations/supabase/client';
 import { logger } from '@/lib/logger';
+import { usePageVisibility } from '@/hooks/usePageVisibility';
 
 const log = logger.create('useVoipAnomalies');
 
@@ -47,10 +48,11 @@ function makeId(a: Omit<DetectedAnomaly, 'id' | 'kind'>): string {
 }
 
 export function useVoipAnomalies(periodHours: number = 24) {
+  const isVisible = usePageVisibility();
   return useQuery({
     queryKey: ['voip-anomalies', periodHours],
     staleTime: 120_000,
-    refetchInterval: 120_000,
+    refetchInterval: isVisible ? 120_000 : false,
     queryFn: async (): Promise<DetectedAnomaly[]> => {
       const { data, error } = await supabase.functions.invoke<AnomaliesResponse>(
         'voip-anomaly-detector',

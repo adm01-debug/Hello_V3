@@ -50,7 +50,6 @@ const App = () => (
   <ErrorBoundary>
     <QueryClientProvider client={queryClient}>
        <TooltipProvider>
-         <GlobalServices />
          <Toaster />
         <Sonner />
         <BrowserRouter>
@@ -78,6 +77,10 @@ const App = () => (
                   element={
                     <ProtectedRoute>
                       <AchievementNotificationProvider>
+                        {/* Monitoramento de troncos e alertas de qualidade VoIP so
+                            faz sentido para quem esta autenticado: montado acima
+                            do roteador, rodava tambem nas paginas publicas. */}
+                        <GlobalServices />
                         <AppLayout>
                           <Suspense fallback={<PageFallback />}>
                             <Routes>

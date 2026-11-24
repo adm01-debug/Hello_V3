@@ -1,5 +1,6 @@
 import { useQuery } from '@tanstack/react-query';
 import { supabase } from '@/integrations/supabase/client';
+import { usePageVisibility } from '@/hooks/usePageVisibility';
 
 export interface AdherenceData {
   scheduled_minutes: number;
@@ -9,6 +10,7 @@ export interface AdherenceData {
 }
 
 export function useAdherence(date?: string) {
+  const isVisible = usePageVisibility();
   return useQuery({
     queryKey: ['adherence', date],
     queryFn: async () => {
@@ -18,6 +20,6 @@ export function useAdherence(date?: string) {
       if (error) throw error;
       return data as { date: string; adherence: Record<string, AdherenceData> };
     },
-    refetchInterval: 60000,
+    refetchInterval: isVisible ? 60000 : false,
   });
 }

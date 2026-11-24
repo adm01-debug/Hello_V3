@@ -1,6 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
 import { supabase } from '@/integrations/supabase/client';
 import { logger } from '@/lib/logger';
+import { usePageVisibility } from '@/hooks/usePageVisibility';
 
 const dashboardLog = logger.create('useDashboardData');
 
@@ -49,6 +50,7 @@ interface QueueStats {
 }
 
  export function useDashboardStats() {
+   const isVisible = usePageVisibility();
    return useQuery<DashboardStats>({
      queryKey: ['dashboard-stats'],
      queryFn: async () => {
@@ -59,11 +61,12 @@ interface QueueStats {
         }
        return data as unknown as DashboardStats;
      },
-     refetchInterval: 15000, // Faster refresh for real-time feel
+     refetchInterval: isVisible ? 15000 : false, // Faster refresh for real-time feel
    });
  }
 
  export function useAgentsListData() {
+   const isVisible = usePageVisibility();
    return useQuery<(AgentRow & { active_call_started_at?: string; active_call_caller?: string })[]>({
      queryKey: ['agents-list'],
      queryFn: async () => {
@@ -74,11 +77,12 @@ interface QueueStats {
         }
        return (data as unknown as (AgentRow & { active_call_started_at?: string; active_call_caller?: string })[]) || [];
      },
-     refetchInterval: 10000,
+     refetchInterval: isVisible ? 10000 : false,
    });
  }
 
 export function useRecentCallsData() {
+  const isVisible = usePageVisibility();
   return useQuery<CallSessionRow[]>({
     queryKey: ['recent-calls'],
     queryFn: async () => {
@@ -90,11 +94,12 @@ export function useRecentCallsData() {
       if (error) throw error;
       return data || [];
     },
-    refetchInterval: 15000,
+    refetchInterval: isVisible ? 15000 : false,
   });
 }
 
  export function useCallVolumeData() {
+   const isVisible = usePageVisibility();
    return useQuery<HourlyVolume[]>({
      queryKey: ['call-volume'],
      queryFn: async () => {
@@ -102,11 +107,12 @@ export function useRecentCallsData() {
        if (error) throw error;
        return data as unknown as HourlyVolume[];
      },
-     refetchInterval: 60000,
+     refetchInterval: isVisible ? 60000 : false,
    });
  }
 
 export function useQueueStatsData() {
+  const isVisible = usePageVisibility();
   return useQuery<QueueStats>({
     queryKey: ['queue-stats'],
      queryFn: async () => {
@@ -114,7 +120,7 @@ export function useQueueStatsData() {
        if (error) throw error;
        return data as unknown as QueueStats;
      },
-    refetchInterval: 15000,
+    refetchInterval: isVisible ? 15000 : false,
   });
 }
 

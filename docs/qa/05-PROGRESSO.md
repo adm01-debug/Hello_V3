@@ -6,11 +6,11 @@
 
 | Marca | Significado |
 |---|---|
-| `[ ]` | **175** |
+| `[ ]` | **174** |
 | `[>]` | em andamento (branch criada) |
 | `[P]` | 0 |
 | `[~]` | 0 |
-| `[x]` | 125 |
+| `[x]` | 126 |
 | `[-]` | 0 |
 
 **`[x]` exige evidência.** Escreva ao lado, entre parênteses, o comando ou a consulta que você rodou e o resultado. Sem isso, a marca é `[~]`.
@@ -24,11 +24,11 @@
 | | Quantidade |
 |---|---:|
 | Total de etapas | 300 |
-| `[x]` concluídas | 125 |
+| `[x]` concluídas | 126 |
 | `[P]` aguardando o dono | 0 |
 | `[~]` parciais | 0 |
 | `[-]` descartadas | 0 |
-| `[ ]` não iniciadas | **175** |
+| `[ ]` não iniciadas | **174** |
 
 *Atualize esta tabela ao fim de cada onda.*
 
@@ -311,7 +311,7 @@
 - [ ] **250** — Guard de CI contra N+1 em edge function — onda 6 — Baixa — CI
 - [ ] **251** — Reduzir o chunk de entrada do front — onda 6 — Média — Frontend
 - [ ] **252** — Transformar o orçamento de bundle em meta de produto — onda 6 — Média — CI
-- [ ] **253** — Pausar realtime e poll quando a aba está oculta — onda 6 — Média — Hooks
+- [x] **253** — Pausar realtime e poll quando a aba está oculta — onda 6 — Média — Hooks · (Diagnóstico em duas partes. **(1) A-134:** `<GlobalServices />` montava **acima do `BrowserRouter`** em `src/App.tsx`, então toda rota pública (`/landing`, `/pricing`, `/login`, `/unauthorized`) abria o canal de realtime `voip-failover-events` em `voip_trunks` e assinava `useQualityAlerts` → `useQualityMetrics` (`select('*').limit(50)`, `refetchInterval: 5000`) — para visitante anônimo. Não havia montagem dupla (`grep -rn "GlobalServices" src` = 1 montagem): a "segunda" chamada medida é o próprio poll de 5 s, 2 requisições numa janela de 10 s. **(2) A-105:** só 4 hooks respeitavam `usePageVisibility` (`useBlfBoard`, `useQueueMetrics`, `useExtensionsOverview`, `useSecurityMonitoringData`); os demais painéis consultavam com a aba em segundo plano. Correção: `GlobalServices` passou para **dentro** do `ProtectedRoute` (junto do `AppLayout`), e `useQualityMetrics`/`useTrunkUsageMetrics` trocaram `select('*')` por lista explícita de colunas; o padrão `const isVisible = usePageVisibility(); refetchInterval: isVisible ? N : false` (o mesmo de `useBlfBoard.ts:53,62`) foi aplicado em `useQualityMetrics` (5 s), `useTrunkUsageMetrics` (10 s), `useVoipAnomalies` (120 s), `useAdherence` (60 s) e nos **cinco** hooks de `useDashboardData` (`useDashboardStats` 15 s, `useAgentsListData` 10 s, `useRecentCallsData` 15 s, `useCallVolumeData` 60 s, `useQueueStatsData` 15 s). Hooks que **não** podem pausar ficaram documentados com o motivo em `docs/agentes/mapa-repo.md` §"Consulta periódica × aba oculta": `useSipCall`/`useMultiChannelCall`/`useWavoipCall` (a ligação não para quando o agente troca de aba), `useActiveCallsRealtime`/`useCallTimers`/`useHoldReminder`/`useHoldSoundAlert` (contador e alerta de espera de chamada em curso), `useSessionManager` (renovação de sessão) e `useVoipQualityMonitor` (amostra de MOS da chamada ativa). Prova de que o defeito era real: os 13 testes novos de `src/hooks/__tests__/pageVisibility.gating.test.tsx` — guardas de fonte por hook, guarda de posição de `<GlobalServices />` no `App.tsx`, ausência de `select('*')` e captura das opções reais entregues ao `useQuery` — rodados **contra o código anterior** (`git checkout --` nos 5 arquivos; restaurados e conferidos por `md5sum`, idênticos: `d5b3fa98…`, `646e6ee7…`, `f695487e…`, `b60b673f…`, `07793f50…`) dão **12 falhas** (`expected "vi.fn()" … refetchInterval` / `expected 1986 to be greater than 2764` na posição do `GlobalServices`). O teste de intervalo em si não serve como prova — o React Query já pausa o intervalo quando a janela perde o foco (`refetchIntervalInBackground` falso por padrão) —, por isso a asserção é sobre a opção que o hook entrega, não sobre o relógio. Sobre a policy de leitura (pedido da etapa): `supabase/migrations/20260515172623_….sql:45-49` é `FOR SELECT USING (is_admin() OR is_supervisor() OR agent_name = get_user_agent_name())` — sem `TO anon`, todo mundo tenta, mas `anon` não satisfaz nenhuma das três, logo a resposta é vazia; **NÃO VERIFICADO no banco vivo**, não há credencial de banco neste ambiente. Testes: `bunx vitest run src/hooks src/components/dashboard src/components/executive src/components/network src/components/queue src/pages/__tests__ src/lib/__tests__` — **277 arquivos / 3187 testes passando**; `bunx tsc --noEmit` rc=0; `bunx eslint` nos 6 arquivos rc=0.)
 - [ ] **254** — Virtualizar as listas longas — onda 6 — Baixa — Frontend
 - [ ] **255** — Retenção dos logs que crescem sem parar — onda 6 — Média — Banco 🔒
 - [ ] **256** — Medir o custo real das policies de RLS — onda 6 — Média — Banco 🔒
