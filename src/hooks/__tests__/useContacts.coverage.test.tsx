@@ -1,6 +1,7 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { renderHook, waitFor, act } from '@testing-library/react';
 import { useContacts } from '../useContacts';
+import { toast } from 'sonner';
 
 const fromMock = vi.fn();
 vi.mock('@/integrations/supabase/client', () => ({
@@ -128,6 +129,8 @@ describe('useContacts (coverage)', () => {
     fromMock.mockReturnValue({ insert: vi.fn(() => ({ select: vi.fn(() => ({ single: vi.fn().mockResolvedValue({ data: null, error: new Error('add') }) })) })) });
     await act(async () => { res = await result.current.addContactInteraction('c1', { interaction_type: 'call' }); });
     expect(res).toBeNull();
+    // O agente precisa saber: a chamada nao entrou no historico do contato
+    expect(toast.error).toHaveBeenCalledWith('Não foi possível registrar a interação no histórico do contato');
   });
 
   it('findOrCreateContact returns existing or creates new', async () => {

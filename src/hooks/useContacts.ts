@@ -335,6 +335,9 @@ export const useContacts = () => {
         error: err instanceof Error ? err : undefined,
         metadata: { contactId, interaction }
       });
+      // Sem aviso, a chamada some do historico do contato e o agente so descobre
+      // quando o cliente reclama que o ultimo atendimento nao aparece.
+      toast.error('Não foi possível registrar a interação no histórico do contato');
       return null;
     }
   }, []);
