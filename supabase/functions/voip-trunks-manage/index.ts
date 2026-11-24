@@ -93,12 +93,13 @@ serve(async (req) => {
         created_by: user.id,
       }).select().single();
       if (error) throw error;
-      await supabase.from('call_control_audit_logs').insert({
+      const { error: auditCreateErr } = await supabase.from('call_control_audit_logs').insert({
         call_session_id: 'system-trunk-mgmt',
         event_type: 'create',
         source: 'trunk-manage-function',
         details: { resource_type: "voip_trunk", resource_id: data.id, name, provider },
       });
+      if (auditCreateErr) console.error('voip-trunks-manage: falha ao auditar criacao de tronco', auditCreateErr);
       return json({ trunk: data }, cors);
     }
 
@@ -111,12 +112,13 @@ serve(async (req) => {
       const { data, error } = await supabase.from("voip_trunks")
         .update(updates).eq("id", id).select().single();
       if (error) throw error;
-      await supabase.from('call_control_audit_logs').insert({
+      const { error: auditUpdateErr } = await supabase.from('call_control_audit_logs').insert({
         call_session_id: 'system-trunk-mgmt',
         event_type: 'update',
         source: 'trunk-manage-function',
         details: { resource_type: "voip_trunk", resource_id: id, fields: Object.keys(rest) },
       });
+      if (auditUpdateErr) console.error('voip-trunks-manage: falha ao auditar atualizacao de tronco', auditUpdateErr);
       return json({ trunk: data }, cors);
     }
 
@@ -125,12 +127,13 @@ serve(async (req) => {
       if (!id) return json({ error: "id obrigatório" }, cors, 400);
       const { error } = await supabase.from("voip_trunks").delete().eq("id", id);
       if (error) throw error;
-      await supabase.from('call_control_audit_logs').insert({
+      const { error: auditDeleteErr } = await supabase.from('call_control_audit_logs').insert({
         call_session_id: 'system-trunk-mgmt',
         event_type: 'delete',
         source: 'trunk-manage-function',
         details: { resource_type: "voip_trunk", resource_id: id },
       });
+      if (auditDeleteErr) console.error('voip-trunks-manage: falha ao auditar remocao de tronco', auditDeleteErr);
       return json({ ok: true }, cors);
     }
 
@@ -175,8 +178,9 @@ serve(async (req) => {
       const { agent_id, trunk_id, is_primary } = body;
       if (!agent_id || !trunk_id) return json({ error: "agent_id e trunk_id obrigatórios" }, cors, 400);
       if (is_primary) {
-        await supabase.from("agent_trunk_assignments")
+        const { error: primaryResetErr } = await supabase.from("agent_trunk_assignments")
           .update({ is_primary: false }).eq("agent_id", agent_id);
+        if (primaryResetErr) console.error('voip-trunks-manage: falha ao limpar tronco primario anterior', primaryResetErr);
       }
       const { data, error } = await supabase.from("agent_trunk_assignments")
         .insert({ agent_id, trunk_id, is_primary: !!is_primary, created_by: user.id })
