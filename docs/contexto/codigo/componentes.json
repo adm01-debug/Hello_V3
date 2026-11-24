@@ -2916,9 +2916,10 @@
     "QualityForecastCard"
    ],
    "export_default": null,
-   "linhas": 195,
+   "linhas": 224,
    "dominio": "components/network",
    "hooks_locais": [
+    "useRecordVoipRecommendationAction",
     "useVoipCapacityRecommendations",
     "useVoipQualityForecastFetch"
    ],
@@ -3013,14 +3014,13 @@
     "VoipRecommendationsPanel"
    ],
    "export_default": null,
-   "linhas": 322,
+   "linhas": 311,
    "dominio": "components/network",
    "hooks_locais": [
+    "useRecordVoipRecommendationAction",
     "useVoipRecommendations"
    ],
-   "tabelas": [
-    "voip_recommendation_actions"
-   ],
+   "tabelas": [],
    "edges": [],
    "usado_por": 1,
    "orfao": false

@@ -2934,6 +2934,7 @@
     "usePageTitle",
     "useQuery",
     "useQueryClient",
+    "useRecordVoipRecommendationAction",
     "useRef",
     "useState",
     "useVoipAnomalies",
@@ -2953,6 +2954,7 @@
     "useAnomalyRemediation",
     "useNetworkMonitor",
     "usePageTitle",
+    "useRecordVoipRecommendationAction",
     "useVoipAnomalies",
     "useVoipCapacityRecommendations",
     "useVoipDiagnosticVoiceQA",
@@ -2989,7 +2991,7 @@
    "canais_realtime": [],
    "flags": [],
    "papeis": [],
-   "arquivos_puxados": 57
+   "arquivos_puxados": 58
   },
   {
    "protegida": false,

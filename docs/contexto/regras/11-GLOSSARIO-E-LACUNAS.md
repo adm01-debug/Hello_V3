@@ -1,6 +1,6 @@
 # 11 · GLOSSÁRIO, DADOS DE REFERÊNCIA E LACUNAS
 
-> Gerado automaticamente por AI Context Sync v1.3.2 · commit `b99cdc84af` · branch `main` · 2026-11-24 01:51 UTC
+> Gerado automaticamente por AI Context Sync v1.3.2 · commit `fd7ebb06c9` · branch `main` · 2026-11-24 01:58 UTC
 > Não edite à mão — regras humanas vão em `manual/`.
 
 ## Glossário do domínio (entidades do sistema)
@@ -225,6 +225,7 @@
 | `ExecutivePeriod` (TS) | day \| week \| month |  | `src/hooks/useVoipExecutiveSummary.ts` |
 | `AlertsSummaryPeriod` (TS) | day \| week \| month |  | `src/hooks/useVoipQualityAlertsSummary.ts` |
 | `QualityLabel` (TS) | excellent \| good \| fair \| poor \| unknown |  | `src/hooks/useVoipQualityMonitor.ts` |
+| `RecommendationOutcome` (TS) | applied \| snoozed \| dismissed \| auto_applied |  | `src/hooks/useVoipRecommendationActions.ts` |
 | `HistoryPeriod` (TS) | day \| week \| month |  | `src/hooks/useVoipRecommendationHistory.ts` |
 | `HistoryOutcome` (TS) | applied \| snoozed \| dismissed \| auto_applied |  | `src/hooks/useVoipRecommendationHistory.ts` |
 | `InsightsPeriod` (TS) | week \| month |  | `src/hooks/useVoipRecommendationInsights.ts` |

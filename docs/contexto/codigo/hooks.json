@@ -1,7 +1,7 @@
 {
  "aviso": "GERADO AUTOMATICAMENTE por scripts/ai-context/gerar.mjs — não editar à mão; será sobrescrito.",
  "format_version": 2,
- "total": 193,
+ "total": 194,
  "hooks": [
   {
    "arquivo": "scripts/ai-context/cenarios.mjs",
@@ -4616,6 +4616,30 @@
     "src/hooks/useSipCall.ts"
    ],
    "coberto_por_testes": 2
+  },
+  {
+   "arquivo": "src/hooks/useVoipRecommendationActions.ts",
+   "hooks_exportados": [
+    "useRecordVoipRecommendationAction"
+   ],
+   "linhas": 62,
+   "dominio": "hooks",
+   "tabelas": [
+    "voip_recommendation_actions"
+   ],
+   "rpcs": [],
+   "edges": [],
+   "hooks_internos": [
+    "useCallback",
+    "useQueryClient"
+   ],
+   "canais_realtime": [],
+   "usado_por": 2,
+   "usado_por_arquivos": [
+    "src/components/network/QualityForecastCard.tsx",
+    "src/components/network/VoipRecommendationsPanel.tsx"
+   ],
+   "coberto_por_testes": 0
   },
   {
    "arquivo": "src/hooks/useVoipRecommendationHistory.ts",

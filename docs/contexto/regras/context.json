@@ -1,15 +1,15 @@
 {
  "meta": {
-  "sha": "b99cdc84affac80af3e8631afb50b8708a714f53",
+  "sha": "fd7ebb06c959910c13af258e56b68af2a7cd0643",
   "branch": "main",
   "remote": "https://github.com/adm01-debug/Hello_V3",
-  "generated_at": "2026-11-24 01:51 UTC",
-  "files_total": 1745,
-  "code_files": 1542,
-  "code_lines": 190995
+  "generated_at": "2026-11-24 01:58 UTC",
+  "files_total": 1747,
+  "code_files": 1544,
+  "code_lines": 191187
  },
  "version": "1.3.2",
- "facts_hash": "9980a4730d1c1ffb",
+ "facts_hash": "bd98ebff310eeeac",
  "stack": {
   "frameworks": [
    "React + Vite",
@@ -153,8 +153,8 @@
   ],
   "package_manager": "bun",
   "languages": {
-   ".ts": 643,
-   ".tsx": 620,
+   ".ts": 644,
+   ".tsx": 621,
    ".sql": 245,
    ".mjs": 27,
    ".py": 5,
@@ -28749,7 +28749,7 @@
      "voip-sla-report"
     ],
     "rpc_transitive": [],
-    "deps_count": 57
+    "deps_count": 58
    },
    {
     "path": "",
@@ -32188,7 +32188,7 @@
     "file": ".github/workflows/inventario-estado-semanal.yml"
    }
   ],
-  "components_count": 361,
+  "components_count": 362,
   "hooks": [
    {
     "name": "useContacts",
@@ -32991,6 +32991,10 @@
     "file": "src/hooks/useVoipQualityMonitor.ts"
    },
    {
+    "name": "useRecordVoipRecommendationAction",
+    "file": "src/hooks/useVoipRecommendationActions.ts"
+   },
+   {
     "name": "useVoipRecommendationHistory",
     "file": "src/hooks/useVoipRecommendationHistory.ts"
    },
@@ -33333,8 +33337,8 @@
   },
   {
    "module": "src/components",
-   "files": 361,
-   "lines": 43162,
+   "files": 362,
+   "lines": 43292,
    "tables": [
     "accounts",
     "agent_goals",
@@ -33370,7 +33374,6 @@
     "scheduled_callbacks",
     "system_settings",
     "voip_quality_alerts",
-    "voip_recommendation_actions",
     "voip_trunk_usage_metrics",
     "voip_trunks",
     "whisper_messages"
@@ -33591,8 +33594,8 @@
   },
   {
    "module": "src/hooks",
-   "files": 354,
-   "lines": 46370,
+   "files": 355,
+   "lines": 46432,
    "tables": [
     "accounts",
     "active_sessions",
@@ -33711,6 +33714,7 @@
     "voice_prints",
     "voip_monitoring_settings",
     "voip_quality_alerts",
+    "voip_recommendation_actions",
     "voip_trunk_health_checks",
     "voip_trunk_usage_metrics",
     "voip_trunks",
@@ -36463,7 +36467,7 @@
    },
    "voip_recommendation_actions": {
     "insert": [
-     "src/components/network/VoipRecommendationsPanel.tsx",
+     "src/hooks/useVoipRecommendationActions.ts",
      "supabase/functions/voip-anomaly-remediation/index.ts"
     ],
     "select": [
@@ -39652,6 +39656,11 @@
     "values": "excellent | good | fair | poor | unknown"
    },
    {
+    "file": "src/hooks/useVoipRecommendationActions.ts",
+    "name": "RecommendationOutcome",
+    "values": "applied | snoozed | dismissed | auto_applied"
+   },
+   {
     "file": "src/hooks/useVoipRecommendationHistory.ts",
     "name": "HistoryPeriod",
     "values": "day | week | month"
@@ -40289,6 +40298,10 @@
    {
     "file": "src/components/network/QualityAlertsCard.tsx",
     "msg": "Não foi possível carregar alertas de qualidade"
+   },
+   {
+    "file": "src/components/network/QualityForecastCard.tsx",
+    "msg": "Não foi possível registrar a leitura"
    },
    {
     "file": "src/components/network/QualityHeatmap.tsx",
@@ -57389,6 +57402,22 @@
    {
     "file": "src/components/layout/__tests__/AppSidebar.test.tsx",
     "name": "admin vê Executivo e Logs de Auditoria"
+   },
+   {
+    "file": "src/components/network/__tests__/QualityForecastCard.test.tsx",
+    "name": "QualityForecastCard — recomendacao de capacity registra leitura (E178)"
+   },
+   {
+    "file": "src/components/network/__tests__/QualityForecastCard.test.tsx",
+    "name": "nao promete execucao: o botao diz "
+   },
+   {
+    "file": "src/components/network/__tests__/QualityForecastCard.test.tsx",
+    "name": "grava a acao com outcome dismissed e os dados da recomendacao"
+   },
+   {
+    "file": "src/components/network/__tests__/QualityForecastCard.test.tsx",
+    "name": "nao afirma sucesso quando o insert falha"
    },
    {
     "file": "src/components/supervisor/panel/__tests__/TrendChartToggle.test.tsx",
@@ -95951,9 +95980,12 @@
   },
   "src/components/network/QualityForecastCard.tsx": {
    "path": "src/components/network/QualityForecastCard.tsx",
-   "lines": 195,
+   "lines": 224,
    "exports": [
     "const QualityForecastCard"
+   ],
+   "errors": [
+    "Não foi possível registrar a leitura"
    ]
   },
   "src/components/network/QualityHeatmap.tsx": {
@@ -96042,15 +96074,9 @@
   },
   "src/components/network/VoipRecommendationsPanel.tsx": {
    "path": "src/components/network/VoipRecommendationsPanel.tsx",
-   "lines": 322,
+   "lines": 311,
    "exports": [
     "function VoipRecommendationsPanel"
-   ],
-   "tables": [
-    {
-     "table": "voip_recommendation_actions",
-     "op": "insert"
-    }
    ],
    "params": [
     {
@@ -96096,6 +96122,17 @@
      "params": "p: Preset",
      "body": "const v = PRESETS[p]; setDMos(v.mos); setDJitter(v.jitter); setDPl(v.packetLoss);"
     }
+   ]
+  },
+  "src/components/network/__tests__/QualityForecastCard.test.tsx": {
+   "path": "src/components/network/__tests__/QualityForecastCard.test.tsx",
+   "lines": 112,
+   "is_test": true,
+   "tests": [
+    "QualityForecastCard — recomendacao de capacity registra leitura (E178)",
+    "nao promete execucao: o botao diz ",
+    "grava a acao com outcome dismissed e os dados da recomendacao",
+    "nao afirma sucesso quando o insert falha"
    ]
   },
   "src/components/notification-center/NotificationList.tsx": {
@@ -104808,6 +104845,30 @@
      "params": "rttMs: number, jitterMs: number, lossPct: number",
      "body": "const effectiveLatency = rttMs / 2 + jitterMs * 2 + 10; let R = effectiveLatency < 160 ? 93.2 - effectiveLatency / 40 : 93.2 - (effectiveLatency - 120) / 10; R = R - lossPct * 2.5; if (R < 0) R = 0; if (R > 100) R = 100; const mos = 1 + 0.035 * R + R * (R - 60) * (100 - R) * 7e-6; return Math.max(1, Math.min(5, Number(mos.toFixed(2))));"
     }
+   ]
+  },
+  "src/hooks/useVoipRecommendationActions.ts": {
+   "path": "src/hooks/useVoipRecommendationActions.ts",
+   "lines": 62,
+   "exports": [
+    "type RecommendationOutcome",
+    "interface RecommendationActionInput",
+    "function useRecordVoipRecommendationAction"
+   ],
+   "tables": [
+    {
+     "table": "voip_recommendation_actions",
+     "op": "insert"
+    }
+   ],
+   "enums": [
+    {
+     "name": "RecommendationOutcome",
+     "values": "applied | snoozed | dismissed | auto_applied"
+    }
+   ],
+   "hooks": [
+    "useRecordVoipRecommendationAction"
    ]
   },
   "src/hooks/useVoipRecommendationHistory.ts": {
@@ -125267,10 +125328,23 @@
   }
  },
  "git": {
-  "sha": "b99cdc84affac80af3e8631afb50b8708a714f53",
+  "sha": "fd7ebb06c959910c13af258e56b68af2a7cd0643",
   "branch": "main",
   "remote": "https://github.com/adm01-debug/Hello_V3",
   "commits": [
+   {
+    "sha": "fd7ebb0",
+    "date": "2026-11-23",
+    "author": "adm01-debug",
+    "subject": "fix: recomendacao de capacity registra leitura em vez de fingir aplicacao (#213)",
+    "files": [
+     "docs/qa/05-PROGRESSO.md",
+     "src/components/network/QualityForecastCard.tsx",
+     "src/components/network/VoipRecommendationsPanel.tsx",
+     "src/components/network/__tests__/QualityForecastCard.test.tsx",
+     "src/hooks/useVoipRecommendationActions.ts"
+    ]
+   },
    {
     "sha": "b99cdc8",
     "date": "2026-11-23",
@@ -125642,21 +125716,6 @@
      "src/pages/Login.tsx",
      "src/pages/__tests__/Login.lockout.test.tsx"
     ]
-   },
-   {
-    "sha": "727dead",
-    "date": "2026-11-23",
-    "author": "adm01-debug",
-    "subject": "fix: chamada sem audio deixa de ser classificada como ideal (E115) (#183)",
-    "files": [
-     "docs/qa/05-PROGRESSO.md",
-     "src/components/conversation-intelligence/TalkRatioChart.tsx",
-     "src/hooks/useTalkRatio.ts",
-     "src/lib/__tests__/talkRatio.test.ts",
-     "src/lib/talkRatio.ts",
-     "supabase/functions/analyze-talk-ratio/__tests__/index.test.ts",
-     "supabase/functions/analyze-talk-ratio/index.ts"
-    ]
    }
   ],
   "hot_files": [
@@ -125693,10 +125752,6 @@
     2
    ],
    [
-    "supabase/functions/analyze-talk-ratio/index.ts",
-    2
-   ],
-   [
     "supabase/functions/embed-kb-article/index.ts",
     2
    ],
@@ -125717,6 +125772,22 @@
     2
    ],
    [
+    "src/components/network/QualityForecastCard.tsx",
+    1
+   ],
+   [
+    "src/components/network/VoipRecommendationsPanel.tsx",
+    1
+   ],
+   [
+    "src/components/network/__tests__/QualityForecastCard.test.tsx",
+    1
+   ],
+   [
+    "src/hooks/useVoipRecommendationActions.ts",
+    1
+   ],
+   [
     "src/lib/security-report-data.ts",
     1
    ],
@@ -125726,18 +125797,6 @@
    ],
    [
     "src/pages/__tests__/SecurityReport.test.tsx",
-    1
-   ],
-   [
-    "src/pages/ConcurrencyConflicts.tsx",
-    1
-   ],
-   [
-    "src/pages/__tests__/ConcurrencyConflicts.test.tsx",
-    1
-   ],
-   [
-    "src/hooks/__tests__/useAnomalyRemediation.coverage.test.tsx",
     1
    ]
   ]

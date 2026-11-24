@@ -11,7 +11,7 @@
    "src/contexts (4)"
   ],
   "hooks": [
-   "src/hooks (174)",
+   "src/hooks (175)",
    "src/components (12)",
    "src/contexts (4)"
   ],
@@ -21,7 +21,7 @@
    "scripts/regras_negocio (2)"
   ],
   "testes": [
-   "co-localizado (__tests__) (352)",
+   "co-localizado (__tests__) (353)",
    "e2e/ (7)",
    "tests/ (6)"
   ],
@@ -58,11 +58,11 @@
  "commits": {
   "convencao": "conventional commits (observado)",
   "exemplos": [
+   "fix: recomendacao de capacity registra leitura em vez de fingir aplicacao (#213)",
    "Catalogo de seguranca declara a origem de cada estado (remove KPI literal) (#212)",
    "fix: tela de conflitos de concorrencia explica o vazio e a retencao (#211)",
    "fix: remediacao de anomalia atualiza a lista (#210)",
-   "feat: conferir lista DNC antes de confiar na importacao (#209)",
-   "fix: paineis de proxima melhor acao e CRM explicam carregando, erro e vazio (#208)"
+   "feat: conferir lista DNC antes de confiar na importacao (#209)"
   ]
  },
  "pr_template": null,

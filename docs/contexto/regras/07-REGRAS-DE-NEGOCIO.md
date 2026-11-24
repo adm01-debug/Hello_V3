@@ -1,6 +1,6 @@
 # 07 · REGRAS DE NEGÓCIO
 
-> Gerado automaticamente por AI Context Sync v1.3.2 · commit `b99cdc84af` · branch `main` · 2026-11-24 01:51 UTC
+> Gerado automaticamente por AI Context Sync v1.3.2 · commit `fd7ebb06c9` · branch `main` · 2026-11-24 01:58 UTC
 > Não edite à mão — regras humanas vão em `manual/`.
 
 ## A. Regras escritas por humanos (`manual/` — prioridade máxima, nunca sobrescrito)
@@ -1088,6 +1088,7 @@ _nenhum mapa explícito encontrado — transições só existem implicitamente n
 | ExecutivePeriod | day \| week \| month | `src/hooks/useVoipExecutiveSummary.ts` |
 | AlertsSummaryPeriod | day \| week \| month | `src/hooks/useVoipQualityAlertsSummary.ts` |
 | QualityLabel | excellent \| good \| fair \| poor \| unknown | `src/hooks/useVoipQualityMonitor.ts` |
+| RecommendationOutcome | applied \| snoozed \| dismissed \| auto_applied | `src/hooks/useVoipRecommendationActions.ts` |
 | HistoryPeriod | day \| week \| month | `src/hooks/useVoipRecommendationHistory.ts` |
 | HistoryOutcome | applied \| snoozed \| dismissed \| auto_applied | `src/hooks/useVoipRecommendationHistory.ts` |
 | InsightsPeriod | week \| month | `src/hooks/useVoipRecommendationInsights.ts` |
@@ -2219,6 +2220,7 @@ _nenhum item encontrado_
 | Não foi possível copiar | `src/components/network/ExecutiveSummaryDialog.tsx` |
 | Falha ao marcar alertas como lidos | `src/components/network/QualityAlertsCard.tsx` |
 | Não foi possível carregar alertas de qualidade | `src/components/network/QualityAlertsCard.tsx` |
+| Não foi possível registrar a leitura | `src/components/network/QualityForecastCard.tsx` |
 | Não foi possível carregar o heatmap | `src/components/network/QualityHeatmap.tsx` |
 | Sem ações para exportar | `src/components/network/RecommendationHistoryDrawer.tsx` |
 | HTTP ${res.status} | `src/components/network/SlaReportCards.tsx` |
@@ -2415,8 +2417,7 @@ _nenhum item encontrado_
 | Falha ao salvar política | `src/hooks/useSLA.ts` |
 | Erro ao agendar callback | `src/hooks/useScheduledCallbacks.ts` |
 | Erro ao atualizar callback | `src/hooks/useScheduledCallbacks.ts` |
-| Erro ao cancelar callback | `src/hooks/useScheduledCallbacks.ts` |
-| … +257 linhas — lista completa em `context.json` | |
+| … +258 linhas — lista completa em `context.json` | |
 
 ## J. Controle de acesso no código (checagens de perfil/permissão)
 
@@ -2465,7 +2466,7 @@ _nenhum item encontrado_
 | `admin` | `supabase/functions/data-lake-flush/index.ts` |
 | `admin` | `supabase/migrations/20261123000200_fix_has_role_oracle_and_debug_tables.sql` |
 
-## K. Testes como especificação (4248 testes em 366 arquivos — nomes completos em `context.json`)
+## K. Testes como especificação (4252 testes em 367 arquivos — nomes completos em `context.json`)
 
 | Arquivo | Testes | Exemplos do que o sistema DEVE fazer |
 |---|---|---|
@@ -2750,6 +2751,7 @@ _nenhum item encontrado_
 | `src/components/calls/__tests__/NextBestActionPanel.test.tsx` | 4 | NextBestActionPanel · mostra o erro da consulta em vez de um painel vazio · distingue carregando de sem sugestao · lista o sinal e marca como usado |
 | `src/components/compliance/dnc/__tests__/ReconcileDNCDialog.test.tsx` | 4 | ReconcileDNCDialog · aponta exatamente o numero ausente da lista · reenvia apenas os ausentes e recontabiliza · mostra o erro da consulta em vez de dizer que esta tudo certo |
 | `src/components/executive/__tests__/OmnichannelCard.test.tsx` | 4 | OmnichannelCard · renderiza KPIs principais (abertas, SLA, violações) · exibe badge de SLA quando há violações · lista todos os canais com contagem |
+| `src/components/network/__tests__/QualityForecastCard.test.tsx` | 4 | QualityForecastCard — recomendacao de capacity registra leitura (E178) · nao promete execucao: o botao diz  · grava a acao com outcome dismissed e os dados da recomendacao · nao afirma sucesso quando o insert falha |
 | `src/hooks/__tests__/callLifecycle-integration.test.tsx` | 4 | Ciclo de vida da chamada — integracao (E064) · INSERT em call_sessions ao ficar ativa com campos corretos · UPDATE em call_sessions ao encerrar chamada · sem INSERT se chamada for encerrada antes de ficar ativa |
 | `src/hooks/__tests__/use-mobile.coverage.test.tsx` | 4 | useIsMobile · returns false for desktop width · returns true for mobile width and reacts to change · cleans up listener on unmount |
 | `src/hooks/__tests__/useAccounts.test.ts` | 4 | useAccounts · loads accounts on mount · recomputes health via edge function · triggers churn detection |
@@ -2768,8 +2770,7 @@ _nenhum item encontrado_
 | `src/hooks/__tests__/useVoipDiagnosticVoiceQA.coverage.test.tsx` | 4 | useVoipDiagnosticVoiceQA · resolves answer on success (default period) · passes explicit period · throws on error branch |
 | `src/hooks/__tests__/useVoipExecutiveSummary.coverage.test.tsx` | 4 | useVoipExecutiveSummary (coverage) · fetches summary with default period · fetches summary with explicit day period · throws on invoke error |
 | `src/hooks/__tests__/useVoipQualityAlertsSummary.coverage.test.tsx` | 4 | useVoipQualityAlertsSummary · carrega o resumo com sucesso (default week) · aceita período day e month (querystring no nome da function, não em  · propaga erro da edge function |
-| `src/hooks/__tests__/useVoipRecommendationInsights.coverage.test.tsx` | 4 | useVoipRecommendationInsights · carrega insights com sucesso (default week) · aceita período month · propaga erro da edge function |
-| … +66 linhas — lista completa em `context.json` | | |
+| … +67 linhas — lista completa em `context.json` | | |
 
 ## L. Eventos de webhook tratados (contratos com sistemas externos)
 

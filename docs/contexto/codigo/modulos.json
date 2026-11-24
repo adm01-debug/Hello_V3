@@ -1701,6 +1701,7 @@
     "useReauthContext",
     "useRecentCallsData",
     "useRecordKbView",
+    "useRecordVoipRecommendationAction",
     "useRecordings",
     "useRedactCall",
     "useRenewals",
@@ -2228,8 +2229,8 @@
   {
    "modulo": "components/network",
    "arquivos": 17,
-   "testes": 0,
-   "linhas": 3079,
+   "testes": 1,
+   "linhas": 3097,
    "itens_menu": [],
    "telas": [],
    "rotas_http": [],
@@ -2237,6 +2238,7 @@
    "hooks_locais": [
     "useAnomalyRemediation",
     "useNetworkMonitor",
+    "useRecordVoipRecommendationAction",
     "useVoipAnomalies",
     "useVoipCapacityRecommendations",
     "useVoipDiagnosticVoiceQA",
@@ -2288,8 +2290,7 @@
     ],
     "tabelas": [
      "call_quality_metrics",
-     "voip_quality_alerts",
-     "voip_recommendation_actions"
+     "voip_quality_alerts"
     ],
     "rpcs": []
    },
@@ -2306,7 +2307,6 @@
     "lib/metrics"
    ],
    "pacotes_externos": [
-    "@tanstack/react-query",
     "jspdf",
     "lucide-react",
     "react-markdown",
@@ -3483,9 +3483,9 @@
   },
   {
    "modulo": "hooks",
-   "arquivos": 168,
+   "arquivos": 169,
    "testes": 0,
-   "linhas": 20924,
+   "linhas": 20986,
    "itens_menu": [],
    "telas": [],
    "rotas_http": [],
@@ -3626,6 +3626,7 @@
     "useReauthContext",
     "useRecentCallsData",
     "useRecordKbView",
+    "useRecordVoipRecommendationAction",
     "useRecordings",
     "useRedactCall",
     "useRenewals",
@@ -3890,6 +3891,7 @@
     "useVoipQualityForecast",
     "useVoipQualityForecastFetch",
     "useVoipQualityMonitor",
+    "useRecordVoipRecommendationAction",
     "useVoipRecommendationHistory",
     "useVoipRecommendationInsights",
     "useVoipRecommendations",
@@ -4086,6 +4088,7 @@
     "voice_prints",
     "voip_monitoring_settings",
     "voip_quality_alerts",
+    "voip_recommendation_actions",
     "voip_trunk_health_checks",
     "voip_trunk_usage_metrics",
     "voip_trunks",
@@ -4346,6 +4349,7 @@
      "voice_prints",
      "voip_monitoring_settings",
      "voip_quality_alerts",
+     "voip_recommendation_actions",
      "voip_trunk_health_checks",
      "voip_trunk_usage_metrics",
      "voip_trunks",
@@ -5911,6 +5915,7 @@
     "useReauthContext",
     "useRecentCallsData",
     "useRecordKbView",
+    "useRecordVoipRecommendationAction",
     "useRecordings",
     "useRedactCall",
     "useRenewals",
@@ -6901,6 +6906,7 @@
     "useReauthContext",
     "useRecentCallsData",
     "useRecordKbView",
+    "useRecordVoipRecommendationAction",
     "useRecordings",
     "useRedactCall",
     "useRenewals",

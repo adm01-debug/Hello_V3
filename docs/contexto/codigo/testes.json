@@ -5,17 +5,17 @@
   "vitest",
   "playwright"
  ],
- "total": 376,
+ "total": 377,
  "por_tipo": {
   "contrato": 1,
   "e2e": 13,
   "pytest": 2,
-  "unit": 359
+  "unit": 360
  },
  "onde_ficam": [
   {
    "padrao": "co-localizado (__tests__)",
-   "arquivos": 352
+   "arquivos": 353
   },
   {
    "padrao": "e2e/",
@@ -288,6 +288,15 @@
     "src/routes/protectedRoutes.tsx"
    ],
    "casos": 4
+  },
+  {
+   "arquivo": "src/components/network/__tests__/QualityForecastCard.test.tsx",
+   "tipo": "unit",
+   "linhas": 112,
+   "testa": [
+    "src/components/network/QualityForecastCard.tsx"
+   ],
+   "casos": 3
   },
   {
    "arquivo": "src/components/supervisor/panel/__tests__/TrendChartToggle.test.tsx",
@@ -3404,6 +3413,7 @@
   "src/components/executive/ConversationIntelligenceCard.tsx": 1,
   "src/components/executive/OmnichannelCard.tsx": 1,
   "src/components/layout/AppSidebar.tsx": 1,
+  "src/components/network/QualityForecastCard.tsx": 1,
   "src/components/supervisor/panel/TrendChartToggle.tsx": 1,
   "src/components/supervisor/panel/types.ts": 1,
   "src/components/ui/search-input.tsx": 1,
@@ -3822,6 +3832,7 @@
    "src/hooks/useTestWebhook.ts",
    "src/hooks/useVirtualFaxOcr.ts",
    "src/hooks/useVoicePreferences.ts",
+   "src/hooks/useVoipRecommendationActions.ts",
    "src/hooks/useWebhookConfig.ts",
    "src/hooks/useWebhookHealthData.ts",
    "src/hooks/useWebhookHistory.ts",
