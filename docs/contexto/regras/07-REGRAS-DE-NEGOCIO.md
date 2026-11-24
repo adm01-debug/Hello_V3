@@ -1,6 +1,6 @@
 # 07 · REGRAS DE NEGÓCIO
 
-> Gerado automaticamente por AI Context Sync v1.3.2 · commit `da41888b12` · branch `main` · 2026-11-24 02:36 UTC
+> Gerado automaticamente por AI Context Sync v1.3.2 · commit `d1b586c815` · branch `main` · 2026-11-24 02:39 UTC
 > Não edite à mão — regras humanas vão em `manual/`.
 
 ## A. Regras escritas por humanos (`manual/` — prioridade máxima, nunca sobrescrito)
@@ -2466,7 +2466,7 @@ _nenhum item encontrado_
 | `admin` | `supabase/functions/data-lake-flush/index.ts` |
 | `admin` | `supabase/migrations/20261123000200_fix_has_role_oracle_and_debug_tables.sql` |
 
-## K. Testes como especificação (4280 testes em 371 arquivos — nomes completos em `context.json`)
+## K. Testes como especificação (4286 testes em 372 arquivos — nomes completos em `context.json`)
 
 | Arquivo | Testes | Exemplos do que o sistema DEVE fazer |
 |---|---|---|
@@ -2572,6 +2572,7 @@ _nenhum item encontrado_
 | `src/hooks/__tests__/useAlerts.coverage.test.tsx` | 10 | useAlerts · loads alerts and computes counts · applies filters · checks for new alerts (success and none) … |
 | `src/hooks/__tests__/useAnomalyRemediation.coverage.test.tsx` | 10 | useAnomalyRemediation · applied success · idempotent_skip → info · dryRun → info … |
 | `src/hooks/__tests__/useDashboardGoals.coverage.test.tsx` | 10 | useDashboardGoals · fetches goals on mount · handles fetch error · opens dialog for new and for editing … |
+| `src/hooks/__tests__/useIPWhitelist.coverage.test.tsx` | 10 | useIPWhitelist · does not fetch when not admin · fetches data when admin · publishes the read error instead of an empty list … |
 | `src/hooks/__tests__/useLiveTranslation.coverage.test.tsx` | 10 | useLiveTranslation · returns initial state · does nothing without callSessionId or empty text · queues short utterances below minWords without invoking … |
 | `src/hooks/__tests__/useLoginLockout.coverage.test.tsx` | 10 | useLoginLockout · checkLockout success returns parsed status · checkLockout handles error from rpc · checkLockout handles thrown exception … |
 | `src/hooks/__tests__/useMultiChannelCall.coverage.test.tsx` | 10 | useMultiChannelCall · initiates calls, enforces MAX_SIMULTANEOUS_CALLS, switches and ends · updateCallStatus active starts timer, toggles mute/hold/recording, addTranscript · handles no-op branches when no active call id … |
@@ -2619,7 +2620,6 @@ _nenhum item encontrado_
 | `src/hooks/__tests__/useAuth.coverage.test.tsx` | 8 | useAuth · calls getSession on mount and exposes API · hasRole false without profile, true with matching role · handles SIGNED_OUT auth state change … |
 | `src/hooks/__tests__/useCallRecording.coverage.test.tsx` | 8 | useCallRecording · starts recording successfully · handles start recording failure · stopAndSaveRecording returns null when no recorder … |
 | `src/hooks/__tests__/useExecutiveDashboard.coverage.test.tsx` | 8 | useExecutiveDashboard helpers · getPeriodLabel covers all periods and fallback · formatDuration formats minutes and seconds · useExecutiveDashboardData … |
-| `src/hooks/__tests__/useIPWhitelist.coverage.test.tsx` | 8 | useIPWhitelist · does not fetch when not admin · fetches data when admin · validates IP format on addGlobalIP … |
 | `src/hooks/__tests__/useSecurityMonitoringData.coverage.test.tsx` | 8 | useSecurityMonitoringData · fetches logs, alerts and computes stats · erro de leitura vira alarme, nao tranquilidade · limpa o erro na leitura seguinte bem-sucedida … |
 | `src/hooks/__tests__/useSecurityNotifications.coverage.test.tsx` | 8 | useSecurityNotifications · detects support and initial permission · requestPermission granted path · requestPermission denied path … |
 | `src/hooks/__tests__/useSessionManager.coverage.test.tsx` | 8 | useSessionManager · loads sessions and creates current session · revokes a non-current session · revokes the current session and signs out … |
@@ -2770,7 +2770,7 @@ _nenhum item encontrado_
 | `src/hooks/__tests__/useVoipDiagnosticVoiceQA.coverage.test.tsx` | 4 | useVoipDiagnosticVoiceQA · resolves answer on success (default period) · passes explicit period · throws on error branch |
 | `src/hooks/__tests__/useVoipExecutiveSummary.coverage.test.tsx` | 4 | useVoipExecutiveSummary (coverage) · fetches summary with default period · fetches summary with explicit day period · throws on invoke error |
 | `src/hooks/__tests__/useVoipQualityAlertsSummary.coverage.test.tsx` | 4 | useVoipQualityAlertsSummary · carrega o resumo com sucesso (default week) · aceita período day e month (querystring no nome da function, não em  · propaga erro da edge function |
-| … +71 linhas — lista completa em `context.json` | | |
+| … +72 linhas — lista completa em `context.json` | | |
 
 ## L. Eventos de webhook tratados (contratos com sistemas externos)
 

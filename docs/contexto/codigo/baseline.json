@@ -2,11 +2,16 @@
  "aviso": "GERADO AUTOMATICAMENTE por scripts/ai-context/gerar.mjs — não editar à mão; será sobrescrito.",
  "format_version": 2,
  "git": {
-  "commit": "da41888b124e7a450f4ab4e4f06c7cbc93a11c27",
+  "commit": "d1b586c8157482d2841fea0612afa1b03e399db0",
   "branch": "main",
-  "data_commit": "2026-11-23T23:36:28-03:00",
+  "data_commit": "2026-11-23T23:39:06-03:00",
   "remote": "https://github.com/adm01-debug/Hello_V3",
   "ultimos_commits": [
+   {
+    "sha": "d1b586c",
+    "data": "2026-11-23",
+    "assunto": "fix: whitelist de IPs avisa quando a leitura falha em vez de parecer vazia (#216)"
+   },
    {
     "sha": "da41888",
     "data": "2026-11-23",
@@ -126,14 +131,9 @@
     "sha": "cf78676",
     "data": "2026-11-23",
     "assunto": "fix: rate limit passa a falhar fechado nos endpoints que gastam dinheiro (E012) (#195)"
-   },
-   {
-    "sha": "e42050a",
-    "data": "2026-11-23",
-    "assunto": "fix: CORS so ecoa origens conhecidas e omite o header nas desconhecidas (E027) (#194)"
    }
   ],
-  "arquivos_mudados_7d": 1042,
+  "arquivos_mudados_7d": 1045,
   "pastas_mais_mudadas_30d": [
    {
     "pasta": "covout/lcov-report/hooks",
@@ -145,11 +145,11 @@
    },
    {
     "pasta": "docs/qa/05-PROGRESSO.md",
-    "mudancas": 48
+    "mudancas": 49
    },
    {
     "pasta": "src/hooks/__tests__",
-    "mudancas": 48
+    "mudancas": 49
    },
    {
     "pasta": "src/lib/__tests__",
@@ -184,11 +184,11 @@
     "mudancas": 12
    },
    {
-    "pasta": "src/components/dashboard",
-    "mudancas": 10
+    "pasta": "src/pages/__tests__",
+    "mudancas": 11
    },
    {
-    "pasta": "src/pages/__tests__",
+    "pasta": "src/components/dashboard",
     "mudancas": 10
    },
    {
@@ -199,7 +199,7 @@
   "arquivos_mais_mudados_90d": [
    {
     "arquivo": "docs/qa/05-PROGRESSO.md",
-    "mudancas": 48
+    "mudancas": 49
    },
    {
     "arquivo": "docs/estado/funcionalidades-planejadas.md",
@@ -301,7 +301,7 @@
   "autores_30d": [
    {
     "autor": "adm01-debug",
-    "commits": 197
+    "commits": 198
    },
    {
     "autor": "Joaquim Ataides",
@@ -314,9 +314,9 @@
   ]
  },
  "contagens": {
-  "arquivos_total": 1704,
-  "arquivos_codigo": 1302,
-  "linhas_codigo": 175783,
+  "arquivos_total": 1705,
+  "arquivos_codigo": 1303,
+  "linhas_codigo": 175902,
   "rotas": 106,
   "rotas_http_backend": 12,
   "vistas_por_id": 0,
@@ -328,7 +328,7 @@
   "tabelas": 169,
   "migrations": 242,
   "cron_jobs": 11,
-  "testes": 381,
+  "testes": 382,
   "workflows": 3,
   "scripts": 34,
   "docs_md": 120
@@ -492,7 +492,7 @@
   },
   "src/hooks": {
    "arquivos": 355,
-   "linhas": 46754
+   "linhas": 46798
   },
   "src/integrations": {
    "arquivos": 3,
@@ -507,8 +507,8 @@
    "linhas": 44
   },
   "src/pages": {
-   "arquivos": 140,
-   "linhas": 21696
+   "arquivos": 141,
+   "linhas": 21771
   },
   "src/routes": {
    "arquivos": 2,

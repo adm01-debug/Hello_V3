@@ -21,7 +21,7 @@
    "scripts/regras_negocio (2)"
   ],
   "testes": [
-   "co-localizado (__tests__) (357)",
+   "co-localizado (__tests__) (358)",
    "e2e/ (7)",
    "tests/ (6)"
   ],
@@ -58,11 +58,11 @@
  "commits": {
   "convencao": "conventional commits (observado)",
   "exemplos": [
+   "fix: whitelist de IPs avisa quando a leitura falha em vez de parecer vazia (#216)",
    "fix: registrar falha de leitura onde o erro era descartado (#219)",
    "fix: nao gravar dado derivado quando a leitura falha (#218)",
    "fix: ranking, scorecards e planos de sucesso distinguem erro de leitura de lista vazia (#217)",
-   "fix: paineis de seguranca alarmam quando a leitura falha (#215)",
-   "fix: painel de fila mostra erro de leitura em vez de zeros (#214)"
+   "fix: paineis de seguranca alarmam quando a leitura falha (#215)"
   ]
  },
  "pr_template": null,

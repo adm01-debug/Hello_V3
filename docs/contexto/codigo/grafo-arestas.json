@@ -2569,6 +2569,7 @@
   ],
   "src/hooks/useIPWhitelist.ts": [
    "src/integrations/supabase/client.ts",
+   "src/lib/error-message.ts",
    "src/lib/logger.ts"
   ],
   "src/hooks/useKeyMoments.ts": [
