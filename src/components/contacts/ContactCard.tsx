@@ -1,8 +1,15 @@
 import { motion } from 'framer-motion';
-import { Building2, Mail, MoreHorizontal, Phone, Star } from 'lucide-react';
+import { Building2, Eye, Mail, MoreHorizontal, Pencil, Phone, Star, Trash2 } from 'lucide-react';
 import { Card, CardContent } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
+import { Button, buttonVariants } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from '@/components/ui/dropdown-menu';
 import { cn } from '@/lib/utils';
 import type { Contact } from '@/hooks/useContacts';
 
@@ -33,6 +40,8 @@ interface ContactCardProps {
   onToggleFavorite: (id: string) => void;
   onSelect: (contact: Contact) => void;
   onCall: (contact: Contact) => void;
+  onEdit?: (contact: Contact) => void;
+  onDelete?: (contact: Contact) => void;
 }
 
 export const ContactCard = ({
@@ -41,6 +50,8 @@ export const ContactCard = ({
   onToggleFavorite,
   onSelect,
   onCall,
+  onEdit,
+  onDelete,
 }: ContactCardProps) => (
   <motion.div variants={itemVariants}>
     <Card
@@ -97,14 +108,48 @@ export const ContactCard = ({
             </div>
           </div>
 
-          <Button
-            variant="ghost"
-            size="icon"
-            className="h-8 w-8"
-            onClick={(e) => e.stopPropagation()}
-          >
-            <MoreHorizontal className="h-4 w-4" />
-          </Button>
+          <DropdownMenu>
+            <DropdownMenuTrigger
+              aria-label="Mais opções"
+              className={cn(buttonVariants({ variant: 'ghost', size: 'icon' }), 'h-8 w-8')}
+              onClick={(e) => e.stopPropagation()}
+            >
+              <MoreHorizontal className="h-4 w-4" />
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="end">
+              <DropdownMenuItem onSelect={() => onSelect(contact)}>
+                <Eye className="mr-2 h-4 w-4" />
+                Ver detalhes
+              </DropdownMenuItem>
+              <DropdownMenuItem onSelect={() => onCall(contact)}>
+                <Phone className="mr-2 h-4 w-4" />
+                Ligar
+              </DropdownMenuItem>
+              {onEdit && (
+                <DropdownMenuItem onSelect={() => onEdit(contact)}>
+                  <Pencil className="mr-2 h-4 w-4" />
+                  Editar
+                </DropdownMenuItem>
+              )}
+              <DropdownMenuSeparator />
+              <DropdownMenuItem onSelect={() => onToggleFavorite(contact.id)}>
+                <Star className={cn('mr-2 h-4 w-4', isFavorite && 'fill-warning text-warning')} />
+                {isFavorite ? 'Remover dos favoritos' : 'Adicionar aos favoritos'}
+              </DropdownMenuItem>
+              {onDelete && (
+                <>
+                  <DropdownMenuSeparator />
+                  <DropdownMenuItem
+                    onSelect={() => onDelete(contact)}
+                    className="text-destructive focus:text-destructive"
+                  >
+                    <Trash2 className="mr-2 h-4 w-4" />
+                    Excluir
+                  </DropdownMenuItem>
+                </>
+              )}
+            </DropdownMenuContent>
+          </DropdownMenu>
         </div>
 
         <div className="mt-4 flex items-center gap-2 flex-wrap">
@@ -141,14 +186,19 @@ export const ContactCard = ({
             <Phone className="h-4 w-4" />
             Ligar
           </Button>
-          <Button
-            variant="outline"
-            size="sm"
-            className="gap-2 border-border/50 hover:border-primary/30"
-            onClick={(e) => e.stopPropagation()}
-          >
-            <Mail className="h-4 w-4" />
-          </Button>
+          {contact.email && (
+            <a
+              href={`mailto:${contact.email}`}
+              aria-label={`Enviar e-mail para ${contact.name}`}
+              onClick={(e) => e.stopPropagation()}
+              className={cn(
+                buttonVariants({ variant: 'outline', size: 'sm' }),
+                'border-border/50 hover:border-primary/30',
+              )}
+            >
+              <Mail className="h-4 w-4" />
+            </a>
+          )}
         </div>
       </CardContent>
     </Card>

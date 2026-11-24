@@ -24,11 +24,11 @@
 | | Quantidade |
 |---|---:|
 | Total de etapas | 300 |
-| `[x]` concluídas | 83 |
+| `[x]` concluídas | 84 |
 | `[P]` aguardando o dono | 0 |
 | `[~]` parciais | 0 |
 | `[-]` descartadas | 0 |
-| `[ ]` não iniciadas | **217** |
+| `[ ]` não iniciadas | **216** |
 
 *Atualize esta tabela ao fim de cada onda.*
 
@@ -214,7 +214,7 @@
 - [ ] **163** — Ligar "Priorizar" no discador preditivo — onda 4 — Média — Frontend
 - [ ] **164** — Ligar as duas ações de triagem da análise de IA — onda 4 — Média — Frontend 🔒
 - [ ] **165** — Ligar os botões de navegação do dashboard — onda 4 — Baixa — Frontend
-- [ ] **166** — Resolver o menu "mais opções" do cartão de contato — onda 4 — Baixa — Frontend
+- [x] **166** — Resolver o menu "mais opções" do cartão de contato — onda 4 — Baixa — Frontend · (o `MoreHorizontal` de `ContactCard.tsx` virou `DropdownMenuTrigger` com `aria-label="Mais opções"` e menu real: Ver detalhes → `onSelect`, Ligar → `onCall`, Editar → `onEdit`, Favoritar/Desfavoritar → `onToggleFavorite` e Excluir → `onDelete` (vermelho, com separador); o `stopPropagation` ficou no trigger e o clique no cartão continua abrindo o detalhe. Desvio consciente do checklist "só neste arquivo": o cartão não tinha `onEdit`/`onDelete`, então entraram como props **opcionais** passadas por `ContactGrid` e ligadas aos handlers que a página já tinha (`Contacts.tsx` `handleEdit`/`handleDelete`, os mesmos que o `ContactDetailSheet` usa) — nada duplicado e nenhum outro consumidor afetado. No mesmo arquivo, o botão de e-mail (que só fazia `stopPropagation`) passou a ser `<a href="mailto:...">` com `aria-label` e só aparece quando o contato tem e-mail. Evidência: `src/components/contacts/__tests__/ContactCard.test.tsx` (3 testes — trigger não seleciona o cartão, e-mail aponta para `mailto:`, clique no cartão ainda seleciona), `bunx tsc --noEmit` rc=0 e `bunx eslint` rc=0 nos 4 arquivos tocados, `bunx vitest run` com 3384 testes passed/0 failed (4 suítes falham na coleta por `z` undefined **também sem a minha mudança**, com HEAD == `origin/main` e CI verde da #238 no mesmo commit → falha de ambiente local, não regressão). Limitações registradas: o conteúdo do `DropdownMenu` Radix não monta no jsdom 20 (sem `PointerEvent`), então a abertura do menu não tem teste automatizado; e `Button asChild` deste repo não renderiza `children` (`src/components/ui/button.tsx:70`), por isso trigger e link usam `buttonVariants` — os 146 usos de `asChild` no app merecem etapa própria)
 - [ ] **167** — Ligar "Ver Alertas" do painel de limite de requisições — onda 4 — Baixa — Frontend
 - [ ] **168** — Ligar os botões "Configurar" e os testes de áudio — onda 4 — Baixa — Frontend
 - [ ] **169** — Explicar na tela a regra do coaching automático — onda 4 — Baixa — Frontend
