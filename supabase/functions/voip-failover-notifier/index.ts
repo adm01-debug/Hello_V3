@@ -1,6 +1,7 @@
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
 import { buildCorsHeaders } from "../_shared/cors.ts";
+import { getCorrelationId, internalErrorResponse } from '../_shared/errors.ts';
 
 export const handler = async (req: Request): Promise<Response> => {
   const cors = buildCorsHeaders(req);
@@ -54,9 +55,7 @@ export const handler = async (req: Request): Promise<Response> => {
       headers: { ...cors, "Content-Type": "application/json" }
     });
   } catch (e) {
-    return new Response(JSON.stringify({ error: e instanceof Error ? e.message : String(e) }), {
-      status: 500, headers: { ...cors, "Content-Type": "application/json" }
-    });
+    return internalErrorResponse(e, getCorrelationId(req), cors, { fn: 'voip-failover-notifier' });
   }
 };
 

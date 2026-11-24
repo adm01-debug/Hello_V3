@@ -2,6 +2,7 @@ import { serve } from "https://deno.land/std@0.168.0/http/server.ts"
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2"
 import fc from "https://esm.sh/fast-check"
 import { buildCorsHeaders } from "../_shared/cors.ts"
+import { getCorrelationId, internalErrorResponse } from '../_shared/errors.ts';
 
 // Alvos permitidos: apenas Edge Functions deste projeto. Um `target` arbitrário
 // permitiria usar a função como proxy de requisições para qualquer host.
@@ -135,9 +136,6 @@ serve(async (req) => {
     )
 
   } catch (error) {
-    return new Response(JSON.stringify({ error: error instanceof Error ? error.message : String(error) }), {
-      status: 500,
-      headers: { ...cors, 'Content-Type': 'application/json' }
-    })
+    return internalErrorResponse(error, getCorrelationId(req), cors, { fn: 'fuzz-test-runner' });
   }
 })

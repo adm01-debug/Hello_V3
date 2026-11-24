@@ -2,6 +2,7 @@ import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.57.4';
 import { buildCorsHeaders } from '../_shared/cors.ts';
 import { validate, string, oneOf, optional, boolean } from '../_shared/validate.ts';
 import { clientIpFromHeaders } from "../_shared/client-ip.ts";
+import { getCorrelationId, internalErrorResponse } from '../_shared/errors.ts';
 
 Deno.serve(async (req) => {
   const cors = buildCorsHeaders(req);
@@ -94,8 +95,6 @@ Deno.serve(async (req) => {
       status: 200, headers: { ...cors, 'Content-Type': 'application/json' },
     });
   } catch (err) {
-    return new Response(JSON.stringify({ error: err instanceof Error ? err.message : String(err) }), {
-      status: 500, headers: { ...cors, 'Content-Type': 'application/json' },
-    });
+    return internalErrorResponse(err, getCorrelationId(req), cors, { fn: 'record-consent' });
   }
 });

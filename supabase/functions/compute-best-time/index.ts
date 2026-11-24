@@ -1,6 +1,7 @@
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.57.4';
 import { buildCorsHeaders } from '../_shared/cors.ts';
 import { validate, string, optional } from '../_shared/validate.ts';
+import { getCorrelationId, internalErrorResponse } from '../_shared/errors.ts';
 
 Deno.serve(async (req) => {
   const cors = buildCorsHeaders(req);
@@ -121,7 +122,7 @@ Deno.serve(async (req) => {
 
     return json({ success: true, processed, results }, 200, cors);
   } catch (err) {
-    return json({ error: err instanceof Error ? err.message : String(err) }, 500, cors);
+    return internalErrorResponse(err, getCorrelationId(req), cors, { fn: 'compute-best-time' });
   }
 });
 
