@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { Suspense, lazy, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Radio, MessageCircle, Headphones, Info, ExternalLink } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
@@ -7,10 +7,16 @@ import { Button } from '@/components/ui/button';
 import { UnifiedSoftphone } from '@/components/calls/UnifiedSoftphone';
 import { NetworkStatusBadge } from '@/components/calls/NetworkStatusBadge';
 import { SipConnectionStatus } from '@/components/calls/SipConnectionStatus';
-import { LiveTranslationPanel } from '@/components/translation/LiveTranslationPanel';
 import { useSipCall } from '@/hooks/useSipCall';
 import { toast } from 'sonner';
 import { usePageTitle } from '@/hooks/usePageTitle';
+
+// O painel so aparece durante a chamada e concentra o maior peso da rota (hooks de
+// traducao/hints + scroll-area): carrega sob demanda para o chunk da pagina caber no
+// orcamento de bundle (scripts/check-bundle-budget.mjs).
+const LiveTranslationPanel = lazy(() =>
+  import('@/components/translation/LiveTranslationPanel').then((m) => ({ default: m.LiveTranslationPanel })),
+);
 
 const Calls = () => {
   usePageTitle('Chamadas');
@@ -56,7 +62,9 @@ const Calls = () => {
         <div className="space-y-6">
           {/* Tradução em tempo real durante chamada */}
           {sip.isInCall && (
-            <LiveTranslationPanel callSessionId={sip.callId ?? undefined} />
+            <Suspense fallback={null}>
+              <LiveTranslationPanel callSessionId={sip.callId ?? undefined} />
+            </Suspense>
           )}
 
           {/* Stats rápidas */}
