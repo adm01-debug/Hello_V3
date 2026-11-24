@@ -2,11 +2,16 @@
  "aviso": "GERADO AUTOMATICAMENTE por scripts/ai-context/gerar.mjs — não editar à mão; será sobrescrito.",
  "format_version": 2,
  "git": {
-  "commit": "564451c0e0e7fce4bf63dba63c75fd71c800ed9d",
+  "commit": "ea6b0f0f81970be2e1949325b3e0fb0f57f10f59",
   "branch": "main",
-  "data_commit": "2026-11-24T01:09:45-03:00",
+  "data_commit": "2026-11-24T01:22:03-03:00",
   "remote": "https://github.com/adm01-debug/Hello_V3",
   "ultimos_commits": [
+   {
+    "sha": "ea6b0f0",
+    "data": "2026-11-24",
+    "assunto": "fix: checar erro nas escritas do discador e parar a campanha quando o claim falha (etapa 080) (#229)"
+   },
    {
     "sha": "564451c",
     "data": "2026-11-24",
@@ -126,11 +131,6 @@
     "sha": "9add2c1",
     "data": "2026-11-23",
     "assunto": "fix: grava o desfecho real da chamada em call_sessions (#205)"
-   },
-   {
-    "sha": "c1e7859",
-    "data": "2026-11-23",
-    "assunto": "feat: modulo unico de metricas de fila (serviceLevel, abandono, espera) (#204)"
    }
   ],
   "arquivos_mudados_7d": 1070,
@@ -141,7 +141,7 @@
    },
    {
     "pasta": "docs/qa/05-PROGRESSO.md",
-    "mudancas": 58
+    "mudancas": 59
    },
    {
     "pasta": "covout/lcov-report/lib",
@@ -149,7 +149,7 @@
    },
    {
     "pasta": "src/hooks/__tests__",
-    "mudancas": 53
+    "mudancas": 54
    },
    {
     "pasta": "src/lib/__tests__",
@@ -199,7 +199,7 @@
   "arquivos_mais_mudados_90d": [
    {
     "arquivo": "docs/qa/05-PROGRESSO.md",
-    "mudancas": 58
+    "mudancas": 59
    },
    {
     "arquivo": "docs/estado/funcionalidades-planejadas.md",
@@ -301,7 +301,7 @@
   "autores_30d": [
    {
     "autor": "adm01-debug",
-    "commits": 207
+    "commits": 208
    },
    {
     "autor": "Joaquim Ataides",
@@ -316,7 +316,7 @@
  "contagens": {
   "arquivos_total": 1714,
   "arquivos_codigo": 1312,
-  "linhas_codigo": 176661,
+  "linhas_codigo": 176712,
   "rotas": 106,
   "rotas_http_backend": 12,
   "vistas_por_id": 0,
@@ -492,7 +492,7 @@
   },
   "src/hooks": {
    "arquivos": 355,
-   "linhas": 46991
+   "linhas": 47042
   },
   "src/integrations": {
    "arquivos": 3,

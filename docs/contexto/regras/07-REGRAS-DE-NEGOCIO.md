@@ -1,6 +1,6 @@
 # 07 · REGRAS DE NEGÓCIO
 
-> Gerado automaticamente por AI Context Sync v1.3.2 · commit `564451c0e0` · branch `main` · 2026-11-24 04:10 UTC
+> Gerado automaticamente por AI Context Sync v1.3.2 · commit `ea6b0f0f81` · branch `main` · 2026-11-24 04:22 UTC
 > Não edite à mão — regras humanas vão em `manual/`.
 
 ## A. Regras escritas por humanos (`manual/` — prioridade máxima, nunca sobrescrito)
@@ -2392,6 +2392,7 @@ _nenhum item encontrado_
 | Erro ao iniciar campanha | `src/hooks/usePredictiveDialer.ts` |
 | Erro ao pausar campanha | `src/hooks/usePredictiveDialer.ts` |
 | Erro ao remover campanha | `src/hooks/usePredictiveDialer.ts` |
+| Não foi possível reservar o contato na fila. Campanha pausada. | `src/hooks/usePredictiveDialer.ts` |
 | Falha ao aplicar pacing | `src/hooks/usePredictivePacing.ts` |
 | Erro ao atualizar perfil | `src/hooks/useProfile.ts` |
 | Not authenticated | `src/hooks/useProfile.ts` |
@@ -2429,8 +2430,7 @@ _nenhum item encontrado_
 | Falha ao remover regra | `src/hooks/useRoutingRules.ts` |
 | Falha ao salvar regra | `src/hooks/useRoutingRules.ts` |
 | Falha ao executar enforcement de SLA | `src/hooks/useSLA.ts` |
-| Falha ao salvar política | `src/hooks/useSLA.ts` |
-| … +257 linhas — lista completa em `context.json` | |
+| … +258 linhas — lista completa em `context.json` | |
 
 ## J. Controle de acesso no código (checagens de perfil/permissão)
 
@@ -2479,7 +2479,7 @@ _nenhum item encontrado_
 | `admin` | `supabase/functions/data-lake-flush/index.ts` |
 | `admin` | `supabase/migrations/20261123000200_fix_has_role_oracle_and_debug_tables.sql` |
 
-## K. Testes como especificação (4307 testes em 375 arquivos — nomes completos em `context.json`)
+## K. Testes como especificação (4308 testes em 375 arquivos — nomes completos em `context.json`)
 
 | Arquivo | Testes | Exemplos do que o sistema DEVE fazer |
 |---|---|---|
@@ -2524,11 +2524,11 @@ _nenhum item encontrado_
 | `src/lib/__tests__/performance-optimizations.test.ts` | 22 | Performance: React.memo wrapping · ${name} is wrapped with React.memo · ${name} imports memo from react · ${name} exports as named export with memo … |
 | `src/lib/__tests__/ring-group.test.ts` | 22 | sanitizeExtension · sempre produz null ou uma string aceita pelo CHECK do banco · descarta caracteres inválidos preservando os válidos · clampInt … |
 | `src/hooks/__tests__/useKnowledgeBase.coverage.test.tsx` | 21 | useKbCategories · returns published categories · surfaces a query error · useKbArticles … |
+| `src/hooks/__tests__/usePredictiveDialer.coverage.test.tsx` | 21 | usePredictiveDialer · fetches campaigns on mount and exposes API · handles fetchCampaigns error branch · fetchQueue success and error branches … |
 | `src/lib/__tests__/blf.test.ts` | 21 | blf: helpers puros · safeText normaliza tipos inesperados · agentKey ignora acentos, caixa e espaços múltiplos · maskPhone preserva no máximo os 4 últimos dígitos … |
 | `src/lib/__tests__/error-tracking.test.ts` | 21 | Error Tracking Module · Module exports · exports initErrorTracking function · exports getErrorReports function … |
 | `src/lib/__tests__/logger.test.ts` | 21 | Logger Module · Basic logging methods · logger.debug calls console.debug · logger.info calls console.info … |
 | `src/lib/__tests__/queue-metrics.test.ts` | 21 | serviceLevel · devolve null para lista vazia · conta atendida dentro do limiar como 100% · limiar e inclusivo … |
-| `src/hooks/__tests__/usePredictiveDialer.coverage.test.tsx` | 20 | usePredictiveDialer · fetches campaigns on mount and exposes API · handles fetchCampaigns error branch · fetchQueue success and error branches … |
 | `src/__tests__/rls/rls-policies.test.ts` | 19 | RLS — call_sessions · agent vê apenas as próprias sessões · supervisor lê todas as sessões da equipe · admin tem acesso total (delete incluído) … |
 | `src/lib/__tests__/dialer-favorites-and-alert.test.ts` | 19 | dialer-favorites-order — simulação de centenas de cenários · preserva o conjunto de itens em qualquer movimento (PBT) · sempre gera posições densas 0..n-1 (PBT) · é imutável: nunca altera o array original … |
 | `src/lib/webauthn/__tests__/webauthn-utils.coverage.test.ts` | 19 | webauthn-utils (coverage) · base64 helpers · round-trips a buffer through base64url · accepts a plain ArrayBuffer input … |
