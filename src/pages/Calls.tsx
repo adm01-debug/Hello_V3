@@ -73,7 +73,7 @@ const Calls = () => {
               <CardTitle className="text-lg">Estatísticas de Hoje</CardTitle>
             </CardHeader>
             <CardContent>
-              <div className="grid grid-cols-4 gap-4 text-center">
+              <div className="grid grid-cols-2 gap-4 text-center sm:grid-cols-4">
                 <div>
                   <p className="text-2xl font-bold text-primary">{callStats.today}</p>
                   <p className="text-xs text-muted-foreground">Total</p>

@@ -6,25 +6,37 @@ import { hasAdminCredentials } from './helpers/skipGuard';
 
 /**
  * Etapa 270 — conferência das telas internas em largura de celular.
+ * Etapa 271 — localizar a causa e exigir transbordo zero.
  *
  * As 10 rotas públicas já foram medidas (2026-11-23, A-137). O que não tinha
  * cobertura eram as telas de dentro do sistema, que exigem login. Aqui elas são
- * capturadas em 390/768/1280 e o transbordo horizontal é medido.
+ * capturadas em 390/768/1280 e o transbordo horizontal é medido em dois níveis:
+ *
+ * - `transbordoPx`  — a página (documento) passa da largura da tela: rolagem
+ *   horizontal na tela inteira, o caso que a etapa 271 corrige.
+ * - `conteudo`      — o que passa da largura dentro de <main>: conteúdo cortado
+ *   sem que a página role. Um `overflow-x-auto` proposital (tabela larga) não
+ *   conta, porque o que está dentro dele não estica o <main>.
  *
  * Não é teste de regressão visual: nenhum pixel é comparado. As asserções são
- * sobre a captura ser real (URL e título de cada tela), não sobre o layout — os
- * problemas encontrados viram achados para a etapa 271.
+ * sobre a captura ser real (URL de cada tela) e sobre o layout caber.
  */
 
-interface Culpado {
-  /** elemento: tag + ate 3 classes + [left..right width pos/overflowX] */
+interface ElementoCulpado {
+  /** tag + até 3 classes + [left..right largura posição/overflow-x] */
   el: string;
-  pos: string;
-  overflowX: string;
-  /** ja esta dentro de algum ancestral que recorta (overflow-x != visible) */
+  /** o pai já cabe na largura: este é candidato a causa, não a vítima esticada */
+  fronteira: boolean;
+  /** já está dentro de algo que recorta (uma rolagem proposital, por exemplo) */
   recortado: boolean;
-  /** cadeia de ancestrais, do pai ate o body */
   ancestrais: string[];
+}
+
+interface Area {
+  scrollWidth: number;
+  clientWidth: number;
+  transbordoPx: number;
+  culpados: ElementoCulpado[];
 }
 
 interface Captura {
@@ -36,9 +48,8 @@ interface Captura {
   scrollWidth: number;
   clientWidth: number;
   transbordoPx: number;
-  culpados: Culpado[];
-  /** trilha body > ... > filho mais profundo: mostra em que nivel o eixo X esticou */
-  trilha: string[];
+  culpados: ElementoCulpado[];
+  conteudo: Area | null;
 }
 
 const TELAS = [
@@ -52,7 +63,7 @@ const TELAS = [
 const LARGURAS = [390, 768, 1280];
 const SAIDA = join(process.cwd(), 'capturas', '270');
 
-test.describe('Etapa 270 — telas internas em largura de celular', () => {
+test.describe('Etapa 270/271 — telas internas em largura de celular', () => {
   test('captura 5 telas em 3 larguras e mede transbordo horizontal', async ({ page, context }) => {
     test.setTimeout(300_000);
 
@@ -112,51 +123,60 @@ test.describe('Etapa 270 — telas internas em largura de celular', () => {
             );
           };
 
-          // Culpados: quem passa da borda, do pior (mais a direita) para o menor. Cada um
-          // vem com a cadeia de ancestrais, que e o que diz quem esticou o eixo X.
-          const culpados = Array.from(document.body.querySelectorAll('*'))
-            .filter((elemento) => {
-              const caixa = elemento.getBoundingClientRect();
-              return caixa.width > 0 && caixa.right > viewport + 1;
-            })
-            .sort((a, b) => b.getBoundingClientRect().right - a.getBoundingClientRect().right)
-            .slice(0, 5)
-            .map((elemento) => {
-              const ancestrais: string[] = [];
+          const recortadoPor = (elemento: Element, ate: Element | null) => {
+            for (
               let pai = elemento.parentElement;
-              while (pai && ancestrais.length < 8) {
-                ancestrais.push(descrever(pai));
-                pai = pai.parentElement;
-              }
-              const estilo = getComputedStyle(elemento);
-              let recortado = false;
-              for (let a = elemento.parentElement; a && a !== document.body; a = a.parentElement) {
-                if (getComputedStyle(a).overflowX !== 'visible') {
-                  recortado = true;
-                  break;
-                }
-              }
-              return {
-                el: descrever(elemento),
-                pos: estilo.position,
-                overflowX: estilo.overflowX,
-                recortado,
-                ancestrais,
-              };
-            });
+              pai && pai !== ate && pai !== document.body;
+              pai = pai.parentElement
+            ) {
+              if (getComputedStyle(pai).overflowX !== 'visible') return true;
+            }
+            return false;
+          };
 
-          const trilha: string[] = [];
-          let nivel: Element | null = document.body;
-          while (nivel && trilha.length < 8) {
-            trilha.push(descrever(nivel));
-            nivel = nivel.firstElementChild;
-          }
+          // Culpados: quem passa da borda, com o elemento de fronteira (o pai já
+          // cabe) na frente — é ele, e não o wrapper esticado, que estica a página.
+          const culpadosDe = (escopo: Element, limite: number) =>
+            Array.from(escopo.querySelectorAll('*'))
+              .map((elemento) => ({ elemento, caixa: elemento.getBoundingClientRect() }))
+              .filter(({ caixa }) => caixa.width > 0 && caixa.right > limite + 1)
+              .map(({ elemento, caixa }) => {
+                const pai = elemento.parentElement;
+                const fimDoPai = pai ? pai.getBoundingClientRect().right : caixa.right;
+                return { elemento, direita: caixa.right, fronteira: fimDoPai <= limite + 1 };
+              })
+              .sort((a, b) => Number(b.fronteira) - Number(a.fronteira) || b.direita - a.direita)
+              .slice(0, 4)
+              .map(({ elemento, fronteira }) => {
+                const ancestrais: string[] = [];
+                let pai = elemento.parentElement;
+                while (pai && ancestrais.length < 5) {
+                  ancestrais.push(descrever(pai));
+                  pai = pai.parentElement;
+                }
+                return {
+                  el: descrever(elemento),
+                  fronteira,
+                  recortado: recortadoPor(elemento, escopo === document.body ? null : escopo),
+                  ancestrais,
+                };
+              });
+
+          const principal = document.querySelector('main');
+          const conteudo = principal
+            ? {
+                scrollWidth: principal.scrollWidth,
+                clientWidth: principal.clientWidth,
+                transbordoPx: Math.max(0, principal.scrollWidth - principal.clientWidth),
+                culpados: culpadosDe(principal, principal.getBoundingClientRect().right),
+              }
+            : null;
 
           return {
             scrollWidth: raiz.scrollWidth,
             clientWidth: viewport,
-            culpados,
-            trilha,
+            culpados: culpadosDe(document.body, viewport),
+            conteudo,
             titulo: (document.querySelector('h1')?.textContent ?? '').trim(),
           };
         });
@@ -181,6 +201,19 @@ test.describe('Etapa 270 — telas internas em largura de celular', () => {
     // deslogadas viram cinco imagens iguais e o relatório diz "tudo certo".
     expect(
       capturas.filter((c) => c.url !== c.rota).map((c) => `${c.tela}: pedi ${c.rota}, veio ${c.url}`),
+    ).toEqual([]);
+    // Etapa 271: nem a página rola de lado, nem o conteúdo fica cortado no <main>.
+    expect(
+      capturas
+        .filter((c) => c.transbordoPx > 0 || (c.conteudo?.transbordoPx ?? 0) > 0)
+        .map((c) => ({
+          tela: c.tela,
+          largura: c.largura,
+          pagina: c.transbordoPx,
+          conteudo: c.conteudo?.transbordoPx ?? 0,
+          culpados: [...c.culpados, ...(c.conteudo?.culpados ?? [])].filter((k) => k.fronteira),
+        })),
+      'transbordo horizontal: a página ou o conteúdo passou da largura da tela',
     ).toEqual([]);
   });
 });

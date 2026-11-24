@@ -58,20 +58,20 @@ export default function ExecutiveDashboard() {
   return (
     <div className="container mx-auto p-6 space-y-6">
       {/* Header */}
-      <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
+      <div className="flex flex-col gap-4 md:flex-row md:flex-wrap md:items-center md:justify-between">
         <div>
           <h1 className="text-3xl font-bold">Dashboard Executivo</h1>
           <p className="text-muted-foreground">Visão consolidada de todas as métricas do call center</p>
         </div>
-        <div className="flex items-center gap-4">
+        <div className="flex flex-wrap items-center gap-4">
           <div className="flex items-center gap-2 text-sm text-muted-foreground">
             <RefreshCw className="h-4 w-4 animate-pulse text-green-500" />
             <span>Atualizado: {format(lastUpdate, 'HH:mm:ss', { locale: ptBR })}</span>
           </div>
-          <div className="flex items-center gap-2">
+          <div className="flex flex-wrap items-center gap-2">
             <Calendar className="h-4 w-4 text-muted-foreground" />
             <Select value={period} onValueChange={(v) => setPeriod(v as PeriodType)}>
-              <SelectTrigger className="w-[180px]">
+              <SelectTrigger className="w-[180px] max-w-full">
                 <SelectValue placeholder="Selecione o período" />
               </SelectTrigger>
               <SelectContent>
