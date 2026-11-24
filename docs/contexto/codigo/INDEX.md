@@ -1,7 +1,7 @@
 # Contexto do projeto para agentes de IA
 
 GERADO AUTOMATICAMENTE por scripts/ai-context/gerar.mjs — não editar à mão; será sobrescrito.
-Publicado em `docs/contexto/codigo/` na branch `contexto` (gerada, nunca abra PR dela) a cada push em `main` e a cada 10 minutos pelo workflow `contexto.yml`; índice único das três fontes em `docs/contexto/00-INDEX.md`. Gere local com `node scripts/ai-context/gerar.mjs`. Commit-base: `52e0392cfbba8be55582da2cc1198268a77c24be` (2026-11-23T22:37:53-03:00).
+Publicado em `docs/contexto/codigo/` na branch `contexto` (gerada, nunca abra PR dela) a cada push em `main` e a cada 10 minutos pelo workflow `contexto.yml`; índice único das três fontes em `docs/contexto/00-INDEX.md`. Gere local com `node scripts/ai-context/gerar.mjs`. Commit-base: `b99cdc84affac80af3e8631afb50b8708a714f53` (2026-11-23T22:49:58-03:00).
 
 ## Como usar (leia antes de planejar ou executar qualquer tarefa)
 1. **Tela/rota/menu** → `rotas.json` (url/vista/menu → arquivo → hooks → tabelas → edges; `rotas_http_backend` para APIs) e `modulos.json` (módulo inteiro + dependências entre módulos).
@@ -14,7 +14,7 @@ Publicado em `docs/contexto/codigo/` na branch `contexto` (gerada, nunca abra PR
 Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua tarefa; não carregue tudo.
 
 ## Stack
-- linguagens: TypeScript (1262), SQL (245), Markdown (120), JavaScript (29), JSON (18), Python (5), YAML (3), Shell (2)
+- linguagens: TypeScript (1263), SQL (245), Markdown (120), JavaScript (29), JSON (18), Python (5), YAML (3), Shell (2)
 - linguagem_principal: TypeScript
 - framework: React
 - backend_http: n/d
@@ -34,9 +34,9 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 ## Números
 | item | qtd |
 |---|---|
-| arquivos_total | 1697 |
-| arquivos_codigo | 1295 |
-| linhas_codigo | 174921 |
+| arquivos_total | 1698 |
+| arquivos_codigo | 1296 |
+| linhas_codigo | 174983 |
 | rotas | 106 |
 | rotas_http_backend | 12 |
 | vistas_por_id | 0 |
@@ -48,7 +48,7 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 | tabelas | 169 |
 | migrations | 242 |
 | cron_jobs | 11 |
-| testes | 375 |
+| testes | 376 |
 | workflows | 3 |
 | scripts | 34 |
 | docs_md | 120 |
@@ -58,7 +58,7 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 - componentes: src/components (318), src/pages (126), src/contexts (4)
 - hooks: src/hooks (174), src/components (12), src/contexts (4)
 - servicos_logica: src/lib (88), src/integrations (3), scripts/regras_negocio (2)
-- testes: co-localizado (__tests__) (351), e2e/ (7), tests/ (6)
+- testes: co-localizado (__tests__) (352), e2e/ (7), tests/ (6)
 - edge_functions: supabase/functions
 - migrations: supabase/migrations
 - scripts: scripts/inventario (6), scripts/regras_negocio (3), scripts/ai-context (2)
@@ -347,7 +347,7 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 - env de integração (só nomes): BITRIX_WEBHOOK_URL, CLEANUP_CRON_TOKEN, COACHING_CRON_TOKEN, DATA_LAKE_CRON_TOKEN, DD_API_KEY, DIALER_CRON_TOKEN, ELEVENLABS_AGENT_ID, ELEVENLABS_API_KEY, EMAIL_SERVICE_API_KEY, JWT_SECRET, MS_CLIENT_ID, MS_CLIENT_SECRET, OPENROUTER_API_KEY, RECORDINGS_CRON_TOKEN, REDIS_HOST, REDIS_PASSWORD, REDIS_PORT, REDIS_QUEUE_DB, RESEND_API_KEY, SENTRY_DSN, SENTRY_ENVIRONMENT, STORAGE_BUCKET, STORAGE_SECRET_KEY, TESTE_CRON_TOKEN, TEST_REDIS_HOST, TEST_REDIS_PORT, WAVOIP_TOKEN
 
 ## Permissões / papéis
-- papéis no código: admin (35), user (24), agent (20), system (18), button (13), alert (11), supervisor (8), status (7), group (5), viewer (4), article (3), img (3), navigation (3), anon (2), customer (2), dialog (2), string (2), god (1), link (1), presentation (1), progressbar (1), region (1), searchbox (1), separator (1), sup (1), table (1)
+- papéis no código: admin (36), user (24), agent (20), system (18), button (13), alert (11), supervisor (8), status (7), group (5), viewer (4), article (3), img (3), navigation (3), anon (2), customer (2), dialog (2), string (2), god (1), link (1), presentation (1), progressbar (1), region (1), searchbox (1), separator (1), sup (1), table (1)
 - enums de papel: app_role: admin|supervisor|agent|viewer
 - guards: src/components/auth/ProtectedRoute.tsx · rotas protegidas: 0 · públicas: /, /*, /accounts, /admin/data-export, /admin/database-health, /admin/extensions, /admin/security-alerts, /admin/security-audit, /admin/slo, /admin/voice-quality, /admin/voip-trunks, /admin/webhook-health, /agent-assist, /ai, /alert-history, /alerts, /analytics, /audit-logs, /battle-cards, /blf, /blocked-access-logs, /cadences, /call-flow-designer, /call-history, /call-library, /call-park, /call-queues, /callbacks, /calls, /coaching, /compliance, /concurrency-conflicts, /contacts, /contacts/insights, /dashboard, /deals, /dialer, /dialer/predictive, /executive, /external-recordings-import, /financial-impact, /forgot-password, /gamification, /geo-blocking, /history, /hold-alerts, /hold-metrics, /hold-settings, /hot-desking, /inbox, /ip-whitelist, /knowledge, /landing, /ldap-sync, /learning, /login, /marketplace, /meeting-summaries, /multi-device-ring, /network-diagnostics, /notifications, /number-porting, /observability, /onboarding, /outbound-compliance, /passkeys, /password-reset-approval, /permissions, /pricing, /qr-provisioning, /queue-dashboard, /queue-metrics-settings, /ranking, /rate-limit, /recordings, /register, /renewals, /reports, /reset-password, /ring-groups, /roles, /routing-rules, /scheduling, /scorecards, /security, /security-monitoring, /security-report, /sessions, /settings, /shift-swap-suggestions, /skills, /sla-policies, /status, /success-plans, /toll-free-numbers, /topic-detection, /trackers, /translation-center, /two-factor-auth, /unauthorized, /verify-email, /video-conference, /virtual-fax, /voice-security, /voicemail, /vs/3cplus
 - feature flags: FEATURE_X, nova-tela, novo-inbox
@@ -370,13 +370,13 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 - possiveis_segredos_no_codigo: 4 — ex.: scripts/ai-context/cenarios.mjs:103, src/lib/__tests__/security-advanced.test.ts:203, src/lib/__tests__/security-advanced.test.ts:208
 
 ## Grafo de código (graphify)
-- 9981 nós · 25658 arestas · 808 comunidades · grafo do commit `52e0392c`
-- comunidades maiores: react (289), lucide-react (211), usePageTitle (160), button.tsx (157), ref_https (118), safeFormatDatePtBR (111), cn (104), safe-date.ts (103), validate.ts (95), dependencies (82), gerar.mjs (80), NetworkDiagnostics.tsx (79)
+- 9984 nós · 25667 arestas · 786 comunidades · grafo do commit `b99cdc84`
+- comunidades maiores: react (213), client.ts (180), card.tsx (178), vitest (163), badge.tsx (152), traceHeaders (149), react-router-dom (122), ref_https (120), protectedRoutes.tsx (113), usePageTitle (113), safeFormatDatePtBR (112), lucide-react (109)
 - símbolos mais chamados: cn() (src/lib/utils.ts), usePageTitle() (src/hooks/usePageTitle.ts), safeFormatDatePtBR() (src/lib/safe-date.ts), q() (scripts/supabase_snapshot/snapshot.py), safeFormatDistanceToNow() (src/lib/safe-date.ts), useAuthContext() (src/contexts/AuthContext.tsx), traceHeaders() (src/lib/tracing.ts), withTrace() (src/lib/tracing.ts), formatDuration() (src/lib/utils.ts), safeToLocaleString() (src/lib/safe-date.ts), .collect() (scripts/supabase_snapshot/test_snapshot.py), buildCorsHeaders() (supabase/functions/_shared/cors.ts)
 - consulta local: `graphify query "<pergunta>"`, `graphify path "<A>" "<B>"`, `graphify explain "<X>"`
 
 ## Hotspots (arquivos mais alterados, 90 dias)
-- docs/qa/05-PROGRESSO.md (42)
+- docs/qa/05-PROGRESSO.md (43)
 - docs/estado/funcionalidades-planejadas.md (27)
 - src/components/layout/AppSidebar.tsx (9)
 - docs/audits/pendencias-2026-07.md (8)
@@ -429,6 +429,7 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 
 
 ## Últimos commits
+- 2026-11-23 `b99cdc8` Catalogo de seguranca declara a origem de cada estado (remove KPI literal) (#212)
 - 2026-11-23 `52e0392` fix: tela de conflitos de concorrencia explica o vazio e a retencao (#211)
 - 2026-11-23 `046acb3` fix: remediacao de anomalia atualiza a lista (#210)
 - 2026-11-23 `de29d5d` feat: conferir lista DNC antes de confiar na importacao (#209)
@@ -443,7 +444,6 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 - 2026-11-23 `581cd3a` fix: whatsapp-inbound deixa de concatenar telefone no filtro do PostgREST (#198)
 - 2026-11-23 `617d9e8` fix: scripts destrutivos exigem DB_HOST explicito (#200)
 - 2026-11-23 `4271aa3` chore: react-router-dom 7.13.1 -> 7.18.6 (corrige open redirect) (#199)
-- 2026-11-23 `4e8548e` fix: email-inbound idempotente para parar o laco de 500 e a conversa duplicada (#197)
 
 ## Arquivos deste diretório
 - `docs/contexto/codigo/rotas.json`

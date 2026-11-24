@@ -21,7 +21,7 @@
    "scripts/regras_negocio (2)"
   ],
   "testes": [
-   "co-localizado (__tests__) (351)",
+   "co-localizado (__tests__) (352)",
    "e2e/ (7)",
    "tests/ (6)"
   ],
@@ -58,11 +58,11 @@
  "commits": {
   "convencao": "conventional commits (observado)",
   "exemplos": [
+   "Catalogo de seguranca declara a origem de cada estado (remove KPI literal) (#212)",
    "fix: tela de conflitos de concorrencia explica o vazio e a retencao (#211)",
    "fix: remediacao de anomalia atualiza a lista (#210)",
    "feat: conferir lista DNC antes de confiar na importacao (#209)",
-   "fix: paineis de proxima melhor acao e CRM explicam carregando, erro e vazio (#208)",
-   "fix: grafico de espera do dashboard trata erro e nunca mostra valor negativo (#207)"
+   "fix: paineis de proxima melhor acao e CRM explicam carregando, erro e vazio (#208)"
   ]
  },
  "pr_template": null,

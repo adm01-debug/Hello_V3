@@ -2,11 +2,16 @@
  "aviso": "GERADO AUTOMATICAMENTE por scripts/ai-context/gerar.mjs — não editar à mão; será sobrescrito.",
  "format_version": 2,
  "git": {
-  "commit": "52e0392cfbba8be55582da2cc1198268a77c24be",
+  "commit": "b99cdc84affac80af3e8631afb50b8708a714f53",
   "branch": "main",
-  "data_commit": "2026-11-23T22:37:53-03:00",
+  "data_commit": "2026-11-23T22:49:58-03:00",
   "remote": "https://github.com/adm01-debug/Hello_V3",
   "ultimos_commits": [
+   {
+    "sha": "b99cdc8",
+    "data": "2026-11-23",
+    "assunto": "Catalogo de seguranca declara a origem de cada estado (remove KPI literal) (#212)"
+   },
    {
     "sha": "52e0392",
     "data": "2026-11-23",
@@ -126,14 +131,9 @@
     "sha": "fa2c38d",
     "data": "2026-11-23",
     "assunto": "fix: notify-blocked-ip exige sessao autenticada, valida corpo e escapa HTML (E010) (#188)"
-   },
-   {
-    "sha": "22ca6d0",
-    "data": "2026-11-23",
-    "assunto": "fix: notify-new-device exige sessao autenticada e nao aceita destinatario do corpo (E009) (#187)"
    }
   ],
-  "arquivos_mudados_7d": 1015,
+  "arquivos_mudados_7d": 1016,
   "pastas_mais_mudadas_30d": [
    {
     "pasta": "covout/lcov-report/hooks",
@@ -145,7 +145,7 @@
    },
    {
     "pasta": "docs/qa/05-PROGRESSO.md",
-    "mudancas": 42
+    "mudancas": 43
    },
    {
     "pasta": "src/hooks/__tests__",
@@ -199,7 +199,7 @@
   "arquivos_mais_mudados_90d": [
    {
     "arquivo": "docs/qa/05-PROGRESSO.md",
-    "mudancas": 42
+    "mudancas": 43
    },
    {
     "arquivo": "docs/estado/funcionalidades-planejadas.md",
@@ -301,7 +301,7 @@
   "autores_30d": [
    {
     "autor": "adm01-debug",
-    "commits": 190
+    "commits": 191
    },
    {
     "autor": "Joaquim Ataides",
@@ -314,9 +314,9 @@
   ]
  },
  "contagens": {
-  "arquivos_total": 1697,
-  "arquivos_codigo": 1295,
-  "linhas_codigo": 174921,
+  "arquivos_total": 1698,
+  "arquivos_codigo": 1296,
+  "linhas_codigo": 174983,
   "rotas": 106,
   "rotas_http_backend": 12,
   "vistas_por_id": 0,
@@ -328,7 +328,7 @@
   "tabelas": 169,
   "migrations": 242,
   "cron_jobs": 11,
-  "testes": 375,
+  "testes": 376,
   "workflows": 3,
   "scripts": 34,
   "docs_md": 120
@@ -500,15 +500,15 @@
   },
   "src/lib": {
    "arquivos": 178,
-   "linhas": 21591
+   "linhas": 21599
   },
   "src/main.tsx": {
    "arquivos": 1,
    "linhas": 44
   },
   "src/pages": {
-   "arquivos": 135,
-   "linhas": 21356
+   "arquivos": 136,
+   "linhas": 21410
   },
   "src/routes": {
    "arquivos": 2,

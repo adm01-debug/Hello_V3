@@ -6937,7 +6937,7 @@
     "SecurityReport"
    ],
    "export_default": "SecurityReport",
-   "linhas": 195,
+   "linhas": 198,
    "dominio": "pages",
    "hooks_locais": [
     "useAuth",

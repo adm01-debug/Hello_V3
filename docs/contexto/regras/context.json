@@ -1,15 +1,15 @@
 {
  "meta": {
-  "sha": "52e0392cfbba8be55582da2cc1198268a77c24be",
+  "sha": "b99cdc84affac80af3e8631afb50b8708a714f53",
   "branch": "main",
   "remote": "https://github.com/adm01-debug/Hello_V3",
-  "generated_at": "2026-11-24 01:38 UTC",
-  "files_total": 1744,
-  "code_files": 1541,
-  "code_lines": 190933
+  "generated_at": "2026-11-24 01:51 UTC",
+  "files_total": 1745,
+  "code_files": 1542,
+  "code_lines": 190995
  },
  "version": "1.3.2",
- "facts_hash": "264d64998518500b",
+ "facts_hash": "9980a4730d1c1ffb",
  "stack": {
   "frameworks": [
    "React + Vite",
@@ -154,7 +154,7 @@
   "package_manager": "bun",
   "languages": {
    ".ts": 643,
-   ".tsx": 619,
+   ".tsx": 620,
    ".sql": 245,
    ".mjs": 27,
    ".py": 5,
@@ -33897,7 +33897,7 @@
   {
    "module": "src/lib",
    "files": 178,
-   "lines": 21591,
+   "lines": 21599,
    "tables": [
     "active_sessions",
     "call_quality_metrics",
@@ -34068,8 +34068,8 @@
   },
   {
    "module": "src/pages",
-   "files": 135,
-   "lines": 21356,
+   "files": 136,
+   "lines": 21410,
    "tables": [
     "audit_logs",
     "battle_card_triggers",
@@ -53691,18 +53691,6 @@
    {
     "file": "src/pages/SecurityReport.tsx",
     "field": "status",
-    "value": "implemented",
-    "kind": "compara"
-   },
-   {
-    "file": "src/pages/SecurityReport.tsx",
-    "field": "status",
-    "value": "implemented",
-    "kind": "compara"
-   },
-   {
-    "file": "src/pages/SecurityReport.tsx",
-    "field": "status",
     "value": "partial",
     "kind": "compara"
    },
@@ -72397,6 +72385,22 @@
    {
     "file": "src/pages/__tests__/PhoneDialer.compliance.test.tsx",
     "name": "inicia a chamada quando o pre-dial check aprova"
+   },
+   {
+    "file": "src/pages/__tests__/SecurityReport.test.tsx",
+    "name": "SecurityReport — catalogo com origem declarada (E172)"
+   },
+   {
+    "file": "src/pages/__tests__/SecurityReport.test.tsx",
+    "name": "nao exibe mais o KPI de features como indicador"
+   },
+   {
+    "file": "src/pages/__tests__/SecurityReport.test.tsx",
+    "name": "declara a origem de cada controle listado"
+   },
+   {
+    "file": "src/pages/__tests__/SecurityReport.test.tsx",
+    "name": "a cobertura de RLS continua sendo medida pela RPC"
    },
    {
     "file": "src/pages/__tests__/Status.test.tsx",
@@ -110410,7 +110414,7 @@
   },
   "src/lib/security-report-data.ts": {
    "path": "src/lib/security-report-data.ts",
-   "lines": 63,
+   "lines": 71,
    "exports": [
     "interface SecurityFeature",
     "interface SecurityDecision",
@@ -115633,7 +115637,7 @@
   },
   "src/pages/SecurityReport.tsx": {
    "path": "src/pages/SecurityReport.tsx",
-   "lines": 195,
+   "lines": 198,
    "exports": [
     "default SecurityReport"
    ],
@@ -115647,16 +115651,6 @@
     {
      "field": "role",
      "value": "admin",
-     "kind": "compara"
-    },
-    {
-     "field": "status",
-     "value": "implemented",
-     "kind": "compara"
-    },
-    {
-     "field": "status",
-     "value": "implemented",
      "kind": "compara"
     },
     {
@@ -116251,6 +116245,17 @@
     "PhoneDialer compliance guard",
     "bloqueia a chamada quando o pre-dial check reprova",
     "inicia a chamada quando o pre-dial check aprova"
+   ]
+  },
+  "src/pages/__tests__/SecurityReport.test.tsx": {
+   "path": "src/pages/__tests__/SecurityReport.test.tsx",
+   "lines": 51,
+   "is_test": true,
+   "tests": [
+    "SecurityReport — catalogo com origem declarada (E172)",
+    "nao exibe mais o KPI de features como indicador",
+    "declara a origem de cada controle listado",
+    "a cobertura de RLS continua sendo medida pela RPC"
    ]
   },
   "src/pages/__tests__/Status.test.tsx": {
@@ -125262,10 +125267,22 @@
   }
  },
  "git": {
-  "sha": "52e0392cfbba8be55582da2cc1198268a77c24be",
+  "sha": "b99cdc84affac80af3e8631afb50b8708a714f53",
   "branch": "main",
   "remote": "https://github.com/adm01-debug/Hello_V3",
   "commits": [
+   {
+    "sha": "b99cdc8",
+    "date": "2026-11-23",
+    "author": "adm01-debug",
+    "subject": "Catalogo de seguranca declara a origem de cada estado (remove KPI literal) (#212)",
+    "files": [
+     "docs/qa/05-PROGRESSO.md",
+     "src/lib/security-report-data.ts",
+     "src/pages/SecurityReport.tsx",
+     "src/pages/__tests__/SecurityReport.test.tsx"
+    ]
+   },
    {
     "sha": "52e0392",
     "date": "2026-11-23",
@@ -125640,24 +125657,6 @@
      "supabase/functions/analyze-talk-ratio/__tests__/index.test.ts",
      "supabase/functions/analyze-talk-ratio/index.ts"
     ]
-   },
-   {
-    "sha": "560302d",
-    "date": "2026-11-23",
-    "author": "adm01-debug",
-    "subject": "fix: unifica o limiar de qualidade MOS em uma lib (E113) (#182)",
-    "files": [
-     "docs/qa/05-PROGRESSO.md",
-     "src/components/network/AgentQualityRanking.tsx",
-     "src/components/network/QualityHeatmap.tsx",
-     "src/hooks/useQualityTrendAnalyzer.ts",
-     "src/hooks/useVoipQualityMonitor.ts",
-     "src/lib/metrics/__tests__/mos.test.ts",
-     "src/lib/metrics/mos.ts",
-     "supabase/functions/_shared/mos.ts",
-     "supabase/functions/_shared/mos_test.ts",
-     "supabase/functions/voip-recommendation-simulate/index.ts"
-    ]
    }
   ],
   "hot_files": [
@@ -125718,6 +125717,18 @@
     2
    ],
    [
+    "src/lib/security-report-data.ts",
+    1
+   ],
+   [
+    "src/pages/SecurityReport.tsx",
+    1
+   ],
+   [
+    "src/pages/__tests__/SecurityReport.test.tsx",
+    1
+   ],
+   [
     "src/pages/ConcurrencyConflicts.tsx",
     1
    ],
@@ -125727,18 +125738,6 @@
    ],
    [
     "src/hooks/__tests__/useAnomalyRemediation.coverage.test.tsx",
-    1
-   ],
-   [
-    "src/hooks/useAnomalyRemediation.ts",
-    1
-   ],
-   [
-    "src/components/compliance/dnc/ReconcileDNCDialog.tsx",
-    1
-   ],
-   [
-    "src/components/compliance/dnc/__tests__/ReconcileDNCDialog.test.tsx",
     1
    ]
   ]

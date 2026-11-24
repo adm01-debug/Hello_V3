@@ -1,6 +1,6 @@
 # 07 · REGRAS DE NEGÓCIO
 
-> Gerado automaticamente por AI Context Sync v1.3.2 · commit `52e0392cfb` · branch `main` · 2026-11-24 01:38 UTC
+> Gerado automaticamente por AI Context Sync v1.3.2 · commit `b99cdc84af` · branch `main` · 2026-11-24 01:51 UTC
 > Não edite à mão — regras humanas vão em `manual/`.
 
 ## A. Regras escritas por humanos (`manual/` — prioridade máxima, nunca sobrescrito)
@@ -2465,7 +2465,7 @@ _nenhum item encontrado_
 | `admin` | `supabase/functions/data-lake-flush/index.ts` |
 | `admin` | `supabase/migrations/20261123000200_fix_has_role_oracle_and_debug_tables.sql` |
 
-## K. Testes como especificação (4244 testes em 365 arquivos — nomes completos em `context.json`)
+## K. Testes como especificação (4248 testes em 366 arquivos — nomes completos em `context.json`)
 
 | Arquivo | Testes | Exemplos do que o sistema DEVE fazer |
 |---|---|---|
@@ -2769,7 +2769,7 @@ _nenhum item encontrado_
 | `src/hooks/__tests__/useVoipExecutiveSummary.coverage.test.tsx` | 4 | useVoipExecutiveSummary (coverage) · fetches summary with default period · fetches summary with explicit day period · throws on invoke error |
 | `src/hooks/__tests__/useVoipQualityAlertsSummary.coverage.test.tsx` | 4 | useVoipQualityAlertsSummary · carrega o resumo com sucesso (default week) · aceita período day e month (querystring no nome da function, não em  · propaga erro da edge function |
 | `src/hooks/__tests__/useVoipRecommendationInsights.coverage.test.tsx` | 4 | useVoipRecommendationInsights · carrega insights com sucesso (default week) · aceita período month · propaga erro da edge function |
-| … +65 linhas — lista completa em `context.json` | | |
+| … +66 linhas — lista completa em `context.json` | | |
 
 ## L. Eventos de webhook tratados (contratos com sistemas externos)
 

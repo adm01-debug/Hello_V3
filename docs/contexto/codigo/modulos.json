@@ -4730,7 +4730,7 @@
    "modulo": "lib",
    "arquivos": 51,
    "testes": 0,
-   "linhas": 6459,
+   "linhas": 6467,
    "itens_menu": [],
    "telas": [],
    "rotas_http": [],
@@ -5592,7 +5592,7 @@
    "modulo": "pages",
    "arquivos": 93,
    "testes": 0,
-   "linhas": 16634,
+   "linhas": 16637,
    "itens_menu": [
     "Acessos Bloqueados",
     "Agent Assist",
@@ -6385,7 +6385,7 @@
   {
    "modulo": "pages/__tests__",
    "arquivos": 0,
-   "testes": 4,
+   "testes": 5,
    "linhas": 0,
    "itens_menu": [],
    "telas": [],
