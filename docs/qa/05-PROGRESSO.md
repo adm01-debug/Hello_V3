@@ -24,11 +24,11 @@
 | | Quantidade |
 |---|---:|
 | Total de etapas | 300 |
-| `[x]` concluídas | 81 |
+| `[x]` concluídas | 83 |
 | `[P]` aguardando o dono | 0 |
 | `[~]` parciais | 0 |
 | `[-]` descartadas | 0 |
-| `[ ]` não iniciadas | **219** |
+| `[ ]` não iniciadas | **217** |
 
 *Atualize esta tabela ao fim de cada onda.*
 
@@ -206,7 +206,7 @@
 - [ ] **155** — Decidir o destino da verificação de voz ao vivo — onda 4 — Média — Frontend 🔒
 - [ ] **156** — Mostrar as inscrições de cadência na interface — onda 4 — Média — Frontend
 - [ ] **157** — Mostrar os acertos dos trackers — onda 4 — Média — Frontend
-- [ ] **158** — Remover o hook de conferência duplicado e defeituoso — onda 4 — Média — Hooks
+- [x] **158** — Remover o hook de conferência duplicado e defeituoso — onda 4 — Média — Hooks · (apagados `src/hooks/useMultiChannelCallConference.ts` e `src/hooks/__tests__/useMultiChannelCallConference.coverage.test.tsx`, que era o **único** importador do hook — `grep -rn "MultiChannelCallConference" src supabase tests` não retorna nada depois da remoção, logo **nenhuma tela usava o arquivo**). O defeito que a etapa aponta está em `useMultiChannelCallConference.ts:102-105` (arquivo já removido): `setTimeout(() => completeTransfer(id, target), 2000)` dentro de `useCallback(..., [])` com as dependências suprimidas — o timer capturava o `completeTransfer` do **primeiro render**, e `useCallTransfer.ts:7-11` documenta justamente que concluir transferência por timer é errado. Antes de apagar, conferi que a capacidade do hook órfão está toda na versão viva: `useMultiChannelCall.ts` já tem `startConference` (285), `addToConference` (296), `endConference` (302), `removeFromConference` (309), `toggleConferenceRecording` (317) e `getCallsAvailableForConference` (324), e `useCallTransfer.ts` tem `transferCall` (42), `completeTransfer` (22) e `cancelTransfer` (69). A única função sem equivalente literal — `cleanupConference` (125) — só faz `clearInterval(conferenceDurationRef.current)`, e o `endConference` do hook vivo (303) faz o mesmo `clearInterval` **e** zera a ref (`conferenceDurationRef.current = null`), então não há capacidade perdida. Evidência: `bunx tsc --noEmit` rc=0, `bunx vitest run` **305 arquivos / 3456 testes passed / 0 failed** (a suíte caiu de 306 para 305 arquivos por causa do teste removido, sem nenhuma outra quebra) e o `grep` acima vazio)
 - [ ] **159** — Levantar o que falta para os hooks dormentes restantes — onda 4 — Média — Documentação
 - [ ] **160** — Ligar ou remover os hooks dormentes, dois a dois — onda 4 — Média — Frontend
 - [ ] **161** — Decidir o destino de `translate-summary` e `sync-crm-queue` — onda 4 — Baixa — Edge Function
