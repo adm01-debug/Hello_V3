@@ -77,7 +77,7 @@ Deno.serve(async (req) => {
         .map(([cat, items]) => `${cat}: ${items.length} notificação(ões)`)
         .join(", ");
 
-      await supabase.from("notifications").insert({
+      const { error: digestErr } = await supabase.from("notifications").insert({
         user_id: userPref.user_id,
         title: `Resumo ${userPref.digest_frequency === "daily" ? "Diário" : "Semanal"}`,
         message: `Você tem ${notifications.length} notificações não lidas. ${summary}`,
@@ -86,6 +86,7 @@ Deno.serve(async (req) => {
         severity: "info",
         metadata: { grouped_count: notifications.length, categories: grouped },
       });
+      if (digestErr) console.error('process-digest: falha ao criar notificacao de resumo', digestErr);
 
       results.push({
         user_id: userPref.user_id,
