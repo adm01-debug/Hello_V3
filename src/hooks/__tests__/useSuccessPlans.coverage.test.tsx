@@ -36,6 +36,7 @@ const milestoneRows = [
 
 const state = {
   planError: null as unknown,
+  msError: null as unknown,
   insertError: null as unknown,
   updateError: null as unknown,
   emptyPlans: false,
@@ -60,7 +61,7 @@ vi.mock('@/integrations/supabase/client', () => ({
         });
       } else {
         // success_plan_milestones
-        builder.order = vi.fn().mockResolvedValue({ data: milestoneRows, error: null });
+        builder.order = vi.fn().mockResolvedValue({ data: milestoneRows, error: state.msError });
         builder.eq = vi.fn().mockResolvedValue({ data: null, error: state.updateError });
       }
       return builder;
@@ -76,6 +77,7 @@ vi.mock('@/lib/logger', () => {
 
 beforeEach(() => {
   state.planError = null;
+  state.msError = null;
   state.insertError = null;
   state.updateError = null;
   state.emptyPlans = false;
@@ -101,6 +103,25 @@ describe('useSuccessPlans', () => {
     await waitFor(() => expect(result.current.loading).toBe(false));
     expect(result.current.plans.length).toBe(0);
     expect(result.current.milestones).toEqual({});
+  });
+
+  it('exposes the milestone read error, because a plan without milestones is not empty', async () => {
+    state.msError = { message: 'milestones down' };
+    const { result } = renderHook(() => useSuccessPlans());
+    await waitFor(() => expect(result.current.loading).toBe(false));
+    expect(result.current.error).toBe('milestones down');
+    expect(result.current.milestones).toEqual({});
+  });
+
+  it('clears the milestone error after the next successful read', async () => {
+    state.msError = { message: 'milestones down' };
+    const { result } = renderHook(() => useSuccessPlans());
+    await waitFor(() => expect(result.current.error).toBe('milestones down'));
+
+    state.msError = null;
+    await act(async () => { await result.current.refresh(); });
+    expect(result.current.error).toBeNull();
+    expect(result.current.milestones['pl1']?.length).toBe(1);
   });
 
   it('handles load error', async () => {

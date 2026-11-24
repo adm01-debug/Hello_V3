@@ -20,7 +20,7 @@ export default function AgentRanking() {
   usePageTitle('Ranking de Agentes');
 
   const {
-    agents, performanceData, isLoading, sortBy, setSortBy, period, setPeriod,
+    agents, performanceData, isLoading, error, sortBy, setSortBy, period, setPeriod,
     editingGoals, setEditingGoals, goalsDialogOpen, setGoalsDialogOpen,
     getGoalsForAgent, saveGoals, createTestData,
   } = useAgentRanking();
@@ -71,12 +71,23 @@ export default function AgentRanking() {
          }
        />
  
-       <AgentSummaryStats agents={agents} />
+       {error && (
+        <div className="rounded-xl border border-destructive/40 bg-destructive/10 p-4">
+          <p className="font-medium text-destructive">Não foi possível carregar o ranking de agentes</p>
+          <p className="mt-1 text-sm text-muted-foreground">{error}</p>
+          <p className="mt-1 text-xs text-muted-foreground">Ranking vazio não significa "nenhum agente produziu nada" — a leitura das chamadas falhou.</p>
+        </div>
+      )}
+      {!error && (
+        <>
+      <AgentSummaryStats agents={agents} />
       <PerformanceEvolutionChart performanceData={performanceData} agents={agents} />
       <AgentPodium agents={agents} />
       <AgentGoalsGrid agents={agents} getGoalsForAgent={getGoalsForAgent}
         onEditGoals={(goals) => { setEditingGoals(goals); setGoalsDialogOpen(true); }} />
       <AgentRankingTable agents={agents} isLoading={isLoading} />
+        </>
+      )}
       <BadgesShowcase badges={badges} agentBadges={agentBadges} />
        <GoalsConfigDialog open={goalsDialogOpen} onOpenChange={setGoalsDialogOpen}
          editingGoals={editingGoals} setEditingGoals={setEditingGoals} onSave={saveGoals} />

@@ -9,7 +9,7 @@ import { NeonPageLayout } from '@/components/layout/NeonPageLayout';
 
 export default function SuccessPlans() {
   usePageTitle('Planos de Sucesso');
-  const { plans, milestones, loading, toggleMilestone } = useSuccessPlans();
+  const { plans, milestones, loading, error, toggleMilestone } = useSuccessPlans();
 
   return (
     <NeonPageLayout>
@@ -20,6 +20,10 @@ export default function SuccessPlans() {
 
       {loading ? (
         <p className="text-muted-foreground">Carregando...</p>
+      ) : error ? (
+        <Card><CardContent className="pt-6">
+          <p className="text-destructive text-center py-8">Não foi possível carregar os planos de sucesso: {error}</p>
+        </CardContent></Card>
       ) : plans.length === 0 ? (
         <Card><CardContent className="pt-6">
           <p className="text-muted-foreground text-center py-8">Nenhum plano de sucesso ainda</p>

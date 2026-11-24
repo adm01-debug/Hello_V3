@@ -2,6 +2,7 @@ import { useCallback, useEffect, useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { logger } from "@/lib/logger";
 import { toast } from "sonner";
+import { mensagemDeErro } from "@/lib/error-message";
 
 export interface ScorecardTemplate {
   id: string;
@@ -47,24 +48,34 @@ export function useScorecards(callSessionId?: string) {
   const [scorecards, setScorecards] = useState<CallScorecard[]>([]);
   const [responses, setResponses] = useState<ScorecardResponse[]>([]);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
   const refresh = useCallback(async () => {
     setLoading(true);
-    const [{ data: tpl }, { data: crit }] = await Promise.all([
+    const [{ data: tpl, error: tplError }, { data: crit, error: critError }] = await Promise.all([
       supabase.from("scorecard_templates").select("*").eq("is_active", true),
       supabase.from("scorecard_criteria").select("*").order("display_order"),
     ]);
+    // Lista de modelos vazia por erro de leitura leva a criar um modelo que ja existe.
+    if (tplError || critError) {
+      setError(mensagemDeErro(tplError ?? critError));
+      setLoading(false);
+      return;
+    }
+    setError(null);
     setTemplates((tpl ?? []) as ScorecardTemplate[]);
     setCriteria((crit ?? []) as ScorecardCriterion[]);
 
     if (callSessionId) {
-      const { data: sc } = await supabase
+      const { data: sc, error: scError } = await supabase
         .from("call_scorecards").select("*").eq("call_session_id", callSessionId);
+      if (scError) { setError(mensagemDeErro(scError)); setLoading(false); return; }
       setScorecards((sc ?? []) as CallScorecard[]);
       const ids = (sc ?? []).map((s) => s.id);
       if (ids.length) {
-        const { data: r } = await supabase
+        const { data: r, error: responsesError } = await supabase
           .from("scorecard_responses").select("*").in("scorecard_id", ids);
+        if (responsesError) { setError(mensagemDeErro(responsesError)); setLoading(false); return; }
         setResponses((r ?? []) as ScorecardResponse[]);
       } else { setResponses([]); }
     }
@@ -134,5 +145,5 @@ export function useScorecards(callSessionId?: string) {
     return data;
   }, [callSessionId, refresh]);
 
-  return { templates, criteria, scorecards, responses, loading, refresh, updateStatus, createTemplate, generateAIScorecard };
+  return { templates, criteria, scorecards, responses, loading, error, refresh, updateStatus, createTemplate, generateAIScorecard };
 }

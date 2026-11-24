@@ -80,6 +80,25 @@ describe('useAgentRanking (coverage)', () => {
     setTable('call_analyses', null);
   });
 
+  it('exposes the read error instead of an empty ranking', async () => {
+    setTable('call_summaries', null, { message: 'permission denied' });
+    const { result } = renderHook(() => useAgentRanking());
+    await waitFor(() => expect(result.current.isLoading).toBe(false));
+    expect(result.current.error).toBe('permission denied');
+    expect(result.current.agents).toEqual([]);
+  });
+
+  it('clears the ranking error after the next successful read', async () => {
+    setTable('call_summaries', null, { message: 'permission denied' });
+    const { result } = renderHook(() => useAgentRanking());
+    await waitFor(() => expect(result.current.error).toBe('permission denied'));
+
+    setTable('call_summaries', [{ call_session_id: 's1', customer_satisfaction: 9, agent_performance_score: 8 }]);
+    await act(async () => { result.current.setPeriod('week'); });
+    await waitFor(() => expect(result.current.error).toBeNull());
+    expect(result.current.agents.length).toBeGreaterThan(0);
+  });
+
   it('fetches agent stats on mount and exposes data', async () => {
     const { result } = renderHook(() => useAgentRanking());
     await waitFor(() => expect(result.current.isLoading).toBe(false));
