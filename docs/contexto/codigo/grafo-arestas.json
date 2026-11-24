@@ -4723,6 +4723,7 @@
   ],
   "supabase/functions/analyze-talk-ratio/index.ts": [
    "supabase/functions/_shared/cors.ts",
+   "supabase/functions/_shared/errors.ts",
    "supabase/functions/_shared/validate.ts"
   ],
   "supabase/functions/approve-password-reset/index.ts": [
@@ -4768,13 +4769,15 @@
    "supabase/functions/_shared/cors.ts"
   ],
   "supabase/functions/check-calling-hours/index.ts": [
-   "supabase/functions/_shared/cors.ts"
+   "supabase/functions/_shared/cors.ts",
+   "supabase/functions/_shared/errors.ts"
   ],
   "supabase/functions/check-contact-alerts/index.ts": [
    "supabase/functions/_shared/cors.ts"
   ],
   "supabase/functions/check-dnc/index.ts": [
-   "supabase/functions/_shared/cors.ts"
+   "supabase/functions/_shared/cors.ts",
+   "supabase/functions/_shared/errors.ts"
   ],
   "supabase/functions/check-goals/index.ts": [
    "supabase/functions/_shared/cors.ts"
@@ -4801,6 +4804,7 @@
   ],
   "supabase/functions/compute-best-time/index.ts": [
    "supabase/functions/_shared/cors.ts",
+   "supabase/functions/_shared/errors.ts",
    "supabase/functions/_shared/validate.ts"
   ],
   "supabase/functions/compute-deal-health/index.ts": [
@@ -4827,7 +4831,8 @@
   ],
   "supabase/functions/dialer-pacing-tick/index.ts": [
    "supabase/functions/_shared/constant-time.ts",
-   "supabase/functions/_shared/cors.ts"
+   "supabase/functions/_shared/cors.ts",
+   "supabase/functions/_shared/errors.ts"
   ],
   "supabase/functions/elevenlabs-conversation-token/index.ts": [
    "supabase/functions/_shared/cors.ts"
@@ -4844,6 +4849,7 @@
   "supabase/functions/embed-kb-article/index.ts": [
    "supabase/functions/_shared/auth.ts",
    "supabase/functions/_shared/cors.ts",
+   "supabase/functions/_shared/errors.ts",
    "supabase/functions/_shared/rate-limit.ts",
    "supabase/functions/_shared/resilience.ts",
    "supabase/functions/_shared/validate.ts",
@@ -4861,6 +4867,7 @@
   ],
   "supabase/functions/export-data-lake/index.ts": [
    "supabase/functions/_shared/cors.ts",
+   "supabase/functions/_shared/errors.ts",
    "supabase/functions/export-data-lake/csv.ts"
   ],
   "supabase/functions/extract-crm-fields/index.ts": [
@@ -4876,7 +4883,8 @@
    "supabase/functions/_shared/cors.ts"
   ],
   "supabase/functions/fuzz-test-runner/index.ts": [
-   "supabase/functions/_shared/cors.ts"
+   "supabase/functions/_shared/cors.ts",
+   "supabase/functions/_shared/errors.ts"
   ],
   "supabase/functions/generate-coaching-plan/index.ts": [
    "supabase/functions/_shared/cors.ts",
@@ -4947,6 +4955,7 @@
   "supabase/functions/record-consent/index.ts": [
    "supabase/functions/_shared/client-ip.ts",
    "supabase/functions/_shared/cors.ts",
+   "supabase/functions/_shared/errors.ts",
    "supabase/functions/_shared/validate.ts"
   ],
   "supabase/functions/redact-sensitive-audio/index.ts": [
@@ -4965,6 +4974,7 @@
   ],
   "supabase/functions/score-call-attempt/index.ts": [
    "supabase/functions/_shared/cors.ts",
+   "supabase/functions/_shared/errors.ts",
    "supabase/functions/_shared/validate.ts"
   ],
   "supabase/functions/score-call/index.ts": [
@@ -4973,6 +4983,7 @@
   ],
   "supabase/functions/search-calls/index.ts": [
    "supabase/functions/_shared/cors.ts",
+   "supabase/functions/_shared/errors.ts",
    "supabase/functions/_shared/validate.ts"
   ],
   "supabase/functions/send-notification/index.ts": [
@@ -5002,6 +5013,7 @@
   ],
   "supabase/functions/translate-summary/index.ts": [
    "supabase/functions/_shared/cors.ts",
+   "supabase/functions/_shared/errors.ts",
    "supabase/functions/_shared/resilience.ts"
   ],
   "supabase/functions/translate-utterance/index.ts": [
@@ -5059,7 +5071,8 @@
    "supabase/functions/_shared/validate.ts"
   ],
   "supabase/functions/voip-failover-notifier/index.ts": [
-   "supabase/functions/_shared/cors.ts"
+   "supabase/functions/_shared/cors.ts",
+   "supabase/functions/_shared/errors.ts"
   ],
   "supabase/functions/voip-load-test/index.ts": [
    "supabase/functions/_shared/cors.ts"

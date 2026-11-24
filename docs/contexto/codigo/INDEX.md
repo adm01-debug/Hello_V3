@@ -1,7 +1,7 @@
 # Contexto do projeto para agentes de IA
 
 GERADO AUTOMATICAMENTE por scripts/ai-context/gerar.mjs — não editar à mão; será sobrescrito.
-Publicado em `docs/contexto/codigo/` na branch `contexto` (gerada, nunca abra PR dela) a cada push em `main` e a cada 10 minutos pelo workflow `contexto.yml`; índice único das três fontes em `docs/contexto/00-INDEX.md`. Gere local com `node scripts/ai-context/gerar.mjs`. Commit-base: `668bf69765cb442366d31e658a71276115af8ffd` (2026-11-24T01:33:44-03:00).
+Publicado em `docs/contexto/codigo/` na branch `contexto` (gerada, nunca abra PR dela) a cada push em `main` e a cada 10 minutos pelo workflow `contexto.yml`; índice único das três fontes em `docs/contexto/00-INDEX.md`. Gere local com `node scripts/ai-context/gerar.mjs`. Commit-base: `48a60a2d695b11ad8ae86e79247f6c7e0cedf990` (2026-11-24T01:47:46-03:00).
 
 ## Como usar (leia antes de planejar ou executar qualquer tarefa)
 1. **Tela/rota/menu** → `rotas.json` (url/vista/menu → arquivo → hooks → tabelas → edges; `rotas_http_backend` para APIs) e `modulos.json` (módulo inteiro + dependências entre módulos).
@@ -36,7 +36,7 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 |---|---|
 | arquivos_total | 1716 |
 | arquivos_codigo | 1314 |
-| linhas_codigo | 176869 |
+| linhas_codigo | 176864 |
 | rotas | 106 |
 | rotas_http_backend | 12 |
 | vistas_por_id | 0 |
@@ -370,13 +370,13 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 - possiveis_segredos_no_codigo: 4 — ex.: scripts/ai-context/cenarios.mjs:103, src/lib/__tests__/security-advanced.test.ts:203, src/lib/__tests__/security-advanced.test.ts:208
 
 ## Grafo de código (graphify)
-- 10044 nós · 25899 arestas · 785 comunidades · grafo do commit `668bf697`
-- comunidades maiores: lucide-react (319), cn (216), react (198), safe-date.ts (192), vitest (190), client.ts (182), logger.ts (171), usePageTitle (151), Tabela de funcionalidades (142), protectedRoutes.tsx (112), ref_https (108), snapshot.py (102)
+- 10044 nós · 25944 arestas · 794 comunidades · grafo do commit `48a60a2d`
+- comunidades maiores: lucide-react (288), protectedRoutes.tsx (235), cn (208), client.ts (202), vitest (184), traceHeaders (155), react (141), usePageTitle (123), safe-date.ts (118), react-router-dom (118), ref_https (113), Tabela de funcionalidades (112)
 - símbolos mais chamados: cn() (src/lib/utils.ts), usePageTitle() (src/hooks/usePageTitle.ts), safeFormatDatePtBR() (src/lib/safe-date.ts), q() (scripts/supabase_snapshot/snapshot.py), safeFormatDistanceToNow() (src/lib/safe-date.ts), useAuthContext() (src/contexts/AuthContext.tsx), traceHeaders() (src/lib/tracing.ts), withTrace() (src/lib/tracing.ts), formatDuration() (src/lib/utils.ts), safeToLocaleString() (src/lib/safe-date.ts), .collect() (scripts/supabase_snapshot/test_snapshot.py), buildCorsHeaders() (supabase/functions/_shared/cors.ts)
 - consulta local: `graphify query "<pergunta>"`, `graphify path "<A>" "<B>"`, `graphify explain "<X>"`
 
 ## Hotspots (arquivos mais alterados, 90 dias)
-- docs/qa/05-PROGRESSO.md (60)
+- docs/qa/05-PROGRESSO.md (61)
 - docs/estado/funcionalidades-planejadas.md (27)
 - src/components/layout/AppSidebar.tsx (9)
 - docs/audits/pendencias-2026-07.md (8)
@@ -429,6 +429,7 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 
 
 ## Últimos commits
+- 2026-11-24 `48a60a2` fix: onda 2 da E050 - nao vazar erro interno em mais 13 edges (#231)
 - 2026-11-24 `668bf69` fix: nao vazar mensagem de erro interna nas edges (E050 onda 1) (#230)
 - 2026-11-24 `ea6b0f0` fix: checar erro nas escritas do discador e parar a campanha quando o claim falha (etapa 080) (#229)
 - 2026-11-24 `564451c` fix: teto em todo campo de texto das edges publicas que gastam dinheiro (E047) (#228)
@@ -443,7 +444,6 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 - 2026-11-23 `d1b586c` fix: whitelist de IPs avisa quando a leitura falha em vez de parecer vazia (#216)
 - 2026-11-23 `da41888` fix: registrar falha de leitura onde o erro era descartado (#219)
 - 2026-11-23 `ac329a7` fix: nao gravar dado derivado quando a leitura falha (#218)
-- 2026-11-23 `9d457f8` fix: ranking, scorecards e planos de sucesso distinguem erro de leitura de lista vazia (#217)
 
 ## Arquivos deste diretório
 - `docs/contexto/codigo/rotas.json`

@@ -1,15 +1,15 @@
 {
  "meta": {
-  "sha": "668bf69765cb442366d31e658a71276115af8ffd",
+  "sha": "48a60a2d695b11ad8ae86e79247f6c7e0cedf990",
   "branch": "main",
   "remote": "https://github.com/adm01-debug/Hello_V3",
-  "generated_at": "2026-11-24 04:34 UTC",
+  "generated_at": "2026-11-24 04:48 UTC",
   "files_total": 1763,
   "code_files": 1560,
-  "code_lines": 192881
+  "code_lines": 192876
  },
  "version": "1.3.2",
- "facts_hash": "bce353b1e6d744ec",
+ "facts_hash": "cadd64ec365cebdf",
  "stack": {
   "frameworks": [
    "React + Vite",
@@ -34277,7 +34277,7 @@
   {
    "module": "supabase/functions",
    "files": 202,
-   "lines": 22512,
+   "lines": 22507,
    "tables": [
     "account_lockouts",
     "accounts",
@@ -118297,7 +118297,7 @@
   },
   "supabase/functions/analyze-talk-ratio/index.ts": {
    "path": "supabase/functions/analyze-talk-ratio/index.ts",
-   "lines": 137,
+   "lines": 136,
    "exports": [
     "type TalkRatioStatus",
     "function talkRatioStatus"
@@ -119547,7 +119547,7 @@
   },
   "supabase/functions/compute-best-time/index.ts": {
    "path": "supabase/functions/compute-best-time/index.ts",
-   "lines": 131,
+   "lines": 132,
    "tables": [
     {
      "table": "contacts",
@@ -120002,7 +120002,7 @@
   },
   "supabase/functions/dialer-pacing-tick/index.ts": {
    "path": "supabase/functions/dialer-pacing-tick/index.ts",
-   "lines": 71,
+   "lines": 68,
    "rpc": [
     "apply_predictive_pacing",
     "is_admin_user"
@@ -120181,7 +120181,7 @@
   },
   "supabase/functions/embed-kb-article/index.ts": {
    "path": "supabase/functions/embed-kb-article/index.ts",
-   "lines": 119,
+   "lines": 120,
    "exports": [
     "function recordKb",
     "function handler"
@@ -120382,7 +120382,7 @@
   },
   "supabase/functions/export-data-lake/index.ts": {
    "path": "supabase/functions/export-data-lake/index.ts",
-   "lines": 83,
+   "lines": 82,
    "tables": [
     {
      "table": "user_roles",
@@ -120652,7 +120652,7 @@
   },
   "supabase/functions/fuzz-test-runner/index.ts": {
    "path": "supabase/functions/fuzz-test-runner/index.ts",
-   "lines": 143,
+   "lines": 142,
    "tables": [
     {
      "table": "user_roles",
@@ -121724,7 +121724,7 @@
   },
   "supabase/functions/record-consent/index.ts": {
    "path": "supabase/functions/record-consent/index.ts",
-   "lines": 102,
+   "lines": 101,
    "tables": [
     {
      "table": "user_profiles",
@@ -121990,7 +121990,7 @@
   },
   "supabase/functions/score-call-attempt/index.ts": {
    "path": "supabase/functions/score-call-attempt/index.ts",
-   "lines": 117,
+   "lines": 118,
    "tables": [
     {
      "table": "contact_engagement_patterns",
@@ -122039,7 +122039,7 @@
   },
   "supabase/functions/search-calls/index.ts": {
    "path": "supabase/functions/search-calls/index.ts",
-   "lines": 139,
+   "lines": 138,
    "exports": [
     "function handler"
    ],
@@ -122413,7 +122413,7 @@
   },
   "supabase/functions/translate-summary/index.ts": {
    "path": "supabase/functions/translate-summary/index.ts",
-   "lines": 115,
+   "lines": 116,
    "tables": [
     {
      "table": "call_summaries",
@@ -123227,7 +123227,7 @@
   },
   "supabase/functions/voip-failover-notifier/index.ts": {
    "path": "supabase/functions/voip-failover-notifier/index.ts",
-   "lines": 64,
+   "lines": 63,
    "exports": [
     "const handler"
    ],
@@ -125765,10 +125765,32 @@
   }
  },
  "git": {
-  "sha": "668bf69765cb442366d31e658a71276115af8ffd",
+  "sha": "48a60a2d695b11ad8ae86e79247f6c7e0cedf990",
   "branch": "main",
   "remote": "https://github.com/adm01-debug/Hello_V3",
   "commits": [
+   {
+    "sha": "48a60a2",
+    "date": "2026-11-24",
+    "author": "adm01-debug",
+    "subject": "fix: onda 2 da E050 - nao vazar erro interno em mais 13 edges (#231)",
+    "files": [
+     "docs/qa/05-PROGRESSO.md",
+     "supabase/functions/analyze-talk-ratio/index.ts",
+     "supabase/functions/check-calling-hours/index.ts",
+     "supabase/functions/check-dnc/index.ts",
+     "supabase/functions/compute-best-time/index.ts",
+     "supabase/functions/dialer-pacing-tick/index.ts",
+     "supabase/functions/embed-kb-article/index.ts",
+     "supabase/functions/export-data-lake/index.ts",
+     "supabase/functions/fuzz-test-runner/index.ts",
+     "supabase/functions/record-consent/index.ts",
+     "supabase/functions/score-call-attempt/index.ts",
+     "supabase/functions/search-calls/index.ts",
+     "supabase/functions/translate-summary/index.ts",
+     "supabase/functions/voip-failover-notifier/index.ts"
+    ]
+   },
    {
     "sha": "668bf69",
     "date": "2026-11-24",
@@ -126178,17 +126200,6 @@
      "src/hooks/__tests__/useMultiChannelCall.coverage.test.tsx",
      "src/hooks/useMultiChannelCall.ts",
      "src/pages/PhoneDialer.tsx"
-    ]
-   },
-   {
-    "sha": "adaa1e7",
-    "date": "2026-11-23",
-    "author": "adm01-debug",
-    "subject": "fix: webauthn-authenticate valida o contador do autenticador e ganha rate limit (#201)",
-    "files": [
-     "docs/qa/05-PROGRESSO.md",
-     "supabase/functions/webauthn-authenticate/__tests__/contador.test.ts",
-     "supabase/functions/webauthn-authenticate/index.ts"
     ]
    }
   ],

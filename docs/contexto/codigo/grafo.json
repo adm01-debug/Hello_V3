@@ -2,7 +2,7 @@
  "aviso": "GERADO AUTOMATICAMENTE por scripts/ai-context/gerar.mjs — não editar à mão; será sobrescrito.",
  "format_version": 2,
  "nos": 930,
- "arestas": 3586,
+ "arestas": 3599,
  "hubs": [
   {
    "arquivo": "src/integrations/supabase/client.ts",
@@ -121,6 +121,10 @@
    "importado_por": 21
   },
   {
+   "arquivo": "supabase/functions/_shared/errors.ts",
+   "importado_por": 21
+  },
+  {
    "arquivo": "src/components/ui/alert.tsx",
    "importado_por": 20
   },
@@ -158,10 +162,6 @@
   },
   {
    "arquivo": "src/components/ui/popover.tsx",
-   "importado_por": 10
-  },
-  {
-   "arquivo": "src/components/ui/slider.tsx",
    "importado_por": 10
   }
  ],

@@ -207,7 +207,7 @@
    "nome": "analyze-talk-ratio",
    "entrada": "supabase/functions/analyze-talk-ratio/index.ts",
    "arquivos": 1,
-   "linhas": 137,
+   "linhas": 136,
    "verify_jwt": true,
    "metodos": [
     "OPTIONS"
@@ -220,6 +220,7 @@
    "hosts_externos": [],
    "usa_shared": [
     "cors.ts",
+    "errors.ts",
     "validate.ts"
    ],
    "chamada_pelo_front": [
@@ -472,7 +473,8 @@
    "chama_edges": [],
    "hosts_externos": [],
    "usa_shared": [
-    "cors.ts"
+    "cors.ts",
+    "errors.ts"
    ],
    "chamada_pelo_front": [],
    "chamada_por_edges": [],
@@ -535,7 +537,8 @@
    "chama_edges": [],
    "hosts_externos": [],
    "usa_shared": [
-    "cors.ts"
+    "cors.ts",
+    "errors.ts"
    ],
    "chamada_pelo_front": [],
    "chamada_por_edges": [],
@@ -780,7 +783,7 @@
    "nome": "compute-best-time",
    "entrada": "supabase/functions/compute-best-time/index.ts",
    "arquivos": 1,
-   "linhas": 131,
+   "linhas": 132,
    "verify_jwt": true,
    "metodos": [
     "OPTIONS"
@@ -800,6 +803,7 @@
    "hosts_externos": [],
    "usa_shared": [
     "cors.ts",
+    "errors.ts",
     "validate.ts"
    ],
    "chamada_pelo_front": [
@@ -1024,7 +1028,7 @@
    "nome": "dialer-pacing-tick",
    "entrada": "supabase/functions/dialer-pacing-tick/index.ts",
    "arquivos": 1,
-   "linhas": 71,
+   "linhas": 68,
    "verify_jwt": false,
    "metodos": [
     "OPTIONS"
@@ -1045,7 +1049,8 @@
    "hosts_externos": [],
    "usa_shared": [
     "constant-time.ts",
-    "cors.ts"
+    "cors.ts",
+    "errors.ts"
    ],
    "chamada_pelo_front": [
     "src/hooks/usePredictivePacing.ts"
@@ -1128,7 +1133,7 @@
    "nome": "embed-kb-article",
    "entrada": "supabase/functions/embed-kb-article/index.ts",
    "arquivos": 1,
-   "linhas": 119,
+   "linhas": 120,
    "verify_jwt": true,
    "metodos": [
     "OPTIONS"
@@ -1150,6 +1155,7 @@
    "usa_shared": [
     "auth.ts",
     "cors.ts",
+    "errors.ts",
     "rate-limit.ts",
     "resilience.ts",
     "validate.ts",
@@ -1239,7 +1245,7 @@
    "nome": "export-data-lake",
    "entrada": "supabase/functions/export-data-lake/index.ts",
    "arquivos": 2,
-   "linhas": 120,
+   "linhas": 119,
    "verify_jwt": true,
    "metodos": [
     "OPTIONS"
@@ -1260,7 +1266,8 @@
    "chama_edges": [],
    "hosts_externos": [],
    "usa_shared": [
-    "cors.ts"
+    "cors.ts",
+    "errors.ts"
    ],
    "chamada_pelo_front": [
     "src/hooks/useDataLakeExports.ts"
@@ -1376,7 +1383,7 @@
    "nome": "fuzz-test-runner",
    "entrada": "supabase/functions/fuzz-test-runner/index.ts",
    "arquivos": 1,
-   "linhas": 143,
+   "linhas": 142,
    "verify_jwt": true,
    "metodos": [
     "OPTIONS"
@@ -1396,7 +1403,8 @@
    "chama_edges": [],
    "hosts_externos": [],
    "usa_shared": [
-    "cors.ts"
+    "cors.ts",
+    "errors.ts"
    ],
    "chamada_pelo_front": [],
    "chamada_por_edges": [],
@@ -1881,7 +1889,7 @@
    "nome": "record-consent",
    "entrada": "supabase/functions/record-consent/index.ts",
    "arquivos": 1,
-   "linhas": 102,
+   "linhas": 101,
    "verify_jwt": true,
    "metodos": [
     "OPTIONS"
@@ -1904,6 +1912,7 @@
    "usa_shared": [
     "client-ip.ts",
     "cors.ts",
+    "errors.ts",
     "validate.ts"
    ],
    "chamada_pelo_front": [
@@ -2061,7 +2070,7 @@
    "nome": "score-call-attempt",
    "entrada": "supabase/functions/score-call-attempt/index.ts",
    "arquivos": 1,
-   "linhas": 117,
+   "linhas": 118,
    "verify_jwt": true,
    "metodos": [
     "OPTIONS"
@@ -2082,6 +2091,7 @@
    "hosts_externos": [],
    "usa_shared": [
     "cors.ts",
+    "errors.ts",
     "validate.ts"
    ],
    "chamada_pelo_front": [
@@ -2096,7 +2106,7 @@
    "nome": "search-calls",
    "entrada": "supabase/functions/search-calls/index.ts",
    "arquivos": 1,
-   "linhas": 139,
+   "linhas": 138,
    "verify_jwt": true,
    "metodos": [
     "OPTIONS"
@@ -2115,6 +2125,7 @@
    "hosts_externos": [],
    "usa_shared": [
     "cors.ts",
+    "errors.ts",
     "validate.ts"
    ],
    "chamada_pelo_front": [
@@ -2376,7 +2387,7 @@
    "nome": "translate-summary",
    "entrada": "supabase/functions/translate-summary/index.ts",
    "arquivos": 1,
-   "linhas": 115,
+   "linhas": 116,
    "verify_jwt": true,
    "metodos": [
     "OPTIONS"
@@ -2398,6 +2409,7 @@
    ],
    "usa_shared": [
     "cors.ts",
+    "errors.ts",
     "resilience.ts"
    ],
    "chamada_pelo_front": [],
@@ -2864,7 +2876,7 @@
    "nome": "voip-failover-notifier",
    "entrada": "supabase/functions/voip-failover-notifier/index.ts",
    "arquivos": 1,
-   "linhas": 64,
+   "linhas": 63,
    "verify_jwt": true,
    "metodos": [
     "OPTIONS"
@@ -2883,7 +2895,8 @@
    "chama_edges": [],
    "hosts_externos": [],
    "usa_shared": [
-    "cors.ts"
+    "cors.ts",
+    "errors.ts"
    ],
    "chamada_pelo_front": [],
    "chamada_por_edges": [

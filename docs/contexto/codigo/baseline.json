@@ -2,11 +2,16 @@
  "aviso": "GERADO AUTOMATICAMENTE por scripts/ai-context/gerar.mjs — não editar à mão; será sobrescrito.",
  "format_version": 2,
  "git": {
-  "commit": "668bf69765cb442366d31e658a71276115af8ffd",
+  "commit": "48a60a2d695b11ad8ae86e79247f6c7e0cedf990",
   "branch": "main",
-  "data_commit": "2026-11-24T01:33:44-03:00",
+  "data_commit": "2026-11-24T01:47:46-03:00",
   "remote": "https://github.com/adm01-debug/Hello_V3",
   "ultimos_commits": [
+   {
+    "sha": "48a60a2",
+    "data": "2026-11-24",
+    "assunto": "fix: onda 2 da E050 - nao vazar erro interno em mais 13 edges (#231)"
+   },
    {
     "sha": "668bf69",
     "data": "2026-11-24",
@@ -126,14 +131,9 @@
     "sha": "1dcca43",
     "data": "2026-11-23",
     "assunto": "fix: grafico de espera do dashboard trata erro e nunca mostra valor negativo (#207)"
-   },
-   {
-    "sha": "6be7a63",
-    "data": "2026-11-23",
-    "assunto": "fix: importacao de DNC passa a conferir o resultado real da RPC (#206)"
    }
   ],
-  "arquivos_mudados_7d": 1072,
+  "arquivos_mudados_7d": 1074,
   "pastas_mais_mudadas_30d": [
    {
     "pasta": "covout/lcov-report/hooks",
@@ -141,7 +141,7 @@
    },
    {
     "pasta": "docs/qa/05-PROGRESSO.md",
-    "mudancas": 60
+    "mudancas": 61
    },
    {
     "pasta": "covout/lcov-report/lib",
@@ -199,7 +199,7 @@
   "arquivos_mais_mudados_90d": [
    {
     "arquivo": "docs/qa/05-PROGRESSO.md",
-    "mudancas": 60
+    "mudancas": 61
    },
    {
     "arquivo": "docs/estado/funcionalidades-planejadas.md",
@@ -258,6 +258,10 @@
     "mudancas": 5
    },
    {
+    "arquivo": "supabase/functions/dialer-pacing-tick/index.ts",
+    "mudancas": 5
+   },
+   {
     "arquivo": "AGENTS.md",
     "mudancas": 4
    },
@@ -292,16 +296,12 @@
    {
     "arquivo": "supabase/functions/auto-scorecard/index.ts",
     "mudancas": 4
-   },
-   {
-    "arquivo": "supabase/functions/chatbot-respond/index.ts",
-    "mudancas": 4
    }
   ],
   "autores_30d": [
    {
     "autor": "adm01-debug",
-    "commits": 209
+    "commits": 210
    },
    {
     "autor": "Joaquim Ataides",
@@ -316,7 +316,7 @@
  "contagens": {
   "arquivos_total": 1716,
   "arquivos_codigo": 1314,
-  "linhas_codigo": 176869,
+  "linhas_codigo": 176864,
   "rotas": 106,
   "rotas_http_backend": 12,
   "vistas_por_id": 0,
@@ -520,7 +520,7 @@
   },
   "supabase/functions": {
    "arquivos": 202,
-   "linhas": 22512
+   "linhas": 22507
   },
   "tailwind.config.ts": {
    "arquivos": 1,
