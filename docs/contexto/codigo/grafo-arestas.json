@@ -4695,6 +4695,7 @@
    "supabase/functions/_shared/hmac.ts",
    "supabase/functions/_shared/observability.ts",
    "supabase/functions/_shared/rate-limit.ts",
+   "supabase/functions/_shared/resilience.ts",
    "supabase/functions/_shared/validator.ts",
    "supabase/functions/analyze-call/schema.ts"
   ],
@@ -4722,7 +4723,8 @@
    "supabase/functions/_shared/cors.ts"
   ],
   "supabase/functions/auto-scorecard/index.ts": [
-   "supabase/functions/_shared/cors.ts"
+   "supabase/functions/_shared/cors.ts",
+   "supabase/functions/_shared/resilience.ts"
   ],
   "supabase/functions/bitrix-api/index.ts": [
    "supabase/functions/_shared/allowed-hosts.ts",
@@ -4741,6 +4743,7 @@
    "supabase/functions/_shared/constant-time.ts",
    "supabase/functions/_shared/cors.ts",
    "supabase/functions/_shared/rate-limit.ts",
+   "supabase/functions/_shared/resilience.ts",
    "supabase/functions/_shared/validate.ts"
   ],
   "supabase/functions/check-alerts/index.ts": [
@@ -4839,6 +4842,7 @@
   "supabase/functions/extract-crm-fields/index.ts": [
    "supabase/functions/_shared/cors.ts",
    "supabase/functions/_shared/rate-limit.ts",
+   "supabase/functions/_shared/resilience.ts",
    "supabase/functions/_shared/validate.ts"
   ],
   "supabase/functions/forecast-call-volume/index.ts": [
@@ -4851,7 +4855,8 @@
    "supabase/functions/_shared/cors.ts"
   ],
   "supabase/functions/generate-coaching-plan/index.ts": [
-   "supabase/functions/_shared/cors.ts"
+   "supabase/functions/_shared/cors.ts",
+   "supabase/functions/_shared/resilience.ts"
   ],
   "supabase/functions/generate-coaching-track/index.ts": [
    "supabase/functions/_shared/constant-time.ts",
@@ -4867,7 +4872,8 @@
   ],
   "supabase/functions/generate-meeting-summary/index.ts": [
    "supabase/functions/_shared/cors.ts",
-   "supabase/functions/_shared/rate-limit.ts"
+   "supabase/functions/_shared/rate-limit.ts",
+   "supabase/functions/_shared/resilience.ts"
   ],
   "supabase/functions/generate-summary/index.ts": [
    "supabase/functions/_shared/cors.ts",
@@ -4910,6 +4916,7 @@
   "supabase/functions/realtime-analysis/index.ts": [
    "supabase/functions/_shared/cors.ts",
    "supabase/functions/_shared/rate-limit.ts",
+   "supabase/functions/_shared/resilience.ts",
    "supabase/functions/_shared/validate.ts"
   ],
   "supabase/functions/record-consent/index.ts": [
@@ -4972,7 +4979,8 @@
    "supabase/functions/_shared/resilience.ts"
   ],
   "supabase/functions/translate-utterance/index.ts": [
-   "supabase/functions/_shared/cors.ts"
+   "supabase/functions/_shared/cors.ts",
+   "supabase/functions/_shared/resilience.ts"
   ],
   "supabase/functions/validate-geo/index.ts": [
    "supabase/functions/_shared/client-ip.ts",
@@ -4989,7 +4997,8 @@
    "supabase/functions/_shared/voice-utils.ts"
   ],
   "supabase/functions/voice-command/index.ts": [
-   "supabase/functions/_shared/cors.ts"
+   "supabase/functions/_shared/cors.ts",
+   "supabase/functions/_shared/resilience.ts"
   ],
   "supabase/functions/voice-transcribe/index.ts": [
    "supabase/functions/_shared/cors.ts"
@@ -5015,6 +5024,7 @@
   ],
   "supabase/functions/voip-executive-narrative/index.ts": [
    "supabase/functions/_shared/cors.ts",
+   "supabase/functions/_shared/resilience.ts",
    "supabase/functions/_shared/validate.ts"
   ],
   "supabase/functions/voip-executive-summary/index.ts": [
@@ -5101,6 +5111,7 @@
   "supabase/functions/whatsapp-rewrite/index.ts": [
    "supabase/functions/_shared/cors.ts",
    "supabase/functions/_shared/rate-limit.ts",
+   "supabase/functions/_shared/resilience.ts",
    "supabase/functions/_shared/validate.ts"
   ]
  }

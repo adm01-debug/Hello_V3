@@ -51,7 +51,7 @@
    "nome": "analyze-call",
    "entrada": "supabase/functions/analyze-call/index.ts",
    "arquivos": 3,
-   "linhas": 214,
+   "linhas": 219,
    "verify_jwt": true,
    "metodos": [
     "OPTIONS"
@@ -73,6 +73,7 @@
     "hmac.ts",
     "observability.ts",
     "rate-limit.ts",
+    "resilience.ts",
     "validator.ts"
    ],
    "chamada_pelo_front": [
@@ -267,7 +268,7 @@
    "nome": "auto-scorecard",
    "entrada": "supabase/functions/auto-scorecard/index.ts",
    "arquivos": 1,
-   "linhas": 203,
+   "linhas": 209,
    "verify_jwt": true,
    "metodos": [
     "OPTIONS"
@@ -291,7 +292,8 @@
     "openrouter.ai"
    ],
    "usa_shared": [
-    "cors.ts"
+    "cors.ts",
+    "resilience.ts"
    ],
    "chamada_pelo_front": [],
    "chamada_por_edges": [],
@@ -373,7 +375,7 @@
    "nome": "chatbot-respond",
    "entrada": "supabase/functions/chatbot-respond/index.ts",
    "arquivos": 1,
-   "linhas": 271,
+   "linhas": 272,
    "verify_jwt": true,
    "metodos": [
     "OPTIONS"
@@ -402,6 +404,7 @@
     "constant-time.ts",
     "cors.ts",
     "rate-limit.ts",
+    "resilience.ts",
     "validate.ts"
    ],
    "chamada_pelo_front": [
@@ -1263,7 +1266,7 @@
    "nome": "extract-crm-fields",
    "entrada": "supabase/functions/extract-crm-fields/index.ts",
    "arquivos": 1,
-   "linhas": 172,
+   "linhas": 175,
    "verify_jwt": true,
    "metodos": [
     "OPTIONS"
@@ -1287,6 +1290,7 @@
    "usa_shared": [
     "cors.ts",
     "rate-limit.ts",
+    "resilience.ts",
     "validate.ts"
    ],
    "chamada_pelo_front": [
@@ -1440,7 +1444,7 @@
    "nome": "generate-coaching-plan",
    "entrada": "supabase/functions/generate-coaching-plan/index.ts",
    "arquivos": 1,
-   "linhas": 117,
+   "linhas": 123,
    "verify_jwt": true,
    "metodos": [
     "OPTIONS"
@@ -1460,7 +1464,8 @@
     "openrouter.ai"
    ],
    "usa_shared": [
-    "cors.ts"
+    "cors.ts",
+    "resilience.ts"
    ],
    "chamada_pelo_front": [
     "src/components/coaching/CoachingCopilotCard.tsx"
@@ -1514,7 +1519,7 @@
    "nome": "generate-meeting-summary",
    "entrada": "supabase/functions/generate-meeting-summary/index.ts",
    "arquivos": 1,
-   "linhas": 310,
+   "linhas": 302,
    "verify_jwt": true,
    "metodos": [
     "OPTIONS"
@@ -1538,7 +1543,8 @@
    ],
    "usa_shared": [
     "cors.ts",
-    "rate-limit.ts"
+    "rate-limit.ts",
+    "resilience.ts"
    ],
    "chamada_pelo_front": [
     "src/hooks/useCallSession.ts",
@@ -1831,7 +1837,7 @@
    "nome": "realtime-analysis",
    "entrada": "supabase/functions/realtime-analysis/index.ts",
    "arquivos": 1,
-   "linhas": 98,
+   "linhas": 103,
    "verify_jwt": true,
    "metodos": [
     "OPTIONS"
@@ -1851,6 +1857,7 @@
    "usa_shared": [
     "cors.ts",
     "rate-limit.ts",
+    "resilience.ts",
     "validate.ts"
    ],
    "chamada_pelo_front": [
@@ -2393,7 +2400,7 @@
    "nome": "translate-utterance",
    "entrada": "supabase/functions/translate-utterance/index.ts",
    "arquivos": 1,
-   "linhas": 101,
+   "linhas": 100,
    "verify_jwt": true,
    "metodos": [
     "OPTIONS"
@@ -2414,7 +2421,8 @@
     "openrouter.ai"
    ],
    "usa_shared": [
-    "cors.ts"
+    "cors.ts",
+    "resilience.ts"
    ],
    "chamada_pelo_front": [
     "src/hooks/useLiveTranslation.ts"
@@ -2541,7 +2549,7 @@
    "nome": "voice-command",
    "entrada": "supabase/functions/voice-command/index.ts",
    "arquivos": 1,
-   "linhas": 97,
+   "linhas": 113,
    "verify_jwt": true,
    "metodos": [
     "OPTIONS"
@@ -2560,7 +2568,8 @@
     "openrouter.ai"
    ],
    "usa_shared": [
-    "cors.ts"
+    "cors.ts",
+    "resilience.ts"
    ],
    "chamada_pelo_front": [
     "src/hooks/useVoiceCommand.ts"
@@ -2795,6 +2804,7 @@
    ],
    "usa_shared": [
     "cors.ts",
+    "resilience.ts",
     "validate.ts"
    ],
    "chamada_pelo_front": [
@@ -3417,7 +3427,7 @@
    "nome": "whatsapp-rewrite",
    "entrada": "supabase/functions/whatsapp-rewrite/index.ts",
    "arquivos": 1,
-   "linhas": 140,
+   "linhas": 137,
    "verify_jwt": true,
    "metodos": [
     "OPTIONS"
@@ -3437,6 +3447,7 @@
    "usa_shared": [
     "cors.ts",
     "rate-limit.ts",
+    "resilience.ts",
     "validate.ts"
    ],
    "chamada_pelo_front": [],

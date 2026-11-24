@@ -4,20 +4,20 @@
  "presente": true,
  "como_gerar": "uvx --from \"graphifyy[sql]\" graphify update .  (ou: bun run graph:update); saída em graphify-out/ — graph.json e graph.html NÃO são versionados (dezenas de MB); use `graphify query/path/explain` localmente",
  "relatorio": null,
- "commit_do_grafo": "890ceeb52fcb7503ad136c839a44a3b3fcbcd6ef",
+ "commit_do_grafo": "51189721f046dd7e6fac205262a5590fb02d2a48",
  "grafo_atual": true,
  "nos": 10022,
- "arestas": 25801,
- "comunidades_total": 778,
+ "arestas": 25824,
+ "comunidades_total": 770,
  "relacoes": {
-  "calls": 2457,
+  "calls": 2458,
   "cites": 9,
   "contains": 7390,
   "defines": 6,
   "dynamic_import": 158,
   "implements": 1,
-  "imports": 6855,
-  "imports_from": 6136,
+  "imports": 6866,
+  "imports_from": 6147,
   "indexes": 419,
   "indirect_call": 143,
   "inherits": 12,
@@ -29,7 +29,7 @@
   "triggers": 113
  },
  "origem": {
-  "EXTRACTED": 24390,
+  "EXTRACTED": 24413,
   "INFERRED": 1411
  },
  "comunidades": [
@@ -189,9 +189,9 @@
   {
    "id": 9,
    "nome": "ref_https",
-   "nos": 119,
-   "callables": 47,
-   "arquivos": 61,
+   "nos": 116,
+   "callables": 46,
+   "arquivos": 62,
    "exemplos_arquivos": [
     "supabase/functions/__tests__/optimistic-lock.test.ts",
     "supabase/functions/_shared/__tests__/cors.test.ts",
@@ -200,7 +200,7 @@
     "supabase/functions/_shared/client-ip_test.ts",
     "supabase/functions/_shared/cors.ts",
     "supabase/functions/approve-password-reset/index.ts",
-    "supabase/functions/check-alerts/index.ts"
+    "supabase/functions/chat-widget-session/index.ts"
    ]
   },
   {
@@ -256,6 +256,23 @@
   },
   {
    "id": 13,
+   "nome": "validate.ts",
+   "nos": 97,
+   "callables": 52,
+   "arquivos": 34,
+   "exemplos_arquivos": [
+    "supabase/functions/_shared/__tests__/rate-limit.test.ts",
+    "supabase/functions/_shared/html.ts",
+    "supabase/functions/_shared/rate-limit.ts",
+    "supabase/functions/_shared/validate.ts",
+    "supabase/functions/_shared/voice-utils.ts",
+    "supabase/functions/analyze-contact-profile/index.ts",
+    "supabase/functions/analyze-live-utterance/index.ts",
+    "supabase/functions/analyze-sentiment/index.ts"
+   ]
+  },
+  {
+   "id": 14,
    "nome": "safe-date.ts",
    "nos": 92,
    "callables": 58,
@@ -272,7 +289,7 @@
    ]
   },
   {
-   "id": 14,
+   "id": 15,
    "nome": "generate.py",
    "nos": 91,
    "callables": 64,
@@ -284,7 +301,7 @@
    ]
   },
   {
-   "id": 15,
+   "id": 16,
    "nome": "Logger",
    "nos": 91,
    "callables": 45,
@@ -298,23 +315,6 @@
     "docs/qa/04-PLANO.md",
     "mem/features/outbound-compliance.md",
     "src/components/admin/extensions/BulkAssignTrunkDialog.tsx"
-   ]
-  },
-  {
-   "id": 16,
-   "nome": "validate.ts",
-   "nos": 84,
-   "callables": 47,
-   "arquivos": 33,
-   "exemplos_arquivos": [
-    "supabase/functions/_shared/__tests__/rate-limit.test.ts",
-    "supabase/functions/_shared/rate-limit.ts",
-    "supabase/functions/_shared/resilience.ts",
-    "supabase/functions/_shared/validate.ts",
-    "supabase/functions/_shared/voice-utils.ts",
-    "supabase/functions/analyze-contact-profile/index.ts",
-    "supabase/functions/analyze-live-utterance/index.ts",
-    "supabase/functions/analyze-sentiment/index.ts"
    ]
   },
   {
@@ -537,6 +537,23 @@
   },
   {
    "id": 31,
+   "nome": "analyze-call/index.ts",
+   "nos": 53,
+   "callables": 23,
+   "arquivos": 18,
+   "exemplos_arquivos": [
+    "docs/edge-functions/README.md",
+    "supabase/functions/_shared/observability.ts",
+    "supabase/functions/_shared/validator.ts",
+    "supabase/functions/_shared/validator_test.ts",
+    "supabase/functions/analyze-call/__tests__/integration_test.ts",
+    "supabase/functions/analyze-call/__tests__/schema.property.test.ts",
+    "supabase/functions/analyze-call/__tests__/schema_test.ts",
+    "supabase/functions/analyze-call/analyze-call_test.ts"
+   ]
+  },
+  {
+   "id": 32,
    "nome": "AppLayout.tsx",
    "nos": 53,
    "callables": 30,
@@ -553,7 +570,7 @@
    ]
   },
   {
-   "id": 32,
+   "id": 33,
    "nome": "useAnomalyRemediation.ts",
    "nos": 53,
    "callables": 25,
@@ -567,23 +584,6 @@
     "src/hooks/__tests__/useAnomalyRemediation.coverage.test.tsx",
     "src/hooks/__tests__/useQualityAlerts.coverage.test.tsx",
     "src/hooks/__tests__/useQualityMetrics.coverage.test.tsx"
-   ]
-  },
-  {
-   "id": 33,
-   "nome": "analyze-call/index.ts",
-   "nos": 52,
-   "callables": 22,
-   "arquivos": 18,
-   "exemplos_arquivos": [
-    "docs/edge-functions/README.md",
-    "supabase/functions/_shared/observability.ts",
-    "supabase/functions/_shared/validator.ts",
-    "supabase/functions/_shared/validator_test.ts",
-    "supabase/functions/analyze-call/__tests__/integration_test.ts",
-    "supabase/functions/analyze-call/__tests__/schema.property.test.ts",
-    "supabase/functions/analyze-call/__tests__/schema_test.ts",
-    "supabase/functions/analyze-call/analyze-call_test.ts"
    ]
   },
   {
@@ -639,6 +639,23 @@
   },
   {
    "id": 37,
+   "nome": "resilience.ts",
+   "nos": 50,
+   "callables": 34,
+   "arquivos": 10,
+   "exemplos_arquivos": [
+    "docs/qa/05-PROGRESSO.md",
+    "supabase/functions/_shared/__tests__/resilience.test.ts",
+    "supabase/functions/_shared/__tests__/resilient-fetch.test.ts",
+    "supabase/functions/_shared/resilience.ts",
+    "supabase/functions/auto-scorecard/index.ts",
+    "supabase/functions/generate-coaching-plan/index.ts",
+    "supabase/functions/score-call/index.test.ts",
+    "supabase/functions/score-call/index.ts"
+   ]
+  },
+  {
+   "id": 38,
    "nome": "useTimeOff.coverage.test.tsx",
    "nos": 49,
    "callables": 19,
@@ -655,7 +672,7 @@
    ]
   },
   {
-   "id": 38,
+   "id": 39,
    "nome": "ONDA 3 — Integridade de dados e regras de negócio (101–150)",
    "nos": 49,
    "callables": 0,
@@ -665,7 +682,7 @@
    ]
   },
   {
-   "id": 39,
+   "id": 40,
    "nome": "snapshot.py",
    "nos": 46,
    "callables": 34,
@@ -675,7 +692,17 @@
    ]
   },
   {
-   "id": 40,
+   "id": 41,
+   "nome": "ONDA 5 — Robustez: erros, estados e concorrência (181–235)",
+   "nos": 46,
+   "callables": 0,
+   "arquivos": 1,
+   "exemplos_arquivos": [
+    "docs/qa/04-PLANO.md"
+   ]
+  },
+  {
+   "id": 42,
    "nome": "useConversations.ts",
    "nos": 46,
    "callables": 23,
@@ -692,7 +719,7 @@
    ]
   },
   {
-   "id": 41,
+   "id": 43,
    "nome": "PhoneDialer.tsx",
    "nos": 46,
    "callables": 26,
@@ -709,7 +736,7 @@
    ]
   },
   {
-   "id": 42,
+   "id": 44,
    "nome": "useSipCall.ts",
    "nos": 45,
    "callables": 21,
@@ -726,17 +753,7 @@
    ]
   },
   {
-   "id": 43,
-   "nome": "ONDA 5 — Robustez: erros, estados e concorrência (181–235)",
-   "nos": 45,
-   "callables": 0,
-   "arquivos": 1,
-   "exemplos_arquivos": [
-    "docs/qa/04-PLANO.md"
-   ]
-  },
-  {
-   "id": 44,
+   "id": 45,
    "nome": "QualityForecastCard.tsx",
    "nos": 44,
    "callables": 19,
@@ -750,23 +767,6 @@
     "src/components/network/__tests__/QualityForecastCard.test.tsx",
     "src/hooks/__tests__/useTrunkHealth.coverage.test.tsx",
     "src/hooks/__tests__/useVoipCapacityRecommendations.coverage.test.tsx"
-   ]
-  },
-  {
-   "id": 45,
-   "nome": "WebRTCCall.tsx",
-   "nos": 44,
-   "callables": 33,
-   "arquivos": 16,
-   "exemplos_arquivos": [
-    "docs/agentes/telefonia-voip.md",
-    "docs/estado/componentes-parte1.md",
-    "docs/qa/04-PLANO.md",
-    "src/components/calls/AudioOutputSelector.tsx",
-    "src/components/calls/CallQualityIndicator.tsx",
-    "src/components/calls/PostCallSummary.tsx",
-    "src/components/calls/WebRTCCall.tsx",
-    "src/components/calls/WebRTCMetricsPanel.tsx"
    ]
   },
   {
@@ -798,6 +798,40 @@
   },
   {
    "id": 48,
+   "nome": "adr/README.md",
+   "nos": 43,
+   "callables": 0,
+   "arquivos": 9,
+   "exemplos_arquivos": [
+    "docs/adr/001-supabase-cloud-backend.md",
+    "docs/adr/007-lazy-routing-code-splitting.md",
+    "docs/adr/020-onda-5-polimento.md",
+    "docs/adr/023-onda-8-resiliencia-operacional.md",
+    "docs/adr/028-onda-13-inteligencia-executiva-voip.md",
+    "docs/adr/038-onda-23-rls-hardening-hibp.md",
+    "docs/adr/041-onda-27-cobertura-defensiva.md",
+    "docs/adr/043-onda-29-observabilidade-conflitos.md"
+   ]
+  },
+  {
+   "id": 49,
+   "nome": "mesmaString",
+   "nos": 43,
+   "callables": 21,
+   "arquivos": 15,
+   "exemplos_arquivos": [
+    "docs/qa/04-PLANO.md",
+    "src/lib/security/rate-limiter.ts",
+    "supabase/functions/_shared/__tests__/auth_test.ts",
+    "supabase/functions/_shared/auth.ts",
+    "supabase/functions/_shared/constant-time.ts",
+    "supabase/functions/chatbot-respond/__tests__/index.test.ts",
+    "supabase/functions/chatbot-respond/index.ts",
+    "supabase/functions/cleanup-lock-conflicts/__tests__/cron_auth_test.ts"
+   ]
+  },
+  {
+   "id": 50,
    "nome": "20260417001411_2f77b480-8ec1-46a5-af32-2904e651a55a.sql",
    "nos": 43,
    "callables": 0,
@@ -807,7 +841,7 @@
    ]
   },
   {
-   "id": 49,
+   "id": 51,
    "nome": "schemas.ts",
    "nos": 42,
    "callables": 16,
@@ -820,7 +854,7 @@
    ]
   },
   {
-   "id": 50,
+   "id": 52,
    "nome": ".collect",
    "nos": 41,
    "callables": 39,
@@ -830,7 +864,7 @@
    ]
   },
   {
-   "id": 51,
+   "id": 53,
    "nome": "ExtensionsTable.tsx",
    "nos": 41,
    "callables": 18,
@@ -847,24 +881,7 @@
    ]
   },
   {
-   "id": 52,
-   "nome": "BattleCardAlert.tsx",
-   "nos": 40,
-   "callables": 25,
-   "arquivos": 11,
-   "exemplos_arquivos": [
-    "docs/adr/008-conversation-intelligence.md",
-    "docs/qa/04-PLANO.md",
-    "src/components/calls/LiveTranscription.tsx",
-    "src/components/calls/live-transcription/TranscriptList.tsx",
-    "src/components/calls/live-transcription/TranscriptionHeader.tsx",
-    "src/components/calls/live-transcription/__tests__/useLiveTranscription.test.ts",
-    "src/components/calls/live-transcription/types.ts",
-    "src/components/calls/live-transcription/useLiveTranscription.ts"
-   ]
-  },
-  {
-   "id": 53,
+   "id": 54,
    "nome": "external-payload-schemas.ts",
    "nos": 40,
    "callables": 24,
@@ -881,7 +898,7 @@
    ]
   },
   {
-   "id": 54,
+   "id": 55,
    "nome": "20260416234921_cc18cae3-c0a2-4ffd-a96e-7bc43be82ec5.sql",
    "nos": 40,
    "callables": 0,
@@ -891,7 +908,7 @@
    ]
   },
   {
-   "id": 55,
+   "id": 56,
    "nome": "useRingtoneSettings.ts",
    "nos": 39,
    "callables": 20,
@@ -906,7 +923,23 @@
    ]
   },
   {
-   "id": 56,
+   "id": 57,
+   "nome": "BlfBoard.tsx",
+   "nos": 38,
+   "callables": 24,
+   "arquivos": 7,
+   "exemplos_arquivos": [
+    "src/components/blf/BlfLampCard.tsx",
+    "src/components/blf/BlfSummaryBar.tsx",
+    "src/hooks/useBlfBoard.ts",
+    "src/lib/__tests__/blf.test.ts",
+    "src/lib/blf.ts",
+    "src/pages/BlfBoard.tsx",
+    "src/routes/protectedRoutes.tsx"
+   ]
+  },
+  {
+   "id": 58,
    "nome": "useCallSession.ts",
    "nos": 37,
    "callables": 14,
@@ -922,7 +955,7 @@
    ]
   },
   {
-   "id": 57,
+   "id": 59,
    "nome": "ONDA 2 — Fluxos principais quebrados (056–100)",
    "nos": 37,
    "callables": 1,
@@ -934,24 +967,7 @@
    ]
   },
   {
-   "id": 58,
-   "nome": "oneOf",
-   "nos": 36,
-   "callables": 17,
-   "arquivos": 10,
-   "exemplos_arquivos": [
-    "docs/qa/04-PLANO.md",
-    "mem/features/voip-recommendation-history.md",
-    "supabase/functions/_shared/validate.ts",
-    "supabase/functions/voip-anomaly-remediation/__tests__/index.test.ts",
-    "supabase/functions/voip-anomaly-remediation/index.ts",
-    "supabase/functions/voip-executive-narrative/index.ts",
-    "supabase/functions/voip-quality-alerts-summary/index.ts",
-    "supabase/functions/voip-recommendation-history/__tests__/index.test.ts"
-   ]
-  },
-  {
-   "id": 59,
+   "id": 60,
    "nome": "AgentAssistDashboardCard.tsx",
    "nos": 36,
    "callables": 13,
@@ -968,7 +984,7 @@
    ]
   },
   {
-   "id": 60,
+   "id": 61,
    "nome": "CardContent",
    "nos": 36,
    "callables": 19,
@@ -985,7 +1001,7 @@
    ]
   },
   {
-   "id": 61,
+   "id": 62,
    "nome": "webauthn-authenticate/index.ts",
    "nos": 36,
    "callables": 27,
@@ -1002,7 +1018,7 @@
    ]
   },
   {
-   "id": 62,
+   "id": 63,
    "nome": "20260416235642_e9fe6fa3-4307-49a3-9253-09718c07703d.sql",
    "nos": 36,
    "callables": 0,
@@ -1012,7 +1028,24 @@
    ]
   },
   {
-   "id": 63,
+   "id": 64,
+   "nome": "WebRTCCall.tsx",
+   "nos": 35,
+   "callables": 25,
+   "arquivos": 13,
+   "exemplos_arquivos": [
+    "docs/agentes/telefonia-voip.md",
+    "docs/qa/04-PLANO.md",
+    "src/components/calls/AudioOutputSelector.tsx",
+    "src/components/calls/CallQualityIndicator.tsx",
+    "src/components/calls/WebRTCCall.tsx",
+    "src/components/calls/WebRTCMetricsPanel.tsx",
+    "src/components/calls/__tests__/WebRTCCall.test.tsx",
+    "src/components/ui/badge.tsx"
+   ]
+  },
+  {
+   "id": 65,
    "nome": "utilities-comprehensive.test.ts",
    "nos": 35,
    "callables": 19,
@@ -1029,7 +1062,7 @@
    ]
   },
   {
-   "id": 64,
+   "id": 66,
    "nome": "security-alerts-webhook.ts",
    "nos": 35,
    "callables": 24,
@@ -1043,7 +1076,24 @@
    ]
   },
   {
-   "id": 65,
+   "id": 67,
+   "nome": "BattleCardAlert.tsx",
+   "nos": 34,
+   "callables": 20,
+   "arquivos": 12,
+   "exemplos_arquivos": [
+    "docs/adr/008-conversation-intelligence.md",
+    "docs/estado/componentes-parte1.md",
+    "docs/qa/04-PLANO.md",
+    "src/components/calls/AudioOutputSelector.tsx",
+    "src/components/calls/LiveTranscription.tsx",
+    "src/components/calls/live-transcription/TranscriptList.tsx",
+    "src/components/calls/live-transcription/TranscriptionHeader.tsx",
+    "src/components/calls/live-transcription/types.ts"
+   ]
+  },
+  {
+   "id": 68,
    "nome": "useSipCall",
    "nos": 34,
    "callables": 10,
@@ -1060,40 +1110,7 @@
    ]
   },
   {
-   "id": 66,
-   "nome": "mesmaString",
-   "nos": 34,
-   "callables": 17,
-   "arquivos": 11,
-   "exemplos_arquivos": [
-    "docs/qa/04-PLANO.md",
-    "src/lib/security/rate-limiter.ts",
-    "supabase/functions/_shared/constant-time.ts",
-    "supabase/functions/auto-scorecard/index.ts",
-    "supabase/functions/cleanup-lock-conflicts/__tests__/cron_auth_test.ts",
-    "supabase/functions/cleanup-lock-conflicts/index.ts",
-    "supabase/functions/cleanup-recordings/__tests__/retencao_test.ts",
-    "supabase/functions/cleanup-recordings/index.ts"
-   ]
-  },
-  {
-   "id": 67,
-   "nome": "resilience.ts",
-   "nos": 34,
-   "callables": 23,
-   "arquivos": 7,
-   "exemplos_arquivos": [
-    "docs/qa/04-PLANO.md",
-    "docs/qa/05-PROGRESSO.md",
-    "supabase/functions/_shared/__tests__/resilience.test.ts",
-    "supabase/functions/_shared/__tests__/resilient-fetch.test.ts",
-    "supabase/functions/_shared/resilience.ts",
-    "supabase/functions/score-call/index.test.ts",
-    "supabase/functions/score-call/index.ts"
-   ]
-  },
-  {
-   "id": 68,
+   "id": 69,
    "nome": "test_snapshot.py",
    "nos": 33,
    "callables": 9,
@@ -1105,7 +1122,21 @@
    ]
   },
   {
-   "id": 69,
+   "id": 70,
+   "nome": "AnomalyDetectionCard",
+   "nos": 33,
+   "callables": 2,
+   "arquivos": 5,
+   "exemplos_arquivos": [
+    "docs/adr/036-onda-21-anomaly-detection-auto-remediation.md",
+    "docs/adr/037-onda-22-quality-forecasting.md",
+    "mem/features/voip-anomaly-detection.md",
+    "mem/features/voip-quality-forecasting.md",
+    "src/components/network/AnomalyDetectionCard.tsx"
+   ]
+  },
+  {
+   "id": 71,
    "nome": "Tabela de funcionalidades",
    "nos": 33,
    "callables": 26,
@@ -1122,7 +1153,7 @@
    ]
   },
   {
-   "id": 70,
+   "id": 72,
    "nome": "security-advanced.test.ts",
    "nos": 33,
    "callables": 21,
@@ -1138,7 +1169,7 @@
    ]
   },
   {
-   "id": 71,
+   "id": 73,
    "nome": "useAlerts.coverage.test.tsx",
    "nos": 32,
    "callables": 12,
@@ -1154,7 +1185,7 @@
    ]
   },
   {
-   "id": 72,
+   "id": 74,
    "nome": "useExecutiveDashboard.ts",
    "nos": 32,
    "callables": 21,
@@ -1168,24 +1199,7 @@
    ]
   },
   {
-   "id": 73,
-   "nome": "notify-new-device/index.ts",
-   "nos": 32,
-   "callables": 18,
-   "arquivos": 10,
-   "exemplos_arquivos": [
-    "supabase/functions/_shared/__tests__/auth_test.ts",
-    "supabase/functions/_shared/auth.ts",
-    "supabase/functions/_shared/html.ts",
-    "supabase/functions/_shared/validator.ts",
-    "supabase/functions/notify-blocked-ip/__tests__/index.test.ts",
-    "supabase/functions/notify-blocked-ip/index.ts",
-    "supabase/functions/notify-new-device/__tests__/index.test.ts",
-    "supabase/functions/notify-new-device/index.ts"
-   ]
-  },
-  {
-   "id": 74,
+   "id": 75,
    "nome": "safeParseInt",
    "nos": 31,
    "callables": 7,
@@ -1202,7 +1216,7 @@
    ]
   },
   {
-   "id": 75,
+   "id": 76,
    "nome": "sync-history.ts",
    "nos": 31,
    "callables": 23,
@@ -1215,7 +1229,7 @@
    ]
   },
   {
-   "id": 76,
+   "id": 77,
    "nome": "useVoipQualityMonitor",
    "nos": 31,
    "callables": 11,
@@ -1232,7 +1246,7 @@
    ]
   },
   {
-   "id": 77,
+   "id": 78,
    "nome": "web-vitals.ts",
    "nos": 31,
    "callables": 19,
@@ -1249,7 +1263,7 @@
    ]
   },
   {
-   "id": 78,
+   "id": 79,
    "nome": "security-infrastructure.test.ts",
    "nos": 31,
    "callables": 19,
@@ -1263,21 +1277,6 @@
     "src/lib/security/helmet-config.ts",
     "src/lib/security/hsts-headers.ts",
     "src/lib/security/penetration-test-reporter.ts"
-   ]
-  },
-  {
-   "id": 79,
-   "nome": "usePredictiveDialer.ts",
-   "nos": 30,
-   "callables": 23,
-   "arquivos": 6,
-   "exemplos_arquivos": [
-    "docs/qa/04-PLANO.md",
-    "src/components/dialer/CreateCampaignDialog.tsx",
-    "src/components/dialer/DialerControlPanel.tsx",
-    "src/hooks/predictive-dialer/api.ts",
-    "src/hooks/predictive-dialer/types.ts",
-    "src/hooks/usePredictiveDialer.ts"
    ]
   }
  ],
@@ -2115,11 +2114,11 @@
   ".lovable/memory/engineering/testing-infrastructure.md": "AgentAssistDashboardCard.tsx",
   ".lovable/memory/features/voip-recommendation-insights.md": "RecommendationInsightsCard",
   ".lovable/memory/voip/painel-blf-ramais.md": "MockSession",
-  ".lovable/memory/voip/painel-ramais-unificado.md": "useExtensionsOverview.ts",
+  ".lovable/memory/voip/painel-ramais-unificado.md": "ExtensionStatusBadge.tsx",
   ".lovable/plan.md": "O que vou fazer",
   "AGENTS.md": "AGENTS.md — Hello V3",
   "CLAUDE.md": "CLAUDE.md",
-  "ESTADO_ATUAL.md": "SupervisorPanel.tsx",
+  "ESTADO_ATUAL.md": "3. Riscos estruturais, por gravidade",
   "README.md": "📞 Bitrix Call Connect - VoIP Enterprise & AI Intelligence",
   "SYSTEM_FEATURES.md": "📋 Levantamento Completo de Funcionalidades do Sistema",
   "components.json": "components.json",
@@ -2132,13 +2131,13 @@
   "docs/adr/004-modular-auth-architecture.md": "RingGroupFormDialog.tsx",
   "docs/adr/005-edge-function-cors-validation.md": "ADR-005: Origin-Validated CORS in Edge Functions",
   "docs/adr/006-centralized-logging.md": "ADR-006: Centralized Structured Logger with Request ID",
-  "docs/adr/007-lazy-routing-code-splitting.md": "ADR-007: Lazy Routing and Bundle Code Splitting",
+  "docs/adr/007-lazy-routing-code-splitting.md": "adr/README.md",
   "docs/adr/008-conversation-intelligence.md": "Decisão",
   "docs/adr/009-sales-enablement-suite.md": "ADR 009 — Sales Enablement & Revenue Intelligence Suite",
   "docs/adr/010-customer-success-suite.md": "ADR 010 — Customer Success & Retention Intelligence Suite",
   "docs/adr/011-workforce-management-suite.md": "ADR 011 — Workforce Management & Operational Excellence Suite",
   "docs/adr/012-meeting-summary-ai.md": "ADR 012: Meeting Summary AI (Notas Executivas Pós-Call)",
-  "docs/adr/012-omnichannel-suite.md": "adr/README.md",
+  "docs/adr/012-omnichannel-suite.md": "ADR 012 — Suíte Omnichannel (Inbox, Knowledge Base, Roteamento, SLA, Chatbot)",
   "docs/adr/013-real-time-agent-assist.md": "ADR 013 — Real-Time Agent Assist & Next-Best-Action",
   "docs/adr/014-voice-biometrics-fraud.md": "ADR-014: Voice Biometrics & Fraud Detection",
   "docs/adr/015-outbound-compliance-predictive.md": "generate.py",
@@ -2149,12 +2148,12 @@
   "docs/adr/020-onda-5-polimento.md": "logger.ts",
   "docs/adr/021-onda-6-hardening-final.md": "Decisões",
   "docs/adr/022-onda-7-manutencao-continua.md": "ADR-022 — Onda 7: Manutenção Contínua",
-  "docs/adr/023-onda-8-resiliencia-operacional.md": "ADR-023: Onda 8 — Resiliência Operacional",
+  "docs/adr/023-onda-8-resiliencia-operacional.md": "adr/README.md",
   "docs/adr/024-onda-9-monitoramento-voip.md": "useVoipQualityMonitor",
   "docs/adr/025-onda-10-diagnostico-rede.md": "useVoipQualityMonitor",
-  "docs/adr/026-onda-11-inteligencia-preditiva-voip.md": "ADR-026 — Onda 11: Inteligência Preditiva de Qualidade VoIP",
+  "docs/adr/026-onda-11-inteligencia-preditiva-voip.md": "Scorecard — Maturidade Técnica (re-avaliação E2)",
   "docs/adr/027-onda-12-auto-remediacao-voip.md": "ADR-027: Onda 12 — Auto-Remediação e Alertas Persistentes VoIP",
-  "docs/adr/028-onda-13-inteligencia-executiva-voip.md": "adr/README.md",
+  "docs/adr/028-onda-13-inteligencia-executiva-voip.md": "metrics/mos.ts",
   "docs/adr/029-onda-14-anomaly-detection-forecast.md": "ADR-029: Onda 14 — Detecção de Anomalias e Forecast de Capacidade VoIP",
   "docs/adr/030-onda-15-cockpit-executivo-voip.md": "voip-executive-summary/index.ts",
   "docs/adr/031-onda-16-recomendacoes-acionaveis-voip.md": "VoipHealthScoreCard",
@@ -2162,18 +2161,18 @@
   "docs/adr/033-onda-18-coaching-insights-recomendacoes.md": "RecommendationInsightsCard",
   "docs/adr/034-onda-19-whatif-simulator-proactive.md": "ADR-034 — Onda 19: What-If Simulator + Recomendações Proativas Agendadas",
   "docs/adr/035-onda-20-voice-qa-executive-summary.md": "VoipVoiceQAPanel",
-  "docs/adr/036-onda-21-anomaly-detection-auto-remediation.md": "Decisão",
-  "docs/adr/037-onda-22-quality-forecasting.md": "ADR-037 — Onda 22: Forecasting Preditivo de Qualidade VoIP + Capacity Planning",
+  "docs/adr/036-onda-21-anomaly-detection-auto-remediation.md": "AnomalyDetectionCard",
+  "docs/adr/037-onda-22-quality-forecasting.md": "AnomalyDetectionCard",
   "docs/adr/038-onda-23-rls-hardening-hibp.md": "adr/README.md",
   "docs/adr/039-onda-24-25-locking-coverage.md": "useContacts",
   "docs/adr/040-onda-26-locking-expandido.md": "ADR-040 — Onda 26: Optimistic Locking expandido + Testes defensivos",
   "docs/adr/041-onda-27-cobertura-defensiva.md": "useContacts",
   "docs/adr/042-onda-28-blindagem-concorrencia.md": "ADR-042 — Onda 28: Blindagem de Concorrência Final",
-  "docs/adr/043-onda-29-observabilidade-conflitos.md": "ADR-043 — Onda 29: Observabilidade de Conflitos + Retenção Automática",
+  "docs/adr/043-onda-29-observabilidade-conflitos.md": "adr/README.md",
   "docs/adr/044-onda-30-cron-hotspot-alerts.md": "ADR-044 — Onda 30: Cron Automatizado + Alertas de Hotspot",
   "docs/adr/046-onda-32-sip-config-healthcheck.md": "Decisão",
   "docs/adr/047-onda-33-failover-trunks.md": "ADR-047 — Onda 33: Failover automático e métricas de uso por trunk VoIP",
-  "docs/adr/048-onda-34-painel-unificado-ramais.md": "ADR-048 — Onda 34: Painel Unificado de Gestão de Ramais",
+  "docs/adr/048-onda-34-painel-unificado-ramais.md": "ExtensionStatusBadge.tsx",
   "docs/adr/049-onda-35-bulk-ops-health-score.md": "ADR-049 — Onda 35: Bulk Operations + Health Score por Ramal",
   "docs/adr/050-onda-36-auditoria-telemetria-ramais.md": "useCallSession.ts",
   "docs/adr/051-onda-37-property-based-fuzz-testing.md": "computeHealth",
@@ -2186,33 +2185,33 @@
   "docs/agentes/mapa-repo.md": "supabase-snapshot",
   "docs/agentes/telefonia-voip.md": "Telefonia (SIP / WebRTC / WhatsApp) — referência para agentes",
   "docs/analises/comparativo-3cx.md": "MockSession",
-  "docs/audit/scorecard-final.md": "voip-anomaly-detector/index.ts",
+  "docs/audit/scorecard-final.md": "Scorecard — Maturidade Técnica (re-avaliação E2)",
   "docs/audits/2026-07-12-backend-audit.md": "web-vitals.ts",
-  "docs/audits/pendencias-2026-07.md": "useReauth",
+  "docs/audits/pendencias-2026-07.md": "useExtensionsOverview.ts",
   "docs/contexto/regras/manual/README.md": "manual/README.md",
   "docs/contexto/regras/manual/TEMPLATE-regras-de-negocio.md": "Regras de negócio — preencha o que o código não diz",
   "docs/edge-functions/README.md": "analyze-call/index.ts",
-  "docs/estado/componentes-parte1.md": "WebRTCCall.tsx",
+  "docs/estado/componentes-parte1.md": "Tabela de funcionalidades",
   "docs/estado/componentes-parte2.md": "SystemIntegrityDashboard.tsx",
   "docs/estado/componentes-parte3.md": "logger.ts",
-  "docs/estado/componentes-parte4.md": "ESTADO_ATUAL.md",
+  "docs/estado/componentes-parte4.md": "useLiveTranslation",
   "docs/estado/dados-schema-migrations.md": "Lote M1 — Camada de dados",
   "docs/estado/edge-functions-parte1.md": "Lote F1 — supabase/functions (parte 1)",
-  "docs/estado/edge-functions-parte2.md": "voip-anomaly-detector/index.ts",
+  "docs/estado/edge-functions-parte2.md": "ESTADO_ATUAL.md",
   "docs/estado/funcionalidades-planejadas.md": "useQueueMetrics",
   "docs/estado/hooks-parte1.md": "Logger",
   "docs/estado/hooks-parte2.md": "useAuthContext",
   "docs/estado/hooks-parte3.md": "Logger",
-  "docs/estado/hooks-parte4.md": "useTimeOff.coverage.test.tsx",
+  "docs/estado/hooks-parte4.md": "SecurityAlerts.tsx",
   "docs/estado/infra-ci-rotas-integracoes.md": "usePageTitle",
-  "docs/estado/integracoes.md": "Integrações de Terceiros — Implementadas, Parciais e Planejadas",
+  "docs/estado/integracoes.md": "ESTADO_ATUAL.md",
   "docs/estado/lib-parte1.md": "fixes-exhaustive.test.ts",
   "docs/estado/lib-parte2.md": "meeting-summary-utils.ts",
   "docs/estado/paginas-parte1.md": "PredictiveDialerPanel.tsx",
-  "docs/estado/paginas-parte2.md": "ESTADO_ATUAL.md",
+  "docs/estado/paginas-parte2.md": "Tabela de funcionalidades",
   "docs/observabilidade/SLI_SLO.md": "SLI_SLO.md",
   "docs/pendencias/WIRING-01-permissiongate.md": "PermissionGate.tsx",
-  "docs/pendencias/WIRING-02-livetranslationpanel.md": "useLiveTranslation",
+  "docs/pendencias/WIRING-02-livetranslationpanel.md": "TranslationCenter",
   "docs/pendencias/WIRING-03-whatsappcomposer.md": "useDataLakeExports.ts",
   "docs/pendencias/WIRING-04-gamificationdashboard.md": "Estado de wiring em 20/11 (branch claude/feat-wiring-frontend-20261120-1622 → PR)",
   "docs/pendencias/WIRING-05-securityauditdashboard.md": "Tabela de funcionalidades",
@@ -2271,18 +2270,18 @@
   "mem/features/outbound-compliance.md": "generate.py",
   "mem/features/security-hardening-10-10.md": "logger.ts",
   "mem/features/voice-security.md": "voice-security.md",
-  "mem/features/voip-anomaly-detection.md": "AnomalyDetectionCard",
+  "mem/features/voip-anomaly-detection.md": "useAnomalyRemediation.ts",
   "mem/features/voip-anomaly-forecast.md": "voip-anomaly-detector/index.ts",
   "mem/features/voip-auto-remediation.md": "Onda 12 — Auto-Remediação e Alertas Persistentes VoIP",
   "mem/features/voip-executive-cockpit.md": "VoipHealthScoreCard",
   "mem/features/voip-executive-intelligence.md": "Onda 13 — Inteligência Executiva VoIP",
   "mem/features/voip-predictive-quality.md": "VoIP — Inteligência Preditiva de Qualidade",
   "mem/features/voip-quality-forecasting.md": "AnomalyDetectionCard",
-  "mem/features/voip-recommendation-history.md": "oneOf",
+  "mem/features/voip-recommendation-history.md": "voip-recommendation-history.md",
   "mem/features/voip-recommendation-insights.md": "RecommendationInsightsCard",
   "mem/features/voip-recommendations.md": "VoipHealthScoreCard",
   "mem/features/voip-voice-qa-executive.md": "VoipVoiceQAPanel",
-  "mem/features/voip-whatif-simulator.md": "RecommendationInsightsCard",
+  "mem/features/voip-whatif-simulator.md": "VoipHealthScoreCard",
   "mem/features/workforce-management.md": "Workforce Management & Operational Excellence Suite",
   "mem/index.md": "QualityForecastCard.tsx",
   "mem/voip/trunks-failover-metrics.md": "useSipCall",
@@ -2352,7 +2351,7 @@
   "src/components/admin/extensions/BulkAssignTrunkDialog.tsx": "Logger",
   "src/components/admin/extensions/ExtensionAuditTimeline.tsx": "safe-date.ts",
   "src/components/admin/extensions/ExtensionDetailsDrawer.tsx": "ExtensionsTable.tsx",
-  "src/components/admin/extensions/ExtensionStatusBadge.tsx": "useExtensionsOverview.ts",
+  "src/components/admin/extensions/ExtensionStatusBadge.tsx": "ExtensionStatusBadge.tsx",
   "src/components/admin/extensions/ExtensionsFilters.tsx": "Logger",
   "src/components/admin/extensions/ExtensionsTable.tsx": "ExtensionsTable.tsx",
   "src/components/admin/extensions/HealthScoreBadge.tsx": "ActiveCallsIndicator.tsx",
@@ -2428,7 +2427,7 @@
   "src/components/calls/__tests__/WebRTCCall.test.tsx": "WebRTCCall.tsx",
   "src/components/calls/live-transcription/TranscriptList.tsx": "card.tsx",
   "src/components/calls/live-transcription/TranscriptionHeader.tsx": "BattleCardAlert.tsx",
-  "src/components/calls/live-transcription/__tests__/useLiveTranscription.test.ts": "BattleCardAlert.tsx",
+  "src/components/calls/live-transcription/__tests__/useLiveTranscription.test.ts": "useLiveTranscription.test.ts",
   "src/components/calls/live-transcription/types.ts": "BattleCardAlert.tsx",
   "src/components/calls/live-transcription/useLiveTranscription.ts": "BattleCardAlert.tsx",
   "src/components/calls/softphone/ActiveCallDisplay.tsx": "UnifiedSoftphone.tsx",
@@ -2924,7 +2923,7 @@
   "src/hooks/useBattleCardDetection.ts": "BattleCardAlert.tsx",
   "src/hooks/useBestTimeToContact.ts": "logger.ts",
   "src/hooks/useBitrix.ts": "useBitrix.ts",
-  "src/hooks/useBlfBoard.ts": "blf.ts",
+  "src/hooks/useBlfBoard.ts": "BlfBoard.tsx",
   "src/hooks/useBlockedAccessLogs.ts": "Tabela de funcionalidades",
   "src/hooks/useCadences.ts": "useContacts",
   "src/hooks/useCallAnalytics.ts": "Index.tsx",
@@ -2968,7 +2967,7 @@
   "src/hooks/useExtensionAudit.ts": "Logger",
   "src/hooks/useExtensionAuditHistory.ts": "client.ts",
   "src/hooks/useExtensionsAdmin.ts": "Logger",
-  "src/hooks/useExtensionsOverview.ts": "ExtensionsTable.tsx",
+  "src/hooks/useExtensionsOverview.ts": "useExtensionsOverview.ts",
   "src/hooks/useFinancialImpact.ts": "useFinancialImpact.ts",
   "src/hooks/useForecastVolume.ts": "logger.ts",
   "src/hooks/useGamification.ts": "useGamification.ts",
@@ -2986,7 +2985,7 @@
   "src/hooks/useLearning.ts": "useTimeOff.coverage.test.tsx",
   "src/hooks/useLiveAssist.ts": "usePageTitle",
   "src/hooks/useLiveSentiment.ts": "useLiveSentiment.coverage.test.tsx",
-  "src/hooks/useLiveTranslation.ts": "useLiveTranslation",
+  "src/hooks/useLiveTranslation.ts": "useLiveTranslation.ts",
   "src/hooks/useLoginLockout.ts": "useAuthContext",
   "src/hooks/useMFA.ts": "Tabela de funcionalidades",
   "src/hooks/useMeetingSummary.ts": "meeting-summary-utils.ts",
@@ -3104,7 +3103,7 @@
   "src/lib/__tests__/hash-endpoint.test.ts": "security-alerts-webhook-queue.ts",
   "src/lib/__tests__/health-score.property.test.ts": "computeHealth",
   "src/lib/__tests__/holdReminderSounds.coverage.test.tsx": "useHoldReminder.ts",
-  "src/lib/__tests__/language-detection.test.ts": "useLiveTranslation",
+  "src/lib/__tests__/language-detection.test.ts": "useLiveTranslation.ts",
   "src/lib/__tests__/logger.test.ts": "vitest",
   "src/lib/__tests__/meeting-summary-utils.test.ts": "meeting-summary-utils.ts",
   "src/lib/__tests__/mock-data-integrity.test.ts": "mock-data-integrity.test.ts",
@@ -3145,7 +3144,7 @@
   "src/lib/__tests__/voice-biometrics.coverage.test.ts": "voice-biometrics.coverage.test.ts",
   "src/lib/__tests__/voice-command-history.test.ts": "VoiceAssistantDialog.tsx",
   "src/lib/__tests__/voice-preferences.test.ts": "VoiceAssistantDialog.tsx",
-  "src/lib/__tests__/voipProactiveSnapshot.coverage.test.ts": "voipProactiveSnapshot.ts",
+  "src/lib/__tests__/voipProactiveSnapshot.coverage.test.ts": "RecommendationInsightsCard",
   "src/lib/__tests__/voipRecommendationCoaching.coverage.test.ts": "voipRecommendationCoaching.ts",
   "src/lib/__tests__/web-vitals.coverage.test.ts": "web-vitals.ts",
   "src/lib/__tests__/webhook-health-and-export.simulation.test.ts": "webhook-health-utils.ts",
@@ -3157,7 +3156,7 @@
   "src/lib/audit/index.ts": "utilities-comprehensive.test.ts",
   "src/lib/bitrix/circuit-breaker.ts": "useBitrix.ts",
   "src/lib/bitrix/sync-log.ts": "useBitrix.ts",
-  "src/lib/blf.ts": "blf.ts",
+  "src/lib/blf.ts": "BlfBoard.tsx",
   "src/lib/call-park.ts": "call-park.ts",
   "src/lib/call-queue.ts": "queue-audio.ts",
   "src/lib/device-identity.ts": "device-identity.ts",
@@ -3178,7 +3177,7 @@
   "src/lib/health-score.ts": "computeHealth",
   "src/lib/holdReminderSounds.ts": "useHoldReminder.ts",
   "src/lib/incoming-call-alert.ts": "useRingtoneSettings.ts",
-  "src/lib/language-detection.ts": "useLiveTranslation",
+  "src/lib/language-detection.ts": "useLiveTranslation.ts",
   "src/lib/logger.ts": "Logger",
   "src/lib/meeting-summary-utils.ts": "meeting-summary-utils.ts",
   "src/lib/metrics/__tests__/mos.test.ts": "metrics/mos.ts",
@@ -3245,7 +3244,7 @@
   "src/lib/voice-command-history.ts": "VoiceAssistantDialog.tsx",
   "src/lib/voice-preferences.ts": "VoiceAssistantDialog.tsx",
   "src/lib/voice-speech.ts": "VoiceAssistantDialog.tsx",
-  "src/lib/voipProactiveSnapshot.ts": "voipProactiveSnapshot.ts",
+  "src/lib/voipProactiveSnapshot.ts": "RecommendationInsightsCard",
   "src/lib/voipRecommendationCoaching.ts": "voipRecommendationCoaching.ts",
   "src/lib/web-vitals.ts": "web-vitals.ts",
   "src/lib/webauthn/__tests__/webauthn-utils.coverage.test.ts": "useWebAuthn.ts",
@@ -3407,7 +3406,7 @@
   "src/vite-env.d.ts": "vite-env.d.ts",
   "supabase/functions/__tests__/optimistic-lock.test.ts": "ref_https",
   "supabase/functions/_shared/__tests__/allowed-hosts.test.ts": "allowed-hosts.ts",
-  "supabase/functions/_shared/__tests__/auth_test.ts": "notify-new-device/index.ts",
+  "supabase/functions/_shared/__tests__/auth_test.ts": "mesmaString",
   "supabase/functions/_shared/__tests__/capture-handler.ts": "webauthn-authenticate/index.ts",
   "supabase/functions/_shared/__tests__/cors.test.ts": "ref_https",
   "supabase/functions/_shared/__tests__/local-supabase.ts": "local-supabase.ts",
@@ -3426,7 +3425,7 @@
   "supabase/functions/_shared/external-payload-schemas.ts": "external-payload-schemas.ts",
   "supabase/functions/_shared/external-payload-schemas_test.ts": "external-payload-schemas.ts",
   "supabase/functions/_shared/hmac.ts": "external-payload-schemas.ts",
-  "supabase/functions/_shared/html.ts": "notify-new-device/index.ts",
+  "supabase/functions/_shared/html.ts": "validate.ts",
   "supabase/functions/_shared/mos.ts": "voip-recommendation-simulate/index.ts",
   "supabase/functions/_shared/mos_test.ts": "voip-recommendation-simulate/index.ts",
   "supabase/functions/_shared/numeric-schemas.ts": "external-payload-schemas.ts",
@@ -3452,13 +3451,13 @@
   "supabase/functions/analyze-talk-ratio/__tests__/index.test.ts": "validate.ts",
   "supabase/functions/analyze-talk-ratio/index.ts": "validate.ts",
   "supabase/functions/approve-password-reset/index.ts": "ref_https",
-  "supabase/functions/auto-scorecard/index.ts": "mesmaString",
+  "supabase/functions/auto-scorecard/index.ts": "resilience.ts",
   "supabase/functions/bitrix-api/__tests__/index.test.ts": "external-payload-schemas.ts",
   "supabase/functions/bitrix-api/index.test.ts": "external-payload-schemas.ts",
   "supabase/functions/bitrix-api/index.ts": "external-payload-schemas.ts",
-  "supabase/functions/chat-widget-session/index.ts": "validate.ts",
-  "supabase/functions/chatbot-respond/__tests__/index.test.ts": "validate.ts",
-  "supabase/functions/chatbot-respond/index.ts": "validate.ts",
+  "supabase/functions/chat-widget-session/index.ts": "ref_https",
+  "supabase/functions/chatbot-respond/__tests__/index.test.ts": "mesmaString",
+  "supabase/functions/chatbot-respond/index.ts": "mesmaString",
   "supabase/functions/check-alerts/index.ts": "ref_https",
   "supabase/functions/check-calling-hours/__tests__/index.test.ts": "local-supabase.ts",
   "supabase/functions/check-calling-hours/index.ts": "ref_https",
@@ -3500,23 +3499,23 @@
   "supabase/functions/forecast-call-volume/index.ts": "ref_https",
   "supabase/functions/forecast-deals/index.ts": "ref_https",
   "supabase/functions/fuzz-test-runner/index.ts": "ref_https",
-  "supabase/functions/generate-coaching-plan/index.ts": "mesmaString",
+  "supabase/functions/generate-coaching-plan/index.ts": "resilience.ts",
   "supabase/functions/generate-coaching-track/index.ts": "track-engine.ts",
   "supabase/functions/generate-coaching-track/track-engine.ts": "track-engine.ts",
   "supabase/functions/generate-coaching-track/track-engine_test.ts": "Lote L2 — src/lib (parte 2)",
   "supabase/functions/generate-coaching/index.ts": "ref_https",
   "supabase/functions/generate-meeting-summary/index.ts": "validate.ts",
-  "supabase/functions/generate-summary/index.ts": "validate.ts",
+  "supabase/functions/generate-summary/index.ts": "ref_https",
   "supabase/functions/global-load-test/index.ts": "ref_https",
   "supabase/functions/health-check/__tests__/index.test.ts": "analyze-call/index.ts",
   "supabase/functions/health-check/__tests__/slo-budget_test.ts": "analyze-call/index.ts",
   "supabase/functions/health-check/index.ts": "analyze-call/index.ts",
   "supabase/functions/health-check/slo-budget.ts": "analyze-call/index.ts",
   "supabase/functions/ldap-sync/index.ts": "ONDA 1 — Segurança e risco de perda de dado (001–055)",
-  "supabase/functions/notify-blocked-ip/__tests__/index.test.ts": "notify-new-device/index.ts",
-  "supabase/functions/notify-blocked-ip/index.ts": "notify-new-device/index.ts",
-  "supabase/functions/notify-new-device/__tests__/index.test.ts": "notify-new-device/index.ts",
-  "supabase/functions/notify-new-device/index.ts": "notify-new-device/index.ts",
+  "supabase/functions/notify-blocked-ip/__tests__/index.test.ts": "validate.ts",
+  "supabase/functions/notify-blocked-ip/index.ts": "validate.ts",
+  "supabase/functions/notify-new-device/__tests__/index.test.ts": "validate.ts",
+  "supabase/functions/notify-new-device/index.ts": "validate.ts",
   "supabase/functions/ocr-virtual-fax/index.ts": "ref_https",
   "supabase/functions/process-digest/index.ts": "ref_https",
   "supabase/functions/realtime-analysis/index.ts": "validate.ts",
@@ -3531,17 +3530,17 @@
   "supabase/functions/score-call/index.ts": "resilience.ts",
   "supabase/functions/search-calls/__tests__/index.test.ts": "validate.ts",
   "supabase/functions/search-calls/index.ts": "validate.ts",
-  "supabase/functions/send-notification/__tests__/index.test.ts": "notify-new-device/index.ts",
-  "supabase/functions/send-notification/index.ts": "notify-new-device/index.ts",
+  "supabase/functions/send-notification/__tests__/index.test.ts": "mesmaString",
+  "supabase/functions/send-notification/index.ts": "mesmaString",
   "supabase/functions/send-survey/index.ts": "ref_https",
   "supabase/functions/sip-config/index.ts": "ref_https",
   "supabase/functions/suggest-shift-swaps/index.ts": "ref_https",
   "supabase/functions/sync-crm-queue/index.ts": "ref_https",
   "supabase/functions/teams-fetch-recordings/index.ts": "ref_https",
   "supabase/functions/transcribe-recording/index.ts": "ref_https",
-  "supabase/functions/translate-summary/index.ts": "ref_https",
+  "supabase/functions/translate-summary/index.ts": "resilience.ts",
   "supabase/functions/translate-utterance/__tests__/index.test.ts": "ref_https",
-  "supabase/functions/translate-utterance/index.ts": "ref_https",
+  "supabase/functions/translate-utterance/index.ts": "resilience.ts",
   "supabase/functions/validate-geo/index.ts": "ref_https",
   "supabase/functions/validate-ip/__tests__/index.test.ts": "ref_https",
   "supabase/functions/validate-ip/index.ts": "ref_https",
@@ -3550,8 +3549,8 @@
   "supabase/functions/voice-transcribe/index.ts": "ref_https",
   "supabase/functions/voip-anomaly-detector/__tests__/index.test.ts": "voip-anomaly-detector/index.ts",
   "supabase/functions/voip-anomaly-detector/index.ts": "voip-anomaly-detector/index.ts",
-  "supabase/functions/voip-anomaly-remediation/__tests__/index.test.ts": "oneOf",
-  "supabase/functions/voip-anomaly-remediation/index.ts": "oneOf",
+  "supabase/functions/voip-anomaly-remediation/__tests__/index.test.ts": "voip-anomaly-remediation/index.ts",
+  "supabase/functions/voip-anomaly-remediation/index.ts": "voip-anomaly-remediation/index.ts",
   "supabase/functions/voip-capacity-forecast/__tests__/index.test.ts": "voip-anomaly-detector/index.ts",
   "supabase/functions/voip-capacity-forecast/index.ts": "voip-anomaly-detector/index.ts",
   "supabase/functions/voip-capacity-recommendations/__tests__/index.test.ts": "voip-capacity-recommendations/index.ts",
@@ -3559,19 +3558,19 @@
   "supabase/functions/voip-diagnostic-voice-qa/__tests__/index.test.ts": "ref_https",
   "supabase/functions/voip-diagnostic-voice-qa/index.ts": "validate.ts",
   "supabase/functions/voip-executive-narrative/__tests__/index.test.ts": "ref_https",
-  "supabase/functions/voip-executive-narrative/index.ts": "oneOf",
+  "supabase/functions/voip-executive-narrative/index.ts": "validate.ts",
   "supabase/functions/voip-executive-summary/__tests__/index.test.ts": "voip-executive-summary/index.ts",
   "supabase/functions/voip-executive-summary/index.ts": "voip-executive-summary/index.ts",
   "supabase/functions/voip-failover-notifier/index.ts": "ref_https",
   "supabase/functions/voip-load-test/index.ts": "ref_https",
   "supabase/functions/voip-quality-alerts-summary/__tests__/index.test.ts": "ref_https",
-  "supabase/functions/voip-quality-alerts-summary/index.ts": "oneOf",
+  "supabase/functions/voip-quality-alerts-summary/index.ts": "validate.ts",
   "supabase/functions/voip-quality-forecast/__tests__/index.test.ts": "voip-quality-forecast/index.ts",
   "supabase/functions/voip-quality-forecast/index.ts": "voip-quality-forecast/index.ts",
   "supabase/functions/voip-quality-heatmap/__tests__/index.test.ts": "ref_https",
   "supabase/functions/voip-quality-heatmap/index.ts": "validate.ts",
-  "supabase/functions/voip-recommendation-history/__tests__/index.test.ts": "oneOf",
-  "supabase/functions/voip-recommendation-history/index.ts": "oneOf",
+  "supabase/functions/voip-recommendation-history/__tests__/index.test.ts": "voip-recommendation-history/index.ts",
+  "supabase/functions/voip-recommendation-history/index.ts": "voip-recommendation-history/index.ts",
   "supabase/functions/voip-recommendation-insights/__tests__/index.test.ts": "voip-recommendation-insights/index.ts",
   "supabase/functions/voip-recommendation-insights/index.ts": "voip-recommendation-insights/index.ts",
   "supabase/functions/voip-recommendation-simulate/__tests__/index.test.ts": "voip-recommendation-simulate/index.ts",
@@ -3579,7 +3578,7 @@
   "supabase/functions/voip-recommendations/__tests__/index.test.ts": "voip-recommendations/index.ts",
   "supabase/functions/voip-recommendations/index.ts": "voip-recommendations/index.ts",
   "supabase/functions/voip-sla-report/__tests__/index.test.ts": "ref_https",
-  "supabase/functions/voip-sla-report/index.ts": "oneOf",
+  "supabase/functions/voip-sla-report/index.ts": "voip-sla-report/index.ts",
   "supabase/functions/voip-trunks-healthcheck/index.test.ts": "allowed-hosts.ts",
   "supabase/functions/voip-trunks-healthcheck/index.ts": "allowed-hosts.ts",
   "supabase/functions/voip-trunks-manage/index.ts": "ONDA 1 — Segurança e risco de perda de dado (001–055)",

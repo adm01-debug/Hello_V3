@@ -1,6 +1,6 @@
 # 07 · REGRAS DE NEGÓCIO
 
-> Gerado automaticamente por AI Context Sync v1.3.2 · commit `890ceeb52f` · branch `main` · 2026-11-24 03:47 UTC
+> Gerado automaticamente por AI Context Sync v1.3.2 · commit `51189721f0` · branch `main` · 2026-11-24 03:58 UTC
 > Não edite à mão — regras humanas vão em `manual/`.
 
 ## A. Regras escritas por humanos (`manual/` — prioridade máxima, nunca sobrescrito)
@@ -2418,7 +2418,7 @@ _nenhum item encontrado_
 | Falha ao salvar regra | `src/hooks/useRoutingRules.ts` |
 | Falha ao executar enforcement de SLA | `src/hooks/useSLA.ts` |
 | Falha ao salvar política | `src/hooks/useSLA.ts` |
-| … +262 linhas — lista completa em `context.json` | |
+| … +257 linhas — lista completa em `context.json` | |
 
 ## J. Controle de acesso no código (checagens de perfil/permissão)
 

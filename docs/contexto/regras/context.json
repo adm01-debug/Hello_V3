@@ -1,15 +1,15 @@
 {
  "meta": {
-  "sha": "890ceeb52fcb7503ad136c839a44a3b3fcbcd6ef",
+  "sha": "51189721f046dd7e6fac205262a5590fb02d2a48",
   "branch": "main",
   "remote": "https://github.com/adm01-debug/Hello_V3",
-  "generated_at": "2026-11-24 03:47 UTC",
+  "generated_at": "2026-11-24 03:58 UTC",
   "files_total": 1755,
   "code_files": 1552,
-  "code_lines": 192448
+  "code_lines": 192478
  },
  "version": "1.3.2",
- "facts_hash": "e84325b72dc048fd",
+ "facts_hash": "c6bb9f9f8c86eecf",
  "stack": {
   "frameworks": [
    "React + Vite",
@@ -29402,9 +29402,7 @@
      "SUPABASE_ANON_KEY",
      "SUPABASE_URL"
     ],
-    "external": [
-     "https://openrouter.ai/api/v1/chat/…"
-    ],
+    "external": [],
     "invokes": [],
     "doc": "",
     "errors": [
@@ -29566,9 +29564,7 @@
      "SUPABASE_SERVICE_ROLE_KEY",
      "SUPABASE_URL"
     ],
-    "external": [
-     "https://openrouter.ai/api/v1/chat/…"
-    ],
+    "external": [],
     "invokes": [],
     "doc": "Auto-Scorecard — Gera scorecard automático via IA para chamadas com resumo Invocado por trigger em call_summaries (pg_net) ou manualmente.",
     "errors": [],
@@ -29647,13 +29643,10 @@
      "SUPABASE_SERVICE_ROLE_KEY",
      "SUPABASE_URL"
     ],
-    "external": [
-     "https://openrouter.ai/api/v1/chat/…"
-    ],
+    "external": [],
     "invokes": [],
     "doc": "",
     "errors": [
-     "AI gateway error: ${aiResp.status}",
      "OPENROUTER_API_KEY não configurada",
      "Resposta sem tool call"
     ],
@@ -30302,9 +30295,7 @@
      "SUPABASE_SERVICE_ROLE_KEY",
      "SUPABASE_URL"
     ],
-    "external": [
-     "https://openrouter.ai/api/v1/chat/…"
-    ],
+    "external": [],
     "invokes": [],
     "doc": "",
     "errors": [],
@@ -30396,9 +30387,7 @@
      "SUPABASE_ANON_KEY",
      "SUPABASE_URL"
     ],
-    "external": [
-     "https://openrouter.ai/api/v1/chat/…"
-    ],
+    "external": [],
     "invokes": [],
     "doc": "Coaching Copilot — Gera plano semanal de coaching baseado nas últimas chamadas do agente",
     "errors": [],
@@ -30483,9 +30472,7 @@
      "SUPABASE_SERVICE_ROLE_KEY",
      "SUPABASE_URL"
     ],
-    "external": [
-     "https://openrouter.ai/api/v1/chat/…"
-    ],
+    "external": [],
     "invokes": [],
     "doc": "",
     "errors": [],
@@ -30716,9 +30703,7 @@
      "SUPABASE_ANON_KEY",
      "SUPABASE_URL"
     ],
-    "external": [
-     "https://openrouter.ai/api/v1/chat/…"
-    ],
+    "external": [],
     "invokes": [],
     "doc": "",
     "errors": [
@@ -31141,15 +31126,11 @@
      "SUPABASE_SERVICE_ROLE_KEY",
      "SUPABASE_URL"
     ],
-    "external": [
-     "https://openrouter.ai/api/v1/chat/…"
-    ],
+    "external": [],
     "invokes": [],
     "doc": "",
     "errors": [
-     "Créditos esgotados.",
      "Idioma não suportado: ${body.targetLang}",
-     "Rate limit excedido, tente novamente.",
      "Unauthorized",
      "callSessionId, text e targetLang obrigatórios"
     ],
@@ -31254,9 +31235,7 @@
      "SUPABASE_SERVICE_ROLE_KEY",
      "SUPABASE_URL"
     ],
-    "external": [
-     "https://openrouter.ai/api/v1/chat/…"
-    ],
+    "external": [],
     "invokes": [],
     "doc": "",
     "errors": [],
@@ -31433,9 +31412,7 @@
     "invokes": [],
     "doc": "Edge Function: voip-executive-narrative (Onda 20) Gera resumo executivo narrativo PT-BR (≤400 palavras) sobre o estado VoIP. Agrega KPIs, top recomendações e padrões; usa Lovable AI para a narrativa.",
     "errors": [
-     "Créditos de IA esgotados.",
      "Invalid params",
-     "Limite de requisições atingido.",
      "Method not allowed",
      "Unauthorized"
     ],
@@ -31914,9 +31891,7 @@
      "SUPABASE_ANON_KEY",
      "SUPABASE_URL"
     ],
-    "external": [
-     "https://openrouter.ai/api/v1/chat/…"
-    ],
+    "external": [],
     "invokes": [],
     "doc": "",
     "errors": [],
@@ -34300,7 +34275,7 @@
   {
    "module": "supabase/functions",
    "files": 194,
-   "lines": 22130,
+   "lines": 22160,
    "tables": [
     "account_lockouts",
     "accounts",
@@ -38575,19 +38550,9 @@
     "supabase/functions/teams-fetch-recordings/index.ts"
    ],
    "https://openrouter.ai": [
-    "supabase/functions/analyze-call/index.ts",
     "supabase/functions/analyze-contact-profile/index.ts",
     "supabase/functions/analyze-live-utterance/index.ts",
-    "supabase/functions/auto-scorecard/index.ts",
-    "supabase/functions/chatbot-respond/index.ts",
-    "supabase/functions/extract-crm-fields/index.ts",
-    "supabase/functions/generate-coaching-plan/index.ts",
-    "supabase/functions/generate-meeting-summary/index.ts",
-    "supabase/functions/ocr-virtual-fax/index.ts",
-    "supabase/functions/realtime-analysis/index.ts",
-    "supabase/functions/translate-utterance/index.ts",
-    "supabase/functions/voice-command/index.ts",
-    "supabase/functions/whatsapp-rewrite/index.ts"
+    "supabase/functions/ocr-virtual-fax/index.ts"
    ]
   },
   "dynamic_from": [
@@ -41791,10 +41756,6 @@
    },
    {
     "file": "supabase/functions/chatbot-respond/index.ts",
-    "msg": "AI gateway error: ${aiResp.status}"
-   },
-   {
-    "file": "supabase/functions/chatbot-respond/index.ts",
     "msg": "OPENROUTER_API_KEY não configurada"
    },
    {
@@ -41927,15 +41888,7 @@
    },
    {
     "file": "supabase/functions/translate-utterance/index.ts",
-    "msg": "Créditos esgotados."
-   },
-   {
-    "file": "supabase/functions/translate-utterance/index.ts",
     "msg": "Idioma não suportado: ${body.targetLang}"
-   },
-   {
-    "file": "supabase/functions/translate-utterance/index.ts",
-    "msg": "Rate limit excedido, tente novamente."
    },
    {
     "file": "supabase/functions/translate-utterance/index.ts",
@@ -41975,15 +41928,7 @@
    },
    {
     "file": "supabase/functions/voip-executive-narrative/index.ts",
-    "msg": "Créditos de IA esgotados."
-   },
-   {
-    "file": "supabase/functions/voip-executive-narrative/index.ts",
     "msg": "Invalid params"
-   },
-   {
-    "file": "supabase/functions/voip-executive-narrative/index.ts",
-    "msg": "Limite de requisições atingido."
    },
    {
     "file": "supabase/functions/voip-executive-narrative/index.ts",
@@ -55074,12 +55019,6 @@
     "file": "supabase/functions/generate-meeting-summary/index.ts",
     "field": "type",
     "value": "function",
-    "kind": "escreve"
-   },
-   {
-    "file": "supabase/functions/generate-meeting-summary/index.ts",
-    "field": "status",
-    "value": "failed",
     "kind": "escreve"
    },
    {
@@ -118041,10 +117980,7 @@
   },
   "supabase/functions/analyze-call/index.ts": {
    "path": "supabase/functions/analyze-call/index.ts",
-   "lines": 147,
-   "external_urls": [
-    "https://openrouter.ai/api/v1/chat/…"
-   ],
+   "lines": 152,
    "env": [
     "OPENROUTER_API_KEY",
     "SUPABASE_ANON_KEY",
@@ -118398,7 +118334,7 @@
   },
   "supabase/functions/auto-scorecard/index.ts": {
    "path": "supabase/functions/auto-scorecard/index.ts",
-   "lines": 203,
+   "lines": 209,
    "tables": [
     {
      "table": "call_scorecards",
@@ -118454,9 +118390,6 @@
      "weight"
     ]
    },
-   "external_urls": [
-    "https://openrouter.ai/api/v1/chat/…"
-   ],
    "env": [
     "OPENROUTER_API_KEY",
     "SUPABASE_SERVICE_ROLE_KEY",
@@ -118666,7 +118599,7 @@
   },
   "supabase/functions/chatbot-respond/index.ts": {
    "path": "supabase/functions/chatbot-respond/index.ts",
-   "lines": 271,
+   "lines": 272,
    "exports": [
     "function handler"
    ],
@@ -118731,16 +118664,12 @@
      "direction"
     ]
    },
-   "external_urls": [
-    "https://openrouter.ai/api/v1/chat/…"
-   ],
    "env": [
     "OPENROUTER_API_KEY",
     "SUPABASE_SERVICE_ROLE_KEY",
     "SUPABASE_URL"
    ],
    "errors": [
-    "AI gateway error: ${aiResp.status}",
     "OPENROUTER_API_KEY não configurada",
     "Resposta sem tool call"
    ],
@@ -120410,7 +120339,7 @@
   },
   "supabase/functions/extract-crm-fields/index.ts": {
    "path": "supabase/functions/extract-crm-fields/index.ts",
-   "lines": 172,
+   "lines": 175,
    "tables": [
     {
      "table": "contacts",
@@ -120431,9 +120360,6 @@
      "position"
     ]
    },
-   "external_urls": [
-    "https://openrouter.ai/api/v1/chat/…"
-   ],
    "env": [
     "OPENROUTER_API_KEY",
     "SUPABASE_ANON_KEY",
@@ -120709,7 +120635,7 @@
   },
   "supabase/functions/generate-coaching-plan/index.ts": {
    "path": "supabase/functions/generate-coaching-plan/index.ts",
-   "lines": 117,
+   "lines": 123,
    "tables": [
     {
      "table": "call_sessions",
@@ -120724,9 +120650,6 @@
      "status"
     ]
    },
-   "external_urls": [
-    "https://openrouter.ai/api/v1/chat/…"
-   ],
    "env": [
     "OPENROUTER_API_KEY",
     "SUPABASE_ANON_KEY",
@@ -120896,7 +120819,7 @@
   },
   "supabase/functions/generate-meeting-summary/index.ts": {
    "path": "supabase/functions/generate-meeting-summary/index.ts",
-   "lines": 310,
+   "lines": 302,
    "tables": [
     {
      "table": "meeting_summaries",
@@ -120913,10 +120836,6 @@
     {
      "table": "meeting_summaries",
      "op": "upsert"
-    },
-    {
-     "table": "meeting_summaries",
-     "op": "update"
     },
     {
      "table": "meeting_summaries",
@@ -120951,9 +120870,6 @@
      "text"
     ]
    },
-   "external_urls": [
-    "https://openrouter.ai/api/v1/chat/…"
-   ],
    "env": [
     "OPENROUTER_API_KEY",
     "SUPABASE_ANON_KEY",
@@ -121104,11 +121020,6 @@
     {
      "field": "type",
      "value": "function",
-     "kind": "escreve"
-    },
-    {
-     "field": "status",
-     "value": "failed",
      "kind": "escreve"
     },
     {
@@ -121644,10 +121555,7 @@
   },
   "supabase/functions/realtime-analysis/index.ts": {
    "path": "supabase/functions/realtime-analysis/index.ts",
-   "lines": 98,
-   "external_urls": [
-    "https://openrouter.ai/api/v1/chat/…"
-   ],
+   "lines": 103,
    "env": [
     "OPENROUTER_API_KEY",
     "SUPABASE_ANON_KEY",
@@ -122414,15 +122322,12 @@
   },
   "supabase/functions/translate-utterance/index.ts": {
    "path": "supabase/functions/translate-utterance/index.ts",
-   "lines": 101,
+   "lines": 100,
    "tables": [
     {
      "table": "call_translations",
      "op": "insert"
     }
-   ],
-   "external_urls": [
-    "https://openrouter.ai/api/v1/chat/…"
    ],
    "env": [
     "OPENROUTER_API_KEY",
@@ -122431,9 +122336,7 @@
     "SUPABASE_URL"
    ],
    "errors": [
-    "Créditos esgotados.",
     "Idioma não suportado: ${body.targetLang}",
-    "Rate limit excedido, tente novamente.",
     "Unauthorized",
     "callSessionId, text e targetLang obrigatórios"
    ],
@@ -122632,10 +122535,7 @@
   },
   "supabase/functions/voice-command/index.ts": {
    "path": "supabase/functions/voice-command/index.ts",
-   "lines": 97,
-   "external_urls": [
-    "https://openrouter.ai/api/v1/chat/…"
-   ],
+   "lines": 113,
    "env": [
     "OPENROUTER_API_KEY",
     "SUPABASE_ANON_KEY",
@@ -123032,9 +122932,7 @@
     "SUPABASE_URL"
    ],
    "errors": [
-    "Créditos de IA esgotados.",
     "Invalid params",
-    "Limite de requisições atingido.",
     "Method not allowed",
     "Unauthorized"
    ],
@@ -124483,10 +124381,7 @@
   },
   "supabase/functions/whatsapp-rewrite/index.ts": {
    "path": "supabase/functions/whatsapp-rewrite/index.ts",
-   "lines": 140,
-   "external_urls": [
-    "https://openrouter.ai/api/v1/chat/…"
-   ],
+   "lines": 137,
    "env": [
     "OPENROUTER_API_KEY",
     "SUPABASE_ANON_KEY",
@@ -125727,10 +125622,30 @@
   }
  },
  "git": {
-  "sha": "890ceeb52fcb7503ad136c839a44a3b3fcbcd6ef",
+  "sha": "51189721f046dd7e6fac205262a5590fb02d2a48",
   "branch": "main",
   "remote": "https://github.com/adm01-debug/Hello_V3",
   "commits": [
+   {
+    "sha": "5118972",
+    "date": "2026-11-24",
+    "author": "adm01-debug",
+    "subject": "fix: prazo e 503 unico nas 11 edges de IA que chamavam o provedor direto (E209) (#227)",
+    "files": [
+     "docs/qa/05-PROGRESSO.md",
+     "supabase/functions/analyze-call/index.ts",
+     "supabase/functions/auto-scorecard/index.ts",
+     "supabase/functions/chatbot-respond/index.ts",
+     "supabase/functions/extract-crm-fields/index.ts",
+     "supabase/functions/generate-coaching-plan/index.ts",
+     "supabase/functions/generate-meeting-summary/index.ts",
+     "supabase/functions/realtime-analysis/index.ts",
+     "supabase/functions/translate-utterance/index.ts",
+     "supabase/functions/voice-command/index.ts",
+     "supabase/functions/voip-executive-narrative/index.ts",
+     "supabase/functions/whatsapp-rewrite/index.ts"
+    ]
+   },
    {
     "sha": "890ceeb",
     "date": "2026-11-24",
@@ -126119,17 +126034,6 @@
      "package-lock.json",
      "package.json"
     ]
-   },
-   {
-    "sha": "4e8548e",
-    "date": "2026-11-23",
-    "author": "adm01-debug",
-    "subject": "fix: email-inbound idempotente para parar o laco de 500 e a conversa duplicada (#197)",
-    "files": [
-     "docs/qa/05-PROGRESSO.md",
-     "supabase/functions/email-inbound/__tests__/index.test.ts",
-     "supabase/functions/email-inbound/index.ts"
-    ]
    }
   ],
   "hot_files": [
@@ -126186,31 +126090,31 @@
     2
    ],
    [
-    "supabase/functions/_shared/__tests__/resilient-fetch.test.ts",
+    "supabase/functions/analyze-call/index.ts",
     1
    ],
    [
-    "supabase/functions/_shared/resilience.ts",
+    "supabase/functions/auto-scorecard/index.ts",
     1
    ],
    [
-    "src/hooks/__tests__/useScheduledCallbacks.coverage.test.tsx",
+    "supabase/functions/chatbot-respond/index.ts",
     1
    ],
    [
-    "src/hooks/useScheduledCallbacks.ts",
+    "supabase/functions/extract-crm-fields/index.ts",
     1
    ],
    [
-    "AGENTS.md",
+    "supabase/functions/generate-coaching-plan/index.ts",
     1
    ],
    [
-    "src/test/setup.ts",
+    "supabase/functions/generate-meeting-summary/index.ts",
     1
    ],
    [
-    "src/hooks/__tests__/useAgentStatus.coverage.test.tsx",
+    "supabase/functions/realtime-analysis/index.ts",
     1
    ]
   ]
