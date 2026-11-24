@@ -9,6 +9,12 @@ import { useOptimisticLockConflicts, type ConflictPeriod } from '@/hooks/useOpti
 import { usePageTitle } from '@/hooks/usePageTitle';
 
 import { safeToLocaleString } from "@/lib/safe-date";
+const PERIOD_LABEL: Record<ConflictPeriod, string> = {
+  '24h': 'nas últimas 24 horas',
+  '7d': 'nos últimos 7 dias',
+  '30d': 'nos últimos 30 dias',
+};
+
 const TABLE_OPTIONS = [
   { value: 'all', label: 'Todas as tabelas' },
   { value: 'deals', label: 'Deals' },
@@ -34,6 +40,12 @@ export default function ConcurrencyConflicts() {
         </h1>
         <p className="text-muted-foreground">
           Monitoramento de conflitos de optimistic locking. Use para identificar hotspots de edição simultânea.
+        </p>
+        <p className="text-xs text-muted-foreground">
+          O gatilho <code className="font-mono">enforce_optimistic_lock</code> só grava uma linha quando a
+          atualização envia <code className="font-mono">version</code> e ele está desatualizado. O cron{' '}
+          <code className="font-mono">cleanup-lock-conflicts-weekly</code> apaga registros com mais de 90 dias,
+          então esta tela nunca mostra histórico mais longo que isso.
         </p>
       </header>
 
@@ -114,9 +126,13 @@ export default function ConcurrencyConflicts() {
           {isLoading ? (
             <Skeleton className="h-64 w-full" />
           ) : (data?.timeline.length ?? 0) === 0 ? (
-            <p className="text-center text-muted-foreground py-8">
-              Nenhum conflito registrado no período. ✨
-            </p>
+            <div className="text-center text-muted-foreground py-8 space-y-2">
+              <p>Nenhum conflito registrado {PERIOD_LABEL[period]}.</p>
+              <p className="text-xs">
+                Isso significa que nenhuma edição simultânea foi detectada no período — não que a tela esteja
+                sem dados.
+              </p>
+            </div>
           ) : (
             <ResponsiveContainer width="100%" height={260}>
               <LineChart data={data?.timeline ?? []}>
@@ -142,7 +158,7 @@ export default function ConcurrencyConflicts() {
           <CardHeader><CardTitle>Top 5 Tabelas</CardTitle></CardHeader>
           <CardContent className="space-y-2">
             {isLoading ? <Skeleton className="h-32" /> : (data?.topTables.length ?? 0) === 0 ? (
-              <p className="text-sm text-muted-foreground">Sem dados.</p>
+              <p className="text-sm text-muted-foreground">Nenhum conflito {PERIOD_LABEL[period]}.</p>
             ) : data?.topTables.map((t) => (
               <div key={t.table_name} className="flex justify-between items-center p-2 rounded bg-muted/30">
                 <span className="font-mono text-sm">{t.table_name}</span>
@@ -156,7 +172,7 @@ export default function ConcurrencyConflicts() {
           <CardHeader><CardTitle>Top 5 Usuários</CardTitle></CardHeader>
           <CardContent className="space-y-2">
             {isLoading ? <Skeleton className="h-32" /> : (data?.topUsers.length ?? 0) === 0 ? (
-              <p className="text-sm text-muted-foreground">Sem dados.</p>
+              <p className="text-sm text-muted-foreground">Nenhum conflito {PERIOD_LABEL[period]}.</p>
             ) : data?.topUsers.map((u) => (
               <div key={u.user_id} className="flex justify-between items-center p-2 rounded bg-muted/30">
                 <span className="font-mono text-xs truncate max-w-[200px]">{u.user_id}</span>
@@ -171,8 +187,16 @@ export default function ConcurrencyConflicts() {
         <CardHeader><CardTitle>Conflitos recentes</CardTitle></CardHeader>
         <CardContent>
           {isLoading ? <Skeleton className="h-48" /> : (data?.recent.length ?? 0) === 0 ? (
-            <p className="text-sm text-muted-foreground">Nenhum conflito recente.</p>
+            <p className="text-sm text-muted-foreground">
+              Nenhum conflito registrado {PERIOD_LABEL[period]}.
+            </p>
           ) : (
+            <>
+            {(data?.total ?? 0) > (data?.recent.length ?? 0) && (
+              <p className="text-xs text-muted-foreground mb-2">
+                Mostrando os {data?.recent.length} conflitos mais recentes de {data?.total}.
+              </p>
+            )}
             <div className="overflow-x-auto">
               <table className="w-full text-sm">
                 <thead className="text-xs uppercase text-muted-foreground border-b border-border">
@@ -199,6 +223,7 @@ export default function ConcurrencyConflicts() {
                 </tbody>
               </table>
             </div>
+            </>
           )}
         </CardContent>
       </Card>
