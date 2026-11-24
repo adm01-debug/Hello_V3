@@ -23,8 +23,7 @@ export function useAuth() {
     return () => {
       fetchedRef.current = false;
     };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [getSession]);
+  }, [getSession, fetchedRef]);
 
   // Auth state change listener
   useEffect(() => {

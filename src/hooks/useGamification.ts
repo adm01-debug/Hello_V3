@@ -304,6 +304,7 @@ export function useGamification(agentId?: string) {
     };
 
     loadData();
+    // Motivo: as tres funcoes de fetch sao recriadas a cada render; incluida uma delas o efeito buscaria em laco.
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [agentId]);
 

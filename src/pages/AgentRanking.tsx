@@ -34,6 +34,7 @@ export default function AgentRanking() {
     if (currentAgent?.id && !selectedAgentId) {
       setSelectedAgentId(currentAgent.id);
     }
+    // Motivo: selecao inicial do agente: incluir `selectedAgentId` reexecutaria o efeito apenas para reafirmar o mesmo valor.
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentAgent]);
 

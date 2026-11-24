@@ -66,6 +66,7 @@ export default function SecurityAuditDashboard() {
       return;
     }
     fetchData();
+    // Motivo: `navigate` muda de identidade a cada navegacao e o efeito refaria o fetch dos dados a cada troca de rota.
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [hasRole]);
 

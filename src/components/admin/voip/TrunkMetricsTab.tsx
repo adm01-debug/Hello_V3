@@ -14,10 +14,10 @@ export function TrunkMetricsTab() {
   const [days, setDays] = useState<Period>(7);
   const { data, isLoading } = useTrunkMetrics(days);
 
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  const summary = data?.summary ?? [];
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  const daily = data?.daily ?? [];
+  // Derivados memoizados: sem isso o array literal e novo a cada render e os
+  // useMemo abaixo recalcularia sem parar.
+  const summary = useMemo(() => data?.summary ?? [], [data]);
+  const daily = useMemo(() => data?.daily ?? [], [data]);
 
   // Pivota daily para gráfico: { date, trunkA: 5, trunkB: 3 }
   const chartData = useMemo(() => {
@@ -33,14 +33,12 @@ export function TrunkMetricsTab() {
       data: Array.from(byDate.values()).sort((a, b) => String(a.date).localeCompare(String(b.date))),
       trunks: Array.from(trunkNames),
     };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [daily]);
 
   const totals = useMemo(() => ({
     calls: summary.reduce((s, r) => s + r.total_calls, 0),
     minutes: summary.reduce((s, r) => s + r.total_minutes, 0),
     failovers: summary.reduce((s, r) => s + r.failover_calls, 0),
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }), [summary]);
 
   const colors = ['hsl(var(--primary))', 'hsl(var(--accent))', 'hsl(var(--success))', 'hsl(var(--warning))', 'hsl(var(--destructive))'];

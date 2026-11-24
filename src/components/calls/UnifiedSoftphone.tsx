@@ -81,6 +81,7 @@ export function UnifiedSoftphone({ onCallStart, onCallEnd, onTranscript }: Unifi
   }, [activeChannel, sipCall.isRegistered, sipCall.status, sipCall.isConfigured, sipAttempt, sipConnect]);
   // E070: injeta o UUID real do banco para evitar id sintético no relato de tronco
   // sipCall é estável (criado uma vez); setDbSessionId usa apenas um ref interno
+  // Motivo: `sipCall` e o objeto do useSipCall, com identidade nova a cada render; incluido, a sessao seria reassinada sem parar.
   // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => { sipCall.setDbSessionId(currentSession?.id ?? null); }, [currentSession?.id]);
 

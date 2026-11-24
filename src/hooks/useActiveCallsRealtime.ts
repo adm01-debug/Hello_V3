@@ -98,6 +98,7 @@ export function useActiveCallsRealtime() {
     let hasCritical = false, hasWarning = false;
     callsOnHold.forEach(c => { const s = getHoldSeverity(getHoldDuration(c.id)); if (s === 'critical') hasCritical = true; if (s === 'warning') hasWarning = true; });
     return { onHold: callsOnHold.length, inCall: activeCalls.length - callsOnHold.length, total: activeCalls.length, maxSeverity: hasCritical ? 'critical' : hasWarning ? 'warning' : 'normal' };
+    // Motivo: os helpers derivam de `activeHolds`, que ja esta no array; com identidade nova a cada render o memo recalcularia sem parar.
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [activeCalls, activeHolds]);
 
@@ -106,6 +107,7 @@ export function useActiveCallsRealtime() {
     if (selectedAgent !== 'all') filtered = filtered.filter(c => c.agent_name === selectedAgent);
     if (selectedHoldStatus === 'on_hold') filtered = filtered.filter(c => isCallOnHold(c.id));
     else if (selectedHoldStatus === 'in_call') filtered = filtered.filter(c => !isCallOnHold(c.id));
+    // Motivo: idem: `isCallOnHold` deriva de `activeHolds`, que ja esta no array.
     return filtered;
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [activeCalls, selectedAgent, selectedHoldStatus, activeHolds]);

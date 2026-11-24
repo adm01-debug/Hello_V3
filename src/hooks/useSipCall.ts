@@ -246,8 +246,7 @@ export interface SipCallState {
       toast.error(errMsg);
       return false;
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [usageReporter]);
 
   const startCall = useCallback(async (phoneNumber: string): Promise<boolean> => {
     if (!uaRef.current || !state.isRegistered) {
@@ -300,8 +299,7 @@ export interface SipCallState {
       toast.error(errMsg);
       return false;
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [state.isRegistered, connect, startDurationTimer, stopDurationTimer, attachRemoteStream]);
+  }, [state.isRegistered, connect, startDurationTimer, stopDurationTimer, attachRemoteStream, usageReporter]);
 
   /** Atende o convite entrante pendente. Retorna false quando não há convite válido. */
   const answerCall = useCallback(async (): Promise<boolean> => {
@@ -356,7 +354,7 @@ export interface SipCallState {
       toast.error('Falha ao atender a chamada');
       return false;
     }
-  }, [attachRemoteStream, startDurationTimer, stopDurationTimer]);
+  }, [attachRemoteStream, startDurationTimer, stopDurationTimer, usageReporter]);
 
   /** Rejeita o convite entrante pendente com 603 Decline. */
   const rejectCall = useCallback(() => {

@@ -94,8 +94,7 @@ export function useDeviceLabel() {
     return () => {
       cancelled = true;
     };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [persist]);
 
   /** Aplica o apelido localmente (imediato) e replica no perfil. */
   const updateLabel = useCallback(

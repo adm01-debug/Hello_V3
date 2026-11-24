@@ -81,6 +81,7 @@ export function useGoalViolations() {
 
   useEffect(() => {
     fetchViolations();
+    // Motivo: `fetchViolations` e recriada a cada render; `dateRange` ja cobre a mudanca real.
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [dateRange]);
 
@@ -88,6 +89,7 @@ export function useGoalViolations() {
     const channel = supabase.channel('goal-violations')
       .on('postgres_changes', { event: 'INSERT', schema: 'public', table: 'goal_violations' }, () => fetchViolations())
       .subscribe();
+    // Motivo: assinatura de canal realtime; refazer o efeito a cada render derrubaria a subscription.
     return () => { supabase.removeChannel(channel); };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [dateRange]);

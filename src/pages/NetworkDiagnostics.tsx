@@ -95,6 +95,7 @@ const NetworkDiagnostics = () => {
     const handler = () => { runConnectivityTest(); };
     window.addEventListener('voip:run-connectivity-test', handler);
     return () => window.removeEventListener('voip:run-connectivity-test', handler);
+    // Motivo: bridge de evento global montado uma vez; `runConnectivityTest` muda de identidade a cada render e o listener oscilaria.
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
