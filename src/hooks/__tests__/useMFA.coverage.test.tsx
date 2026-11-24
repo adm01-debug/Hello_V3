@@ -97,11 +97,18 @@ describe('useMFA', () => {
     expect(ok).toBe(false);
   });
 
-  it('generateBackupCodes returns 10 codes', async () => {
+  it('generateBackupCodes gera 10 codigos unicos via crypto.getRandomValues', async () => {
     const { result } = renderHook(() => useMFA());
     await waitFor(() => expect(result.current.isLoading).toBe(false));
+    const randomSpy = vi.spyOn(globalThis.crypto, 'getRandomValues');
     const codes = result.current.generateBackupCodes();
-    expect(codes.length).toBe(10);
+    expect(codes).toHaveLength(10);
+    expect(new Set(codes).size).toBe(10);
+    codes.forEach(code => expect(code).toMatch(/^[A-HJ-NP-Z2-9]{6}$/));
+    expect(randomSpy).toHaveBeenCalledTimes(10);
+    randomSpy.mock.calls.forEach(([buffer]) =>
+      expect((buffer as Uint8Array).length).toBe(6)
+    );
   });
 
   it('saveSettings success and error', async () => {
