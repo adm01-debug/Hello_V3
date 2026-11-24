@@ -2,11 +2,16 @@
  "aviso": "GERADO AUTOMATICAMENTE por scripts/ai-context/gerar.mjs — não editar à mão; será sobrescrito.",
  "format_version": 2,
  "git": {
-  "commit": "ccbea6f9350ee52744da001b917415e40b7e1282",
+  "commit": "6ba5cb05cceb6fccdf734998bb5be0e4417663be",
   "branch": "main",
-  "data_commit": "2026-11-24T04:11:15-03:00",
+  "data_commit": "2026-11-24T04:16:30-03:00",
   "remote": "https://github.com/adm01-debug/Hello_V3",
   "ultimos_commits": [
+   {
+    "sha": "6ba5cb0",
+    "data": "2026-11-24",
+    "assunto": "fix: estatisticas da semana nao falham mais em silencio (etapa 185) (#252)"
+   },
    {
     "sha": "ccbea6f",
     "data": "2026-11-24",
@@ -126,11 +131,6 @@
     "sha": "890ceeb",
     "data": "2026-11-24",
     "assunto": "fix: descarta pagina do historico que chega depois da troca de filtro (#225)"
-   },
-   {
-    "sha": "695f5ef",
-    "data": "2026-11-24",
-    "assunto": "feat: prazo de fetch nas chamadas externas das edges (#226)"
    }
   ],
   "arquivos_mudados_7d": 1114,
@@ -141,11 +141,11 @@
    },
    {
     "pasta": "docs/qa/05-PROGRESSO.md",
-    "mudancas": 78
+    "mudancas": 79
    },
    {
     "pasta": "src/hooks/__tests__",
-    "mudancas": 59
+    "mudancas": 60
    },
    {
     "pasta": "covout/lcov-report/lib",
@@ -199,7 +199,7 @@
   "arquivos_mais_mudados_90d": [
    {
     "arquivo": "docs/qa/05-PROGRESSO.md",
-    "mudancas": 78
+    "mudancas": 79
    },
    {
     "arquivo": "docs/estado/funcionalidades-planejadas.md",
@@ -301,7 +301,7 @@
   "autores_30d": [
    {
     "autor": "adm01-debug",
-    "commits": 228
+    "commits": 229
    },
    {
     "autor": "Joaquim Ataides",
@@ -316,7 +316,7 @@
  "contagens": {
   "arquivos_total": 1731,
   "arquivos_codigo": 1328,
-  "linhas_codigo": 178894,
+  "linhas_codigo": 178937,
   "rotas": 106,
   "rotas_http_backend": 12,
   "vistas_por_id": 0,
@@ -492,7 +492,7 @@
   },
   "src/hooks": {
    "arquivos": 353,
-   "linhas": 46965
+   "linhas": 47008
   },
   "src/integrations": {
    "arquivos": 3,
@@ -664,7 +664,7 @@
   },
   {
    "arquivo": "src/hooks/__tests__/useGamification.coverage.test.tsx",
-   "linha": 136,
+   "linha": 137,
    "tipo": "XXX",
    "texto": "', message: 'fail' } }] });"
   },

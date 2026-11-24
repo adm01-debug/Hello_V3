@@ -58,11 +58,11 @@
  "commits": {
   "convencao": "conventional commits (observado)",
   "exemplos": [
+   "fix: estatisticas da semana nao falham mais em silencio (etapa 185) (#252)",
    "fix: falha na trilha de auditoria passa a ser visivel (etapa 182) (#249)",
    "feat: botao Ver Alertas abre a lista de alertas na propria tela (etapa 167) (#247)",
    "feat: estados de falha visiveis no softphone (etapa 233) (#246)",
-   "feat: leitura do artigo da base de conhecimento (etapa 153) (#248)",
-   "chore: inventario dos hooks dormentes e rotas.json atualizado (etapa 159) (#245)"
+   "feat: leitura do artigo da base de conhecimento (etapa 153) (#248)"
   ]
  },
  "pr_template": null,

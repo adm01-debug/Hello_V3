@@ -1,15 +1,15 @@
 {
  "meta": {
-  "sha": "ccbea6f9350ee52744da001b917415e40b7e1282",
+  "sha": "6ba5cb05cceb6fccdf734998bb5be0e4417663be",
   "branch": "main",
   "remote": "https://github.com/adm01-debug/Hello_V3",
-  "generated_at": "2026-11-24 07:11 UTC",
+  "generated_at": "2026-11-24 07:17 UTC",
   "files_total": 1778,
   "code_files": 1574,
-  "code_lines": 194906
+  "code_lines": 194949
  },
  "version": "1.3.2",
- "facts_hash": "65485121e174e90f",
+ "facts_hash": "c876195fcb5535ee",
  "stack": {
   "frameworks": [
    "React + Vite",
@@ -33602,7 +33602,7 @@
   {
    "module": "src/hooks",
    "files": 353,
-   "lines": 46965,
+   "lines": 47008,
    "tables": [
     "accounts",
     "active_sessions",
@@ -41093,6 +41093,10 @@
    {
     "file": "src/hooks/useGamification.ts",
     "msg": "Não foi possível atualizar as estatísticas da semana"
+   },
+   {
+    "file": "src/hooks/useGamification.ts",
+    "msg": "Não foi possível salvar as estatísticas da semana"
    },
    {
     "file": "src/hooks/useGeoBlocking.ts",
@@ -62189,6 +62193,14 @@
    {
     "file": "src/hooks/__tests__/useGamification.coverage.test.tsx",
     "name": "não regrava a semana quando a leitura das estatísticas falha"
+   },
+   {
+    "file": "src/hooks/__tests__/useGamification.coverage.test.tsx",
+    "name": "avisa quando o update das estatísticas da semana falha"
+   },
+   {
+    "file": "src/hooks/__tests__/useGamification.coverage.test.tsx",
+    "name": "avisa quando o insert das estatísticas da semana falha"
    },
    {
     "file": "src/hooks/__tests__/useGamification.coverage.test.tsx",
@@ -101741,7 +101753,7 @@
   },
   "src/hooks/useGamification.ts": {
    "path": "src/hooks/useGamification.ts",
-   "lines": 317,
+   "lines": 327,
    "exports": [
     "interface Badge",
     "interface AgentBadge",
@@ -101803,7 +101815,8 @@
     ]
    },
    "errors": [
-    "Não foi possível atualizar as estatísticas da semana"
+    "Não foi possível atualizar as estatísticas da semana",
+    "Não foi possível salvar as estatísticas da semana"
    ],
    "hooks": [
     "useGamification"
@@ -107808,7 +107821,7 @@
   },
   "src/hooks/__tests__/useGamification.coverage.test.tsx": {
    "path": "src/hooks/__tests__/useGamification.coverage.test.tsx",
-   "lines": 214,
+   "lines": 247,
    "is_test": true,
    "tests": [
     "useGamification",
@@ -107819,6 +107832,8 @@
     "awardBadge handles duplicate (23505) and generic errors",
     "updateWeeklyStats inserts when no existing row",
     "não regrava a semana quando a leitura das estatísticas falha",
+    "avisa quando o update das estatísticas da semana falha",
+    "avisa quando o insert das estatísticas da semana falha",
     "updateWeeklyStats returns early without agentId",
     "checkAndAwardBadges evaluates all requirement types",
     "exposes refetch"
@@ -126729,10 +126744,21 @@
   }
  },
  "git": {
-  "sha": "ccbea6f9350ee52744da001b917415e40b7e1282",
+  "sha": "6ba5cb05cceb6fccdf734998bb5be0e4417663be",
   "branch": "main",
   "remote": "https://github.com/adm01-debug/Hello_V3",
   "commits": [
+   {
+    "sha": "6ba5cb0",
+    "date": "2026-11-24",
+    "author": "adm01-debug",
+    "subject": "fix: estatisticas da semana nao falham mais em silencio (etapa 185) (#252)",
+    "files": [
+     "docs/qa/05-PROGRESSO.md",
+     "src/hooks/__tests__/useGamification.coverage.test.tsx",
+     "src/hooks/useGamification.ts"
+    ]
+   },
    {
     "sha": "ccbea6f",
     "date": "2026-11-24",
@@ -127176,23 +127202,6 @@
      "src/pages/ExecutiveDashboard.tsx",
      "src/pages/PhoneDialer.tsx",
      "src/pages/__tests__/ExecutiveDashboard.test.tsx"
-    ]
-   },
-   {
-    "sha": "85a73de",
-    "date": "2026-11-23",
-    "author": "adm01-debug",
-    "subject": "feat: padronizar o estado de erro das telas com o EmptyErrorState (etapa 202) (#220)",
-    "files": [
-     "docs/qa/05-PROGRESSO.md",
-     "src/components/auth/PermissionGate.tsx",
-     "src/components/auth/__tests__/PermissionGate.test.tsx",
-     "src/components/ui/empty-state.tsx",
-     "src/pages/AgentRanking.tsx",
-     "src/pages/IPWhitelist.tsx",
-     "src/pages/Scorecards.tsx",
-     "src/pages/SecurityMonitoring.tsx",
-     "src/pages/SuccessPlans.tsx"
     ]
    }
   ],

@@ -1075,11 +1075,11 @@
   {
    "arquivo": "src/hooks/__tests__/useGamification.coverage.test.tsx",
    "tipo": "unit",
-   "linhas": 214,
+   "linhas": 247,
    "testa": [
     "src/hooks/useGamification.ts"
    ],
-   "casos": 10
+   "casos": 12
   },
   {
    "arquivo": "src/hooks/__tests__/useGamificationAndCallbacks.test.ts",

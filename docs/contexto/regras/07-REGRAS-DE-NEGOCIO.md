@@ -1,6 +1,6 @@
 # 07 · REGRAS DE NEGÓCIO
 
-> Gerado automaticamente por AI Context Sync v1.3.2 · commit `ccbea6f935` · branch `main` · 2026-11-24 07:11 UTC
+> Gerado automaticamente por AI Context Sync v1.3.2 · commit `6ba5cb05cc` · branch `main` · 2026-11-24 07:17 UTC
 > Não edite à mão — regras humanas vão em `manual/`.
 
 ## A. Regras escritas por humanos (`manual/` — prioridade máxima, nunca sobrescrito)
@@ -2504,6 +2504,7 @@ _nenhum item encontrado_
 | Falha ao atualizar status | `src/hooks/useExtensionsAdmin.ts` |
 | Nada para exportar | `src/hooks/useExtensionsAdmin.ts` |
 | Não foi possível atualizar as estatísticas da semana | `src/hooks/useGamification.ts` |
+| Não foi possível salvar as estatísticas da semana | `src/hooks/useGamification.ts` |
 | Erro ao atualizar configurações | `src/hooks/useGeoBlocking.ts` |
 | Erro ao remover país | `src/hooks/useGeoBlocking.ts` |
 | Erro ao validar IP | `src/hooks/useGeoBlocking.ts` |
@@ -2579,8 +2580,7 @@ _nenhum item encontrado_
 | Não foi possível atualizar o participante | `src/hooks/useRingGroups.ts` |
 | Não foi possível criar o grupo | `src/hooks/useRingGroups.ts` |
 | Não foi possível remover o grupo | `src/hooks/useRingGroups.ts` |
-| Não foi possível remover o participante | `src/hooks/useRingGroups.ts` |
-| … +271 linhas — lista completa em `context.json` | |
+| … +272 linhas — lista completa em `context.json` | |
 
 ## J. Controle de acesso no código (checagens de perfil/permissão)
 
@@ -2629,7 +2629,7 @@ _nenhum item encontrado_
 | `admin` | `supabase/functions/data-lake-flush/index.ts` |
 | `admin` | `supabase/migrations/20261123000200_fix_has_role_oracle_and_debug_tables.sql` |
 
-## K. Testes como especificação (4341 testes em 384 arquivos — nomes completos em `context.json`)
+## K. Testes como especificação (4343 testes em 384 arquivos — nomes completos em `context.json`)
 
 | Arquivo | Testes | Exemplos do que o sistema DEVE fazer |
 |---|---|---|
@@ -2711,6 +2711,7 @@ _nenhum item encontrado_
 | `src/hooks/__tests__/useAgentRanking.coverage.test.tsx` | 13 | useAgentRanking (coverage) · exposes the read error instead of an empty ranking · clears the ranking error after the next successful read · fetches agent stats on mount and exposes data … |
 | `src/hooks/__tests__/useCallSession.coverage.test.tsx` | 13 | useCallSession · starts a session successfully · returns null on start error · addTranscript/addAnalysis no-op without session … |
 | `src/hooks/__tests__/useDashboardData.coverage.test.tsx` | 13 | useDashboardData · useDashboardStats success · useDashboardStats error · useAgentsListData success returns data … |
+| `src/hooks/__tests__/useGamification.coverage.test.tsx` | 13 | useGamification · loads data successfully and computes rankings · runs without agentId (skips agent-scoped fetches) · handles fetch errors on all tables … |
 | `src/hooks/__tests__/useMeetingSummary.coverage.test.tsx` | 13 | useMeetingSummary · loads summary and runs generate/update/share · disabled when no callSessionId · generate handles skipped response … |
 | `src/hooks/__tests__/useQueueMetrics.coverage.test.tsx` | 13 | useQueueMetrics · fetches metrics and computes values · conta em espera apenas chamadas on_hold, nunca um status inventado · checkGoalStatus handles gte and lte operators … |
 | `src/lib/__tests__/executive-dashboard-utils.test.ts` | 13 | getPeriodLabel · returns correct label for today · returns correct label for week · returns correct label for month … |
@@ -2721,7 +2722,6 @@ _nenhum item encontrado_
 | `src/lib/security/__tests__/hsts-headers.coverage.test.ts` | 12 | buildHSTSHeader · builds header from default config · omits includeSubDomains and preload when false · includes only includeSubDomains when preload is false … |
 | `src/lib/validation/__tests__/zod-schemas.property.test.ts` | 12 | Zod schemas — property-based (1000 runs cada) · uuidSchema aceita UUIDs válidos · uuidSchema rejeita strings arbitrárias não-UUID · emailSchema aceita emails válidos … |
 | `src/hooks/__tests__/useContacts.coverage.test.tsx` | 11 | useContacts (coverage) · fetches contacts on mount · fetchContacts with search filter · getContactByPhone success and not found … |
-| `src/hooks/__tests__/useGamification.coverage.test.tsx` | 11 | useGamification · loads data successfully and computes rankings · runs without agentId (skips agent-scoped fetches) · handles fetch errors on all tables … |
 | `src/hooks/__tests__/useLiveAssist.coverage.test.tsx` | 11 | useLiveAssist · is disabled (no fetch) without callSessionId · loads signals and subscribes to realtime when callSessionId present · analyze invokes edge function when throttle allows … |
 | `src/hooks/__tests__/useScheduledCallbacks.coverage.test.tsx` | 11 | useScheduledCallbacks · loads pending callbacks and upcoming count on mount · fetchCallbacks with status filter and error branch · fetchUpcomingCount error branch … |
 | `src/hooks/__tests__/useSipCall.coverage.test.tsx` | 11 | useSipCall (coverage) · initial state is disconnected · connect succeeds and registers · connect with failover shows warning … |

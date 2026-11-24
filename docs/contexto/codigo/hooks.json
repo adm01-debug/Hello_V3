@@ -2371,7 +2371,7 @@
    "hooks_exportados": [
     "useGamification"
    ],
-   "linhas": 317,
+   "linhas": 327,
    "dominio": "hooks",
    "tabelas": [
     "agent_badges",
