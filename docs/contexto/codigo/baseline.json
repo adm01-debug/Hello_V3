@@ -2,11 +2,16 @@
  "aviso": "GERADO AUTOMATICAMENTE por scripts/ai-context/gerar.mjs — não editar à mão; será sobrescrito.",
  "format_version": 2,
  "git": {
-  "commit": "e08bab6ed453cec3166bae89cb8ba3c12909763c",
+  "commit": "521541455224ef08b6dc103b3fc9c324e7fed88d",
   "branch": "main",
-  "data_commit": "2026-11-24T04:28:10-03:00",
+  "data_commit": "2026-11-24T04:28:14-03:00",
   "remote": "https://github.com/adm01-debug/Hello_V3",
   "ultimos_commits": [
+   {
+    "sha": "5215414",
+    "data": "2026-11-24",
+    "assunto": "fix: edges de entrada nao devolvem 200 com escrita perdida (etapa 188) (#256)"
+   },
    {
     "sha": "e08bab6",
     "data": "2026-11-24",
@@ -126,14 +131,9 @@
     "sha": "ea6b0f0",
     "data": "2026-11-24",
     "assunto": "fix: checar erro nas escritas do discador e parar a campanha quando o claim falha (etapa 080) (#229)"
-   },
-   {
-    "sha": "564451c",
-    "data": "2026-11-24",
-    "assunto": "fix: teto em todo campo de texto das edges publicas que gastam dinheiro (E047) (#228)"
    }
   ],
-  "arquivos_mudados_7d": 1117,
+  "arquivos_mudados_7d": 1118,
   "pastas_mais_mudadas_30d": [
    {
     "pasta": "covout/lcov-report/hooks",
@@ -242,6 +242,10 @@
     "mudancas": 6
    },
    {
+    "arquivo": "supabase/functions/chatbot-respond/index.ts",
+    "mudancas": 6
+   },
+   {
     "arquivo": "supabase/functions/generate-coaching-track/index.ts",
     "mudancas": 6
    },
@@ -259,10 +263,6 @@
    },
    {
     "arquivo": "src/routes/protectedRoutes.tsx",
-    "mudancas": 5
-   },
-   {
-    "arquivo": "supabase/functions/chatbot-respond/index.ts",
     "mudancas": 5
    },
    {
@@ -286,22 +286,22 @@
     "mudancas": 5
    },
    {
+    "arquivo": "supabase/functions/request-password-reset/index.ts",
+    "mudancas": 5
+   },
+   {
     "arquivo": "supabase/functions/score-call/index.ts",
     "mudancas": 5
    },
    {
     "arquivo": "supabase/functions/teams-fetch-recordings/index.ts",
     "mudancas": 5
-   },
-   {
-    "arquivo": "supabase/functions/voip-load-test/index.ts",
-    "mudancas": 5
    }
   ],
   "autores_30d": [
    {
     "autor": "adm01-debug",
-    "commits": 231
+    "commits": 232
    },
    {
     "autor": "Joaquim Ataides",
@@ -316,7 +316,7 @@
  "contagens": {
   "arquivos_total": 1732,
   "arquivos_codigo": 1329,
-  "linhas_codigo": 179080,
+  "linhas_codigo": 179112,
   "rotas": 106,
   "rotas_http_backend": 12,
   "vistas_por_id": 0,
@@ -520,7 +520,7 @@
   },
   "supabase/functions": {
    "arquivos": 206,
-   "linhas": 23025
+   "linhas": 23057
   },
   "tailwind.config.ts": {
    "arquivos": 1,

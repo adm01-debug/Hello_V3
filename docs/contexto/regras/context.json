@@ -1,15 +1,15 @@
 {
  "meta": {
-  "sha": "e08bab6ed453cec3166bae89cb8ba3c12909763c",
+  "sha": "521541455224ef08b6dc103b3fc9c324e7fed88d",
   "branch": "main",
   "remote": "https://github.com/adm01-debug/Hello_V3",
-  "generated_at": "2026-11-24 07:28 UTC",
+  "generated_at": "2026-11-24 07:30 UTC",
   "files_total": 1779,
   "code_files": 1575,
-  "code_lines": 195092
+  "code_lines": 195124
  },
  "version": "1.3.2",
- "facts_hash": "759f2504e4ae2072",
+ "facts_hash": "461f2c4c70f097c0",
  "stack": {
   "frameworks": [
    "React + Vite",
@@ -34307,7 +34307,7 @@
   {
    "module": "supabase/functions",
    "files": 206,
-   "lines": 23025,
+   "lines": 23057,
    "tables": [
     "account_lockouts",
     "accounts",
@@ -119364,7 +119364,7 @@
   },
   "supabase/functions/approve-password-reset/index.ts": {
    "path": "supabase/functions/approve-password-reset/index.ts",
-   "lines": 151,
+   "lines": 161,
    "tables": [
     {
      "table": "password_reset_requests",
@@ -119590,7 +119590,7 @@
   },
   "supabase/functions/chat-widget-session/index.ts": {
    "path": "supabase/functions/chat-widget-session/index.ts",
-   "lines": 195,
+   "lines": 199,
    "tables": [
     {
      "table": "chat_sessions",
@@ -119708,7 +119708,7 @@
   },
   "supabase/functions/chatbot-respond/index.ts": {
    "path": "supabase/functions/chatbot-respond/index.ts",
-   "lines": 287,
+   "lines": 294,
    "exports": [
     "function handler"
    ],
@@ -121041,7 +121041,7 @@
   },
   "supabase/functions/email-inbound/index.ts": {
    "path": "supabase/functions/email-inbound/index.ts",
-   "lines": 225,
+   "lines": 227,
    "exports": [
     "function handler"
    ],
@@ -122743,7 +122743,7 @@
   },
   "supabase/functions/record-consent/index.ts": {
    "path": "supabase/functions/record-consent/index.ts",
-   "lines": 101,
+   "lines": 104,
    "tables": [
     {
      "table": "user_profiles",
@@ -122824,7 +122824,7 @@
   },
   "supabase/functions/request-password-reset/index.ts": {
    "path": "supabase/functions/request-password-reset/index.ts",
-   "lines": 130,
+   "lines": 132,
    "tables": [
     {
      "table": "password_reset_requests",
@@ -125355,7 +125355,7 @@
   },
   "supabase/functions/webhook-handler/index.ts": {
    "path": "supabase/functions/webhook-handler/index.ts",
-   "lines": 77,
+   "lines": 79,
    "tables": [
     {
      "table": "audit_logs",
@@ -125401,7 +125401,7 @@
   },
   "supabase/functions/whatsapp-inbound/index.ts": {
    "path": "supabase/functions/whatsapp-inbound/index.ts",
-   "lines": 184,
+   "lines": 186,
    "tables": [
     {
      "table": "conversation_messages",
@@ -126791,10 +126791,26 @@
   }
  },
  "git": {
-  "sha": "e08bab6ed453cec3166bae89cb8ba3c12909763c",
+  "sha": "521541455224ef08b6dc103b3fc9c324e7fed88d",
   "branch": "main",
   "remote": "https://github.com/adm01-debug/Hello_V3",
   "commits": [
+   {
+    "sha": "5215414",
+    "date": "2026-11-24",
+    "author": "adm01-debug",
+    "subject": "fix: edges de entrada nao devolvem 200 com escrita perdida (etapa 188) (#256)",
+    "files": [
+     "supabase/functions/approve-password-reset/index.ts",
+     "supabase/functions/chat-widget-session/index.ts",
+     "supabase/functions/chatbot-respond/index.ts",
+     "supabase/functions/email-inbound/index.ts",
+     "supabase/functions/record-consent/index.ts",
+     "supabase/functions/request-password-reset/index.ts",
+     "supabase/functions/webhook-handler/index.ts",
+     "supabase/functions/whatsapp-inbound/index.ts"
+    ]
+   },
    {
     "sha": "e08bab6",
     "date": "2026-11-24",
@@ -127232,23 +127248,28 @@
      "src/hooks/__tests__/useScheduledCallbacks.coverage.test.tsx",
      "src/hooks/useScheduledCallbacks.ts"
     ]
-   },
-   {
-    "sha": "87d013e",
-    "date": "2026-11-24",
-    "author": "adm01-debug",
-    "subject": "chore: suite de testes roda sem .env e sem configuracao manual (#224)",
-    "files": [
-     "AGENTS.md",
-     "docs/qa/05-PROGRESSO.md",
-     "src/test/setup.ts"
-    ]
    }
   ],
   "hot_files": [
    [
     "docs/qa/05-PROGRESSO.md",
-    29
+    28
+   ],
+   [
+    "supabase/functions/chatbot-respond/index.ts",
+    4
+   ],
+   [
+    "supabase/functions/approve-password-reset/index.ts",
+    3
+   ],
+   [
+    "supabase/functions/chat-widget-session/index.ts",
+    3
+   ],
+   [
+    "supabase/functions/email-inbound/index.ts",
+    3
    ],
    [
     "supabase/functions/data-lake-flush/index.ts",
@@ -127267,8 +127288,16 @@
     3
    ],
    [
-    "supabase/functions/chatbot-respond/index.ts",
-    3
+    "supabase/functions/record-consent/index.ts",
+    2
+   ],
+   [
+    "supabase/functions/request-password-reset/index.ts",
+    2
+   ],
+   [
+    "supabase/functions/whatsapp-inbound/index.ts",
+    2
    ],
    [
     "supabase/functions/generate-coaching-track/index.ts",
@@ -127280,10 +127309,6 @@
    ],
    [
     "src/hooks/usePredictiveDialer.ts",
-    2
-   ],
-   [
-    "supabase/functions/approve-password-reset/index.ts",
     2
    ],
    [
@@ -127304,26 +127329,6 @@
    ],
    [
     "supabase/functions/voip-failover-notifier/index.ts",
-    2
-   ],
-   [
-    "supabase/functions/voip-trunks-manage/index.ts",
-    2
-   ],
-   [
-    "supabase/functions/ocr-virtual-fax/index.ts",
-    2
-   ],
-   [
-    "supabase/functions/translate-summary/index.ts",
-    2
-   ],
-   [
-    "supabase/functions/voice-command/index.ts",
-    2
-   ],
-   [
-    "supabase/functions/sync-crm-queue/index.ts",
     2
    ]
   ]

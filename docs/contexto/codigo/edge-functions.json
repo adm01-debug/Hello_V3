@@ -240,7 +240,7 @@
    "nome": "approve-password-reset",
    "entrada": "supabase/functions/approve-password-reset/index.ts",
    "arquivos": 1,
-   "linhas": 151,
+   "linhas": 161,
    "verify_jwt": true,
    "metodos": [
     "OPTIONS"
@@ -353,7 +353,7 @@
    "nome": "chat-widget-session",
    "entrada": "supabase/functions/chat-widget-session/index.ts",
    "arquivos": 3,
-   "linhas": 239,
+   "linhas": 243,
    "verify_jwt": true,
    "metodos": [
     "OPTIONS"
@@ -388,7 +388,7 @@
    "nome": "chatbot-respond",
    "entrada": "supabase/functions/chatbot-respond/index.ts",
    "arquivos": 3,
-   "linhas": 324,
+   "linhas": 331,
    "verify_jwt": true,
    "metodos": [
     "OPTIONS"
@@ -1127,7 +1127,7 @@
    "nome": "email-inbound",
    "entrada": "supabase/functions/email-inbound/index.ts",
    "arquivos": 3,
-   "linhas": 281,
+   "linhas": 283,
    "verify_jwt": true,
    "metodos": [
     "OPTIONS",
@@ -1944,7 +1944,7 @@
    "nome": "record-consent",
    "entrada": "supabase/functions/record-consent/index.ts",
    "arquivos": 1,
-   "linhas": 101,
+   "linhas": 104,
    "verify_jwt": true,
    "metodos": [
     "OPTIONS"
@@ -2018,7 +2018,7 @@
    "nome": "request-password-reset",
    "entrada": "supabase/functions/request-password-reset/index.ts",
    "arquivos": 1,
-   "linhas": 130,
+   "linhas": 132,
    "verify_jwt": true,
    "metodos": [
     "OPTIONS"
@@ -3483,7 +3483,7 @@
    "nome": "webhook-handler",
    "entrada": "supabase/functions/webhook-handler/index.ts",
    "arquivos": 1,
-   "linhas": 77,
+   "linhas": 79,
    "verify_jwt": true,
    "metodos": [
     "OPTIONS"
@@ -3515,7 +3515,7 @@
    "nome": "whatsapp-inbound",
    "entrada": "supabase/functions/whatsapp-inbound/index.ts",
    "arquivos": 5,
-   "linhas": 423,
+   "linhas": 425,
    "verify_jwt": true,
    "metodos": [
     "OPTIONS",

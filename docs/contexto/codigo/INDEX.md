@@ -1,7 +1,7 @@
 # Contexto do projeto para agentes de IA
 
 GERADO AUTOMATICAMENTE por scripts/ai-context/gerar.mjs — não editar à mão; será sobrescrito.
-Publicado em `docs/contexto/codigo/` na branch `contexto` (gerada, nunca abra PR dela) a cada push em `main` e a cada 10 minutos pelo workflow `contexto.yml`; índice único das três fontes em `docs/contexto/00-INDEX.md`. Gere local com `node scripts/ai-context/gerar.mjs`. Commit-base: `e08bab6ed453cec3166bae89cb8ba3c12909763c` (2026-11-24T04:28:10-03:00).
+Publicado em `docs/contexto/codigo/` na branch `contexto` (gerada, nunca abra PR dela) a cada push em `main` e a cada 10 minutos pelo workflow `contexto.yml`; índice único das três fontes em `docs/contexto/00-INDEX.md`. Gere local com `node scripts/ai-context/gerar.mjs`. Commit-base: `521541455224ef08b6dc103b3fc9c324e7fed88d` (2026-11-24T04:28:14-03:00).
 
 ## Como usar (leia antes de planejar ou executar qualquer tarefa)
 1. **Tela/rota/menu** → `rotas.json` (url/vista/menu → arquivo → hooks → tabelas → edges; `rotas_http_backend` para APIs) e `modulos.json` (módulo inteiro + dependências entre módulos).
@@ -36,7 +36,7 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 |---|---|
 | arquivos_total | 1732 |
 | arquivos_codigo | 1329 |
-| linhas_codigo | 179080 |
+| linhas_codigo | 179112 |
 | rotas | 106 |
 | rotas_http_backend | 12 |
 | vistas_por_id | 0 |
@@ -370,7 +370,7 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 - possiveis_segredos_no_codigo: 4 — ex.: scripts/ai-context/cenarios.mjs:103, src/lib/__tests__/security-advanced.test.ts:203, src/lib/__tests__/security-advanced.test.ts:208
 
 ## Grafo de código (graphify)
-- 10152 nós · 26705 arestas · 777 comunidades · grafo do commit `e08bab6e`
+- 10152 nós · 26705 arestas · 777 comunidades · grafo do commit `52154145`
 - comunidades maiores: card.tsx (255), react (209), vitest (195), protectedRoutes.tsx (194), lucide-react (188), traceHeaders (165), button.tsx (153), badge.tsx (135), cn (124), @tanstack/react-query (111), buildCorsHeaders (105), usePageTitle (103)
 - símbolos mais chamados: cn() (src/lib/utils.ts), usePageTitle() (src/hooks/usePageTitle.ts), safeFormatDatePtBR() (src/lib/safe-date.ts), q() (scripts/supabase_snapshot/snapshot.py), safeFormatDistanceToNow() (src/lib/safe-date.ts), useAuthContext() (src/contexts/AuthContext.tsx), traceHeaders() (src/lib/tracing.ts), withTrace() (src/lib/tracing.ts), formatDuration() (src/lib/utils.ts), safeToLocaleString() (src/lib/safe-date.ts), .collect() (scripts/supabase_snapshot/test_snapshot.py), buildCorsHeaders() (supabase/functions/_shared/cors.ts)
 - consulta local: `graphify query "<pergunta>"`, `graphify path "<A>" "<B>"`, `graphify explain "<X>"`
@@ -387,10 +387,10 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 - src/components/calls/UnifiedSoftphone.tsx (7)
 - .github/workflows/contexto.yml (6)
 - src/components/layout/CommandPalette.tsx (6)
+- supabase/functions/chatbot-respond/index.ts (6)
 - supabase/functions/generate-coaching-track/index.ts (6)
 - deno.lock (5)
 - docs/prod-readiness.md (5)
-- inventario/estado/edges.json (5)
 
 ## Workflows
 - `ci.yml` — CI (pull_request, push)
@@ -429,6 +429,7 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 
 
 ## Últimos commits
+- 2026-11-24 `5215414` fix: edges de entrada nao devolvem 200 com escrita perdida (etapa 188) (#256)
 - 2026-11-24 `e08bab6` fix: remocao de audio de fila checa storage antes do banco (etapa 186) (#253)
 - 2026-11-24 `3717f08` fix: falha em sessao e passkey passa a ser visivel (etapa 183) (#250)
 - 2026-11-24 `6ba5cb0` fix: estatisticas da semana nao falham mais em silencio (etapa 185) (#252)
@@ -443,7 +444,6 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 - 2026-11-24 `024aa1e` feat: explica na tela a regra do coaching automatico (etapa 169) (#241)
 - 2026-11-24 `0b5b0b3` fix: resolve o menu mais opcoes do cartao de contato (etapa 166) (#240)
 - 2026-11-24 `5bae125` feat: liga Priorizar no discador preditivo (etapa 163) (#239)
-- 2026-11-24 `b21f44f` feat: mostra os acertos dos trackers e leva ao detalhe da chamada (etapa 157) (#238)
 
 ## Arquivos deste diretório
 - `docs/contexto/codigo/rotas.json`
