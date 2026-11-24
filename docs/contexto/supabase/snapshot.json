@@ -32072,15 +32072,11 @@
         "callers": {
           "code": [
             {
-              "file": "supabase/functions/validate-ip/index.ts",
-              "hits": 2
-            },
-            {
               "file": "supabase/migrations/20260712220202_52e516fc-3b1c-45ce-9c00-3dd4f6acb406.sql",
               "hits": 1
             }
           ],
-          "code_total_files": 2,
+          "code_total_files": 1,
           "cron": [],
           "db": [],
           "triggers": [],

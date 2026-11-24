@@ -2,6 +2,10 @@
 
 Diff semântico gerado a cada coleta em que algo mudou.
 
+## 2026-11-24 11:13 UTC
+
+- **functions** alterado (1): `public.check_ip_in_cidr(p_ip text, p_cidr text)`
+
 ## 2026-11-24 10:13 UTC
 
 - **colunas** adicionado (1): `public.user_profiles.avatar_url`
