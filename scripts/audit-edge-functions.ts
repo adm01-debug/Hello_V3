@@ -227,6 +227,28 @@ for (const file of entrypoints) {
       }
     }
   }
+  // R11 — `fetch` de saída sem prazo. As etapas 208-211 zeraram o conjunto; esta
+  // regra existe para a próxima edge não nascer sem prazo (o provedor fora do ar
+  // penduraria a função até o timeout da plataforma). Use `fetchComPrazo()` de
+  // _shared/resilience.ts — ele já injeta o `signal`. NÃO entra no baseline: um
+  // achado novo aqui é sempre um bug novo. `// fetch-prazo-ok` silencia.
+  if (!/fetch-prazo-ok/.test(raw)) {
+    const chamadas = /(?<![\w.$])fetch\s*\(/g;
+    let chamada: RegExpExecArray | null;
+    while ((chamada = chamadas.exec(code))) {
+      const abre = code.indexOf("(", chamada.index);
+      const fecha = matchDelimiter(code, abre);
+      const args = fecha === -1 ? code.slice(abre) : code.slice(abre, fecha + 1);
+      if (/signal/.test(args)) continue;
+      const linha = code.slice(0, chamada.index).split("\n").length;
+      report(
+        "error",
+        "R11-fetch-sem-prazo",
+        rel,
+        `fetch() sem sinal de prazo (linha ${linha}): use fetchComPrazo() de _shared/resilience.ts (silencio: // fetch-prazo-ok)`,
+      );
+    }
+  }
 }
 
 function keyOf(f: Finding): string {
@@ -248,7 +270,7 @@ if (UPDATE) {
   process.exit(0);
 }
 
-const NAO_BASELINEAVEIS = new Set(["R10-n-plus-1"]);
+const NAO_BASELINEAVEIS = new Set(["R10-n-plus-1", "R11-fetch-sem-prazo"]);
 const fresh = findings.filter((f) => NAO_BASELINEAVEIS.has(f.rule) || !baselineSet.has(keyOf(f)));
 const errors = findings.filter((f) => f.severity === "error");
 const freshErrors = fresh.filter((f) => f.severity === "error");

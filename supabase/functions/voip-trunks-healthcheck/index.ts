@@ -2,6 +2,7 @@ import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
 import { buildCorsHeaders } from "../_shared/cors.ts";
 import { assertSafeOutboundUrl, SsrfBlockedError } from "../_shared/allowed-hosts.ts";
+import { fetchComPrazo } from "../_shared/resilience.ts";
 
 // Health check WSS/TCP simulado via fetch HEAD/HTTP. Para WSS, fazemos GET HTTP no host.
 async function checkTrunk(server: string, transport: string): Promise<{ reachable: boolean; latency_ms: number; error?: string }> {
@@ -123,7 +124,7 @@ async function checkTrunk(server: string, transport: string): Promise<{ reachabl
                console.log(`Failover completed successfully from ${trunk.name} to ${backupTrunk.name}`);
                
                // Dispara notificação assíncrona para os agentes
-               fetch(`${supabaseUrl}/functions/v1/voip-failover-notifier`, {
+               fetchComPrazo(`${supabaseUrl}/functions/v1/voip-failover-notifier`, {
                  method: 'POST',
                  headers: {
                    'Authorization': `Bearer ${supabaseKey}`,

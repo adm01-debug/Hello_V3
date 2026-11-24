@@ -6,11 +6,11 @@
 
 | Marca | Significado |
 |---|---|
-| `[ ]` | **160** |
+| `[ ]` | **158** |
 | `[>]` | em andamento (branch criada) |
 | `[P]` | 0 |
 | `[~]` | 1 |
-| `[x]` | 134 |
+| `[x]` | 141 |
 | `[-]` | 0 |
 
 **`[x]` exige evidência.** Escreva ao lado, entre parênteses, o comando ou a consulta que você rodou e o resultado. Sem isso, a marca é `[~]`.
@@ -24,11 +24,11 @@
 | | Quantidade |
 |---|---:|
 | Total de etapas | 300 |
-| `[x]` concluídas | 134 |
+| `[x]` concluídas | 141 |
 | `[P]` aguardando o dono | 0 |
-| `[~]` parciais | 0 |
+| `[~]` parciais | 1 |
 | `[-]` descartadas | 0 |
-| `[ ]` não iniciadas | **166** |
+| `[ ]` não iniciadas | **158** |
 
 *Atualize esta tabela ao fim de cada onda.*
 
@@ -266,7 +266,7 @@
 - [x] **209** — Prazo nas edges de IA — onda 5 — Média — Edge Function · (as 11 edges de IA que ainda chamavam `fetch` direto agora usam `fetchComPrazo()`: auto-scorecard, analyze-call, voice-command, generate-coaching-plan, chatbot-respond, realtime-analysis, extract-crm-fields, translate-utterance, generate-meeting-summary, whatsapp-rewrite, voip-executive-narrative — as 4 que já usavam `resilientFetch` herdam o prazo da 208; o timeout vira `503 {error:"Serviço de IA indisponível"}` e os ramos que repassavam status/corpo do provedor (429/402/500/502, incl. `details`/`detail`) foram unificados em 503 com o motivo só no log — contrato da 050; `deno check` 11/11 OK, `deno test -A supabase/functions/` 383 passed/0 failed, `deno lint` sem problema novo; a simulação de upstream lento ponta a ponta fica na etapa 234, porque a URL do provedor é fixa)
 - [x] **210** — Prazo nas edges de e-mail e de integração — onda 5 — Média — Edge Function · (o commit `43eafa2` (24/11 04:53 -03) já tinha aplicado o lote; conferência de byte a byte do lote citado: `grep -c "await fetch("` = **0** e `fetchComPrazo` presente em `notify-blocked-ip` (Resend) e `notify-new-device` (Resend), `teams-fetch-recordings` (Graph), `ocr-virtual-fax` (gateway de visão) e `elevenlabs-conversation-token`. A sexta, `ldap-sync`, **não faz `fetch`**: usa o cliente `ldapts` com `LDAP_TIMEOUT_MS = 15000` (`index.ts:12`) e o envoltório `withTimeout()` no `bind` e nas buscas (`:86,118-126,228-230`) — e o plano pede explicitamente para não mexer no TLS desse arquivo, então ele fecha sem alteração. **Deploy confirmado** em produção: `supabase functions list` mostra as 6 `ACTIVE`, e as 5 do lote foram publicadas 1–3 minutos depois do commit do fix (07:54:27–07:56:02 UTC contra 07:53:17 UTC do commit), ou seja o prazo está no ar; `ldap-sync` segue na v11 de 22/11, correto porque não mudou)
 - [x] **211** — Prazo e proteção na cadeia edge→edge — onda 5 — Média — Edge Function · (das 3 citacoes, so uma era cadeia edge->edge: `voip-capacity-recommendations:161` agora chama a edge interna `voip-quality-forecast` com `fetchComPrazo(..., 10_000)` — metade do orcamento de 20 s da plataforma — e, no estouro, responde `503 Servico de previsao indisponivel` com `request_id`, em vez de deixar a requisicao pendurada. `voip-diagnostic-voice-qa:145` nao chamava outra edge e sim o gateway de IA sem prazo: recebeu o contrato da 209 (`fetchComPrazo` + catch -> `503 Servico de IA indisponivel`), mantendo os ramos 429/402/502 como estavam porque unifica-los e escopo da 213. `voip-executive-narrative:127` ja usava `fetchComPrazo` desde a 209 (falso positivo). Nao unifiquei as edges em `_shared/`: a interna continua autenticada por conta propria e a fusao e mudanca de desenho (proposta, nao imposta, como pede a etapa). Verificacao: `grep -rn "await fetch("` nos 2 arquivos = 0 ocorrencias; `deno check --quiet` 2/2 rc=0. A simulacao com a edge interna lenta continua na etapa 234: depende de instancia servida, mesma pendencia anotada na 209; deploy confirmado para fechar a etapa: `voip-capacity-recommendations` v18 e `voip-diagnostic-voice-qa` v19 em 24/11/2026 08:06 (Brasília), ambas ATIVAS, e POST sem auth devolve 401 com request_id)
-- [ ] **212** — Guard de CI para `fetch` sem prazo — onda 5 — Média — CI
+- [x] **212** — Guard de CI para `fetch` sem prazo — onda 5 — Média — CI · (Medição antes do fix: **5 `fetch(` sem `signal`** nos entrypoints das edges — `voice-transcribe:63`, `fuzz-test-runner:108`, `analyze-contact-profile:67`, `voip-trunks-healthcheck:126`, `validate-geo:75`. Os 5 passaram a usar `fetchComPrazo` de `_shared/resilience.ts` (import + troca da chamada): `voice-transcribe` com **60 s** explícito por ser upload de áudio, os outros no default `15_000`; o `.catch(...)` do `voip-trunks-healthcheck` foi preservado e o `http://` do `validate-geo` **não** foi tocado (protocolo é a etapa 228). Regra **R11-fetch-sem-prazo** em `scripts/audit-edge-functions.ts` — severidade `error`, detecta `(?<![\w.$])fetch\s*\(`, extrai os argumentos com `matchDelimiter` e só acusa quando não há `signal` (silêncio: `// fetch-prazo-ok`) — e incluída em `NAO_BASELINEAVEIS` (`:273`) para não aceitar dívida nova. **Verificação**: `bun scripts/audit-edge-functions.ts` → **exit 0**, `Resumo: 30 achado(s) atuais, 13 novo(s), 0 erro(s) (0 novo(s))` (os 13 novos são R10 herdados, que por desenho nunca entram no baseline). **Prova negativa** em `validate-geo`: `const semPrazo = fetch(endpoint);` → `[ERROR] R11-fetch-sem-prazo supabase/functions/validate-geo/index.ts (linha 210)` e **exit 1**, enquanto a linha seguinte `fetch(endpoint, { signal: AbortSignal.timeout(1000) })` **não** foi acusada — o guard distingue os dois casos; probe removido, `git status --porcelain` conferido e auditoria de volta a exit 0. `bunx eslint` nos arquivos tocados = 0 erros (as 5 edges ficam em `supabase/functions/`, ignorado pela config) e `bunx tsc --noEmit` rc=0. O script é passo obrigatório do job `quality` (`ci.yml:44`), então o guard vale a partir do merge)
 - [ ] **213** — Padronizar o contrato de erro das edge functions — onda 5 — Baixa — Edge Function
 - [x] **214** — Fazer a suíte de testes rodar sem configuração manual — onda 5 — Baixa — Testes · (`src/test/setup.ts` preenche `VITE_SUPABASE_URL=https://test.invalid` e `VITE_SUPABASE_PUBLISHABLE_KEY=test-publishable-key` quando ausentes; `AGENTS.md:32` documenta. Verificação num shell sem nenhuma variável `VITE_*`: `useFinancialImpact.property.test.ts` e `executive-dashboard-utils.test.ts` — que falhavam na coleta com "Missing VITE_SUPABASE_URL" — passam (5 + 11 testes); suíte completa: 298 arquivos e 3376 testes passando. Restam 4 arquivos que falham **localmente** com `zod` `undefined` sob o runtime do Bun (`useContacts.coverage`, `validation-schemas`, `zod-schemas.property`) — causa diferente e nenhuma relação com env; a `main` está verde nos mesmos arquivos (run 45313951657, sha d1b586c) — e 1 teste de `Status.tsx` que falha só local)
 - [ ] **215** — Retentativa com espera nas chamadas ao Bitrix — onda 5 — Média — Frontend

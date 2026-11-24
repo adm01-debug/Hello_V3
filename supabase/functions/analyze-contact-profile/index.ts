@@ -3,6 +3,7 @@ import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
 import { buildCorsHeaders } from "../_shared/cors.ts";
 import { validate, uuid } from "../_shared/validate.ts";
 import { checkRateLimitDB, getClientIp } from "../_shared/rate-limit.ts";
+import { fetchComPrazo } from "../_shared/resilience.ts";
 
 serve(async (req) => {
   const cors = buildCorsHeaders(req);
@@ -64,7 +65,7 @@ serve(async (req) => {
       `${idx + 1}. ${i.interaction_type} - ${i.sentiment || 'neutro'} - ${i.summary || 'sem resumo'}`
     ).join('\n').slice(0, 4000);
 
-    const response = await fetch('https://openrouter.ai/api/v1/chat/completions', {
+    const response = await fetchComPrazo('https://openrouter.ai/api/v1/chat/completions', {
       method: 'POST',
       headers: { 'Authorization': `Bearer ${OPENROUTER_API_KEY}`, 'Content-Type': 'application/json' },
       body: JSON.stringify({

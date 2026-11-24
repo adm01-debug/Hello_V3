@@ -1,6 +1,7 @@
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
 import { buildCorsHeaders } from "../_shared/cors.ts";
+import { fetchComPrazo } from "../_shared/resilience.ts";
 
 
 serve(async (req) => {
@@ -60,11 +61,11 @@ serve(async (req) => {
     apiFormData.append('diarize', 'true');
     apiFormData.append('tag_audio_events', 'false');
 
-    const response = await fetch('https://api.elevenlabs.io/v1/speech-to-text', {
+    const response = await fetchComPrazo('https://api.elevenlabs.io/v1/speech-to-text', {
       method: 'POST',
       headers: { 'xi-api-key': ELEVENLABS_API_KEY },
       body: apiFormData,
-    });
+    }, 60_000);
 
     if (!response.ok) {
       console.error('ElevenLabs API error:', response.status);
