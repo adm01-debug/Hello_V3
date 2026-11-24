@@ -69,21 +69,26 @@ export function CallDetailDialog({ selectedSession, onClose, isLoadingDetails, s
     let cancelled = false;
     (async () => {
       try {
-        const { data: rec } = await supabase
+        const { data: rec, error: recError } = await supabase
           .from('call_recordings')
           .select('file_path')
           .eq('call_session_id', sessionId)
           .order('recorded_at', { ascending: false })
           .limit(1)
           .maybeSingle();
+        // Gravação e coaching são enriquecimento do detalhe: a falha não bloqueia
+        // a tela, mas fica registrada em vez de sumir (etapa 201).
+        if (recError) log.warn('Falha ao localizar gravação da chamada', recError);
         if (rec?.file_path && !cancelled) {
-          const { data: signed } = await supabase.storage.from('call-recordings').createSignedUrl(rec.file_path, 3600);
+          const { data: signed, error: signedError } = await supabase.storage.from('call-recordings').createSignedUrl(rec.file_path, 3600);
+          if (signedError) log.warn('Falha ao assinar URL da gravação', signedError);
           if (!cancelled) setAudioUrl(signed?.signedUrl);
         }
-        const { data: cts } = await supabase.from('coaching_timestamps')
+        const { data: cts, error: ctsError } = await supabase.from('coaching_timestamps')
           .select('id, timestamp_seconds, message, severity')
           .eq('call_session_id', sessionId)
           .order('timestamp_seconds', { ascending: true });
+        if (ctsError) log.warn('Falha ao carregar marcas de coaching', ctsError);
         if (!cancelled) setCoachingTs((cts ?? []) as unknown as CoachingTs[]);
       } catch (e) {
         log.warn('Falha ao carregar mídia/coaching', e);
