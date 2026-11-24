@@ -123,7 +123,7 @@ const Calls = () => {
                   </p>
                 </div>
                 {!sip.isRegistered && (
-                  <Button variant="outline" size="sm" className="gap-1" onClick={() => window.location.assign('/admin/voip-trunks')}>
+                  <Button variant="outline" size="sm" className="gap-1 max-md:h-11" onClick={() => window.location.assign('/admin/voip-trunks')}>
                     <ExternalLink className="h-3 w-3" />
                     Configurar
                   </Button>
@@ -163,7 +163,7 @@ const Calls = () => {
                 <Button
                   variant="outline"
                   size="sm"
-                  className="gap-1"
+                  className="gap-1 max-md:h-11"
                   onClick={() => navigate('/admin/voip-trunks')}
                 >
                   <ExternalLink className="h-3 w-3" />

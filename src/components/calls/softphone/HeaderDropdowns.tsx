@@ -49,7 +49,7 @@ export function AgentSelector({
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button variant="outline" size="sm" className="gap-2">
+        <Button variant="outline" size="sm" className="gap-2 max-md:h-11">
           {currentAgent ? (
             <>
               <span className={statusDot(currentAgent.status)} />
@@ -107,7 +107,7 @@ export function ChannelSelector({ channels, activeChannel, isInCall, onSetChanne
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button variant="outline" size="sm" className="gap-2">
+        <Button variant="outline" size="sm" className="gap-2 max-md:h-11">
           <Badge variant="secondary" className="text-xs">
             {channels.find(ch => ch.id === activeChannel)?.name}
           </Badge>

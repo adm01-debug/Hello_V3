@@ -33,14 +33,14 @@ export function DeviceNameSetting() {
               if (event.key === 'Escape') setEditing(false);
             }}
             aria-label="Apelido deste dispositivo"
-            className="h-7 flex-1 text-[11px]"
+            className="h-7 max-md:h-11 flex-1 text-[11px]"
             autoFocus
           />
           <Button
             type="button"
             variant="ghost"
             size="icon"
-            className="h-7 w-7"
+            className="h-7 w-7 max-md:h-11 max-md:w-11"
             onClick={commit}
             aria-label="Salvar apelido do dispositivo"
           >
@@ -50,7 +50,7 @@ export function DeviceNameSetting() {
             type="button"
             variant="ghost"
             size="icon"
-            className="h-7 w-7"
+            className="h-7 w-7 max-md:h-11 max-md:w-11"
             onClick={() => setEditing(false)}
             aria-label="Cancelar edição do apelido"
           >
@@ -66,7 +66,7 @@ export function DeviceNameSetting() {
             type="button"
             variant="ghost"
             size="icon"
-            className="h-7 w-7"
+            className="h-7 w-7 max-md:h-11 max-md:w-11"
             disabled={isSyncing}
             onClick={() => {
               setDraft(label);

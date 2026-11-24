@@ -229,11 +229,11 @@ export function PhoneQuickAccess({
   return (
     <div className="flex h-full flex-col gap-4 rounded-xl border border-border/50 bg-card/60 p-4 backdrop-blur-sm">
       <div className="flex flex-wrap gap-2">
-        <Button type="button" variant="outline" size="sm" onClick={onPaste}>
+        <Button type="button" variant="outline" size="sm" className="max-md:h-11" onClick={onPaste}>
           <ClipboardPaste className="mr-2 h-4 w-4" />
           Colar número
         </Button>
-        <Button type="button" variant="outline" size="sm" onClick={onOpenContacts}>
+        <Button type="button" variant="outline" size="sm" className="max-md:h-11" onClick={onOpenContacts}>
           <Users className="mr-2 h-4 w-4" />
           Contatos
         </Button>

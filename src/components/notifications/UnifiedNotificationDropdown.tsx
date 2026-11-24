@@ -41,7 +41,7 @@ import { activateOnKey } from "../../lib/a11y-clickable";
          <Button 
            variant="ghost" 
            size="icon" 
-           className="relative hover:bg-primary/10 transition-all group"
+           className="relative hover:bg-primary/10 transition-all group max-md:h-11 max-md:w-11"
            aria-label={`Notificações${totalUnread > 0 ? ` - ${totalUnread} não lidas` : ''}`}
          >
            {totalUnread > 0 ? (

@@ -47,7 +47,7 @@ export function RingtoneSettings() {
           type="button"
           variant="ghost"
           size="sm"
-          className="h-7 gap-1 px-2 text-[11px] text-muted-foreground"
+          className="h-7 max-md:h-11 gap-1 px-2 text-[11px] text-muted-foreground"
           onClick={resetToDefaults}
           disabled={isDefault}
           aria-label="Restaurar toque padrão"
@@ -69,7 +69,7 @@ export function RingtoneSettings() {
       <div className="space-y-3">
         <div className="flex items-center gap-2">
           <Select value={presetId} onValueChange={selectPreset}>
-            <SelectTrigger className="h-9 flex-1" aria-label="Toque para chamadas recebidas">
+            <SelectTrigger className="h-9 flex-1 max-md:h-11" aria-label="Toque para chamadas recebidas">
               <SelectValue />
             </SelectTrigger>
             <SelectContent>
@@ -84,7 +84,7 @@ export function RingtoneSettings() {
             type="button"
             variant="outline"
             size="icon"
-            className="h-9 w-9 shrink-0"
+            className="h-9 w-9 max-md:h-11 max-md:w-11 shrink-0"
             aria-label="Ouvir prévia do toque"
             onClick={preview}
           >

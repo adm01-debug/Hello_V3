@@ -88,7 +88,7 @@ export function HistoryTab({ callHistory, onSelectNumber }: HistoryTabProps) {
               <Button
                 variant="ghost"
                 size="icon"
-                className="h-8 w-8"
+                className="h-8 w-8 max-md:h-11 max-md:w-11"
                 aria-label={
                   call.phoneNumber
                     ? `Ligar de volta para ${call.contactName || call.phoneNumber}`
