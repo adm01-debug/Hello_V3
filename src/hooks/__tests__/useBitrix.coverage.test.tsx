@@ -191,7 +191,7 @@ describe('useBitrix', () => {
   it('syncAgents falha quando o upsert de um agente retorna erro', async () => {
     setInvoke({ data: { data: [{ ID: '1', NAME: 'A' }, { ID: '2', NAME: 'B' }] }, error: null });
     upsertMock
-      .mockResolvedValueOnce({ error: { message: 'denied' } })
+      .mockResolvedValueOnce({ error: { message: 'denied' } } as never)
       .mockResolvedValueOnce({ error: null });
     const { result } = renderHook(() => useBitrix());
     await act(async () => {
