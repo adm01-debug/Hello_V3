@@ -73,4 +73,22 @@ describe('useAuditLog', () => {
     });
     expect(rpcMock).toHaveBeenCalledTimes(12);
   });
+
+  it('logEvent devolve false quando o rpc falha e true quando grava', async () => {
+    const { result } = renderHook(() => useAuditLog());
+    let ok: boolean | undefined;
+    await act(async () => { ok = await result.current.logEvent('view', 'agent', 'a1'); });
+    expect(ok).toBe(true);
+    rpcMock.mockResolvedValueOnce({ error: { message: 'denied' } });
+    await act(async () => { ok = await result.current.logEvent('view', 'agent', 'a1'); });
+    expect(ok).toBe(false);
+  });
+
+  it('logEvent devolve false quando o rpc lança exceção', async () => {
+    rpcMock.mockRejectedValueOnce(new Error('network'));
+    const { result } = renderHook(() => useAuditLog());
+    let ok: boolean | undefined;
+    await act(async () => { ok = await result.current.logEvent('delete', 'call_session', 'x'); });
+    expect(ok).toBe(false);
+  });
 });

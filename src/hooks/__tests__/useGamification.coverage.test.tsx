@@ -58,6 +58,7 @@ vi.mock('@/lib/logger', () => ({
 }));
 
 import { useGamification } from '../useGamification';
+import { toast } from 'sonner';
 
 function setResults(map: Record<string, QueryResult[]>) {
   for (const k of Object.keys(tableResults)) delete tableResults[k];
@@ -161,6 +162,38 @@ describe('useGamification', () => {
     await act(async () => { await result.current.updateWeeklyStats({ total_calls: 1 }); });
 
     expect(writes).not.toContain('agent_weekly_stats');
+  });
+
+  it('avisa quando o update das estatísticas da semana falha', async () => {
+    setResults({ badges: [{ data: [], error: null }], agent_badges: [{ data: [], error: null }], agent_weekly_stats: [{ data: [], error: null }], agents: [{ data: [], error: null }] });
+    const { result } = renderHook(() => useGamification('a1'));
+    await waitFor(() => expect(result.current.isLoading).toBe(false));
+
+    setResults({
+      agent_weekly_stats: [
+        { data: { id: 's1', total_calls: 1, total_duration_seconds: 0, badges_earned: 0, points_earned: 0, avg_satisfaction: 0, avg_performance: 0 }, error: null },
+        { data: null, error: { message: 'permission denied' } },
+      ],
+    });
+    await act(async () => { await result.current.updateWeeklyStats({ total_calls: 1 }); });
+
+    expect(toast.error).toHaveBeenCalledWith('Não foi possível salvar as estatísticas da semana');
+  });
+
+  it('avisa quando o insert das estatísticas da semana falha', async () => {
+    setResults({ badges: [{ data: [], error: null }], agent_badges: [{ data: [], error: null }], agent_weekly_stats: [{ data: [], error: null }], agents: [{ data: [], error: null }] });
+    const { result } = renderHook(() => useGamification('a1'));
+    await waitFor(() => expect(result.current.isLoading).toBe(false));
+
+    setResults({
+      agent_weekly_stats: [
+        { data: null, error: null },
+        { data: null, error: { message: 'permission denied' } },
+      ],
+    });
+    await act(async () => { await result.current.updateWeeklyStats({ total_calls: 1 }); });
+
+    expect(toast.error).toHaveBeenCalledWith('Não foi possível salvar as estatísticas da semana');
   });
 
   it('updateWeeklyStats returns early without agentId', async () => {

@@ -229,18 +229,28 @@ export function useGamification(agentId?: string) {
       if (updates.avg_satisfaction) newValues.avg_satisfaction = updates.avg_satisfaction;
       if (updates.avg_performance) newValues.avg_performance = updates.avg_performance;
 
-      await supabase
+      const { error: updateError } = await supabase
         .from('agent_weekly_stats')
         .update(newValues)
         .eq('id', existing.id);
+      if (updateError) {
+        logger.error('useGamification.updateWeeklyStats.update', { err: updateError, agentId });
+        toast.error('Não foi possível salvar as estatísticas da semana');
+        return;
+      }
     } else {
-      await supabase
+      const { error: insertError } = await supabase
         .from('agent_weekly_stats')
         .insert({
           agent_id: agentId,
           week_start: weekStart,
           ...updates
         });
+      if (insertError) {
+        logger.error('useGamification.updateWeeklyStats.insert', { err: insertError, agentId });
+        toast.error('Não foi possível salvar as estatísticas da semana');
+        return;
+      }
     }
 
     fetchWeeklyStats();

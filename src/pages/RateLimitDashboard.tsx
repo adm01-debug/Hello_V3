@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
@@ -13,6 +14,8 @@ import { useRateLimitData } from '@/hooks/useRateLimitData';
 import { safeToLocaleString } from "@/lib/safe-date";
 export default function RateLimitDashboard() {
   usePageTitle('Rate Limit');
+  // Aba controlada: o botão do alerta de incidente abre a lista de alertas sem tirar o admin da tela.
+  const [tab, setTab] = useState('logs');
 
   const {
     isLoading, alerts, settings, searchTerm, setSearchTerm, refreshing,
@@ -49,7 +52,7 @@ export default function RateLimitDashboard() {
           <AlertTriangle className="h-4 w-4" />
           <AlertDescription className="flex items-center justify-between">
             <span>{stats.activeAlerts} alerta(s) ativo(s) requerem atenção</span>
-            <Button variant="outline" size="sm">Ver Alertas</Button>
+            <Button variant="outline" size="sm" onClick={() => setTab('alerts')}>Ver Alertas</Button>
           </AlertDescription>
         </Alert>
       )}
@@ -71,7 +74,7 @@ export default function RateLimitDashboard() {
         </CardContent>
       </Card>
 
-      <Tabs defaultValue="logs" className="space-y-4">
+      <Tabs value={tab} onValueChange={setTab} className="space-y-4">
         <TabsList>
           <TabsTrigger value="logs">Logs de Requests</TabsTrigger>
           <TabsTrigger value="alerts">Alertas{stats.activeAlerts > 0 && <Badge variant="destructive" className="ml-2">{stats.activeAlerts}</Badge>}</TabsTrigger>
