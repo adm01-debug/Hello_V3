@@ -23,6 +23,7 @@ import { MultilingualDashboardCard } from '@/components/executive/MultilingualDa
 import { OmnichannelCard } from '@/components/executive/OmnichannelCard';
 import { PendingFollowupsCard } from '@/components/executive/PendingFollowupsCard';
 import { usePageTitle } from '@/hooks/usePageTitle';
+import { EmptyErrorState } from '@/components/ui/empty-state';
 
 export default function ExecutiveDashboard() {
   usePageTitle('Dashboard Executivo');
@@ -30,13 +31,26 @@ export default function ExecutiveDashboard() {
   const [period, setPeriod] = useState<PeriodType>('week');
   const {
     metrics, callsByDay, satisfactionTrend, sentimentData,
-    topAgents, goalsComparison, holdByAgent, isLoading, lastUpdate,
+    topAgents, goalsComparison, holdByAgent, isLoading, error, lastUpdate, refetch,
   } = useExecutiveDashboardData(period);
 
   if (isLoading) {
     return (
       <div className="container mx-auto p-6 flex items-center justify-center min-h-[400px]">
         <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary" />
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="container mx-auto p-6">
+        <EmptyErrorState
+          title="Não foi possível carregar o dashboard"
+          description="A leitura das métricas falhou — os números não foram zerados para não parecer que não houve chamada."
+          hint={error}
+          onRetry={() => void refetch()}
+        />
       </div>
     );
   }

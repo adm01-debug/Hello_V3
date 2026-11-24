@@ -49,6 +49,7 @@ export function useCallHistory() {
   const { logCallTranscriptionAccess, logCallAnalysisAccess, logDataExport } = useAuditLog();
   const [sessions, setSessions] = useState<SessionWithSummary[]>([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedSession, setSelectedSession] = useState<SessionWithSummary | null>(null);
   const [sessionTranscripts, setSessionTranscripts] = useState<Transcription[]>([]);
@@ -83,6 +84,7 @@ export function useCallHistory() {
 
   const fetchSessions = async (pageToFetch: number = 0) => {
     setIsLoading(true);
+    setError(null);
     try {
       const { data, error } = await supabase.rpc('get_call_history_with_summaries', {
         p_limit: PAGE_SIZE,
@@ -118,6 +120,7 @@ export function useCallHistory() {
       setPage(pageToFetch);
     } catch (error) {
       logger.error('Error fetching sessions:', error);
+      setError(error instanceof Error ? error.message : 'Falha ao carregar o histórico de chamadas');
     } finally {
       setIsLoading(false);
     }
@@ -217,7 +220,7 @@ export function useCallHistory() {
   };
 
   return {
-    sessions: filteredSessions, isLoading, searchQuery, setSearchQuery,
+    sessions: filteredSessions, isLoading, error, searchQuery, setSearchQuery,
     selectedSession, setSelectedSession, sessionTranscripts, sessionAnalyses, sessionSummary,
     isLoadingDetails, showFilters, setShowFilters, dateRangePreset, setDateRangePreset,
     customDateFrom, setCustomDateFrom, customDateTo, setCustomDateTo,

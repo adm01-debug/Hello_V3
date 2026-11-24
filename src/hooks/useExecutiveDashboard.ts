@@ -105,6 +105,7 @@ export function useExecutiveDashboardData(period: PeriodType) {
   const [goalsComparison, setGoalsComparison] = useState<GoalsComparison[]>([]);
   const [holdByAgent, setHoldByAgent] = useState<HoldByAgent[]>([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
   const [lastUpdate, setLastUpdate] = useState<Date>(new Date());
 
   const fetchAllMetrics = useCallback(async () => {
@@ -123,11 +124,16 @@ export function useExecutiveDashboardData(period: PeriodType) {
     if (period !== 'all') holdQuery = holdQuery.gte('created_at', dateFilter.toISOString());
         const { data: holdEvents, error: holdError } = await holdQuery;
 
-    if (!sessions) { setIsLoading(false); return; }
+    if (!sessions) {
+      setError(sessionsError?.message ?? 'Falha ao ler as chamadas do período');
+      setIsLoading(false);
+      return;
+    }
 
     const errMsg = (sessionsError ?? summariesError ?? alertsError ?? agentGoalsError ?? holdError)?.message;
     if (errMsg) {
       console.error('[ExecutiveDashboard] erro ao carregar métricas:', errMsg);
+      setError(errMsg);
       setIsLoading(false);
       return;
     }
@@ -262,6 +268,7 @@ export function useExecutiveDashboardData(period: PeriodType) {
 
   return {
     metrics, callsByDay, satisfactionTrend, sentimentData,
-    topAgents, goalsComparison, holdByAgent, isLoading, lastUpdate,
+    topAgents, goalsComparison, holdByAgent, isLoading, error, lastUpdate,
+    refetch: fetchAllMetrics,
   };
 }

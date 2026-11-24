@@ -36,6 +36,8 @@ interface PhoneQuickAccessProps {
   recents: QuickAccessEntry[];
   favorites: QuickAccessEntry[];
   isLoading?: boolean;
+  /** Falha ao ler as recentes: sem isto a lista vazia mente. */
+  error?: string | null;
   onSelect: (phone: string, name?: string) => void;
   onPaste: () => void;
   onOpenContacts: () => void;
@@ -176,6 +178,7 @@ export function PhoneQuickAccess({
   recents,
   favorites,
   isLoading = false,
+  error = null,
   onSelect,
   onPaste,
   onOpenContacts,
@@ -322,6 +325,8 @@ export function PhoneQuickAccess({
         <ScrollArea className="min-h-0 flex-1 pr-2">
           {isLoading ? (
             <p className="px-3 text-xs text-muted-foreground">Carregando…</p>
+          ) : error ? (
+            <p className="px-3 text-xs text-destructive">Não foi possível carregar as recentes.</p>
           ) : recents.length === 0 ? (
             <p className="px-3 text-xs text-muted-foreground">Sem chamadas recentes.</p>
           ) : (

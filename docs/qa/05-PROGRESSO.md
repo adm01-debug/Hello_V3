@@ -257,7 +257,7 @@
 - [x] **200** — Idem no ranking, nos scorecards e nos planos de sucesso — onda 5 — Média — Hooks
 - [x] **201** — Varrer as consultas cegas restantes — onda 5 — Média — Hooks
 - [x] **202** — Padronizar o estado de erro das telas — onda 5 — Média — Frontend
-- [ ] **203** — Estados de carregamento e vazio nas telas de operação — onda 5 — Média — Frontend
+- [x] **203** — Estados de carregamento e vazio nas telas de operação — onda 5 — Média — Frontend · (8 telas do fluxo central conferidas: fila, ranking, métricas de fila e softphone de chamadas já corretas; 4 corrigidas — executivo e histórico não tinham estado de erro, o discador não tinha carregamento e as recentes do discador não distinguiam falha de lista vazia; tsc=0, eslint=0, 63/63 testes relacionados)
 - [ ] **204** — Fazer o agente ficar offline ao fechar o navegador — onda 5 — Alta — Hooks
 - [ ] **205** — Parar de engolir falha no agendamento de retorno ao cliente — onda 5 — Alta — Hooks
 - [ ] **206** — Evitar a corrida entre "carregar mais" e troca de filtro no histórico — onda 5 — Baixa — Hooks
