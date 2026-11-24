@@ -37,10 +37,11 @@ serve(async (req) => {
 
     for (const item of queueItems) {
       // Marcar como processando
-      await supabase.from("crm_sync_queue").update({
+      const { error: processingErr } = await supabase.from("crm_sync_queue").update({
         status: "processing",
         attempts: item.attempts + 1,
       }).eq("id", item.id);
+      if (processingErr) console.error('sync-crm-queue: falha ao marcar item da fila como processando', processingErr);
 
       try {
         // Tentar chamar a função do bitrix
@@ -59,23 +60,25 @@ serve(async (req) => {
         }
 
         // Sucesso!
-        await supabase.from("crm_sync_queue").update({
+        const { error: completedErr } = await supabase.from("crm_sync_queue").update({
           status: "completed",
           last_error: null,
         }).eq("id", item.id);
+        if (completedErr) console.error('sync-crm-queue: falha ao marcar item da fila como concluido', completedErr);
         results.push({ id: item.id, status: "completed" });
       } catch (error) {
         // Falha - agendar retentativa com backoff exponencial
         const delay = Math.pow(2, item.attempts) * 60; // 2, 4, 8, 16, 32 minutos
         const nextRetry = new Date(Date.now() + delay * 1000).toISOString();
 
-        await supabase.from("crm_sync_queue").update({
+        const { error: failedErr } = await supabase.from("crm_sync_queue").update({
           status: "failed",
           last_error: error instanceof Error
             ? error.message
             : "erro desconhecido",
           next_retry_at: nextRetry,
         }).eq("id", item.id);
+        if (failedErr) console.error('sync-crm-queue: falha ao marcar item da fila como falho', failedErr);
 
         results.push({
           id: item.id,

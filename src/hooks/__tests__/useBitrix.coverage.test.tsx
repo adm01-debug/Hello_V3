@@ -1,5 +1,6 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { renderHook, act } from '@testing-library/react';
+import { toast } from 'sonner';
 
 interface InvokeResult { data: unknown; error: unknown; }
 
@@ -185,6 +186,19 @@ describe('useBitrix', () => {
       expect(users?.length).toBe(1);
     });
     expect(upsertMock).toHaveBeenCalled();
+  });
+
+  it('syncAgents falha quando o upsert de um agente retorna erro', async () => {
+    setInvoke({ data: { data: [{ ID: '1', NAME: 'A' }, { ID: '2', NAME: 'B' }] }, error: null });
+    upsertMock
+      .mockResolvedValueOnce({ error: { message: 'denied' } } as never)
+      .mockResolvedValueOnce({ error: null });
+    const { result } = renderHook(() => useBitrix());
+    await act(async () => {
+      expect(await result.current.syncAgents()).toBeNull();
+    });
+    expect(toast.success).not.toHaveBeenCalledWith('Agentes sincronizados com sucesso');
+    expect(toast.error).toHaveBeenCalled();
   });
 
   it('syncAgents returns null when no result', async () => {
