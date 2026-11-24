@@ -4122,7 +4122,8 @@
    "src/components/ui/separator.tsx",
    "src/components/ui/switch.tsx",
    "src/components/ui/tabs.tsx",
-   "src/hooks/usePageTitle.ts"
+   "src/hooks/usePageTitle.ts",
+   "src/lib/audio/deviceTest.ts"
   ],
   "src/pages/ShiftSwapSuggestions.tsx": [
    "src/components/layout/NeonPageHeader.tsx",

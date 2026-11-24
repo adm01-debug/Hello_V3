@@ -5,17 +5,17 @@
   "vitest",
   "playwright"
  ],
- "total": 388,
+ "total": 389,
  "por_tipo": {
   "contrato": 1,
   "e2e": 13,
   "pytest": 2,
-  "unit": 371
+  "unit": 372
  },
  "onde_ficam": [
   {
    "padrao": "co-localizado (__tests__)",
-   "arquivos": 364
+   "arquivos": 365
   },
   {
    "padrao": "e2e/",
@@ -2677,6 +2677,15 @@
    "casos": 4
   },
   {
+   "arquivo": "src/lib/audio/__tests__/deviceTest.test.ts",
+   "tipo": "unit",
+   "linhas": 132,
+   "testa": [
+    "src/lib/audio/deviceTest.ts"
+   ],
+   "casos": 5
+  },
+  {
    "arquivo": "src/lib/audit/__tests__/index.coverage.test.ts",
    "tipo": "unit",
    "linhas": 68,
@@ -3678,6 +3687,7 @@
   "src/integrations/supabase/client.ts": 30,
   "src/lib/a11y-clickable.ts": 1,
   "src/lib/agent-assist-utils.ts": 2,
+  "src/lib/audio/deviceTest.ts": 1,
   "src/lib/audit/index.ts": 2,
   "src/lib/blf.ts": 1,
   "src/lib/call-park.ts": 1,

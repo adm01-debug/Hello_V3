@@ -1330,6 +1330,7 @@
     "useMemo",
     "useMultiChannelCall",
     "useMutation",
+    "useNavigate",
     "useNetworkMonitor",
     "usePageTitle",
     "useQualityTrendAnalyzer",
@@ -4335,7 +4336,7 @@
    ],
    "flags": [],
    "papeis": [],
-   "arquivos_puxados": 34
+   "arquivos_puxados": 35
   },
   {
    "protegida": false,

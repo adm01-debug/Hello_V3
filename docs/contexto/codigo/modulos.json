@@ -5143,6 +5143,36 @@
    "pacotes_externos": []
   },
   {
+   "modulo": "lib/audio",
+   "arquivos": 1,
+   "testes": 1,
+   "linhas": 128,
+   "itens_menu": [],
+   "telas": [],
+   "rotas_http": [],
+   "componentes": 0,
+   "hooks_locais": [],
+   "hooks_definidos": [],
+   "edges": [],
+   "tabelas": [],
+   "rpcs": [],
+   "buckets": [],
+   "canais_realtime": [],
+   "env": [],
+   "flags": [],
+   "papeis": [],
+   "diretos": {
+    "edges": [],
+    "tabelas": [],
+    "rpcs": []
+   },
+   "importado_por_outros_modulos": [
+    "pages"
+   ],
+   "depende_de_modulos": [],
+   "pacotes_externos": []
+  },
+  {
    "modulo": "lib/audit",
    "arquivos": 1,
    "testes": 1,
@@ -5598,7 +5628,7 @@
    "modulo": "pages",
    "arquivos": 93,
    "testes": 0,
-   "linhas": 16841,
+   "linhas": 16916,
    "itens_menu": [
     "Acessos Bloqueados",
     "Agent Assist",
@@ -6368,6 +6398,7 @@
     "integrations/lovable",
     "integrations/supabase",
     "lib",
+    "lib/audio",
     "lib/export",
     "lib/webauthn",
     "pages/call-analytics",

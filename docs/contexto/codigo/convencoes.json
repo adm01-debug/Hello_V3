@@ -16,12 +16,12 @@
    "src/contexts (4)"
   ],
   "servicos_logica": [
-   "src/lib (88)",
+   "src/lib (89)",
    "src/integrations (3)",
    "scripts/regras_negocio (2)"
   ],
   "testes": [
-   "co-localizado (__tests__) (364)",
+   "co-localizado (__tests__) (365)",
    "e2e/ (7)",
    "tests/ (6)"
   ],
@@ -58,11 +58,11 @@
  "commits": {
   "convencao": "conventional commits (observado)",
   "exemplos": [
+   "feat: ligar botões Configurar e adicionar testes de áudio (#242)",
    "feat: explica na tela a regra do coaching automatico (etapa 169) (#241)",
    "fix: resolve o menu mais opcoes do cartao de contato (etapa 166) (#240)",
    "feat: liga Priorizar no discador preditivo (etapa 163) (#239)",
-   "feat: mostra os acertos dos trackers e leva ao detalhe da chamada (etapa 157) (#238)",
-   "chore: remove o hook de conferencia orfao e defeituoso (etapa 158) (#237)"
+   "feat: mostra os acertos dos trackers e leva ao detalhe da chamada (etapa 157) (#238)"
   ]
  },
  "pr_template": null,

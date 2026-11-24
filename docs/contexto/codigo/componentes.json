@@ -5837,7 +5837,7 @@
     "Calls"
    ],
    "export_default": "Calls",
-   "linhas": 203,
+   "linhas": 206,
    "dominio": "pages",
    "hooks_locais": [
     "usePageTitle",
@@ -6989,7 +6989,7 @@
     "Settings"
    ],
    "export_default": "Settings",
-   "linhas": 309,
+   "linhas": 381,
    "dominio": "pages",
    "hooks_locais": [
     "usePageTitle"

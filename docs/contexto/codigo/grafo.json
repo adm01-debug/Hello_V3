@@ -1,8 +1,8 @@
 {
  "aviso": "GERADO AUTOMATICAMENTE por scripts/ai-context/gerar.mjs — não editar à mão; será sobrescrito.",
  "format_version": 2,
- "nos": 933,
- "arestas": 3697,
+ "nos": 934,
+ "arestas": 3698,
  "hubs": [
   {
    "arquivo": "src/integrations/supabase/client.ts",
@@ -226,14 +226,14 @@
    "importado_por": 51
   },
   {
+   "modulo": "pages",
+   "depende_de": 53,
+   "importado_por": 2
+  },
+  {
    "modulo": "hooks",
    "depende_de": 14,
    "importado_por": 40
-  },
-  {
-   "modulo": "pages",
-   "depende_de": 52,
-   "importado_por": 2
   },
   {
    "modulo": "components/ui",

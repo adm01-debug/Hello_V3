@@ -1,15 +1,15 @@
 {
  "meta": {
-  "sha": "024aa1eed8a9d8d5fddcdae3696247ee0197e304",
+  "sha": "95304bc3d78a5598b532455ff31b162b9dfd811c",
   "branch": "main",
   "remote": "https://github.com/adm01-debug/Hello_V3",
-  "generated_at": "2026-11-24 06:26 UTC",
-  "files_total": 1769,
-  "code_files": 1566,
-  "code_lines": 193647
+  "generated_at": "2026-11-24 06:46 UTC",
+  "files_total": 1771,
+  "code_files": 1568,
+  "code_lines": 193982
  },
  "version": "1.3.2",
- "facts_hash": "4c2c65d6a8b540c0",
+ "facts_hash": "bbbee29fcdac4b98",
  "stack": {
   "frameworks": [
    "React + Vite",
@@ -153,7 +153,7 @@
   ],
   "package_manager": "bun",
   "languages": {
-   ".ts": 655,
+   ".ts": 657,
    ".tsx": 632,
    ".sql": 245,
    ".mjs": 27,
@@ -29196,7 +29196,7 @@
     "rpc_transitive": [
      "log_audit_event"
     ],
-    "deps_count": 30
+    "deps_count": 31
    },
    {
     "path": "",
@@ -33906,8 +33906,8 @@
   },
   {
    "module": "src/lib",
-   "files": 178,
-   "lines": 21599,
+   "files": 180,
+   "lines": 21859,
    "tables": [
     "active_sessions",
     "call_quality_metrics",
@@ -34079,7 +34079,7 @@
   {
    "module": "src/pages",
    "files": 144,
-   "lines": 22065,
+   "lines": 22140,
    "tables": [
     "audit_logs",
     "battle_card_triggers",
@@ -41786,6 +41786,18 @@
     "msg": "${newCritical.length} nova(s) recomendação(ões) crítica(s) detectada(s)"
    },
    {
+    "file": "src/lib/audio/deviceTest.ts",
+    "msg": "Este navegador não expõe acesso ao microfone. Abra o sistema em HTTPS (ou localhost)."
+   },
+   {
+    "file": "src/lib/audio/deviceTest.ts",
+    "msg": "Este navegador não suporta análise de áudio."
+   },
+   {
+    "file": "src/lib/audio/deviceTest.ts",
+    "msg": "Este navegador não suporta reprodução de áudio."
+   },
+   {
     "file": "src/lib/webauthn/webauthn-utils.ts",
     "msg": "Failed to create credential"
    },
@@ -41992,6 +42004,14 @@
    {
     "file": "src/pages/SessionManagement.tsx",
     "msg": ";\nimport { Separator } from "
+   },
+   {
+    "file": "src/pages/Settings.tsx",
+    "msg": "Teste de microfone"
+   },
+   {
+    "file": "src/pages/Settings.tsx",
+    "msg": "Teste de áudio"
    },
    {
     "file": "src/pages/TwoFactorAuth.tsx",
@@ -72354,6 +72374,30 @@
    {
     "file": "src/lib/__tests__/webrtc-config.test.ts",
     "name": "ativa cancelamento de eco, supressão de ruído e AGC"
+   },
+   {
+    "file": "src/lib/audio/__tests__/deviceTest.test.ts",
+    "name": "deviceTest"
+   },
+   {
+    "file": "src/lib/audio/__tests__/deviceTest.test.ts",
+    "name": "explica a recusa de permissão e não vaza stream"
+   },
+   {
+    "file": "src/lib/audio/__tests__/deviceTest.test.ts",
+    "name": "mede o nível e libera o microfone ao parar"
+   },
+   {
+    "file": "src/lib/audio/__tests__/deviceTest.test.ts",
+    "name": "avisa quando não há microfone disponível"
+   },
+   {
+    "file": "src/lib/audio/__tests__/deviceTest.test.ts",
+    "name": "toca o tom de saída e fecha o contexto"
+   },
+   {
+    "file": "src/lib/audio/__tests__/deviceTest.test.ts",
+    "name": "falha com mensagem clara sem Web Audio"
    },
    {
     "file": "src/lib/audit/__tests__/index.coverage.test.ts",
@@ -113639,6 +113683,36 @@
     "ativa cancelamento de eco, supressão de ruído e AGC"
    ]
   },
+  "src/lib/audio/deviceTest.ts": {
+   "path": "src/lib/audio/deviceTest.ts",
+   "lines": 128,
+   "exports": [
+    "class AudioTestError",
+    "interface MicTestHandle",
+    "function describeMicError",
+    "function startMicLevel",
+    "function playTestTone"
+   ],
+   "errors": [
+    "Este navegador não expõe acesso ao microfone. Abra o sistema em HTTPS (ou localhost).",
+    "Este navegador não suporta análise de áudio.",
+    "Este navegador não suporta reprodução de áudio."
+   ],
+   "doc": "Testes de áudio do navegador usados em Configurações. Tudo aqui é local: microfone via getUserMedia (com liberação obrigatória do stream) e um tom curto na saída. Nada vai para o backend."
+  },
+  "src/lib/audio/__tests__/deviceTest.test.ts": {
+   "path": "src/lib/audio/__tests__/deviceTest.test.ts",
+   "lines": 132,
+   "is_test": true,
+   "tests": [
+    "deviceTest",
+    "explica a recusa de permissão e não vaza stream",
+    "mede o nível e libera o microfone ao parar",
+    "avisa quando não há microfone disponível",
+    "toca o tom de saída e fecha o contexto",
+    "falha com mensagem clara sem Web Audio"
+   ]
+  },
   "src/lib/audit/index.ts": {
    "path": "src/lib/audit/index.ts",
    "lines": 65,
@@ -115151,9 +115225,12 @@
   },
   "src/pages/Calls.tsx": {
    "path": "src/pages/Calls.tsx",
-   "lines": 203,
+   "lines": 206,
    "exports": [
     "default Calls"
+   ],
+   "navigates": [
+    "/admin/voip-trunks"
    ],
    "status_values": [
     {
@@ -116334,9 +116411,13 @@
   },
   "src/pages/Settings.tsx": {
    "path": "src/pages/Settings.tsx",
-   "lines": 309,
+   "lines": 381,
    "exports": [
     "default Settings"
+   ],
+   "errors": [
+    "Teste de microfone",
+    "Teste de áudio"
    ]
   },
   "src/pages/ShiftSwapSuggestions.tsx": {
@@ -126399,10 +126480,23 @@
   }
  },
  "git": {
-  "sha": "024aa1eed8a9d8d5fddcdae3696247ee0197e304",
+  "sha": "95304bc3d78a5598b532455ff31b162b9dfd811c",
   "branch": "main",
   "remote": "https://github.com/adm01-debug/Hello_V3",
   "commits": [
+   {
+    "sha": "95304bc",
+    "date": "2026-11-24",
+    "author": "adm01-debug",
+    "subject": "feat: ligar botões Configurar e adicionar testes de áudio (#242)",
+    "files": [
+     "docs/qa/05-PROGRESSO.md",
+     "src/lib/audio/__tests__/deviceTest.test.ts",
+     "src/lib/audio/deviceTest.ts",
+     "src/pages/Calls.tsx",
+     "src/pages/Settings.tsx"
+    ]
+   },
    {
     "sha": "024aa1e",
     "date": "2026-11-24",
@@ -126869,18 +126963,6 @@
      "src/components/network/VoipRecommendationsPanel.tsx",
      "src/components/network/__tests__/QualityForecastCard.test.tsx",
      "src/hooks/useVoipRecommendationActions.ts"
-    ]
-   },
-   {
-    "sha": "b99cdc8",
-    "date": "2026-11-23",
-    "author": "adm01-debug",
-    "subject": "Catalogo de seguranca declara a origem de cada estado (remove KPI literal) (#212)",
-    "files": [
-     "docs/qa/05-PROGRESSO.md",
-     "src/lib/security-report-data.ts",
-     "src/pages/SecurityReport.tsx",
-     "src/pages/__tests__/SecurityReport.test.tsx"
     ]
    }
   ],
