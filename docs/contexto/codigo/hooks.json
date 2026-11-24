@@ -14,7 +14,6 @@
    "linhas": 174,
    "dominio": null,
    "tabelas": [
-    "a",
     "fantasma",
     "so_teste",
     "t",
@@ -25,13 +24,9 @@
     "r1"
    ],
    "edges": [
-    "inexistente",
-    "other",
     "tick"
    ],
-   "hooks_internos": [
-    "useFeatureFlag"
-   ],
+   "hooks_internos": [],
    "canais_realtime": [],
    "usado_por": 0,
    "usado_por_arquivos": [],

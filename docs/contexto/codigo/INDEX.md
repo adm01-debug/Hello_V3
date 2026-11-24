@@ -1,7 +1,7 @@
 # Contexto do projeto para agentes de IA
 
 GERADO AUTOMATICAMENTE por scripts/ai-context/gerar.mjs — não editar à mão; será sobrescrito.
-Publicado em `docs/contexto/codigo/` na branch `contexto` (gerada, nunca abra PR dela) a cada push em `main` e a cada 10 minutos pelo workflow `contexto.yml`; índice único das três fontes em `docs/contexto/00-INDEX.md`. Gere local com `node scripts/ai-context/gerar.mjs`. Commit-base: `fa17b61efec8d2e1c4fd64bc7f34aca844a7b72a` (2026-11-24T10:52:38-03:00).
+Publicado em `docs/contexto/codigo/` na branch `contexto` (gerada, nunca abra PR dela) a cada push em `main` e a cada 10 minutos pelo workflow `contexto.yml`; índice único das três fontes em `docs/contexto/00-INDEX.md`. Gere local com `node scripts/ai-context/gerar.mjs`. Commit-base: `559db78de5003cde7913fdb67691da834e380682` (2026-11-24T11:08:57-03:00).
 
 ## Como usar (leia antes de planejar ou executar qualquer tarefa)
 1. **Tela/rota/menu** → `rotas.json` (url/vista/menu → arquivo → hooks → tabelas → edges; `rotas_http_backend` para APIs) e `modulos.json` (módulo inteiro + dependências entre módulos).
@@ -36,9 +36,9 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 |---|---|
 | arquivos_total | 1745 |
 | arquivos_codigo | 1342 |
-| linhas_codigo | 181571 |
+| linhas_codigo | 181624 |
 | rotas | 106 |
-| rotas_http_backend | 12 |
+| rotas_http_backend | 11 |
 | vistas_por_id | 0 |
 | itens_menu | 96 |
 | modulos | 83 |
@@ -223,7 +223,6 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 - `GET /u` → scripts/ai-context/cenarios.mjs
 - `GET /users` → scripts/ai-context/cenarios.mjs
 - `POST /users/:id` → scripts/ai-context/cenarios.mjs
-- `GET /x` → scripts/ai-context/cenarios.mjs
 
 ## Vistas por id (menu/ViewRouter → arquivo)
 - (nenhum)
@@ -348,10 +347,10 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 - env de integração (só nomes): BITRIX_WEBHOOK_URL, CLEANUP_CRON_TOKEN, COACHING_CRON_TOKEN, DATA_LAKE_CRON_TOKEN, DD_API_KEY, DIALER_CRON_TOKEN, ELEVENLABS_AGENT_ID, ELEVENLABS_API_KEY, EMAIL_SERVICE_API_KEY, JWT_SECRET, MS_CLIENT_ID, MS_CLIENT_SECRET, OPENROUTER_API_KEY, RECORDINGS_CRON_TOKEN, REDIS_HOST, REDIS_PASSWORD, REDIS_PORT, REDIS_QUEUE_DB, RESEND_API_KEY, SENTRY_DSN, SENTRY_ENVIRONMENT, STORAGE_BUCKET, STORAGE_SECRET_KEY, TESTE_CRON_TOKEN, TEST_REDIS_HOST, TEST_REDIS_PORT, WAVOIP_TOKEN
 
 ## Permissões / papéis
-- papéis no código: admin (38), user (24), agent (21), system (18), button (13), alert (11), supervisor (8), status (7), group (5), viewer (4), article (3), img (3), navigation (3), anon (2), customer (2), dialog (2), string (2), god (1), link (1), presentation (1), progressbar (1), region (1), searchbox (1), separator (1), sup (1), table (1)
+- papéis no código: admin (37), user (24), agent (20), system (18), button (13), alert (11), supervisor (8), status (7), group (5), viewer (4), article (3), img (3), navigation (3), anon (2), customer (2), dialog (2), string (2), god (1), link (1), presentation (1), progressbar (1), region (1), searchbox (1), separator (1), table (1)
 - enums de papel: app_role: admin|supervisor|agent|viewer
 - guards: src/components/auth/ProtectedRoute.tsx · rotas protegidas: 0 · públicas: /, /*, /accounts, /admin/data-export, /admin/database-health, /admin/extensions, /admin/security-alerts, /admin/security-audit, /admin/slo, /admin/voice-quality, /admin/voip-trunks, /admin/webhook-health, /agent-assist, /ai, /alert-history, /alerts, /analytics, /audit-logs, /battle-cards, /blf, /blocked-access-logs, /cadences, /call-flow-designer, /call-history, /call-library, /call-park, /call-queues, /callbacks, /calls, /coaching, /compliance, /concurrency-conflicts, /contacts, /contacts/insights, /dashboard, /deals, /dialer, /dialer/predictive, /executive, /external-recordings-import, /financial-impact, /forgot-password, /gamification, /geo-blocking, /history, /hold-alerts, /hold-metrics, /hold-settings, /hot-desking, /inbox, /ip-whitelist, /knowledge, /landing, /ldap-sync, /learning, /login, /marketplace, /meeting-summaries, /multi-device-ring, /network-diagnostics, /notifications, /number-porting, /observability, /onboarding, /outbound-compliance, /passkeys, /password-reset-approval, /permissions, /pricing, /qr-provisioning, /queue-dashboard, /queue-metrics-settings, /ranking, /rate-limit, /recordings, /register, /renewals, /reports, /reset-password, /ring-groups, /roles, /routing-rules, /scheduling, /scorecards, /security, /security-monitoring, /security-report, /sessions, /settings, /shift-swap-suggestions, /skills, /sla-policies, /status, /success-plans, /toll-free-numbers, /topic-detection, /trackers, /translation-center, /two-factor-auth, /unauthorized, /verify-email, /video-conference, /virtual-fax, /voice-security, /voicemail, /vs/3cplus
-- feature flags: FEATURE_X, nova-tela, novo-inbox
+- feature flags: novo-inbox
 
 ## Alertas (baseline.json → alertas)
 - rotas_sem_arquivo: 0
@@ -368,16 +367,16 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 - scripts_orfaos: 0
 - env_usadas_nao_declaradas: 4 — ex.: DEV, VITE_TURN_CRED, VITE_TURN_URL
 - ciclos_de_import: 1
-- possiveis_segredos_no_codigo: 4 — ex.: scripts/ai-context/cenarios.mjs:103, src/lib/__tests__/security-advanced.test.ts:203, src/lib/__tests__/security-advanced.test.ts:208
+- possiveis_segredos_no_codigo: 3 — ex.: src/lib/__tests__/security-advanced.test.ts:203, src/lib/__tests__/security-advanced.test.ts:208, src/lib/__tests__/security-advanced.test.ts:213
 
 ## Grafo de código (graphify)
-- 10219 nós · 26970 arestas · 778 comunidades · grafo do commit `fa17b61e`
-- comunidades maiores: lucide-react (322), react (199), vitest (189), usePageTitle (151), @tanstack/react-query (127), client.ts (126), 5. Em uso por rota (124), buildCorsHeaders (124), logger.ts (120), cn (115), protectedRoutes.tsx (111), utils.ts (110)
+- 10223 nós · 26976 arestas · 767 comunidades · grafo do commit `559db78d`
+- comunidades maiores: lucide-react (295), client.ts (224), react (203), vitest (194), badge.tsx (127), utils.ts (125), CallDetailDialog.tsx (118), buildCorsHeaders (117), cn (117), @tanstack/react-query (115), 5. Em uso por rota (113), validate.ts (97)
 - símbolos mais chamados: cn() (src/lib/utils.ts), usePageTitle() (src/hooks/usePageTitle.ts), safeFormatDatePtBR() (src/lib/safe-date.ts), q() (scripts/supabase_snapshot/snapshot.py), safeFormatDistanceToNow() (src/lib/safe-date.ts), useAuthContext() (src/contexts/AuthContext.tsx), traceHeaders() (src/lib/tracing.ts), withTrace() (src/lib/tracing.ts), formatDuration() (src/lib/utils.ts), safeToLocaleString() (src/lib/safe-date.ts), .collect() (scripts/supabase_snapshot/test_snapshot.py), buildCorsHeaders() (supabase/functions/_shared/cors.ts)
 - consulta local: `graphify query "<pergunta>"`, `graphify path "<A>" "<B>"`, `graphify explain "<X>"`
 
 ## Hotspots (arquivos mais alterados, 90 dias)
-- docs/qa/05-PROGRESSO.md (110)
+- docs/qa/05-PROGRESSO.md (111)
 - docs/estado/funcionalidades-planejadas.md (30)
 - src/components/layout/AppSidebar.tsx (10)
 - src/hooks/useMultiChannelCall.ts (10)
@@ -430,6 +429,7 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 
 
 ## Últimos commits
+- 2026-11-24 `559db78` chore: gate de lint de acessibilidade e escopo do eslint (etapa 264) (#287)
 - 2026-11-24 `fa17b61` chore: registra cobertura de menu das rotas protegidas (etapa 265) (#286)
 - 2026-11-24 `711098f` feat: pagina contatos, negocios e contas de 50 em 50 (etapa 237) (#285)
 - 2026-11-24 `d32534f` chore: fixa o orcamento de bundle a mao a partir da meta (etapa 252) (#284)
@@ -444,7 +444,6 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 - 2026-11-24 `e376b95` fix: para o laco de re-render de 1 Hz do lembrete de espera (etapa 245) (#275)
 - 2026-11-24 `9b4d4b9` fix: pagina a lista de gravacoes e limita as consultas do painel (etapa 236) (#273)
 - 2026-11-24 `a7041fc` chore: regenera types.ts a partir do schema de producao (etapa 136) (#272)
-- 2026-11-24 `2772bab` docs: registra o desfecho da apuracao de exclusao de conta LGPD (etapa 132) (#271)
 
 ## Arquivos deste diretório
 - `docs/contexto/codigo/rotas.json`

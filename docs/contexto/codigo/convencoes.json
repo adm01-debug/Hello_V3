@@ -59,11 +59,11 @@
  "commits": {
   "convencao": "conventional commits (observado)",
   "exemplos": [
+   "chore: gate de lint de acessibilidade e escopo do eslint (etapa 264) (#287)",
    "chore: registra cobertura de menu das rotas protegidas (etapa 265) (#286)",
    "feat: pagina contatos, negocios e contas de 50 em 50 (etapa 237) (#285)",
    "chore: fixa o orcamento de bundle a mao a partir da meta (etapa 252) (#284)",
-   "feat: reduz o chunk de entrada do front em ~15% (etapa 251) (#283)",
-   "feat: guard de CI contra N+1 em edge function (etapa 250) (#282)"
+   "feat: reduz o chunk de entrada do front em ~15% (etapa 251) (#283)"
   ]
  },
  "pr_template": null,

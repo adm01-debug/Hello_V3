@@ -63,7 +63,7 @@
    "type-check": "tsc --noEmit"
   },
   "dependencias": 81,
-  "dev_dependencias": 13,
+  "dev_dependencias": 14,
   "principais": {
    "@supabase/supabase-js": "^2.98.0",
    "@tanstack/react-query": "^5.90.21",
@@ -579,10 +579,6 @@
     "arquivos": 1
    },
    {
-    "host": "api.x.com",
-    "arquivos": 1
-   },
-   {
     "host": "atacante.example",
     "arquivos": 1
    },
@@ -755,7 +751,7 @@
   "papeis_no_codigo": [
    {
     "papel": "admin",
-    "ocorrencias": 38
+    "ocorrencias": 37
    },
    {
     "papel": "user",
@@ -763,7 +759,7 @@
    },
    {
     "papel": "agent",
-    "ocorrencias": 21
+    "ocorrencias": 20
    },
    {
     "papel": "system",
@@ -847,10 +843,6 @@
    },
    {
     "papel": "separator",
-    "ocorrencias": 1
-   },
-   {
-    "papel": "sup",
     "ocorrencias": 1
    },
    {
@@ -992,16 +984,8 @@
   ]
  },
  "feature_flags": {
-  "total": 3,
+  "total": 1,
   "flags": [
-   {
-    "flag": "FEATURE_X",
-    "arquivos": 1
-   },
-   {
-    "flag": "nova-tela",
-    "arquivos": 1
-   },
    {
     "flag": "novo-inbox",
     "arquivos": 1

@@ -2,11 +2,16 @@
  "aviso": "GERADO AUTOMATICAMENTE por scripts/ai-context/gerar.mjs — não editar à mão; será sobrescrito.",
  "format_version": 2,
  "git": {
-  "commit": "fa17b61efec8d2e1c4fd64bc7f34aca844a7b72a",
+  "commit": "559db78de5003cde7913fdb67691da834e380682",
   "branch": "main",
-  "data_commit": "2026-11-24T10:52:38-03:00",
+  "data_commit": "2026-11-24T11:08:57-03:00",
   "remote": "https://github.com/adm01-debug/Hello_V3",
   "ultimos_commits": [
+   {
+    "sha": "559db78",
+    "data": "2026-11-24",
+    "assunto": "chore: gate de lint de acessibilidade e escopo do eslint (etapa 264) (#287)"
+   },
    {
     "sha": "fa17b61",
     "data": "2026-11-24",
@@ -126,14 +131,9 @@
     "sha": "9cc710b",
     "data": "2026-11-24",
     "assunto": "fix: orcamento de tempo na cadeia edge->edge e no QA de voz (etapa 211) (#265)"
-   },
-   {
-    "sha": "94ed302",
-    "data": "2026-11-24",
-    "assunto": "chore: verificacao dos timers de realtime nos hooks (etapa 216) (#266)"
    }
   ],
-  "arquivos_mudados_7d": 1201,
+  "arquivos_mudados_7d": 1205,
   "pastas_mais_mudadas_30d": [
    {
     "pasta": "covout/lcov-report/hooks",
@@ -141,7 +141,7 @@
    },
    {
     "pasta": "docs/qa/05-PROGRESSO.md",
-    "mudancas": 110
+    "mudancas": 111
    },
    {
     "pasta": "src/hooks/__tests__",
@@ -199,7 +199,7 @@
   "arquivos_mais_mudados_90d": [
    {
     "arquivo": "docs/qa/05-PROGRESSO.md",
-    "mudancas": 110
+    "mudancas": 111
    },
    {
     "arquivo": "docs/estado/funcionalidades-planejadas.md",
@@ -301,7 +301,7 @@
   "autores_30d": [
    {
     "autor": "adm01-debug",
-    "commits": 264
+    "commits": 265
    },
    {
     "autor": "Joaquim Ataides",
@@ -316,9 +316,9 @@
  "contagens": {
   "arquivos_total": 1745,
   "arquivos_codigo": 1342,
-  "linhas_codigo": 181571,
+  "linhas_codigo": 181624,
   "rotas": 106,
-  "rotas_http_backend": 12,
+  "rotas_http_backend": 11,
   "vistas_por_id": 0,
   "itens_menu": 96,
   "modulos": 83,
@@ -364,7 +364,7 @@
   },
   "eslint.config.js": {
    "arquivos": 1,
-   "linhas": 58
+   "linhas": 111
   },
   "playwright.config.ts": {
    "arquivos": 1,
@@ -752,7 +752,6 @@
   ],
   "ciclos_de_import": 1,
   "possiveis_segredos_no_codigo": [
-   "scripts/ai-context/cenarios.mjs:103",
    "src/lib/__tests__/security-advanced.test.ts:203",
    "src/lib/__tests__/security-advanced.test.ts:208",
    "src/lib/__tests__/security-advanced.test.ts:213"

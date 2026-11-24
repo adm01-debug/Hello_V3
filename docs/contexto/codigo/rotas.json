@@ -3,7 +3,7 @@
  "format_version": 2,
  "resumo": {
   "urls": 106,
-  "rotas_http_backend": 12,
+  "rotas_http_backend": 11,
   "vistas_por_id": 0,
   "itens_menu": 96,
   "lazy": 106
@@ -4906,7 +4906,6 @@
    "caminho": "/{t}",
    "arquivo": "scripts/ai-context/cenarios.mjs",
    "tabelas": [
-    "a",
     "fantasma",
     "so_teste",
     "t",
@@ -4914,15 +4913,6 @@
     "tx"
    ],
    "env": [
-    "A",
-    "K",
-    "NODE_ENV",
-    "SCRIPT_ONLY",
-    "SRK",
-    "SUPABASE_URL",
-    "VITE_A",
-    "VITE_C",
-    "VITE_FEATURE_X",
     "X"
    ]
   },
@@ -4931,7 +4921,6 @@
    "caminho": "/a",
    "arquivo": "scripts/ai-context/cenarios.mjs",
    "tabelas": [
-    "a",
     "fantasma",
     "so_teste",
     "t",
@@ -4939,15 +4928,6 @@
     "tx"
    ],
    "env": [
-    "A",
-    "K",
-    "NODE_ENV",
-    "SCRIPT_ONLY",
-    "SRK",
-    "SUPABASE_URL",
-    "VITE_A",
-    "VITE_C",
-    "VITE_FEATURE_X",
     "X"
    ]
   },
@@ -4956,7 +4936,6 @@
    "caminho": "/a",
    "arquivo": "scripts/ai-context/cenarios.mjs",
    "tabelas": [
-    "a",
     "fantasma",
     "so_teste",
     "t",
@@ -4964,15 +4943,6 @@
     "tx"
    ],
    "env": [
-    "A",
-    "K",
-    "NODE_ENV",
-    "SCRIPT_ONLY",
-    "SRK",
-    "SUPABASE_URL",
-    "VITE_A",
-    "VITE_C",
-    "VITE_FEATURE_X",
     "X"
    ]
   },
@@ -4981,7 +4951,6 @@
    "caminho": "/b",
    "arquivo": "scripts/ai-context/cenarios.mjs",
    "tabelas": [
-    "a",
     "fantasma",
     "so_teste",
     "t",
@@ -4989,15 +4958,6 @@
     "tx"
    ],
    "env": [
-    "A",
-    "K",
-    "NODE_ENV",
-    "SCRIPT_ONLY",
-    "SRK",
-    "SUPABASE_URL",
-    "VITE_A",
-    "VITE_C",
-    "VITE_FEATURE_X",
     "X"
    ]
   },
@@ -5006,7 +4966,6 @@
    "caminho": "/b",
    "arquivo": "scripts/ai-context/cenarios.mjs",
    "tabelas": [
-    "a",
     "fantasma",
     "so_teste",
     "t",
@@ -5014,15 +4973,6 @@
     "tx"
    ],
    "env": [
-    "A",
-    "K",
-    "NODE_ENV",
-    "SCRIPT_ONLY",
-    "SRK",
-    "SUPABASE_URL",
-    "VITE_A",
-    "VITE_C",
-    "VITE_FEATURE_X",
     "X"
    ]
   },
@@ -5031,7 +4981,6 @@
    "caminho": "/c",
    "arquivo": "scripts/ai-context/cenarios.mjs",
    "tabelas": [
-    "a",
     "fantasma",
     "so_teste",
     "t",
@@ -5039,15 +4988,6 @@
     "tx"
    ],
    "env": [
-    "A",
-    "K",
-    "NODE_ENV",
-    "SCRIPT_ONLY",
-    "SRK",
-    "SUPABASE_URL",
-    "VITE_A",
-    "VITE_C",
-    "VITE_FEATURE_X",
     "X"
    ]
   },
@@ -5056,7 +4996,6 @@
    "caminho": "/d",
    "arquivo": "scripts/ai-context/cenarios.mjs",
    "tabelas": [
-    "a",
     "fantasma",
     "so_teste",
     "t",
@@ -5064,15 +5003,6 @@
     "tx"
    ],
    "env": [
-    "A",
-    "K",
-    "NODE_ENV",
-    "SCRIPT_ONLY",
-    "SRK",
-    "SUPABASE_URL",
-    "VITE_A",
-    "VITE_C",
-    "VITE_FEATURE_X",
     "X"
    ]
   },
@@ -5102,7 +5032,6 @@
    "caminho": "/u",
    "arquivo": "scripts/ai-context/cenarios.mjs",
    "tabelas": [
-    "a",
     "fantasma",
     "so_teste",
     "t",
@@ -5110,15 +5039,6 @@
     "tx"
    ],
    "env": [
-    "A",
-    "K",
-    "NODE_ENV",
-    "SCRIPT_ONLY",
-    "SRK",
-    "SUPABASE_URL",
-    "VITE_A",
-    "VITE_C",
-    "VITE_FEATURE_X",
     "X"
    ]
   },
@@ -5127,7 +5047,6 @@
    "caminho": "/users",
    "arquivo": "scripts/ai-context/cenarios.mjs",
    "tabelas": [
-    "a",
     "fantasma",
     "so_teste",
     "t",
@@ -5135,15 +5054,6 @@
     "tx"
    ],
    "env": [
-    "A",
-    "K",
-    "NODE_ENV",
-    "SCRIPT_ONLY",
-    "SRK",
-    "SUPABASE_URL",
-    "VITE_A",
-    "VITE_C",
-    "VITE_FEATURE_X",
     "X"
    ]
   },
@@ -5152,7 +5062,6 @@
    "caminho": "/users/:id",
    "arquivo": "scripts/ai-context/cenarios.mjs",
    "tabelas": [
-    "a",
     "fantasma",
     "so_teste",
     "t",
@@ -5160,40 +5069,6 @@
     "tx"
    ],
    "env": [
-    "A",
-    "K",
-    "NODE_ENV",
-    "SCRIPT_ONLY",
-    "SRK",
-    "SUPABASE_URL",
-    "VITE_A",
-    "VITE_C",
-    "VITE_FEATURE_X",
-    "X"
-   ]
-  },
-  {
-   "metodo": "GET",
-   "caminho": "/x",
-   "arquivo": "scripts/ai-context/cenarios.mjs",
-   "tabelas": [
-    "a",
-    "fantasma",
-    "so_teste",
-    "t",
-    "t1",
-    "tx"
-   ],
-   "env": [
-    "A",
-    "K",
-    "NODE_ENV",
-    "SCRIPT_ONLY",
-    "SRK",
-    "SUPABASE_URL",
-    "VITE_A",
-    "VITE_C",
-    "VITE_FEATURE_X",
     "X"
    ]
   }
