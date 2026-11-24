@@ -46,6 +46,20 @@ Deno.test("chatbot-respond: conversation_id que nao e UUID devolve 400", async (
   assertEquals(body.error, "conversation_id invalido");
 });
 
+Deno.test("chatbot-respond: user_message acima do teto devolve 422 com o campo apontado", async () => {
+  const resp = await handler(
+    new Request(URL_FN, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ conversation_id: CONV, user_message: "x".repeat(4001) }),
+    }),
+  );
+  assertEquals(resp.status, 422);
+  const body = await resp.json();
+  assertEquals(body.code, "VALIDATION_ERROR");
+  assertEquals(body.fields[0].field, "user_message");
+});
+
 Deno.test("chatbot-respond: preflight OPTIONS responde com CORS da origem permitida", async () => {
   const resp = await handler(
     new Request(URL_FN, {

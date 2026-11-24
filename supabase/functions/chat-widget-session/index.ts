@@ -1,6 +1,8 @@
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.45.0';
 import { buildCorsHeaders } from '../_shared/cors.ts';
 import { checkRateLimitDB, getClientIp } from '../_shared/rate-limit.ts';
+import { createErrorResponse } from '../_shared/validator.ts';
+import { ChatWidgetSessionSchema } from './schema.ts';
 
 Deno.serve(async (req) => {
   const cors = buildCorsHeaders(req);
@@ -21,7 +23,19 @@ Deno.serve(async (req) => {
       Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!
     );
 
-    const body = await req.json().catch(() => ({}));
+    // Corpo ausente ou invalido continua sendo sessao nova: o widget pode chamar sem body.
+    const raw = await req.json().catch(() => ({}));
+    const parsed = ChatWidgetSessionSchema.safeParse(raw ?? {});
+    if (!parsed.success) {
+      return createErrorResponse(
+        'Dados inválidos',
+        'VALIDATION_ERROR',
+        parsed.error.errors.map((e) => ({ field: e.path.join('.'), error: e.message })),
+        422,
+        cors,
+      );
+    }
+    const body = parsed.data;
     const action = body.action || 'create';
 
     if (action === 'create') {
