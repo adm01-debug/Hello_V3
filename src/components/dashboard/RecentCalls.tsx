@@ -1,15 +1,24 @@
-import { PhoneIncoming, PhoneMissed, MoreHorizontal } from 'lucide-react';
+import { PhoneIncoming, PhoneMissed, MoreHorizontal, Eye, Copy } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
+import { Button, buttonVariants } from '@/components/ui/button';
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from '@/components/ui/dropdown-menu';
 import { EmptyCallsState } from '@/components/ui/empty-state';
 import { Skeleton } from '@/components/ui/skeleton';
 import { safeFormatDistanceToNow } from "@/lib/safe-date";
- import { useRecentCallsData } from '@/hooks/useDashboardData';
- import { cn, formatDuration } from '@/lib/utils';
+import { useRecentCallsData } from '@/hooks/useDashboardData';
+import { cn, formatDuration } from '@/lib/utils';
 import { ptBR } from 'date-fns/locale';
+import { toast } from 'sonner';
 
 export function RecentCalls() {
   const { data: recentCalls, isLoading } = useRecentCallsData();
+  const navigate = useNavigate();
 
   const getCallIcon = (status: string | null) => {
     if (status === 'missed' || status === 'abandoned') return PhoneMissed;
@@ -50,7 +59,7 @@ export function RecentCalls() {
     <Card>
       <CardHeader className="flex flex-row items-center justify-between">
         <CardTitle className="text-lg font-semibold">Chamadas Recentes</CardTitle>
-        <Button variant="ghost" size="sm">
+        <Button variant="ghost" size="sm" onClick={() => navigate('/history')}>
           Ver todas
         </Button>
       </CardHeader>
@@ -100,14 +109,33 @@ export function RecentCalls() {
                       </span>
                     )}
                     
-                    <Button 
-                      variant="ghost" 
-                      size="icon" 
-                      className="h-8 w-8"
-                      aria-label="Mais opções"
-                    >
-                      <MoreHorizontal className="h-4 w-4" aria-hidden="true" />
-                    </Button>
+                    <DropdownMenu>
+                      <DropdownMenuTrigger
+                        aria-label={`Mais opções da chamada de ${call.caller_name || 'Desconhecido'}`}
+                        className={cn(buttonVariants({ variant: 'ghost', size: 'icon' }), 'h-8 w-8')}
+                      >
+                        <MoreHorizontal className="h-4 w-4" aria-hidden="true" />
+                      </DropdownMenuTrigger>
+                      <DropdownMenuContent align="end">
+                        <DropdownMenuItem onSelect={() => navigate(`/history?session=${call.id}`)}>
+                          <Eye className="mr-2 h-4 w-4" />
+                          Ver no histórico
+                        </DropdownMenuItem>
+                        {call.caller_phone && (
+                          <DropdownMenuItem
+                            onSelect={() => {
+                              void navigator.clipboard
+                                ?.writeText(call.caller_phone as string)
+                                .then(() => toast.success('Número copiado', { description: call.caller_phone as string }))
+                                .catch(() => toast.error('Não foi possível copiar o número'));
+                            }}
+                          >
+                            <Copy className="mr-2 h-4 w-4" />
+                            Copiar número
+                          </DropdownMenuItem>
+                        )}
+                      </DropdownMenuContent>
+                    </DropdownMenu>
                   </div>
                 </div>
               );
