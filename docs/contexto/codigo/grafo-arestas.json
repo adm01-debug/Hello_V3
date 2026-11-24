@@ -930,7 +930,8 @@
   "src/components/dashboard/HoldTrendChart.tsx": [
    "src/components/ui/badge.tsx",
    "src/components/ui/card.tsx",
-   "src/integrations/supabase/client.ts"
+   "src/integrations/supabase/client.ts",
+   "src/lib/logger.ts"
   ],
   "src/components/dashboard/QueueStatus.tsx": [
    "src/components/ui/card.tsx",

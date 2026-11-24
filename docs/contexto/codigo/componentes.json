@@ -1789,7 +1789,7 @@
     "HoldTrendChart"
    ],
    "export_default": null,
-   "linhas": 217,
+   "linhas": 242,
    "dominio": "components/dashboard",
    "hooks_locais": [],
    "tabelas": [

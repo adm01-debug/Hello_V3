@@ -1074,8 +1074,8 @@
   {
    "modulo": "components/dashboard",
    "arquivos": 12,
-   "testes": 0,
-   "linhas": 1403,
+   "testes": 1,
+   "linhas": 1428,
    "itens_menu": [],
    "telas": [],
    "rotas_http": [],
@@ -1124,6 +1124,7 @@
    ],
    "flags": [],
    "papeis": [
+    "alert",
     "article",
     "img",
     "status"

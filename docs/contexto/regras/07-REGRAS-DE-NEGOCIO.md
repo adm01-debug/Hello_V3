@@ -1,6 +1,6 @@
 # 07 · REGRAS DE NEGÓCIO
 
-> Gerado automaticamente por AI Context Sync v1.3.2 · commit `6be7a63836` · branch `main` · 2026-11-24 01:03 UTC
+> Gerado automaticamente por AI Context Sync v1.3.2 · commit `1dcca432ef` · branch `main` · 2026-11-24 01:12 UTC
 > Não edite à mão — regras humanas vão em `manual/`.
 
 ## A. Regras escritas por humanos (`manual/` — prioridade máxima, nunca sobrescrito)
@@ -2203,6 +2203,7 @@ _nenhum item encontrado_
 | Bitrix24 não configurado | `src/components/contacts/useBitrixSync.ts` |
 | Erro ao sincronizar com Bitrix24 | `src/components/contacts/useBitrixSync.ts` |
 | Não foi possível registrar uso | `src/components/conversation-intelligence/BattleCardAlert.tsx` |
+|  className= | `src/components/dashboard/HoldTrendChart.tsx` |
 | Não foi possível exportar o histórico | `src/components/dialer/phone/SyncHistoryPanel.tsx` |
 | >           <div className= | `src/components/error-boundary/ErrorBoundary.tsx` |
 | >         <Card className= | `src/components/error-boundary/ErrorBoundary.tsx` |
@@ -2413,8 +2414,7 @@ _nenhum item encontrado_
 | Erro ao carregar callbacks | `src/hooks/useScheduledCallbacks.ts` |
 | Erro ao concluir callback | `src/hooks/useScheduledCallbacks.ts` |
 | Erro ao remover callback | `src/hooks/useScheduledCallbacks.ts` |
-| Erro ao atualizar a avaliação | `src/hooks/useScorecards.ts` |
-| … +253 linhas — lista completa em `context.json` | |
+| … +254 linhas — lista completa em `context.json` | |
 
 ## J. Controle de acesso no código (checagens de perfil/permissão)
 
@@ -2463,7 +2463,7 @@ _nenhum item encontrado_
 | `admin` | `supabase/functions/data-lake-flush/index.ts` |
 | `admin` | `supabase/migrations/20261123000200_fix_has_role_oracle_and_debug_tables.sql` |
 
-## K. Testes como especificação (4205 testes em 358 arquivos — nomes completos em `context.json`)
+## K. Testes como especificação (4208 testes em 359 arquivos — nomes completos em `context.json`)
 
 | Arquivo | Testes | Exemplos do que o sistema DEVE fazer |
 |---|---|---|
@@ -2767,7 +2767,7 @@ _nenhum item encontrado_
 | `src/hooks/__tests__/useWebVitals.coverage.test.tsx` | 4 | useWebVitals · loads vitals on mount and refreshes on interval · manual refresh invokes getters · clears interval on unmount |
 | `src/lib/__tests__/a11y-clickable.test.ts` | 4 | clickableRowProps · entrega semantica de controle focavel · ativa com Enter e com Espaco, consumindo o evento · ignora teclas que nao ativam |
 | `src/lib/__tests__/callHistoryCsv.test.ts` | 4 | callHistoryCsv · gera header + linhas separadas por ; · escapa valores com virgula e aspas · deixa vazio campos nulos |
-| … +58 linhas — lista completa em `context.json` | | |
+| … +59 linhas — lista completa em `context.json` | | |
 
 ## L. Eventos de webhook tratados (contratos com sistemas externos)
 

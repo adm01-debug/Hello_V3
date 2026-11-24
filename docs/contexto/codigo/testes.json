@@ -5,17 +5,17 @@
   "vitest",
   "playwright"
  ],
- "total": 368,
+ "total": 369,
  "por_tipo": {
   "contrato": 1,
   "e2e": 13,
   "pytest": 2,
-  "unit": 351
+  "unit": 352
  },
  "onde_ficam": [
   {
    "padrao": "co-localizado (__tests__)",
-   "arquivos": 344
+   "arquivos": 345
   },
   {
    "padrao": "e2e/",
@@ -211,6 +211,15 @@
    "testa": [
     "src/components/compliance/dnc/ImportDNCDialog.tsx",
     "src/hooks/useDNCCompliance.ts"
+   ],
+   "casos": 2
+  },
+  {
+   "arquivo": "src/components/dashboard/__tests__/HoldTrendChart.test.tsx",
+   "tipo": "unit",
+   "linhas": 92,
+   "testa": [
+    "src/components/dashboard/HoldTrendChart.tsx"
    ],
    "casos": 2
   },
@@ -3320,6 +3329,7 @@
   "src/components/calls/softphone/constants.tsx": 1,
   "src/components/compliance/dnc/ImportDNCDialog.tsx": 1,
   "src/components/dashboard/CallVolumeChart.tsx": 1,
+  "src/components/dashboard/HoldTrendChart.tsx": 1,
   "src/components/dashboard/StatsCard.tsx": 1,
   "src/components/dialer/phone/phone-utils.ts": 1,
   "src/components/error-boundary/ErrorBoundary.tsx": 1,

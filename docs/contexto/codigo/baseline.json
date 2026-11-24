@@ -2,11 +2,16 @@
  "aviso": "GERADO AUTOMATICAMENTE por scripts/ai-context/gerar.mjs — não editar à mão; será sobrescrito.",
  "format_version": 2,
  "git": {
-  "commit": "6be7a6383601f1d519b334cd8bf3ec38424ac880",
+  "commit": "1dcca432ef098ae125287255632913744fd6c2c4",
   "branch": "main",
-  "data_commit": "2026-11-23T22:02:30-03:00",
+  "data_commit": "2026-11-23T22:11:12-03:00",
   "remote": "https://github.com/adm01-debug/Hello_V3",
   "ultimos_commits": [
+   {
+    "sha": "1dcca43",
+    "data": "2026-11-23",
+    "assunto": "fix: grafico de espera do dashboard trata erro e nunca mostra valor negativo (#207)"
+   },
    {
     "sha": "6be7a63",
     "data": "2026-11-23",
@@ -126,14 +131,9 @@
     "sha": "727dead",
     "data": "2026-11-23",
     "assunto": "fix: chamada sem audio deixa de ser classificada como ideal (E115) (#183)"
-   },
-   {
-    "sha": "560302d",
-    "data": "2026-11-23",
-    "assunto": "fix: unifica o limiar de qualidade MOS em uma lib (E113) (#182)"
    }
   ],
-  "arquivos_mudados_7d": 997,
+  "arquivos_mudados_7d": 999,
   "pastas_mais_mudadas_30d": [
    {
     "pasta": "covout/lcov-report/hooks",
@@ -145,7 +145,7 @@
    },
    {
     "pasta": "docs/qa/05-PROGRESSO.md",
-    "mudancas": 37
+    "mudancas": 38
    },
    {
     "pasta": "src/hooks/__tests__",
@@ -180,6 +180,10 @@
     "mudancas": 10
    },
    {
+    "pasta": "src/components/dashboard",
+    "mudancas": 10
+   },
+   {
     "pasta": "src/components/network",
     "mudancas": 9
    },
@@ -190,16 +194,12 @@
    {
     "pasta": "src/components/contacts",
     "mudancas": 8
-   },
-   {
-    "pasta": "src/components/dashboard",
-    "mudancas": 8
    }
   ],
   "arquivos_mais_mudados_90d": [
    {
     "arquivo": "docs/qa/05-PROGRESSO.md",
-    "mudancas": 37
+    "mudancas": 38
    },
    {
     "arquivo": "docs/estado/funcionalidades-planejadas.md",
@@ -301,7 +301,7 @@
   "autores_30d": [
    {
     "autor": "adm01-debug",
-    "commits": 185
+    "commits": 186
    },
    {
     "autor": "Joaquim Ataides",
@@ -314,9 +314,9 @@
   ]
  },
  "contagens": {
-  "arquivos_total": 1687,
-  "arquivos_codigo": 1285,
-  "linhas_codigo": 174114,
+  "arquivos_total": 1688,
+  "arquivos_codigo": 1286,
+  "linhas_codigo": 174231,
   "rotas": 106,
   "rotas_http_backend": 12,
   "vistas_por_id": 0,
@@ -328,7 +328,7 @@
   "tabelas": 169,
   "migrations": 242,
   "cron_jobs": 11,
-  "testes": 368,
+  "testes": 369,
   "workflows": 3,
   "scripts": 34,
   "docs_md": 120
@@ -479,8 +479,8 @@
    "linhas": 450
   },
   "src/components": {
-   "arquivos": 356,
-   "linhas": 42646
+   "arquivos": 357,
+   "linhas": 42763
   },
   "src/contexts": {
    "arquivos": 4,
