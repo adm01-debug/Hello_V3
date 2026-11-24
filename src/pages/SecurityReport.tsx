@@ -73,7 +73,10 @@ Gerado em: ${format(reportDate, "dd/MM/yyyy 'às' HH:mm", { locale: ptBR })}
 - Tabelas Totais Analisadas: ${totalCount}
 - Tabelas com RLS Ativo: ${protectedCount}
 - Nível de Proteção RLS: ${totalCount > 0 ? Math.round((protectedCount / totalCount) * 100) : 0}%
-- Features de Segurança: ${securityFeatures.filter(f => f.status === 'implemented').length}/${securityFeatures.length}
+
+CONTROLES DE SEGURANÇA (estado e origem)
+---------------------------------------
+${securityFeatures.map(f => `- ${f.name} [${f.status}] | Origem: ${f.evidence}`).join('\n')}
 
 2. DETALHAMENTO DE TABELAS CRÍTICAS (CONFIRMADAS)
 -----------------------------------------------
@@ -115,15 +118,14 @@ Fim do Relatório Corporativo
         <Button onClick={handleExportReport} className="gap-2"><Download className="h-4 w-4" />Exportar Relatório</Button>
       </div>
 
-      <div className="grid gap-4 md:grid-cols-4">
+      <div className="grid gap-4 md:grid-cols-3">
         <Card><CardHeader className="flex flex-row items-center justify-between pb-2"><CardTitle className="text-sm font-medium">Tabelas Protegidas</CardTitle><Database className="h-4 w-4 text-muted-foreground" /></CardHeader><CardContent><div className="text-2xl font-bold">{protectedCount}</div><p className="text-xs text-muted-foreground">Com RLS ativo</p></CardContent></Card>
         <Card><CardHeader className="flex flex-row items-center justify-between pb-2"><CardTitle className="text-sm font-medium">Cobertura RLS</CardTitle><Lock className="h-4 w-4 text-muted-foreground" /></CardHeader><CardContent><div className="text-2xl font-bold">{totalCount > 0 ? Math.round((protectedCount / totalCount) * 100) : 0}%</div><Progress value={totalCount > 0 ? (protectedCount / totalCount) * 100 : 0} className="mt-2 h-1" /></CardContent></Card>
-        <Card><CardHeader className="flex flex-row items-center justify-between pb-2"><CardTitle className="text-sm font-medium">Features de Segurança</CardTitle><ShieldCheck className="h-4 w-4 text-muted-foreground" /></CardHeader><CardContent><div className="text-2xl font-bold">{securityFeatures.filter(f => f.status === 'implemented').length}/{securityFeatures.length}</div><p className="text-xs text-muted-foreground">Implementadas · Catálogo curado</p></CardContent></Card>
-        <Card><CardHeader className="flex flex-row items-center justify-between pb-2"><CardTitle className="text-sm font-medium">Decisões Documentadas</CardTitle><FileText className="h-4 w-4 text-muted-foreground" /></CardHeader><CardContent><div className="text-2xl font-bold">{securityDecisions.length}</div><p className="text-xs text-muted-foreground">Com justificativa · Catálogo curado</p></CardContent></Card>
+                <Card><CardHeader className="flex flex-row items-center justify-between pb-2"><CardTitle className="text-sm font-medium">Decisões Documentadas</CardTitle><FileText className="h-4 w-4 text-muted-foreground" /></CardHeader><CardContent><div className="text-2xl font-bold">{securityDecisions.length}</div><p className="text-xs text-muted-foreground">Com justificativa · Catálogo curado</p></CardContent></Card>
       </div>
 
       <Card>
-        <CardHeader><CardTitle className="flex items-center gap-2"><ShieldCheck className="h-5 w-5" />Funcionalidades de Segurança</CardTitle><CardDescription>Status de implementação das principais features de segurança (catálogo curado)</CardDescription></CardHeader>
+        <CardHeader><CardTitle className="flex items-center gap-2"><ShieldCheck className="h-5 w-5" />Funcionalidades de Segurança</CardTitle><CardDescription>Catálogo curado de controles. Cada estado declara de onde vem — medição, código ou declaração sem teste.</CardDescription></CardHeader>
         <CardContent>
           <div className="space-y-4">
             {securityFeatures.map((feature, index) => (
@@ -134,6 +136,7 @@ Fim do Relatório Corporativo
                     <div>
                       <h4 className="font-medium">{feature.name}</h4>
                       <p className="text-sm text-muted-foreground">{feature.description}</p>
+                      <p className="text-xs text-muted-foreground mt-1">Origem: {feature.evidence}</p>
                       {feature.details && (<ul className="mt-2 space-y-1">{feature.details.map((detail, i) => (<li key={i} className="text-sm text-muted-foreground flex items-center gap-2"><span className="h-1.5 w-1.5 rounded-full bg-muted-foreground" />{detail}</li>))}</ul>)}
                     </div>
                   </div>
