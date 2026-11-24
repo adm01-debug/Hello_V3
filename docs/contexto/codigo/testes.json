@@ -5,17 +5,17 @@
   "vitest",
   "playwright"
  ],
- "total": 398,
+ "total": 399,
  "por_tipo": {
   "contrato": 1,
   "e2e": 13,
   "pytest": 2,
-  "unit": 381
+  "unit": 382
  },
  "onde_ficam": [
   {
    "padrao": "co-localizado (__tests__)",
-   "arquivos": 374
+   "arquivos": 375
   },
   {
    "padrao": "e2e/",
@@ -1123,11 +1123,11 @@
   {
    "arquivo": "src/hooks/__tests__/useGeoBlocking.coverage.test.tsx",
    "tipo": "unit",
-   "linhas": 112,
+   "linhas": 141,
    "testa": [
     "src/hooks/useGeoBlocking.ts"
    ],
-   "casos": 8
+   "casos": 9
   },
   {
    "arquivo": "src/hooks/__tests__/useGoalViolations.coverage.test.tsx",
@@ -3038,6 +3038,15 @@
    "casos": 0
   },
   {
+   "arquivo": "supabase/functions/__tests__/geo-decision.test.ts",
+   "tipo": "unit",
+   "linhas": 66,
+   "testa": [
+    "supabase/functions/validate-geo/decide.ts"
+   ],
+   "casos": 9
+  },
+  {
    "arquivo": "supabase/functions/__tests__/optimistic-lock.test.ts",
    "tipo": "unit",
    "linhas": 95,
@@ -3898,6 +3907,7 @@
   "supabase/functions/score-call/index.ts": 1,
   "supabase/functions/search-calls/index.ts": 1,
   "supabase/functions/send-notification/index.ts": 1,
+  "supabase/functions/validate-geo/decide.ts": 1,
   "supabase/functions/voip-anomaly-detector/index.ts": 1,
   "supabase/functions/voip-anomaly-remediation/index.ts": 1,
   "supabase/functions/voip-capacity-forecast/index.ts": 1,

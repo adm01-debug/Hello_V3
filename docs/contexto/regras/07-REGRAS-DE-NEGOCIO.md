@@ -1,6 +1,6 @@
 # 07 · REGRAS DE NEGÓCIO
 
-> Gerado automaticamente por AI Context Sync v1.3.2 · commit `c771af6fb1` · branch `main` · 2026-11-24 08:59 UTC
+> Gerado automaticamente por AI Context Sync v1.3.2 · commit `b8877578dc` · branch `main` · 2026-11-24 09:14 UTC
 > Não edite à mão — regras humanas vão em `manual/`.
 
 ## A. Regras escritas por humanos (`manual/` — prioridade máxima, nunca sobrescrito)
@@ -1129,6 +1129,8 @@ _nenhum mapa explícito encontrado — transições só existem implicitamente n
 | CircuitState | CLOSED \| OPEN \| HALF_OPEN | `supabase/functions/_shared/resilience.ts` |
 | TalkRatioStatus | agent_low \| agent_high \| optimal \| insufficient_data | `supabase/functions/analyze-talk-ratio/index.ts` |
 | BudgetStatus | healthy \| warning \| exhausted \| unknown | `supabase/functions/health-check/slo-budget.ts` |
+| GeoMode | allowlist \| blocklist | `supabase/functions/validate-geo/decide.ts` |
+| GeoVerdict | allowed \| blocked \| not_configured \| unknown_country \| invalid_mode | `supabase/functions/validate-geo/decide.ts` |
 | AnomalyKind | spike \| drift \| outage | `supabase/functions/voip-anomaly-remediation/index.ts` |
 | AnomalyMetric | mos \| jitter \| volume | `supabase/functions/voip-anomaly-remediation/index.ts` |
 | RecommendationCategory | capacity \| quality \| infra \| process | `supabase/functions/voip-recommendations/index.ts` |
@@ -2632,7 +2634,7 @@ _nenhum item encontrado_
 | `admin` | `supabase/functions/data-lake-flush/index.ts` |
 | `admin` | `supabase/migrations/20261123000200_fix_has_role_oracle_and_debug_tables.sql` |
 
-## K. Testes como especificação (4366 testes em 388 arquivos — nomes completos em `context.json`)
+## K. Testes como especificação (4376 testes em 389 arquivos — nomes completos em `context.json`)
 
 | Arquivo | Testes | Exemplos do que o sistema DEVE fazer |
 |---|---|---|
@@ -2741,6 +2743,7 @@ _nenhum item encontrado_
 | `src/hooks/__tests__/useAlerts.coverage.test.tsx` | 10 | useAlerts · loads alerts and computes counts · applies filters · checks for new alerts (success and none) … |
 | `src/hooks/__tests__/useAnomalyRemediation.coverage.test.tsx` | 10 | useAnomalyRemediation · applied success · idempotent_skip → info · dryRun → info … |
 | `src/hooks/__tests__/useDashboardGoals.coverage.test.tsx` | 10 | useDashboardGoals · fetches goals on mount · handles fetch error · opens dialog for new and for editing … |
+| `src/hooks/__tests__/useGeoBlocking.coverage.test.tsx` | 10 | useGeoBlocking · carrega settings, restrictions e logs · inicializa settings quando ausentes · atualiza settings com sucesso … |
 | `src/hooks/__tests__/useIPWhitelist.coverage.test.tsx` | 10 | useIPWhitelist · does not fetch when not admin · fetches data when admin · publishes the read error instead of an empty list … |
 | `src/hooks/__tests__/useLiveTranslation.coverage.test.tsx` | 10 | useLiveTranslation · returns initial state · does nothing without callSessionId or empty text · queues short utterances below minWords without invoking … |
 | `src/hooks/__tests__/useLoginLockout.coverage.test.tsx` | 10 | useLoginLockout · checkLockout success returns parsed status · checkLockout handles error from rpc · checkLockout handles thrown exception … |
@@ -2765,7 +2768,6 @@ _nenhum item encontrado_
 | `src/hooks/__tests__/useDNCCompliance.coverage.test.tsx` | 9 | useDNCCompliance · loads queries and getSettingValue parses values · checkDNC success and error branches · checkCallingHours success and error branches … |
 | `src/hooks/__tests__/useDebouncedSearchParam.test.tsx` | 9 | useDebouncedSearchParam · hidrata a partir da URL · debounce: uma rajada de setValue commita apenas uma vez · string vazia aplica imediatamente (bypass debounce) … |
 | `src/hooks/__tests__/useExtensionsOverview.scenarios.test.ts` | 9 | useExtensionsOverview — 50+ cenários de agregação · lista vazia retorna array vazio · 1 agente sem chamadas: call_count_7d=0 · 1 agente com 3 chamadas: count=3, média correta … |
-| `src/hooks/__tests__/useGeoBlocking.coverage.test.tsx` | 9 | useGeoBlocking · carrega settings, restrictions e logs · inicializa settings quando ausentes · atualiza settings com sucesso … |
 | `src/hooks/__tests__/useMFA.coverage.test.tsx` | 9 | useMFA · loads factors and settings · enrollTOTP success and error · enrollPhone success and error … |
 | `src/hooks/__tests__/useNotifications.coverage.test.tsx` | 9 | useNotifications · loads notifications and unread count · marks single and all as read · archives a notification … |
 | `src/hooks/__tests__/useQualityTrendAnalyzer.coverage.test.tsx` | 9 | useQualityTrendAnalyzer · não faz nada quando desabilitado · ignora MOS null ou não finito · detecta degradação progressiva e persiste alerta … |
@@ -2776,6 +2778,7 @@ _nenhum item encontrado_
 | `src/lib/__tests__/device-identity.test.ts` | 9 | device-identity · sanitize sempre respeita o CHECK do banco (trim + limite) · sanitize é idempotente · sanitize rejeita não-strings … |
 | `src/lib/__tests__/voipProactiveSnapshot.coverage.test.ts` | 9 | voipProactiveSnapshot · isProactiveEnabled reflects localStorage pref · setProactiveEnabled writes the pref · shouldRunProactiveCheck false when disabled … |
 | `src/lib/security/__tests__/https-enforcer.coverage.test.ts` | 9 | https-enforcer · does not enforce on localhost · does not enforce on 127.0.0.1 · does not enforce when already https … |
+| `supabase/functions/__tests__/geo-decision.test.ts` | 9 | allowlist: pais listado e permitido · allowlist: pais fora da lista e bloqueado · blocklist: pais listado e bloqueado · blocklist: pais fora da lista e permitido … |
 | `supabase/functions/_shared/__tests__/auth_test.ts` | 9 | auth: requireUser sem header Authorization devolve 401 · auth: requireUser com header que nao e Bearer devolve 401 · auth: header Bearer vazio devolve 401 · auth: erro de credencial devolve o envelope com CORS da origem do chamador … |
 | `supabase/functions/_shared/__tests__/resilience.test.ts` | 9 | retry: sucesso na primeira tentativa não dorme · retry: exponencial sem jitter é determinístico · retry: respeita shouldRetry (não repete em 4xx) · retry: repete em 429 e 5xx … |
 | `supabase/functions/compute-deal-health/__tests__/index.test.ts` | 9 | compute-deal-health: recencyScore decresce 5 pts/dia, mín 0 · compute-deal-health: recencyScore = 100 quando hoje · compute-deal-health: sentimentScore neutro = 50 · compute-deal-health: sentimentScore 100% positivo = 100 … |
@@ -2935,8 +2938,7 @@ _nenhum item encontrado_
 | `src/hooks/__tests__/useDeals.test.ts` | 4 | useDeals · loads deals · createDeal returns true on success · computeHealth invokes edge function |
 | `src/hooks/__tests__/useHoldMetrics.coverage.test.tsx` | 4 | useHoldMetrics · aggregates 7d metrics · handles 30d and 90d ranges with empty data · handles 90d range |
 | `src/hooks/__tests__/useIPValidation.coverage.test.tsx` | 4 | useIPValidation · returns data on success · handles supabase error branch · handles thrown exception branch |
-| `src/hooks/__tests__/usePageTitle.coverage.test.tsx` | 4 | usePageTitle · sets document title with app name suffix · resets title on unmount · updates title when prop changes |
-| … +88 linhas — lista completa em `context.json` | | |
+| … +89 linhas — lista completa em `context.json` | | |
 
 ## L. Eventos de webhook tratados (contratos com sistemas externos)
 
@@ -3104,6 +3106,7 @@ _nenhum item encontrado_
 | * - Digitar rapidamente atualiza `inputValue` imediatamente e enfileira apenas | `src/hooks/useDebouncedSearchParam.ts` |
 | ').limit(1).maybeSingle(); | `src/hooks/useGeoBlocking.ts` |
 | ').order('created_at', { ascending: false }).limit(50); | `src/hooks/useGeoBlocking.ts` |
+| mesmo país não pode estar nas duas listas ao mesmo tempo. | `src/hooks/useGeoBlocking.ts` |
 | ').order('created_at', { ascending: false }).limit(100); | `src/hooks/useIPWhitelist.ts` |
 | * mínimo de palavras para disparar tradução */ | `src/hooks/useLiveTranslation.ts` |
 | * A RPC falhou: não sabemos se a conta está bloqueada. Quem consome deve recusar a tentativa. */ | `src/hooks/useLoginLockout.ts` |
@@ -3233,6 +3236,9 @@ _nenhum item encontrado_
 | entao a anon key publica nao pode ser suficiente para invoca-las. | `supabase/functions/sync-crm-queue/index.ts` |
 | Token app-only nao resolve /me; usar /groups (Application permission Group.Read.All) | `supabase/functions/teams-fetch-recordings/index.ts` |
 | entao a anon key publica nao pode ser suficiente para invoca-las. | `supabase/functions/teams-fetch-recordings/index.ts` |
+| tela nao mudava nada. A regra fica aqui, isolada e testavel, porque um erro | `supabase/functions/validate-geo/decide.ts` |
+| * - `allowlist`: permite apenas os paises da lista configurada. | `supabase/functions/validate-geo/decide.ts` |
+| - `blocklist`: bloqueia apenas os paises da lista configurada. | `supabase/functions/validate-geo/decide.ts` |
 | limite, cada request anonimo consumia uma chamada ao provedor externo. | `supabase/functions/validate-geo/index.ts` |
 | Falha aberta por decisao de negocio: nao bloqueia o usuario se a checagem cair. | `supabase/functions/validate-geo/index.ts` |
 | Header e controlado pelo cliente: sem validação, a whitelist de IP é | `supabase/functions/validate-ip/index.ts` |

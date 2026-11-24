@@ -2402,7 +2402,7 @@
    "hooks_exportados": [
     "useGeoBlocking"
    ],
-   "linhas": 129,
+   "linhas": 138,
    "dominio": "hooks",
    "tabelas": [
     "geo_access_logs",

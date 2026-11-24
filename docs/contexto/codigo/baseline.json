@@ -2,11 +2,16 @@
  "aviso": "GERADO AUTOMATICAMENTE por scripts/ai-context/gerar.mjs — não editar à mão; será sobrescrito.",
  "format_version": 2,
  "git": {
-  "commit": "c771af6fb135471d7df73256a66771204a328f67",
+  "commit": "b8877578dc7961bf758edfe7fba3124b53a056db",
   "branch": "main",
-  "data_commit": "2026-11-24T05:58:57-03:00",
+  "data_commit": "2026-11-24T06:13:31-03:00",
   "remote": "https://github.com/adm01-debug/Hello_V3",
   "ultimos_commits": [
+   {
+    "sha": "b887757",
+    "data": "2026-11-24",
+    "assunto": "fix: validate-geo e a tela de geo honram o modo allowlist/blocklist (etapa 141) (#270)"
+   },
    {
     "sha": "c771af6",
     "data": "2026-11-24",
@@ -126,14 +131,9 @@
     "sha": "b5df75f",
     "data": "2026-11-24",
     "assunto": "feat: leitura do artigo da base de conhecimento (etapa 153) (#248)"
-   },
-   {
-    "sha": "a097cd7",
-    "data": "2026-11-24",
-    "assunto": "chore: inventario dos hooks dormentes e rotas.json atualizado (etapa 159) (#245)"
    }
   ],
-  "arquivos_mudados_7d": 1168,
+  "arquivos_mudados_7d": 1172,
   "pastas_mais_mudadas_30d": [
    {
     "pasta": "covout/lcov-report/hooks",
@@ -141,11 +141,11 @@
    },
    {
     "pasta": "docs/qa/05-PROGRESSO.md",
-    "mudancas": 94
+    "mudancas": 95
    },
    {
     "pasta": "src/hooks/__tests__",
-    "mudancas": 69
+    "mudancas": 70
    },
    {
     "pasta": "covout/lcov-report/lib",
@@ -199,7 +199,7 @@
   "arquivos_mais_mudados_90d": [
    {
     "arquivo": "docs/qa/05-PROGRESSO.md",
-    "mudancas": 94
+    "mudancas": 95
    },
    {
     "arquivo": "docs/estado/funcionalidades-planejadas.md",
@@ -258,6 +258,10 @@
     "mudancas": 6
    },
    {
+    "arquivo": "supabase/functions/validate-geo/index.ts",
+    "mudancas": 6
+   },
+   {
     "arquivo": "supabase/functions/voip-load-test/index.ts",
     "mudancas": 6
    },
@@ -292,16 +296,12 @@
    {
     "arquivo": "supabase/functions/dialer-pacing-tick/index.ts",
     "mudancas": 5
-   },
-   {
-    "arquivo": "supabase/functions/enforce-sla/index.ts",
-    "mudancas": 5
    }
   ],
   "autores_30d": [
    {
     "autor": "adm01-debug",
-    "commits": 248
+    "commits": 249
    },
    {
     "autor": "Joaquim Ataides",
@@ -314,9 +314,9 @@
   ]
  },
  "contagens": {
-  "arquivos_total": 1735,
-  "arquivos_codigo": 1332,
-  "linhas_codigo": 179618,
+  "arquivos_total": 1737,
+  "arquivos_codigo": 1334,
+  "linhas_codigo": 179869,
   "rotas": 106,
   "rotas_http_backend": 12,
   "vistas_por_id": 0,
@@ -328,7 +328,7 @@
   "tabelas": 169,
   "migrations": 242,
   "cron_jobs": 11,
-  "testes": 398,
+  "testes": 399,
   "workflows": 3,
   "scripts": 35,
   "docs_md": 121
@@ -492,7 +492,7 @@
   },
   "src/hooks": {
    "arquivos": 354,
-   "linhas": 47336
+   "linhas": 47374
   },
   "src/integrations": {
    "arquivos": 3,
@@ -508,7 +508,7 @@
   },
   "src/pages": {
    "arquivos": 146,
-   "linhas": 22345
+   "linhas": 22357
   },
   "src/routes": {
    "arquivos": 2,
@@ -519,8 +519,8 @@
    "linhas": 170
   },
   "supabase/functions": {
-   "arquivos": 206,
-   "linhas": 23130
+   "arquivos": 208,
+   "linhas": 23331
   },
   "tailwind.config.ts": {
    "arquivos": 1,

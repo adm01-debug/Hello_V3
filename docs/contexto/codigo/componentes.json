@@ -6058,7 +6058,7 @@
     "GeoBlocking"
    ],
    "export_default": "GeoBlocking",
-   "linhas": 124,
+   "linhas": 136,
    "dominio": "pages",
    "hooks_locais": [
     "useGeoBlocking",

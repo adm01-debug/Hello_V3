@@ -2534,8 +2534,8 @@
   {
    "nome": "validate-geo",
    "entrada": "supabase/functions/validate-geo/index.ts",
-   "arquivos": 1,
-   "linhas": 189,
+   "arquivos": 2,
+   "linhas": 324,
    "verify_jwt": true,
    "metodos": [
     "OPTIONS"

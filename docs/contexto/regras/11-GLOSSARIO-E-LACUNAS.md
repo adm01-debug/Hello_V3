@@ -1,6 +1,6 @@
 # 11 · GLOSSÁRIO, DADOS DE REFERÊNCIA E LACUNAS
 
-> Gerado automaticamente por AI Context Sync v1.3.2 · commit `c771af6fb1` · branch `main` · 2026-11-24 08:59 UTC
+> Gerado automaticamente por AI Context Sync v1.3.2 · commit `b8877578dc` · branch `main` · 2026-11-24 09:14 UTC
 > Não edite à mão — regras humanas vão em `manual/`.
 
 ## Glossário do domínio (entidades do sistema)
@@ -266,6 +266,8 @@
 | `CircuitState` (TS) | CLOSED \| OPEN \| HALF_OPEN |  | `supabase/functions/_shared/resilience.ts` |
 | `TalkRatioStatus` (TS) | agent_low \| agent_high \| optimal \| insufficient_data |  | `supabase/functions/analyze-talk-ratio/index.ts` |
 | `BudgetStatus` (TS) | healthy \| warning \| exhausted \| unknown |  | `supabase/functions/health-check/slo-budget.ts` |
+| `GeoMode` (TS) | allowlist \| blocklist |  | `supabase/functions/validate-geo/decide.ts` |
+| `GeoVerdict` (TS) | allowed \| blocked \| not_configured \| unknown_country \| invalid_mode |  | `supabase/functions/validate-geo/decide.ts` |
 | `AnomalyKind` (TS) | spike \| drift \| outage |  | `supabase/functions/voip-anomaly-remediation/index.ts` |
 | `AnomalyMetric` (TS) | mos \| jitter \| volume |  | `supabase/functions/voip-anomaly-remediation/index.ts` |
 | `RecommendationCategory` (TS) | capacity \| quality \| infra \| process |  | `supabase/functions/voip-recommendations/index.ts` |

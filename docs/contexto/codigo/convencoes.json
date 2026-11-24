@@ -21,7 +21,7 @@
    "scripts/regras_negocio (2)"
   ],
   "testes": [
-   "co-localizado (__tests__) (374)",
+   "co-localizado (__tests__) (375)",
    "e2e/ (7)",
    "tests/ (6)"
   ],
@@ -58,11 +58,11 @@
  "commits": {
   "convencao": "conventional commits (observado)",
   "exemplos": [
+   "fix: validate-geo e a tela de geo honram o modo allowlist/blocklist (etapa 141) (#270)",
    "fix: rótulo acessível nos botões-ícone restantes (etapas 262 e 263) (#268)",
    "chore: painel de traducao sob demanda tira a rota Calls do teto do bundle (#269)",
    "fix: rotulos acessiveis nos botoes-icone de discador, chamada, contatos e transcricao (etapas 259-261) (#267)",
-   "fix: gravacoes cegas em componentes e login reportam erro (etapa 187) (#255)",
-   "chore: veredito explicito nos catch que escondem escrita (etapas 194-195) (#262)"
+   "fix: gravacoes cegas em componentes e login reportam erro (etapa 187) (#255)"
   ]
  },
  "pr_template": null,
