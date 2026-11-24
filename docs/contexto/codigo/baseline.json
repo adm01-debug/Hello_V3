@@ -2,11 +2,16 @@
  "aviso": "GERADO AUTOMATICAMENTE por scripts/ai-context/gerar.mjs — não editar à mão; será sobrescrito.",
  "format_version": 2,
  "git": {
-  "commit": "b6163308800aab54fd59830cbe71225a82af81a7",
+  "commit": "6272242cc5c43571cee35a4bc986515e3bff43db",
   "branch": "main",
-  "data_commit": "2026-11-24T14:22:14-03:00",
+  "data_commit": "2026-11-24T14:31:53-03:00",
   "remote": "https://github.com/adm01-debug/Hello_V3",
   "ultimos_commits": [
+   {
+    "sha": "6272242",
+    "data": "2026-11-24",
+    "assunto": "test: prova a resiliencia das edges com upstream fora do ar (#298)"
+   },
    {
     "sha": "b616330",
     "data": "2026-11-24",
@@ -126,14 +131,9 @@
     "sha": "e376b95",
     "data": "2026-11-24",
     "assunto": "fix: para o laco de re-render de 1 Hz do lembrete de espera (etapa 245) (#275)"
-   },
-   {
-    "sha": "9b4d4b9",
-    "data": "2026-11-24",
-    "assunto": "fix: pagina a lista de gravacoes e limita as consultas do painel (etapa 236) (#273)"
    }
   ],
-  "arquivos_mudados_7d": 1243,
+  "arquivos_mudados_7d": 1249,
   "pastas_mais_mudadas_30d": [
    {
     "pasta": "covout/lcov-report/hooks",
@@ -141,7 +141,7 @@
    },
    {
     "pasta": "docs/qa/05-PROGRESSO.md",
-    "mudancas": 121
+    "mudancas": 122
    },
    {
     "pasta": "src/hooks/__tests__",
@@ -157,7 +157,7 @@
    },
    {
     "pasta": "supabase/functions/_shared",
-    "mudancas": 39
+    "mudancas": 40
    },
    {
     "pasta": "src/lib/__tests__",
@@ -199,7 +199,7 @@
   "arquivos_mais_mudados_90d": [
    {
     "arquivo": "docs/qa/05-PROGRESSO.md",
-    "mudancas": 121
+    "mudancas": 122
    },
    {
     "arquivo": "docs/estado/funcionalidades-planejadas.md",
@@ -262,6 +262,10 @@
     "mudancas": 6
    },
    {
+    "arquivo": "supabase/functions/auto-scorecard/index.ts",
+    "mudancas": 6
+   },
+   {
     "arquivo": "supabase/functions/chatbot-respond/index.ts",
     "mudancas": 6
    },
@@ -292,16 +296,12 @@
    {
     "arquivo": "docs/prod-readiness.md",
     "mudancas": 5
-   },
-   {
-    "arquivo": "inventario/estado/edges.json",
-    "mudancas": 5
    }
   ],
   "autores_30d": [
    {
     "autor": "adm01-debug",
-    "commits": 276
+    "commits": 277
    },
    {
     "autor": "Joaquim Ataides",
@@ -314,9 +314,9 @@
   ]
  },
  "contagens": {
-  "arquivos_total": 1736,
-  "arquivos_codigo": 1332,
-  "linhas_codigo": 177296,
+  "arquivos_total": 1742,
+  "arquivos_codigo": 1338,
+  "linhas_codigo": 177916,
   "rotas": 106,
   "rotas_http_backend": 11,
   "vistas_por_id": 0,
@@ -328,7 +328,7 @@
   "tabelas": 169,
   "migrations": 243,
   "cron_jobs": 11,
-  "testes": 389,
+  "testes": 394,
   "workflows": 3,
   "scripts": 35,
   "docs_md": 121
@@ -519,8 +519,8 @@
    "linhas": 170
   },
   "supabase/functions": {
-   "arquivos": 212,
-   "linhas": 23801
+   "arquivos": 218,
+   "linhas": 24421
   },
   "tailwind.config.ts": {
    "arquivos": 1,

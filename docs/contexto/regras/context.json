@@ -1,15 +1,15 @@
 {
  "meta": {
-  "sha": "b6163308800aab54fd59830cbe71225a82af81a7",
+  "sha": "6272242cc5c43571cee35a4bc986515e3bff43db",
   "branch": "main",
   "remote": "https://github.com/adm01-debug/Hello_V3",
-  "generated_at": "2026-11-24 17:22 UTC",
-  "files_total": 1783,
-  "code_files": 1579,
-  "code_lines": 193346
+  "generated_at": "2026-11-24 17:32 UTC",
+  "files_total": 1789,
+  "code_files": 1585,
+  "code_lines": 193966
  },
  "version": "1.3.2",
- "facts_hash": "2d2ad4cd4b996b18",
+ "facts_hash": "573a456ea529d76e",
  "stack": {
   "frameworks": [
    "React + Vite",
@@ -153,8 +153,8 @@
   ],
   "package_manager": "bun",
   "languages": {
+   ".ts": 653,
    ".tsx": 651,
-   ".ts": 647,
    ".sql": 246,
    ".mjs": 28,
    ".py": 5,
@@ -34513,8 +34513,8 @@
   },
   {
    "module": "supabase/functions",
-   "files": 212,
-   "lines": 23801,
+   "files": 218,
+   "lines": 24421,
    "tables": [
     "account_lockouts",
     "accounts",
@@ -34630,8 +34630,11 @@
     "voice-utils.ts: VoiceFeatures, cosineSimilarity, averageEmbeddings, verifyVerdict, REDACTION_PATTERNS, RedactionMatch",
     "capture-handler.ts: capturarHandler",
     "local-supabase.ts: edgeLocalDisponivel, MOTIVO_IGNORADO",
+    "backend-falso.ts: Registro, Falha, Cenario, json, comBackendFalso, escritasDeNegocio",
+    "index.ts: handler",
     "schema.ts: AnalyzeCallSchema, AnalyzeCall",
     "index.ts: TalkRatioStatus, talkRatioStatus",
+    "index.ts: handler",
     "schema.ts: ChatWidgetSessionSchema, ChatWidgetSession",
     "index.ts: handler",
     "schema.ts: ChatbotRespondSchema, ChatbotRespond",
@@ -34641,10 +34644,7 @@
     "index.ts: pickPolicy",
     "csv.ts: toCsv",
     "track-engine.ts: CallSummary, CallSession, AgentStat, Weakness, TrackCandidate, Skipped",
-    "index.ts: handler",
-    "slo-budget.ts: BudgetStatus, BudgetInput, BudgetResult, budget",
-    "index.ts: buildBlockedIpEmail, handler",
-    "index.ts: buildNewDeviceEmail, handler"
+    "index.ts: handler"
    ],
    "docs": [
     "geo-decision.test.ts: Etapa 141: as quatro combinacoes modo x pais + os casos de borda que nao podem ficar silenciosos (modo desconhecido, lista vazia, pais ausente).",
@@ -34706,12 +34706,14 @@
     "supabase/functions/_shared/__tests__/resilience.test.ts",
     "supabase/functions/_shared/__tests__/resilient-fetch.test.ts",
     "supabase/functions/_shared/__tests__/validate.fuzz.test.ts",
+    "supabase/functions/_shared/testing/backend-falso.ts",
     "supabase/functions/analyze-call/analyze-call_test.ts",
     "supabase/functions/analyze-call/index.ts",
     "supabase/functions/analyze-call/schema.ts",
     "supabase/functions/analyze-call/__tests__/integration_test.ts",
     "supabase/functions/analyze-call/__tests__/schema.property.test.ts",
     "supabase/functions/analyze-call/__tests__/schema_test.ts",
+    "supabase/functions/analyze-call/__tests__/upstream-falha.test.ts",
     "supabase/functions/analyze-contact-profile/index.ts",
     "supabase/functions/analyze-live-utterance/index.ts",
     "supabase/functions/analyze-sentiment/index.ts",
@@ -34719,9 +34721,11 @@
     "supabase/functions/analyze-talk-ratio/__tests__/index.test.ts",
     "supabase/functions/approve-password-reset/index.ts",
     "supabase/functions/auto-scorecard/index.ts",
+    "supabase/functions/auto-scorecard/__tests__/upstream-falha.test.ts",
     "supabase/functions/bitrix-api/index.test.ts",
     "supabase/functions/bitrix-api/index.ts",
     "supabase/functions/bitrix-api/__tests__/index.test.ts",
+    "supabase/functions/bitrix-api/__tests__/upstream-falha.test.ts",
     "supabase/functions/chat-widget-session/index.ts",
     "supabase/functions/chat-widget-session/schema.ts",
     "supabase/functions/chat-widget-session/schema_test.ts",
@@ -34729,17 +34733,13 @@
     "supabase/functions/chatbot-respond/schema.ts",
     "supabase/functions/chatbot-respond/schema_test.ts",
     "supabase/functions/chatbot-respond/__tests__/index.test.ts",
+    "supabase/functions/chatbot-respond/__tests__/upstream-falha.test.ts",
     "supabase/functions/check-alerts/index.ts",
     "supabase/functions/check-calling-hours/index.ts",
     "supabase/functions/check-calling-hours/__tests__/index.test.ts",
     "supabase/functions/check-contact-alerts/index.ts",
     "supabase/functions/check-dnc/index.ts",
-    "supabase/functions/check-dnc/__tests__/index.test.ts",
-    "supabase/functions/check-goals/index.ts",
-    "supabase/functions/check-hold-alerts/index.ts",
-    "supabase/functions/check-queue-metrics/index.ts",
-    "supabase/functions/check-queue-metrics/__tests__/index.test.ts",
-    "supabase/functions/cleanup-lock-conflicts/index.test.ts"
+    "supabase/functions/check-dnc/__tests__/index.test.ts"
    ]
   },
   {
@@ -43445,6 +43445,10 @@
    {
     "file": "supabase/functions/_shared/validate.ts",
     "text": "Provides Zod-like schema validation without external dependencies."
+   },
+   {
+    "file": "supabase/functions/_shared/testing/backend-falso.ts",
+    "text": "* Escritas de negócio (tabelas), sem contar as RPCs de controle como o rate limit. */"
    },
    {
     "file": "supabase/functions/analyze-call/analyze-call_test.ts",
@@ -55093,6 +55097,24 @@
     "file": "supabase/functions/_shared/resilience.ts",
     "field": "status",
     "value": "number",
+    "kind": "compara"
+   },
+   {
+    "file": "supabase/functions/_shared/testing/backend-falso.ts",
+    "field": "tipo",
+    "value": "timeout",
+    "kind": "compara"
+   },
+   {
+    "file": "supabase/functions/_shared/testing/backend-falso.ts",
+    "field": "tipo",
+    "value": "abort",
+    "kind": "compara"
+   },
+   {
+    "file": "supabase/functions/_shared/testing/backend-falso.ts",
+    "field": "tipo",
+    "value": "corpo-invalido",
     "kind": "compara"
    },
    {
@@ -70796,6 +70818,26 @@
     "name": "AnalyzeCallSchema - invalid callInfo fields"
    },
    {
+    "file": "supabase/functions/analyze-call/__tests__/upstream-falha.test.ts",
+    "name": "analyze-call: caminho feliz devolve a analise estruturada"
+   },
+   {
+    "file": "supabase/functions/analyze-call/__tests__/upstream-falha.test.ts",
+    "name": "analyze-call: IA sem prazo devolve 503 AI_UNAVAILABLE sem gravar nada"
+   },
+   {
+    "file": "supabase/functions/analyze-call/__tests__/upstream-falha.test.ts",
+    "name": "analyze-call: 500 do provedor devolve 503 AI_SERVICE_UNAVAILABLE"
+   },
+   {
+    "file": "supabase/functions/analyze-call/__tests__/upstream-falha.test.ts",
+    "name": "analyze-call: 429 do provedor devolve 503 AI_SERVICE_UNAVAILABLE"
+   },
+   {
+    "file": "supabase/functions/analyze-call/__tests__/upstream-falha.test.ts",
+    "name": "analyze-call: corpo invalido do provedor devolve 500 INTERNAL_ERROR"
+   },
+   {
     "file": "supabase/functions/analyze-talk-ratio/__tests__/index.test.ts",
     "name": "chamada com duração 0 é insuficiente, nunca "
    },
@@ -70810,6 +70852,26 @@
    {
     "file": "supabase/functions/analyze-talk-ratio/__tests__/index.test.ts",
     "name": "com áudio, classifica pelo intervalo 40–60%"
+   },
+   {
+    "file": "supabase/functions/auto-scorecard/__tests__/upstream-falha.test.ts",
+    "name": "auto-scorecard: caminho feliz grava scorecard e respostas"
+   },
+   {
+    "file": "supabase/functions/auto-scorecard/__tests__/upstream-falha.test.ts",
+    "name": "auto-scorecard: IA sem prazo devolve 503 sem gravar nada"
+   },
+   {
+    "file": "supabase/functions/auto-scorecard/__tests__/upstream-falha.test.ts",
+    "name": "auto-scorecard: 429 do provedor devolve 503 sem gravar nada"
+   },
+   {
+    "file": "supabase/functions/auto-scorecard/__tests__/upstream-falha.test.ts",
+    "name": "auto-scorecard: 500 do provedor devolve 503 sem gravar nada"
+   },
+   {
+    "file": "supabase/functions/auto-scorecard/__tests__/upstream-falha.test.ts",
+    "name": "auto-scorecard: corpo invalido do provedor devolve 5xx sem gravar nada"
    },
    {
     "file": "supabase/functions/bitrix-api/index.test.ts",
@@ -70840,6 +70902,30 @@
     "name": "bitrix-api: acao desconhecida e recusada pelo schema"
    },
    {
+    "file": "supabase/functions/bitrix-api/__tests__/upstream-falha.test.ts",
+    "name": "bitrix-api: caminho feliz devolve os contatos"
+   },
+   {
+    "file": "supabase/functions/bitrix-api/__tests__/upstream-falha.test.ts",
+    "name": "bitrix-api: 500 do Bitrix e reenviado 2x e termina em 502"
+   },
+   {
+    "file": "supabase/functions/bitrix-api/__tests__/upstream-falha.test.ts",
+    "name": "bitrix-api: 429 do Bitrix e tratado como indisponibilidade (502)"
+   },
+   {
+    "file": "supabase/functions/bitrix-api/__tests__/upstream-falha.test.ts",
+    "name": "bitrix-api: timeout do Bitrix vira 504"
+   },
+   {
+    "file": "supabase/functions/bitrix-api/__tests__/upstream-falha.test.ts",
+    "name": "bitrix-api: resposta nao-JSON do Bitrix vira 503 de configuracao"
+   },
+   {
+    "file": "supabase/functions/bitrix-api/__tests__/upstream-falha.test.ts",
+    "name": "bitrix-api: get_user degrada para configured=false em vez de derrubar a tela"
+   },
+   {
     "file": "supabase/functions/chatbot-respond/__tests__/index.test.ts",
     "name": "chatbot-respond: sem visitor_token e sem sessao devolve 401"
    },
@@ -70858,6 +70944,26 @@
    {
     "file": "supabase/functions/chatbot-respond/__tests__/index.test.ts",
     "name": "chatbot-respond: preflight OPTIONS responde com CORS da origem permitida"
+   },
+   {
+    "file": "supabase/functions/chatbot-respond/__tests__/upstream-falha.test.ts",
+    "name": "chatbot-respond: caminho feliz responde ao visitante e grava a mensagem"
+   },
+   {
+    "file": "supabase/functions/chatbot-respond/__tests__/upstream-falha.test.ts",
+    "name": "chatbot-respond: IA sem prazo devolve 503 sem gravar nada"
+   },
+   {
+    "file": "supabase/functions/chatbot-respond/__tests__/upstream-falha.test.ts",
+    "name": "chatbot-respond: 429 do provedor devolve 503 sem gravar nada"
+   },
+   {
+    "file": "supabase/functions/chatbot-respond/__tests__/upstream-falha.test.ts",
+    "name": "chatbot-respond: 500 do provedor devolve 503 sem gravar nada"
+   },
+   {
+    "file": "supabase/functions/chatbot-respond/__tests__/upstream-falha.test.ts",
+    "name": "chatbot-respond: corpo invalido do provedor devolve 5xx sem gravar nada"
    },
    {
     "file": "supabase/functions/check-calling-hours/__tests__/index.test.ts",
@@ -71178,6 +71284,26 @@
    {
     "file": "supabase/functions/notify-new-device/__tests__/index.test.ts",
     "name": "notify-new-device: template visual permanece igual para dados normais"
+   },
+   {
+    "file": "supabase/functions/notify-new-device/__tests__/upstream-falha.test.ts",
+    "name": "notify-new-device: caminho feliz envia o e-mail e nao grava no banco"
+   },
+   {
+    "file": "supabase/functions/notify-new-device/__tests__/upstream-falha.test.ts",
+    "name": "notify-new-device: timeout do Resend devolve 5xx sem gravar nada"
+   },
+   {
+    "file": "supabase/functions/notify-new-device/__tests__/upstream-falha.test.ts",
+    "name": "notify-new-device: 429 do Resend devolve 5xx sem gravar nada"
+   },
+   {
+    "file": "supabase/functions/notify-new-device/__tests__/upstream-falha.test.ts",
+    "name": "notify-new-device: 500 do Resend devolve 5xx sem gravar nada"
+   },
+   {
+    "file": "supabase/functions/notify-new-device/__tests__/upstream-falha.test.ts",
+    "name": "notify-new-device: corpo invalido do Resend devolve 5xx sem gravar nada"
    },
    {
     "file": "supabase/functions/record-consent/__tests__/index.test.ts",
@@ -82219,6 +82345,17 @@
      "proposal": [
       "escreve:supabase/functions/global-load-test/index.ts"
      ]
+    },
+    "tipo": {
+     "timeout": [
+      "compara:supabase/functions/_shared/testing/backend-falso.ts"
+     ],
+     "abort": [
+      "compara:supabase/functions/_shared/testing/backend-falso.ts"
+     ],
+     "corpo-invalido": [
+      "compara:supabase/functions/_shared/testing/backend-falso.ts"
+     ]
     }
    }
   }
@@ -84958,14 +85095,18 @@
    "supabase/functions/_shared/hmac.ts",
    "supabase/functions/_shared/rate-limit.ts",
    "supabase/functions/_shared/validator.ts",
+   "supabase/functions/analyze-call/__tests__/upstream-falha.test.ts",
    "supabase/functions/analyze-contact-profile/index.ts",
    "supabase/functions/analyze-live-utterance/index.ts",
    "supabase/functions/analyze-sentiment/index.ts",
    "supabase/functions/approve-password-reset/index.ts",
+   "supabase/functions/auto-scorecard/__tests__/upstream-falha.test.ts",
    "supabase/functions/auto-scorecard/index.ts",
    "supabase/functions/bitrix-api/__tests__/index.test.ts",
+   "supabase/functions/bitrix-api/__tests__/upstream-falha.test.ts",
    "supabase/functions/chat-widget-session/index.ts",
    "supabase/functions/chatbot-respond/__tests__/index.test.ts",
+   "supabase/functions/chatbot-respond/__tests__/upstream-falha.test.ts",
    "supabase/functions/chatbot-respond/index.ts",
    "supabase/functions/check-alerts/index.ts",
    "supabase/functions/check-contact-alerts/index.ts",
@@ -84999,6 +85140,7 @@
    "supabase/functions/health-check/__tests__/index.test.ts",
    "supabase/functions/health-check/index.ts",
    "supabase/functions/ldap-sync/index.ts",
+   "supabase/functions/notify-new-device/__tests__/upstream-falha.test.ts",
    "supabase/functions/ocr-virtual-fax/index.ts",
    "supabase/functions/process-digest/index.ts",
    "supabase/functions/record-consent/index.ts",
@@ -115726,6 +115868,40 @@
     "Fuzzing Webhook Validator - Edge Case UUIDs and Dates"
    ]
   },
+  "supabase/functions/_shared/testing/backend-falso.ts": {
+   "path": "supabase/functions/_shared/testing/backend-falso.ts",
+   "lines": 125,
+   "exports": [
+    "type Registro",
+    "type Falha",
+    "type Cenario",
+    "function json",
+    "function comBackendFalso",
+    "function escritasDeNegocio",
+    "function chamadasDe"
+   ],
+   "status_values": [
+    {
+     "field": "tipo",
+     "value": "timeout",
+     "kind": "compara"
+    },
+    {
+     "field": "tipo",
+     "value": "abort",
+     "kind": "compara"
+    },
+    {
+     "field": "tipo",
+     "value": "corpo-invalido",
+     "kind": "compara"
+    }
+   ],
+   "rule_comments": [
+    "* Escritas de negócio (tabelas), sem contar as RPCs de controle como o rate limit. */"
+   ],
+   "doc": "Harness de teste das edges: backend Supabase falso + injeção de falha no terceiro. Não é arquivo de teste (não declara Deno.test) — é utilitário compartilhado. Uso: comBackendFalso({ tabelas, rpc, falhas }, async (registro) => { ... })"
+  },
   "supabase/functions/analyze-call/analyze-call_test.ts": {
    "path": "supabase/functions/analyze-call/analyze-call_test.ts",
    "lines": 52,
@@ -115748,6 +115924,9 @@
   "supabase/functions/analyze-call/index.ts": {
    "path": "supabase/functions/analyze-call/index.ts",
    "lines": 152,
+   "exports": [
+    "const handler"
+   ],
    "env": [
     "OPENROUTER_API_KEY",
     "SUPABASE_ANON_KEY",
@@ -115820,6 +115999,20 @@
     "AnalyzeCallSchema - optional callInfo",
     "AnalyzeCallSchema - invalid callInfo fields"
    ]
+  },
+  "supabase/functions/analyze-call/__tests__/upstream-falha.test.ts": {
+   "path": "supabase/functions/analyze-call/__tests__/upstream-falha.test.ts",
+   "lines": 96,
+   "is_test": true,
+   "doc": "Etapa 234 — resiliência de analyze-call com o provedor de IA fora do ar. Prova que timeout vira 503 AI_UNAVAILABLE, 4xx/5xx vira 503 AI_SERVICE_UNAVAILABLE e corpo quebrado vira 500 INTERNAL_ERROR — sempre sem gravar nada.",
+   "tests": [
+    "analyze-call: caminho feliz devolve a analise estruturada",
+    "analyze-call: IA sem prazo devolve 503 AI_UNAVAILABLE sem gravar nada",
+    "analyze-call: 500 do provedor devolve 503 AI_SERVICE_UNAVAILABLE",
+    "analyze-call: 429 do provedor devolve 503 AI_SERVICE_UNAVAILABLE",
+    "analyze-call: corpo invalido do provedor devolve 500 INTERNAL_ERROR"
+   ],
+   "uses_service_role": true
   },
   "supabase/functions/analyze-contact-profile/index.ts": {
    "path": "supabase/functions/analyze-contact-profile/index.ts",
@@ -116098,7 +116291,10 @@
   },
   "supabase/functions/auto-scorecard/index.ts": {
    "path": "supabase/functions/auto-scorecard/index.ts",
-   "lines": 211,
+   "lines": 213,
+   "exports": [
+    "const handler"
+   ],
    "tables": [
     {
      "table": "call_scorecards",
@@ -116227,6 +116423,26 @@
    ],
    "uses_service_role": true
   },
+  "supabase/functions/auto-scorecard/__tests__/upstream-falha.test.ts": {
+   "path": "supabase/functions/auto-scorecard/__tests__/upstream-falha.test.ts",
+   "lines": 109,
+   "is_test": true,
+   "params": [
+    {
+     "name": "SESSAO",
+     "value": "\"aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee\""
+    }
+   ],
+   "doc": "Etapa 234 — resiliência de auto-scorecard com o provedor de IA fora do ar. Prova que timeout/429/5xx viram 503 e que nenhum scorecard fica gravado pela metade.",
+   "tests": [
+    "auto-scorecard: caminho feliz grava scorecard e respostas",
+    "auto-scorecard: IA sem prazo devolve 503 sem gravar nada",
+    "auto-scorecard: 429 do provedor devolve 503 sem gravar nada",
+    "auto-scorecard: 500 do provedor devolve 503 sem gravar nada",
+    "auto-scorecard: corpo invalido do provedor devolve 5xx sem gravar nada"
+   ],
+   "uses_service_role": true
+  },
   "supabase/functions/bitrix-api/index.test.ts": {
    "path": "supabase/functions/bitrix-api/index.test.ts",
    "lines": 48,
@@ -116261,6 +116477,27 @@
     "bitrix-api: sem Authorization responde 401",
     "bitrix-api: token invalido responde 401, nunca 500",
     "bitrix-api: acao desconhecida e recusada pelo schema"
+   ],
+   "uses_service_role": true
+  },
+  "supabase/functions/bitrix-api/__tests__/upstream-falha.test.ts": {
+   "path": "supabase/functions/bitrix-api/__tests__/upstream-falha.test.ts",
+   "lines": 93,
+   "is_test": true,
+   "params": [
+    {
+     "name": "HOST",
+     "value": "\"edge-234.bitrix24.com.br\""
+    }
+   ],
+   "doc": "Etapa 234 — resiliência de bitrix-api com o Bitrix fora do ar. Prova o mapeamento de falha (retry -> 502, timeout -> 504, corpo inválido -> 503) e a degradação graciosa do get_user, que nunca derruba o Inbox inteiro.",
+   "tests": [
+    "bitrix-api: caminho feliz devolve os contatos",
+    "bitrix-api: 500 do Bitrix e reenviado 2x e termina em 502",
+    "bitrix-api: 429 do Bitrix e tratado como indisponibilidade (502)",
+    "bitrix-api: timeout do Bitrix vira 504",
+    "bitrix-api: resposta nao-JSON do Bitrix vira 503 de configuracao",
+    "bitrix-api: get_user degrada para configured=false em vez de derrubar a tela"
    ],
    "uses_service_role": true
   },
@@ -116578,6 +116815,26 @@
     "chatbot-respond: conversation_id que nao e UUID devolve 400",
     "chatbot-respond: user_message acima do teto devolve 422 com o campo apontado",
     "chatbot-respond: preflight OPTIONS responde com CORS da origem permitida"
+   ],
+   "uses_service_role": true
+  },
+  "supabase/functions/chatbot-respond/__tests__/upstream-falha.test.ts": {
+   "path": "supabase/functions/chatbot-respond/__tests__/upstream-falha.test.ts",
+   "lines": 113,
+   "is_test": true,
+   "params": [
+    {
+     "name": "CONVERSA",
+     "value": "\"11111111-2222-3333-4444-555555555555\""
+    }
+   ],
+   "doc": "Etapa 234 — resiliência de chatbot-respond com o provedor de IA fora do ar. Prova que timeout, 429 e 5xx do OpenRouter viram 503 sem gravar mensagem pela metade.",
+   "tests": [
+    "chatbot-respond: caminho feliz responde ao visitante e grava a mensagem",
+    "chatbot-respond: IA sem prazo devolve 503 sem gravar nada",
+    "chatbot-respond: 429 do provedor devolve 503 sem gravar nada",
+    "chatbot-respond: 500 do provedor devolve 503 sem gravar nada",
+    "chatbot-respond: corpo invalido do provedor devolve 5xx sem gravar nada"
    ],
    "uses_service_role": true
   },
@@ -119271,6 +119528,23 @@
    "side_effects": [
     "notify"
    ]
+  },
+  "supabase/functions/notify-new-device/__tests__/upstream-falha.test.ts": {
+   "path": "supabase/functions/notify-new-device/__tests__/upstream-falha.test.ts",
+   "lines": 82,
+   "is_test": true,
+   "doc": "Etapa 234 — resiliência de notify-new-device com o Resend fora do ar. Simula timeout, 429 com Retry-After, 500 e corpo inválido no terceiro e afirma que a edge responde erro (5xx) sem gravar nada pela metade.",
+   "tests": [
+    "notify-new-device: caminho feliz envia o e-mail e nao grava no banco",
+    "notify-new-device: timeout do Resend devolve 5xx sem gravar nada",
+    "notify-new-device: 429 do Resend devolve 5xx sem gravar nada",
+    "notify-new-device: 500 do Resend devolve 5xx sem gravar nada",
+    "notify-new-device: corpo invalido do Resend devolve 5xx sem gravar nada"
+   ],
+   "side_effects": [
+    "notify"
+   ],
+   "uses_service_role": true
   },
   "supabase/functions/ocr-virtual-fax/index.ts": {
    "path": "supabase/functions/ocr-virtual-fax/index.ts",
@@ -123492,10 +123766,27 @@
   }
  },
  "git": {
-  "sha": "b6163308800aab54fd59830cbe71225a82af81a7",
+  "sha": "6272242cc5c43571cee35a4bc986515e3bff43db",
   "branch": "main",
   "remote": "https://github.com/adm01-debug/Hello_V3",
   "commits": [
+   {
+    "sha": "6272242",
+    "date": "2026-11-24",
+    "author": "adm01-debug",
+    "subject": "test: prova a resiliencia das edges com upstream fora do ar (#298)",
+    "files": [
+     "docs/qa/05-PROGRESSO.md",
+     "supabase/functions/_shared/testing/backend-falso.ts",
+     "supabase/functions/analyze-call/__tests__/upstream-falha.test.ts",
+     "supabase/functions/analyze-call/index.ts",
+     "supabase/functions/auto-scorecard/__tests__/upstream-falha.test.ts",
+     "supabase/functions/auto-scorecard/index.ts",
+     "supabase/functions/bitrix-api/__tests__/upstream-falha.test.ts",
+     "supabase/functions/chatbot-respond/__tests__/upstream-falha.test.ts",
+     "supabase/functions/notify-new-device/__tests__/upstream-falha.test.ts"
+    ]
+   },
    {
     "sha": "b616330",
     "date": "2026-11-24",
@@ -123972,21 +124263,12 @@
      "src/pages/roles/RolesTable.tsx",
      "src/pages/two-factor/TotpCard.tsx"
     ]
-   },
-   {
-    "sha": "46cc92e",
-    "date": "2026-11-24",
-    "author": "adm01-debug",
-    "subject": "chore: painel de traducao sob demanda tira a rota Calls do teto do bundle (#269)",
-    "files": [
-     "src/pages/Calls.tsx"
-    ]
    }
   ],
   "hot_files": [
    [
     "docs/qa/05-PROGRESSO.md",
-    28
+    29
    ],
    [
     "docs/agentes/mapa-repo.md",
@@ -124061,7 +124343,7 @@
     2
    ],
    [
-    "supabase/functions/analyze-contact-profile/index.ts",
+    "supabase/functions/_shared/testing/backend-falso.ts",
     1
    ]
   ]

@@ -1,6 +1,6 @@
 # 07 · REGRAS DE NEGÓCIO
 
-> Gerado automaticamente por AI Context Sync v1.3.2 · commit `b616330880` · branch `main` · 2026-11-24 17:22 UTC
+> Gerado automaticamente por AI Context Sync v1.3.2 · commit `6272242cc5` · branch `main` · 2026-11-24 17:32 UTC
 > Não edite à mão — regras humanas vão em `manual/`.
 
 ## A. Regras escritas por humanos (`manual/` — prioridade máxima, nunca sobrescrito)
@@ -1033,6 +1033,9 @@ _nenhum mapa explícito encontrado — transições só existem implicitamente n
 | `relationship_status` | `vip` | compara | `src/hooks/useContactInsights.ts` |
 | `stage` | `proposal` | escreve | `supabase/functions/global-load-test/index.ts` |
 | `stage` | `prospecting` | escreve | `src/pages/Deals.tsx` |
+| `tipo` | `abort` | compara | `supabase/functions/_shared/testing/backend-falso.ts` |
+| `tipo` | `corpo-invalido` | compara | `supabase/functions/_shared/testing/backend-falso.ts` |
+| `tipo` | `timeout` | compara | `supabase/functions/_shared/testing/backend-falso.ts` |
 
 ### E.4 Enums e listas de valores
 
@@ -2655,7 +2658,7 @@ _nenhum item encontrado_
 | `admin` | `supabase/functions/data-lake-flush/index.ts` |
 | `admin` | `supabase/migrations/20261123000200_fix_has_role_oracle_and_debug_tables.sql` |
 
-## K. Testes como especificação (3538 testes em 379 arquivos — nomes completos em `context.json`)
+## K. Testes como especificação (3564 testes em 384 arquivos — nomes completos em `context.json`)
 
 | Arquivo | Testes | Exemplos do que o sistema DEVE fazer |
 |---|---|---|
@@ -2883,6 +2886,7 @@ _nenhum item encontrado_
 | `supabase/functions/__tests__/optimistic-lock.test.ts` | 6 | optimistic-lock: migration canonica do trigger existe · optimistic-lock: detecta divergencia de versao e lanca OPTIMISTIC_LOCK_CONFLICT · optimistic-lock: incrementa a versao quando nao ha divergencia · optimistic-lock: conflito e auditado em optimistic_lock_conflicts … |
 | `supabase/functions/_shared/__tests__/allowed-hosts.test.ts` | 6 | aceita hosts públicos https · bloqueia loopback, metadata e esquemas perigosos · faixas privadas são liberáveis apenas com allowPrivate · metadata continua bloqueada mesmo com allowPrivate … |
 | `supabase/functions/analyze-call/__tests__/schema_test.ts` | 6 | AnalyzeCallSchema - valid data · AnalyzeCallSchema - missing transcript · AnalyzeCallSchema - transcript too short · AnalyzeCallSchema - transcript too long … |
+| `supabase/functions/bitrix-api/__tests__/upstream-falha.test.ts` | 6 | bitrix-api: caminho feliz devolve os contatos · bitrix-api: 500 do Bitrix e reenviado 2x e termina em 502 · bitrix-api: 429 do Bitrix e tratado como indisponibilidade (502) · bitrix-api: timeout do Bitrix vira 504 … |
 | `supabase/functions/email-inbound/__tests__/index.test.ts` | 6 | email-inbound: sem message_id devolve 422 (sem chave nao ha idempotencia) · email-inbound: from/subject ausentes continuam devolvendo 400 · email-inbound: subject acima do teto devolve 422 com o campo apontado · email-inbound: ticket ja existente responde 200 idempotent_replay sem escrever … |
 | `supabase/functions/record-consent/__tests__/index.test.ts` | 6 | record-consent: OPTIONS devolve preflight · record-consent: sem Authorization responde 401 · record-consent: token invalido nao grava consentimento · record-consent: canal fora do enum nao e aceito … |
 | `supabase/functions/validate-ip/__tests__/index.test.ts` | 6 | validate-ip: CORS preflight retorna headers válidos · validate-ip: rejeita requisição sem Authorization header · validate-ip: extrai IP de cf-connecting-ip prioritariamente · validate-ip: fallback para x-forwarded-for quando cf/real ausentes … |
@@ -2924,8 +2928,12 @@ _nenhum item encontrado_
 | `src/pages/__tests__/IPWhitelist.test.tsx` | 5 | IPWhitelist · alerts when the whitelist could not be read · shows the genuine empty state when the read succeeded · does not present an empty user table as  … |
 | `src/pages/__tests__/Status.test.tsx` | 5 | Status — sem medição (E092) · mostra  · mostra  · Status — erro no carregamento (E093) … |
 | `supabase/functions/_shared/__tests__/rate-limit.test.ts` | 5 | rate-limit: DB liberado devolve allowed · rate-limit: DB bloqueando devolve allowed=false com motivo · rate-limit: erro do banco segue fail-open por padrao · rate-limit: erro do banco nega quando onError=deny … |
+| `supabase/functions/analyze-call/__tests__/upstream-falha.test.ts` | 5 | analyze-call: caminho feliz devolve a analise estruturada · analyze-call: IA sem prazo devolve 503 AI_UNAVAILABLE sem gravar nada · analyze-call: 500 do provedor devolve 503 AI_SERVICE_UNAVAILABLE · analyze-call: 429 do provedor devolve 503 AI_SERVICE_UNAVAILABLE … |
+| `supabase/functions/auto-scorecard/__tests__/upstream-falha.test.ts` | 5 | auto-scorecard: caminho feliz grava scorecard e respostas · auto-scorecard: IA sem prazo devolve 503 sem gravar nada · auto-scorecard: 429 do provedor devolve 503 sem gravar nada · auto-scorecard: 500 do provedor devolve 503 sem gravar nada … |
 | `supabase/functions/chatbot-respond/__tests__/index.test.ts` | 5 | chatbot-respond: sem visitor_token e sem sessao devolve 401 · chatbot-respond: corpo sem conversation_id devolve 400 · chatbot-respond: conversation_id que nao e UUID devolve 400 · chatbot-respond: user_message acima do teto devolve 422 com o campo apontado … |
+| `supabase/functions/chatbot-respond/__tests__/upstream-falha.test.ts` | 5 | chatbot-respond: caminho feliz responde ao visitante e grava a mensagem · chatbot-respond: IA sem prazo devolve 503 sem gravar nada · chatbot-respond: 429 do provedor devolve 503 sem gravar nada · chatbot-respond: 500 do provedor devolve 503 sem gravar nada … |
 | `supabase/functions/notify-new-device/__tests__/index.test.ts` | 5 | notify-new-device: sem header Authorization devolve 401 · notify-new-device: header Authorization vazio tambem devolve 401 · notify-new-device: preflight OPTIONS responde com CORS da origem permitida · notify-new-device: HTML do aviso escapa todo valor vindo do corpo … |
+| `supabase/functions/notify-new-device/__tests__/upstream-falha.test.ts` | 5 | notify-new-device: caminho feliz envia o e-mail e nao grava no banco · notify-new-device: timeout do Resend devolve 5xx sem gravar nada · notify-new-device: 429 do Resend devolve 5xx sem gravar nada · notify-new-device: 500 do Resend devolve 5xx sem gravar nada … |
 | `supabase/functions/score-call/index.test.ts` | 5 | computeWeightedTotal — limita a nota ao max_score do critério · computeWeightedTotal — nota negativa vira zero · computeWeightedTotal — soma ponderada normal · computeWeightedTotal — critério desconhecido é ignorado … |
 | `supabase/functions/voip-recommendation-simulate/__tests__/index.test.ts` | 5 | rejeita requisição sem JWT · rejeita corpo sem recommendationId · projectImpact retorna baseline nulo sem dados · projectImpact projeta melhoria de MOS positiva … |
 | `supabase/functions/webauthn-challenge/__tests__/index.test.ts` | 5 | webauthn-challenge: OPTIONS devolve preflight CORS vazio · webauthn-challenge: sem e-mail responde 400 · webauthn-challenge: e-mail vazio responde 400 · webauthn-challenge: payload invalido responde 400, nunca 500 … |
@@ -2954,12 +2962,7 @@ _nenhum item encontrado_
 | `src/hooks/__tests__/useVoipDiagnosticVoiceQA.coverage.test.tsx` | 4 | useVoipDiagnosticVoiceQA · resolves answer on success (default period) · passes explicit period · throws on error branch |
 | `src/hooks/__tests__/useVoipExecutiveSummary.coverage.test.tsx` | 4 | useVoipExecutiveSummary (coverage) · fetches summary with default period · fetches summary with explicit day period · throws on invoke error |
 | `src/hooks/__tests__/useVoipQualityAlertsSummary.coverage.test.tsx` | 4 | useVoipQualityAlertsSummary · carrega o resumo com sucesso (default week) · aceita período day e month (querystring no nome da function, não em  · propaga erro da edge function |
-| `src/hooks/__tests__/useVoipRecommendationInsights.coverage.test.tsx` | 4 | useVoipRecommendationInsights · carrega insights com sucesso (default week) · aceita período month · propaga erro da edge function |
-| `src/hooks/__tests__/useVoipRecommendations.coverage.test.tsx` | 4 | useVoipRecommendations · loads recommendations successfully · defaults period to week and supports day · throws and surfaces error when invoke returns error |
-| `src/hooks/__tests__/useWebVitals.coverage.test.tsx` | 4 | useWebVitals · loads vitals on mount and refreshes on interval · manual refresh invokes getters · clears interval on unmount |
-| `src/lib/__tests__/a11y-clickable.test.ts` | 4 | clickableRowProps · entrega semantica de controle focavel · ativa com Enter e com Espaco, consumindo o evento · ignora teclas que nao ativam |
-| `src/lib/__tests__/callHistoryCsv.test.ts` | 4 | callHistoryCsv · gera header + linhas separadas por ; · escapa valores com virgula e aspas · deixa vazio campos nulos |
-| … +79 linhas — lista completa em `context.json` | | |
+| … +84 linhas — lista completa em `context.json` | | |
 
 ## L. Eventos de webhook tratados (contratos com sistemas externos)
 
@@ -3241,6 +3244,7 @@ _nenhum item encontrado_
 | `timeoutMs` em vez de esperar o limite da plataforma. O erro e um | `supabase/functions/_shared/resilience.ts` |
 | * Lightweight input validation helpers for Edge Functions. | `supabase/functions/_shared/validate.ts` |
 | Provides Zod-like schema validation without external dependencies. | `supabase/functions/_shared/validate.ts` |
+| * Escritas de negócio (tabelas), sem contar as RPCs de controle como o rate limit. */ | `supabase/functions/_shared/testing/backend-falso.ts` |
 | Limit is 10000 | `supabase/functions/analyze-call/analyze-call_test.ts` |
 | Input validation with auditing for 422 errors | `supabase/functions/analyze-call/index.ts` |
 | Edge function ausente: existiam apenas os testes. Sem ela o discador nao tinha | `supabase/functions/check-calling-hours/index.ts` |

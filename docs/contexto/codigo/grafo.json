@@ -1,7 +1,7 @@
 {
  "aviso": "GERADO AUTOMATICAMENTE por scripts/ai-context/gerar.mjs — não editar à mão; será sobrescrito.",
  "format_version": 2,
- "nos": 944,
+ "nos": 945,
  "arestas": 3748,
  "hubs": [
   {
@@ -78,7 +78,7 @@
   },
   {
    "arquivo": "supabase/functions/_shared/resilience.ts",
-   "importado_por": 34
+   "importado_por": 35
   },
   {
    "arquivo": "supabase/functions/_shared/validate.ts",

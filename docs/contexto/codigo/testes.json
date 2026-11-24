@@ -5,17 +5,17 @@
   "vitest",
   "playwright"
  ],
- "total": 389,
+ "total": 394,
  "por_tipo": {
   "contrato": 1,
   "e2e": 13,
   "pytest": 2,
-  "unit": 372
+  "unit": 377
  },
  "onde_ficam": [
   {
    "padrao": "co-localizado (__tests__)",
-   "arquivos": 365
+   "arquivos": 370
   },
   {
    "padrao": "e2e/",
@@ -3108,6 +3108,16 @@
    "casos": 2
   },
   {
+   "arquivo": "supabase/functions/analyze-call/__tests__/upstream-falha.test.ts",
+   "tipo": "unit",
+   "linhas": 96,
+   "testa": [
+    "supabase/functions/_shared/testing/backend-falso.ts",
+    "supabase/functions/analyze-call/index.ts"
+   ],
+   "casos": 5
+  },
+  {
    "arquivo": "supabase/functions/analyze-talk-ratio/__tests__/index.test.ts",
    "tipo": "unit",
    "linhas": 25,
@@ -3117,6 +3127,16 @@
    "casos": 4
   },
   {
+   "arquivo": "supabase/functions/auto-scorecard/__tests__/upstream-falha.test.ts",
+   "tipo": "unit",
+   "linhas": 109,
+   "testa": [
+    "supabase/functions/_shared/testing/backend-falso.ts",
+    "supabase/functions/auto-scorecard/index.ts"
+   ],
+   "casos": 5
+  },
+  {
    "arquivo": "supabase/functions/bitrix-api/__tests__/index.test.ts",
    "tipo": "unit",
    "linhas": 67,
@@ -3124,6 +3144,17 @@
     "supabase/functions/bitrix-api/index.ts"
    ],
    "casos": 4
+  },
+  {
+   "arquivo": "supabase/functions/bitrix-api/__tests__/upstream-falha.test.ts",
+   "tipo": "unit",
+   "linhas": 93,
+   "testa": [
+    "supabase/functions/_shared/resilience.ts",
+    "supabase/functions/_shared/testing/backend-falso.ts",
+    "supabase/functions/bitrix-api/index.ts"
+   ],
+   "casos": 6
   },
   {
    "arquivo": "supabase/functions/bitrix-api/index.test.ts",
@@ -3139,6 +3170,16 @@
    "tipo": "unit",
    "linhas": 73,
    "testa": [
+    "supabase/functions/chatbot-respond/index.ts"
+   ],
+   "casos": 5
+  },
+  {
+   "arquivo": "supabase/functions/chatbot-respond/__tests__/upstream-falha.test.ts",
+   "tipo": "unit",
+   "linhas": 113,
+   "testa": [
+    "supabase/functions/_shared/testing/backend-falso.ts",
     "supabase/functions/chatbot-respond/index.ts"
    ],
    "casos": 5
@@ -3264,6 +3305,16 @@
    "tipo": "unit",
    "linhas": 78,
    "testa": [
+    "supabase/functions/notify-new-device/index.ts"
+   ],
+   "casos": 5
+  },
+  {
+   "arquivo": "supabase/functions/notify-new-device/__tests__/upstream-falha.test.ts",
+   "tipo": "unit",
+   "linhas": 82,
+   "testa": [
+    "supabase/functions/_shared/testing/backend-falso.ts",
     "supabase/functions/notify-new-device/index.ts"
    ],
    "casos": 5
@@ -3847,12 +3898,15 @@
   "supabase/functions/_shared/constant-time.ts": 2,
   "supabase/functions/_shared/cors.ts": 2,
   "supabase/functions/_shared/rate-limit.ts": 1,
-  "supabase/functions/_shared/resilience.ts": 2,
+  "supabase/functions/_shared/resilience.ts": 3,
+  "supabase/functions/_shared/testing/backend-falso.ts": 5,
   "supabase/functions/_shared/validator.ts": 1,
+  "supabase/functions/analyze-call/index.ts": 1,
   "supabase/functions/analyze-call/schema.ts": 3,
   "supabase/functions/analyze-talk-ratio/index.ts": 1,
-  "supabase/functions/bitrix-api/index.ts": 2,
-  "supabase/functions/chatbot-respond/index.ts": 1,
+  "supabase/functions/auto-scorecard/index.ts": 1,
+  "supabase/functions/bitrix-api/index.ts": 3,
+  "supabase/functions/chatbot-respond/index.ts": 2,
   "supabase/functions/email-inbound/index.ts": 1,
   "supabase/functions/embed-kb-article/index.ts": 1,
   "supabase/functions/enforce-sla/index.ts": 1,
@@ -3860,7 +3914,7 @@
   "supabase/functions/health-check/index.ts": 1,
   "supabase/functions/health-check/slo-budget.ts": 1,
   "supabase/functions/notify-blocked-ip/index.ts": 1,
-  "supabase/functions/notify-new-device/index.ts": 1,
+  "supabase/functions/notify-new-device/index.ts": 2,
   "supabase/functions/record-consent/index.ts": 1,
   "supabase/functions/score-call/index.ts": 1,
   "supabase/functions/search-calls/index.ts": 1,
@@ -4020,7 +4074,6 @@
    "analyze-live-utterance",
    "analyze-sentiment",
    "approve-password-reset",
-   "auto-scorecard",
    "chat-widget-session",
    "check-alerts",
    "check-contact-alerts",

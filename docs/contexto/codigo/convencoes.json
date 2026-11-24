@@ -22,7 +22,7 @@
    "scripts/regras_negocio (2)"
   ],
   "testes": [
-   "co-localizado (__tests__) (365)",
+   "co-localizado (__tests__) (370)",
    "e2e/ (7)",
    "tests/ (6)"
   ],
@@ -59,11 +59,11 @@
  "commits": {
   "convencao": "conventional commits (observado)",
   "exemplos": [
+   "test: prova a resiliencia das edges com upstream fora do ar (#298)",
    "fix: guard de CI contra fetch sem prazo e migra os 5 ultimos fetch (#297)",
    "fix: sincroniza o fim de sessao entre abas pelo evento storage (#296)",
    "feat: preserva o formulario e reautentica quando a sessao expira (#295)",
-   "fix: restaura estado anterior no rollback das mutacoes otimistas de favoritos (#294)",
-   "fix: separa o cache de notificacoes por usuario (etapa 221) (#293)"
+   "fix: restaura estado anterior no rollback das mutacoes otimistas de favoritos (#294)"
   ]
  },
  "pr_template": null,

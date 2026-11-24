@@ -1,6 +1,6 @@
 # 10 · ACESSO E SEGURANÇA — quem pode o quê
 
-> Gerado automaticamente por AI Context Sync v1.3.2 · commit `b616330880` · branch `main` · 2026-11-24 17:22 UTC
+> Gerado automaticamente por AI Context Sync v1.3.2 · commit `6272242cc5` · branch `main` · 2026-11-24 17:32 UTC
 > Não edite à mão — regras humanas vão em `manual/`.
 
 ## Perfis / roles identificados
@@ -188,7 +188,7 @@
 
 > `—` com RLS ligado = ninguém além de service_role. `sem RLS` = qualquer chave anon lê/escreve tudo.
 
-## Onde o RLS é IGNORADO (service_role) — 120 arquivo(s)
+## Onde o RLS é IGNORADO (service_role) — 125 arquivo(s)
 
 - `scripts/ai-context/cenarios.mjs`
 - `scripts/ai-context/gerar.unit.mjs`
@@ -210,14 +210,18 @@
 - `supabase/functions/_shared/hmac.ts`
 - `supabase/functions/_shared/rate-limit.ts`
 - `supabase/functions/_shared/validator.ts`
+- `supabase/functions/analyze-call/__tests__/upstream-falha.test.ts`
 - `supabase/functions/analyze-contact-profile/index.ts`
 - `supabase/functions/analyze-live-utterance/index.ts`
 - `supabase/functions/analyze-sentiment/index.ts`
 - `supabase/functions/approve-password-reset/index.ts`
+- `supabase/functions/auto-scorecard/__tests__/upstream-falha.test.ts`
 - `supabase/functions/auto-scorecard/index.ts`
 - `supabase/functions/bitrix-api/__tests__/index.test.ts`
+- `supabase/functions/bitrix-api/__tests__/upstream-falha.test.ts`
 - `supabase/functions/chat-widget-session/index.ts`
 - `supabase/functions/chatbot-respond/__tests__/index.test.ts`
+- `supabase/functions/chatbot-respond/__tests__/upstream-falha.test.ts`
 - `supabase/functions/chatbot-respond/index.ts`
 - `supabase/functions/check-alerts/index.ts`
 - `supabase/functions/check-contact-alerts/index.ts`
@@ -251,6 +255,7 @@
 - `supabase/functions/health-check/__tests__/index.test.ts`
 - `supabase/functions/health-check/index.ts`
 - `supabase/functions/ldap-sync/index.ts`
+- `supabase/functions/notify-new-device/__tests__/upstream-falha.test.ts`
 - `supabase/functions/ocr-virtual-fax/index.ts`
 - `supabase/functions/process-digest/index.ts`
 - `supabase/functions/record-consent/index.ts`

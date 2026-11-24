@@ -51,6 +51,7 @@
   "supabase/functions/_shared/queue-metrics_test.ts",
   "supabase/functions/_shared/rate-limit.ts",
   "supabase/functions/_shared/resilience.ts",
+  "supabase/functions/_shared/testing/backend-falso.ts",
   "supabase/functions/_shared/validate.ts",
   "supabase/functions/_shared/validator.ts",
   "supabase/functions/_shared/validator_test.ts",
@@ -92,7 +93,7 @@
    "chamada_por_edges": [],
    "chamada_por_sql_ou_cron": false,
    "orfa": false,
-   "testes": 3
+   "testes": 4
   },
   {
    "nome": "analyze-contact-profile",
@@ -283,7 +284,7 @@
    "nome": "auto-scorecard",
    "entrada": "supabase/functions/auto-scorecard/index.ts",
    "arquivos": 1,
-   "linhas": 211,
+   "linhas": 213,
    "verify_jwt": true,
    "metodos": [
     "OPTIONS"
@@ -315,7 +316,7 @@
    "chamada_por_edges": [],
    "chamada_por_sql_ou_cron": true,
    "orfa": false,
-   "testes": 0
+   "testes": 1
   },
   {
    "nome": "bitrix-api",
@@ -352,7 +353,7 @@
    ],
    "chamada_por_sql_ou_cron": false,
    "orfa": false,
-   "testes": 2
+   "testes": 3
   },
   {
    "nome": "chat-widget-session",
@@ -433,7 +434,7 @@
    "chamada_por_edges": [],
    "chamada_por_sql_ou_cron": false,
    "orfa": false,
-   "testes": 1
+   "testes": 2
   },
   {
    "nome": "check-alerts",
@@ -1841,7 +1842,7 @@
    "chamada_por_edges": [],
    "chamada_por_sql_ou_cron": false,
    "orfa": false,
-   "testes": 1
+   "testes": 2
   },
   {
    "nome": "ocr-virtual-fax",

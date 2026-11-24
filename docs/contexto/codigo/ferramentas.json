@@ -3,7 +3,7 @@
  "format_version": 2,
  "stack": {
   "linguagens": [
-   "TypeScript (1298)",
+   "TypeScript (1304)",
    "SQL (246)",
    "Markdown (121)",
    "JavaScript (30)",
@@ -515,12 +515,12 @@
     "arquivos": 14
    },
    {
-    "host": "lovable.dev",
-    "arquivos": 6
+    "host": "mock.supabase.co",
+    "arquivos": 9
    },
    {
-    "host": "mock.supabase.co",
-    "arquivos": 4
+    "host": "lovable.dev",
+    "arquivos": 6
    },
    {
     "host": "api.elevenlabs.io",
@@ -580,6 +580,10 @@
    },
    {
     "host": "b.com",
+    "arquivos": 1
+   },
+   {
+    "host": "edge-234.bitrix24.com.br",
     "arquivos": 1
    },
    {
