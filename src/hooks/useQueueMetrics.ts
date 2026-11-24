@@ -22,6 +22,10 @@ const CHAMADA_EM_CURSO = ['active', 'ringing', 'on_hold'] as const;
 // so como rede de seguranca para quando o canal cair.
 const SAFETY_POLL_MS = 60_000;
 const REALTIME_DEBOUNCE_MS = 1_000;
+// Aviso de meta e sobre TRANSICAO, nao sobre estado: enquanto a metrica segue
+// critica nao repetimos o toast. O intervalo minimo existe para o caso de a
+// metrica oscilar em cima do limiar e o supervisor receber um toast por oscilacao.
+const GOAL_NOTIFY_COOLDOWN_MS = 15 * 60 * 1000;
 
 export interface QueueMetrics {
   activeCalls: number;
@@ -67,6 +71,10 @@ export function useQueueMetrics() {
   const isVisible = usePageVisibility();
   const isVisibleRef = useRef(isVisible);
   const realtimeDebounceRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  // Ultimo estado conhecido de cada meta, em ref e nao em estado: guardar isso
+  // em useState recriaria o laco de re-render da etapa 245 (cada leitura mudaria
+  // o estado, o que refaria o efeito que agenda a proxima leitura).
+  const goalStateRef = useRef<Map<string, { status: 'ok' | 'warning' | 'critical'; notifiedAt: number; alarmed: boolean }>>(new Map());
 
   const fetchGoals = async () => {
     const { data, error } = await supabase.from('dashboard_goals').select('*').eq('is_active', true);
@@ -95,12 +103,38 @@ export function useQueueMetrics() {
   const checkAndNotifyGoals = useCallback((currentMetrics: QueueMetrics) => {
     const statuses = goals.map(goal => checkGoalStatus(goal, currentMetrics));
     setGoalStatuses(statuses);
+    const agora = Date.now();
     statuses.forEach(({ goal, status }) => {
+      const anterior = goalStateRef.current.get(goal.id);
+      const mudou = anterior === undefined ? status !== 'ok' : anterior.status !== status;
+      // O estado novo e guardado ANTES de decidir o aviso: se o aviso for barrado
+      // pelo intervalo minimo, ele nao pode reaparecer no ciclo seguinte.
+      // `alarmed` marca que existe um aviso em aberto para esta meta — e o que
+      // permite avisar a volta ao normal sem repetir o alarme sem motivo.
+      const alarmed = anterior?.alarmed ?? false;
+      goalStateRef.current.set(goal.id, { status, notifiedAt: anterior?.notifiedAt ?? 0, alarmed });
+      if (!mudou) return;
+
+      if (status === 'ok') {
+        // A volta ao normal tambem e informacao: sem ela o supervisor nao sabe
+        // se o problema passou ou se simplesmente parou de ser avisado.
+        if (!alarmed) return;
+        toast.success(`Meta normalizada: ${goal.name}`, { description: 'A métrica voltou ao nível esperado.', duration: 5000 });
+        goalStateRef.current.set(goal.id, { status, notifiedAt: agora, alarmed: false });
+        return;
+      }
+
+      // No maximo um alarme por meta a cada 15 min: e o que impede a metrica que
+      // oscila em cima do limiar de virar uma fila de toasts.
+      if (anterior && agora - anterior.notifiedAt < GOAL_NOTIFY_COOLDOWN_MS) return;
       if (status === 'critical' && goal.notify_on_critical) {
         toast.error(`Meta Crítica: ${goal.name}`, { description: 'A métrica está em nível crítico!', duration: 10000 });
       } else if (status === 'warning' && goal.notify_on_warning) {
         toast.warning(`Meta em Aviso: ${goal.name}`, { description: 'A métrica está abaixo do esperado.', duration: 5000 });
+      } else {
+        return;
       }
+      goalStateRef.current.set(goal.id, { status, notifiedAt: agora, alarmed: true });
     });
   }, [goals, checkGoalStatus]);
 

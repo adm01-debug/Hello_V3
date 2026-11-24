@@ -6,11 +6,11 @@
 
 | Marca | Significado |
 |---|---|
-| `[ ]` | **178** |
+| `[ ]` | **177** |
 | `[>]` | em andamento (branch criada) |
 | `[P]` | 0 |
 | `[~]` | 0 |
-| `[x]` | 122 |
+| `[x]` | 123 |
 | `[-]` | 0 |
 
 **`[x]` exige evidência.** Escreva ao lado, entre parênteses, o comando ou a consulta que você rodou e o resultado. Sem isso, a marca é `[~]`.
@@ -24,11 +24,11 @@
 | | Quantidade |
 |---|---:|
 | Total de etapas | 300 |
-| `[x]` concluídas | 122 |
+| `[x]` concluídas | 123 |
 | `[P]` aguardando o dono | 0 |
 | `[~]` parciais | 0 |
 | `[-]` descartadas | 0 |
-| `[ ]` não iniciadas | **178** |
+| `[ ]` não iniciadas | **177** |
 
 *Atualize esta tabela ao fim de cada onda.*
 
@@ -304,7 +304,7 @@
 - [ ] **243** — Índices para as buscas por texto que existirem — onda 6 — Baixa — Banco 🔒
 - [x] **244** — Reduzir a tempestade de consultas do painel de fila — onda 6 — Média — Hooks · (Diagnóstico: `useQueueMetrics.ts:166` tinha poll de 5 s **por cima** do realtime e os dois handlers do canal chamavam `fetchMetrics` a cada evento, cada leitura fazendo 3 consultas — em pico, uma rajada de 20 mudanças de status em 2 s virava 60 consultas. `usePredictiveDialer.ts:322-338` era o mesmo desenho, com um agravante: `activeCampaign` estava nas dependências do efeito, então trocar de campanha derrubava e recriava o canal, perdendo eventos no intervalo. Correção: o realtime virou a fonte principal com **agrupamento de 1 s** por rajada e o poll virou rede de segurança de **60 s** — consultando apenas com a aba visível (`usePageVisibility`, hook que já existia no repositório e é usado por `useBlfBoard.ts:53`, `useExtensionsOverview.ts:82`, `useSecurityMonitoringData.ts:85`), com uma leitura ao voltar a ficar visível para não exibir número velho. No discador: agrupamento de 1 s por tabela e a campanha ativa em `useRef`, para o canal parar de ser recriado. Prova de que o defeito era real: os 3 testes novos, rodados **contra o código anterior** (`git checkout --` nos dois hooks; arquivos restaurados e conferidos por `md5sum`, idênticos), falham — a mensagem do discador é `expected "vi.fn()" to not be called at all, but actually been called 10 times`, isto é, 10 eventos geravam 10 leituras onde agora há 1. Item (3) do plano — assinar só `UPDATE` de `status` em vez de `*` — **não foi aplicado de propósito**: `INSERT` de `call_sessions` é exatamente o instante em que o supervisor precisa ver a chamada nova, `DELETE` também muda a fila, e o volume da tempestade vem de `UPDATE`, que o agrupamento já colapsa; cortar esses eventos compraria ganho zero com atraso de até 60 s em caso de queda de linha. Testes: `bunx vitest run src/hooks src/components/queue src/components/dialer src/components/supervisor src/pages/__tests__` — **196 arquivos / 1960 testes passando**; `bunx tsc --noEmit` rc=0; `bunx eslint` nos 4 arquivos rc=0, sem warning novo.)
 - [x] **245** — Parar o laço de re-render de 1 Hz do lembrete de espera — onda 6 — Média — Hooks · (Diagnóstico: `useHoldReminder.ts` guardava `alertedCalls` e `lastReminderTime` em `useState` e `checkHoldAlerts` gravava um objeto novo **a cada tick de 1 s** — `setAlertedCalls(newAlertedCalls)` era incondicional e `playHoldReminder` fazia o mesmo com `setLastReminderTime(newLRT)`. Como os dois estados estavam nas dependências dos `useCallback`, a identidade dos callbacks mudava a cada tique, o efeito `:134-137` rodava de novo e **recriava o `setInterval` de 1 s em laço** — inclusive com **zero** chamadas em espera. Nenhum dos dois estados aparecia no retorno do hook, logo não alimentavam a interface. Correção: os dois viraram `useRef` (`lastReminderTimeRef`, `alertedCallsRef`); `checkHoldAlerts` muta a ref e só chama `setActiveAlerts` quando há alerta novo (`:119`), `playHoldReminder` idem; o efeito de poda (`:139-154`) muta as refs e devolve `prev` quando o filtro não remove nada; `changeInterval`/`changeAlertThreshold` zeram as refs. Prova de que o defeito era real: o teste de regressão novo (`useHoldReminder.coverage.test.tsx`, conta renderizações e espiona `setInterval`/`clearInterval`), rodado **contra o código antigo** (`git show HEAD:src/hooks/useHoldReminder.ts > arquivo`), falha com `expected "setInterval" to be called 1 times, but got 2 times`, e passa contra o código novo (arquivo restaurado e conferido por `md5sum`, idêntico). Testes: `bunx vitest run src/hooks src/components/calls` — **187 arquivos / 1944 testes passando**; `bunx tsc --noEmit` rc=0; `bunx eslint src/hooks/useHoldReminder.ts src/hooks/__tests__/useHoldReminder.coverage.test.tsx` rc=0. Consumidores intactos: `ActiveCallsIndicator.tsx:39` e `HoldReminderSettings.tsx` usam apenas a API pública, que não mudou.)
-- [ ] **246** — Transformar o alerta repetitivo de meta em alerta de transição — onda 6 — Média — Hooks
+- [x] **246** — Transformar o alerta repetitivo de meta em alerta de transição — onda 6 — Média — Hooks · (Diagnóstico: `checkAndNotifyGoals` disparava `toast.error` para toda meta **atualmente** crítica, e era chamado a cada `fetchMetrics` — que roda no realtime (a cada evento, antes da 244) e na rede de segurança. Com a métrica parada em nível crítico o supervisor recebia o mesmo toast de 10 s a cada leitura, e a degradação real passava batida em meio ao ruído. Correção: o estado anterior de cada meta vive num `useRef` (`goalStateRef`, mapa por id — em `useState` recriaria o laço de re-render da etapa 245), o aviso dispara só na transição de severidade, e há um segundo aviso na volta ao normal — a normalização só sai se havia um alarme em aberto (`alarmed`), senão o supervisor veria "normalizada" de uma meta que nunca foi avisada. Intervalo mínimo de 15 min por meta barra o alarme, para a métrica que oscila em cima do limiar não virar fila de toasts; a normalização passa por cima do intervalo porque é ela que fecha o ciclo. Prova de que o defeito era real: os 2 testes novos, rodados **contra o código anterior** (`git checkout --`; arquivo restaurado e conferido por `md5sum`, idêntico: `9b1d45afbb8e01426311073ce9421ee6`), falham — 6 leituras produziam **6 toasts** (`expected "vi.fn()" to be called 1 times, but got 6 times`) e a normalização não existia (`Number of calls: 0`). Padrão registrado em `docs/agentes/mapa-repo.md` §"Alertas derivados de métrica", para não reaparecer em outro hook. Testes: `useQueueMetrics.coverage.test.tsx` — 16/16 passando; suíte ampla de hooks e painéis verde; `bunx tsc --noEmit` rc=0; `bunx eslint` nos arquivos tocados rc=0.)
 - [ ] **247** — Eliminar o N+1 da validação de IP — onda 6 — Média — Edge Function
 - [ ] **248** — Eliminar o N+1 do cálculo de melhor horário — onda 6 — Média — Edge Function 🔒
 - [ ] **249** — Eliminar o N+1 do resumo de notificações — onda 6 — Baixa — Edge Function
