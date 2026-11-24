@@ -4,6 +4,7 @@ import { buildCorsHeaders } from "../_shared/cors.ts";
 import { getCorrelationId, internalErrorResponse } from "../_shared/errors.ts";
 import { validateBody } from "../_shared/validator.ts";
 import { OcrVirtualFaxBodySchema } from "../_shared/ai-body-schemas.ts";
+import { fetchComPrazo } from "../_shared/resilience.ts";
 
 serve(async (req) => {
   if (req.method === 'OPTIONS') return new Response(null, { headers: buildCorsHeaders(req) });
@@ -60,7 +61,7 @@ serve(async (req) => {
     const mime = file.type || 'application/pdf';
 
     // Chama Lovable AI Gateway (Gemini vision)
-    const aiResp = await fetch('https://openrouter.ai/api/v1/chat/completions', {
+    const aiResp = await fetchComPrazo('https://openrouter.ai/api/v1/chat/completions', {
       method: 'POST',
       headers: { 'Authorization': `Bearer ${openRouterKey}`, 'Content-Type': 'application/json' },
       body: JSON.stringify({

@@ -59,10 +59,16 @@ export function ConversationIntelligenceCard() {
         const ratios: number[] = [];
         if (sessionsWithDuration.length > 0) {
           const ids = sessionsWithDuration.map(s => s.id);
-          const { data: turns } = await supabase
+          const { data: turns, error: turnsError } = await supabase
             .from('call_transcriptions')
             .select('call_session_id, speaker, start_time, end_time')
             .in('call_session_id', ids);
+
+          if (turnsError) {
+            // Sem transcrições o talk ratio fica 0%: registro o motivo para o
+            // número não ser lido como "ninguém falou" (A-009, etapa 201).
+            log.warn('Falha ao carregar transcrições para o talk ratio', turnsError);
+          }
 
           const byCall = new Map<string, Array<{ speaker: string; start: number; end: number }>>();
           for (const t of turns ?? []) {

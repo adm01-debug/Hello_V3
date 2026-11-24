@@ -75,4 +75,14 @@ describe('useActiveCallsRealtime (coverage)', () => {
     act(() => { vi.advanceTimersByTime(1100); });
     expect(result.current.statusCounts.total).toBe(2);
   });
+
+  it('monta e desmonta 50 vezes sem acumular canal de realtime', async () => {
+    const { supabase } = await import('@/integrations/supabase/client');
+    for (let i = 0; i < 50; i++) {
+      const { unmount } = renderHook(() => useActiveCallsRealtime());
+      unmount();
+    }
+    expect(supabase.channel).toHaveBeenCalledTimes(50);
+    expect(supabase.removeChannel).toHaveBeenCalledTimes(50);
+  });
 });
