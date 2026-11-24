@@ -1,15 +1,15 @@
 {
  "meta": {
-  "sha": "0bba9fbc1fba527640da469c982d1b54d02a0246",
+  "sha": "e78a64b0fd3692b58d31487ac5ee782f49e8dd91",
   "branch": "main",
   "remote": "https://github.com/adm01-debug/Hello_V3",
-  "generated_at": "2026-11-24 05:28 UTC",
-  "files_total": 1765,
-  "code_files": 1562,
-  "code_lines": 193088
+  "generated_at": "2026-11-24 05:42 UTC",
+  "files_total": 1767,
+  "code_files": 1564,
+  "code_lines": 193377
  },
  "version": "1.3.2",
- "facts_hash": "4d81d3b64567b10c",
+ "facts_hash": "e1dbcb56f3f858a6",
  "stack": {
   "frameworks": [
    "React + Vite",
@@ -153,7 +153,7 @@
   ],
   "package_manager": "bun",
   "languages": {
-   ".ts": 654,
+   ".ts": 656,
    ".tsx": 629,
    ".sql": 245,
    ".mjs": 27,
@@ -29663,6 +29663,7 @@
     ],
     "auth": "service_role (ignora RLS) + valida JWT do usuário",
     "tables": [
+     "audit_logs",
      "call_alerts"
     ],
     "env": [
@@ -29684,8 +29685,10 @@
     "methods": [
      "OPTIONS"
     ],
-    "auth": "JWT do usuário",
-    "tables": [],
+    "auth": "service_role (ignora RLS) + valida JWT do usuário",
+    "tables": [
+     "audit_logs"
+    ],
     "env": [
      "SUPABASE_ANON_KEY",
      "SUPABASE_URL"
@@ -29728,8 +29731,10 @@
     "methods": [
      "OPTIONS"
     ],
-    "auth": "JWT do usuário",
-    "tables": [],
+    "auth": "service_role (ignora RLS) + valida JWT do usuário",
+    "tables": [
+     "audit_logs"
+    ],
     "env": [
      "SUPABASE_ANON_KEY",
      "SUPABASE_URL"
@@ -29880,6 +29885,7 @@
     "auth": "service_role (ignora RLS) + valida JWT do usuário",
     "tables": [
      "accounts",
+     "audit_logs",
      "call_sessions",
      "call_summaries",
      "churn_risk_signals",
@@ -29904,9 +29910,10 @@
     "methods": [
      "OPTIONS"
     ],
-    "auth": "JWT do usuário",
+    "auth": "service_role (ignora RLS) + valida JWT do usuário",
     "tables": [
-     "agent_shifts"
+     "agent_shifts",
+     "audit_logs"
     ],
     "env": [
      "SUPABASE_ANON_KEY",
@@ -29954,6 +29961,7 @@
     ],
     "auth": "service_role (ignora RLS) + valida JWT do usuário",
     "tables": [
+     "audit_logs",
      "call_key_moments",
      "call_sessions",
      "call_summaries",
@@ -29979,6 +29987,7 @@
     ],
     "auth": "PÚBLICA (verify_jwt=false em config.toml)",
     "tables": [
+     "audit_logs",
      "data_lake_exports",
      "user_profiles"
     ],
@@ -30057,6 +30066,7 @@
     "auth": "service_role (ignora RLS) + valida JWT do usuário",
     "tables": [
      "accounts",
+     "audit_logs",
      "call_key_moments",
      "call_sessions",
      "call_summaries",
@@ -30127,8 +30137,10 @@
     "methods": [
      "OPTIONS"
     ],
-    "auth": "JWT do usuário",
-    "tables": [],
+    "auth": "service_role (ignora RLS) + valida JWT do usuário",
+    "tables": [
+     "audit_logs"
+    ],
     "env": [
      "ELEVENLABS_AGENT_ID",
      "ELEVENLABS_API_KEY",
@@ -30258,6 +30270,7 @@
     ],
     "auth": "service_role (ignora RLS) + valida JWT do usuário",
     "tables": [
+     "audit_logs",
      "data_lake_exports",
      "user_roles"
     ],
@@ -30337,6 +30350,7 @@
     ],
     "auth": "service_role (ignora RLS) + valida JWT do usuário",
     "tables": [
+     "audit_logs",
      "deals"
     ],
     "env": [
@@ -30960,6 +30974,7 @@
     "auth": "service_role (ignora RLS) + valida JWT do usuário",
     "tables": [
      "agent_trunk_assignments",
+     "audit_logs",
      "user_profiles"
     ],
     "env": [
@@ -31472,6 +31487,7 @@
     "auth": "service_role (ignora RLS) + valida JWT do usuário",
     "tables": [
      "agent_trunk_assignments",
+     "audit_logs",
      "notifications",
      "voip_trunks"
     ],
@@ -31747,6 +31763,7 @@
     "auth": "service_role (ignora RLS) + valida JWT do usuário",
     "tables": [
      "agent_trunk_assignments",
+     "audit_logs",
      "call_control_audit_logs",
      "user_roles",
      "voip_trunks"
@@ -31770,8 +31787,10 @@
     "methods": [
      "OPTIONS"
     ],
-    "auth": "JWT do usuário",
-    "tables": [],
+    "auth": "service_role (ignora RLS) + valida JWT do usuário",
+    "tables": [
+     "audit_logs"
+    ],
     "env": [
      "SUPABASE_ANON_KEY",
      "SUPABASE_URL",
@@ -34290,8 +34309,8 @@
   },
   {
    "module": "supabase/functions",
-   "files": 204,
-   "lines": 22719,
+   "files": 206,
+   "lines": 23008,
    "tables": [
     "account_lockouts",
     "accounts",
@@ -34394,6 +34413,7 @@
     "hmac.ts: verifyWebhookSignature",
     "html.ts: escapeHtml",
     "mos.ts: MOS_THRESHOLDS, MosLabel, classifyMos, isPoorMos",
+    "numeric-body-schemas.ts: ExportDataLakeBodySchema, ForecastDealsBodySchema, AccountIdBodySchema, ComputeAdherenceBodySchema, ComputeDealHealthBodySchema, CheckAlertsBodySchema",
     "numeric-schemas.ts: finiteNumber, finiteInt, nonNegativeInt, positiveInt, percent, latitude",
     "observability.ts: logInfo, logError, logRequest, withRequestLog, trackMetric, logStructuredError",
     "queue-metrics.ts: QueueCallSample, serviceLevel, abandonmentRate, averageWaitTime",
@@ -34420,8 +34440,7 @@
     "index.ts: buildBlockedIpEmail, handler",
     "index.ts: buildNewDeviceEmail, handler",
     "index.ts: computeWeightedTotal",
-    "index.ts: handler",
-    "index.ts: contemHtml, handler"
+    "index.ts: handler"
    ],
    "docs": [
     "optimistic-lock.test.ts: Guarda de contrato do trigger enforce_optimistic_lock. O trigger vive em SQL e e aplicado pelo banco, nao por codigo TypeScript, entao nao ha como exercita-lo sem uma conexao Postgres real. A versao anterior deste arquivo simulava o teste (runSql devolvia `{ sql }` e a assercao era `typeof result == …",
@@ -34456,6 +34475,8 @@
     "supabase/functions/_shared/html.ts",
     "supabase/functions/_shared/mos.ts",
     "supabase/functions/_shared/mos_test.ts",
+    "supabase/functions/_shared/numeric-body-schemas.ts",
+    "supabase/functions/_shared/numeric-body-schemas_test.ts",
     "supabase/functions/_shared/numeric-schemas.ts",
     "supabase/functions/_shared/numeric-schemas_test.ts",
     "supabase/functions/_shared/observability.ts",
@@ -34514,9 +34535,7 @@
     "supabase/functions/cleanup-lock-conflicts/__tests__/cron_auth_test.ts",
     "supabase/functions/cleanup-recordings/index.ts",
     "supabase/functions/cleanup-recordings/__tests__/retencao_test.ts",
-    "supabase/functions/compute-account-health/index.ts",
-    "supabase/functions/compute-adherence/index.ts",
-    "supabase/functions/compute-best-time/index.ts"
+    "supabase/functions/compute-account-health/index.ts"
    ]
   },
   {
@@ -39214,6 +39233,174 @@
     "name": "WebhookEventSchema",
     "kind": "object",
     "body": "{ id: z.string().min(1).max(128), type: z.string().min(1).max(128), source: z.string().min(1).max(128).optional(), // Aceita ISO string ou epoch (seg/ms) — normalização fica com o handler. timestamp: z .union([z.string().datetime(), unixTimestamp(), unixTimestamp().transform((s) => s * 1000)]) .optional(), attempt: nonNegativeInt().max(100).optional(), retry_count: nonNegativeInt().max(100).optional(), latency_ms: durationMs().optional(), version: z.union([positiveInt().max(1000), z.string().max(16)]).optional(), data: z.record(z.unknown()).optional(), metadata: z.record(z.unknown()).optional(), }",
+    "refines": [],
+    "chain": []
+   },
+   {
+    "file": "supabase/functions/_shared/numeric-body-schemas.ts",
+    "name": "id",
+    "kind": "string",
+    "body": "",
+    "refines": [],
+    "chain": []
+   },
+   {
+    "file": "supabase/functions/_shared/numeric-body-schemas.ts",
+    "name": "shortText",
+    "kind": "string",
+    "body": "",
+    "refines": [],
+    "chain": []
+   },
+   {
+    "file": "supabase/functions/_shared/numeric-body-schemas.ts",
+    "name": "mediumText",
+    "kind": "string",
+    "body": "",
+    "refines": [],
+    "chain": []
+   },
+   {
+    "file": "supabase/functions/_shared/numeric-body-schemas.ts",
+    "name": "ExportDataLakeBodySchema",
+    "kind": "object",
+    "body": "{ dataset: z.string().max(100).optional(), format: z.string().max(20).optional(), since: z.string().max(40).optional(), }",
+    "refines": [],
+    "chain": []
+   },
+   {
+    "file": "supabase/functions/_shared/numeric-body-schemas.ts",
+    "name": "ForecastDealsBodySchema",
+    "kind": "object",
+    "body": "{ period: z.string().max(20).optional(), }",
+    "refines": [],
+    "chain": []
+   },
+   {
+    "file": "supabase/functions/_shared/numeric-body-schemas.ts",
+    "name": "AccountIdBodySchema",
+    "kind": "object",
+    "body": "{ account_id: id.optional(), }",
+    "refines": [],
+    "chain": []
+   },
+   {
+    "file": "supabase/functions/_shared/numeric-body-schemas.ts",
+    "name": "ComputeAdherenceBodySchema",
+    "kind": "object",
+    "body": "{ date: z.string().max(40).optional(), }",
+    "refines": [],
+    "chain": []
+   },
+   {
+    "file": "supabase/functions/_shared/numeric-body-schemas.ts",
+    "name": "ComputeDealHealthBodySchema",
+    "kind": "object",
+    "body": "{ dealId: id.optional(), }",
+    "refines": [],
+    "chain": []
+   },
+   {
+    "file": "supabase/functions/_shared/numeric-body-schemas.ts",
+    "name": "CheckAlertsBodySchema",
+    "kind": "object",
+    "body": "{ callSessionId: id.optional(), sentiment: z.string().max(40).optional(), // A nota de satisfacao e tratada como 0-10 no handler; fora da faixa e 422 // em vez de virar alerta com nota calculada errada. satisfaction: finiteNumber().min(0).max(10).optional(), urgency: z.string().max(40).optional(), callerName: shortText.optional(), }",
+    "refines": [],
+    "chain": []
+   },
+   {
+    "file": "supabase/functions/_shared/numeric-body-schemas.ts",
+    "name": "CheckCallingHoursBodySchema",
+    "kind": "object",
+    "body": "{ region_code: z.string().max(10).optional(), }",
+    "refines": [],
+    "chain": []
+   },
+   {
+    "file": "supabase/functions/_shared/numeric-body-schemas.ts",
+    "name": "CheckDncBodySchema",
+    "kind": "object",
+    "body": "{ phone: z.string().max(30).optional(), }",
+    "refines": [],
+    "chain": []
+   },
+   {
+    "file": "supabase/functions/_shared/numeric-body-schemas.ts",
+    "name": "DataLakeFlushBodySchema",
+    "kind": "object",
+    "body": "{ datasets: z.array(z.string().max(100)).max(20).optional(), }",
+    "refines": [],
+    "chain": []
+   },
+   {
+    "file": "supabase/functions/_shared/numeric-body-schemas.ts",
+    "name": "VoipFailoverNotifierBodySchema",
+    "kind": "object",
+    "body": "{ failed_trunk_id: id.optional(), backup_trunk_id: id.optional(), reason: mediumText.optional(), }",
+    "refines": [],
+    "chain": []
+   },
+   {
+    "file": "supabase/functions/_shared/numeric-body-schemas.ts",
+    "name": "WavoipCallBodySchema",
+    "kind": "object",
+    "body": "{ action: z.string().max(30).optional(), whatsappId: id.optional(), callId: id.optional(), }",
+    "refines": [],
+    "chain": []
+   },
+   {
+    "file": "supabase/functions/_shared/numeric-body-schemas.ts",
+    "name": "SipConfigBodySchema",
+    "kind": "object",
+    "body": "{ action: z.string().max(30).optional(), }",
+    "refines": [],
+    "chain": []
+   },
+   {
+    "file": "supabase/functions/_shared/numeric-body-schemas.ts",
+    "name": "VoipTrunksManageBodySchema",
+    "kind": "object",
+    "body": "{ action: z.string().max(30).optional(), id: id.optional(), version: nonNegativeInt().optional(), agent_id: id.optional(), trunk_id: id.optional(), is_primary: z.boolean().optional(), name: shortText.optional(), provider: z.string().max(100).optional(), sip_server: z.string().max(255).optional(), sip_username: z.string().max(255).optional(), sip_password: z.string().max(512).optional(), sip_realm: z.string().max(255).optional(), transport: z.string().max(50).optional(), max_channels: nonNegativeInt().max(10_000).optional(), priority: nonNegativeInt().max(100_000).optional(), is_active: z.boolean().optional(), notes: z.string().max(2_000).optional(), }",
+    "refines": [],
+    "chain": []
+   },
+   {
+    "file": "supabase/functions/_shared/numeric-body-schemas.ts",
+    "name": "LdapConfigSchema",
+    "kind": "object",
+    "body": "{ serverUrl: z.string().max(255).optional(), port: z.string().max(10).optional(), baseDn: z.string().max(500).optional(), bindDn: z.string().max(500).optional(), passwordEncrypted: z.string().max(4_096).optional(), useTLS: z.boolean().optional(), searchFilter: z.string().max(500).optional(), syncInterval: z.string().max(50).optional(), fieldMapping: z.record(z.string().max(200)).optional(), }",
+    "refines": [],
+    "chain": []
+   },
+   {
+    "file": "supabase/functions/_shared/numeric-body-schemas.ts",
+    "name": "LdapSyncBodySchema",
+    "kind": "object",
+    "body": "{ action: z.string().max(30).optional(), config: LdapConfigSchema.optional(), password: z.string().max(512).optional(), }",
+    "refines": [],
+    "chain": []
+   },
+   {
+    "file": "supabase/functions/_shared/numeric-body-schemas.ts",
+    "name": "ApprovePasswordResetBodySchema",
+    "kind": "object",
+    "body": "{ requestId: id.optional(), action: z.string().max(20).optional(), }",
+    "refines": [],
+    "chain": []
+   },
+   {
+    "file": "supabase/functions/_shared/numeric-body-schemas.ts",
+    "name": "WebauthnAuthBodySchema",
+    "kind": "object",
+    "body": "{ credentialId: z.string().max(500).optional(), userId: id.optional(), clientDataJSON: z.string().max(20_000).optional(), authenticatorData: z.string().max(4_000).optional(), signature: z.string().max(4_000).optional(), email: z.string().max(254).optional(), }",
+    "refines": [],
+    "chain": []
+   },
+   {
+    "file": "supabase/functions/_shared/numeric-body-schemas.ts",
+    "name": "ElevenLabsTokenBodySchema",
+    "kind": "object",
+    "body": "{ agentId: id.optional(), useDefaultAgent: z.boolean().optional(), }",
     "refines": [],
     "chain": []
    },
@@ -117945,6 +118132,182 @@
    "path": "supabase/functions/_shared/mos_test.ts",
    "lines": 24
   },
+  "supabase/functions/_shared/numeric-body-schemas.ts": {
+   "path": "supabase/functions/_shared/numeric-body-schemas.ts",
+   "lines": 130,
+   "exports": [
+    "const ExportDataLakeBodySchema",
+    "const ForecastDealsBodySchema",
+    "const AccountIdBodySchema",
+    "const ComputeAdherenceBodySchema",
+    "const ComputeDealHealthBodySchema",
+    "const CheckAlertsBodySchema",
+    "const CheckCallingHoursBodySchema",
+    "const CheckDncBodySchema",
+    "const DataLakeFlushBodySchema",
+    "const VoipFailoverNotifierBodySchema",
+    "const WavoipCallBodySchema",
+    "const SipConfigBodySchema",
+    "const VoipTrunksManageBodySchema",
+    "const LdapSyncBodySchema",
+    "const ApprovePasswordResetBodySchema",
+    "const WebauthnAuthBodySchema",
+    "const ElevenLabsTokenBodySchema"
+   ],
+   "zod": [
+    {
+     "name": "id",
+     "kind": "string",
+     "body": "",
+     "refines": [],
+     "chain": []
+    },
+    {
+     "name": "shortText",
+     "kind": "string",
+     "body": "",
+     "refines": [],
+     "chain": []
+    },
+    {
+     "name": "mediumText",
+     "kind": "string",
+     "body": "",
+     "refines": [],
+     "chain": []
+    },
+    {
+     "name": "ExportDataLakeBodySchema",
+     "kind": "object",
+     "body": "{ dataset: z.string().max(100).optional(), format: z.string().max(20).optional(), since: z.string().max(40).optional(), }",
+     "refines": [],
+     "chain": []
+    },
+    {
+     "name": "ForecastDealsBodySchema",
+     "kind": "object",
+     "body": "{ period: z.string().max(20).optional(), }",
+     "refines": [],
+     "chain": []
+    },
+    {
+     "name": "AccountIdBodySchema",
+     "kind": "object",
+     "body": "{ account_id: id.optional(), }",
+     "refines": [],
+     "chain": []
+    },
+    {
+     "name": "ComputeAdherenceBodySchema",
+     "kind": "object",
+     "body": "{ date: z.string().max(40).optional(), }",
+     "refines": [],
+     "chain": []
+    },
+    {
+     "name": "ComputeDealHealthBodySchema",
+     "kind": "object",
+     "body": "{ dealId: id.optional(), }",
+     "refines": [],
+     "chain": []
+    },
+    {
+     "name": "CheckAlertsBodySchema",
+     "kind": "object",
+     "body": "{ callSessionId: id.optional(), sentiment: z.string().max(40).optional(), // A nota de satisfacao e tratada como 0-10 no handler; fora da faixa e 422 // em vez de virar alerta com nota calculada errada. satisfaction: finiteNumber().min(0).max(10).optional(), urgency: z.string().max(40).optional(), callerName: shortText.optional(), }",
+     "refines": [],
+     "chain": []
+    },
+    {
+     "name": "CheckCallingHoursBodySchema",
+     "kind": "object",
+     "body": "{ region_code: z.string().max(10).optional(), }",
+     "refines": [],
+     "chain": []
+    },
+    {
+     "name": "CheckDncBodySchema",
+     "kind": "object",
+     "body": "{ phone: z.string().max(30).optional(), }",
+     "refines": [],
+     "chain": []
+    },
+    {
+     "name": "DataLakeFlushBodySchema",
+     "kind": "object",
+     "body": "{ datasets: z.array(z.string().max(100)).max(20).optional(), }",
+     "refines": [],
+     "chain": []
+    },
+    {
+     "name": "VoipFailoverNotifierBodySchema",
+     "kind": "object",
+     "body": "{ failed_trunk_id: id.optional(), backup_trunk_id: id.optional(), reason: mediumText.optional(), }",
+     "refines": [],
+     "chain": []
+    },
+    {
+     "name": "WavoipCallBodySchema",
+     "kind": "object",
+     "body": "{ action: z.string().max(30).optional(), whatsappId: id.optional(), callId: id.optional(), }",
+     "refines": [],
+     "chain": []
+    },
+    {
+     "name": "SipConfigBodySchema",
+     "kind": "object",
+     "body": "{ action: z.string().max(30).optional(), }",
+     "refines": [],
+     "chain": []
+    },
+    {
+     "name": "VoipTrunksManageBodySchema",
+     "kind": "object",
+     "body": "{ action: z.string().max(30).optional(), id: id.optional(), version: nonNegativeInt().optional(), agent_id: id.optional(), trunk_id: id.optional(), is_primary: z.boolean().optional(), name: shortText.optional(), provider: z.string().max(100).optional(), sip_server: z.string().max(255).optional(), sip_username: z.string().max(255).optional(), sip_password: z.string().max(512).optional(), sip_realm: z.string().max(255).optional(), transport: z.string().max(50).optional(), max_channels: nonNegativeInt().max(10_000).optional(), priority: nonNegativeInt().max(100_000).optional(), is_active: z.boolean().optional(), notes: z.string().max(2_000).optional(), }",
+     "refines": [],
+     "chain": []
+    },
+    {
+     "name": "LdapConfigSchema",
+     "kind": "object",
+     "body": "{ serverUrl: z.string().max(255).optional(), port: z.string().max(10).optional(), baseDn: z.string().max(500).optional(), bindDn: z.string().max(500).optional(), passwordEncrypted: z.string().max(4_096).optional(), useTLS: z.boolean().optional(), searchFilter: z.string().max(500).optional(), syncInterval: z.string().max(50).optional(), fieldMapping: z.record(z.string().max(200)).optional(), }",
+     "refines": [],
+     "chain": []
+    },
+    {
+     "name": "LdapSyncBodySchema",
+     "kind": "object",
+     "body": "{ action: z.string().max(30).optional(), config: LdapConfigSchema.optional(), password: z.string().max(512).optional(), }",
+     "refines": [],
+     "chain": []
+    },
+    {
+     "name": "ApprovePasswordResetBodySchema",
+     "kind": "object",
+     "body": "{ requestId: id.optional(), action: z.string().max(20).optional(), }",
+     "refines": [],
+     "chain": []
+    },
+    {
+     "name": "WebauthnAuthBodySchema",
+     "kind": "object",
+     "body": "{ credentialId: z.string().max(500).optional(), userId: id.optional(), clientDataJSON: z.string().max(20_000).optional(), authenticatorData: z.string().max(4_000).optional(), signature: z.string().max(4_000).optional(), email: z.string().max(254).optional(), }",
+     "refines": [],
+     "chain": []
+    },
+    {
+     "name": "ElevenLabsTokenBodySchema",
+     "kind": "object",
+     "body": "{ agentId: id.optional(), useDefaultAgent: z.boolean().optional(), }",
+     "refines": [],
+     "chain": []
+    }
+   ]
+  },
+  "supabase/functions/_shared/numeric-body-schemas_test.ts": {
+   "path": "supabase/functions/_shared/numeric-body-schemas_test.ts",
+   "lines": 113
+  },
   "supabase/functions/_shared/numeric-schemas.ts": {
    "path": "supabase/functions/_shared/numeric-schemas.ts",
    "lines": 95,
@@ -118678,7 +119041,7 @@
   },
   "supabase/functions/approve-password-reset/index.ts": {
    "path": "supabase/functions/approve-password-reset/index.ts",
-   "lines": 147,
+   "lines": 151,
    "tables": [
     {
      "table": "password_reset_requests",
@@ -119221,7 +119584,7 @@
   },
   "supabase/functions/check-alerts/index.ts": {
    "path": "supabase/functions/check-alerts/index.ts",
-   "lines": 119,
+   "lines": 115,
    "tables": [
     {
      "table": "call_alerts",
@@ -119237,7 +119600,7 @@
   },
   "supabase/functions/check-calling-hours/index.ts": {
    "path": "supabase/functions/check-calling-hours/index.ts",
-   "lines": 47,
+   "lines": 51,
    "rpc": [
     "check_calling_hours"
    ],
@@ -119299,7 +119662,7 @@
   },
   "supabase/functions/check-dnc/index.ts": {
    "path": "supabase/functions/check-dnc/index.ts",
-   "lines": 45,
+   "lines": 49,
    "rpc": [
     "check_dnc"
    ],
@@ -119759,7 +120122,7 @@
   },
   "supabase/functions/compute-account-health/index.ts": {
    "path": "supabase/functions/compute-account-health/index.ts",
-   "lines": 173,
+   "lines": 177,
    "tables": [
     {
      "table": "accounts",
@@ -119827,7 +120190,7 @@
   },
   "supabase/functions/compute-adherence/index.ts": {
    "path": "supabase/functions/compute-adherence/index.ts",
-   "lines": 92,
+   "lines": 96,
    "tables": [
     {
      "table": "agent_shifts",
@@ -119917,7 +120280,7 @@
   },
   "supabase/functions/compute-deal-health/index.ts": {
    "path": "supabase/functions/compute-deal-health/index.ts",
-   "lines": 110,
+   "lines": 114,
    "tables": [
     {
      "table": "deals",
@@ -119993,7 +120356,7 @@
   },
   "supabase/functions/data-lake-flush/index.ts": {
    "path": "supabase/functions/data-lake-flush/index.ts",
-   "lines": 181,
+   "lines": 185,
    "tables": [
     {
      "table": "user_profiles",
@@ -120203,7 +120566,7 @@
   },
   "supabase/functions/detect-churn-risk/index.ts": {
    "path": "supabase/functions/detect-churn-risk/index.ts",
-   "lines": 190,
+   "lines": 194,
    "tables": [
     {
      "table": "call_sessions",
@@ -120342,7 +120705,7 @@
   },
   "supabase/functions/elevenlabs-conversation-token/index.ts": {
    "path": "supabase/functions/elevenlabs-conversation-token/index.ts",
-   "lines": 88,
+   "lines": 92,
    "external_urls": [
     "https://api.elevenlabs.io/v1/convai/conversation/…"
    ],
@@ -120706,7 +121069,7 @@
   },
   "supabase/functions/export-data-lake/index.ts": {
    "path": "supabase/functions/export-data-lake/index.ts",
-   "lines": 82,
+   "lines": 86,
    "tables": [
     {
      "table": "user_roles",
@@ -120938,7 +121301,7 @@
   },
   "supabase/functions/forecast-deals/index.ts": {
    "path": "supabase/functions/forecast-deals/index.ts",
-   "lines": 85,
+   "lines": 89,
    "tables": [
     {
      "table": "deals",
@@ -121743,7 +122106,7 @@
   },
   "supabase/functions/ldap-sync/index.ts": {
    "path": "supabase/functions/ldap-sync/index.ts",
-   "lines": 368,
+   "lines": 372,
    "tables": [
     {
      "table": "system_settings",
@@ -122498,7 +122861,7 @@
   },
   "supabase/functions/sip-config/index.ts": {
    "path": "supabase/functions/sip-config/index.ts",
-   "lines": 161,
+   "lines": 165,
    "tables": [
     {
      "table": "user_profiles",
@@ -123565,7 +123928,7 @@
   },
   "supabase/functions/voip-failover-notifier/index.ts": {
    "path": "supabase/functions/voip-failover-notifier/index.ts",
-   "lines": 63,
+   "lines": 67,
    "exports": [
     "const handler"
    ],
@@ -124293,7 +124656,7 @@
   },
   "supabase/functions/voip-trunks-manage/index.ts": {
    "path": "supabase/functions/voip-trunks-manage/index.ts",
-   "lines": 205,
+   "lines": 209,
    "tables": [
     {
      "table": "user_roles",
@@ -124400,7 +124763,7 @@
   },
   "supabase/functions/wavoip-call/index.ts": {
    "path": "supabase/functions/wavoip-call/index.ts",
-   "lines": 123,
+   "lines": 121,
    "env": [
     "SUPABASE_ANON_KEY",
     "SUPABASE_URL",
@@ -124427,7 +124790,7 @@
   },
   "supabase/functions/webauthn-authenticate/index.ts": {
    "path": "supabase/functions/webauthn-authenticate/index.ts",
-   "lines": 233,
+   "lines": 225,
    "tables": [
     {
      "table": "user_passkeys",
@@ -126103,10 +126466,39 @@
   }
  },
  "git": {
-  "sha": "0bba9fbc1fba527640da469c982d1b54d02a0246",
+  "sha": "e78a64b0fd3692b58d31487ac5ee782f49e8dd91",
   "branch": "main",
   "remote": "https://github.com/adm01-debug/Hello_V3",
   "commits": [
+   {
+    "sha": "e78a64b",
+    "date": "2026-11-24",
+    "author": "adm01-debug",
+    "subject": "fix: valida o corpo nas 18 edges de calculo e exportacao (etapa 049) (#235)",
+    "files": [
+     "docs/qa/05-PROGRESSO.md",
+     "supabase/functions/_shared/numeric-body-schemas.ts",
+     "supabase/functions/_shared/numeric-body-schemas_test.ts",
+     "supabase/functions/approve-password-reset/index.ts",
+     "supabase/functions/check-alerts/index.ts",
+     "supabase/functions/check-calling-hours/index.ts",
+     "supabase/functions/check-dnc/index.ts",
+     "supabase/functions/compute-account-health/index.ts",
+     "supabase/functions/compute-adherence/index.ts",
+     "supabase/functions/compute-deal-health/index.ts",
+     "supabase/functions/data-lake-flush/index.ts",
+     "supabase/functions/detect-churn-risk/index.ts",
+     "supabase/functions/elevenlabs-conversation-token/index.ts",
+     "supabase/functions/export-data-lake/index.ts",
+     "supabase/functions/forecast-deals/index.ts",
+     "supabase/functions/ldap-sync/index.ts",
+     "supabase/functions/sip-config/index.ts",
+     "supabase/functions/voip-failover-notifier/index.ts",
+     "supabase/functions/voip-trunks-manage/index.ts",
+     "supabase/functions/wavoip-call/index.ts",
+     "supabase/functions/webauthn-authenticate/index.ts"
+    ]
+   },
    {
     "sha": "0bba9fb",
     "date": "2026-11-24",
@@ -126562,25 +126954,16 @@
      "src/hooks/__tests__/useDNCCompliance.coverage.test.tsx",
      "src/hooks/useDNCCompliance.ts"
     ]
-   },
-   {
-    "sha": "9add2c1",
-    "date": "2026-11-23",
-    "author": "adm01-debug",
-    "subject": "fix: grava o desfecho real da chamada em call_sessions (#205)",
-    "files": [
-     "docs/qa/05-PROGRESSO.md",
-     "src/hooks/__tests__/useCallSession.coverage.test.tsx",
-     "src/hooks/useCallSession.ts",
-     "src/hooks/useMultiChannelCall.ts",
-     "src/lib/pendingCallWrites.ts"
-    ]
    }
   ],
   "hot_files": [
    [
     "docs/qa/05-PROGRESSO.md",
     28
+   ],
+   [
+    "supabase/functions/data-lake-flush/index.ts",
+    3
    ],
    [
     "supabase/functions/generate-coaching-plan/index.ts",
@@ -126599,6 +126982,34 @@
     3
    ],
    [
+    "supabase/functions/approve-password-reset/index.ts",
+    2
+   ],
+   [
+    "supabase/functions/check-calling-hours/index.ts",
+    2
+   ],
+   [
+    "supabase/functions/check-dnc/index.ts",
+    2
+   ],
+   [
+    "supabase/functions/export-data-lake/index.ts",
+    2
+   ],
+   [
+    "supabase/functions/ldap-sync/index.ts",
+    2
+   ],
+   [
+    "supabase/functions/voip-failover-notifier/index.ts",
+    2
+   ],
+   [
+    "supabase/functions/voip-trunks-manage/index.ts",
+    2
+   ],
+   [
     "supabase/functions/ocr-virtual-fax/index.ts",
     2
    ],
@@ -126608,10 +127019,6 @@
    ],
    [
     "supabase/functions/voice-command/index.ts",
-    2
-   ],
-   [
-    "supabase/functions/data-lake-flush/index.ts",
     2
    ],
    [
@@ -126628,34 +127035,6 @@
    ],
    [
     "supabase/functions/voip-executive-narrative/index.ts",
-    2
-   ],
-   [
-    "supabase/functions/auto-scorecard/index.ts",
-    2
-   ],
-   [
-    "supabase/functions/chat-widget-session/index.ts",
-    2
-   ],
-   [
-    "supabase/functions/email-inbound/index.ts",
-    2
-   ],
-   [
-    "src/hooks/__tests__/useCallHistory.coverage.test.tsx",
-    2
-   ],
-   [
-    "src/hooks/useCallHistory.ts",
-    2
-   ],
-   [
-    "src/pages/AgentRanking.tsx",
-    2
-   ],
-   [
-    "src/pages/IPWhitelist.tsx",
     2
    ]
   ]

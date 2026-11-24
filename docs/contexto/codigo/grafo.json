@@ -1,8 +1,8 @@
 {
  "aviso": "GERADO AUTOMATICAMENTE por scripts/ai-context/gerar.mjs — não editar à mão; será sobrescrito.",
  "format_version": 2,
- "nos": 932,
- "arestas": 3659,
+ "nos": 934,
+ "arestas": 3697,
  "hubs": [
   {
    "arquivo": "src/integrations/supabase/client.ts",
@@ -73,6 +73,10 @@
    "importado_por": 45
   },
   {
+   "arquivo": "supabase/functions/_shared/validator.ts",
+   "importado_por": 41
+  },
+  {
    "arquivo": "supabase/functions/_shared/validate.ts",
    "importado_por": 34
   },
@@ -117,10 +121,6 @@
    "importado_por": 23
   },
   {
-   "arquivo": "supabase/functions/_shared/validator.ts",
-   "importado_por": 23
-  },
-  {
    "arquivo": "supabase/functions/_shared/resilience.ts",
    "importado_por": 22
   },
@@ -134,6 +134,10 @@
   },
   {
    "arquivo": "src/lib/safe-number.ts",
+   "importado_por": 19
+  },
+  {
+   "arquivo": "supabase/functions/_shared/numeric-body-schemas.ts",
    "importado_por": 19
   },
   {
@@ -159,10 +163,6 @@
   {
    "arquivo": "src/lib/security-alerts-webhook.ts",
    "importado_por": 11
-  },
-  {
-   "arquivo": "src/components/ui/dropdown-menu.tsx",
-   "importado_por": 10
   }
  ],
  "ciclos": {

@@ -1,6 +1,6 @@
 # 07 · REGRAS DE NEGÓCIO
 
-> Gerado automaticamente por AI Context Sync v1.3.2 · commit `0bba9fbc1f` · branch `main` · 2026-11-24 05:28 UTC
+> Gerado automaticamente por AI Context Sync v1.3.2 · commit `e78a64b0fd` · branch `main` · 2026-11-24 05:42 UTC
 > Não edite à mão — regras humanas vão em `manual/`.
 
 ## A. Regras escritas por humanos (`manual/` — prioridade máxima, nunca sobrescrito)
@@ -1339,6 +1339,90 @@ _nenhum mapa explícito encontrado — transições só existem implicitamente n
 - **WebhookEventSchema** (`supabase/functions/_shared/external-payload-schemas.ts`, z.object):
   ```ts
   { id: z.string().min(1).max(128), type: z.string().min(1).max(128), source: z.string().min(1).max(128).optional(), // Aceita ISO string ou epoch (seg/ms) — normalização fica com o handler. timestamp: z .union([z.string().datetime(), unixTimestamp(), unixTimestamp().transform((s) => s * 1000)]) .optional(), attempt: nonNegativeInt().max(100).optional(), retry_count: nonNegativeInt().max(100).optional(), latency_ms: durationMs().optional(), version: z.union([positiveInt().max(1000), z.string().max(16)]).optional(), data: z.record(z.unknown()).optional(), metadata: z.record(z.unknown()).optional(), }
+  ```
+- **id** (`supabase/functions/_shared/numeric-body-schemas.ts`, z.string):
+  ```ts
+  
+  ```
+- **shortText** (`supabase/functions/_shared/numeric-body-schemas.ts`, z.string):
+  ```ts
+  
+  ```
+- **mediumText** (`supabase/functions/_shared/numeric-body-schemas.ts`, z.string):
+  ```ts
+  
+  ```
+- **ExportDataLakeBodySchema** (`supabase/functions/_shared/numeric-body-schemas.ts`, z.object):
+  ```ts
+  { dataset: z.string().max(100).optional(), format: z.string().max(20).optional(), since: z.string().max(40).optional(), }
+  ```
+- **ForecastDealsBodySchema** (`supabase/functions/_shared/numeric-body-schemas.ts`, z.object):
+  ```ts
+  { period: z.string().max(20).optional(), }
+  ```
+- **AccountIdBodySchema** (`supabase/functions/_shared/numeric-body-schemas.ts`, z.object):
+  ```ts
+  { account_id: id.optional(), }
+  ```
+- **ComputeAdherenceBodySchema** (`supabase/functions/_shared/numeric-body-schemas.ts`, z.object):
+  ```ts
+  { date: z.string().max(40).optional(), }
+  ```
+- **ComputeDealHealthBodySchema** (`supabase/functions/_shared/numeric-body-schemas.ts`, z.object):
+  ```ts
+  { dealId: id.optional(), }
+  ```
+- **CheckAlertsBodySchema** (`supabase/functions/_shared/numeric-body-schemas.ts`, z.object):
+  ```ts
+  { callSessionId: id.optional(), sentiment: z.string().max(40).optional(), // A nota de satisfacao e tratada como 0-10 no handler; fora da faixa e 422 // em vez de virar alerta com nota calculada errada. satisfaction: finiteNumber().min(0).max(10).optional(), urgency: z.string().max(40).optional(), callerName: shortText.optional(), }
+  ```
+- **CheckCallingHoursBodySchema** (`supabase/functions/_shared/numeric-body-schemas.ts`, z.object):
+  ```ts
+  { region_code: z.string().max(10).optional(), }
+  ```
+- **CheckDncBodySchema** (`supabase/functions/_shared/numeric-body-schemas.ts`, z.object):
+  ```ts
+  { phone: z.string().max(30).optional(), }
+  ```
+- **DataLakeFlushBodySchema** (`supabase/functions/_shared/numeric-body-schemas.ts`, z.object):
+  ```ts
+  { datasets: z.array(z.string().max(100)).max(20).optional(), }
+  ```
+- **VoipFailoverNotifierBodySchema** (`supabase/functions/_shared/numeric-body-schemas.ts`, z.object):
+  ```ts
+  { failed_trunk_id: id.optional(), backup_trunk_id: id.optional(), reason: mediumText.optional(), }
+  ```
+- **WavoipCallBodySchema** (`supabase/functions/_shared/numeric-body-schemas.ts`, z.object):
+  ```ts
+  { action: z.string().max(30).optional(), whatsappId: id.optional(), callId: id.optional(), }
+  ```
+- **SipConfigBodySchema** (`supabase/functions/_shared/numeric-body-schemas.ts`, z.object):
+  ```ts
+  { action: z.string().max(30).optional(), }
+  ```
+- **VoipTrunksManageBodySchema** (`supabase/functions/_shared/numeric-body-schemas.ts`, z.object):
+  ```ts
+  { action: z.string().max(30).optional(), id: id.optional(), version: nonNegativeInt().optional(), agent_id: id.optional(), trunk_id: id.optional(), is_primary: z.boolean().optional(), name: shortText.optional(), provider: z.string().max(100).optional(), sip_server: z.string().max(255).optional(), sip_username: z.string().max(255).optional(), sip_password: z.string().max(512).optional(), sip_realm: z.string().max(255).optional(), transport: z.string().max(50).optional(), max_channels: nonNegativeInt().max(10_000).optional(), priority: nonNegativeInt().max(100_000).optional(), is_active: z.boolean().optional(), notes: z.string().max(2_000).optional(), }
+  ```
+- **LdapConfigSchema** (`supabase/functions/_shared/numeric-body-schemas.ts`, z.object):
+  ```ts
+  { serverUrl: z.string().max(255).optional(), port: z.string().max(10).optional(), baseDn: z.string().max(500).optional(), bindDn: z.string().max(500).optional(), passwordEncrypted: z.string().max(4_096).optional(), useTLS: z.boolean().optional(), searchFilter: z.string().max(500).optional(), syncInterval: z.string().max(50).optional(), fieldMapping: z.record(z.string().max(200)).optional(), }
+  ```
+- **LdapSyncBodySchema** (`supabase/functions/_shared/numeric-body-schemas.ts`, z.object):
+  ```ts
+  { action: z.string().max(30).optional(), config: LdapConfigSchema.optional(), password: z.string().max(512).optional(), }
+  ```
+- **ApprovePasswordResetBodySchema** (`supabase/functions/_shared/numeric-body-schemas.ts`, z.object):
+  ```ts
+  { requestId: id.optional(), action: z.string().max(20).optional(), }
+  ```
+- **WebauthnAuthBodySchema** (`supabase/functions/_shared/numeric-body-schemas.ts`, z.object):
+  ```ts
+  { credentialId: z.string().max(500).optional(), userId: id.optional(), clientDataJSON: z.string().max(20_000).optional(), authenticatorData: z.string().max(4_000).optional(), signature: z.string().max(4_000).optional(), email: z.string().max(254).optional(), }
+  ```
+- **ElevenLabsTokenBodySchema** (`supabase/functions/_shared/numeric-body-schemas.ts`, z.object):
+  ```ts
+  { agentId: id.optional(), useDefaultAgent: z.boolean().optional(), }
   ```
 - **TestSchema** (`supabase/functions/_shared/validator_test.ts`, z.object):
   ```ts

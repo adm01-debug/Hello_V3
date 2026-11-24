@@ -1,7 +1,7 @@
 # Contexto do projeto para agentes de IA
 
 GERADO AUTOMATICAMENTE por scripts/ai-context/gerar.mjs — não editar à mão; será sobrescrito.
-Publicado em `docs/contexto/codigo/` na branch `contexto` (gerada, nunca abra PR dela) a cada push em `main` e a cada 10 minutos pelo workflow `contexto.yml`; índice único das três fontes em `docs/contexto/00-INDEX.md`. Gere local com `node scripts/ai-context/gerar.mjs`. Commit-base: `0bba9fbc1fba527640da469c982d1b54d02a0246` (2026-11-24T02:28:02-03:00).
+Publicado em `docs/contexto/codigo/` na branch `contexto` (gerada, nunca abra PR dela) a cada push em `main` e a cada 10 minutos pelo workflow `contexto.yml`; índice único das três fontes em `docs/contexto/00-INDEX.md`. Gere local com `node scripts/ai-context/gerar.mjs`. Commit-base: `e78a64b0fd3692b58d31487ac5ee782f49e8dd91` (2026-11-24T02:41:30-03:00).
 
 ## Como usar (leia antes de planejar ou executar qualquer tarefa)
 1. **Tela/rota/menu** → `rotas.json` (url/vista/menu → arquivo → hooks → tabelas → edges; `rotas_http_backend` para APIs) e `modulos.json` (módulo inteiro + dependências entre módulos).
@@ -14,7 +14,7 @@ Publicado em `docs/contexto/codigo/` na branch `contexto` (gerada, nunca abra PR
 Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua tarefa; não carregue tudo.
 
 ## Stack
-- linguagens: TypeScript (1283), SQL (245), Markdown (120), JavaScript (29), JSON (18), Python (5), YAML (3), Shell (2)
+- linguagens: TypeScript (1285), SQL (245), Markdown (120), JavaScript (29), JSON (18), Python (5), YAML (3), Shell (2)
 - linguagem_principal: TypeScript
 - framework: React
 - backend_http: n/d
@@ -34,9 +34,9 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 ## Números
 | item | qtd |
 |---|---|
-| arquivos_total | 1718 |
-| arquivos_codigo | 1316 |
-| linhas_codigo | 177076 |
+| arquivos_total | 1720 |
+| arquivos_codigo | 1318 |
+| linhas_codigo | 177365 |
 | rotas | 106 |
 | rotas_http_backend | 12 |
 | vistas_por_id | 0 |
@@ -370,20 +370,20 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 - possiveis_segredos_no_codigo: 4 — ex.: scripts/ai-context/cenarios.mjs:103, src/lib/__tests__/security-advanced.test.ts:203, src/lib/__tests__/security-advanced.test.ts:208
 
 ## Grafo de código (graphify)
-- 10064 nós · 26143 arestas · 773 comunidades · grafo do commit `0bba9fbc`
-- comunidades maiores: lucide-react (258), react (170), vitest (162), ref_https (150), utils.ts (149), logger.ts (140), client.ts (134), protectedRoutes.tsx (130), useAuthContext (126), badge.tsx (121), cn (111), snapshot.py (102)
+- 10084 nós · 26256 arestas · 770 comunidades · grafo do commit `e78a64b0`
+- comunidades maiores: card.tsx (248), client.ts (232), @tanstack/react-query (200), vitest (194), usePageTitle (189), safe-date.ts (183), react (168), utils.ts (134), getCorrelationId (130), Tabela de funcionalidades (127), useAuthContext (123), cn (114)
 - símbolos mais chamados: cn() (src/lib/utils.ts), usePageTitle() (src/hooks/usePageTitle.ts), safeFormatDatePtBR() (src/lib/safe-date.ts), q() (scripts/supabase_snapshot/snapshot.py), safeFormatDistanceToNow() (src/lib/safe-date.ts), useAuthContext() (src/contexts/AuthContext.tsx), traceHeaders() (src/lib/tracing.ts), withTrace() (src/lib/tracing.ts), formatDuration() (src/lib/utils.ts), safeToLocaleString() (src/lib/safe-date.ts), .collect() (scripts/supabase_snapshot/test_snapshot.py), buildCorsHeaders() (supabase/functions/_shared/cors.ts)
 - consulta local: `graphify query "<pergunta>"`, `graphify path "<A>" "<B>"`, `graphify explain "<X>"`
 
 ## Hotspots (arquivos mais alterados, 90 dias)
-- docs/qa/05-PROGRESSO.md (63)
+- docs/qa/05-PROGRESSO.md (64)
 - docs/estado/funcionalidades-planejadas.md (27)
 - src/components/layout/AppSidebar.tsx (9)
 - docs/audits/pendencias-2026-07.md (8)
 - src/hooks/useMultiChannelCall.ts (8)
+- supabase/functions/data-lake-flush/index.ts (8)
 - .github/workflows/ci.yml (7)
 - docs/edge-functions/README.md (7)
-- supabase/functions/data-lake-flush/index.ts (7)
 - .github/workflows/contexto.yml (6)
 - src/components/calls/UnifiedSoftphone.tsx (6)
 - src/components/layout/CommandPalette.tsx (6)
@@ -429,6 +429,7 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 
 
 ## Últimos commits
+- 2026-11-24 `e78a64b` fix: valida o corpo nas 18 edges de calculo e exportacao (etapa 049) (#235)
 - 2026-11-24 `0bba9fb` fix: teto de tamanho e validacao de corpo nas 12 edges de IA e transcricao (#234)
 - 2026-11-24 `1929b04` fix: onda 4 e fechamento da E050 - erro interno nunca chega ao cliente (#233)
 - 2026-11-24 `a3a8463` fix: onda 3 da E050 - erro interno generico em 26 edges (#232)
@@ -443,7 +444,6 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 - 2026-11-24 `87d013e` chore: suite de testes roda sem .env e sem configuracao manual (#224)
 - 2026-11-24 `e1e227d` fix: agente fica offline ao fechar o navegador (etapa 204) (#222)
 - 2026-11-24 `d2f80cb` fix: telas do fluxo central distinguem falha de leitura de lista vazia (etapa 203) (#221)
-- 2026-11-23 `85a73de` feat: padronizar o estado de erro das telas com o EmptyErrorState (etapa 202) (#220)
 
 ## Arquivos deste diretório
 - `docs/contexto/codigo/rotas.json`

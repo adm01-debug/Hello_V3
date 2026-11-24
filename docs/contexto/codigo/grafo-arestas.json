@@ -4680,6 +4680,12 @@
   "supabase/functions/_shared/mos_test.ts": [
    "supabase/functions/_shared/mos.ts"
   ],
+  "supabase/functions/_shared/numeric-body-schemas.ts": [
+   "supabase/functions/_shared/numeric-schemas.ts"
+  ],
+  "supabase/functions/_shared/numeric-body-schemas_test.ts": [
+   "supabase/functions/_shared/numeric-body-schemas.ts"
+  ],
   "supabase/functions/_shared/numeric-schemas.ts": [
    "supabase/functions/_shared/observability.ts"
   ],
@@ -4731,7 +4737,9 @@
   ],
   "supabase/functions/approve-password-reset/index.ts": [
    "supabase/functions/_shared/cors.ts",
-   "supabase/functions/_shared/errors.ts"
+   "supabase/functions/_shared/errors.ts",
+   "supabase/functions/_shared/numeric-body-schemas.ts",
+   "supabase/functions/_shared/validator.ts"
   ],
   "supabase/functions/auto-scorecard/index.ts": [
    "supabase/functions/_shared/cors.ts",
@@ -4771,18 +4779,24 @@
    "supabase/functions/chatbot-respond/schema.ts"
   ],
   "supabase/functions/check-alerts/index.ts": [
-   "supabase/functions/_shared/cors.ts"
+   "supabase/functions/_shared/cors.ts",
+   "supabase/functions/_shared/numeric-body-schemas.ts",
+   "supabase/functions/_shared/validator.ts"
   ],
   "supabase/functions/check-calling-hours/index.ts": [
    "supabase/functions/_shared/cors.ts",
-   "supabase/functions/_shared/errors.ts"
+   "supabase/functions/_shared/errors.ts",
+   "supabase/functions/_shared/numeric-body-schemas.ts",
+   "supabase/functions/_shared/validator.ts"
   ],
   "supabase/functions/check-contact-alerts/index.ts": [
    "supabase/functions/_shared/cors.ts"
   ],
   "supabase/functions/check-dnc/index.ts": [
    "supabase/functions/_shared/cors.ts",
-   "supabase/functions/_shared/errors.ts"
+   "supabase/functions/_shared/errors.ts",
+   "supabase/functions/_shared/numeric-body-schemas.ts",
+   "supabase/functions/_shared/validator.ts"
   ],
   "supabase/functions/check-goals/index.ts": [
    "supabase/functions/_shared/cors.ts",
@@ -4804,10 +4818,14 @@
    "supabase/functions/_shared/cors.ts"
   ],
   "supabase/functions/compute-account-health/index.ts": [
-   "supabase/functions/_shared/cors.ts"
+   "supabase/functions/_shared/cors.ts",
+   "supabase/functions/_shared/numeric-body-schemas.ts",
+   "supabase/functions/_shared/validator.ts"
   ],
   "supabase/functions/compute-adherence/index.ts": [
-   "supabase/functions/_shared/cors.ts"
+   "supabase/functions/_shared/cors.ts",
+   "supabase/functions/_shared/numeric-body-schemas.ts",
+   "supabase/functions/_shared/validator.ts"
   ],
   "supabase/functions/compute-best-time/index.ts": [
    "supabase/functions/_shared/cors.ts",
@@ -4815,13 +4833,17 @@
    "supabase/functions/_shared/validate.ts"
   ],
   "supabase/functions/compute-deal-health/index.ts": [
-   "supabase/functions/_shared/cors.ts"
+   "supabase/functions/_shared/cors.ts",
+   "supabase/functions/_shared/numeric-body-schemas.ts",
+   "supabase/functions/_shared/validator.ts"
   ],
   "supabase/functions/data-lake-flush/index.ts": [
    "supabase/functions/_shared/constant-time.ts",
    "supabase/functions/_shared/cors.ts",
    "supabase/functions/_shared/errors.ts",
-   "supabase/functions/_shared/observability.ts"
+   "supabase/functions/_shared/numeric-body-schemas.ts",
+   "supabase/functions/_shared/observability.ts",
+   "supabase/functions/_shared/validator.ts"
   ],
   "supabase/functions/database-backup/index.ts": [
    "supabase/functions/_shared/cors.ts"
@@ -4830,7 +4852,9 @@
    "supabase/functions/_shared/cors.ts"
   ],
   "supabase/functions/detect-churn-risk/index.ts": [
-   "supabase/functions/_shared/cors.ts"
+   "supabase/functions/_shared/cors.ts",
+   "supabase/functions/_shared/numeric-body-schemas.ts",
+   "supabase/functions/_shared/validator.ts"
   ],
   "supabase/functions/detect-key-moments/index.ts": [
    "supabase/functions/_shared/cors.ts",
@@ -4844,7 +4868,9 @@
    "supabase/functions/_shared/errors.ts"
   ],
   "supabase/functions/elevenlabs-conversation-token/index.ts": [
-   "supabase/functions/_shared/cors.ts"
+   "supabase/functions/_shared/cors.ts",
+   "supabase/functions/_shared/numeric-body-schemas.ts",
+   "supabase/functions/_shared/validator.ts"
   ],
   "supabase/functions/email-inbound/index.ts": [
    "supabase/functions/_shared/cors.ts",
@@ -4878,6 +4904,8 @@
   "supabase/functions/export-data-lake/index.ts": [
    "supabase/functions/_shared/cors.ts",
    "supabase/functions/_shared/errors.ts",
+   "supabase/functions/_shared/numeric-body-schemas.ts",
+   "supabase/functions/_shared/validator.ts",
    "supabase/functions/export-data-lake/csv.ts"
   ],
   "supabase/functions/extract-crm-fields/index.ts": [
@@ -4890,7 +4918,9 @@
    "supabase/functions/_shared/cors.ts"
   ],
   "supabase/functions/forecast-deals/index.ts": [
-   "supabase/functions/_shared/cors.ts"
+   "supabase/functions/_shared/cors.ts",
+   "supabase/functions/_shared/numeric-body-schemas.ts",
+   "supabase/functions/_shared/validator.ts"
   ],
   "supabase/functions/fuzz-test-runner/index.ts": [
    "supabase/functions/_shared/cors.ts",
@@ -4945,7 +4975,9 @@
   ],
   "supabase/functions/ldap-sync/index.ts": [
    "supabase/functions/_shared/cors.ts",
-   "supabase/functions/_shared/errors.ts"
+   "supabase/functions/_shared/errors.ts",
+   "supabase/functions/_shared/numeric-body-schemas.ts",
+   "supabase/functions/_shared/validator.ts"
   ],
   "supabase/functions/notify-blocked-ip/index.ts": [
    "supabase/functions/_shared/auth.ts",
@@ -5029,7 +5061,9 @@
    "supabase/functions/_shared/validator.ts"
   ],
   "supabase/functions/sip-config/index.ts": [
-   "supabase/functions/_shared/cors.ts"
+   "supabase/functions/_shared/cors.ts",
+   "supabase/functions/_shared/numeric-body-schemas.ts",
+   "supabase/functions/_shared/validator.ts"
   ],
   "supabase/functions/suggest-shift-swaps/index.ts": [
    "supabase/functions/_shared/cors.ts",
@@ -5123,7 +5157,9 @@
   ],
   "supabase/functions/voip-failover-notifier/index.ts": [
    "supabase/functions/_shared/cors.ts",
-   "supabase/functions/_shared/errors.ts"
+   "supabase/functions/_shared/errors.ts",
+   "supabase/functions/_shared/numeric-body-schemas.ts",
+   "supabase/functions/_shared/validator.ts"
   ],
   "supabase/functions/voip-load-test/index.ts": [
    "supabase/functions/_shared/cors.ts",
@@ -5175,14 +5211,20 @@
   ],
   "supabase/functions/voip-trunks-manage/index.ts": [
    "supabase/functions/_shared/cors.ts",
-   "supabase/functions/_shared/errors.ts"
+   "supabase/functions/_shared/errors.ts",
+   "supabase/functions/_shared/numeric-body-schemas.ts",
+   "supabase/functions/_shared/validator.ts"
   ],
   "supabase/functions/wavoip-call/index.ts": [
-   "supabase/functions/_shared/cors.ts"
+   "supabase/functions/_shared/cors.ts",
+   "supabase/functions/_shared/numeric-body-schemas.ts",
+   "supabase/functions/_shared/validator.ts"
   ],
   "supabase/functions/webauthn-authenticate/index.ts": [
    "supabase/functions/_shared/cors.ts",
+   "supabase/functions/_shared/numeric-body-schemas.ts",
    "supabase/functions/_shared/rate-limit.ts",
+   "supabase/functions/_shared/validator.ts",
    "supabase/functions/webauthn-authenticate/verify.ts"
   ],
   "supabase/functions/webauthn-challenge/index.ts": [

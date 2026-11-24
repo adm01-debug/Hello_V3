@@ -2,11 +2,16 @@
  "aviso": "GERADO AUTOMATICAMENTE por scripts/ai-context/gerar.mjs — não editar à mão; será sobrescrito.",
  "format_version": 2,
  "git": {
-  "commit": "0bba9fbc1fba527640da469c982d1b54d02a0246",
+  "commit": "e78a64b0fd3692b58d31487ac5ee782f49e8dd91",
   "branch": "main",
-  "data_commit": "2026-11-24T02:28:02-03:00",
+  "data_commit": "2026-11-24T02:41:30-03:00",
   "remote": "https://github.com/adm01-debug/Hello_V3",
   "ultimos_commits": [
+   {
+    "sha": "e78a64b",
+    "data": "2026-11-24",
+    "assunto": "fix: valida o corpo nas 18 edges de calculo e exportacao (etapa 049) (#235)"
+   },
    {
     "sha": "0bba9fb",
     "data": "2026-11-24",
@@ -126,14 +131,9 @@
     "sha": "52e0392",
     "data": "2026-11-23",
     "assunto": "fix: tela de conflitos de concorrencia explica o vazio e a retencao (#211)"
-   },
-   {
-    "sha": "046acb3",
-    "data": "2026-11-23",
-    "assunto": "fix: remediacao de anomalia atualiza a lista (#210)"
    }
   ],
-  "arquivos_mudados_7d": 1084,
+  "arquivos_mudados_7d": 1088,
   "pastas_mais_mudadas_30d": [
    {
     "pasta": "covout/lcov-report/hooks",
@@ -141,7 +141,7 @@
    },
    {
     "pasta": "docs/qa/05-PROGRESSO.md",
-    "mudancas": 63
+    "mudancas": 64
    },
    {
     "pasta": "covout/lcov-report/lib",
@@ -153,7 +153,7 @@
    },
    {
     "pasta": "supabase/functions/_shared",
-    "mudancas": 33
+    "mudancas": 35
    },
    {
     "pasta": "src/lib/__tests__",
@@ -199,7 +199,7 @@
   "arquivos_mais_mudados_90d": [
    {
     "arquivo": "docs/qa/05-PROGRESSO.md",
-    "mudancas": 63
+    "mudancas": 64
    },
    {
     "arquivo": "docs/estado/funcionalidades-planejadas.md",
@@ -218,15 +218,15 @@
     "mudancas": 8
    },
    {
+    "arquivo": "supabase/functions/data-lake-flush/index.ts",
+    "mudancas": 8
+   },
+   {
     "arquivo": ".github/workflows/ci.yml",
     "mudancas": 7
    },
    {
     "arquivo": "docs/edge-functions/README.md",
-    "mudancas": 7
-   },
-   {
-    "arquivo": "supabase/functions/data-lake-flush/index.ts",
     "mudancas": 7
    },
    {
@@ -266,6 +266,10 @@
     "mudancas": 5
    },
    {
+    "arquivo": "supabase/functions/export-data-lake/index.ts",
+    "mudancas": 5
+   },
+   {
     "arquivo": "supabase/functions/generate-coaching-plan/index.ts",
     "mudancas": 5
    },
@@ -292,16 +296,12 @@
    {
     "arquivo": "supabase/functions/voip-load-test/index.ts",
     "mudancas": 5
-   },
-   {
-    "arquivo": "AGENTS.md",
-    "mudancas": 4
    }
   ],
   "autores_30d": [
    {
     "autor": "adm01-debug",
-    "commits": 213
+    "commits": 214
    },
    {
     "autor": "Joaquim Ataides",
@@ -314,9 +314,9 @@
   ]
  },
  "contagens": {
-  "arquivos_total": 1718,
-  "arquivos_codigo": 1316,
-  "linhas_codigo": 177076,
+  "arquivos_total": 1720,
+  "arquivos_codigo": 1318,
+  "linhas_codigo": 177365,
   "rotas": 106,
   "rotas_http_backend": 12,
   "vistas_por_id": 0,
@@ -519,8 +519,8 @@
    "linhas": 170
   },
   "supabase/functions": {
-   "arquivos": 204,
-   "linhas": 22719
+   "arquivos": 206,
+   "linhas": 23008
   },
   "tailwind.config.ts": {
    "arquivos": 1,
@@ -605,16 +605,16 @@
    "linhas": 372
   },
   {
+   "arquivo": "supabase/functions/ldap-sync/index.ts",
+   "linhas": 372
+  },
+  {
    "arquivo": "src/components/ui/empty-state.tsx",
    "linhas": 371
   },
   {
    "arquivo": "src/pages/TopicDetection.tsx",
    "linhas": 370
-  },
-  {
-   "arquivo": "supabase/functions/ldap-sync/index.ts",
-   "linhas": 368
   },
   {
    "arquivo": "src/lib/security-alerts-webhook.ts",

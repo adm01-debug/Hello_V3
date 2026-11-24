@@ -38,6 +38,8 @@
   "supabase/functions/_shared/html.ts",
   "supabase/functions/_shared/mos.ts",
   "supabase/functions/_shared/mos_test.ts",
+  "supabase/functions/_shared/numeric-body-schemas.ts",
+  "supabase/functions/_shared/numeric-body-schemas_test.ts",
   "supabase/functions/_shared/numeric-schemas.ts",
   "supabase/functions/_shared/numeric-schemas_test.ts",
   "supabase/functions/_shared/observability.ts",
@@ -238,7 +240,7 @@
    "nome": "approve-password-reset",
    "entrada": "supabase/functions/approve-password-reset/index.ts",
    "arquivos": 1,
-   "linhas": 147,
+   "linhas": 151,
    "verify_jwt": true,
    "metodos": [
     "OPTIONS"
@@ -260,7 +262,9 @@
    "hosts_externos": [],
    "usa_shared": [
     "cors.ts",
-    "errors.ts"
+    "errors.ts",
+    "numeric-body-schemas.ts",
+    "validator.ts"
    ],
    "chamada_pelo_front": [
     "src/pages/PasswordResetApproval.tsx"
@@ -430,7 +434,7 @@
    "nome": "check-alerts",
    "entrada": "supabase/functions/check-alerts/index.ts",
    "arquivos": 1,
-   "linhas": 119,
+   "linhas": 115,
    "verify_jwt": true,
    "metodos": [
     "OPTIONS"
@@ -448,7 +452,9 @@
    "chama_edges": [],
    "hosts_externos": [],
    "usa_shared": [
-    "cors.ts"
+    "cors.ts",
+    "numeric-body-schemas.ts",
+    "validator.ts"
    ],
    "chamada_pelo_front": [],
    "chamada_por_edges": [],
@@ -460,7 +466,7 @@
    "nome": "check-calling-hours",
    "entrada": "supabase/functions/check-calling-hours/index.ts",
    "arquivos": 1,
-   "linhas": 47,
+   "linhas": 51,
    "verify_jwt": true,
    "metodos": [
     "OPTIONS"
@@ -478,7 +484,9 @@
    "hosts_externos": [],
    "usa_shared": [
     "cors.ts",
-    "errors.ts"
+    "errors.ts",
+    "numeric-body-schemas.ts",
+    "validator.ts"
    ],
    "chamada_pelo_front": [],
    "chamada_por_edges": [],
@@ -524,7 +532,7 @@
    "nome": "check-dnc",
    "entrada": "supabase/functions/check-dnc/index.ts",
    "arquivos": 1,
-   "linhas": 45,
+   "linhas": 49,
    "verify_jwt": true,
    "metodos": [
     "OPTIONS"
@@ -542,7 +550,9 @@
    "hosts_externos": [],
    "usa_shared": [
     "cors.ts",
-    "errors.ts"
+    "errors.ts",
+    "numeric-body-schemas.ts",
+    "validator.ts"
    ],
    "chamada_pelo_front": [],
    "chamada_por_edges": [],
@@ -721,7 +731,7 @@
    "nome": "compute-account-health",
    "entrada": "supabase/functions/compute-account-health/index.ts",
    "arquivos": 1,
-   "linhas": 173,
+   "linhas": 177,
    "verify_jwt": true,
    "metodos": [
     "OPTIONS"
@@ -743,7 +753,9 @@
    "chama_edges": [],
    "hosts_externos": [],
    "usa_shared": [
-    "cors.ts"
+    "cors.ts",
+    "numeric-body-schemas.ts",
+    "validator.ts"
    ],
    "chamada_pelo_front": [
     "src/hooks/useAccounts.ts"
@@ -757,7 +769,7 @@
    "nome": "compute-adherence",
    "entrada": "supabase/functions/compute-adherence/index.ts",
    "arquivos": 1,
-   "linhas": 92,
+   "linhas": 96,
    "verify_jwt": true,
    "metodos": [
     "OPTIONS"
@@ -775,7 +787,9 @@
    "chama_edges": [],
    "hosts_externos": [],
    "usa_shared": [
-    "cors.ts"
+    "cors.ts",
+    "numeric-body-schemas.ts",
+    "validator.ts"
    ],
    "chamada_pelo_front": [
     "src/hooks/useAdherence.ts"
@@ -824,7 +838,7 @@
    "nome": "compute-deal-health",
    "entrada": "supabase/functions/compute-deal-health/index.ts",
    "arquivos": 1,
-   "linhas": 110,
+   "linhas": 114,
    "verify_jwt": true,
    "metodos": [
     "OPTIONS"
@@ -844,7 +858,9 @@
    "chama_edges": [],
    "hosts_externos": [],
    "usa_shared": [
-    "cors.ts"
+    "cors.ts",
+    "numeric-body-schemas.ts",
+    "validator.ts"
    ],
    "chamada_pelo_front": [
     "src/hooks/useDeals.ts"
@@ -858,7 +874,7 @@
    "nome": "data-lake-flush",
    "entrada": "supabase/functions/data-lake-flush/index.ts",
    "arquivos": 1,
-   "linhas": 181,
+   "linhas": 185,
    "verify_jwt": false,
    "metodos": [
     "OPTIONS"
@@ -881,7 +897,9 @@
     "constant-time.ts",
     "cors.ts",
     "errors.ts",
-    "observability.ts"
+    "numeric-body-schemas.ts",
+    "observability.ts",
+    "validator.ts"
    ],
    "chamada_pelo_front": [],
    "chamada_por_edges": [],
@@ -961,7 +979,7 @@
    "nome": "detect-churn-risk",
    "entrada": "supabase/functions/detect-churn-risk/index.ts",
    "arquivos": 1,
-   "linhas": 190,
+   "linhas": 194,
    "verify_jwt": true,
    "metodos": [
     "OPTIONS"
@@ -983,7 +1001,9 @@
    "chama_edges": [],
    "hosts_externos": [],
    "usa_shared": [
-    "cors.ts"
+    "cors.ts",
+    "numeric-body-schemas.ts",
+    "validator.ts"
    ],
    "chamada_pelo_front": [
     "src/hooks/useAccounts.ts"
@@ -1072,7 +1092,7 @@
    "nome": "elevenlabs-conversation-token",
    "entrada": "supabase/functions/elevenlabs-conversation-token/index.ts",
    "arquivos": 1,
-   "linhas": 88,
+   "linhas": 92,
    "verify_jwt": true,
    "metodos": [
     "OPTIONS"
@@ -1091,7 +1111,9 @@
     "api.elevenlabs.io"
    ],
    "usa_shared": [
-    "cors.ts"
+    "cors.ts",
+    "numeric-body-schemas.ts",
+    "validator.ts"
    ],
    "chamada_pelo_front": [
     "src/components/calls/UnifiedSoftphone.tsx"
@@ -1254,7 +1276,7 @@
    "nome": "export-data-lake",
    "entrada": "supabase/functions/export-data-lake/index.ts",
    "arquivos": 2,
-   "linhas": 119,
+   "linhas": 123,
    "verify_jwt": true,
    "metodos": [
     "OPTIONS"
@@ -1276,7 +1298,9 @@
    "hosts_externos": [],
    "usa_shared": [
     "cors.ts",
-    "errors.ts"
+    "errors.ts",
+    "numeric-body-schemas.ts",
+    "validator.ts"
    ],
    "chamada_pelo_front": [
     "src/hooks/useDataLakeExports.ts"
@@ -1361,7 +1385,7 @@
    "nome": "forecast-deals",
    "entrada": "supabase/functions/forecast-deals/index.ts",
    "arquivos": 1,
-   "linhas": 85,
+   "linhas": 89,
    "verify_jwt": true,
    "metodos": [
     "OPTIONS"
@@ -1378,7 +1402,9 @@
    "chama_edges": [],
    "hosts_externos": [],
    "usa_shared": [
-    "cors.ts"
+    "cors.ts",
+    "numeric-body-schemas.ts",
+    "validator.ts"
    ],
    "chamada_pelo_front": [
     "src/hooks/useDealForecast.ts"
@@ -1696,7 +1722,7 @@
    "nome": "ldap-sync",
    "entrada": "supabase/functions/ldap-sync/index.ts",
    "arquivos": 1,
-   "linhas": 368,
+   "linhas": 372,
    "verify_jwt": true,
    "metodos": [
     "OPTIONS"
@@ -1721,7 +1747,9 @@
    "hosts_externos": [],
    "usa_shared": [
     "cors.ts",
-    "errors.ts"
+    "errors.ts",
+    "numeric-body-schemas.ts",
+    "validator.ts"
    ],
    "chamada_pelo_front": [
     "src/hooks/useLDAPSync.ts"
@@ -2241,7 +2269,7 @@
    "nome": "sip-config",
    "entrada": "supabase/functions/sip-config/index.ts",
    "arquivos": 1,
-   "linhas": 161,
+   "linhas": 165,
    "verify_jwt": true,
    "metodos": [
     "OPTIONS"
@@ -2263,7 +2291,9 @@
    "chama_edges": [],
    "hosts_externos": [],
    "usa_shared": [
-    "cors.ts"
+    "cors.ts",
+    "numeric-body-schemas.ts",
+    "validator.ts"
    ],
    "chamada_pelo_front": [
     "src/hooks/useSipCall.ts"
@@ -2926,7 +2956,7 @@
    "nome": "voip-failover-notifier",
    "entrada": "supabase/functions/voip-failover-notifier/index.ts",
    "arquivos": 1,
-   "linhas": 63,
+   "linhas": 67,
    "verify_jwt": true,
    "metodos": [
     "OPTIONS"
@@ -2946,7 +2976,9 @@
    "hosts_externos": [],
    "usa_shared": [
     "cors.ts",
-    "errors.ts"
+    "errors.ts",
+    "numeric-body-schemas.ts",
+    "validator.ts"
    ],
    "chamada_pelo_front": [],
    "chamada_por_edges": [
@@ -3303,7 +3335,7 @@
    "nome": "voip-trunks-manage",
    "entrada": "supabase/functions/voip-trunks-manage/index.ts",
    "arquivos": 1,
-   "linhas": 205,
+   "linhas": 209,
    "verify_jwt": true,
    "metodos": [
     "OPTIONS"
@@ -3327,7 +3359,9 @@
    "hosts_externos": [],
    "usa_shared": [
     "cors.ts",
-    "errors.ts"
+    "errors.ts",
+    "numeric-body-schemas.ts",
+    "validator.ts"
    ],
    "chamada_pelo_front": [
     "src/hooks/useVoipTrunks.ts"
@@ -3341,7 +3375,7 @@
    "nome": "wavoip-call",
    "entrada": "supabase/functions/wavoip-call/index.ts",
    "arquivos": 1,
-   "linhas": 123,
+   "linhas": 121,
    "verify_jwt": true,
    "metodos": [
     "OPTIONS"
@@ -3357,7 +3391,9 @@
    "chama_edges": [],
    "hosts_externos": [],
    "usa_shared": [
-    "cors.ts"
+    "cors.ts",
+    "numeric-body-schemas.ts",
+    "validator.ts"
    ],
    "chamada_pelo_front": [
     "src/hooks/useWavoipCall.ts"
@@ -3371,7 +3407,7 @@
    "nome": "webauthn-authenticate",
    "entrada": "supabase/functions/webauthn-authenticate/index.ts",
    "arquivos": 2,
-   "linhas": 406,
+   "linhas": 398,
    "verify_jwt": true,
    "metodos": [
     "OPTIONS"
@@ -3395,7 +3431,9 @@
    ],
    "usa_shared": [
     "cors.ts",
-    "rate-limit.ts"
+    "numeric-body-schemas.ts",
+    "rate-limit.ts",
+    "validator.ts"
    ],
    "chamada_pelo_front": [
     "src/hooks/useWebAuthn.ts"
