@@ -2,11 +2,21 @@
  "aviso": "GERADO AUTOMATICAMENTE por scripts/ai-context/gerar.mjs — não editar à mão; será sobrescrito.",
  "format_version": 2,
  "git": {
-  "commit": "95304bc3d78a5598b532455ff31b162b9dfd811c",
+  "commit": "0526bc2481b8e1b0cfa9b5ef2ad1e94fe8a5cc22",
   "branch": "main",
-  "data_commit": "2026-11-24T03:45:32-03:00",
+  "data_commit": "2026-11-24T03:46:30-03:00",
   "remote": "https://github.com/adm01-debug/Hello_V3",
   "ultimos_commits": [
+   {
+    "sha": "0526bc2",
+    "data": "2026-11-24",
+    "assunto": "fix: ligar botoes de navegacao do dashboard sem acao (E165) (#244)"
+   },
+   {
+    "sha": "a032d25",
+    "data": "2026-11-24",
+    "assunto": "fix: tratar o erro de banco nas gravacoes do ciclo de chamada (#243)"
+   },
    {
     "sha": "95304bc",
     "data": "2026-11-24",
@@ -121,19 +131,9 @@
     "sha": "85a73de",
     "data": "2026-11-23",
     "assunto": "feat: padronizar o estado de erro das telas com o EmptyErrorState (etapa 202) (#220)"
-   },
-   {
-    "sha": "d1b586c",
-    "data": "2026-11-23",
-    "assunto": "fix: whitelist de IPs avisa quando a leitura falha em vez de parecer vazia (#216)"
-   },
-   {
-    "sha": "da41888",
-    "data": "2026-11-23",
-    "assunto": "fix: registrar falha de leitura onde o erro era descartado (#219)"
    }
   ],
-  "arquivos_mudados_7d": 1100,
+  "arquivos_mudados_7d": 1103,
   "pastas_mais_mudadas_30d": [
    {
     "pasta": "covout/lcov-report/hooks",
@@ -141,11 +141,11 @@
    },
    {
     "pasta": "docs/qa/05-PROGRESSO.md",
-    "mudancas": 71
+    "mudancas": 73
    },
    {
     "pasta": "src/hooks/__tests__",
-    "mudancas": 56
+    "mudancas": 57
    },
    {
     "pasta": "covout/lcov-report/lib",
@@ -156,15 +156,15 @@
     "mudancas": 35
    },
    {
+    "pasta": "src/components/calls",
+    "mudancas": 29
+   },
+   {
     "pasta": "src/lib/__tests__",
     "mudancas": 29
    },
    {
     "pasta": "docs/estado/funcionalidades-planejadas.md",
-    "mudancas": 27
-   },
-   {
-    "pasta": "src/components/calls",
     "mudancas": 27
    },
    {
@@ -184,22 +184,22 @@
     "mudancas": 13
    },
    {
+    "pasta": "src/components/dashboard",
+    "mudancas": 12
+   },
+   {
     "pasta": "src/components/network",
     "mudancas": 12
    },
    {
     "pasta": "src/components/contacts",
     "mudancas": 11
-   },
-   {
-    "pasta": "src/components/dashboard",
-    "mudancas": 10
    }
   ],
   "arquivos_mais_mudados_90d": [
    {
     "arquivo": "docs/qa/05-PROGRESSO.md",
-    "mudancas": 71
+    "mudancas": 73
    },
    {
     "arquivo": "docs/estado/funcionalidades-planejadas.md",
@@ -210,11 +210,11 @@
     "mudancas": 9
    },
    {
-    "arquivo": "docs/audits/pendencias-2026-07.md",
-    "mudancas": 8
+    "arquivo": "src/hooks/useMultiChannelCall.ts",
+    "mudancas": 9
    },
    {
-    "arquivo": "src/hooks/useMultiChannelCall.ts",
+    "arquivo": "docs/audits/pendencias-2026-07.md",
     "mudancas": 8
    },
    {
@@ -301,7 +301,7 @@
   "autores_30d": [
    {
     "autor": "adm01-debug",
-    "commits": 221
+    "commits": 223
    },
    {
     "autor": "Joaquim Ataides",
@@ -314,9 +314,9 @@
   ]
  },
  "contagens": {
-  "arquivos_total": 1724,
-  "arquivos_codigo": 1322,
-  "linhas_codigo": 177970,
+  "arquivos_total": 1726,
+  "arquivos_codigo": 1324,
+  "linhas_codigo": 178141,
   "rotas": 106,
   "rotas_http_backend": 12,
   "vistas_por_id": 0,
@@ -328,7 +328,7 @@
   "tabelas": 169,
   "migrations": 242,
   "cron_jobs": 11,
-  "testes": 389,
+  "testes": 391,
   "workflows": 3,
   "scripts": 34,
   "docs_md": 120
@@ -479,8 +479,8 @@
    "linhas": 450
   },
   "src/components": {
-   "arquivos": 366,
-   "linhas": 43683
+   "arquivos": 368,
+   "linhas": 43823
   },
   "src/contexts": {
    "arquivos": 4,
@@ -492,7 +492,7 @@
   },
   "src/hooks": {
    "arquivos": 353,
-   "linhas": 46852
+   "linhas": 46883
   },
   "src/integrations": {
    "arquivos": 3,

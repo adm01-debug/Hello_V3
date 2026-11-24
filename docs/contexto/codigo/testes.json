@@ -5,17 +5,17 @@
   "vitest",
   "playwright"
  ],
- "total": 389,
+ "total": 391,
  "por_tipo": {
   "contrato": 1,
   "e2e": 13,
   "pytest": 2,
-  "unit": 372
+  "unit": 374
  },
  "onde_ficam": [
   {
    "padrao": "co-localizado (__tests__)",
-   "arquivos": 365
+   "arquivos": 367
   },
   {
    "padrao": "e2e/",
@@ -241,6 +241,16 @@
    "casos": 6
   },
   {
+   "arquivo": "src/components/calls/softphone/__tests__/HistoryTab.test.tsx",
+   "tipo": "unit",
+   "linhas": 51,
+   "testa": [
+    "src/components/calls/softphone/TabContents.tsx",
+    "src/hooks/useMultiChannelCall.ts"
+   ],
+   "casos": 2
+  },
+  {
    "arquivo": "src/components/coaching/__tests__/CoachingAssignmentsPanel.rules.test.tsx",
    "tipo": "unit",
    "linhas": 68,
@@ -285,6 +295,15 @@
    "linhas": 92,
    "testa": [
     "src/components/dashboard/HoldTrendChart.tsx"
+   ],
+   "casos": 2
+  },
+  {
+   "arquivo": "src/components/dashboard/__tests__/RecentCalls.test.tsx",
+   "tipo": "unit",
+   "linhas": 47,
+   "testa": [
+    "src/components/dashboard/RecentCalls.tsx"
    ],
    "casos": 2
   },
@@ -649,11 +668,11 @@
   {
    "arquivo": "src/hooks/__tests__/useCallRecording.test.ts",
    "tipo": "unit",
-   "linhas": 70,
+   "linhas": 85,
    "testa": [
     "src/hooks/useCallRecording.ts"
    ],
-   "casos": 2
+   "casos": 3
   },
   {
    "arquivo": "src/hooks/__tests__/useCallScoring.coverage.test.tsx",
@@ -3516,6 +3535,7 @@
   "src/components/calls/PostCallSummary.tsx": 1,
   "src/components/calls/WebRTCCall.tsx": 1,
   "src/components/calls/live-transcription/useLiveTranscription.ts": 1,
+  "src/components/calls/softphone/TabContents.tsx": 1,
   "src/components/calls/softphone/constants.tsx": 1,
   "src/components/coaching/CoachingAssignmentsPanel.tsx": 1,
   "src/components/compliance/dnc/ImportDNCDialog.tsx": 1,
@@ -3523,6 +3543,7 @@
   "src/components/contacts/ContactCard.tsx": 1,
   "src/components/dashboard/CallVolumeChart.tsx": 1,
   "src/components/dashboard/HoldTrendChart.tsx": 1,
+  "src/components/dashboard/RecentCalls.tsx": 1,
   "src/components/dashboard/StatsCard.tsx": 1,
   "src/components/dialer/phone/phone-utils.ts": 1,
   "src/components/error-boundary/ErrorBoundary.tsx": 1,
@@ -3621,7 +3642,7 @@
   "src/hooks/useLoginLockout.ts": 1,
   "src/hooks/useMFA.ts": 1,
   "src/hooks/useMeetingSummary.ts": 3,
-  "src/hooks/useMultiChannelCall.ts": 7,
+  "src/hooks/useMultiChannelCall.ts": 8,
   "src/hooks/useMultiDeviceRing.ts": 1,
   "src/hooks/useNetworkMonitor.ts": 1,
   "src/hooks/useNotifications.ts": 1,

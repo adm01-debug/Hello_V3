@@ -1360,7 +1360,7 @@
    "hooks_exportados": [
     "useCallRecording"
    ],
-   "linhas": 88,
+   "linhas": 96,
    "dominio": "hooks",
    "tabelas": [
     "call_recordings"
@@ -1429,7 +1429,7 @@
    "hooks_exportados": [
     "useCallSession"
    ],
-   "linhas": 245,
+   "linhas": 249,
    "dominio": "hooks",
    "tabelas": [
     "call_analyses",
@@ -2889,7 +2889,7 @@
    "hooks_exportados": [
     "useMultiChannelCall"
    ],
-   "linhas": 341,
+   "linhas": 343,
    "dominio": "hooks",
    "tabelas": [
     "hold_events"
@@ -2924,7 +2924,7 @@
     "src/hooks/useHoldReminder.ts",
     "src/pages/PhoneDialer.tsx"
    ],
-   "coberto_por_testes": 7
+   "coberto_por_testes": 8
   },
   {
    "arquivo": "src/hooks/useMultiDeviceRing.ts",
@@ -4576,7 +4576,7 @@
    "hooks_exportados": [
     "useVoipQualityMonitor"
    ],
-   "linhas": 203,
+   "linhas": 205,
    "dominio": "hooks",
    "tabelas": [
     "call_quality_metrics"

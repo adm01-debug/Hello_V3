@@ -639,8 +639,8 @@
   {
    "modulo": "components/calls",
    "arquivos": 27,
-   "testes": 6,
-   "linhas": 3907,
+   "testes": 7,
+   "linhas": 3921,
    "itens_menu": [],
    "telas": [],
    "rotas_http": [],
@@ -1082,8 +1082,8 @@
   {
    "modulo": "components/dashboard",
    "arquivos": 12,
-   "testes": 1,
-   "linhas": 1428,
+   "testes": 2,
+   "linhas": 1456,
    "itens_menu": [],
    "telas": [],
    "rotas_http": [],
@@ -1164,7 +1164,9 @@
     "@dnd-kit/utilities",
     "date-fns",
     "lucide-react",
-    "recharts"
+    "react-router-dom",
+    "recharts",
+    "sonner"
    ]
   },
   {
@@ -3489,7 +3491,7 @@
    "modulo": "hooks",
    "arquivos": 168,
    "testes": 0,
-   "linhas": 21099,
+   "linhas": 21115,
    "itens_menu": [],
    "telas": [],
    "rotas_http": [],

@@ -21,7 +21,7 @@
    "scripts/regras_negocio (2)"
   ],
   "testes": [
-   "co-localizado (__tests__) (365)",
+   "co-localizado (__tests__) (367)",
    "e2e/ (7)",
    "tests/ (6)"
   ],
@@ -58,11 +58,11 @@
  "commits": {
   "convencao": "conventional commits (observado)",
   "exemplos": [
+   "fix: ligar botoes de navegacao do dashboard sem acao (E165) (#244)",
+   "fix: tratar o erro de banco nas gravacoes do ciclo de chamada (#243)",
    "feat: ligar botões Configurar e adicionar testes de áudio (#242)",
    "feat: explica na tela a regra do coaching automatico (etapa 169) (#241)",
-   "fix: resolve o menu mais opcoes do cartao de contato (etapa 166) (#240)",
-   "feat: liga Priorizar no discador preditivo (etapa 163) (#239)",
-   "feat: mostra os acertos dos trackers e leva ao detalhe da chamada (etapa 157) (#238)"
+   "fix: resolve o menu mais opcoes do cartao de contato (etapa 166) (#240)"
   ]
  },
  "pr_template": null,

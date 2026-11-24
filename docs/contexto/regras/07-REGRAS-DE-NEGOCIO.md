@@ -1,6 +1,6 @@
 # 07 · REGRAS DE NEGÓCIO
 
-> Gerado automaticamente por AI Context Sync v1.3.2 · commit `95304bc3d7` · branch `main` · 2026-11-24 06:46 UTC
+> Gerado automaticamente por AI Context Sync v1.3.2 · commit `0526bc2481` · branch `main` · 2026-11-24 06:47 UTC
 > Não edite à mão — regras humanas vão em `manual/`.
 
 ## A. Regras escritas por humanos (`manual/` — prioridade máxima, nunca sobrescrito)
@@ -2373,6 +2373,7 @@ _nenhum item encontrado_
 | Erro ao sincronizar com Bitrix24 | `src/components/contacts/useBitrixSync.ts` |
 | Não foi possível registrar uso | `src/components/conversation-intelligence/BattleCardAlert.tsx` |
 |  className= | `src/components/dashboard/HoldTrendChart.tsx` |
+| Não foi possível copiar o número | `src/components/dashboard/RecentCalls.tsx` |
 | Erro ao priorizar contato | `src/components/dialer/PredictiveDialerPanel.tsx` |
 | Não foi possível exportar o histórico | `src/components/dialer/phone/SyncHistoryPanel.tsx` |
 | >           <div className= | `src/components/error-boundary/ErrorBoundary.tsx` |
@@ -2579,8 +2580,7 @@ _nenhum item encontrado_
 | Não foi possível remover o participante | `src/hooks/useRingGroups.ts` |
 | ; import { getCurrentDeviceLabel, sanitizeDeviceLabel } from  | `src/hooks/useRingtoneSettings.ts` |
 | Falha ao remover regra | `src/hooks/useRoutingRules.ts` |
-| Falha ao salvar regra | `src/hooks/useRoutingRules.ts` |
-| … +267 linhas — lista completa em `context.json` | |
+| … +268 linhas — lista completa em `context.json` | |
 
 ## J. Controle de acesso no código (checagens de perfil/permissão)
 
@@ -2629,7 +2629,7 @@ _nenhum item encontrado_
 | `admin` | `supabase/functions/data-lake-flush/index.ts` |
 | `admin` | `supabase/migrations/20261123000200_fix_has_role_oracle_and_debug_tables.sql` |
 
-## K. Testes como especificação (4320 testes em 379 arquivos — nomes completos em `context.json`)
+## K. Testes como especificação (4325 testes em 381 arquivos — nomes completos em `context.json`)
 
 | Arquivo | Testes | Exemplos do que o sistema DEVE fazer |
 |---|---|---|
@@ -2924,6 +2924,7 @@ _nenhum item encontrado_
 | `src/hooks/__tests__/use-mobile.coverage.test.tsx` | 4 | useIsMobile · returns false for desktop width · returns true for mobile width and reacts to change · cleans up listener on unmount |
 | `src/hooks/__tests__/useAccounts.test.ts` | 4 | useAccounts · loads accounts on mount · recomputes health via edge function · triggers churn detection |
 | `src/hooks/__tests__/useActiveCallsRealtime.coverage.test.tsx` | 4 | useActiveCallsRealtime (coverage) · loads active calls and holds, computes derived data · filters by selected agent and hold status · starts a tick interval when there are active calls |
+| `src/hooks/__tests__/useCallRecording.test.ts` | 4 | useCallRecording · inicia a captura e persiste o audio ao parar · devolve null e nao grava quando o microfone e negado · devolve null quando o audio sobe mas a gravacao nao e registrada no banco |
 | `src/hooks/__tests__/useCallScoring.coverage.test.tsx` | 4 | useCallScoring · expõe o estado inicial · calcula score com sucesso · lança erro quando a edge function falha |
 | `src/hooks/__tests__/useContactInsights.coverage.test.tsx` | 4 | useContactInsights · returns empty metrics with no contacts · computes distributions across varied personality profiles · handles fetch error gracefully |
 | `src/hooks/__tests__/useDeals.test.ts` | 4 | useDeals · loads deals · createDeal returns true on success · computeHealth invokes edge function |
@@ -2932,8 +2933,7 @@ _nenhum item encontrado_
 | `src/hooks/__tests__/usePageTitle.coverage.test.tsx` | 4 | usePageTitle · sets document title with app name suffix · resets title on unmount · updates title when prop changes |
 | `src/hooks/__tests__/useQualityMetrics.coverage.test.tsx` | 4 | useQualityMetrics / useTrunkUsageMetrics · loads quality metrics · loads trunk usage metrics · propagates errors |
 | `src/hooks/__tests__/useTalkRatio.test.ts` | 4 | useTalkRatio · estado inicial é vazio · analisa com sucesso · captura erro do backend |
-| `src/hooks/__tests__/useTrunkMetrics.coverage.test.tsx` | 4 | useTrunkMetrics · aggregates usage by trunk and by day · returns empty for no data with default days · throws on usage error |
-| … +79 linhas — lista completa em `context.json` | | |
+| … +81 linhas — lista completa em `context.json` | | |
 
 ## L. Eventos de webhook tratados (contratos com sistemas externos)
 
