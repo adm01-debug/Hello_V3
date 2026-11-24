@@ -35,6 +35,16 @@ export type {
 
 const log = logger.create('PredictiveDialer');
 
+// E244: realtime sem agrupamento dispara uma leitura por evento. Uma rajada
+// (varias linhas da mesma tabela chegando juntas) vira uma leitura so.
+const agendarLeitura = (
+  alvo: { current: ReturnType<typeof setTimeout> | null },
+  ler: () => void,
+) => {
+  if (alvo.current) clearTimeout(alvo.current);
+  alvo.current = setTimeout(() => { alvo.current = null; ler(); }, 1_000);
+};
+
 /**
  * Checagem de DNC/horario legal antes de discar. Estruturalmente igual ao
  * `preDialCheck` de `useDNCCompliance`, declarado aqui para o discador nao
@@ -314,27 +324,40 @@ export const usePredictiveDialer = (preDialCheck?: PreDialCheck) => {
     };
   }, [isDialing, activeCampaign, currentCall, loopTick, getNextContact, dialContact, pauseCampaign]);
 
-  // Realtime
+  // E244: sem agrupamento, cada linha de `dialer_queue`/`dialer_campaigns` que o
+  // realtime entregava disparava uma leitura — e o canal era recriado a cada
+  // troca de campanha ativa. O agrupamento de 1 s e a campanha em ref resolvem as
+  // duas coisas sem mudar o que o operador ve.
+  const realtimeDebounceCampanhasRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const realtimeDebounceFilaRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const activeCampaignRef = useRef<DialerCampaign | null>(activeCampaign);
+  useEffect(() => { activeCampaignRef.current = activeCampaign; }, [activeCampaign]);
+
   useEffect(() => {
+    const refCampanhas = realtimeDebounceCampanhasRef;
+    const refFila = realtimeDebounceFilaRef;
     const channel = supabase
       .channel('dialer-changes')
       .on(
         'postgres_changes',
         { event: '*', schema: 'public', table: 'dialer_campaigns' },
-        () => fetchCampaigns(),
+        () => agendarLeitura(refCampanhas, () => { void fetchCampaigns(); }),
       )
       .on(
         'postgres_changes',
         { event: '*', schema: 'public', table: 'dialer_queue' },
-        () => {
-          if (activeCampaign) fetchQueue(activeCampaign.id);
-        },
+        () => agendarLeitura(refFila, () => {
+          const campanha = activeCampaignRef.current;
+          if (campanha) void fetchQueue(campanha.id);
+        }),
       )
       .subscribe();
     return () => {
+      if (refCampanhas.current) clearTimeout(refCampanhas.current);
+      if (refFila.current) clearTimeout(refFila.current);
       supabase.removeChannel(channel);
     };
-  }, [fetchCampaigns, fetchQueue, activeCampaign]);
+  }, [fetchCampaigns, fetchQueue]);
 
   useEffect(() => {
     fetchCampaigns();

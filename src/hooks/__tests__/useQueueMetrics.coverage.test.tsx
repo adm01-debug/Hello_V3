@@ -10,6 +10,9 @@ let readError: string | null = null;
 
 vi.mock('@/components/dashboard/DashboardGoalsSettings', () => ({}));
 
+// `vi.hoisted` porque a fabrica de `vi.mock` roda antes das declaracoes do topo.
+const realtimeHandlers = vi.hoisted(() => [] as Array<() => void>);
+
 vi.mock('@/integrations/supabase/client', () => {
   const from = vi.fn((table: string) => {
     const b: Record<string, unknown> = {};
@@ -32,7 +35,10 @@ vi.mock('@/integrations/supabase/client', () => {
   });
   const channel = vi.fn(() => {
     const ch: Record<string, unknown> = {};
-    ch.on = vi.fn(() => ch);
+    ch.on = vi.fn((_evento: string, _cfg: unknown, cb: () => void) => {
+      if (typeof cb === 'function') realtimeHandlers.push(cb);
+      return ch;
+    });
     ch.subscribe = vi.fn(() => ch);
     return ch;
   });
@@ -47,6 +53,7 @@ import { toast } from 'sonner';
 describe('useQueueMetrics', () => {
   beforeEach(() => {
     vi.clearAllMocks();
+    realtimeHandlers.length = 0;
     goalsData = [];
     activeCallsData = [{ status: 'active' }, { status: 'ringing' }, { status: 'on_hold' }];
     agentsData = [{ status: 'available' }, { status: 'busy' }, { status: 'on_call' }, { status: 'break' }, { status: 'away' }];
@@ -200,5 +207,36 @@ describe('useQueueMetrics', () => {
     readError = null;
     await act(async () => { await result.current.fetchMetrics(); });
     expect(result.current.error).toBeNull();
+  });
+
+  // E244: sem agrupamento, 20 mudancas de status em 2 s viravam 20 leituras de 3
+  // consultas cada. Com o debounce de 1 s, a rajada inteira vale uma leitura.
+  it('agrupa uma rajada de eventos de realtime numa unica leitura', async () => {
+    const { result } = renderHook(() => useQueueMetrics());
+    await waitFor(() => expect(result.current.loading).toBe(false));
+    expect(realtimeHandlers.length).toBeGreaterThanOrEqual(2);
+
+    const fromMock = supabase.from as unknown as ReturnType<typeof vi.fn>;
+    fromMock.mockClear();
+
+    vi.useFakeTimers();
+    act(() => { realtimeHandlers.forEach(h => { for (let i = 0; i < 10; i++) h(); }); });
+    // Nada de leitura antes do silencio de 1 s: a rajada continua sendo agrupada.
+    expect(fromMock).not.toHaveBeenCalled();
+
+    act(() => { vi.advanceTimersByTime(1000); });
+    vi.useRealTimers();
+
+    await waitFor(() => expect(fromMock).toHaveBeenCalledTimes(3));
+    expect(fromMock).toHaveBeenCalledTimes(3);
+  });
+
+  // E244: o poll era de 5 s por cima do realtime; virou rede de seguranca de 60 s.
+  it('usa poll de seguranca de 60 s em vez de 5 s', async () => {
+    const setIntervalSpy = vi.spyOn(window, 'setInterval');
+    const { result } = renderHook(() => useQueueMetrics());
+    expect(setIntervalSpy).toHaveBeenCalledWith(expect.any(Function), 60000);
+    await waitFor(() => expect(result.current.loading).toBe(false));
+    setIntervalSpy.mockRestore();
   });
 });
