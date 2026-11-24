@@ -2,11 +2,16 @@
  "aviso": "GERADO AUTOMATICAMENTE por scripts/ai-context/gerar.mjs — não editar à mão; será sobrescrito.",
  "format_version": 2,
  "git": {
-  "commit": "9b4d4b9c18540e88d47e5b0d3a8362b64232296c",
+  "commit": "e376b9500988da1a768adc250acce641c128cb2e",
   "branch": "main",
-  "data_commit": "2026-11-24T06:35:20-03:00",
+  "data_commit": "2026-11-24T06:48:36-03:00",
   "remote": "https://github.com/adm01-debug/Hello_V3",
   "ultimos_commits": [
+   {
+    "sha": "e376b95",
+    "data": "2026-11-24",
+    "assunto": "fix: para o laco de re-render de 1 Hz do lembrete de espera (etapa 245) (#275)"
+   },
    {
     "sha": "9b4d4b9",
     "data": "2026-11-24",
@@ -126,14 +131,9 @@
     "sha": "6ba5cb0",
     "data": "2026-11-24",
     "assunto": "fix: estatisticas da semana nao falham mais em silencio (etapa 185) (#252)"
-   },
-   {
-    "sha": "ccbea6f",
-    "data": "2026-11-24",
-    "assunto": "fix: falha na trilha de auditoria passa a ser visivel (etapa 182) (#249)"
    }
   ],
-  "arquivos_mudados_7d": 1179,
+  "arquivos_mudados_7d": 1181,
   "pastas_mais_mudadas_30d": [
    {
     "pasta": "covout/lcov-report/hooks",
@@ -141,11 +141,11 @@
    },
    {
     "pasta": "docs/qa/05-PROGRESSO.md",
-    "mudancas": 98
+    "mudancas": 99
    },
    {
     "pasta": "src/hooks/__tests__",
-    "mudancas": 73
+    "mudancas": 74
    },
    {
     "pasta": "covout/lcov-report/lib",
@@ -199,7 +199,7 @@
   "arquivos_mais_mudados_90d": [
    {
     "arquivo": "docs/qa/05-PROGRESSO.md",
-    "mudancas": 98
+    "mudancas": 99
    },
    {
     "arquivo": "docs/estado/funcionalidades-planejadas.md",
@@ -301,7 +301,7 @@
   "autores_30d": [
    {
     "autor": "adm01-debug",
-    "commits": 252
+    "commits": 253
    },
    {
     "autor": "Joaquim Ataides",
@@ -316,7 +316,7 @@
  "contagens": {
   "arquivos_total": 1738,
   "arquivos_codigo": 1335,
-  "linhas_codigo": 180347,
+  "linhas_codigo": 180382,
   "rotas": 106,
   "rotas_http_backend": 12,
   "vistas_por_id": 0,
@@ -492,7 +492,7 @@
   },
   "src/hooks": {
    "arquivos": 354,
-   "linhas": 47456
+   "linhas": 47491
   },
   "src/integrations": {
    "arquivos": 3,

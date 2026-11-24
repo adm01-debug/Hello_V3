@@ -1,6 +1,6 @@
 # 07 · REGRAS DE NEGÓCIO
 
-> Gerado automaticamente por AI Context Sync v1.3.2 · commit `9b4d4b9c18` · branch `main` · 2026-11-24 09:35 UTC
+> Gerado automaticamente por AI Context Sync v1.3.2 · commit `e376b95009` · branch `main` · 2026-11-24 09:49 UTC
 > Não edite à mão — regras humanas vão em `manual/`.
 
 ## A. Regras escritas por humanos (`manual/` — prioridade máxima, nunca sobrescrito)
@@ -2636,7 +2636,7 @@ _nenhum item encontrado_
 | `admin` | `supabase/functions/data-lake-flush/index.ts` |
 | `admin` | `supabase/migrations/20261123000200_fix_has_role_oracle_and_debug_tables.sql` |
 
-## K. Testes como especificação (4381 testes em 390 arquivos — nomes completos em `context.json`)
+## K. Testes como especificação (4382 testes em 390 arquivos — nomes completos em `context.json`)
 
 | Arquivo | Testes | Exemplos do que o sistema DEVE fazer |
 |---|---|---|
@@ -2824,6 +2824,7 @@ _nenhum item encontrado_
 | `src/hooks/__tests__/useDeviceDetection.coverage.test.tsx` | 7 | useDeviceDetection · returns device info helpers · detects new device when existing sessions and new IP · no notification when no existing sessions … |
 | `src/hooks/__tests__/useExtensionAudit.scenarios.test.ts` | 7 | useExtensionAudit — cenários (fire-and-forget) · envia RPC log_audit_event com payload correto · lida com erro do RPC sem lançar (fire-and-forget) · lida com exception do RPC sem propagar … |
 | `src/hooks/__tests__/useHealthCheck.coverage.test.tsx` | 7 | useHealthCheck · estado inicial: todos checking · runChecks com todos saudáveis => overall healthy · uma falha => degraded … |
+| `src/hooks/__tests__/useHoldReminder.coverage.test.tsx` | 7 | useHoldReminder (coverage) · exposes settings and toggles · triggers warning then critical alerts as hold time crosses thresholds · requestBrowserNotifications resolves to granted … |
 | `src/hooks/__tests__/useKeyMoments.coverage.test.tsx` | 7 | useKeyMoments · fetches moments when callSessionId provided · does not fetch without id · handles fetch error … |
 | `src/hooks/__tests__/useObjectionLibrary.coverage.test.tsx` | 7 | useObjectionLibrary (coverage) · loads objections · list error throws · upsert success and error … |
 | `src/hooks/__tests__/usePermissions.coverage.test.tsx` | 7 | usePermissions (coverage) · loads permissions for active roles · returns empty when no user · returns empty when user has no roles … |
@@ -2859,7 +2860,6 @@ _nenhum item encontrado_
 | `src/hooks/__tests__/useCulturalHints.coverage.test.tsx` | 6 | useCulturalHints (coverage) · returns empty hints when no langCode provided · loads hints for a language code · handles null data gracefully … |
 | `src/hooks/__tests__/useFinancialImpact.property.test.ts` | 6 | useFinancialImpact helpers (PBT) · summarize: linearidade dos totais e sinal do lucro coerente · summarize: aditividade — summarize(A∪B) == somar totais individuais · pct: identidade, previous=0 e simetria de sinal … |
 | `src/hooks/__tests__/useGoalViolations.coverage.test.tsx` | 6 | useGoalViolations · fetches violations and processes chart data · subscribes to realtime channel and cleans up · handles fetch error … |
-| `src/hooks/__tests__/useHoldReminder.coverage.test.tsx` | 6 | useHoldReminder (coverage) · exposes settings and toggles · triggers warning then critical alerts as hold time crosses thresholds · requestBrowserNotifications resolves to granted … |
 | `src/hooks/__tests__/useLiveSentiment.coverage.test.tsx` | 6 | useLiveSentiment · does nothing without callSessionId · loads snapshots and subscribes to realtime channel · handles null data from initial load … |
 | `src/hooks/__tests__/useMeetingSummary.test.ts` | 6 | useMeetingSummary - parse · normaliza arrays nulos para [] · useMeetingSummary - generate · sucesso → toast.success … |
 | `src/hooks/__tests__/useMultiChannelCall.compliance.test.tsx` | 6 | useMultiChannelCall — barreira de compliance (etapa 034) · bloqueia a discagem quando o pre-dial check reprova · libera a discagem quando ha mais de um motivo aprovado · chamada recebida ignora a barreira (skipComplianceCheck) … |

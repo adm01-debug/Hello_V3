@@ -1,15 +1,15 @@
 {
  "meta": {
-  "sha": "9b4d4b9c18540e88d47e5b0d3a8362b64232296c",
+  "sha": "e376b9500988da1a768adc250acce641c128cb2e",
   "branch": "main",
   "remote": "https://github.com/adm01-debug/Hello_V3",
-  "generated_at": "2026-11-24 09:35 UTC",
+  "generated_at": "2026-11-24 09:49 UTC",
   "files_total": 1785,
   "code_files": 1581,
-  "code_lines": 196359
+  "code_lines": 196394
  },
  "version": "1.3.2",
- "facts_hash": "a758378a67304fe8",
+ "facts_hash": "7e93eefd118a86b8",
  "stack": {
   "frameworks": [
    "React + Vite",
@@ -33749,7 +33749,7 @@
   {
    "module": "src/hooks",
    "files": 354,
-   "lines": 47456,
+   "lines": 47491,
    "tables": [
     "accounts",
     "active_sessions",
@@ -62959,6 +62959,10 @@
    {
     "file": "src/hooks/__tests__/useHoldReminder.coverage.test.tsx",
     "name": "plays hold reminder visual notification on interval"
+   },
+   {
+    "file": "src/hooks/__tests__/useHoldReminder.coverage.test.tsx",
+    "name": "does not re-render or recreate the 1 Hz interval when no call is on hold"
    },
    {
     "file": "src/hooks/__tests__/useHoldReminder.test.ts",
@@ -102652,7 +102656,7 @@
   },
   "src/hooks/useHoldReminder.ts": {
    "path": "src/hooks/useHoldReminder.ts",
-   "lines": 158,
+   "lines": 169,
    "exports": [
     "interface HoldAlert",
     "function useHoldReminder"
@@ -108556,7 +108560,7 @@
   },
   "src/hooks/__tests__/useHoldReminder.coverage.test.tsx": {
    "path": "src/hooks/__tests__/useHoldReminder.coverage.test.tsx",
-   "lines": 117,
+   "lines": 141,
    "is_test": true,
    "tests": [
     "useHoldReminder (coverage)",
@@ -108564,7 +108568,8 @@
     "triggers warning then critical alerts as hold time crosses thresholds",
     "requestBrowserNotifications resolves to granted",
     "callsOnHold reflects active held calls",
-    "plays hold reminder visual notification on interval"
+    "plays hold reminder visual notification on interval",
+    "does not re-render or recreate the 1 Hz interval when no call is on hold"
    ]
   },
   "src/hooks/__tests__/useHoldReminder.test.ts": {
@@ -127420,10 +127425,21 @@
   }
  },
  "git": {
-  "sha": "9b4d4b9c18540e88d47e5b0d3a8362b64232296c",
+  "sha": "e376b9500988da1a768adc250acce641c128cb2e",
   "branch": "main",
   "remote": "https://github.com/adm01-debug/Hello_V3",
   "commits": [
+   {
+    "sha": "e376b95",
+    "date": "2026-11-24",
+    "author": "adm01-debug",
+    "subject": "fix: para o laco de re-render de 1 Hz do lembrete de espera (etapa 245) (#275)",
+    "files": [
+     "docs/qa/05-PROGRESSO.md",
+     "src/hooks/__tests__/useHoldReminder.coverage.test.tsx",
+     "src/hooks/useHoldReminder.ts"
+    ]
+   },
    {
     "sha": "9b4d4b9",
     "date": "2026-11-24",
@@ -127853,19 +127869,6 @@
      "inventario/estado/rotas.json",
      "scripts/inventario/gerar-hooks-dormentes.mjs"
     ]
-   },
-   {
-    "sha": "0526bc2",
-    "date": "2026-11-24",
-    "author": "adm01-debug",
-    "subject": "fix: ligar botoes de navegacao do dashboard sem acao (E165) (#244)",
-    "files": [
-     "docs/qa/05-PROGRESSO.md",
-     "src/components/calls/softphone/TabContents.tsx",
-     "src/components/calls/softphone/__tests__/HistoryTab.test.tsx",
-     "src/components/dashboard/RecentCalls.tsx",
-     "src/components/dashboard/__tests__/RecentCalls.test.tsx"
-    ]
    }
   ],
   "hot_files": [
@@ -127900,6 +127903,14 @@
    [
     "src/hooks/useSessionManager.ts",
     2
+   ],
+   [
+    "src/hooks/__tests__/useHoldReminder.coverage.test.tsx",
+    1
+   ],
+   [
+    "src/hooks/useHoldReminder.ts",
+    1
    ],
    [
     "src/hooks/__tests__/useCallRecording.coverage.test.tsx",
@@ -127939,14 +127950,6 @@
    ],
    [
     "src/hooks/useGeoBlocking.ts",
-    1
-   ],
-   [
-    "supabase/functions/__tests__/geo-decision.test.ts",
-    1
-   ],
-   [
-    "supabase/functions/validate-geo/decide.ts",
     1
    ]
   ]

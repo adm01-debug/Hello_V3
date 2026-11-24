@@ -1160,12 +1160,12 @@
   {
    "arquivo": "src/hooks/__tests__/useHoldReminder.coverage.test.tsx",
    "tipo": "unit",
-   "linhas": 117,
+   "linhas": 141,
    "testa": [
     "src/hooks/useHoldReminder.ts",
     "src/hooks/useMultiChannelCall.ts"
    ],
-   "casos": 5
+   "casos": 6
   },
   {
    "arquivo": "src/hooks/__tests__/useHoldReminder.test.ts",
