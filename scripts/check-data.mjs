@@ -25,7 +25,7 @@ for (const q of queries) {
     });
     const range = res.headers.get('content-range') || '(sem header)';
     const totalMatch = range.match(/\/(\d+)/);
-    const total = totalMatch ? parseInt(totalMatch[1]) : 0;
+    const total = totalMatch ? Number(totalMatch[1]) || 0 : 0;
     const status = total === 0 && q.expectMin > 0 ? '⚠️ VAZIA' : '✓';
     console.log(`  ${status} ${q.name.padEnd(28)} status=${res.status} count=${total}`);
   } catch (err) {

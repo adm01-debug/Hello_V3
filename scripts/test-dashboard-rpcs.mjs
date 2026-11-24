@@ -1,5 +1,5 @@
 const SUPABASE_URL = process.env.SUPABASE_URL ?? 'https://cfmlmcdyjuotqobjapng.supabase.co';
-const ANON_KEY = process.env.SUPABASE_ANON_KEY ?? (() => { throw new Error('Credencial ausente: defina SUPABASE_ANON_KEY no ambiente.'); })();
+const _ANON_KEY = process.env.SUPABASE_ANON_KEY ?? (() => { throw new Error('Credencial ausente: defina SUPABASE_ANON_KEY no ambiente.'); })();
 const SERVICE_KEY = process.env.SUPABASE_SERVICE_ROLE_KEY ?? (() => { throw new Error('Credencial ausente: defina SUPABASE_SERVICE_ROLE_KEY no ambiente.'); })();
 
 const rpcs = [

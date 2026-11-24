@@ -24,7 +24,7 @@ const RAIZ_PADRAO = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '
 const SAIDA_REL = 'inventario/estado/rotas.json';
 const EXTENSOES = ['.tsx', '.ts', '.jsx', '.js', '/index.tsx', '/index.ts'];
 
-const ler = (raiz, rel) => fs.readFileSync(path.join(raiz, rel), 'utf8');
+const _ler = (raiz, rel) => fs.readFileSync(path.join(raiz, rel), 'utf8');
 const rel = (raiz, abs) => path.relative(raiz, abs).split(path.sep).join('/');
 const unico = (lista) => [...new Set(lista)].sort();
 

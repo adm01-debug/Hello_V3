@@ -29,7 +29,7 @@ const IGNORADOS = new Set([...CARIMBOS, ...TELEMETRIA]);
 // cada tabela em `tabelas[]`, onde a contagem real importa. So ignora dentro de `cron.historico`.
 function limparHistoricoCron(historico) {
   if (!historico || typeof historico !== 'object') return historico;
-  const { linhas, bytes, ...resto } = historico;
+  const { linhas: _linhas, bytes: _bytes, ...resto } = historico;
   return resto;
 }
 

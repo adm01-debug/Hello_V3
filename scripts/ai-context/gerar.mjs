@@ -38,7 +38,7 @@ const MAX_FILE_BYTES = (CFG.maxFileMB || 8) * 1024 * 1024;
 const PUBLICACAO = process.env.AI_CONTEXT_PUBLICACAO || CFG.publicacao || 'Publicado pelo workflow de contexto do repositório (ver .github/workflows).';
 const exists = (p) => fs.existsSync(abs(p));
 const readText = (p) => { try { const a = path.isAbsolute(p) ? p : abs(p); if (fs.statSync(a).size > MAX_FILE_BYTES) return ''; return fs.readFileSync(a, 'utf8'); } catch { return ''; } };
-const readJson = (p) => { try { return JSON.parse(readText(p).replace(/^﻿/, '')); } catch { return null; } };
+const readJson = (p) => { try { return JSON.parse(readText(p).replace(/^\uFEFF/, '')); } catch { return null; } };
 const uniq = (a) => [...new Set(a)].sort();
 const sortObj = (o) => Object.fromEntries(Object.entries(o).sort(([a], [b]) => (a < b ? -1 : a > b ? 1 : 0)));
 const sha = (s) => crypto.createHash('sha256').update(s).digest('hex').slice(0, 16);
@@ -217,7 +217,7 @@ for (const f of PY_FILES) secao(`py:${f}`, () => {
   const raw = readText(f); const src = raw.replace(/"""[\s\S]*?"""|'''[\s\S]*?'''/g, '""').replace(/#[^\n]*/g, '');
   const mods = [...allMatches(/^\s*from\s+([\w.]+)\s+import/gm, src), ...allMatches(/^\s*import\s+([\w.]+)/gm, src)];
   const local = uniq(mods.map((m) => { const k = m.replace(/^\.+/, ''); for (const cand of [k, 'src.' + k, 'app.' + k]) if (PY_MODS.has(cand)) return PY_MODS.get(cand); const parts = k.split('.'); while (parts.length) { const cnd = parts.join('.'); if (PY_MODS.has(cnd)) return PY_MODS.get(cnd); parts.pop(); } return null; }).filter(Boolean));
-  const rotas = [...src.matchAll(/@(?:app|router|api|bp|blueprint)\.(get|post|put|patch|delete|route)\(\s*['"]([^'"]+)['"]([^)]*)\)/g)].map((m) => ({ metodo: m[1] === 'route' ? (/methods\s*=\s*\[([^\]]*)\]/.exec(m[3]) || [, 'GET'])[1].replace(/['"\s]/g, '') : m[1].toUpperCase(), caminho: m[2] }));
+  const rotas = [...src.matchAll(/@(?:app|router|api|bp|blueprint)\.(get|post|put|patch|delete|route)\(\s*['"]([^'"]+)['"]([^)]*)\)/g)].map((m) => ({ metodo: m[1] === 'route' ? (/methods\s*=\s*\[([^\]]*)\]/.exec(m[3]) || [undefined, 'GET'])[1].replace(/['"\s]/g, '') : m[1].toUpperCase(), caminho: m[2] }));
   for (const m of src.matchAll(/\b(?:path|re_path|url)\(\s*r?['"]([^'"]+)['"]/g)) rotas.push({ metodo: 'DJANGO', caminho: m[1] });
   PY.set(f, { linhas: countLines(raw), imports: local, externos: uniq(mods.filter((m) => !m.startsWith('.')).map((m) => m.split('.')[0])).filter((m) => !PY_MODS.has(m)), defs: uniq(allMatches(/^(?:async\s+)?def\s+(\w+)/gm, src)), classes: uniq(allMatches(/^class\s+(\w+)/gm, src)), rotas_http: rotas, env: uniq([...allMatches(/os\.environ(?:\.get)?\s*[[(]\s*['"](\w+)['"]/g, src), ...allMatches(/getenv\(\s*['"](\w+)['"]/g, src)]), teste: TEST_RE.test(f), modelos: uniq(allMatches(/^class\s+(\w+)\((?:[\w.]*(?:Model|Base|BaseModel|DeclarativeBase)[\w.]*)\)/gm, src)), hooks: [], tabelas: [], rpcs: [], edges: [], buckets: [], canais_realtime: [], flags: [], papeis: [], todos: raw.split('\n').map((l, i) => { const m = /\b(TODO|FIXME|HACK|XXX)\b[:\s-]*([^\n]{0,100})/.exec(l); return m ? { linha: i + 1, tipo: m[1], texto: m[2].trim() } : null; }).filter(Boolean) });
 });
@@ -608,7 +608,7 @@ const workflows = secao('workflows', () => ALL.filter((f) => /^\.github\/workflo
   const y = readText(f);
   const name = (/^name:\s*(.+)$/m.exec(y) || [])[1]?.trim().replace(/^['"]|['"]$/g, '') || path.posix.basename(f);
   const onBlock = (y.split(/^on:/m)[1] || '').split(/^[a-z]/m)[0];
-  const gatilhos = uniq([...onBlock.matchAll(/^\s{2}([a-z_]+):/gm)].map((m) => m[1]).concat((/^on:\s*\[([^\]]*)\]/m.exec(y) || [, ''])[1].split(',').map((s) => s.trim()).filter(Boolean)));
+  const gatilhos = uniq([...onBlock.matchAll(/^\s{2}([a-z_]+):/gm)].map((m) => m[1]).concat((/^on:\s*\[([^\]]*)\]/m.exec(y) || [undefined, ''])[1].split(',').map((s) => s.trim()).filter(Boolean)));
   const jobs = [...(y.split(/^jobs:/m)[1] || '').matchAll(/^\s{2}([\w-]+):\s*$/gm)].map((m) => m[1]);
   const branches = uniq([...onBlock.matchAll(/branches:\s*\[([^\]]*)\]/g)].flatMap((m) => m[1].split(',').map((s) => s.trim().replace(/['"]/g, ''))).concat([...onBlock.matchAll(/branches:\s*\n((?:\s+-\s*.+\n)+)/g)].flatMap((m) => (m[1].match(/-\s*(\S+)/g) || []).map((x) => x.replace(/-\s*/, '').replace(/['"]/g, '')))).filter(Boolean));
   return { arquivo: f, nome: name, gatilhos, crons: [...y.matchAll(/cron:\s*['"]([^'"]+)['"]/g)].map((m) => m[1]), branches, jobs, permissoes: (/^permissions:[ \t]*\n((?:[ \t]+[\w-]+:[^\n]*\n)+)/m.exec(y) || [])[1]?.trim().split('\n').map((l) => l.trim()) || [], scripts_usados: uniq([...y.matchAll(/(?:node|bash|sh|npx tsx|bun|python3?|deno run)\s+((?:scripts|\.github|tools|bin)\/[\w./-]+)/g)].map((m) => m[1])), npm_scripts: uniq([...y.matchAll(/(?:npm|bun|pnpm|yarn)\s+(?:run\s+)?([\w:-]+)/g)].map((m) => m[1]).filter((s) => pkg.scripts && pkg.scripts[s])), secrets: uniq([...y.matchAll(/secrets\.(\w+)/g)].map((m) => m[1])), actions: uniq([...y.matchAll(/uses:\s*([\w./-]+)@/g)].map((m) => m[1])) };
