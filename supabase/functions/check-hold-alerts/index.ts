@@ -110,7 +110,8 @@ serve(async (req) => {
     }
 
     if (alerts.length > 0) {
-      await supabaseAdmin.from('call_alerts').insert(alerts);
+      const { error: holdAlertsErr } = await supabaseAdmin.from('call_alerts').insert(alerts);
+      if (holdAlertsErr) console.error('check-hold-alerts: falha ao criar alertas de espera', holdAlertsErr);
     }
 
     return new Response(JSON.stringify({ success: true, activeHoldsChecked: activeHolds?.length || 0, alertsCreated: alerts.length }), {

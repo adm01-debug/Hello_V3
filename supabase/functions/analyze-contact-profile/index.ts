@@ -87,7 +87,8 @@ serve(async (req) => {
       profile = jsonMatch ? JSON.parse(jsonMatch[0]) : {};
     } catch { profile = { summary: 'Análise não disponível' }; }
 
-    await supabaseAdmin.from('contacts').update({ personality_insights: profile }).eq('id', contactId);
+    const { error: insightsErr } = await supabaseAdmin.from('contacts').update({ personality_insights: profile }).eq('id', contactId);
+    if (insightsErr) console.error('analyze-contact-profile: falha ao salvar insights do contato', insightsErr);
 
     return new Response(JSON.stringify({ success: true, profile, interactions_analyzed: interactions.length }), {
       headers: { ...cors, 'Content-Type': 'application/json' }
