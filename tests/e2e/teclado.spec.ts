@@ -181,7 +181,19 @@ test.describe('Etapa 273 - navegacao por teclado no fluxo de chamada', () => {
     let achou = false;
     for (let i = 0; i < MAX_TABS; i += 1) {
       await comPrazo(page.keyboard.press('Tab'), 15_000, `tab-ate-gatilho-${i + 1}`);
-      if (await comPrazo(gatilho.evaluate((el) => el === document.activeElement), 15_000, `ler-foco-${i + 1}`)) {
+      // Um evaluate leve por Tab. Resolver o locator getByRole a cada passo custa
+      // um snapshot da arvore ARIA inteira e travava o teste no runner.
+      const rotulo = await comPrazo(
+        page.evaluate(() => {
+          const el = document.activeElement as HTMLElement | null;
+          if (!el) return '';
+          const texto = `${el.getAttribute('aria-label') ?? ''} ${el.textContent ?? ''}`;
+          return texto.replace(/\s+/g, ' ').trim().toLowerCase().slice(0, 200);
+        }),
+        15_000,
+        `ler-foco-${i + 1}`,
+      );
+      if (rotulo.includes('assistente de voz')) {
         achou = true;
         break;
       }
