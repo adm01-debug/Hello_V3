@@ -5,6 +5,10 @@ import { requireUser } from "../_shared/auth.ts";
 import { escapeHtml } from "../_shared/html.ts";
 import { optional, string, uuid, validate } from "../_shared/validate.ts";
 import { GENERIC_INTERNAL_MESSAGE, getCorrelationId } from '../_shared/errors.ts';
+import { fetchComPrazo } from "../_shared/resilience.ts";
+
+/** Envio de e-mail nao deveria demorar: acima disso o provedor esta fora do ar. */
+const PRAZO_EMAIL_MS = 8_000;
 
 const bodySchema = {
   user_id: optional(uuid()),
@@ -107,7 +111,7 @@ export async function handler(req: Request): Promise<Response> {
       );
     }
 
-    const emailResponse = await fetch("https://api.resend.com/emails", {
+    const emailResponse = await fetchComPrazo("https://api.resend.com/emails", {
       method: "POST",
       headers: {
         "Authorization": `Bearer ${RESEND_API_KEY}`,
@@ -119,7 +123,7 @@ export async function handler(req: Request): Promise<Response> {
         subject: "🚨 Alerta: Tentativa de Acesso Bloqueado por IP",
         html: buildBlockedIpEmail(data),
       }),
-    });
+    }, PRAZO_EMAIL_MS);
 
     const emailResult = await emailResponse.json();
 

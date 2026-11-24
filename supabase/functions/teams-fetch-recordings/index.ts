@@ -1,6 +1,7 @@
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
 import { buildCorsHeaders } from "../_shared/cors.ts";
 import { GENERIC_INTERNAL_MESSAGE, getCorrelationId, internalErrorResponse } from '../_shared/errors.ts';
+import { fetchComPrazo } from "../_shared/resilience.ts";
 
 const GRAPH_URL = "https://graph.microsoft.com/v1.0";
 
@@ -12,7 +13,7 @@ async function obterTokenGraph(): Promise<string | null> {
   const clientSecret = Deno.env.get("MS_CLIENT_SECRET");
   if (!tenant || !clientId || !clientSecret) return null;
 
-  const resp = await fetch(
+  const resp = await fetchComPrazo(
     `https://login.microsoftonline.com/${tenant}/oauth2/v2.0/token`,
     {
       method: "POST",
@@ -24,6 +25,7 @@ async function obterTokenGraph(): Promise<string | null> {
         scope: "https://graph.microsoft.com/.default",
       }),
     },
+    8_000,
   );
   if (!resp.ok) {
     throw new Error(`Falha ao autenticar no Graph [${resp.status}]`);
@@ -86,7 +88,7 @@ Deno.serve(async (req) => {
     }
 
     // Token app-only nao resolve /me; usar /groups (Application permission Group.Read.All)
-    const teamsResp = await fetch(
+    const teamsResp = await fetchComPrazo(
       `${GRAPH_URL}/groups?$select=id,displayName&$top=20`,
       { headers: { "Authorization": `Bearer ${token}` } },
     );
