@@ -3,6 +3,7 @@
 import { buildCorsHeaders } from "../_shared/cors.ts";
 import { createClient } from 'npm:@supabase/supabase-js@2';
 import { fetchComPrazo } from "../_shared/resilience.ts";
+import { getCorrelationId, internalErrorResponse } from "../_shared/errors.ts";
 
 interface Criterion {
   id: string;
@@ -177,9 +178,9 @@ function json(payload: unknown, status = 200): Response {
       criteria_scored: validScores.length,
     });
   } catch (err) {
-    const message = err instanceof Error ? err.message : String(err);
-    console.error('[auto-scorecard] error:', message);
-    return json({ error: message }, 500);
+    return internalErrorResponse(err, getCorrelationId(req), buildCorsHeaders(req), {
+      fn: 'auto-scorecard',
+    });
   }
 });
 

@@ -1,6 +1,7 @@
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
 import { buildCorsHeaders } from "../_shared/cors.ts";
+import { getCorrelationId, internalErrorResponse } from "../_shared/errors.ts";
 
 serve(async (req) => {
   if (req.method === 'OPTIONS') return new Response(null, { headers: buildCorsHeaders(req) });
@@ -102,8 +103,8 @@ serve(async (req) => {
       headers: { ...buildCorsHeaders(req), 'Content-Type': 'application/json' },
     });
   } catch (err) {
-    return new Response(JSON.stringify({ error: err instanceof Error ? err.message : 'unknown' }), {
-      status: 500, headers: { ...buildCorsHeaders(req), 'Content-Type': 'application/json' },
+    return internalErrorResponse(err, getCorrelationId(req), buildCorsHeaders(req), {
+      fn: 'suggest-shift-swaps',
     });
   }
 });

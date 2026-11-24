@@ -2,6 +2,7 @@ import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.45.0';
 import { buildCorsHeaders } from '../_shared/cors.ts';
 import { checkRateLimitDB, getClientIp } from '../_shared/rate-limit.ts';
 import { createErrorResponse } from '../_shared/validator.ts';
+import { getCorrelationId, internalErrorResponse } from '../_shared/errors.ts';
 import { ChatWidgetSessionSchema } from './schema.ts';
 
 Deno.serve(async (req) => {
@@ -188,10 +189,6 @@ Deno.serve(async (req) => {
       headers: { ...cors, 'Content-Type': 'application/json' },
     });
   } catch (error) {
-    console.error('chat-widget-session error:', error);
-    return new Response(
-      JSON.stringify({ error: error instanceof Error ? error.message : 'Erro interno' }),
-      { status: 500, headers: { ...cors, 'Content-Type': 'application/json' } }
-    );
+    return internalErrorResponse(error, getCorrelationId(req), cors, { fn: 'chat-widget-session' });
   }
 });

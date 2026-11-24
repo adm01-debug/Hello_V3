@@ -5,6 +5,7 @@
 import { createClient } from 'npm:@supabase/supabase-js@2';
 import { buildCorsHeaders } from '../_shared/cors.ts';
 import { validate, oneOf } from '../_shared/validate.ts';
+import { internalErrorResponse } from '../_shared/errors.ts';
 
 interface AlertRow {
   user_id: string;
@@ -100,7 +101,7 @@ Deno.serve(async (req) => {
       { status: 200, headers },
     );
   } catch (err) {
-    const message = err instanceof Error ? err.message : 'Unknown error';
-    return new Response(JSON.stringify({ error: message, requestId }), { status: 500, headers });
+    // `requestId` desta funcao ja e o id de correlacao (header ou gerado).
+    return internalErrorResponse(err, requestId, headers, { fn: 'voip-quality-alerts-summary' });
   }
 });

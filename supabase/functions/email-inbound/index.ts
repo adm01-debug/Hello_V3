@@ -1,6 +1,7 @@
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.45.0';
 import { buildCorsHeaders } from '../_shared/cors.ts';
 import { createErrorResponse } from '../_shared/validator.ts';
+import { getCorrelationId, internalErrorResponse } from '../_shared/errors.ts';
 import { EmailInboundSchema } from './schema.ts';
 
 
@@ -216,11 +217,7 @@ export async function handler(req: Request): Promise<Response> {
       { status: 200, headers: { ...cors, 'Content-Type': 'application/json' } }
     );
   } catch (error) {
-    console.error('email-inbound error:', error);
-    return new Response(
-      JSON.stringify({ error: error instanceof Error ? error.message : 'Erro interno' }),
-      { status: 500, headers: { ...cors, 'Content-Type': 'application/json' } }
-    );
+    return internalErrorResponse(error, getCorrelationId(req), cors, { fn: 'email-inbound' });
   }
 }
 

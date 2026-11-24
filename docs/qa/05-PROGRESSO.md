@@ -24,11 +24,11 @@
 | | Quantidade |
 |---|---:|
 | Total de etapas | 300 |
-| `[x]` concluídas | 0 |
+| `[x]` concluídas | 79 |
 | `[P]` aguardando o dono | 0 |
-| `[~]` parciais | 0 |
+| `[~]` parciais | 1 |
 | `[-]` descartadas | 0 |
-| `[ ]` não iniciadas | **300** |
+| `[ ]` não iniciadas | **222** |
 
 *Atualize esta tabela ao fim de cada onda.*
 
@@ -86,7 +86,7 @@
 - [x] **047** — Validar o corpo nas edges públicas que gastam dinheiro — onda 1 — Média — Edge Function · (3 das 7 ganharam schema Zod com teto em **todo** campo de texto: `chatbot-respond` (user_message 4.000, visitor_token 200), `email-inbound` (subject 998, from 320, body_text 200k, body_html 500k, message_id 998, headers 100 itens) e `chat-widget-session` (message 4.000, e-mail 254, action restrita a create/send_message/fetch_messages); resposta 422 `{code,message,fields}` do `_shared/validator.ts`. As outras 4 já tinham teto e foram conferidas: `embed-kb-article` (`MAX_TEXT`), `notify-blocked-ip` e `notify-new-device` (`bodySchema` com `max` em tudo), `request-password-reset` (e-mail com tipo + 255). Contrato histórico das edges preservado (400/400/422 do chatbot e 400/422 do e-mail continuam) — só o tamanho fora do teto passa a ser 422. Evidência: 14 testes de schema + 2 testes de handler novos; `deno test -A supabase/functions/` **397 passed / 0 failed**; `deno check` OK nas 3 edges; sem `req.json()` sem teto nas 7)
 - [ ] **048** — Validar o corpo nas edges de IA e transcrição — onda 1 — Média — Edge Function
 - [ ] **049** — Validar o corpo nas edges de cálculo e exportação — onda 1 — Média — Edge Function
-- [ ] **050** — Parar de devolver a mensagem de erro interna ao cliente — onda 1 — Média — Edge Function
+- [~] **050** — Parar de devolver a mensagem de erro interna ao cliente — onda 1 — Média — Edge Function · (onda 1 concluída: novo módulo `_shared/errors.ts` com `getCorrelationId`/`internalError`/`internalErrorResponse` — status 500 fixo, corpo `{code:'internal_error',message:'Erro interno',correlation_id}` sem vazar `err.message`, log via `logError` com stack, header `x-correlation-id`; aplicado em 7 edges (ocr-virtual-fax, suggest-shift-swaps, translate-utterance, voip-quality-alerts-summary, chat-widget-session, email-inbound, auto-scorecard) e coberto por `_shared/errors_test.ts` (7 testes). Evidência: `deno check` 7/7 rc=0, `deno test -A supabase/functions/` 406 passed/0 failed, `deno lint` sem problema novo. Faltam 55 ocorrências de `instanceof Error ? err.message` em 49 `index.ts` — ondas 2 e 3.)
 - [x] **051** — Tirar o host de produção dos scripts destrutivos — onda 1 — Média — Scripts
 - [ ] **052** — Declarar `TO authenticated` nas policies que governam as tabelas mais sensíveis — onda 1 — Média — Banco 🔒
 - [ ] **053** — Teste de RLS que realmente toca o banco — onda 1 — Alta — Testes 🔒
