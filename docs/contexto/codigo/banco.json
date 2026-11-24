@@ -8,7 +8,7 @@
   "supabase/migrations",
   "typeorm"
  ],
- "migrations": 242,
+ "migrations": 243,
  "seeds": [],
  "avisos": [
   "44 bloco(s) com DDL dinâmico (EXECUTE format/...) não modelado — policies/colunas criadas dinamicamente podem faltar; confira no banco vivo"
@@ -115,6 +115,7 @@
   "prevent_role_escalation",
   "process_audit_log",
   "recalc_deal_health",
+  "recalc_hold_time_from_events",
   "record_failed_login",
   "record_successful_login",
   "record_trunk_usage",
@@ -567,6 +568,13 @@
    "evento": "update",
    "tabela": "hold_alert_settings",
    "funcao": "update_updated_at_column"
+  },
+  {
+   "nome": "trg_hold_events_recalc_hold_time",
+   "quando": "after",
+   "evento": "update of ended_at",
+   "tabela": "hold_events",
+   "funcao": "recalc_hold_time_from_events"
   },
   {
    "nome": "trg_notify_suspicious_index_drop_activity",
@@ -11278,7 +11286,9 @@
    "usada_em_edges": [
     "check-hold-alerts"
    ],
-   "triggers": [],
+   "triggers": [
+    "trg_hold_events_recalc_hold_time"
+   ],
    "sem_rls": false,
    "nao_usada": false
   },

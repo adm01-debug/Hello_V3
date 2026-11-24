@@ -1,6 +1,6 @@
 # 07 · REGRAS DE NEGÓCIO
 
-> Gerado automaticamente por AI Context Sync v1.3.2 · commit `559db78de5` · branch `main` · 2026-11-24 14:10 UTC
+> Gerado automaticamente por AI Context Sync v1.3.2 · commit `daac6b1170` · branch `main` · 2026-11-24 14:12 UTC
 > Não edite à mão — regras humanas vão em `manual/`.
 
 ## A. Regras escritas por humanos (`manual/` — prioridade máxima, nunca sobrescrito)
@@ -740,6 +740,7 @@ _Nenhum arquivo em `manual/`. Copie `manual/TEMPLATE-regras-de-negocio.md` para 
 | trg_validate_park_orbit | BEFORE INSERT OR UPDATE | `call_park_orbits` | `validate_park_orbit` |  |
 | trg_validate_parked_call | BEFORE INSERT OR UPDATE | `parked_calls` | `validate_parked_call` |  |
 | trg_sync_profile_role | AFTER INSERT OR UPDATE OR DELETE | `user_roles` | `sync_profile_role_from_user_roles` |  |
+| trg_hold_events_recalc_hold_time | AFTER UPDATE OF ENDED_AT | `hold_events` | `recalc_hold_time_from_events` | `NEW.ended_at IS DISTINCT FROM OLD.ended_at` |
 
 Erros lançados por funções SQL (`RAISE EXCEPTION` = regra de negócio no banco):
 

@@ -2,11 +2,16 @@
  "aviso": "GERADO AUTOMATICAMENTE por scripts/ai-context/gerar.mjs — não editar à mão; será sobrescrito.",
  "format_version": 2,
  "git": {
-  "commit": "559db78de5003cde7913fdb67691da834e380682",
+  "commit": "daac6b11709cae837c3cc7c52471990a2a068f34",
   "branch": "main",
-  "data_commit": "2026-11-24T11:08:57-03:00",
+  "data_commit": "2026-11-24T11:11:53-03:00",
   "remote": "https://github.com/adm01-debug/Hello_V3",
   "ultimos_commits": [
+   {
+    "sha": "daac6b1",
+    "data": "2026-11-24",
+    "assunto": "infra: trigger de recalculo de hold_time a partir dos hold_events (etapa 069) — DDL em producao, aguarda decisao (#274)"
+   },
    {
     "sha": "559db78",
     "data": "2026-11-24",
@@ -126,14 +131,9 @@
     "sha": "14bbc21",
     "data": "2026-11-24",
     "assunto": "fix: registrar falha nas gravacoes das edge functions (etapa 188) (#258)"
-   },
-   {
-    "sha": "9cc710b",
-    "data": "2026-11-24",
-    "assunto": "fix: orcamento de tempo na cadeia edge->edge e no QA de voz (etapa 211) (#265)"
    }
   ],
-  "arquivos_mudados_7d": 1205,
+  "arquivos_mudados_7d": 1206,
   "pastas_mais_mudadas_30d": [
    {
     "pasta": "covout/lcov-report/hooks",
@@ -301,7 +301,7 @@
   "autores_30d": [
    {
     "autor": "adm01-debug",
-    "commits": 265
+    "commits": 266
    },
    {
     "autor": "Joaquim Ataides",
@@ -314,7 +314,7 @@
   ]
  },
  "contagens": {
-  "arquivos_total": 1745,
+  "arquivos_total": 1746,
   "arquivos_codigo": 1342,
   "linhas_codigo": 181624,
   "rotas": 106,
@@ -326,7 +326,7 @@
   "hooks": 193,
   "edge_functions": 98,
   "tabelas": 169,
-  "migrations": 242,
+  "migrations": 243,
   "cron_jobs": 11,
   "testes": 402,
   "workflows": 3,

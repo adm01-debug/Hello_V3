@@ -1,15 +1,15 @@
 {
  "meta": {
-  "sha": "559db78de5003cde7913fdb67691da834e380682",
+  "sha": "daac6b11709cae837c3cc7c52471990a2a068f34",
   "branch": "main",
   "remote": "https://github.com/adm01-debug/Hello_V3",
-  "generated_at": "2026-11-24 14:10 UTC",
-  "files_total": 1792,
-  "code_files": 1588,
-  "code_lines": 197636
+  "generated_at": "2026-11-24 14:12 UTC",
+  "files_total": 1793,
+  "code_files": 1589,
+  "code_lines": 197674
  },
  "version": "1.3.2",
- "facts_hash": "7f646136f20da7cf",
+ "facts_hash": "eabb8d1e67acea25",
  "stack": {
   "frameworks": [
    "React + Vite",
@@ -155,7 +155,7 @@
   "languages": {
    ".ts": 663,
    ".tsx": 645,
-   ".sql": 245,
+   ".sql": 246,
    ".mjs": 28,
    ".py": 5,
    ".js": 2
@@ -20712,6 +20712,15 @@
     "condition": "",
     "each": "row",
     "src": "supabase/migrations/20261122290000_sync_profile_role_from_user_roles.sql"
+   },
+   {
+    "name": "trg_hold_events_recalc_hold_time",
+    "when": "AFTER UPDATE OF ENDED_AT",
+    "table": "hold_events",
+    "function": "recalc_hold_time_from_events",
+    "condition": "NEW.ended_at IS DISTINCT FROM OLD.ended_at",
+    "each": "row",
+    "src": "supabase/migrations/20261123030000_hold_time_from_events.sql"
    }
   ],
   "functions": {
@@ -22073,6 +22082,20 @@
      "user_profiles",
      "user_roles",
      "v_effective"
+    ]
+   },
+   "recalc_hold_time_from_events": {
+    "args": "",
+    "returns": "trigger",
+    "lang": "plpgsql",
+    "src": "supabase/migrations/20261123030000_hold_time_from_events.sql",
+    "security_definer": false,
+    "search_path": true,
+    "body": "DECLARE v_session_id uuid; BEGIN v_session_id := COALESCE(NEW.call_session_id, OLD.call_session_id); IF v_session_id IS NULL THEN RETURN COALESCE(NEW, OLD); END IF; UPDATE public.call_sessions cs SET hold_time_seconds = COALESCE(( SELECT SUM(EXTRACT(EPOCH FROM (he.ended_at - he.started_at)))::integer FROM public.hold_events he WHERE he.call_session_id = v_session_id AND he.ended_at IS NOT NULL ), 0) WHERE cs.id = v_session_id; RETURN COALESCE(NEW, OLD); END;",
+    "raises": [],
+    "tables": [
+     "call_sessions",
+     "hold_events"
     ]
    },
    "graphql": {
@@ -25774,6 +25797,7 @@
    "supabase/migrations/20261123002000_b6_text_domain_checks.sql",
    "supabase/migrations/20261123010000_fix_user_delete_cascade.sql",
    "supabase/migrations/20261123020000_add_avatar_storage.sql",
+   "supabase/migrations/20261123030000_hold_time_from_events.sql",
    "supabase/tests/role_source_of_truth_test.sql",
    "src/integrations/supabase/types.ts"
   ],
@@ -34697,8 +34721,8 @@
   },
   {
    "module": "supabase/migrations",
-   "files": 242,
-   "lines": 15729,
+   "files": 243,
+   "lines": 15767,
    "tables": [],
    "exports": [],
    "docs": [],
@@ -82105,6 +82129,15 @@
     "condition": "",
     "each": "row",
     "src": "supabase/migrations/20261122290000_sync_profile_role_from_user_roles.sql"
+   },
+   {
+    "name": "trg_hold_events_recalc_hold_time",
+    "when": "AFTER UPDATE OF ENDED_AT",
+    "table": "hold_events",
+    "function": "recalc_hold_time_from_events",
+    "condition": "NEW.ended_at IS DISTINCT FROM OLD.ended_at",
+    "each": "row",
+    "src": "supabase/migrations/20261123030000_hold_time_from_events.sql"
    }
   ],
   "db_functions": {
@@ -83466,6 +83499,20 @@
      "user_profiles",
      "user_roles",
      "v_effective"
+    ]
+   },
+   "recalc_hold_time_from_events": {
+    "args": "",
+    "returns": "trigger",
+    "lang": "plpgsql",
+    "src": "supabase/migrations/20261123030000_hold_time_from_events.sql",
+    "security_definer": false,
+    "search_path": true,
+    "body": "DECLARE v_session_id uuid; BEGIN v_session_id := COALESCE(NEW.call_session_id, OLD.call_session_id); IF v_session_id IS NULL THEN RETURN COALESCE(NEW, OLD); END IF; UPDATE public.call_sessions cs SET hold_time_seconds = COALESCE(( SELECT SUM(EXTRACT(EPOCH FROM (he.ended_at - he.started_at)))::integer FROM public.hold_events he WHERE he.call_session_id = v_session_id AND he.ended_at IS NOT NULL ), 0) WHERE cs.id = v_session_id; RETURN COALESCE(NEW, OLD); END;",
+    "raises": [],
+    "tables": [
+     "call_sessions",
+     "hold_events"
     ]
    },
    "graphql": {
@@ -127743,6 +127790,10 @@
    "path": "supabase/migrations/20261123020000_add_avatar_storage.sql",
    "lines": 54
   },
+  "supabase/migrations/20261123030000_hold_time_from_events.sql": {
+   "path": "supabase/migrations/20261123030000_hold_time_from_events.sql",
+   "lines": 38
+  },
   "supabase/tests/role_source_of_truth_test.sql": {
    "path": "supabase/tests/role_source_of_truth_test.sql",
    "lines": 72,
@@ -127856,10 +127907,19 @@
   }
  },
  "git": {
-  "sha": "559db78de5003cde7913fdb67691da834e380682",
+  "sha": "daac6b11709cae837c3cc7c52471990a2a068f34",
   "branch": "main",
   "remote": "https://github.com/adm01-debug/Hello_V3",
   "commits": [
+   {
+    "sha": "daac6b1",
+    "date": "2026-11-24",
+    "author": "adm01-debug",
+    "subject": "infra: trigger de recalculo de hold_time a partir dos hold_events (etapa 069) — DDL em producao, aguarda decisao (#274)",
+    "files": [
+     "supabase/migrations/20261123030000_hold_time_from_events.sql"
+    ]
+   },
    {
     "sha": "559db78",
     "date": "2026-11-24",
@@ -128313,21 +128373,12 @@
      "src/pages/SecurityDashboard.tsx",
      "src/pages/roles/useRoles.ts"
     ]
-   },
-   {
-    "sha": "52ae9bb",
-    "date": "2026-11-24",
-    "author": "adm01-debug",
-    "subject": "docs: etapas 191-193 verificadas (ja corrigidas por #180 e #170) (#261)",
-    "files": [
-     "docs/qa/05-PROGRESSO.md"
-    ]
    }
   ],
   "hot_files": [
    [
     "docs/qa/05-PROGRESSO.md",
-    29
+    28
    ],
    [
     "docs/agentes/mapa-repo.md",
@@ -128386,6 +128437,10 @@
     2
    ],
    [
+    "supabase/migrations/20261123030000_hold_time_from_events.sql",
+    1
+   ],
+   [
     "bun.lock",
     1
    ],
@@ -128399,10 +128454,6 @@
    ],
    [
     "scripts/ai-context/cenarios.mjs",
-    1
-   ],
-   [
-    "scripts/ai-context/gerar.mjs",
     1
    ]
   ]

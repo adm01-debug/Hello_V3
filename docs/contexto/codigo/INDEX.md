@@ -1,7 +1,7 @@
 # Contexto do projeto para agentes de IA
 
 GERADO AUTOMATICAMENTE por scripts/ai-context/gerar.mjs — não editar à mão; será sobrescrito.
-Publicado em `docs/contexto/codigo/` na branch `contexto` (gerada, nunca abra PR dela) a cada push em `main` e a cada 10 minutos pelo workflow `contexto.yml`; índice único das três fontes em `docs/contexto/00-INDEX.md`. Gere local com `node scripts/ai-context/gerar.mjs`. Commit-base: `559db78de5003cde7913fdb67691da834e380682` (2026-11-24T11:08:57-03:00).
+Publicado em `docs/contexto/codigo/` na branch `contexto` (gerada, nunca abra PR dela) a cada push em `main` e a cada 10 minutos pelo workflow `contexto.yml`; índice único das três fontes em `docs/contexto/00-INDEX.md`. Gere local com `node scripts/ai-context/gerar.mjs`. Commit-base: `daac6b11709cae837c3cc7c52471990a2a068f34` (2026-11-24T11:11:53-03:00).
 
 ## Como usar (leia antes de planejar ou executar qualquer tarefa)
 1. **Tela/rota/menu** → `rotas.json` (url/vista/menu → arquivo → hooks → tabelas → edges; `rotas_http_backend` para APIs) e `modulos.json` (módulo inteiro + dependências entre módulos).
@@ -14,7 +14,7 @@ Publicado em `docs/contexto/codigo/` na branch `contexto` (gerada, nunca abra PR
 Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua tarefa; não carregue tudo.
 
 ## Stack
-- linguagens: TypeScript (1308), SQL (245), Markdown (121), JavaScript (30), JSON (18), Python (5), YAML (3), Shell (2)
+- linguagens: TypeScript (1308), SQL (246), Markdown (121), JavaScript (30), JSON (18), Python (5), YAML (3), Shell (2)
 - linguagem_principal: TypeScript
 - framework: React
 - backend_http: n/d
@@ -34,7 +34,7 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 ## Números
 | item | qtd |
 |---|---|
-| arquivos_total | 1745 |
+| arquivos_total | 1746 |
 | arquivos_codigo | 1342 |
 | linhas_codigo | 181624 |
 | rotas | 106 |
@@ -46,7 +46,7 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 | hooks | 193 |
 | edge_functions | 98 |
 | tabelas | 169 |
-| migrations | 242 |
+| migrations | 243 |
 | cron_jobs | 11 |
 | testes | 402 |
 | workflows | 3 |
@@ -370,8 +370,8 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 - possiveis_segredos_no_codigo: 3 — ex.: src/lib/__tests__/security-advanced.test.ts:203, src/lib/__tests__/security-advanced.test.ts:208, src/lib/__tests__/security-advanced.test.ts:213
 
 ## Grafo de código (graphify)
-- 10223 nós · 26976 arestas · 767 comunidades · grafo do commit `559db78d`
-- comunidades maiores: lucide-react (295), client.ts (224), react (203), vitest (194), badge.tsx (127), utils.ts (125), CallDetailDialog.tsx (118), buildCorsHeaders (117), cn (117), @tanstack/react-query (115), 5. Em uso por rota (113), validate.ts (97)
+- 10228 nós · 26980 arestas · 779 comunidades · grafo do commit `daac6b11`
+- comunidades maiores: lucide-react (328), vitest (208), client.ts (205), react (183), 5. Em uso por rota (167), buildCorsHeaders (149), react-router-dom (140), usePageTitle.ts (129), Onda 6 — Performance (236–258, 23 etapas) (127), safe-date.ts (126), cn (116), validate.ts (109)
 - símbolos mais chamados: cn() (src/lib/utils.ts), usePageTitle() (src/hooks/usePageTitle.ts), safeFormatDatePtBR() (src/lib/safe-date.ts), q() (scripts/supabase_snapshot/snapshot.py), safeFormatDistanceToNow() (src/lib/safe-date.ts), useAuthContext() (src/contexts/AuthContext.tsx), traceHeaders() (src/lib/tracing.ts), withTrace() (src/lib/tracing.ts), formatDuration() (src/lib/utils.ts), safeToLocaleString() (src/lib/safe-date.ts), .collect() (scripts/supabase_snapshot/test_snapshot.py), buildCorsHeaders() (supabase/functions/_shared/cors.ts)
 - consulta local: `graphify query "<pergunta>"`, `graphify path "<A>" "<B>"`, `graphify explain "<X>"`
 
@@ -429,6 +429,7 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 
 
 ## Últimos commits
+- 2026-11-24 `daac6b1` infra: trigger de recalculo de hold_time a partir dos hold_events (etapa 069) — DDL em producao, aguarda decisao (#274)
 - 2026-11-24 `559db78` chore: gate de lint de acessibilidade e escopo do eslint (etapa 264) (#287)
 - 2026-11-24 `fa17b61` chore: registra cobertura de menu das rotas protegidas (etapa 265) (#286)
 - 2026-11-24 `711098f` feat: pagina contatos, negocios e contas de 50 em 50 (etapa 237) (#285)
@@ -443,7 +444,6 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 - 2026-11-24 `efbd573` fix: agrupa consultas do painel de fila e do discador (etapa 244) (#276)
 - 2026-11-24 `e376b95` fix: para o laco de re-render de 1 Hz do lembrete de espera (etapa 245) (#275)
 - 2026-11-24 `9b4d4b9` fix: pagina a lista de gravacoes e limita as consultas do painel (etapa 236) (#273)
-- 2026-11-24 `a7041fc` chore: regenera types.ts a partir do schema de producao (etapa 136) (#272)
 
 ## Arquivos deste diretório
 - `docs/contexto/codigo/rotas.json`
