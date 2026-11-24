@@ -24,11 +24,11 @@
 | | Quantidade |
 |---|---:|
 | Total de etapas | 300 |
-| `[x]` concluídas | 117 |
+| `[x]` concluídas | 118 |
 | `[P]` aguardando o dono | 0 |
 | `[~]` parciais | 0 |
 | `[-]` descartadas | 0 |
-| `[ ]` não iniciadas | **183** |
+| `[ ]` não iniciadas | **182** |
 
 *Atualize esta tabela ao fim de cada onda.*
 
@@ -176,7 +176,7 @@
 - [ ] **129** — Documentar o contrato dos ponteiros polimórficos — onda 3 — Baixa — Banco
 - [ ] **130** — Escrever o `CREATE TABLE` das três tabelas `geo_*` — onda 3 — Alta — Banco 🔒
 - [ ] **131** — Guardar os `ALTER POLICY` que abortam em ambiente novo — onda 3 — Média — Banco 🔒
-- [ ] **132** — Descobrir se a correção de exclusão de conta (LGPD) está de fato aplicada — onda 3 — Alta — Banco
+- [x] **132** — Descobrir se a correção de exclusão de conta (LGPD) está de fato aplicada — onda 3 — Alta — Banco · (desfecho **(a)** apurado em 2026-11-24: as 6 tabelas de `call_records`, `entity_versions`, `migration_rollbacks`, `queue_items`, `saved_filters` e `schema_migrations` existem em `public`, `20261123010000` consta no ledger e as FKs de `auth.users` estão aplicadas — `saved_filters_user_id_fkey` CASCADE e `entity_versions_changed_by_fkey` SET NULL; a correção de exclusão de conta **está no ar**. Teste funcional com usuário de teste: `DELETE FROM auth.users` sem erro, `user_profiles`/`saved_filters` em 0 (CASCADE) e a linha de `entity_versions` preservada com `changed_by IS NULL` (SET NULL); baseline restaurado (10 usuários, 5 perfis). Registrado com data em `docs/agentes/banco.md` — o que falta do A-092 é só `types.ts` (etapa 136).)
 - [ ] **133** — Desfazer o empate de timestamp entre migrations — onda 3 — Média — Banco 🔒
 - [ ] **134** — Tornar as migrations reaplicáveis (ou documentar quais não são) — onda 3 — Média — Banco
 - [ ] **135** — Responder "esta migration está aplicada?" de forma confiável — onda 3 — Alta — Banco 🔒
