@@ -156,10 +156,12 @@ export async function handler(req: Request): Promise<Response> {
       if (convErr) throw convErr;
       conversationId = newConv.id;
     } else {
-      await supabase
+      // Best-effort: last_message_at/status sao derivaveis das mensagens ja gravadas abaixo.
+      const { error: touchErr } = await supabase
         .from('conversations')
         .update({ last_message_at: new Date().toISOString(), status: 'open' })
         .eq('id', conversationId);
+      if (touchErr) console.error('email-inbound: falha ao atualizar conversa existente', touchErr);
     }
 
     // Inserir ticket de email
