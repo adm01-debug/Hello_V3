@@ -1,15 +1,15 @@
 {
  "meta": {
-  "sha": "de29d5d4667afda6e2e451bdacc5f6b523ec3596",
+  "sha": "046acb3e081da8898a435a7d2efb2aa9bd39e008",
   "branch": "main",
   "remote": "https://github.com/adm01-debug/Hello_V3",
-  "generated_at": "2026-11-24 01:22 UTC",
+  "generated_at": "2026-11-24 01:31 UTC",
   "files_total": 1743,
   "code_files": 1540,
-  "code_lines": 190812
+  "code_lines": 190840
  },
  "version": "1.3.2",
- "facts_hash": "d16478d62d421bef",
+ "facts_hash": "c961b66310e17cd0",
  "stack": {
   "frameworks": [
    "React + Vite",
@@ -33592,7 +33592,7 @@
   {
    "module": "src/hooks",
    "files": 354,
-   "lines": 46342,
+   "lines": 46370,
    "tables": [
     "accounts",
     "active_sessions",
@@ -58157,6 +58157,14 @@
    {
     "file": "src/hooks/__tests__/useAnomalyRemediation.coverage.test.tsx",
     "name": "error from invoke"
+   },
+   {
+    "file": "src/hooks/__tests__/useAnomalyRemediation.coverage.test.tsx",
+    "name": "invalida a lista de anomalias depois de aplicar"
+   },
+   {
+    "file": "src/hooks/__tests__/useAnomalyRemediation.coverage.test.tsx",
+    "name": "modo silencioso nao invalida a lista"
    },
    {
     "file": "src/hooks/__tests__/useAnomalyRemediation.coverage.test.tsx",
@@ -98525,7 +98533,7 @@
   },
   "src/hooks/useAnomalyRemediation.ts": {
    "path": "src/hooks/useAnomalyRemediation.ts",
-   "lines": 68,
+   "lines": 71,
    "exports": [
     "interface RemediationPlan",
     "function useAnomalyRemediation"
@@ -105513,7 +105521,7 @@
   },
   "src/hooks/__tests__/useAnomalyRemediation.coverage.test.tsx": {
    "path": "src/hooks/__tests__/useAnomalyRemediation.coverage.test.tsx",
-   "lines": 75,
+   "lines": 100,
    "is_test": true,
    "tests": [
     "useAnomalyRemediation",
@@ -105523,6 +105531,8 @@
     "no action → warning",
     "silent skips toast",
     "error from invoke",
+    "invalida a lista de anomalias depois de aplicar",
+    "modo silencioso nao invalida a lista",
     "empty data throws"
    ],
    "side_effects": [
@@ -125225,10 +125235,21 @@
   }
  },
  "git": {
-  "sha": "de29d5d4667afda6e2e451bdacc5f6b523ec3596",
+  "sha": "046acb3e081da8898a435a7d2efb2aa9bd39e008",
   "branch": "main",
   "remote": "https://github.com/adm01-debug/Hello_V3",
   "commits": [
+   {
+    "sha": "046acb3",
+    "date": "2026-11-23",
+    "author": "adm01-debug",
+    "subject": "fix: remediacao de anomalia atualiza a lista (#210)",
+    "files": [
+     "docs/qa/05-PROGRESSO.md",
+     "src/hooks/__tests__/useAnomalyRemediation.coverage.test.tsx",
+     "src/hooks/useAnomalyRemediation.ts"
+    ]
+   },
    {
     "sha": "de29d5d",
     "date": "2026-11-23",
@@ -125611,19 +125632,6 @@
      "supabase/functions/_shared/business-hours_test.ts",
      "supabase/functions/enforce-sla/index.ts"
     ]
-   },
-   {
-    "sha": "74c525c",
-    "date": "2026-11-23",
-    "author": "adm01-debug",
-    "subject": "fix: envia version nos updates e liga o lock otimista (E110) (#180)",
-    "files": [
-     "docs/qa/05-PROGRESSO.md",
-     "src/components/contacts/CreateContactDialog.tsx",
-     "src/hooks/__tests__/useDeals.conflict.test.ts",
-     "src/hooks/useAccounts.ts",
-     "src/hooks/useDeals.ts"
-    ]
    }
   ],
   "hot_files": [
@@ -125684,6 +125692,14 @@
     2
    ],
    [
+    "src/hooks/__tests__/useAnomalyRemediation.coverage.test.tsx",
+    1
+   ],
+   [
+    "src/hooks/useAnomalyRemediation.ts",
+    1
+   ],
+   [
     "src/components/compliance/dnc/ReconcileDNCDialog.tsx",
     1
    ],
@@ -125697,14 +125713,6 @@
    ],
    [
     "src/lib/__tests__/error-message.test.ts",
-    1
-   ],
-   [
-    "src/lib/dnc/reconcile.ts",
-    1
-   ],
-   [
-    "src/lib/error-message.ts",
     1
    ]
   ]

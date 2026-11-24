@@ -928,13 +928,14 @@
    "hooks_exportados": [
     "useAnomalyRemediation"
    ],
-   "linhas": 68,
+   "linhas": 71,
    "dominio": "hooks",
    "tabelas": [],
    "rpcs": [],
    "edges": [],
    "hooks_internos": [
-    "useMutation"
+    "useMutation",
+    "useQueryClient"
    ],
    "canais_realtime": [],
    "usado_por": 1,

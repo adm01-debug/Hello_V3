@@ -2,11 +2,16 @@
  "aviso": "GERADO AUTOMATICAMENTE por scripts/ai-context/gerar.mjs — não editar à mão; será sobrescrito.",
  "format_version": 2,
  "git": {
-  "commit": "de29d5d4667afda6e2e451bdacc5f6b523ec3596",
+  "commit": "046acb3e081da8898a435a7d2efb2aa9bd39e008",
   "branch": "main",
-  "data_commit": "2026-11-23T22:21:53-03:00",
+  "data_commit": "2026-11-23T22:31:23-03:00",
   "remote": "https://github.com/adm01-debug/Hello_V3",
   "ultimos_commits": [
+   {
+    "sha": "046acb3",
+    "data": "2026-11-23",
+    "assunto": "fix: remediacao de anomalia atualiza a lista (#210)"
+   },
    {
     "sha": "de29d5d",
     "data": "2026-11-23",
@@ -126,14 +131,9 @@
     "sha": "3d4db07",
     "data": "2026-11-23",
     "assunto": "feat: modulo compartilhado de autenticacao de edge function (E005) (#186)"
-   },
-   {
-    "sha": "ba0ddcf",
-    "data": "2026-11-23",
-    "assunto": "fix: search-calls exige autenticacao e deixa de usar a service_role (E004) (#185)"
    }
   ],
-  "arquivos_mudados_7d": 1011,
+  "arquivos_mudados_7d": 1013,
   "pastas_mais_mudadas_30d": [
    {
     "pasta": "covout/lcov-report/hooks",
@@ -145,11 +145,11 @@
    },
    {
     "pasta": "docs/qa/05-PROGRESSO.md",
-    "mudancas": 40
+    "mudancas": 41
    },
    {
     "pasta": "src/hooks/__tests__",
-    "mudancas": 36
+    "mudancas": 37
    },
    {
     "pasta": "src/lib/__tests__",
@@ -199,7 +199,7 @@
   "arquivos_mais_mudados_90d": [
    {
     "arquivo": "docs/qa/05-PROGRESSO.md",
-    "mudancas": 40
+    "mudancas": 41
    },
    {
     "arquivo": "docs/estado/funcionalidades-planejadas.md",
@@ -301,7 +301,7 @@
   "autores_30d": [
    {
     "autor": "adm01-debug",
-    "commits": 188
+    "commits": 189
    },
    {
     "autor": "Joaquim Ataides",
@@ -316,7 +316,7 @@
  "contagens": {
   "arquivos_total": 1696,
   "arquivos_codigo": 1294,
-  "linhas_codigo": 174800,
+  "linhas_codigo": 174828,
   "rotas": 106,
   "rotas_http_backend": 12,
   "vistas_por_id": 0,
@@ -492,7 +492,7 @@
   },
   "src/hooks": {
    "arquivos": 354,
-   "linhas": 46342
+   "linhas": 46370
   },
   "src/integrations": {
    "arquivos": 3,

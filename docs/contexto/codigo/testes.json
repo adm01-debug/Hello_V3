@@ -447,11 +447,11 @@
   {
    "arquivo": "src/hooks/__tests__/useAnomalyRemediation.coverage.test.tsx",
    "tipo": "unit",
-   "linhas": 75,
+   "linhas": 100,
    "testa": [
     "src/hooks/useAnomalyRemediation.ts"
    ],
-   "casos": 7
+   "casos": 9
   },
   {
    "arquivo": "src/hooks/__tests__/useAudioOutputDevices.test.tsx",

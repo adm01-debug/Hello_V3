@@ -1,7 +1,7 @@
 # Contexto do projeto para agentes de IA
 
 GERADO AUTOMATICAMENTE por scripts/ai-context/gerar.mjs — não editar à mão; será sobrescrito.
-Publicado em `docs/contexto/codigo/` na branch `contexto` (gerada, nunca abra PR dela) a cada push em `main` e a cada 10 minutos pelo workflow `contexto.yml`; índice único das três fontes em `docs/contexto/00-INDEX.md`. Gere local com `node scripts/ai-context/gerar.mjs`. Commit-base: `de29d5d4667afda6e2e451bdacc5f6b523ec3596` (2026-11-23T22:21:53-03:00).
+Publicado em `docs/contexto/codigo/` na branch `contexto` (gerada, nunca abra PR dela) a cada push em `main` e a cada 10 minutos pelo workflow `contexto.yml`; índice único das três fontes em `docs/contexto/00-INDEX.md`. Gere local com `node scripts/ai-context/gerar.mjs`. Commit-base: `046acb3e081da8898a435a7d2efb2aa9bd39e008` (2026-11-23T22:31:23-03:00).
 
 ## Como usar (leia antes de planejar ou executar qualquer tarefa)
 1. **Tela/rota/menu** → `rotas.json` (url/vista/menu → arquivo → hooks → tabelas → edges; `rotas_http_backend` para APIs) e `modulos.json` (módulo inteiro + dependências entre módulos).
@@ -36,7 +36,7 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 |---|---|
 | arquivos_total | 1696 |
 | arquivos_codigo | 1294 |
-| linhas_codigo | 174800 |
+| linhas_codigo | 174828 |
 | rotas | 106 |
 | rotas_http_backend | 12 |
 | vistas_por_id | 0 |
@@ -370,13 +370,13 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 - possiveis_segredos_no_codigo: 4 — ex.: scripts/ai-context/cenarios.mjs:103, src/lib/__tests__/security-advanced.test.ts:203, src/lib/__tests__/security-advanced.test.ts:208
 
 ## Grafo de código (graphify)
-- 9977 nós · 25649 arestas · 787 comunidades · grafo do commit `de29d5d4`
+- 9977 nós · 25649 arestas · 787 comunidades · grafo do commit `046acb3e`
 - comunidades maiores: lucide-react (274), client.ts (253), vitest (198), usePageTitle (184), traceHeaders (174), react (174), badge.tsx (161), cn (147), react-router-dom (125), safe-date.ts (124), ref_https (120), generate.py (91)
 - símbolos mais chamados: cn() (src/lib/utils.ts), usePageTitle() (src/hooks/usePageTitle.ts), safeFormatDatePtBR() (src/lib/safe-date.ts), q() (scripts/supabase_snapshot/snapshot.py), safeFormatDistanceToNow() (src/lib/safe-date.ts), useAuthContext() (src/contexts/AuthContext.tsx), traceHeaders() (src/lib/tracing.ts), withTrace() (src/lib/tracing.ts), formatDuration() (src/lib/utils.ts), safeToLocaleString() (src/lib/safe-date.ts), .collect() (scripts/supabase_snapshot/test_snapshot.py), buildCorsHeaders() (supabase/functions/_shared/cors.ts)
 - consulta local: `graphify query "<pergunta>"`, `graphify path "<A>" "<B>"`, `graphify explain "<X>"`
 
 ## Hotspots (arquivos mais alterados, 90 dias)
-- docs/qa/05-PROGRESSO.md (40)
+- docs/qa/05-PROGRESSO.md (41)
 - docs/estado/funcionalidades-planejadas.md (27)
 - src/components/layout/AppSidebar.tsx (9)
 - docs/audits/pendencias-2026-07.md (8)
@@ -429,6 +429,7 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 
 
 ## Últimos commits
+- 2026-11-23 `046acb3` fix: remediacao de anomalia atualiza a lista (#210)
 - 2026-11-23 `de29d5d` feat: conferir lista DNC antes de confiar na importacao (#209)
 - 2026-11-23 `8e86908` fix: paineis de proxima melhor acao e CRM explicam carregando, erro e vazio (#208)
 - 2026-11-23 `1dcca43` fix: grafico de espera do dashboard trata erro e nunca mostra valor negativo (#207)
@@ -443,7 +444,6 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 - 2026-11-23 `4271aa3` chore: react-router-dom 7.13.1 -> 7.18.6 (corrige open redirect) (#199)
 - 2026-11-23 `4e8548e` fix: email-inbound idempotente para parar o laco de 500 e a conversa duplicada (#197)
 - 2026-11-23 `7375845` chore: migrar 15 edges para buildCorsHeaders(req) e remover export deprecated (#196)
-- 2026-11-23 `cf78676` fix: rate limit passa a falhar fechado nos endpoints que gastam dinheiro (E012) (#195)
 
 ## Arquivos deste diretório
 - `docs/contexto/codigo/rotas.json`

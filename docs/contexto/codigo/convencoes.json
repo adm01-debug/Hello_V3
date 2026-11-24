@@ -58,11 +58,11 @@
  "commits": {
   "convencao": "conventional commits (observado)",
   "exemplos": [
+   "fix: remediacao de anomalia atualiza a lista (#210)",
    "feat: conferir lista DNC antes de confiar na importacao (#209)",
    "fix: paineis de proxima melhor acao e CRM explicam carregando, erro e vazio (#208)",
    "fix: grafico de espera do dashboard trata erro e nunca mostra valor negativo (#207)",
-   "fix: importacao de DNC passa a conferir o resultado real da RPC (#206)",
-   "fix: grava o desfecho real da chamada em call_sessions (#205)"
+   "fix: importacao de DNC passa a conferir o resultado real da RPC (#206)"
   ]
  },
  "pr_template": null,
