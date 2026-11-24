@@ -6,11 +6,11 @@
 
 | Marca | Significado |
 |---|---|
-| `[ ]` | **184** |
+| `[ ]` | **179** |
 | `[>]` | em andamento (branch criada) |
 | `[P]` | 0 |
 | `[~]` | 0 |
-| `[x]` | 116 |
+| `[x]` | 121 |
 | `[-]` | 0 |
 
 **`[x]` exige evidência.** Escreva ao lado, entre parênteses, o comando ou a consulta que você rodou e o resultado. Sem isso, a marca é `[~]`.
@@ -24,11 +24,11 @@
 | | Quantidade |
 |---|---:|
 | Total de etapas | 300 |
-| `[x]` concluídas | 120 |
+| `[x]` concluídas | 121 |
 | `[P]` aguardando o dono | 0 |
 | `[~]` parciais | 0 |
 | `[-]` descartadas | 0 |
-| `[ ]` não iniciadas | **180** |
+| `[ ]` não iniciadas | **179** |
 
 *Atualize esta tabela ao fim de cada onda.*
 
@@ -303,7 +303,7 @@
 - [ ] **242** — Índices derivados do uso real, não do palpite — onda 6 — Média — Banco 🔒
 - [ ] **243** — Índices para as buscas por texto que existirem — onda 6 — Baixa — Banco 🔒
 - [ ] **244** — Reduzir a tempestade de consultas do painel de fila — onda 6 — Média — Hooks
-- [ ] **245** — Parar o laço de re-render de 1 Hz do lembrete de espera — onda 6 — Média — Hooks
+- [x] **245** — Parar o laço de re-render de 1 Hz do lembrete de espera — onda 6 — Média — Hooks · (Diagnóstico: `useHoldReminder.ts` guardava `alertedCalls` e `lastReminderTime` em `useState` e `checkHoldAlerts` gravava um objeto novo **a cada tick de 1 s** — `setAlertedCalls(newAlertedCalls)` era incondicional e `playHoldReminder` fazia o mesmo com `setLastReminderTime(newLRT)`. Como os dois estados estavam nas dependências dos `useCallback`, a identidade dos callbacks mudava a cada tique, o efeito `:134-137` rodava de novo e **recriava o `setInterval` de 1 s em laço** — inclusive com **zero** chamadas em espera. Nenhum dos dois estados aparecia no retorno do hook, logo não alimentavam a interface. Correção: os dois viraram `useRef` (`lastReminderTimeRef`, `alertedCallsRef`); `checkHoldAlerts` muta a ref e só chama `setActiveAlerts` quando há alerta novo (`:119`), `playHoldReminder` idem; o efeito de poda (`:139-154`) muta as refs e devolve `prev` quando o filtro não remove nada; `changeInterval`/`changeAlertThreshold` zeram as refs. Prova de que o defeito era real: o teste de regressão novo (`useHoldReminder.coverage.test.tsx`, conta renderizações e espiona `setInterval`/`clearInterval`), rodado **contra o código antigo** (`git show HEAD:src/hooks/useHoldReminder.ts > arquivo`), falha com `expected "setInterval" to be called 1 times, but got 2 times`, e passa contra o código novo (arquivo restaurado e conferido por `md5sum`, idêntico). Testes: `bunx vitest run src/hooks src/components/calls` — **187 arquivos / 1944 testes passando**; `bunx tsc --noEmit` rc=0; `bunx eslint src/hooks/useHoldReminder.ts src/hooks/__tests__/useHoldReminder.coverage.test.tsx` rc=0. Consumidores intactos: `ActiveCallsIndicator.tsx:39` e `HoldReminderSettings.tsx` usam apenas a API pública, que não mudou.)
 - [ ] **246** — Transformar o alerta repetitivo de meta em alerta de transição — onda 6 — Média — Hooks
 - [ ] **247** — Eliminar o N+1 da validação de IP — onda 6 — Média — Edge Function
 - [ ] **248** — Eliminar o N+1 do cálculo de melhor horário — onda 6 — Média — Edge Function 🔒
@@ -386,6 +386,7 @@ Problema novo achado no caminho **não é corrigido na hora** — vira linha aqu
 | A-216 | 136 | `docs/pendencias/_verificado-banco.md:24` | O documento afirma que `call_records` e `queue_items` “nem existem mais como tabelas → 404”. **Falso no banco vivo:** as duas existem, com RLS ligado e 2 policies cada (`is_admin_or_supervisor()` / `auth.uid() = user_id`). Documento de apuração contradiz o estado real. | Média (doc) |
 | A-217 | 136 | `migration_rollbacks`, `schema_migrations` | `relrowsecurity = true` com **0 policies** — ninguém além de `service_role` lê/escreve. Para tabela de controle de migração é o estado correto (deny-all), mas é o `rls_sem_policy` que o snapshot do inventário acusa todo dia: vale decidir entre documentar como intencional ou revogar a RLS. | Baixa |
 | A-218 | 236 | `src/hooks/useActiveCallsRealtime.ts:26,37` | As duas consultas do painel de chamadas ativas engoliam o erro (`if (!error && data) set...`): banco fora do ar ou permissão negada viravam "sem chamadas ativas" na tela. Nesta etapa passaram a registrar `logger.warn` e a aplicar teto explícito de 200 linhas, mas o painel ainda não avisa o usuário que a leitura falhou — mesma classe do A-009. | Alta |
+| A-219 | 245 | `supabase/migrations/` × `supabase_migrations.schema_migrations` | **Drift de contabilidade de migrations**: 8 versões já presentes na `main` não estavam registradas na tabela (`20261122180000_data_lake_flush_cron_token`, `20261122200000_rls_initplan_remaining`, `20261123000000_fix_anon_rpc_exposure`, `20261123000100_fix_anon_rls_helper_exposure`, `20261123000200_fix_has_role_oracle_and_debug_tables`, `20261123001000_sync_role_creates_missing_profile`, `20261123002000_b6_text_domain_checks`, `20261123020000_add_avatar_storage`). Causa: foram aplicadas à mão em produção e a contabilidade não foi atualizada. Verificado efeito por efeito no banco vivo: 7 já estavam de fato aplicadas (`anon` sem execução nas 8 funções sensíveis, `__dsn_probe`/`__dbg` inexistentes, cron `data-lake-flush-daily` e vault `data_lake_cron_token` presentes, os 6 checks do b6 presentes, 0 policies com `auth.uid()` cru), mas **`add_avatar_storage` nunca foi aplicada** — sem bucket `avatars` e sem `user_profiles.avatar_url`, o upload de foto de perfil (`src/hooks/useAvatar.ts:8,95,135` + `ProfileSettings.tsx:13,31,36,81`) falhava em produção. Aplicada (bucket privado 2 MB + coluna + 4 policies, RLS conferida em transação com `ROLLBACK`: dono enxerga só o próprio objeto e insert na pasta alheia retorna `42501`) e as 8 versões registradas em `schema_migrations` — repo=240, tabela=240, drift zero. | Alta (funcionalidade quebrada em produção) |
 ---
 
 ## Etapas em que o código já não correspondia à evidência
