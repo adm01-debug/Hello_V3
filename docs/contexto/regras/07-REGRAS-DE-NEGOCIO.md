@@ -1,6 +1,6 @@
 # 07 · REGRAS DE NEGÓCIO
 
-> Gerado automaticamente por AI Context Sync v1.3.2 · commit `fd7ebb06c9` · branch `main` · 2026-11-24 01:58 UTC
+> Gerado automaticamente por AI Context Sync v1.3.2 · commit `d674460c34` · branch `main` · 2026-11-24 01:59 UTC
 > Não edite à mão — regras humanas vão em `manual/`.
 
 ## A. Regras escritas por humanos (`manual/` — prioridade máxima, nunca sobrescrito)
@@ -2466,7 +2466,7 @@ _nenhum item encontrado_
 | `admin` | `supabase/functions/data-lake-flush/index.ts` |
 | `admin` | `supabase/migrations/20261123000200_fix_has_role_oracle_and_debug_tables.sql` |
 
-## K. Testes como especificação (4252 testes em 367 arquivos — nomes completos em `context.json`)
+## K. Testes como especificação (4258 testes em 368 arquivos — nomes completos em `context.json`)
 
 | Arquivo | Testes | Exemplos do que o sistema DEVE fazer |
 |---|---|---|
@@ -2548,6 +2548,7 @@ _nenhum item encontrado_
 | `src/hooks/__tests__/useCallSession.coverage.test.tsx` | 13 | useCallSession · starts a session successfully · returns null on start error · addTranscript/addAnalysis no-op without session … |
 | `src/hooks/__tests__/useDashboardData.coverage.test.tsx` | 13 | useDashboardData · useDashboardStats success · useDashboardStats error · useAgentsListData success returns data … |
 | `src/hooks/__tests__/useMeetingSummary.coverage.test.tsx` | 13 | useMeetingSummary · loads summary and runs generate/update/share · disabled when no callSessionId · generate handles skipped response … |
+| `src/hooks/__tests__/useQueueMetrics.coverage.test.tsx` | 13 | useQueueMetrics · fetches metrics and computes values · conta em espera apenas chamadas on_hold, nunca um status inventado · checkGoalStatus handles gte and lte operators … |
 | `src/lib/__tests__/executive-dashboard-utils.test.ts` | 13 | getPeriodLabel · returns correct label for today · returns correct label for week · returns correct label for month … |
 | `src/lib/__tests__/voipRecommendationCoaching.coverage.test.ts` | 13 | voipRecommendationCoaching · schedules a coaching check with mosBefore captured · does not schedule duplicates for the same recommendation · captures null mosBefore when supabase returns empty data … |
 | `src/lib/__tests__/guard-edge-numeric.test.ts` | 12 | guard-edge-numeric — Regra 1 (z.number sem .finite) · detecta z.number() em qualquer disposição de whitespace · aceita z.number().finite() com whitespace variável · ignora z.number() dentro de comentários e strings … |
@@ -2558,7 +2559,6 @@ _nenhum item encontrado_
 | `src/hooks/__tests__/useAgentRanking.coverage.test.tsx` | 11 | useAgentRanking (coverage) · fetches agent stats on mount and exposes data · getGoalsForAgent returns saved goals and default fallback · checkGoalAchievements fires success toast when goals met … |
 | `src/hooks/__tests__/useContacts.coverage.test.tsx` | 11 | useContacts (coverage) · fetches contacts on mount · fetchContacts with search filter · getContactByPhone success and not found … |
 | `src/hooks/__tests__/useLiveAssist.coverage.test.tsx` | 11 | useLiveAssist · is disabled (no fetch) without callSessionId · loads signals and subscribes to realtime when callSessionId present · analyze invokes edge function when throttle allows … |
-| `src/hooks/__tests__/useQueueMetrics.coverage.test.tsx` | 11 | useQueueMetrics · fetches metrics and computes values · conta em espera apenas chamadas on_hold, nunca um status inventado · checkGoalStatus handles gte and lte operators … |
 | `src/hooks/__tests__/useSipCall.coverage.test.tsx` | 11 | useSipCall (coverage) · initial state is disconnected · connect succeeds and registers · connect with failover shows warning … |
 | `src/hooks/auth/__tests__/useAuthSession.coverage.test.tsx` | 11 | withTimeout · resolves when the promise resolves first · rejects with message on timeout · useAuthSession … |
 | `src/lib/__tests__/holdReminderSounds.coverage.test.tsx` | 11 | holdReminderSounds · createNotificationSound plays two oscillators (timer branch) · createUrgentSound plays three beeps over time · formatHoldTime formats both branches … |
@@ -2770,7 +2770,7 @@ _nenhum item encontrado_
 | `src/hooks/__tests__/useVoipDiagnosticVoiceQA.coverage.test.tsx` | 4 | useVoipDiagnosticVoiceQA · resolves answer on success (default period) · passes explicit period · throws on error branch |
 | `src/hooks/__tests__/useVoipExecutiveSummary.coverage.test.tsx` | 4 | useVoipExecutiveSummary (coverage) · fetches summary with default period · fetches summary with explicit day period · throws on invoke error |
 | `src/hooks/__tests__/useVoipQualityAlertsSummary.coverage.test.tsx` | 4 | useVoipQualityAlertsSummary · carrega o resumo com sucesso (default week) · aceita período day e month (querystring no nome da function, não em  · propaga erro da edge function |
-| … +67 linhas — lista completa em `context.json` | | |
+| … +68 linhas — lista completa em `context.json` | | |
 
 ## L. Eventos de webhook tratados (contratos com sistemas externos)
 

@@ -2,11 +2,16 @@
  "aviso": "GERADO AUTOMATICAMENTE por scripts/ai-context/gerar.mjs — não editar à mão; será sobrescrito.",
  "format_version": 2,
  "git": {
-  "commit": "fd7ebb06c959910c13af258e56b68af2a7cd0643",
+  "commit": "d674460c346569b3b6e19322c82e683d11ea0286",
   "branch": "main",
-  "data_commit": "2026-11-23T22:56:31-03:00",
+  "data_commit": "2026-11-23T22:56:35-03:00",
   "remote": "https://github.com/adm01-debug/Hello_V3",
   "ultimos_commits": [
+   {
+    "sha": "d674460",
+    "data": "2026-11-23",
+    "assunto": "fix: painel de fila mostra erro de leitura em vez de zeros (#214)"
+   },
    {
     "sha": "fd7ebb0",
     "data": "2026-11-23",
@@ -126,14 +131,9 @@
     "sha": "32923f9",
     "data": "2026-11-23",
     "assunto": "fix: embed-kb-article exige papel de staff, valida corpo e limita tamanho (E008) (#190)"
-   },
-   {
-    "sha": "5e77404",
-    "data": "2026-11-23",
-    "assunto": "fix: send-notification impede que um usuario notifique outro e rejeita HTML (E011) (#189)"
    }
   ],
-  "arquivos_mudados_7d": 1019,
+  "arquivos_mudados_7d": 1020,
   "pastas_mais_mudadas_30d": [
    {
     "pasta": "covout/lcov-report/hooks",
@@ -145,11 +145,11 @@
    },
    {
     "pasta": "docs/qa/05-PROGRESSO.md",
-    "mudancas": 44
+    "mudancas": 45
    },
    {
     "pasta": "src/hooks/__tests__",
-    "mudancas": 37
+    "mudancas": 38
    },
    {
     "pasta": "src/lib/__tests__",
@@ -199,7 +199,7 @@
   "arquivos_mais_mudados_90d": [
    {
     "arquivo": "docs/qa/05-PROGRESSO.md",
-    "mudancas": 44
+    "mudancas": 45
    },
    {
     "arquivo": "docs/estado/funcionalidades-planejadas.md",
@@ -270,6 +270,14 @@
     "mudancas": 4
    },
    {
+    "arquivo": "src/hooks/__tests__/useQueueMetrics.coverage.test.tsx",
+    "mudancas": 4
+   },
+   {
+    "arquivo": "src/hooks/useQueueMetrics.ts",
+    "mudancas": 4
+   },
+   {
     "arquivo": "supabase/functions/dialer-pacing-tick/index.ts",
     "mudancas": 4
    },
@@ -288,20 +296,12 @@
    {
     "arquivo": "supabase/functions/voip-load-test/index.ts",
     "mudancas": 4
-   },
-   {
-    "arquivo": "AGENTS.md",
-    "mudancas": 3
-   },
-   {
-    "arquivo": "docs/agentes/edge-functions.md",
-    "mudancas": 3
    }
   ],
   "autores_30d": [
    {
     "autor": "adm01-debug",
-    "commits": 192
+    "commits": 193
    },
    {
     "autor": "Joaquim Ataides",
@@ -314,9 +314,9 @@
   ]
  },
  "contagens": {
-  "arquivos_total": 1700,
-  "arquivos_codigo": 1298,
-  "linhas_codigo": 175175,
+  "arquivos_total": 1701,
+  "arquivos_codigo": 1299,
+  "linhas_codigo": 175317,
   "rotas": 106,
   "rotas_http_backend": 12,
   "vistas_por_id": 0,
@@ -328,7 +328,7 @@
   "tabelas": 169,
   "migrations": 242,
   "cron_jobs": 11,
-  "testes": 377,
+  "testes": 378,
   "workflows": 3,
   "scripts": 34,
   "docs_md": 120
@@ -492,7 +492,7 @@
   },
   "src/hooks": {
    "arquivos": 355,
-   "linhas": 46432
+   "linhas": 46479
   },
   "src/integrations": {
    "arquivos": 3,
@@ -507,8 +507,8 @@
    "linhas": 44
   },
   "src/pages": {
-   "arquivos": 136,
-   "linhas": 21410
+   "arquivos": 137,
+   "linhas": 21505
   },
   "src/routes": {
    "arquivos": 2,

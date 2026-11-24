@@ -6626,7 +6626,7 @@
     "QueueMetricsDashboard"
    ],
    "export_default": "QueueMetricsDashboard",
-   "linhas": 106,
+   "linhas": 131,
    "dominio": "pages",
    "hooks_locais": [
     "usePageTitle",
