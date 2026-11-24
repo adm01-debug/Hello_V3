@@ -1695,7 +1695,7 @@
    "hooks_exportados": [
     "useContactAlerts"
    ],
-   "linhas": 190,
+   "linhas": 205,
    "dominio": "hooks",
    "tabelas": [
     "contact_alerts"

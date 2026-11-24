@@ -830,7 +830,7 @@
   {
    "arquivo": "src/hooks/__tests__/useContactAlerts.coverage.test.tsx",
    "tipo": "unit",
-   "linhas": 320,
+   "linhas": 333,
    "testa": [
     "src/hooks/useContactAlerts.ts",
     "src/integrations/supabase/client.ts"

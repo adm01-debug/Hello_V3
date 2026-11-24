@@ -1,6 +1,6 @@
 # 07 · REGRAS DE NEGÓCIO
 
-> Gerado automaticamente por AI Context Sync v1.3.2 · commit `43eafa2a2e` · branch `main` · 2026-11-24 07:53 UTC
+> Gerado automaticamente por AI Context Sync v1.3.2 · commit `55b1736818` · branch `main` · 2026-11-24 07:55 UTC
 > Não edite à mão — regras humanas vão em `manual/`.
 
 ## A. Regras escritas por humanos (`manual/` — prioridade máxima, nunca sobrescrito)
@@ -2475,6 +2475,11 @@ _nenhum item encontrado_
 | Erro ao concluir | `src/hooks/useCoachingAssignments.ts` |
 | Erro ao gerar trilhas | `src/hooks/useCoachingTrack.ts` |
 | Erro ao registrar consentimento | `src/hooks/useConsent.ts` |
+| Não foi possível marcar o alerta como lido | `src/hooks/useContactAlerts.ts` |
+| Não foi possível marcar o alerta como resolvido | `src/hooks/useContactAlerts.ts` |
+| Não foi possível marcar os alertas como lidos | `src/hooks/useContactAlerts.ts` |
+| Não foi possível remover o alerta | `src/hooks/useContactAlerts.ts` |
+| Não foi possível verificar novos alertas | `src/hooks/useContactAlerts.ts` |
 | Dados inválidos | `src/hooks/useContacts.ts` |
 | Erro ao buscar contato por telefone | `src/hooks/useContacts.ts` |
 | Erro ao carregar histórico de interações | `src/hooks/useContacts.ts` |
@@ -2578,12 +2583,7 @@ _nenhum item encontrado_
 | Erro ao excluir gravação | `src/hooks/useRecordings.ts` |
 | Erro ao transcrever gravação | `src/hooks/useRecordings.ts` |
 | Falha ao carregar renovações | `src/hooks/useRenewals.ts` |
-| Falha ao salvar renovação | `src/hooks/useRenewals.ts` |
-| Não foi possível adicionar o agente ao grupo | `src/hooks/useRingGroups.ts` |
-| Não foi possível alterar o status do grupo | `src/hooks/useRingGroups.ts` |
-| Não foi possível atualizar o grupo | `src/hooks/useRingGroups.ts` |
-| Não foi possível atualizar o participante | `src/hooks/useRingGroups.ts` |
-| … +277 linhas — lista completa em `context.json` | |
+| … +282 linhas — lista completa em `context.json` | |
 
 ## J. Controle de acesso no código (checagens de perfil/permissão)
 
