@@ -3064,7 +3064,7 @@
    "usado_por_arquivos": [
     "src/pages/ConcurrencyConflicts.tsx"
    ],
-   "coberto_por_testes": 1
+   "coberto_por_testes": 2
   },
   {
    "arquivo": "src/hooks/usePageTitle.ts",

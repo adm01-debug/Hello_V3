@@ -1,15 +1,15 @@
 {
  "meta": {
-  "sha": "046acb3e081da8898a435a7d2efb2aa9bd39e008",
+  "sha": "52e0392cfbba8be55582da2cc1198268a77c24be",
   "branch": "main",
   "remote": "https://github.com/adm01-debug/Hello_V3",
-  "generated_at": "2026-11-24 01:31 UTC",
-  "files_total": 1743,
-  "code_files": 1540,
-  "code_lines": 190840
+  "generated_at": "2026-11-24 01:38 UTC",
+  "files_total": 1744,
+  "code_files": 1541,
+  "code_lines": 190933
  },
  "version": "1.3.2",
- "facts_hash": "c961b66310e17cd0",
+ "facts_hash": "264d64998518500b",
  "stack": {
   "frameworks": [
    "React + Vite",
@@ -154,7 +154,7 @@
   "package_manager": "bun",
   "languages": {
    ".ts": 643,
-   ".tsx": 618,
+   ".tsx": 619,
    ".sql": 245,
    ".mjs": 27,
    ".py": 5,
@@ -34068,8 +34068,8 @@
   },
   {
    "module": "src/pages",
-   "files": 134,
-   "lines": 21263,
+   "files": 135,
+   "lines": 21356,
    "tables": [
     "audit_logs",
     "battle_card_triggers",
@@ -72357,6 +72357,22 @@
    {
     "file": "src/lib/webauthn/__tests__/webauthn-utils.coverage.test.ts",
     "name": "throws when get returns null"
+   },
+   {
+    "file": "src/pages/__tests__/ConcurrencyConflicts.test.tsx",
+    "name": "ConcurrencyConflicts — estado vazio honesto (E174)"
+   },
+   {
+    "file": "src/pages/__tests__/ConcurrencyConflicts.test.tsx",
+    "name": "diz que nao houve conflito no periodo em vez de deixar a tela em branco"
+   },
+   {
+    "file": "src/pages/__tests__/ConcurrencyConflicts.test.tsx",
+    "name": "explica a origem dos dados e a retencao de 90 dias"
+   },
+   {
+    "file": "src/pages/__tests__/ConcurrencyConflicts.test.tsx",
+    "name": "diz quantos conflitos estao sendo mostrados quando passa de 50"
    },
    {
     "file": "src/pages/__tests__/Login.lockout.test.tsx",
@@ -114525,7 +114541,7 @@
   },
   "src/pages/ConcurrencyConflicts.tsx": {
    "path": "src/pages/ConcurrencyConflicts.tsx",
-   "lines": 208,
+   "lines": 233,
    "exports": [
     "function ConcurrencyConflicts"
    ]
@@ -116202,6 +116218,17 @@
      "id"
     ]
    }
+  },
+  "src/pages/__tests__/ConcurrencyConflicts.test.tsx": {
+   "path": "src/pages/__tests__/ConcurrencyConflicts.test.tsx",
+   "lines": 68,
+   "is_test": true,
+   "tests": [
+    "ConcurrencyConflicts — estado vazio honesto (E174)",
+    "diz que nao houve conflito no periodo em vez de deixar a tela em branco",
+    "explica a origem dos dados e a retencao de 90 dias",
+    "diz quantos conflitos estao sendo mostrados quando passa de 50"
+   ]
   },
   "src/pages/__tests__/Login.lockout.test.tsx": {
    "path": "src/pages/__tests__/Login.lockout.test.tsx",
@@ -125235,10 +125262,21 @@
   }
  },
  "git": {
-  "sha": "046acb3e081da8898a435a7d2efb2aa9bd39e008",
+  "sha": "52e0392cfbba8be55582da2cc1198268a77c24be",
   "branch": "main",
   "remote": "https://github.com/adm01-debug/Hello_V3",
   "commits": [
+   {
+    "sha": "52e0392",
+    "date": "2026-11-23",
+    "author": "adm01-debug",
+    "subject": "fix: tela de conflitos de concorrencia explica o vazio e a retencao (#211)",
+    "files": [
+     "docs/qa/05-PROGRESSO.md",
+     "src/pages/ConcurrencyConflicts.tsx",
+     "src/pages/__tests__/ConcurrencyConflicts.test.tsx"
+    ]
+   },
    {
     "sha": "046acb3",
     "date": "2026-11-23",
@@ -125620,18 +125658,6 @@
      "supabase/functions/_shared/mos_test.ts",
      "supabase/functions/voip-recommendation-simulate/index.ts"
     ]
-   },
-   {
-    "sha": "5e20177",
-    "date": "2026-11-23",
-    "author": "adm01-debug",
-    "subject": "fix: SLA passa a respeitar horario comercial e feriados (E111) (#181)",
-    "files": [
-     "docs/qa/05-PROGRESSO.md",
-     "supabase/functions/_shared/business-hours.ts",
-     "supabase/functions/_shared/business-hours_test.ts",
-     "supabase/functions/enforce-sla/index.ts"
-    ]
    }
   ],
   "hot_files": [
@@ -125692,6 +125718,14 @@
     2
    ],
    [
+    "src/pages/ConcurrencyConflicts.tsx",
+    1
+   ],
+   [
+    "src/pages/__tests__/ConcurrencyConflicts.test.tsx",
+    1
+   ],
+   [
     "src/hooks/__tests__/useAnomalyRemediation.coverage.test.tsx",
     1
    ],
@@ -125705,14 +125739,6 @@
    ],
    [
     "src/components/compliance/dnc/__tests__/ReconcileDNCDialog.test.tsx",
-    1
-   ],
-   [
-    "src/lib/__tests__/dnc-reconcile.test.ts",
-    1
-   ],
-   [
-    "src/lib/__tests__/error-message.test.ts",
     1
    ]
   ]

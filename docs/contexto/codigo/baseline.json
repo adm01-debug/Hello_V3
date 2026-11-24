@@ -2,11 +2,16 @@
  "aviso": "GERADO AUTOMATICAMENTE por scripts/ai-context/gerar.mjs — não editar à mão; será sobrescrito.",
  "format_version": 2,
  "git": {
-  "commit": "046acb3e081da8898a435a7d2efb2aa9bd39e008",
+  "commit": "52e0392cfbba8be55582da2cc1198268a77c24be",
   "branch": "main",
-  "data_commit": "2026-11-23T22:31:23-03:00",
+  "data_commit": "2026-11-23T22:37:53-03:00",
   "remote": "https://github.com/adm01-debug/Hello_V3",
   "ultimos_commits": [
+   {
+    "sha": "52e0392",
+    "data": "2026-11-23",
+    "assunto": "fix: tela de conflitos de concorrencia explica o vazio e a retencao (#211)"
+   },
    {
     "sha": "046acb3",
     "data": "2026-11-23",
@@ -126,14 +131,9 @@
     "sha": "22ca6d0",
     "data": "2026-11-23",
     "assunto": "fix: notify-new-device exige sessao autenticada e nao aceita destinatario do corpo (E009) (#187)"
-   },
-   {
-    "sha": "3d4db07",
-    "data": "2026-11-23",
-    "assunto": "feat: modulo compartilhado de autenticacao de edge function (E005) (#186)"
    }
   ],
-  "arquivos_mudados_7d": 1013,
+  "arquivos_mudados_7d": 1015,
   "pastas_mais_mudadas_30d": [
    {
     "pasta": "covout/lcov-report/hooks",
@@ -145,7 +145,7 @@
    },
    {
     "pasta": "docs/qa/05-PROGRESSO.md",
-    "mudancas": 41
+    "mudancas": 42
    },
    {
     "pasta": "src/hooks/__tests__",
@@ -199,7 +199,7 @@
   "arquivos_mais_mudados_90d": [
    {
     "arquivo": "docs/qa/05-PROGRESSO.md",
-    "mudancas": 41
+    "mudancas": 42
    },
    {
     "arquivo": "docs/estado/funcionalidades-planejadas.md",
@@ -301,7 +301,7 @@
   "autores_30d": [
    {
     "autor": "adm01-debug",
-    "commits": 189
+    "commits": 190
    },
    {
     "autor": "Joaquim Ataides",
@@ -314,9 +314,9 @@
   ]
  },
  "contagens": {
-  "arquivos_total": 1696,
-  "arquivos_codigo": 1294,
-  "linhas_codigo": 174828,
+  "arquivos_total": 1697,
+  "arquivos_codigo": 1295,
+  "linhas_codigo": 174921,
   "rotas": 106,
   "rotas_http_backend": 12,
   "vistas_por_id": 0,
@@ -328,7 +328,7 @@
   "tabelas": 169,
   "migrations": 242,
   "cron_jobs": 11,
-  "testes": 374,
+  "testes": 375,
   "workflows": 3,
   "scripts": 34,
   "docs_md": 120
@@ -507,8 +507,8 @@
    "linhas": 44
   },
   "src/pages": {
-   "arquivos": 134,
-   "linhas": 21263
+   "arquivos": 135,
+   "linhas": 21356
   },
   "src/routes": {
    "arquivos": 2,
