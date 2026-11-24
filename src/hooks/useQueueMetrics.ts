@@ -6,6 +6,7 @@ import { DashboardGoal } from '@/components/dashboard/DashboardGoalsSettings';
 import { logger } from '@/lib/logger';
 
 import { safeFormatDate } from "@/lib/safe-date";
+import { mensagemDeErro } from '@/lib/error-message';
 
 // Estados em que a chamada está em curso. Já era o vocabulário usado no índice
 // parcial idx_call_sessions_status (20260326203635) e no useBlfBoard.
@@ -51,6 +52,8 @@ export function useQueueMetrics() {
   const [goalStatuses, setGoalStatuses] = useState<GoalStatus[]>([]);
   const [activeTab, setActiveTab] = useState('dashboard');
   const [checkingGoals, setCheckingGoals] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const [hasLoaded, setHasLoaded] = useState(false);
 
   const fetchGoals = async () => {
     const { data, error } = await supabase.from('dashboard_goals').select('*').eq('is_active', true);
@@ -90,10 +93,21 @@ export function useQueueMetrics() {
 
   const fetchMetrics = useCallback(async () => {
     try {
-      const { data: activeCalls } = await supabase.from('call_sessions').select('status').in('status', [...CHAMADA_EM_CURSO]);
-      const { data: agents } = await supabase.from('agents').select('status');
+      const { data: activeCalls, error: activeCallsError } = await supabase.from('call_sessions').select('status').in('status', [...CHAMADA_EM_CURSO]);
+      const { data: agents, error: agentsError } = await supabase.from('agents').select('status');
       const oneHourAgo = new Date(Date.now() - 60 * 60 * 1000).toISOString();
-      const { data: recentCalls } = await supabase.from('call_sessions').select('duration_seconds, hold_time_seconds, status').gte('created_at', oneHourAgo);
+      const { data: recentCalls, error: recentCallsError } = await supabase.from('call_sessions').select('duration_seconds, hold_time_seconds, status').gte('created_at', oneHourAgo);
+
+      // Falha de leitura devolve data null. Com o `|| 0` antigo o painel
+      // anunciava "0 chamadas, 0 agentes" — indistinguivel de um dia calmo.
+      // Se qualquer uma das tres consultas falhar, nao calculamos nada.
+      const falhaLeitura = activeCallsError || agentsError || recentCallsError;
+      if (falhaLeitura) {
+        logger.error('Erro ao ler metricas da fila:', falhaLeitura);
+        setError(mensagemDeErro(falhaLeitura));
+        return;
+      }
+      setError(null);
 
       const active = activeCalls?.filter(c => c.status === 'active' || c.status === 'ringing').length || 0;
       const waiting = activeCalls?.filter(c => c.status === 'on_hold').length || 0;
@@ -126,6 +140,7 @@ export function useQueueMetrics() {
       };
       setMetrics(newMetrics);
       setLastUpdate(new Date());
+      setHasLoaded(true);
       if (goals.length > 0) checkAndNotifyGoals(newMetrics);
 
       setRealtimeData(prev => {
@@ -138,6 +153,7 @@ export function useQueueMetrics() {
       });
     } catch (error) {
       logger.error('Error fetching metrics:', error);
+      setError(mensagemDeErro(error));
     } finally {
       setLoading(false);
     }
@@ -187,6 +203,7 @@ export function useQueueMetrics() {
 
   return {
     metrics, realtimeData, loading, lastUpdate, goals, goalStatuses,
+    error, hasLoaded,
     activeTab, setActiveTab, checkingGoals,
     fetchMetrics, fetchGoals, runGoalsCheck,
     formatTime, formatGoalValue, criticalGoals, warningGoals,
