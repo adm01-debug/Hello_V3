@@ -3,6 +3,7 @@ import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
 import { clientIpFromHeaders } from "../_shared/client-ip.ts";
 import { checkRateLimitDB } from "../_shared/rate-limit.ts";
 import { GENERIC_INTERNAL_MESSAGE, getCorrelationId } from '../_shared/errors.ts';
+import { decideGeoAccess } from './decide.ts';
 
 Deno.serve(async (req) => {
   if (req.method === 'OPTIONS') {
@@ -93,22 +94,37 @@ Deno.serve(async (req) => {
       );
     }
 
-    // Check if country is in allowlist
-    const { data: allowedCountries } = await supabase
+    // Lista de paises configurada na tela (o modo decide o sentido dela).
+    const { data: restrictedCountries } = await supabase
       .from('geo_restrictions')
-      .select('country_code')
-      .eq('restriction_type', 'allow');
+      .select('country_code');
 
-    const isAllowed = allowedCountries?.some(c => c.country_code === countryCode) ?? false;
+    const decision = decideGeoAccess(
+      settings.mode,
+      countryCode,
+      (restrictedCountries ?? []).map((c) => c.country_code),
+    );
 
-    if (!allowedCountries || allowedCountries.length === 0) {
+    // Modo desconhecido em geo_settings.mode: recusa explicita + log, nunca um
+    // `else` silencioso que escolhe um modo por conta propria.
+    if (decision.verdict === 'invalid_mode') {
+      console.error('validate-geo: modo de bloqueio geografico invalido; acesso recusado', {
+        mode: settings.mode,
+      });
       return new Response(
-        JSON.stringify({ allowed: true, reason: 'Allowlist not configured' }),
+        JSON.stringify({ allowed: false, reason: decision.reason, country: countryCode, countryName }),
+        { status: 403, headers: { ...buildCorsHeaders(req), 'Content-Type': 'application/json' } }
+      );
+    }
+
+    if (decision.verdict === 'not_configured' || decision.verdict === 'unknown_country') {
+      return new Response(
+        JSON.stringify({ allowed: true, reason: decision.reason }),
         { headers: { ...buildCorsHeaders(req), 'Content-Type': 'application/json' } }
       );
     }
 
-    if (isAllowed) {
+    if (decision.allowed) {
       if (settings.log_blocked_attempts) {
         const { error: geoAllowErr } = await supabase.from('geo_access_logs').insert({
           action: 'allowed',
@@ -120,7 +136,7 @@ Deno.serve(async (req) => {
           user_id: userId,
           user_email: userEmail,
           user_agent: req.headers.get('user-agent'),
-          reason: 'Country in allowlist'
+          reason: decision.logReason
         });
         if (geoAllowErr) console.error('validate-geo: falha ao registrar acesso permitido', geoAllowErr);
       }
@@ -131,7 +147,7 @@ Deno.serve(async (req) => {
       );
     }
 
-    // Country not in allowlist - block
+    // Bloqueado: fora da allowlist ou dentro da blocklist.
     if (settings.log_blocked_attempts) {
       const { error: geoBlockErr } = await supabase.from('geo_access_logs').insert({
         action: 'blocked',
@@ -143,7 +159,7 @@ Deno.serve(async (req) => {
         user_id: userId,
         user_email: userEmail,
         user_agent: req.headers.get('user-agent'),
-        reason: 'Country not in allowlist'
+        reason: decision.logReason
       });
       if (geoBlockErr) console.error('validate-geo: falha ao registrar acesso bloqueado', geoBlockErr);
     }
@@ -170,7 +186,7 @@ Deno.serve(async (req) => {
     return new Response(
       JSON.stringify({ 
         allowed: false, 
-        reason: 'País não permitido',
+        reason: decision.reason,
         country: countryCode,
         countryName
       }),
