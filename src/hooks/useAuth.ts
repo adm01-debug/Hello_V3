@@ -6,6 +6,10 @@ import { useAuthProfile } from './auth/useAuthProfile';
 import { useAuthSession } from './auth/useAuthSession';
 import { useAuthActions } from './auth/useAuthActions';
 
+// Chave de sessao do Supabase em localStorage (sb-<ref>-auth-token, com sufixo
+// .0/.1 quando o valor e fatiado em pedacos).
+const SUPABASE_AUTH_TOKEN_KEY = /^sb-.*-auth-token(\.\d+)?$/;
+
 export type { UserRole, UserProfile } from './auth/useAuthState';
 
 export function useAuth() {
@@ -25,6 +29,32 @@ export function useAuth() {
     };
   }, [getSession, fetchedRef]);
 
+  const handleSignedOut = useCallback(() => {
+    setAuthState({
+      user: null,
+      session: null,
+      profile: null,
+      loading: false,
+      error: null,
+    });
+  }, [setAuthState]);
+
+  // Sincroniza o fim de sessao entre abas: o auth-js 2.x nao escuta o evento
+  // `storage` (so `visibilitychange`), entao uma aba visivel continuaria
+  // autenticada ate a proxima consulta falhar. Reagimos apenas a remocao do
+  // token; login ou renovacao em outra aba gravam valor novo e sao ignorados.
+  useEffect(() => {
+    const onStorage = (event: StorageEvent) => {
+      if (!event.key || !SUPABASE_AUTH_TOKEN_KEY.test(event.key)) return;
+      if (event.newValue !== null) return;
+      logger.create('Auth').debug('Sessao encerrada em outra aba');
+      handleSignedOut();
+    };
+
+    window.addEventListener('storage', onStorage);
+    return () => window.removeEventListener('storage', onStorage);
+  }, [handleSignedOut]);
+
   // Auth state change listener
   useEffect(() => {
     const { data: { subscription } } = supabase.auth.onAuthStateChange(
@@ -34,13 +64,7 @@ export function useAuth() {
         if (isCleaningUp.current) return;
 
         if (event === 'SIGNED_OUT' || !session) {
-          setAuthState({
-            user: null,
-            session: null,
-            profile: null,
-            loading: false,
-            error: null,
-          });
+          handleSignedOut();
           return;
         }
 
@@ -68,7 +92,7 @@ export function useAuth() {
     return () => {
       subscription.unsubscribe();
     };
-  }, [getProfile, clearSession, setAuthState, isCleaningUp]);
+  }, [getProfile, clearSession, setAuthState, isCleaningUp, handleSignedOut]);
 
   const hasRole = useCallback((roles: import('./auth/useAuthState').UserRole[]) => {
     if (!authState.profile) return false;

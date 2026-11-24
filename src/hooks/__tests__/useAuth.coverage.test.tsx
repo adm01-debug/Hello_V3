@@ -94,6 +94,49 @@ describe('useAuth', () => {
     await waitFor(() => expect(clearSession).toHaveBeenCalled());
   });
 
+  it('encerra a sessao quando o token do Supabase some em outra aba', async () => {
+    stateValue = { ...stateValue, user: { id: 'u1' }, session: { user: { id: 'u1' } }, loading: false };
+    const { result, rerender } = renderHook(() => useAuth());
+    await waitFor(() => expect(authChangeCb).not.toBeNull());
+    expect(result.current.isAuthenticated).toBe(true);
+
+    await act(async () => {
+      window.dispatchEvent(new StorageEvent('storage', { key: 'sb-projeto-auth-token', newValue: null }));
+    });
+
+    expect(setAuthState).toHaveBeenCalledWith(
+      expect.objectContaining({ user: null, session: null, profile: null, loading: false }),
+    );
+    rerender();
+    expect(result.current.isAuthenticated).toBe(false);
+  });
+
+  it('nao encerra a sessao quando outra aba renova o token', async () => {
+    renderHook(() => useAuth());
+    await waitFor(() => expect(authChangeCb).not.toBeNull());
+    setAuthState.mockClear();
+
+    await act(async () => {
+      window.dispatchEvent(
+        new StorageEvent('storage', { key: 'sb-projeto-auth-token', newValue: '{"access_token":"novo"}' }),
+      );
+    });
+
+    expect(setAuthState).not.toHaveBeenCalled();
+  });
+
+  it('ignora remocao de chave que nao e de autenticacao', async () => {
+    renderHook(() => useAuth());
+    await waitFor(() => expect(authChangeCb).not.toBeNull());
+    setAuthState.mockClear();
+
+    await act(async () => {
+      window.dispatchEvent(new StorageEvent('storage', { key: 'tema', newValue: null }));
+    });
+
+    expect(setAuthState).not.toHaveBeenCalled();
+  });
+
   it('unsubscribes on unmount', () => {
     const { unmount } = renderHook(() => useAuth());
     unmount();
