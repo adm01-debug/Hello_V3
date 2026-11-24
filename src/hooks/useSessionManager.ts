@@ -136,6 +136,8 @@ export function useSessionManager() {
         .eq('id', currentSessionId);
       if (error) logger.warn('Falha ao atualizar atividade da sessão', error);
     } catch (error) {
+      // Heartbeat: no pior caso a sessao parece inativa mais cedo e o agente reloga.
+      // Nada foi perdido e avisar na tela seria ruido.
       logger.error('Error updating activity:', error);
     }
   }, [currentSessionId]);

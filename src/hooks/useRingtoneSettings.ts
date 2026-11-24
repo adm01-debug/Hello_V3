@@ -190,6 +190,8 @@ export function useRingtoneSettings() {
           .eq('id', userId);
         if (error) throw error;
       } catch (error) {
+        // O toque ja vale neste dispositivo; o sync existe para os outros.
+        // Falhar aqui nao pode impedir o usuario de atender a chamada.
         log.warn('Falha ao sincronizar preferência de toque', { error });
       }
     },

@@ -109,8 +109,9 @@ async function persistAlert(payload: {
       user_id: userId,
       ...payload,
     });
-    if (error) log.warn('Falha ao persistir alerta', error);
+    // Alerta de qualidade que nao grava e alerta que ninguem recebe: erro, nao aviso (mesma logica da E193).
+    if (error) log.error('Falha ao persistir alerta', error);
   } catch (e) {
-    log.warn('Erro inesperado ao persistir alerta', e);
+    log.error('Erro inesperado ao persistir alerta', e);
   }
 }
