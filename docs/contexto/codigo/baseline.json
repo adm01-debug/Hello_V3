@@ -2,11 +2,21 @@
  "aviso": "GERADO AUTOMATICAMENTE por scripts/ai-context/gerar.mjs — não editar à mão; será sobrescrito.",
  "format_version": 2,
  "git": {
-  "commit": "b8877578dc7961bf758edfe7fba3124b53a056db",
+  "commit": "a7041fc40611604dc3a80723c6d48917daf21e53",
   "branch": "main",
-  "data_commit": "2026-11-24T06:13:31-03:00",
+  "data_commit": "2026-11-24T06:27:21-03:00",
   "remote": "https://github.com/adm01-debug/Hello_V3",
   "ultimos_commits": [
+   {
+    "sha": "a7041fc",
+    "data": "2026-11-24",
+    "assunto": "chore: regenera types.ts a partir do schema de producao (etapa 136) (#272)"
+   },
+   {
+    "sha": "2772bab",
+    "data": "2026-11-24",
+    "assunto": "docs: registra o desfecho da apuracao de exclusao de conta LGPD (etapa 132) (#271)"
+   },
    {
     "sha": "b887757",
     "data": "2026-11-24",
@@ -121,19 +131,9 @@
     "sha": "e335d9d",
     "data": "2026-11-24",
     "assunto": "feat: botao Ver Alertas abre a lista de alertas na propria tela (etapa 167) (#247)"
-   },
-   {
-    "sha": "8aa5275",
-    "data": "2026-11-24",
-    "assunto": "feat: estados de falha visiveis no softphone (etapa 233) (#246)"
-   },
-   {
-    "sha": "b5df75f",
-    "data": "2026-11-24",
-    "assunto": "feat: leitura do artigo da base de conhecimento (etapa 153) (#248)"
    }
   ],
-  "arquivos_mudados_7d": 1172,
+  "arquivos_mudados_7d": 1174,
   "pastas_mais_mudadas_30d": [
    {
     "pasta": "covout/lcov-report/hooks",
@@ -141,7 +141,7 @@
    },
    {
     "pasta": "docs/qa/05-PROGRESSO.md",
-    "mudancas": 95
+    "mudancas": 97
    },
    {
     "pasta": "src/hooks/__tests__",
@@ -199,7 +199,7 @@
   "arquivos_mais_mudados_90d": [
    {
     "arquivo": "docs/qa/05-PROGRESSO.md",
-    "mudancas": 95
+    "mudancas": 97
    },
    {
     "arquivo": "docs/estado/funcionalidades-planejadas.md",
@@ -301,7 +301,7 @@
   "autores_30d": [
    {
     "autor": "adm01-debug",
-    "commits": 249
+    "commits": 251
    },
    {
     "autor": "Joaquim Ataides",
@@ -316,7 +316,7 @@
  "contagens": {
   "arquivos_total": 1737,
   "arquivos_codigo": 1334,
-  "linhas_codigo": 179869,
+  "linhas_codigo": 180197,
   "rotas": 106,
   "rotas_http_backend": 12,
   "vistas_por_id": 0,
@@ -496,7 +496,7 @@
   },
   "src/integrations": {
    "arquivos": 3,
-   "linhas": 7851
+   "linhas": 8179
   },
   "src/lib": {
    "arquivos": 180,
@@ -542,7 +542,7 @@
  "maiores_arquivos": [
   {
    "arquivo": "src/integrations/supabase/types.ts",
-   "linhas": 7788
+   "linhas": 8116
   },
   {
    "arquivo": "scripts/regras_negocio/generate.py",
@@ -716,17 +716,7 @@
   "tabelas_usadas_sem_definicao": [
    "agent_status_history"
   ],
-  "tabelas_com_drift_migration_vs_types": [
-   "agents",
-   "blocked_access_logs",
-   "call_control_audit_logs",
-   "call_quality_metrics",
-   "call_sessions",
-   "contacts",
-   "system_settings",
-   "user_profiles",
-   "voip_trunk_usage_metrics"
-  ],
+  "tabelas_com_drift_migration_vs_types": [],
   "rpcs_sem_definicao": [],
   "componentes_orfaos": [
    "src/components/alerts/AlertsDropdown.tsx",

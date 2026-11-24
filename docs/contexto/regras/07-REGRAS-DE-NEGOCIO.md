@@ -1,6 +1,6 @@
 # 07 · REGRAS DE NEGÓCIO
 
-> Gerado automaticamente por AI Context Sync v1.3.2 · commit `b8877578dc` · branch `main` · 2026-11-24 09:14 UTC
+> Gerado automaticamente por AI Context Sync v1.3.2 · commit `a7041fc406` · branch `main` · 2026-11-24 09:27 UTC
 > Não edite à mão — regras humanas vão em `manual/`.
 
 ## A. Regras escritas por humanos (`manual/` — prioridade máxima, nunca sobrescrito)
@@ -539,8 +539,6 @@ _Nenhum arquivo em `manual/`. Copie `manual/TEMPLATE-regras-de-negocio.md` para 
 | `user_profiles` | `email` | obrigatório |
 | `user_profiles` | `role` | obrigatório |
 | `user_profiles` | `updated_at` | obrigatório |
-| `user_profiles` | `voice_command_history` | obrigatório |
-| `user_profiles` | `voice_tts_rate` | obrigatório |
 | `user_profiles` | `(tabela)` | constraint user_profiles_ringtone_preset_check CHECK (ringtone_preset IS NULL OR (char_length(btrim(ringtone_preset)) BETWEEN 1 AND 32 AND ringtone_preset = btrim(ringtone_preset))) |
 | `user_profiles` | `(tabela)` | constraint user_profiles_ringtone_volume_check CHECK (ringtone_volume IS NULL OR (ringtone_volume >= 0 AND ringtone_volume <= 1)) |
 | `user_profiles` | `(tabela)` | constraint user_profiles_preferred_device_label_check CHECK ( preferred_device_label IS NULL OR ( char_length(preferred_device_label) BETWEEN 1 AND 60 AND preferred_device_label = btrim(preferred_device_label) ) ) |
@@ -617,7 +615,9 @@ _Nenhum arquivo em `manual/`. Copie `manual/TEMPLATE-regras-de-negocio.md` para 
 | `user_roles` | `user_id` | único; FK → users.id ON DELETE CASCADE |
 | `user_roles` | `role` | default 'agent' |
 | `user_roles` | `is_active` | default true |
-| … +1043 linhas — lista completa em `context.json` | | |
+| `user_roles` | `created_at` | default now() |
+| `permissions` | `id` | PK; default gen_random_uuid() |
+| … +1047 linhas — lista completa em `context.json` | | |
 
 ## D. Automações no banco (triggers e funções — regras que rodam sozinhas)
 
@@ -827,6 +827,7 @@ Erros lançados por funções SQL (`RAISE EXCEPTION` = regra de negócio no banc
 | `shift_swap_suggestions` | `status` | `approved`, `expired`, `pending`, `rejected` | `pending` |
 | `data_lake_exports` | `status` | `completed`, `failed`, `pending`, `processing` | `pending` |
 | `parked_calls` | `status` | `abandoned`, `expired`, `parked`, `retrieved` | `parked` |
+| `migration_status` | `status` | **livre (sem enum/CHECK)** |  |
 
 ### E.2 Mapas de transição declarados no código
 
@@ -1036,8 +1037,6 @@ _nenhum mapa explícito encontrado — transições só existem implicitamente n
 
 | Nome | Valores | Onde |
 |---|---|---|
-| app_role | `admin`, `supervisor`, `agent`, `viewer` | banco |
-| voip_provider | `nvoip`, `directcall`, `totalvoice`, `generic`, `wavoip` | banco |
 | HealthFilter | all \| healthy \| warning \| critical | `src/components/admin/extensions/ExtensionsFilters.tsx` |
 | SUPPORTED_TIMEZONES | 'America/Sao_Paulo', 'America/Fortaleza', 'America/Manaus', 'America/Cuiaba', 'America/Bogota', 'America/Buenos_Aires', 'America/Mexico_City', 'America/New_York', 'America/Los_Angeles', 'Europe/Lisbon', 'Europe/Madrid', 'UTC', | `src/components/compliance/calling-hours/types.ts` |
 | DNC_REASONS | { value: 'manual', label: 'Adição Manual' }, { value: 'customer_request', label: 'Solicitação do Cliente' }, { value: 'complaint', label: 'Reclamação' }, { value: 'legal', label: 'Determinação Legal' }, { value: 'opt_out', label: 'Opt-out' }, { value: 'wrong_number', label: 'Número Incorreto' }, { v … | `src/components/compliance/dnc/constants.ts` |

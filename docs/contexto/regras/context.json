@@ -1,15 +1,15 @@
 {
  "meta": {
-  "sha": "b8877578dc7961bf758edfe7fba3124b53a056db",
+  "sha": "a7041fc40611604dc3a80723c6d48917daf21e53",
   "branch": "main",
   "remote": "https://github.com/adm01-debug/Hello_V3",
-  "generated_at": "2026-11-24 09:14 UTC",
+  "generated_at": "2026-11-24 09:27 UTC",
   "files_total": 1784,
   "code_files": 1580,
-  "code_lines": 195881
+  "code_lines": 196209
  },
  "version": "1.3.2",
- "facts_hash": "efe782a4babc5730",
+ "facts_hash": "b7c3ed6970985e80",
  "stack": {
   "frameworks": [
    "React + Vite",
@@ -351,6 +351,13 @@
       "fk": "",
       "generated": "",
       "src": "supabase/migrations/20250101000000_versioning.sql"
+     },
+     {
+      "name": "checksum",
+      "type": "string | null",
+      "fk": "",
+      "generated": "",
+      "src": "src/integrations/supabase/types.ts"
      }
     ],
     "constraints": [
@@ -516,6 +523,13 @@
       "fk": "",
       "generated": "",
       "src": "supabase/migrations/20260418125824_ffc6f214-6d47-4a13-b234-cfa8c460ec61.sql"
+     },
+     {
+      "name": "favorite",
+      "type": "boolean | null",
+      "fk": "",
+      "generated": "",
+      "src": "src/integrations/supabase/types.ts"
      }
     ],
     "constraints": [],
@@ -2584,7 +2598,7 @@
      },
      {
       "name": "voice_command_history",
-      "type": "Json not null",
+      "type": "Json | null",
       "fk": "",
       "generated": "",
       "src": "src/integrations/supabase/types.ts"
@@ -2598,7 +2612,7 @@
      },
      {
       "name": "voice_tts_rate",
-      "type": "number not null",
+      "type": "number | null",
       "fk": "",
       "generated": "",
       "src": "src/integrations/supabase/types.ts"
@@ -14194,6 +14208,163 @@
     "src": "src/integrations/supabase/types.ts",
     "comment": "",
     "origin": "types.ts"
+   },
+   "index_usage": {
+    "columns": [
+     {
+      "name": "index_scans",
+      "type": "number | null",
+      "fk": "",
+      "generated": "",
+      "src": "src/integrations/supabase/types.ts"
+     },
+     {
+      "name": "index_size",
+      "type": "string | null",
+      "fk": "",
+      "generated": "",
+      "src": "src/integrations/supabase/types.ts"
+     },
+     {
+      "name": "indexname",
+      "type": "unknown not null",
+      "fk": "",
+      "generated": "",
+      "src": "src/integrations/supabase/types.ts"
+     },
+     {
+      "name": "schemaname",
+      "type": "unknown not null",
+      "fk": "",
+      "generated": "",
+      "src": "src/integrations/supabase/types.ts"
+     },
+     {
+      "name": "tablename",
+      "type": "unknown not null",
+      "fk": "",
+      "generated": "",
+      "src": "src/integrations/supabase/types.ts"
+     },
+     {
+      "name": "tuples_fetched",
+      "type": "number | null",
+      "fk": "",
+      "generated": "",
+      "src": "src/integrations/supabase/types.ts"
+     },
+     {
+      "name": "tuples_read",
+      "type": "number | null",
+      "fk": "",
+      "generated": "",
+      "src": "src/integrations/supabase/types.ts"
+     }
+    ],
+    "constraints": [],
+    "src": "src/integrations/supabase/types.ts",
+    "comment": "",
+    "origin": "types.ts"
+   },
+   "migration_status": {
+    "columns": [
+     {
+      "name": "applied_at",
+      "type": "string | null",
+      "fk": "",
+      "generated": "",
+      "src": "src/integrations/supabase/types.ts"
+     },
+     {
+      "name": "applied_by",
+      "type": "string | null",
+      "fk": "",
+      "generated": "",
+      "src": "src/integrations/supabase/types.ts"
+     },
+     {
+      "name": "execution_time_ms",
+      "type": "number | null",
+      "fk": "",
+      "generated": "",
+      "src": "src/integrations/supabase/types.ts"
+     },
+     {
+      "name": "name",
+      "type": "string | null",
+      "fk": "",
+      "generated": "",
+      "src": "src/integrations/supabase/types.ts"
+     },
+     {
+      "name": "status",
+      "type": "string | null",
+      "fk": "",
+      "generated": "",
+      "src": "src/integrations/supabase/types.ts"
+     },
+     {
+      "name": "success",
+      "type": "boolean | null",
+      "fk": "",
+      "generated": "",
+      "src": "src/integrations/supabase/types.ts"
+     },
+     {
+      "name": "version",
+      "type": "string | null",
+      "fk": "",
+      "generated": "",
+      "src": "src/integrations/supabase/types.ts"
+     }
+    ],
+    "constraints": [],
+    "src": "src/integrations/supabase/types.ts",
+    "comment": "",
+    "origin": "types.ts"
+   },
+   "unused_indexes": {
+    "columns": [
+     {
+      "name": "idx_scan",
+      "type": "number | null",
+      "fk": "",
+      "generated": "",
+      "src": "src/integrations/supabase/types.ts"
+     },
+     {
+      "name": "index_size",
+      "type": "string | null",
+      "fk": "",
+      "generated": "",
+      "src": "src/integrations/supabase/types.ts"
+     },
+     {
+      "name": "indexname",
+      "type": "unknown not null",
+      "fk": "",
+      "generated": "",
+      "src": "src/integrations/supabase/types.ts"
+     },
+     {
+      "name": "schemaname",
+      "type": "unknown not null",
+      "fk": "",
+      "generated": "",
+      "src": "src/integrations/supabase/types.ts"
+     },
+     {
+      "name": "tablename",
+      "type": "unknown not null",
+      "fk": "",
+      "generated": "",
+      "src": "src/integrations/supabase/types.ts"
+     }
+    ],
+    "constraints": [],
+    "src": "src/integrations/supabase/types.ts",
+    "comment": "",
+    "origin": "types.ts"
    }
   },
   "policies": [
@@ -21904,7 +22075,7 @@
      "v_effective"
     ]
    },
-   "Args": {
+   "graphql": {
     "args": "",
     "returns": "?",
     "lang": "",
@@ -21915,7 +22086,7 @@
     "raises": [],
     "tables": []
    },
-   "Returns": {
+   "Args": {
     "args": "",
     "returns": "?",
     "lang": "",
@@ -21927,21 +22098,7 @@
     "tables": []
    }
   },
-  "enums": {
-   "app_role": [
-    "admin",
-    "supervisor",
-    "agent",
-    "viewer"
-   ],
-   "voip_provider": [
-    "nvoip",
-    "directcall",
-    "totalvoice",
-    "generic",
-    "wavoip"
-   ]
-  },
+  "enums": {},
   "indexes": [
    {
     "name": "idx_saved_filters_user_id",
@@ -33873,7 +34030,7 @@
   {
    "module": "src/integrations",
    "files": 3,
-   "lines": 7851,
+   "lines": 8179,
    "tables": [],
    "exports": [
     "index.ts: lovable",
@@ -38770,13 +38927,16 @@
    "deal_revenue_snapshots",
    "email_verification_tokens",
    "entity_versions",
+   "index_usage",
    "kb_article_history",
    "migration_rollbacks",
+   "migration_status",
    "password_reset_tokens",
    "queue_items",
    "queue_skill_requirements",
    "saved_filters",
-   "schema_migrations"
+   "schema_migrations",
+   "unused_indexes"
   ],
   "columns_unknown": [
    {
@@ -44505,16 +44665,6 @@
    },
    {
     "table": "user_profiles",
-    "column": "voice_command_history",
-    "rule": "obrigatório"
-   },
-   {
-    "table": "user_profiles",
-    "column": "voice_tts_rate",
-    "rule": "obrigatório"
-   },
-   {
-    "table": "user_profiles",
     "column": "(tabela)",
     "rule": "constraint user_profiles_ringtone_preset_check CHECK (ringtone_preset IS NULL OR (char_length(btrim(ringtone_preset)) BETWEEN 1 AND 32 AND ringtone_preset = btrim(ringtone_preset)))"
    },
@@ -50106,6 +50256,36 @@
    {
     "table": "geo_settings",
     "column": "updated_at",
+    "rule": "obrigatório"
+   },
+   {
+    "table": "index_usage",
+    "column": "indexname",
+    "rule": "obrigatório"
+   },
+   {
+    "table": "index_usage",
+    "column": "schemaname",
+    "rule": "obrigatório"
+   },
+   {
+    "table": "index_usage",
+    "column": "tablename",
+    "rule": "obrigatório"
+   },
+   {
+    "table": "unused_indexes",
+    "column": "indexname",
+    "rule": "obrigatório"
+   },
+   {
+    "table": "unused_indexes",
+    "column": "schemaname",
+    "rule": "obrigatório"
+   },
+   {
+    "table": "unused_indexes",
+    "column": "tablename",
     "rule": "obrigatório"
    }
   ],
@@ -82997,7 +83177,7 @@
      "v_effective"
     ]
    },
-   "Args": {
+   "graphql": {
     "args": "",
     "returns": "?",
     "lang": "",
@@ -83008,7 +83188,7 @@
     "raises": [],
     "tables": []
    },
-   "Returns": {
+   "Args": {
     "args": "",
     "returns": "?",
     "lang": "",
@@ -83020,21 +83200,7 @@
     "tables": []
    }
   },
-  "db_enums": {
-   "app_role": [
-    "admin",
-    "supervisor",
-    "agent",
-    "viewer"
-   ],
-   "voip_provider": [
-    "nvoip",
-    "directcall",
-    "totalvoice",
-    "generic",
-    "wavoip"
-   ]
-  },
+  "db_enums": {},
   "db_raises": [
    {
     "function": "rollback_migration",
@@ -84123,6 +84289,14 @@
      ],
      "default": "parked",
      "type": "TEXT NOT NULL DEFAULT 'parked'"
+    },
+    {
+     "table": "migration_status",
+     "column": "status",
+     "enum": "",
+     "allowed": [],
+     "default": "",
+     "type": "string | null"
     }
    ],
    "usage": {
@@ -86569,6 +86743,13 @@
     "UPDATE": [],
     "DELETE": []
    },
+   "index_usage": {
+    "rls": "não encontrado",
+    "SELECT": [],
+    "INSERT": [],
+    "UPDATE": [],
+    "DELETE": []
+   },
    "ip_whitelist": {
     "rls": "enabled",
     "SELECT": [
@@ -86745,6 +86926,13 @@
     ]
    },
    "migration_rollbacks": {
+    "rls": "não encontrado",
+    "SELECT": [],
+    "INSERT": [],
+    "UPDATE": [],
+    "DELETE": []
+   },
+   "migration_status": {
     "rls": "não encontrado",
     "SELECT": [],
     "INSERT": [],
@@ -87460,6 +87648,13 @@
     "DELETE": [
      "public: is_admin_or_supervisor()"
     ]
+   },
+   "unused_indexes": {
+    "rls": "não encontrado",
+    "SELECT": [],
+    "INSERT": [],
+    "UPDATE": [],
+    "DELETE": []
    },
    "user_allowed_ips": {
     "rls": "enabled",
@@ -90854,7 +91049,10 @@
     "created_at",
     "updated_at"
    ],
-   "financial_impact_daily": []
+   "financial_impact_daily": [],
+   "index_usage": [],
+   "migration_status": [],
+   "unused_indexes": []
   },
   "pii": [
    [
@@ -91786,7 +91984,8 @@
    "`shift_swap_suggestions.status` tem valores ['approved', 'expired', 'pending', 'rejected'] mas nenhum mapa de transições foi encontrado no código — a ordem permitida (ex.: pago → cancelado?) não está declarada.",
    "`data_lake_exports.status` tem valores ['completed', 'failed', 'pending', 'processing'] mas nenhum mapa de transições foi encontrado no código — a ordem permitida (ex.: pago → cancelado?) não está declarada.",
    "`parked_calls.status` tem valores ['abandoned', 'expired', 'parked', 'retrieved'] mas nenhum mapa de transições foi encontrado no código — a ordem permitida (ex.: pago → cancelado?) não está declarada.",
-   "164/166 tabelas sem `COMMENT ON TABLE` — o significado de negócio não está no schema: `entity_versions`, `schema_migrations`, `migration_rollbacks`, `contacts`, `call_records`, `queue_items`, `agents`, `call_sessions`, `call_transcriptions`, `call_analyses`, `call_summaries`, `call_alerts` …",
+   "`migration_status.status` é uma coluna de status sem enum/CHECK — os valores válidos e as transições permitidas não estão no banco.",
+   "167/169 tabelas sem `COMMENT ON TABLE` — o significado de negócio não está no schema: `entity_versions`, `schema_migrations`, `migration_rollbacks`, `contacts`, `call_records`, `queue_items`, `agents`, `call_sessions`, `call_transcriptions`, `call_analyses`, `call_summaries`, `call_alerts` …",
    "Há tabelas usadas no código sem migration no repo — o schema real pode ter sido alterado pelo painel."
   ]
  },
@@ -110584,7 +110783,7 @@
   },
   "src/integrations/supabase/types.ts": {
    "path": "src/integrations/supabase/types.ts",
-   "lines": 7788,
+   "lines": 8116,
    "exports": [
     "type Json",
     "type Database",
@@ -127132,10 +127331,30 @@
   }
  },
  "git": {
-  "sha": "b8877578dc7961bf758edfe7fba3124b53a056db",
+  "sha": "a7041fc40611604dc3a80723c6d48917daf21e53",
   "branch": "main",
   "remote": "https://github.com/adm01-debug/Hello_V3",
   "commits": [
+   {
+    "sha": "a7041fc",
+    "date": "2026-11-24",
+    "author": "adm01-debug",
+    "subject": "chore: regenera types.ts a partir do schema de producao (etapa 136) (#272)",
+    "files": [
+     "docs/qa/05-PROGRESSO.md",
+     "src/integrations/supabase/types.ts"
+    ]
+   },
+   {
+    "sha": "2772bab",
+    "date": "2026-11-24",
+    "author": "adm01-debug",
+    "subject": "docs: registra o desfecho da apuracao de exclusao de conta LGPD (etapa 132) (#271)",
+    "files": [
+     "docs/agentes/banco.md",
+     "docs/qa/05-PROGRESSO.md"
+    ]
+   },
    {
     "sha": "b887757",
     "date": "2026-11-24",
@@ -127555,33 +127774,6 @@
      "src/hooks/useMultiChannelCall.ts",
      "src/hooks/useVoipQualityMonitor.ts"
     ]
-   },
-   {
-    "sha": "95304bc",
-    "date": "2026-11-24",
-    "author": "adm01-debug",
-    "subject": "feat: ligar botões Configurar e adicionar testes de áudio (#242)",
-    "files": [
-     "docs/qa/05-PROGRESSO.md",
-     "src/lib/audio/__tests__/deviceTest.test.ts",
-     "src/lib/audio/deviceTest.ts",
-     "src/pages/Calls.tsx",
-     "src/pages/Settings.tsx"
-    ]
-   },
-   {
-    "sha": "024aa1e",
-    "date": "2026-11-24",
-    "author": "adm01-debug",
-    "subject": "feat: explica na tela a regra do coaching automatico (etapa 169) (#241)",
-    "files": [
-     "docs/qa/05-PROGRESSO.md",
-     "src/components/coaching/CoachingAssignmentsPanel.tsx",
-     "src/components/coaching/__tests__/CoachingAssignmentsPanel.rules.test.tsx",
-     "src/hooks/useCoachingTrack.ts",
-     "supabase/functions/generate-coaching-track/index.ts",
-     "supabase/functions/generate-coaching-track/track-engine.ts"
-    ]
    }
   ],
   "hot_files": [
@@ -127606,10 +127798,6 @@
     2
    ],
    [
-    "src/pages/Calls.tsx",
-    2
-   ],
-   [
     "src/hooks/useCallSession.ts",
     2
    ],
@@ -127624,6 +127812,14 @@
    [
     "src/hooks/useVoipQualityMonitor.ts",
     2
+   ],
+   [
+    "src/integrations/supabase/types.ts",
+    1
+   ],
+   [
+    "docs/agentes/banco.md",
+    1
    ],
    [
     "src/hooks/__tests__/useGeoBlocking.coverage.test.tsx",
@@ -127659,10 +127855,6 @@
    ],
    [
     "src/components/ai/LiveCallAnalysis.tsx",
-    1
-   ],
-   [
-    "src/components/auth/PasskeyManager.tsx",
     1
    ]
   ]

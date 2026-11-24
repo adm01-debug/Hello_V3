@@ -1,6 +1,6 @@
 # 10 · ACESSO E SEGURANÇA — quem pode o quê
 
-> Gerado automaticamente por AI Context Sync v1.3.2 · commit `b8877578dc` · branch `main` · 2026-11-24 09:14 UTC
+> Gerado automaticamente por AI Context Sync v1.3.2 · commit `a7041fc406` · branch `main` · 2026-11-24 09:27 UTC
 > Não edite à mão — regras humanas vão em `manual/`.
 
 ## Perfis / roles identificados
@@ -102,6 +102,7 @@
 | `holidays` | enabled | public: auth.uid() IS NOT NULL<br>public: is_admin_or_supervisor() | public: is_admin_or_supervisor() | public: is_admin_or_supervisor() | public: is_admin_or_supervisor() |
 | `hot_desking_stations` | enabled | public: is_admin_or_supervisor()<br>public: auth.uid() IS NOT NULL | public: is_admin_or_supervisor() | public: is_admin_or_supervisor()<br>public: is_admin_or_supervisor() OR current_user_name = (SELECT full_name FROM public.user_profiles WHERE id = auth.uid()) | public: is_admin_or_supervisor() |
 | `index_drop_audit` | enabled | authenticated: public.is_admin() | — | — | — |
+| `index_usage` | não encontrado | sem RLS | sem RLS | sem RLS | sem RLS |
 | `ip_whitelist` | enabled | public: get_user_role() = 'admin'<br>public: get_user_role() = 'admin' | public: get_user_role() = 'admin' | public: get_user_role() = 'admin' | public: get_user_role() = 'admin' |
 | `kb_article_history` | enabled | public: is_admin_or_supervisor() | — | — | — |
 | `kb_article_views` | enabled | public: is_admin_or_supervisor()<br>authenticated: viewer_id = auth.uid() | authenticated: viewer_type = 'agent' AND viewer_id = (SELECT auth.uid()) | — | — |
@@ -115,6 +116,7 @@
 | `manager_alerts` | enabled | public: is_admin_or_supervisor() | public: is_admin_or_supervisor()<br>public: is_admin_or_supervisor() | public: is_admin_or_supervisor() | public: is_admin_or_supervisor() |
 | `meeting_summaries` | enabled | public: public.is_admin_or_supervisor()<br>public: EXISTS ( SELECT 1 FROM public.call_sessions cs WHERE cs.id = meeting_summaries.call_session_id AND cs.agent_name = public.get_user_a | public: EXISTS ( SELECT 1 FROM public.call_sessions cs WHERE cs.id = meeting_summaries.call_session_id AND cs.agent_name = public.get_user_a<br>authenticated: is_admin_or_supervisor() | public: public.is_admin_or_supervisor()<br>public: EXISTS ( SELECT 1 FROM public.call_sessions cs WHERE cs.id = meeting_summaries.call_session_id AND cs.agent_name = public.get_user_a | public: public.is_admin_user(auth.uid()) |
 | `migration_rollbacks` | não encontrado | sem RLS | sem RLS | sem RLS | sem RLS |
+| `migration_status` | não encontrado | sem RLS | sem RLS | sem RLS | sem RLS |
 | `notification_preferences` | enabled | authenticated: auth.uid() = user_id | authenticated: auth.uid() = user_id | authenticated: auth.uid() = user_id | — |
 | `notifications` | enabled | authenticated: auth.uid() = user_id | authenticated: auth.uid() = user_id | authenticated: auth.uid() = user_id | authenticated: auth.uid() = user_id |
 | `number_porting_requests` | enabled | public: is_admin_or_supervisor()<br>public: is_admin_or_supervisor() | public: is_admin_or_supervisor() | public: is_admin_or_supervisor() | public: is_admin_or_supervisor() |
@@ -162,6 +164,7 @@
 | `topic_trends` | enabled | public: is_admin_or_supervisor()<br>public: auth.uid() IS NOT NULL | public: is_admin_or_supervisor() | public: is_admin_or_supervisor() | public: is_admin_or_supervisor() |
 | `tracker_matches` | enabled | public: agent_name = get_user_agent_name() OR is_admin_or_supervisor()<br>public: is_admin_or_supervisor() | public: is_admin_or_supervisor()<br>public: is_admin_or_supervisor() | public: is_admin_or_supervisor() | public: is_admin_or_supervisor() |
 | `trackers` | enabled | public: auth.uid() IS NOT NULL<br>public: is_admin_or_supervisor() | public: is_admin_or_supervisor() | public: is_admin_or_supervisor() | public: is_admin_or_supervisor() |
+| `unused_indexes` | não encontrado | sem RLS | sem RLS | sem RLS | sem RLS |
 | `user_allowed_ips` | enabled | public: get_user_role() = 'admin'<br>public: auth.uid() = user_id | public: get_user_role() = 'admin' | public: get_user_role() = 'admin' | public: get_user_role() = 'admin' |
 | `user_ip_restrictions` | enabled | public: get_user_role() = 'admin'<br>public: auth.uid() = user_id | public: get_user_role() = 'admin' | public: get_user_role() = 'admin' | public: get_user_role() = 'admin' |
 | `user_mfa_settings` | enabled | public: auth.uid() = user_id<br>public: public.has_role(auth.uid(), 'admin') | public: auth.uid() = user_id | public: auth.uid() = user_id | authenticated: auth.uid() = user_id |

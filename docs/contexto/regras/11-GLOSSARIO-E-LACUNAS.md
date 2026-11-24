@@ -1,6 +1,6 @@
 # 11 · GLOSSÁRIO, DADOS DE REFERÊNCIA E LACUNAS
 
-> Gerado automaticamente por AI Context Sync v1.3.2 · commit `b8877578dc` · branch `main` · 2026-11-24 09:14 UTC
+> Gerado automaticamente por AI Context Sync v1.3.2 · commit `a7041fc406` · branch `main` · 2026-11-24 09:27 UTC
 > Não edite à mão — regras humanas vão em `manual/`.
 
 ## Glossário do domínio (entidades do sistema)
@@ -63,7 +63,7 @@
 | `contact_alerts` | _(sem COMMENT ON TABLE — significado não documentado)_ | 12 colunas | migration |
 | `contact_engagement_patterns` | _(sem COMMENT ON TABLE — significado não documentado)_ | 15 colunas | migration |
 | `contact_interactions` | _(sem COMMENT ON TABLE — significado não documentado)_ | 13 colunas | migration |
-| `contacts` | _(sem COMMENT ON TABLE — significado não documentado)_ | 16 colunas | migration |
+| `contacts` | _(sem COMMENT ON TABLE — significado não documentado)_ | 17 colunas | migration |
 | `conversation_messages` | _(sem COMMENT ON TABLE — significado não documentado)_ | 13 colunas | migration |
 | `conversations` | _(sem COMMENT ON TABLE — significado não documentado)_ | 21 colunas | migration |
 | `crm_field_suggestions` | _(sem COMMENT ON TABLE — significado não documentado)_ | 14 colunas | migration |
@@ -93,6 +93,7 @@
 | `holidays` | _(sem COMMENT ON TABLE — significado não documentado)_ | 7 colunas | migration |
 | `hot_desking_stations` | _(sem COMMENT ON TABLE — significado não documentado)_ | 11 colunas | migration |
 | `index_drop_audit` | _(sem COMMENT ON TABLE — significado não documentado)_ | 8 colunas | migration |
+| `index_usage` | _(sem COMMENT ON TABLE — significado não documentado)_ | 7 colunas | types.ts |
 | `ip_whitelist` | _(sem COMMENT ON TABLE — significado não documentado)_ | 6 colunas | migration |
 | `kb_article_history` | _(sem COMMENT ON TABLE — significado não documentado)_ | 9 colunas | migration |
 | `kb_article_views` | _(sem COMMENT ON TABLE — significado não documentado)_ | 7 colunas | migration |
@@ -106,6 +107,7 @@
 | `manager_alerts` | _(sem COMMENT ON TABLE — significado não documentado)_ | 11 colunas | migration |
 | `meeting_summaries` | _(sem COMMENT ON TABLE — significado não documentado)_ | 24 colunas | migration |
 | `migration_rollbacks` | _(sem COMMENT ON TABLE — significado não documentado)_ | 5 colunas | migration |
+| `migration_status` | _(sem COMMENT ON TABLE — significado não documentado)_ | 7 colunas | types.ts |
 | `notification_preferences` | _(sem COMMENT ON TABLE — significado não documentado)_ | 13 colunas | migration |
 | `notifications` | _(sem COMMENT ON TABLE — significado não documentado)_ | 18 colunas | migration |
 | `number_porting_requests` | _(sem COMMENT ON TABLE — significado não documentado)_ | 14 colunas | migration |
@@ -133,7 +135,7 @@
 | `routing_rules` | _(sem COMMENT ON TABLE — significado não documentado)_ | 13 colunas | migration |
 | `saved_filters` | Filtros salvos por usuários para diferentes entidades | 8 colunas | migration |
 | `scheduled_callbacks` | _(sem COMMENT ON TABLE — significado não documentado)_ | 13 colunas | migration |
-| `schema_migrations` | _(sem COMMENT ON TABLE — significado não documentado)_ | 6 colunas | migration |
+| `schema_migrations` | _(sem COMMENT ON TABLE — significado não documentado)_ | 7 colunas | migration |
 | `scorecard_criteria` | _(sem COMMENT ON TABLE — significado não documentado)_ | 8 colunas | migration |
 | `scorecard_responses` | _(sem COMMENT ON TABLE — significado não documentado)_ | 6 colunas | migration |
 | `scorecard_templates` | _(sem COMMENT ON TABLE — significado não documentado)_ | 7 colunas | migration |
@@ -153,6 +155,7 @@
 | `topic_trends` | _(sem COMMENT ON TABLE — significado não documentado)_ | 9 colunas | migration |
 | `tracker_matches` | _(sem COMMENT ON TABLE — significado não documentado)_ | 8 colunas | migration |
 | `trackers` | _(sem COMMENT ON TABLE — significado não documentado)_ | 11 colunas | migration |
+| `unused_indexes` | _(sem COMMENT ON TABLE — significado não documentado)_ | 5 colunas | types.ts |
 | `user_allowed_ips` | _(sem COMMENT ON TABLE — significado não documentado)_ | 6 colunas | migration |
 | `user_ip_restrictions` | _(sem COMMENT ON TABLE — significado não documentado)_ | 5 colunas | migration |
 | `user_mfa_settings` | _(sem COMMENT ON TABLE — significado não documentado)_ | 9 colunas | migration |
@@ -173,8 +176,6 @@
 | `webhook_flush_metrics` | _(sem COMMENT ON TABLE — significado não documentado)_ | 10 colunas | migration |
 | `webhook_secrets` | _(sem COMMENT ON TABLE — significado não documentado)_ | 5 colunas | migration |
 | `whisper_messages` | _(sem COMMENT ON TABLE — significado não documentado)_ | 7 colunas | migration |
-| `app_role` (enum) | admin, supervisor, agent, viewer |  | banco |
-| `voip_provider` (enum) | nvoip, directcall, totalvoice, generic, wavoip |  | banco |
 | `HealthFilter` (TS) | all \| healthy \| warning \| critical |  | `src/components/admin/extensions/ExtensionsFilters.tsx` |
 | `SUPPORTED_TIMEZONES` (TS) | 'America/Sao_Paulo', 'America/Fortaleza', 'America/Manaus', 'America/Cuiaba', 'America/Bogota', 'America/Buenos_Aires', 'America/Mexico_City', 'America/New_York', 'America/Los_Angeles', 'Europe/Lisbon', 'Europe/Madrid', 'UTC', |  | `src/components/compliance/calling-hours/types.ts` |
 | `DNC_REASONS` (TS) | { value: 'manual', label: 'Adição Manual' }, { value: 'customer_request', label: 'Solicitação do Cliente' }, { value: 'complaint', label: 'Reclamação' }, { value: 'legal', label: 'Determinação Legal' }, { value: 'opt_out', label: 'Opt-out' }, { value: 'wrong_number', label: 'Número Incorreto' }, { v … |  | `src/components/compliance/dnc/constants.ts` |
@@ -434,7 +435,8 @@
 - `shift_swap_suggestions.status` tem valores ['approved', 'expired', 'pending', 'rejected'] mas nenhum mapa de transições foi encontrado no código — a ordem permitida (ex.: pago → cancelado?) não está declarada.
 - `data_lake_exports.status` tem valores ['completed', 'failed', 'pending', 'processing'] mas nenhum mapa de transições foi encontrado no código — a ordem permitida (ex.: pago → cancelado?) não está declarada.
 - `parked_calls.status` tem valores ['abandoned', 'expired', 'parked', 'retrieved'] mas nenhum mapa de transições foi encontrado no código — a ordem permitida (ex.: pago → cancelado?) não está declarada.
-- 164/166 tabelas sem `COMMENT ON TABLE` — o significado de negócio não está no schema: `entity_versions`, `schema_migrations`, `migration_rollbacks`, `contacts`, `call_records`, `queue_items`, `agents`, `call_sessions`, `call_transcriptions`, `call_analyses`, `call_summaries`, `call_alerts` …
+- `migration_status.status` é uma coluna de status sem enum/CHECK — os valores válidos e as transições permitidas não estão no banco.
+- 167/169 tabelas sem `COMMENT ON TABLE` — o significado de negócio não está no schema: `entity_versions`, `schema_migrations`, `migration_rollbacks`, `contacts`, `call_records`, `queue_items`, `agents`, `call_sessions`, `call_transcriptions`, `call_analyses`, `call_summaries`, `call_alerts` …
 - Há tabelas usadas no código sem migration no repo — o schema real pode ter sido alterado pelo painel.
 
 ## Regras manuais presentes

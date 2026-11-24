@@ -1,7 +1,7 @@
 # Contexto do projeto para agentes de IA
 
 GERADO AUTOMATICAMENTE por scripts/ai-context/gerar.mjs — não editar à mão; será sobrescrito.
-Publicado em `docs/contexto/codigo/` na branch `contexto` (gerada, nunca abra PR dela) a cada push em `main` e a cada 10 minutos pelo workflow `contexto.yml`; índice único das três fontes em `docs/contexto/00-INDEX.md`. Gere local com `node scripts/ai-context/gerar.mjs`. Commit-base: `b8877578dc7961bf758edfe7fba3124b53a056db` (2026-11-24T06:13:31-03:00).
+Publicado em `docs/contexto/codigo/` na branch `contexto` (gerada, nunca abra PR dela) a cada push em `main` e a cada 10 minutos pelo workflow `contexto.yml`; índice único das três fontes em `docs/contexto/00-INDEX.md`. Gere local com `node scripts/ai-context/gerar.mjs`. Commit-base: `a7041fc40611604dc3a80723c6d48917daf21e53` (2026-11-24T06:27:21-03:00).
 
 ## Como usar (leia antes de planejar ou executar qualquer tarefa)
 1. **Tela/rota/menu** → `rotas.json` (url/vista/menu → arquivo → hooks → tabelas → edges; `rotas_http_backend` para APIs) e `modulos.json` (módulo inteiro + dependências entre módulos).
@@ -36,7 +36,7 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 |---|---|
 | arquivos_total | 1737 |
 | arquivos_codigo | 1334 |
-| linhas_codigo | 179869 |
+| linhas_codigo | 180197 |
 | rotas | 106 |
 | rotas_http_backend | 12 |
 | vistas_por_id | 0 |
@@ -360,7 +360,7 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 - edges_chamadas_sem_pasta: 0
 - tabelas_sem_rls: 2 — ex.: migration_rollbacks, schema_migrations
 - tabelas_usadas_sem_definicao: 1 — ex.: agent_status_history
-- tabelas_com_drift_migration_vs_types: 9 — ex.: agents, blocked_access_logs, call_control_audit_logs
+- tabelas_com_drift_migration_vs_types: 0
 - rpcs_sem_definicao: 0
 - componentes_orfaos: 17 — ex.: src/components/alerts/AlertsDropdown.tsx, src/components/calls/WebRTCCall.tsx, src/components/contacts/ContactAlertsDropdown.tsx
 - componentes_com_nome_duplicado: 4 — ex.: KpiCards, SearchInput, Skeleton
@@ -370,13 +370,13 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 - possiveis_segredos_no_codigo: 4 — ex.: scripts/ai-context/cenarios.mjs:103, src/lib/__tests__/security-advanced.test.ts:203, src/lib/__tests__/security-advanced.test.ts:208
 
 ## Grafo de código (graphify)
-- 10169 nós · 26787 arestas · 782 comunidades · grafo do commit `b8877578`
-- comunidades maiores: card.tsx (310), vitest (273), client.ts (242), logger.ts (170), 5. Em uso por rota (167), react (158), utils.ts (147), protectedRoutes.tsx (145), badge.tsx (126), usePageTitle (115), getCorrelationId (113), Rotas protegidas sem `roles:` (etapa 090) (109)
+- 10170 nós · 26788 arestas · 765 comunidades · grafo do commit `a7041fc4`
+- comunidades maiores: lucide-react (291), react (185), vitest (165), usePageTitle (152), utils.ts (142), cn (134), badge.tsx (124), @tanstack/react-query (123), getCorrelationId (120), traceHeaders (113), gerar.mjs (109), sonner (108)
 - símbolos mais chamados: cn() (src/lib/utils.ts), usePageTitle() (src/hooks/usePageTitle.ts), safeFormatDatePtBR() (src/lib/safe-date.ts), q() (scripts/supabase_snapshot/snapshot.py), safeFormatDistanceToNow() (src/lib/safe-date.ts), useAuthContext() (src/contexts/AuthContext.tsx), traceHeaders() (src/lib/tracing.ts), withTrace() (src/lib/tracing.ts), formatDuration() (src/lib/utils.ts), safeToLocaleString() (src/lib/safe-date.ts), .collect() (scripts/supabase_snapshot/test_snapshot.py), buildCorsHeaders() (supabase/functions/_shared/cors.ts)
 - consulta local: `graphify query "<pergunta>"`, `graphify path "<A>" "<B>"`, `graphify explain "<X>"`
 
 ## Hotspots (arquivos mais alterados, 90 dias)
-- docs/qa/05-PROGRESSO.md (95)
+- docs/qa/05-PROGRESSO.md (97)
 - docs/estado/funcionalidades-planejadas.md (27)
 - src/hooks/useMultiChannelCall.ts (10)
 - src/components/layout/AppSidebar.tsx (9)
@@ -429,6 +429,8 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 
 
 ## Últimos commits
+- 2026-11-24 `a7041fc` chore: regenera types.ts a partir do schema de producao (etapa 136) (#272)
+- 2026-11-24 `2772bab` docs: registra o desfecho da apuracao de exclusao de conta LGPD (etapa 132) (#271)
 - 2026-11-24 `b887757` fix: validate-geo e a tela de geo honram o modo allowlist/blocklist (etapa 141) (#270)
 - 2026-11-24 `c771af6` fix: rótulo acessível nos botões-ícone restantes (etapas 262 e 263) (#268)
 - 2026-11-24 `46cc92e` chore: painel de traducao sob demanda tira a rota Calls do teto do bundle (#269)
@@ -442,8 +444,6 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 - 2026-11-24 `55b1736` fix: avisar quando o alerta de contato nao foi gravado (etapa 189) (#259)
 - 2026-11-24 `43eafa2` fix: prazo de resposta nas edges de e-mail e integracao (etapa 210) (#264)
 - 2026-11-24 `608aa86` fix: consultas cegas restantes e estado de erro padronizado (etapas 201-202) (#263)
-- 2026-11-24 `52ae9bb` docs: etapas 191-193 verificadas (ja corrigidas por #180 e #170) (#261)
-- 2026-11-24 `f82596f` fix: edges de infra registram falha de gravacao em vez de ignora-la (etapa 188) (#257)
 
 ## Arquivos deste diretório
 - `docs/contexto/codigo/rotas.json`

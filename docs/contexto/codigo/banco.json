@@ -1144,20 +1144,6 @@
     "account_id->accounts"
    ],
    "criada_em": "20260416235642_e9fe6fa3-4307-49a3-9253-09718c07703d.sql",
-   "colunas_types": {
-    "account_id": "string",
-    "created_at": "string",
-    "from_stage": "string | null",
-    "id": "string",
-    "metadata": "Json | null",
-    "reason": "string | null",
-    "to_stage": "string",
-    "triggered_by": "string | null"
-   },
-   "drift": {
-    "so_na_migration": [],
-    "so_no_types": []
-   },
    "usada_no_front": 0,
    "usada_em_edges": [],
    "triggers": [],
@@ -1257,19 +1243,6 @@
    ],
    "fks": [],
    "criada_em": "20251231132751_524f6c03-6c9f-4b16-aae7-d38bb6903fda.sql",
-   "colunas_types": {
-    "created_at": "string",
-    "email": "string",
-    "failed_attempts": "number",
-    "id": "string",
-    "last_failed_at": "string | null",
-    "locked_until": "string | null",
-    "updated_at": "string"
-   },
-   "drift": {
-    "so_na_migration": [],
-    "so_no_types": []
-   },
    "usada_no_front": 0,
    "usada_em_edges": [
     "database-cleanup"
@@ -1482,34 +1455,6 @@
    ],
    "fks": [],
    "criada_em": "20260416235642_e9fe6fa3-4307-49a3-9253-09718c07703d.sql",
-   "colunas_types": {
-    "arr": "number | null",
-    "churn_risk_score": "number | null",
-    "contract_end_date": "string | null",
-    "contract_start_date": "string | null",
-    "created_at": "string",
-    "csm_agent_name": "string | null",
-    "current_stage": "string | null",
-    "domain": "string | null",
-    "health_factors": "Json | null",
-    "health_score": "number | null",
-    "id": "string",
-    "last_contact_at": "string | null",
-    "metadata": "Json | null",
-    "mrr": "number | null",
-    "name": "string",
-    "next_review_at": "string | null",
-    "notes": "string | null",
-    "segment": "string",
-    "status": "string",
-    "tags": "string[] | null",
-    "updated_at": "string",
-    "version": "number"
-   },
-   "drift": {
-    "so_na_migration": [],
-    "so_no_types": []
-   },
    "usada_no_front": 2,
    "usada_em_edges": [
     "compute-account-health",
@@ -1633,23 +1578,6 @@
     "user_id->auth"
    ],
    "criada_em": "20251231115936_0cbef64e-8440-4db5-8f3d-164a7da98921.sql",
-   "colunas_types": {
-    "created_at": "string | null",
-    "device_info": "Json | null",
-    "expires_at": "string | null",
-    "id": "string",
-    "ip_address": "string | null",
-    "is_active": "boolean | null",
-    "last_activity_at": "string | null",
-    "location": "Json | null",
-    "session_token": "string",
-    "user_agent": "string | null",
-    "user_id": "string"
-   },
-   "drift": {
-    "so_na_migration": [],
-    "so_no_types": []
-   },
    "usada_no_front": 3,
    "usada_em_edges": [],
    "triggers": [],
@@ -1719,16 +1647,6 @@
     "badge_id->badges"
    ],
    "criada_em": "20251224023654_29935900-12bb-4c40-bb31-a061340c76eb.sql",
-   "colunas_types": {
-    "agent_id": "string",
-    "badge_id": "string",
-    "earned_at": "string",
-    "id": "string"
-   },
-   "drift": {
-    "so_na_migration": [],
-    "so_no_types": []
-   },
    "usada_no_front": 1,
    "usada_em_edges": [],
    "triggers": [],
@@ -1851,23 +1769,6 @@
    "indices": [],
    "fks": [],
    "criada_em": "20260315200451_a246f656-4ac8-454c-82f0-11503932b7af.sql",
-   "colunas_types": {
-    "agent_name": "string",
-    "created_at": "string",
-    "device_name": "string",
-    "device_type": "string",
-    "extension": "string | null",
-    "id": "string",
-    "is_enabled": "boolean",
-    "ring_delay_seconds": "number",
-    "ring_order": "number",
-    "sip_uri": "string | null",
-    "updated_at": "string"
-   },
-   "drift": {
-    "so_na_migration": [],
-    "so_no_types": []
-   },
    "usada_no_front": 2,
    "usada_em_edges": [],
    "triggers": [],
@@ -1944,19 +1845,6 @@
    "indices": [],
    "fks": [],
    "criada_em": "20251222172653_e31b25fa-1495-47dc-a70e-59351aae7386.sql",
-   "colunas_types": {
-    "agent_name": "string",
-    "calls_target": "number",
-    "created_at": "string",
-    "id": "string",
-    "performance_target": "number",
-    "satisfaction_target": "number",
-    "updated_at": "string"
-   },
-   "drift": {
-    "so_na_migration": [],
-    "so_no_types": []
-   },
    "usada_no_front": 3,
    "usada_em_edges": [
     "generate-coaching"
@@ -2063,21 +1951,6 @@
    "indices": [],
    "fks": [],
    "criada_em": "20260315200451_a246f656-4ac8-454c-82f0-11503932b7af.sql",
-   "colunas_types": {
-    "agent_name": "string",
-    "created_at": "string",
-    "dnd_enabled": "boolean",
-    "dnd_schedule": "Json | null",
-    "fallback_action": "string",
-    "id": "string",
-    "ring_strategy": "string",
-    "ring_timeout_seconds": "number",
-    "updated_at": "string"
-   },
-   "drift": {
-    "so_na_migration": [],
-    "so_no_types": []
-   },
    "usada_no_front": 1,
    "usada_em_edges": [],
    "triggers": [],
@@ -2207,24 +2080,6 @@
     "template_id->shift_templates"
    ],
    "criada_em": "20260417000338_f03874c1-f8d9-4f2d-bf5c-20ad794cce6f.sql",
-   "colunas_types": {
-    "agent_name": "string",
-    "break_minutes": "number",
-    "created_at": "string",
-    "created_by": "string | null",
-    "end_time": "string",
-    "id": "string",
-    "notes": "string | null",
-    "shift_date": "string",
-    "start_time": "string",
-    "status": "string",
-    "template_id": "string | null",
-    "updated_at": "string"
-   },
-   "drift": {
-    "so_na_migration": [],
-    "so_no_types": []
-   },
    "usada_no_front": 1,
    "usada_em_edges": [
     "compute-adherence",
@@ -2326,20 +2181,6 @@
     "skill_id->skills"
    ],
    "criada_em": "20260417000338_f03874c1-f8d9-4f2d-bf5c-20ad794cce6f.sql",
-   "colunas_types": {
-    "agent_name": "string",
-    "certified_at": "string | null",
-    "certified_by": "string | null",
-    "created_at": "string",
-    "id": "string",
-    "proficiency": "number",
-    "skill_id": "string",
-    "updated_at": "string"
-   },
-   "drift": {
-    "so_na_migration": [],
-    "so_no_types": []
-   },
    "usada_no_front": 1,
    "usada_em_edges": [],
    "triggers": [
@@ -2444,20 +2285,6 @@
     "trunk_id->voip_trunks"
    ],
    "criada_em": "20260418141900_bac7392a-79fd-4a8d-8497-2144c6f23337.sql",
-   "colunas_types": {
-    "agent_id": "string",
-    "created_at": "string",
-    "created_by": "string | null",
-    "id": "string",
-    "is_primary": "boolean",
-    "trunk_id": "string",
-    "updated_at": "string",
-    "version": "number"
-   },
-   "drift": {
-    "so_na_migration": [],
-    "so_no_types": []
-   },
    "usada_no_front": 2,
    "usada_em_edges": [
     "sip-config",
@@ -2578,23 +2405,6 @@
     "agent_id->agents"
    ],
    "criada_em": "20251224023654_29935900-12bb-4c40-bb31-a061340c76eb.sql",
-   "colunas_types": {
-    "agent_id": "string",
-    "avg_performance": "number | null",
-    "avg_satisfaction": "number | null",
-    "badges_earned": "number",
-    "created_at": "string",
-    "id": "string",
-    "points_earned": "number",
-    "total_calls": "number",
-    "total_duration_seconds": "number",
-    "updated_at": "string",
-    "week_start": "string"
-   },
-   "drift": {
-    "so_na_migration": [],
-    "so_no_types": []
-   },
    "usada_no_front": 2,
    "usada_em_edges": [
     "suggest-shift-swaps"
@@ -2725,26 +2535,6 @@
     "user_id->auth"
    ],
    "criada_em": "20250102000000_hello_production.sql",
-   "colunas_types": {
-    "avatar_url": "string | null",
-    "created_at": "string",
-    "department": "string | null",
-    "email": "string | null",
-    "extension": "string",
-    "id": "string",
-    "name": "string",
-    "status": "string",
-    "updated_at": "string",
-    "version": "number"
-   },
-   "drift": {
-    "so_na_migration": [
-     "user_id",
-     "skills",
-     "max_concurrent_calls"
-    ],
-    "so_no_types": []
-   },
    "usada_no_front": 11,
    "usada_em_edges": [
     "chat-widget-session",
@@ -2910,23 +2700,6 @@
     "user_id->auth"
    ],
    "criada_em": "20251225185236_a4c86a9f-4ff8-4f94-b7a7-3970e2787ae0.sql",
-   "colunas_types": {
-    "action": "string",
-    "created_at": "string",
-    "details": "Json | null",
-    "id": "string",
-    "ip_address": "string | null",
-    "resource_id": "string | null",
-    "resource_type": "string",
-    "user_agent": "string | null",
-    "user_email": "string | null",
-    "user_id": "string | null",
-    "user_role": "string | null"
-   },
-   "drift": {
-    "so_na_migration": [],
-    "so_no_types": []
-   },
    "usada_no_front": 5,
    "usada_em_edges": [
     "_shared",
@@ -3035,22 +2808,6 @@
    "indices": [],
    "fks": [],
    "criada_em": "20251224023654_29935900-12bb-4c40-bb31-a061340c76eb.sql",
-   "colunas_types": {
-    "category": "string",
-    "created_at": "string",
-    "description": "string",
-    "icon": "string",
-    "id": "string",
-    "name": "string",
-    "points": "number",
-    "requirement_type": "string",
-    "requirement_value": "number",
-    "tier": "string"
-   },
-   "drift": {
-    "so_na_migration": [],
-    "so_no_types": []
-   },
    "usada_no_front": 2,
    "usada_em_edges": [],
    "triggers": [],
@@ -3142,20 +2899,6 @@
     "call_session_id->call_sessions"
    ],
    "criada_em": "20251224022103_aa00248e-f07a-4edc-8c76-96e520ba31a9.sql",
-   "colunas_types": {
-    "agent_name": "string",
-    "call_session_id": "string",
-    "created_at": "string",
-    "ended_at": "string | null",
-    "id": "string",
-    "started_at": "string",
-    "status": "string",
-    "supervisor_name": "string"
-   },
-   "drift": {
-    "so_na_migration": [],
-    "so_no_types": []
-   },
    "usada_no_front": 2,
    "usada_em_edges": [],
    "triggers": [],
@@ -3238,18 +2981,6 @@
     "battle_card_id->battle_cards"
    ],
    "criada_em": "20260416225701_7a49a0bb-be31-4054-98f2-87f16a3fcbe8.sql",
-   "colunas_types": {
-    "battle_card_id": "string",
-    "created_at": "string",
-    "id": "string",
-    "is_active": "boolean",
-    "keyword": "string",
-    "match_type": "string"
-   },
-   "drift": {
-    "so_na_migration": [],
-    "so_no_types": []
-   },
    "usada_no_front": 2,
    "usada_em_edges": [],
    "triggers": [],
@@ -3354,23 +3085,6 @@
    "indices": [],
    "fks": [],
    "criada_em": "20260416225701_7a49a0bb-be31-4054-98f2-87f16a3fcbe8.sql",
-   "colunas_types": {
-    "competitor_name": "string",
-    "created_at": "string",
-    "created_by": "string | null",
-    "description": "string | null",
-    "id": "string",
-    "is_active": "boolean",
-    "objection_responses": "Json | null",
-    "our_strengths": "string[] | null",
-    "talking_points": "string[] | null",
-    "their_weaknesses": "string[] | null",
-    "updated_at": "string"
-   },
-   "drift": {
-    "so_na_migration": [],
-    "so_no_types": []
-   },
    "usada_no_front": 2,
    "usada_em_edges": [],
    "triggers": [
@@ -3422,16 +3136,6 @@
    "indices": [],
    "fks": [],
    "criada_em": "20260515171135_134e605d-28e8-4d47-9aa1-1e7c4247c819.sql",
-   "colunas_types": {
-    "id": "string",
-    "last_sync_at": "string | null",
-    "name": "string",
-    "parent_id": "string | null"
-   },
-   "drift": {
-    "so_na_migration": [],
-    "so_no_types": []
-   },
    "usada_no_front": 1,
    "usada_em_edges": [],
    "triggers": [],
@@ -3509,20 +3213,6 @@
    "indices": [],
    "fks": [],
    "criada_em": "20260515171135_134e605d-28e8-4d47-9aa1-1e7c4247c819.sql",
-   "colunas_types": {
-    "active": "boolean | null",
-    "email": "string | null",
-    "id": "string",
-    "last_name": "string | null",
-    "last_sync_at": "string | null",
-    "name": "string",
-    "personal_phone": "string | null",
-    "work_phone": "string | null"
-   },
-   "drift": {
-    "so_na_migration": [],
-    "so_no_types": []
-   },
    "usada_no_front": 1,
    "usada_em_edges": [],
    "triggers": [],
@@ -3607,26 +3297,6 @@
     "user_id->auth"
    ],
    "criada_em": "20251225193248_4613adbc-ca55-48c4-94aa-3aec14e8d9de.sql",
-   "colunas_types": {
-    "city": "string | null",
-    "country": "string | null",
-    "country_code": "string | null",
-    "created_at": "string",
-    "id": "string",
-    "ip_address": "string",
-    "reason": "string",
-    "user_agent": "string | null",
-    "user_email": "string | null",
-    "user_id": "string | null"
-   },
-   "drift": {
-    "so_na_migration": [],
-    "so_no_types": [
-     "city",
-     "country",
-     "country_code"
-    ]
-   },
    "usada_no_front": 3,
    "usada_em_edges": [
     "validate-ip"
@@ -3759,24 +3429,6 @@
     "conversation_id->conversations"
    ],
    "criada_em": "20260417001411_2f77b480-8ec1-46a5-af32-2904e651a55a.sql",
-   "colunas_types": {
-    "bot_response": "string",
-    "confidence": "number | null",
-    "conversation_id": "string",
-    "created_at": "string",
-    "handoff_reason": "string | null",
-    "handoff_triggered": "boolean | null",
-    "id": "string",
-    "intent": "string | null",
-    "model_used": "string | null",
-    "response_time_ms": "number | null",
-    "suggested_articles": "string[] | null",
-    "user_message": "string"
-   },
-   "drift": {
-    "so_na_migration": [],
-    "so_no_types": []
-   },
    "usada_no_front": 0,
    "usada_em_edges": [
     "chatbot-respond"
@@ -3932,24 +3584,6 @@
     "deal_id->deals"
    ],
    "criada_em": "20260416234921_cc18cae3-c0a2-4ffd-a96e-7bc43be82ec5.sql",
-   "colunas_types": {
-    "agent_name": "string | null",
-    "cadence_id": "string",
-    "completed_at": "string | null",
-    "contact_id": "string | null",
-    "created_at": "string",
-    "current_step": "number",
-    "deal_id": "string | null",
-    "id": "string",
-    "next_action_at": "string | null",
-    "paused_reason": "string | null",
-    "status": "string",
-    "updated_at": "string"
-   },
-   "drift": {
-    "so_na_migration": [],
-    "so_no_types": []
-   },
    "usada_no_front": 1,
    "usada_em_edges": [],
    "triggers": [
@@ -4062,22 +3696,6 @@
     "cadence_id->cadences"
    ],
    "criada_em": "20260416234921_cc18cae3-c0a2-4ffd-a96e-7bc43be82ec5.sql",
-   "colunas_types": {
-    "body": "string | null",
-    "cadence_id": "string",
-    "created_at": "string",
-    "delay_days": "number",
-    "delay_hours": "number",
-    "id": "string",
-    "metadata": "Json | null",
-    "step_order": "number",
-    "step_type": "string",
-    "subject": "string | null"
-   },
-   "drift": {
-    "so_na_migration": [],
-    "so_no_types": []
-   },
    "usada_no_front": 1,
    "usada_em_edges": [],
    "triggers": [],
@@ -4161,20 +3779,6 @@
    "indices": [],
    "fks": [],
    "criada_em": "20260416234921_cc18cae3-c0a2-4ffd-a96e-7bc43be82ec5.sql",
-   "colunas_types": {
-    "created_at": "string",
-    "created_by": "string | null",
-    "description": "string | null",
-    "id": "string",
-    "is_active": "boolean",
-    "name": "string",
-    "updated_at": "string",
-    "version": "number"
-   },
-   "drift": {
-    "so_na_migration": [],
-    "so_no_types": []
-   },
    "usada_no_front": 1,
    "usada_em_edges": [],
    "triggers": [
@@ -4297,20 +3901,6 @@
     "call_session_id->call_sessions"
    ],
    "criada_em": "20251222165402_c515f03e-0bf3-4c17-a56b-b209d783515a.sql",
-   "colunas_types": {
-    "alert_type": "string",
-    "call_session_id": "string",
-    "created_at": "string",
-    "id": "string",
-    "is_read": "boolean",
-    "message": "string",
-    "severity": "string",
-    "title": "string"
-   },
-   "drift": {
-    "so_na_migration": [],
-    "so_no_types": []
-   },
    "usada_no_front": 8,
    "usada_em_edges": [
     "check-alerts",
@@ -4427,22 +4017,6 @@
     "call_session_id->call_sessions"
    ],
    "criada_em": "20251222153717_0868819c-c2a1-4f51-abcd-34ae49b599ed.sql",
-   "colunas_types": {
-    "call_session_id": "string",
-    "created_at": "string",
-    "emotion": "string | null",
-    "id": "string",
-    "message_analyzed": "string | null",
-    "risk_alert": "string | null",
-    "sentiment": "string | null",
-    "speaker_role": "string | null",
-    "suggestion": "string | null",
-    "urgency": "string | null"
-   },
-   "drift": {
-    "so_na_migration": [],
-    "so_no_types": []
-   },
    "usada_no_front": 3,
    "usada_em_edges": [],
    "triggers": [],
@@ -4563,22 +4137,6 @@
     "call_session_id->call_sessions"
    ],
    "criada_em": "20260509184955_dfe329e5-9241-40ed-8f9d-28cef0cffb1f.sql",
-   "colunas_types": {
-    "call_session_id": "string | null",
-    "created_at": "string",
-    "details": "Json | null",
-    "event_type": "string",
-    "id": "string",
-    "source": "string"
-   },
-   "drift": {
-    "so_na_migration": [
-     "action",
-     "actor_id",
-     "metadata"
-    ],
-    "so_no_types": []
-   },
    "usada_no_front": 2,
    "usada_em_edges": [
     "voip-trunks-manage"
@@ -4671,21 +4229,6 @@
    "indices": [],
    "fks": [],
    "criada_em": "20260315194850_5c156b99-5d85-4b43-9e09-74edf363cd91.sql",
-   "colunas_types": {
-    "created_at": "string",
-    "created_by": "string | null",
-    "description": "string | null",
-    "flow_data": "Json",
-    "id": "string",
-    "is_active": "boolean",
-    "is_default": "boolean",
-    "name": "string",
-    "updated_at": "string"
-   },
-   "drift": {
-    "so_na_migration": [],
-    "so_no_types": []
-   },
    "usada_no_front": 1,
    "usada_em_edges": [],
    "triggers": [],
@@ -4795,21 +4338,6 @@
     "call_session_id->call_sessions"
    ],
    "criada_em": "20260416225701_7a49a0bb-be31-4054-98f2-87f16a3fcbe8.sql",
-   "colunas_types": {
-    "call_session_id": "string",
-    "confidence": "number | null",
-    "created_at": "string",
-    "id": "string",
-    "metadata": "Json | null",
-    "moment_type": "string",
-    "quote": "string",
-    "speaker": "string | null",
-    "timestamp_seconds": "number"
-   },
-   "drift": {
-    "so_na_migration": [],
-    "so_no_types": []
-   },
    "usada_no_front": 2,
    "usada_em_edges": [
     "compute-deal-health",
@@ -4953,25 +4481,6 @@
     "moh_prompt_id->queue_audio_prompts"
    ],
    "criada_em": "20260726202218_619850bb-a4f2-4112-96d7-872649f70b37.sql",
-   "colunas_types": {
-    "announce_slot": "boolean",
-    "created_at": "string",
-    "description": "string | null",
-    "id": "string",
-    "is_active": "boolean",
-    "moh_prompt_id": "string | null",
-    "name": "string",
-    "park_timeout_seconds": "number",
-    "slot_end": "number",
-    "slot_start": "number",
-    "timeout_action": "string",
-    "timeout_target": "string | null",
-    "updated_at": "string"
-   },
-   "drift": {
-    "so_na_migration": [],
-    "so_no_types": []
-   },
    "usada_no_front": 1,
    "usada_em_edges": [],
    "triggers": [
@@ -5096,23 +4605,6 @@
    ],
    "fks": [],
    "criada_em": "20260416234921_cc18cae3-c0a2-4ffd-a96e-7bc43be82ec5.sql",
-   "colunas_types": {
-    "auto_query": "Json | null",
-    "created_at": "string",
-    "created_by": "string | null",
-    "description": "string | null",
-    "id": "string",
-    "is_shared": "boolean",
-    "name": "string",
-    "owner_agent_name": "string | null",
-    "playlist_type": "string",
-    "shared_with": "string[] | null",
-    "updated_at": "string"
-   },
-   "drift": {
-    "so_na_migration": [],
-    "so_no_types": []
-   },
    "usada_no_front": 1,
    "usada_em_edges": [],
    "triggers": [
@@ -5336,34 +4828,6 @@
     "call_session_id->call_sessions"
    ],
    "criada_em": "20260417164448_f2a7d0e1-ed11-4f31-9ec2-8717486ecf5d.sql",
-   "colunas_types": {
-    "agent_name": "string | null",
-    "call_session_id": "string | null",
-    "channel": "string",
-    "created_at": "string",
-    "id": "string",
-    "jitter_avg_ms": "number | null",
-    "jitter_max_ms": "number | null",
-    "mos_avg": "number | null",
-    "mos_min": "number | null",
-    "packet_loss_pct": "number | null",
-    "quality_label": "string | null",
-    "raw_samples": "Json | null",
-    "rtt_avg_ms": "number | null",
-    "rtt_max_ms": "number | null",
-    "samples_count": "number",
-    "updated_at": "string"
-   },
-   "drift": {
-    "so_na_migration": [
-     "mos",
-     "jitter_ms",
-     "packet_loss",
-     "latency_ms",
-     "timestamp"
-    ],
-    "so_no_types": []
-   },
    "usada_no_front": 7,
    "usada_em_edges": [
     "voip-anomaly-detector",
@@ -5468,19 +4932,6 @@
     "queue_id->call_queues"
    ],
    "criada_em": "20260726195450_0ffeebc4-7139-4dfa-8465-d41d8193ea38.sql",
-   "colunas_types": {
-    "agent_id": "string",
-    "created_at": "string",
-    "id": "string",
-    "is_active": "boolean",
-    "penalty": "number",
-    "queue_id": "string",
-    "updated_at": "string"
-   },
-   "drift": {
-    "so_na_migration": [],
-    "so_no_types": []
-   },
    "usada_no_front": 1,
    "usada_em_edges": [],
    "triggers": [
@@ -5722,37 +5173,6 @@
     "periodic_prompt_id->queue_audio_prompts"
    ],
    "criada_em": "20260726195450_0ffeebc4-7139-4dfa-8465-d41d8193ea38.sql",
-   "colunas_types": {
-    "announce_hold_time": "boolean",
-    "announce_interval_seconds": "number",
-    "announce_position": "boolean",
-    "created_at": "string",
-    "created_by": "string | null",
-    "description": "string | null",
-    "greeting_enabled": "boolean",
-    "greeting_prompt_id": "string | null",
-    "id": "string",
-    "is_active": "boolean",
-    "max_queue_size": "number",
-    "max_wait_seconds": "number",
-    "moh_enabled": "boolean",
-    "moh_prompt_id": "string | null",
-    "moh_url": "string | null",
-    "name": "string",
-    "overflow_action": "string",
-    "overflow_prompt_id": "string | null",
-    "overflow_queue_id": "string | null",
-    "periodic_prompt_id": "string | null",
-    "priority": "number",
-    "ring_timeout_seconds": "number",
-    "strategy": "string",
-    "updated_at": "string",
-    "wrap_up_seconds": "number"
-   },
-   "drift": {
-    "so_na_migration": [],
-    "so_no_types": []
-   },
    "usada_no_front": 1,
    "usada_em_edges": [],
    "triggers": [
@@ -5873,22 +5293,6 @@
     "call_session_id->call_sessions"
    ],
    "criada_em": "20251223203951_8b86adf3-98b4-4cf4-8154-b1efb3cde4bd.sql",
-   "colunas_types": {
-    "call_session_id": "string | null",
-    "conference_id": "string | null",
-    "created_at": "string",
-    "duration_seconds": "number | null",
-    "file_path": "string",
-    "file_size_bytes": "number | null",
-    "id": "string",
-    "participant_count": "number | null",
-    "recorded_at": "string",
-    "source": "string"
-   },
-   "drift": {
-    "so_na_migration": [],
-    "so_no_types": []
-   },
    "usada_no_front": 3,
    "usada_em_edges": [
     "cleanup-recordings",
@@ -6163,25 +5567,6 @@
     "template_id->scorecard_templates"
    ],
    "criada_em": "20260416234921_cc18cae3-c0a2-4ffd-a96e-7bc43be82ec5.sql",
-   "colunas_types": {
-    "agent_name": "string | null",
-    "ai_generated": "boolean",
-    "call_session_id": "string",
-    "created_at": "string",
-    "feedback": "string | null",
-    "id": "string",
-    "max_total": "number | null",
-    "reviewer_email": "string | null",
-    "reviewer_id": "string | null",
-    "status": "string",
-    "template_id": "string",
-    "total_score": "number | null",
-    "updated_at": "string"
-   },
-   "drift": {
-    "so_na_migration": [],
-    "so_no_types": []
-   },
    "usada_no_front": 2,
    "usada_em_edges": [
     "auto-scorecard",
@@ -6421,32 +5806,6 @@
     "trunk_id->voip_trunks"
    ],
    "criada_em": "20251222153717_0868819c-c2a1-4f51-abcd-34ae49b599ed.sql",
-   "colunas_types": {
-    "agent_name": "string | null",
-    "caller_name": "string | null",
-    "caller_phone": "string | null",
-    "contact_id": "string | null",
-    "created_at": "string",
-    "deal_id": "string | null",
-    "direction": "string | null",
-    "duration_seconds": "number | null",
-    "ended_at": "string | null",
-    "hold_count": "number | null",
-    "hold_time_seconds": "number | null",
-    "id": "string",
-    "started_at": "string",
-    "status": "string | null"
-   },
-   "drift": {
-    "so_na_migration": [
-     "external_call_id",
-     "agent_id",
-     "trunk_id",
-     "phone_number",
-     "recording_url"
-    ],
-    "so_no_types": []
-   },
    "usada_no_front": 17,
    "usada_em_edges": [
     "auto-scorecard",
@@ -6576,22 +5935,6 @@
     "call_session_id->call_sessions"
    ],
    "criada_em": "20251222153717_0868819c-c2a1-4f51-abcd-34ae49b599ed.sql",
-   "colunas_types": {
-    "agent_performance_score": "number | null",
-    "call_session_id": "string",
-    "created_at": "string",
-    "customer_satisfaction": "number | null",
-    "id": "string",
-    "main_topics": "string[] | null",
-    "next_steps": "string[] | null",
-    "overall_sentiment": "string | null",
-    "summary": "string | null",
-    "translated_summary": "Json | null"
-   },
-   "drift": {
-    "so_na_migration": [],
-    "so_no_types": []
-   },
    "usada_no_front": 5,
    "usada_em_edges": [
     "analyze-sentiment",
@@ -6697,19 +6040,6 @@
     "call_session_id->call_sessions"
    ],
    "criada_em": "20251222153717_0868819c-c2a1-4f51-abcd-34ae49b599ed.sql",
-   "colunas_types": {
-    "call_session_id": "string",
-    "created_at": "string",
-    "end_time": "number | null",
-    "id": "string",
-    "speaker": "string",
-    "start_time": "number | null",
-    "text": "string"
-   },
-   "drift": {
-    "so_na_migration": [],
-    "so_no_types": []
-   },
    "usada_no_front": 3,
    "usada_em_edges": [
     "generate-coaching",
@@ -6822,20 +6152,6 @@
     "call_session_id->call_sessions"
    ],
    "criada_em": "20260416225701_7a49a0bb-be31-4054-98f2-87f16a3fcbe8.sql",
-   "colunas_types": {
-    "agent_name": "string | null",
-    "call_session_id": "string",
-    "created_at": "string",
-    "duration_seconds": "number | null",
-    "full_text": "string",
-    "id": "string",
-    "search_vector": "unknown",
-    "updated_at": "string"
-   },
-   "drift": {
-    "so_na_migration": [],
-    "so_no_types": []
-   },
    "usada_no_front": 1,
    "usada_em_edges": [
     "score-call",
@@ -6983,25 +6299,6 @@
     "call_session_id->call_sessions"
    ],
    "criada_em": "20260417115220_5f984153-6650-4d10-ad92-88678b974261.sql",
-   "colunas_types": {
-    "call_session_id": "string",
-    "confidence": "number | null",
-    "created_at": "string",
-    "detected_lang": "string | null",
-    "id": "string",
-    "latency_ms": "number | null",
-    "model_used": "string | null",
-    "original_text": "string",
-    "segment_id": "string | null",
-    "source_lang": "string",
-    "speaker": "string",
-    "target_lang": "string",
-    "translated_text": "string"
-   },
-   "drift": {
-    "so_na_migration": [],
-    "so_no_types": []
-   },
    "usada_no_front": 2,
    "usada_em_edges": [
     "translate-utterance"
@@ -7142,27 +6439,6 @@
    ],
    "fks": [],
    "criada_em": "20260103145030_b2c1f366-245b-4264-9139-4def0d930fd6.sql",
-   "colunas_types": {
-    "created_at": "string",
-    "holidays_allowed": "boolean",
-    "id": "string",
-    "is_active": "boolean",
-    "region_code": "string",
-    "region_name": "string",
-    "saturday_end": "string | null",
-    "saturday_start": "string | null",
-    "sunday_allowed": "boolean",
-    "sunday_end": "string | null",
-    "sunday_start": "string | null",
-    "timezone": "string",
-    "updated_at": "string",
-    "weekday_end": "string",
-    "weekday_start": "string"
-   },
-   "drift": {
-    "so_na_migration": [],
-    "so_no_types": []
-   },
    "usada_no_front": 2,
    "usada_em_edges": [
     "enforce-sla"
@@ -7309,25 +6585,6 @@
     "conversation_id->conversations"
    ],
    "criada_em": "20260417001411_2f77b480-8ec1-46a5-af32-2904e651a55a.sql",
-   "colunas_types": {
-    "conversation_id": "string | null",
-    "created_at": "string",
-    "device_info": "Json | null",
-    "id": "string",
-    "ip_address": "string | null",
-    "is_active": "boolean | null",
-    "last_seen_at": "string | null",
-    "origin_url": "string | null",
-    "referrer": "string | null",
-    "user_agent": "string | null",
-    "visitor_email": "string | null",
-    "visitor_name": "string | null",
-    "visitor_token": "string"
-   },
-   "drift": {
-    "so_na_migration": [],
-    "so_no_types": []
-   },
    "usada_no_front": 0,
    "usada_em_edges": [
     "chat-widget-session",
@@ -7468,25 +6725,6 @@
     "account_id->accounts"
    ],
    "criada_em": "20260416235642_e9fe6fa3-4307-49a3-9253-09718c07703d.sql",
-   "colunas_types": {
-    "account_id": "string",
-    "created_at": "string",
-    "description": "string",
-    "detected_at": "string",
-    "evidence": "Json | null",
-    "id": "string",
-    "is_active": "boolean",
-    "resolution_notes": "string | null",
-    "resolved_at": "string | null",
-    "resolved_by": "string | null",
-    "score_delta": "number",
-    "severity": "string",
-    "signal_type": "string"
-   },
-   "drift": {
-    "so_na_migration": [],
-    "so_no_types": []
-   },
    "usada_no_front": 2,
    "usada_em_edges": [
     "compute-account-health",
@@ -7657,27 +6895,6 @@
     "call_session_id->call_sessions"
    ],
    "criada_em": "20260417000338_f03874c1-f8d9-4f2d-bf5c-20ad794cce6f.sql",
-   "colunas_types": {
-    "agent_name": "string",
-    "agent_response": "string | null",
-    "assigned_by": "string | null",
-    "assigner_name": "string | null",
-    "call_session_id": "string | null",
-    "completed_at": "string | null",
-    "created_at": "string",
-    "description": "string | null",
-    "due_at": "string | null",
-    "id": "string",
-    "priority": "string",
-    "scorecard_id": "string | null",
-    "status": "string",
-    "title": "string",
-    "updated_at": "string"
-   },
-   "drift": {
-    "so_na_migration": [],
-    "so_no_types": []
-   },
    "usada_no_front": 1,
    "usada_em_edges": [
     "generate-coaching-track"
@@ -7813,24 +7030,6 @@
     "agent_id->agents"
    ],
    "criada_em": "20251224024429_6c4f4a9d-c7f9-4cd3-a57e-c4b8659a6776.sql",
-   "colunas_types": {
-    "action_items": "string[] | null",
-    "agent_id": "string",
-    "category": "string",
-    "completed_at": "string | null",
-    "created_at": "string",
-    "description": "string",
-    "id": "string",
-    "metrics_snapshot": "Json | null",
-    "priority": "string",
-    "reviewed_at": "string | null",
-    "status": "string",
-    "title": "string"
-   },
-   "drift": {
-    "so_na_migration": [],
-    "so_no_types": []
-   },
    "usada_no_front": 1,
    "usada_em_edges": [
     "generate-coaching"
@@ -7942,21 +7141,6 @@
     "call_session_id->call_sessions"
    ],
    "criada_em": "20260416225701_7a49a0bb-be31-4054-98f2-87f16a3fcbe8.sql",
-   "colunas_types": {
-    "agent_name": "string | null",
-    "call_session_id": "string",
-    "category": "string | null",
-    "created_at": "string",
-    "feedback_type": "string",
-    "id": "string",
-    "message": "string",
-    "severity": "string",
-    "timestamp_seconds": "number"
-   },
-   "drift": {
-    "so_na_migration": [],
-    "so_no_types": []
-   },
    "usada_no_front": 3,
    "usada_em_edges": [
     "generate-coaching"
@@ -8083,25 +7267,6 @@
    ],
    "fks": [],
    "criada_em": "20260417110551_0cb1418b-1c9a-4cf2-9164-7d7f523213d8.sql",
-   "colunas_types": {
-    "applies_to": "string",
-    "category": "string | null",
-    "created_at": "string",
-    "created_by": "string | null",
-    "id": "string",
-    "is_active": "boolean",
-    "message": "string",
-    "pattern": "string",
-    "required_disclaimer": "string | null",
-    "rule_name": "string",
-    "rule_type": "string",
-    "severity": "string",
-    "updated_at": "string"
-   },
-   "drift": {
-    "so_na_migration": [],
-    "so_no_types": []
-   },
    "usada_no_front": 1,
    "usada_em_edges": [
     "analyze-live-utterance"
@@ -8182,19 +7347,6 @@
    "indices": [],
    "fks": [],
    "criada_em": "20260103145030_b2c1f366-245b-4264-9139-4def0d930fd6.sql",
-   "colunas_types": {
-    "created_at": "string",
-    "description": "string | null",
-    "id": "string",
-    "setting_key": "string",
-    "setting_value": "Json",
-    "updated_at": "string",
-    "updated_by": "string | null"
-   },
-   "drift": {
-    "so_na_migration": [],
-    "so_no_types": []
-   },
    "usada_no_front": 1,
    "usada_em_edges": [],
    "triggers": [
@@ -8335,26 +7487,6 @@
     "contact_id->contacts"
    ],
    "criada_em": "20260103145030_b2c1f366-245b-4264-9139-4def0d930fd6.sql",
-   "colunas_types": {
-    "consent_given": "boolean",
-    "consent_method": "string",
-    "consent_text": "string | null",
-    "consent_type": "string",
-    "contact_id": "string | null",
-    "created_at": "string",
-    "expires_at": "string | null",
-    "id": "string",
-    "ip_address": "string | null",
-    "phone": "string",
-    "recorded_at": "string",
-    "recorded_by": "string | null",
-    "revoked_at": "string | null",
-    "user_agent": "string | null"
-   },
-   "drift": {
-    "so_na_migration": [],
-    "so_no_types": []
-   },
    "usada_no_front": 1,
    "usada_em_edges": [],
    "triggers": [],
@@ -8529,28 +7661,6 @@
     "contact_id->contacts"
    ],
    "criada_em": "20260417113731_0610041c-71b2-497f-974e-2f62b20b3415.sql",
-   "colunas_types": {
-    "channel": "string",
-    "consent_type": "string",
-    "contact_id": "string | null",
-    "created_at": "string",
-    "evidence": "Json | null",
-    "granted": "boolean",
-    "granted_at": "string",
-    "id": "string",
-    "ip_address": "string | null",
-    "notes": "string | null",
-    "phone": "string | null",
-    "recorded_by": "string | null",
-    "revoked_at": "string | null",
-    "source": "string",
-    "updated_at": "string",
-    "user_agent": "string | null"
-   },
-   "drift": {
-    "so_na_migration": [],
-    "so_no_types": []
-   },
    "usada_no_front": 2,
    "usada_em_edges": [
     "record-consent"
@@ -8701,24 +7811,6 @@
     "contact_id->contacts"
    ],
    "criada_em": "20251223014743_829d5071-0f42-4ea3-bd3d-eb8bd994a318.sql",
-   "colunas_types": {
-    "actioned_at": "string | null",
-    "actioned_by": "string | null",
-    "alert_type": "string",
-    "contact_id": "string",
-    "created_at": "string",
-    "id": "string",
-    "is_actioned": "boolean",
-    "is_read": "boolean",
-    "message": "string",
-    "severity": "string",
-    "title": "string",
-    "trigger_data": "Json | null"
-   },
-   "drift": {
-    "so_na_migration": [],
-    "so_no_types": []
-   },
    "usada_no_front": 3,
    "usada_em_edges": [
     "check-contact-alerts"
@@ -8866,27 +7958,6 @@
     "contact_id->contacts"
    ],
    "criada_em": "20260417113731_0610041c-71b2-497f-974e-2f62b20b3415.sql",
-   "colunas_types": {
-    "answer_rate": "number | null",
-    "avg_call_duration_seconds": "number | null",
-    "best_day_of_week": "number | null",
-    "best_hour": "number | null",
-    "computed_at": "string",
-    "contact_id": "string",
-    "created_at": "string",
-    "daily_distribution": "Json | null",
-    "hourly_distribution": "Json | null",
-    "id": "string",
-    "last_answered_at": "string | null",
-    "last_attempt_at": "string | null",
-    "total_answered": "number",
-    "total_attempts": "number",
-    "updated_at": "string"
-   },
-   "drift": {
-    "so_na_migration": [],
-    "so_no_types": []
-   },
    "usada_no_front": 2,
    "usada_em_edges": [
     "compute-best-time",
@@ -9040,25 +8111,6 @@
     "contact_id->contacts"
    ],
    "criada_em": "20251223013407_14e5788a-757b-4c1a-b447-ee6048bee1b3.sql",
-   "colunas_types": {
-    "agent_name": "string | null",
-    "call_session_id": "string | null",
-    "contact_id": "string",
-    "created_at": "string",
-    "direction": "string | null",
-    "duration_seconds": "number | null",
-    "id": "string",
-    "interaction_type": "string",
-    "metadata": "Json | null",
-    "sentiment": "string | null",
-    "summary": "string | null",
-    "topics": "string[] | null",
-    "transcript": "string | null"
-   },
-   "drift": {
-    "so_na_migration": [],
-    "so_no_types": []
-   },
    "usada_no_front": 2,
    "usada_em_edges": [
     "analyze-contact-profile"
@@ -9263,32 +8315,6 @@
     "account_id->accounts"
    ],
    "criada_em": "20250102000000_hello_production.sql",
-   "colunas_types": {
-    "account_id": "string | null",
-    "company": "string | null",
-    "created_at": "string",
-    "email": "string | null",
-    "external_id": "string | null",
-    "id": "string",
-    "name": "string",
-    "notes": "string | null",
-    "personality_insights": "Json | null",
-    "phone": "string | null",
-    "position": "string | null",
-    "preferences": "Json | null",
-    "source": "string | null",
-    "tags": "string[] | null",
-    "updated_at": "string",
-    "version": "number"
-   },
-   "drift": {
-    "so_na_migration": [
-     "avatar",
-     "favorite",
-     "last_call"
-    ],
-    "so_no_types": []
-   },
    "usada_no_front": 2,
    "usada_em_edges": [
     "analyze-contact-profile",
@@ -9458,25 +8484,6 @@
     "conversation_id->conversations"
    ],
    "criada_em": "20260417001411_2f77b480-8ec1-46a5-af32-2904e651a55a.sql",
-   "colunas_types": {
-    "attachments": "Json | null",
-    "content": "string",
-    "content_type": "string",
-    "conversation_id": "string",
-    "created_at": "string",
-    "direction": "string",
-    "id": "string",
-    "is_private_note": "boolean | null",
-    "metadata": "Json | null",
-    "read_at": "string | null",
-    "sender_identifier": "string | null",
-    "sender_name": "string | null",
-    "sender_type": "string"
-   },
-   "drift": {
-    "so_na_migration": [],
-    "so_no_types": []
-   },
    "usada_no_front": 1,
    "usada_em_edges": [
     "chat-widget-session",
@@ -9708,33 +8715,6 @@
     "contact_id->contacts"
    ],
    "criada_em": "20260417001411_2f77b480-8ec1-46a5-af32-2904e651a55a.sql",
-   "colunas_types": {
-    "account_id": "string | null",
-    "assigned_agent_name": "string | null",
-    "channel": "string",
-    "contact_id": "string | null",
-    "created_at": "string",
-    "external_id": "string | null",
-    "external_metadata": "Json | null",
-    "first_response_at": "string | null",
-    "handoff_threshold": "number | null",
-    "id": "string",
-    "last_message_at": "string | null",
-    "priority": "string",
-    "resolved_at": "string | null",
-    "sla_breached": "boolean | null",
-    "sla_first_response_due_at": "string | null",
-    "sla_resolution_due_at": "string | null",
-    "status": "string",
-    "subject": "string | null",
-    "tags": "string[] | null",
-    "unread_count": "number | null",
-    "updated_at": "string"
-   },
-   "drift": {
-    "so_na_migration": [],
-    "so_no_types": []
-   },
    "usada_no_front": 2,
    "usada_em_edges": [
     "chat-widget-session",
@@ -9899,26 +8879,6 @@
     "contact_id->contacts"
    ],
    "criada_em": "20260417110551_0cb1418b-1c9a-4cf2-9164-7d7f523213d8.sql",
-   "colunas_types": {
-    "applied_value": "string | null",
-    "call_session_id": "string",
-    "confidence": "number | null",
-    "contact_id": "string | null",
-    "created_at": "string",
-    "current_value": "string | null",
-    "field_name": "string",
-    "id": "string",
-    "reviewed_at": "string | null",
-    "reviewed_by": "string | null",
-    "source_quote": "string | null",
-    "status": "string",
-    "suggested_value": "string",
-    "updated_at": "string"
-   },
-   "drift": {
-    "so_na_migration": [],
-    "so_no_types": []
-   },
    "usada_no_front": 1,
    "usada_em_edges": [
     "extract-crm-fields"
@@ -10026,22 +8986,6 @@
    ],
    "fks": [],
    "criada_em": "20260507220616_3feba3f7-8e03-47ff-b2a3-b4e860beb5e0.sql",
-   "colunas_types": {
-    "action": "string",
-    "attempts": "number",
-    "created_at": "string",
-    "id": "string",
-    "last_error": "string | null",
-    "max_attempts": "number",
-    "next_retry_at": "string | null",
-    "payload": "Json",
-    "status": "string",
-    "updated_at": "string"
-   },
-   "drift": {
-    "so_na_migration": [],
-    "so_no_types": []
-   },
    "usada_no_front": 3,
    "usada_em_edges": [
     "sync-crm-queue"
@@ -10135,20 +9079,6 @@
    ],
    "fks": [],
    "criada_em": "20260417115220_5f984153-6650-4d10-ad92-88678b974261.sql",
-   "colunas_types": {
-    "context_type": "string",
-    "created_at": "string",
-    "hint_text": "string",
-    "id": "string",
-    "is_active": "boolean",
-    "locale": "string",
-    "severity": "string",
-    "updated_at": "string"
-   },
-   "drift": {
-    "so_na_migration": [],
-    "so_no_types": []
-   },
    "usada_no_front": 2,
    "usada_em_edges": [],
    "triggers": [
@@ -10255,23 +9185,6 @@
    "indices": [],
    "fks": [],
    "criada_em": "20260416235642_e9fe6fa3-4307-49a3-9253-09718c07703d.sql",
-   "colunas_types": {
-    "color": "string | null",
-    "created_at": "string",
-    "description": "string | null",
-    "display_order": "number",
-    "entry_criteria": "Json | null",
-    "exit_criteria": "Json | null",
-    "id": "string",
-    "is_active": "boolean",
-    "stage_key": "string",
-    "stage_name": "string",
-    "updated_at": "string"
-   },
-   "drift": {
-    "so_na_migration": [],
-    "so_no_types": []
-   },
    "usada_no_front": 0,
    "usada_em_edges": [],
    "triggers": [
@@ -10385,24 +9298,6 @@
    "indices": [],
    "fks": [],
    "criada_em": "20251224142716_d2c04aae-f048-4e7c-b447-1d6e3a840412.sql",
-   "colunas_types": {
-    "comparison_operator": "string",
-    "created_at": "string",
-    "critical_threshold": "number",
-    "id": "string",
-    "is_active": "boolean",
-    "metric_type": "string",
-    "name": "string",
-    "notify_on_critical": "boolean",
-    "notify_on_warning": "boolean",
-    "target_value": "number",
-    "updated_at": "string",
-    "warning_threshold": "number"
-   },
-   "drift": {
-    "so_na_migration": [],
-    "so_no_types": []
-   },
    "usada_no_front": 2,
    "usada_em_edges": [
     "check-goals"
@@ -10525,25 +9420,6 @@
    ],
    "fks": [],
    "criada_em": "20260711153050_e3d3822b-d711-42cf-8514-1f348c336641.sql",
-   "colunas_types": {
-    "completed_at": "string | null",
-    "created_at": "string",
-    "dataset": "string",
-    "error_message": "string | null",
-    "expires_at": "string",
-    "file_path": "string | null",
-    "format": "string",
-    "id": "string",
-    "requested_by": "string",
-    "row_count": "number | null",
-    "since_date": "string | null",
-    "size_bytes": "number | null",
-    "status": "string"
-   },
-   "drift": {
-    "so_na_migration": [],
-    "so_no_types": []
-   },
    "usada_no_front": 1,
    "usada_em_edges": [
     "data-lake-flush",
@@ -10623,18 +9499,6 @@
     "deal_id->deals"
    ],
    "criada_em": "20260711153050_e3d3822b-d711-42cf-8514-1f348c336641.sql",
-   "colunas_types": {
-    "created_at": "string",
-    "currency": "string",
-    "deal_id": "string | null",
-    "id": "string",
-    "occurred_at": "string",
-    "revenue_cents": "number"
-   },
-   "drift": {
-    "so_na_migration": [],
-    "so_no_types": []
-   },
    "usada_no_front": 0,
    "usada_em_edges": [],
    "triggers": [],
@@ -10837,32 +9701,6 @@
     "contact_id->contacts"
    ],
    "criada_em": "20260416234921_cc18cae3-c0a2-4ffd-a96e-7bc43be82ec5.sql",
-   "colunas_types": {
-    "contact_id": "string | null",
-    "created_at": "string",
-    "created_by": "string | null",
-    "currency": "string",
-    "expected_close_date": "string | null",
-    "external_id": "string | null",
-    "health_factors": "Json | null",
-    "health_score": "number | null",
-    "health_updated_at": "string | null",
-    "id": "string",
-    "name": "string",
-    "notes": "string | null",
-    "owner_agent_name": "string | null",
-    "probability": "number",
-    "source": "string | null",
-    "stage": "string",
-    "status": "string",
-    "updated_at": "string",
-    "value_cents": "number",
-    "version": "number"
-   },
-   "drift": {
-    "so_na_migration": [],
-    "so_no_types": []
-   },
    "usada_no_front": 1,
    "usada_em_edges": [
     "compute-deal-health",
@@ -11056,34 +9894,6 @@
    ],
    "fks": [],
    "criada_em": "20251224023203_b0186fe4-1181-4b5d-a9cc-460f3738b952.sql",
-   "colunas_types": {
-    "call_timeout_seconds": "number",
-    "completed_contacts": "number | null",
-    "created_at": "string",
-    "created_by": "string | null",
-    "description": "string | null",
-    "id": "string",
-    "last_pacing_adjustment_at": "string | null",
-    "last_pacing_reason": "string | null",
-    "max_concurrent_calls": "number",
-    "max_pace": "number",
-    "min_pace": "number",
-    "mode": "string",
-    "name": "string",
-    "retry_attempts": "number",
-    "retry_delay_minutes": "number",
-    "status": "string",
-    "successful_contacts": "number | null",
-    "target_abandon_rate": "number",
-    "total_contacts": "number | null",
-    "updated_at": "string",
-    "working_hours_end": "string | null",
-    "working_hours_start": "string | null"
-   },
-   "drift": {
-    "so_na_migration": [],
-    "so_no_types": []
-   },
    "usada_no_front": 2,
    "usada_em_edges": [],
    "triggers": [
@@ -11174,20 +9984,6 @@
    ],
    "fks": [],
    "criada_em": "20260726160049_14fac8e9-52d1-4daf-b825-2005ac32e981.sql",
-   "colunas_types": {
-    "created_at": "string",
-    "id": "string",
-    "label": "string | null",
-    "phone": "string",
-    "position": "number",
-    "tag": "string | null",
-    "updated_at": "string",
-    "user_id": "string"
-   },
-   "drift": {
-    "so_na_migration": [],
-    "so_no_types": []
-   },
    "usada_no_front": 1,
    "usada_em_edges": [],
    "triggers": [
@@ -11364,28 +10160,6 @@
     "contact_id->contacts"
    ],
    "criada_em": "20251224023203_b0186fe4-1181-4b5d-a9cc-460f3738b952.sql",
-   "colunas_types": {
-    "assigned_agent": "string | null",
-    "attempts": "number",
-    "call_duration_seconds": "number | null",
-    "campaign_id": "string",
-    "contact_id": "string | null",
-    "created_at": "string",
-    "id": "string",
-    "last_attempt_at": "string | null",
-    "name": "string | null",
-    "next_attempt_at": "string | null",
-    "phone": "string",
-    "priority": "number",
-    "result": "string | null",
-    "result_notes": "string | null",
-    "status": "string",
-    "updated_at": "string"
-   },
-   "drift": {
-    "so_na_migration": [],
-    "so_no_types": []
-   },
    "usada_no_front": 1,
    "usada_em_edges": [],
    "triggers": [
@@ -11499,24 +10273,6 @@
    "indices": [],
    "fks": [],
    "criada_em": "20260103145030_b2c1f366-245b-4264-9139-4def0d930fd6.sql",
-   "colunas_types": {
-    "completed_at": "string | null",
-    "created_at": "string",
-    "duplicate_records": "number",
-    "error_details": "Json | null",
-    "failed_records": "number",
-    "file_name": "string",
-    "id": "string",
-    "imported_by": "string | null",
-    "imported_records": "number",
-    "started_at": "string",
-    "status": "string",
-    "total_records": "number"
-   },
-   "drift": {
-    "so_na_migration": [],
-    "so_no_types": []
-   },
    "usada_no_front": 1,
    "usada_em_edges": [],
    "triggers": [],
@@ -11637,23 +10393,6 @@
    ],
    "fks": [],
    "criada_em": "20260103145030_b2c1f366-245b-4264-9139-4def0d930fd6.sql",
-   "colunas_types": {
-    "added_by": "string | null",
-    "created_at": "string",
-    "expires_at": "string | null",
-    "id": "string",
-    "is_active": "boolean",
-    "notes": "string | null",
-    "phone": "string",
-    "phone_normalized": "string",
-    "reason": "string",
-    "source": "string",
-    "updated_at": "string"
-   },
-   "drift": {
-    "so_na_migration": [],
-    "so_no_types": []
-   },
    "usada_no_front": 2,
    "usada_em_edges": [],
    "triggers": [
@@ -11800,26 +10539,6 @@
     "conversation_id->conversations"
    ],
    "criada_em": "20260417001411_2f77b480-8ec1-46a5-af32-2904e651a55a.sql",
-   "colunas_types": {
-    "body_html": "string | null",
-    "body_text": "string | null",
-    "cc_emails": "string[] | null",
-    "conversation_id": "string",
-    "created_at": "string",
-    "from_email": "string",
-    "headers": "Json | null",
-    "id": "string",
-    "in_reply_to": "string | null",
-    "message_id": "string | null",
-    "received_at": "string",
-    "subject": "string",
-    "thread_id": "string | null",
-    "to_emails": "string[]"
-   },
-   "drift": {
-    "so_na_migration": [],
-    "so_no_types": []
-   },
    "usada_no_front": 0,
    "usada_em_edges": [
     "email-inbound"
@@ -11918,19 +10637,6 @@
     "user_id->auth"
    ],
    "criada_em": "20251231115936_0cbef64e-8440-4db5-8f3d-164a7da98921.sql",
-   "colunas_types": {
-    "created_at": "string | null",
-    "email": "string",
-    "expires_at": "string",
-    "id": "string",
-    "token": "string",
-    "user_id": "string",
-    "verified_at": "string | null"
-   },
-   "drift": {
-    "so_na_migration": [],
-    "so_no_types": []
-   },
    "usada_no_front": 0,
    "usada_em_edges": [],
    "triggers": [],
@@ -12176,26 +10882,6 @@
     "call_session_id->call_sessions"
    ],
    "criada_em": "20260417113024_b37afec8-ce2c-47c3-9009-50ef0e86b65c.sql",
-   "colunas_types": {
-    "agent_name": "string | null",
-    "call_session_id": "string",
-    "created_at": "string",
-    "description": "string | null",
-    "evidence": "Json",
-    "id": "string",
-    "resolution_notes": "string | null",
-    "reviewed_at": "string | null",
-    "reviewed_by": "string | null",
-    "risk_score": "number",
-    "severity": "string",
-    "signal_type": "string",
-    "status": "string",
-    "updated_at": "string"
-   },
-   "drift": {
-    "so_na_migration": [],
-    "so_no_types": []
-   },
    "usada_no_front": 1,
    "usada_em_edges": [
     "verify-voice"
@@ -12232,20 +10918,6 @@
    ],
    "fks": [],
    "criada_em": null,
-   "colunas_types": {
-    "action": "string",
-    "city": "string | null",
-    "country_code": "string | null",
-    "country_name": "string | null",
-    "created_at": "string",
-    "id": "string",
-    "ip_address": "string",
-    "reason": "string | null",
-    "region": "string | null",
-    "user_agent": "string | null",
-    "user_email": "string | null",
-    "user_id": "string | null"
-   },
    "usada_no_front": 1,
    "usada_em_edges": [
     "validate-geo"
@@ -12268,16 +10940,6 @@
    "indices": [],
    "fks": [],
    "criada_em": null,
-   "colunas_types": {
-    "country_code": "string",
-    "country_name": "string",
-    "created_at": "string",
-    "created_by": "string | null",
-    "id": "string",
-    "reason": "string | null",
-    "restriction_type": "string",
-    "updated_at": "string"
-   },
    "usada_no_front": 1,
    "usada_em_edges": [
     "validate-geo"
@@ -12300,15 +10962,6 @@
    "indices": [],
    "fks": [],
    "criada_em": null,
-   "colunas_types": {
-    "created_at": "string",
-    "enabled": "boolean",
-    "id": "string",
-    "log_blocked_attempts": "boolean",
-    "mode": "string",
-    "notify_on_block": "boolean",
-    "updated_at": "string"
-   },
    "usada_no_front": 1,
    "usada_em_edges": [
     "validate-geo"
@@ -12420,21 +11073,6 @@
     "goal_id->dashboard_goals"
    ],
    "criada_em": "20251224143457_dcc666f8-bf68-4077-86f4-4a0ad7dd27b3.sql",
-   "colunas_types": {
-    "actual_value": "number",
-    "created_at": "string",
-    "deviation_percentage": "number | null",
-    "goal_id": "string",
-    "goal_name": "string",
-    "id": "string",
-    "metric_type": "string",
-    "target_value": "number",
-    "threshold_type": "string"
-   },
-   "drift": {
-    "so_na_migration": [],
-    "so_no_types": []
-   },
    "usada_no_front": 1,
    "usada_em_edges": [
     "check-goals"
@@ -12520,20 +11158,6 @@
    "indices": [],
    "fks": [],
    "criada_em": "20251223220228_f4ebbaa7-ea1c-447d-a07b-e1c0f583963d.sql",
-   "colunas_types": {
-    "created_at": "string",
-    "critical_threshold_seconds": "number",
-    "enabled": "boolean",
-    "id": "string",
-    "notify_on_critical": "boolean",
-    "notify_on_warning": "boolean",
-    "updated_at": "string",
-    "warning_threshold_seconds": "number"
-   },
-   "drift": {
-    "so_na_migration": [],
-    "so_no_types": []
-   },
    "usada_no_front": 2,
    "usada_em_edges": [
     "check-hold-alerts"
@@ -12650,19 +11274,6 @@
     "call_session_id->call_sessions"
    ],
    "criada_em": "20251223211907_9badc1f9-c450-4801-b56f-7cac4cabf237.sql",
-   "colunas_types": {
-    "agent_name": "string | null",
-    "call_session_id": "string | null",
-    "created_at": "string",
-    "duration_seconds": "number | null",
-    "ended_at": "string | null",
-    "id": "string",
-    "started_at": "string"
-   },
-   "drift": {
-    "so_na_migration": [],
-    "so_no_types": []
-   },
    "usada_no_front": 5,
    "usada_em_edges": [
     "check-hold-alerts"
@@ -12747,19 +11358,6 @@
    ],
    "fks": [],
    "criada_em": "20260103145030_b2c1f366-245b-4264-9139-4def0d930fd6.sql",
-   "colunas_types": {
-    "created_at": "string",
-    "date": "string",
-    "id": "string",
-    "is_national": "boolean",
-    "name": "string",
-    "recurring": "boolean",
-    "region_code": "string | null"
-   },
-   "drift": {
-    "so_na_migration": [],
-    "so_no_types": []
-   },
    "usada_no_front": 1,
    "usada_em_edges": [
     "enforce-sla"
@@ -12872,23 +11470,6 @@
    "indices": [],
    "fks": [],
    "criada_em": "20260315194850_5c156b99-5d85-4b43-9e09-74edf363cd91.sql",
-   "colunas_types": {
-    "auto_logout_at": "string | null",
-    "checked_in_at": "string | null",
-    "created_at": "string",
-    "current_user_name": "string | null",
-    "equipment": "Json",
-    "extension": "string | null",
-    "id": "string",
-    "is_available": "boolean",
-    "location": "string | null",
-    "station_name": "string",
-    "updated_at": "string"
-   },
-   "drift": {
-    "so_na_migration": [],
-    "so_no_types": []
-   },
    "usada_no_front": 1,
    "usada_em_edges": [],
    "triggers": [],
@@ -12977,20 +11558,6 @@
    ],
    "fks": [],
    "criada_em": "20260712115343_8332dd3d-29a2-4017-954c-edc625f7029b.sql",
-   "colunas_types": {
-    "action": "string",
-    "admin_email": "string | null",
-    "admin_id": "string | null",
-    "created_at": "string",
-    "id": "string",
-    "index_name": "string",
-    "sql_generated": "string",
-    "table_name": "string"
-   },
-   "drift": {
-    "so_na_migration": [],
-    "so_no_types": []
-   },
    "usada_no_front": 1,
    "usada_em_edges": [],
    "triggers": [
@@ -13062,18 +11629,6 @@
    "indices": [],
    "fks": [],
    "criada_em": "20251225193248_4613adbc-ca55-48c4-94aa-3aec14e8d9de.sql",
-   "colunas_types": {
-    "created_at": "string",
-    "created_by": "string | null",
-    "description": "string | null",
-    "id": "string",
-    "ip_address": "string",
-    "is_cidr": "boolean"
-   },
-   "drift": {
-    "so_na_migration": [],
-    "so_no_types": []
-   },
    "usada_no_front": 1,
    "usada_em_edges": [
     "validate-ip"
@@ -13174,21 +11729,6 @@
     "changed_by->auth"
    ],
    "criada_em": "20260507221454_8ee1f1c8-e52c-42d1-93f5-136662aa8772.sql",
-   "colunas_types": {
-    "article_id": "string",
-    "change_type": "string",
-    "changed_by": "string | null",
-    "created_at": "string",
-    "id": "string",
-    "new_content": "string | null",
-    "new_title": "string | null",
-    "previous_content": "string | null",
-    "previous_title": "string | null"
-   },
-   "drift": {
-    "so_na_migration": [],
-    "so_no_types": []
-   },
    "usada_no_front": 0,
    "usada_em_edges": [],
    "triggers": [],
@@ -13290,19 +11830,6 @@
     "conversation_id->conversations"
    ],
    "criada_em": "20260417001411_2f77b480-8ec1-46a5-af32-2904e651a55a.sql",
-   "colunas_types": {
-    "article_id": "string",
-    "conversation_id": "string | null",
-    "created_at": "string",
-    "id": "string",
-    "viewer_id": "string | null",
-    "viewer_type": "string | null",
-    "was_helpful": "boolean | null"
-   },
-   "drift": {
-    "so_na_migration": [],
-    "so_no_types": []
-   },
    "usada_no_front": 1,
    "usada_em_edges": [],
    "triggers": [],
@@ -13483,29 +12010,6 @@
     "category_id->kb_categories"
    ],
    "criada_em": "20260417001411_2f77b480-8ec1-46a5-af32-2904e651a55a.sql",
-   "colunas_types": {
-    "author_email": "string | null",
-    "category_id": "string | null",
-    "content": "string",
-    "created_at": "string",
-    "embedding": "string | null",
-    "excerpt": "string | null",
-    "helpful_count": "number | null",
-    "id": "string",
-    "not_helpful_count": "number | null",
-    "published_at": "string | null",
-    "search_vector": "unknown",
-    "slug": "string",
-    "status": "string",
-    "tags": "string[] | null",
-    "title": "string",
-    "updated_at": "string",
-    "view_count": "number | null"
-   },
-   "drift": {
-    "so_na_migration": [],
-    "so_no_types": []
-   },
    "usada_no_front": 1,
    "usada_em_edges": [
     "chatbot-respond",
@@ -13617,22 +12121,6 @@
     "parent_id->kb_categories"
    ],
    "criada_em": "20260417001411_2f77b480-8ec1-46a5-af32-2904e651a55a.sql",
-   "colunas_types": {
-    "created_at": "string",
-    "description": "string | null",
-    "icon": "string | null",
-    "id": "string",
-    "is_published": "boolean | null",
-    "name": "string",
-    "parent_id": "string | null",
-    "slug": "string",
-    "sort_order": "number | null",
-    "updated_at": "string"
-   },
-   "drift": {
-    "so_na_migration": [],
-    "so_no_types": []
-   },
    "usada_no_front": 1,
    "usada_em_edges": [],
    "triggers": [
@@ -13723,18 +12211,6 @@
     "module_id->learning_modules"
    ],
    "criada_em": "20260417000338_f03874c1-f8d9-4f2d-bf5c-20ad794cce6f.sql",
-   "colunas_types": {
-    "agent_name": "string",
-    "completed_at": "string",
-    "id": "string",
-    "module_id": "string",
-    "notes": "string | null",
-    "score": "number | null"
-   },
-   "drift": {
-    "so_na_migration": [],
-    "so_no_types": []
-   },
    "usada_no_front": 1,
    "usada_em_edges": [],
    "triggers": [],
@@ -13860,26 +12336,6 @@
    "indices": [],
    "fks": [],
    "criada_em": "20260417000338_f03874c1-f8d9-4f2d-bf5c-20ad794cce6f.sql",
-   "colunas_types": {
-    "category": "string",
-    "content_body": "string | null",
-    "content_type": "string",
-    "content_url": "string | null",
-    "created_at": "string",
-    "created_by": "string | null",
-    "description": "string | null",
-    "difficulty": "string",
-    "duration_minutes": "number",
-    "id": "string",
-    "is_active": "boolean",
-    "tags": "string[] | null",
-    "title": "string",
-    "updated_at": "string"
-   },
-   "drift": {
-    "so_na_migration": [],
-    "so_no_types": []
-   },
    "usada_no_front": 1,
    "usada_em_edges": [],
    "triggers": [
@@ -14042,26 +12498,6 @@
     "call_session_id->call_sessions"
    ],
    "criada_em": "20260417110551_0cb1418b-1c9a-4cf2-9164-7d7f523213d8.sql",
-   "colunas_types": {
-    "agent_name": "string | null",
-    "call_session_id": "string",
-    "confidence": "number | null",
-    "created_at": "string",
-    "id": "string",
-    "intent": "string",
-    "metadata": "Json | null",
-    "source": "string",
-    "speaker": "string | null",
-    "suggestion": "string | null",
-    "timestamp_seconds": "number",
-    "trigger_text": "string | null",
-    "used_at": "string | null",
-    "was_used": "boolean | null"
-   },
-   "drift": {
-    "so_na_migration": [],
-    "so_no_types": []
-   },
    "usada_no_front": 1,
    "usada_em_edges": [
     "analyze-live-utterance"
@@ -14167,21 +12603,6 @@
     "call_session_id->call_sessions"
    ],
    "criada_em": "20260416225701_7a49a0bb-be31-4054-98f2-87f16a3fcbe8.sql",
-   "colunas_types": {
-    "call_session_id": "string",
-    "created_at": "string",
-    "emotion": "string | null",
-    "id": "string",
-    "metadata": "Json | null",
-    "score": "number | null",
-    "sentiment": "string",
-    "timestamp_seconds": "number",
-    "urgency": "string | null"
-   },
-   "drift": {
-    "so_na_migration": [],
-    "so_no_types": []
-   },
    "usada_no_front": 2,
    "usada_em_edges": [],
    "triggers": [],
@@ -14285,18 +12706,6 @@
    ],
    "fks": [],
    "criada_em": "20251231132751_524f6c03-6c9f-4b16-aae7-d38bb6903fda.sql",
-   "colunas_types": {
-    "created_at": "string",
-    "email": "string",
-    "id": "string",
-    "ip_address": "string | null",
-    "success": "boolean",
-    "user_agent": "string | null"
-   },
-   "drift": {
-    "so_na_migration": [],
-    "so_no_types": []
-   },
    "usada_no_front": 1,
    "usada_em_edges": [
     "database-cleanup"
@@ -14411,23 +12820,6 @@
     "call_session_id->call_sessions"
    ],
    "criada_em": "20260315194850_5c156b99-5d85-4b43-9e09-74edf363cd91.sql",
-   "colunas_types": {
-    "agent_name": "string | null",
-    "alert_type": "string",
-    "call_session_id": "string | null",
-    "created_at": "string",
-    "id": "string",
-    "is_resolved": "boolean",
-    "resolved_at": "string | null",
-    "resolved_by": "string | null",
-    "sentiment_score": "number | null",
-    "severity": "string",
-    "trigger_reason": "string"
-   },
-   "drift": {
-    "so_na_migration": [],
-    "so_no_types": []
-   },
    "usada_no_front": 1,
    "usada_em_edges": [],
    "triggers": [],
@@ -14693,36 +13085,6 @@
     "generated_by->auth"
    ],
    "criada_em": "20260417002302_ac16e3fa-c0c4-4a84-958e-c3936f9e9034.sql",
-   "colunas_types": {
-    "action_items": "Json | null",
-    "ai_confidence": "number | null",
-    "ai_model": "string | null",
-    "call_session_id": "string",
-    "created_at": "string",
-    "decisions": "Json | null",
-    "edited": "boolean | null",
-    "edited_at": "string | null",
-    "edited_by": "string | null",
-    "edited_content": "Json | null",
-    "error_message": "string | null",
-    "follow_up_reason": "string | null",
-    "follow_up_required": "boolean | null",
-    "generated_at": "string | null",
-    "generated_by": "string | null",
-    "id": "string",
-    "key_points": "Json | null",
-    "next_steps": "Json | null",
-    "participants_sentiment": "Json | null",
-    "shared_with": "string[] | null",
-    "status": "string",
-    "summary": "string | null",
-    "topics_discussed": "string[] | null",
-    "updated_at": "string"
-   },
-   "drift": {
-    "so_na_migration": [],
-    "so_no_types": []
-   },
    "usada_no_front": 1,
    "usada_em_edges": [
     "generate-meeting-summary"
@@ -14900,25 +13262,6 @@
    "indices": [],
    "fks": [],
    "criada_em": "20260315144312_5b41e5e7-ff57-40a1-ad7e-68133720c86c.sql",
-   "colunas_types": {
-    "categories": "Json",
-    "created_at": "string",
-    "digest_enabled": "boolean",
-    "digest_frequency": "string",
-    "email_enabled": "boolean",
-    "id": "string",
-    "push_enabled": "boolean",
-    "quiet_hours_enabled": "boolean",
-    "quiet_hours_end": "string | null",
-    "quiet_hours_start": "string | null",
-    "sound_enabled": "boolean",
-    "updated_at": "string",
-    "user_id": "string"
-   },
-   "drift": {
-    "so_na_migration": [],
-    "so_no_types": []
-   },
    "usada_no_front": 2,
    "usada_em_edges": [
     "process-digest",
@@ -15120,30 +13463,6 @@
    ],
    "fks": [],
    "criada_em": "20260315144312_5b41e5e7-ff57-40a1-ad7e-68133720c86c.sql",
-   "colunas_types": {
-    "action_label": "string | null",
-    "action_url": "string | null",
-    "category": "string",
-    "created_at": "string",
-    "expires_at": "string | null",
-    "id": "string",
-    "is_archived": "boolean",
-    "is_read": "boolean",
-    "message": "string",
-    "metadata": "Json | null",
-    "read_at": "string | null",
-    "severity": "string",
-    "source_id": "string | null",
-    "source_type": "string | null",
-    "title": "string",
-    "type": "string",
-    "updated_at": "string",
-    "user_id": "string"
-   },
-   "drift": {
-    "so_na_migration": [],
-    "so_no_types": []
-   },
    "usada_no_front": 4,
    "usada_em_edges": [
     "enforce-sla",
@@ -15277,26 +13596,6 @@
    "indices": [],
    "fks": [],
    "criada_em": "20260315194850_5c156b99-5d85-4b43-9e09-74edf363cd91.sql",
-   "colunas_types": {
-    "account_number": "string | null",
-    "authorized_name": "string",
-    "completed_at": "string | null",
-    "created_at": "string",
-    "created_by": "string | null",
-    "current_provider": "string",
-    "estimated_completion": "string | null",
-    "id": "string",
-    "notes": "string | null",
-    "phone_number": "string",
-    "rejection_reason": "string | null",
-    "status": "string",
-    "submitted_at": "string",
-    "updated_at": "string"
-   },
-   "drift": {
-    "so_na_migration": [],
-    "so_no_types": []
-   },
    "usada_no_front": 1,
    "usada_em_edges": [],
    "triggers": [],
@@ -15447,28 +13746,6 @@
    ],
    "fks": [],
    "criada_em": "20260417110551_0cb1418b-1c9a-4cf2-9164-7d7f523213d8.sql",
-   "colunas_types": {
-    "category": "string | null",
-    "created_at": "string",
-    "created_by": "string | null",
-    "difficulty": "string | null",
-    "id": "string",
-    "is_active": "boolean",
-    "objection_example": "string",
-    "objection_type": "string",
-    "recommended_response": "string",
-    "success_rate": "number | null",
-    "talking_points": "string[] | null",
-    "times_suggested": "number | null",
-    "times_used": "number | null",
-    "times_won": "number | null",
-    "trigger_keywords": "string[]",
-    "updated_at": "string"
-   },
-   "drift": {
-    "so_na_migration": [],
-    "so_no_types": []
-   },
    "usada_no_front": 1,
    "usada_em_edges": [
     "analyze-live-utterance"
@@ -15560,19 +13837,6 @@
    ],
    "fks": [],
    "criada_em": "20260418132329_194c7950-0787-43d5-a46a-f204640ee74a.sql",
-   "colunas_types": {
-    "attempted_at": "string",
-    "client_version": "number | null",
-    "current_version": "number | null",
-    "id": "string",
-    "record_id": "string",
-    "table_name": "string",
-    "user_id": "string | null"
-   },
-   "drift": {
-    "so_na_migration": [],
-    "so_no_types": []
-   },
    "usada_no_front": 2,
    "usada_em_edges": [
     "cleanup-lock-conflicts"
@@ -15766,29 +14030,6 @@
     "retrieved_by->auth"
    ],
    "criada_em": "20260726202218_619850bb-a4f2-4112-96d7-872649f70b37.sql",
-   "colunas_types": {
-    "call_session_id": "string | null",
-    "contact_name": "string | null",
-    "contact_phone": "string | null",
-    "created_at": "string",
-    "expires_at": "string",
-    "id": "string",
-    "notes": "string | null",
-    "orbit_id": "string",
-    "parked_at": "string",
-    "parked_by": "string | null",
-    "parked_by_name": "string | null",
-    "retrieved_at": "string | null",
-    "retrieved_by": "string | null",
-    "retrieved_by_name": "string | null",
-    "slot_number": "number",
-    "status": "string",
-    "updated_at": "string"
-   },
-   "drift": {
-    "so_na_migration": [],
-    "so_no_types": []
-   },
    "usada_no_front": 2,
    "usada_em_edges": [],
    "triggers": [
@@ -15926,25 +14167,6 @@
    ],
    "fks": [],
    "criada_em": "20251231131323_f5848ea5-ae7d-4e46-ac63-aba88d5f35bc.sql",
-   "colunas_types": {
-    "created_at": "string",
-    "expires_at": "string",
-    "id": "string",
-    "ip_address": "string | null",
-    "rejection_reason": "string | null",
-    "requested_at": "string",
-    "reviewed_at": "string | null",
-    "reviewed_by": "string | null",
-    "reviewer_email": "string | null",
-    "status": "string",
-    "user_agent": "string | null",
-    "user_email": "string",
-    "user_id": "string"
-   },
-   "drift": {
-    "so_na_migration": [],
-    "so_no_types": []
-   },
    "usada_no_front": 1,
    "usada_em_edges": [
     "approve-password-reset",
@@ -16044,19 +14266,6 @@
     "user_id->auth"
    ],
    "criada_em": "20251231115936_0cbef64e-8440-4db5-8f3d-164a7da98921.sql",
-   "colunas_types": {
-    "created_at": "string | null",
-    "expires_at": "string",
-    "id": "string",
-    "ip_address": "string | null",
-    "token": "string",
-    "used_at": "string | null",
-    "user_id": "string"
-   },
-   "drift": {
-    "so_na_migration": [],
-    "so_no_types": []
-   },
    "usada_no_front": 0,
    "usada_em_edges": [],
    "triggers": [],
@@ -16165,21 +14374,6 @@
     "user_id->auth"
    ],
    "criada_em": "20260507221246_8cb863b7-2e5f-4003-adb0-fa3597e71bf8.sql",
-   "colunas_types": {
-    "created_at": "string",
-    "id": "string",
-    "metric_name": "string",
-    "metric_value": "number",
-    "navigation_type": "string | null",
-    "rating": "string | null",
-    "url": "string | null",
-    "user_agent": "string | null",
-    "user_id": "string | null"
-   },
-   "drift": {
-    "so_na_migration": [],
-    "so_no_types": []
-   },
    "usada_no_front": 1,
    "usada_em_edges": [],
    "triggers": [],
@@ -16249,18 +14443,6 @@
    "indices": [],
    "fks": [],
    "criada_em": "20251231115936_0cbef64e-8440-4db5-8f3d-164a7da98921.sql",
-   "colunas_types": {
-    "action": "string",
-    "created_at": "string | null",
-    "description": "string | null",
-    "id": "string",
-    "module": "string",
-    "name": "string"
-   },
-   "drift": {
-    "so_na_migration": [],
-    "so_no_types": []
-   },
    "usada_no_front": 1,
    "usada_em_edges": [],
    "triggers": [
@@ -16405,19 +14587,6 @@
     "playlist_id->call_playlists"
    ],
    "criada_em": "20260416234921_cc18cae3-c0a2-4ffd-a96e-7bc43be82ec5.sql",
-   "colunas_types": {
-    "added_by": "string | null",
-    "call_session_id": "string",
-    "created_at": "string",
-    "display_order": "number",
-    "id": "string",
-    "notes": "string | null",
-    "playlist_id": "string"
-   },
-   "drift": {
-    "so_na_migration": [],
-    "so_no_types": []
-   },
    "usada_no_front": 1,
    "usada_em_edges": [],
    "triggers": [],
@@ -16535,24 +14704,6 @@
    ],
    "fks": [],
    "criada_em": "20260726201157_da4cb47a-5f61-4783-9786-eb99a7ee6bfc.sql",
-   "colunas_types": {
-    "created_at": "string",
-    "created_by": "string | null",
-    "description": "string | null",
-    "duration_seconds": "number",
-    "file_size_bytes": "number",
-    "id": "string",
-    "is_active": "boolean",
-    "kind": "string",
-    "mime_type": "string",
-    "name": "string",
-    "storage_path": "string",
-    "updated_at": "string"
-   },
-   "drift": {
-    "so_na_migration": [],
-    "so_no_types": []
-   },
    "usada_no_front": 1,
    "usada_em_edges": [],
    "triggers": [
@@ -16762,23 +14913,6 @@
    "indices": [],
    "fks": [],
    "criada_em": "20251224134826_e7324447-c07d-4e94-b603-52bf4efa2773.sql",
-   "colunas_types": {
-    "abandonment_rate_critical": "number",
-    "abandonment_rate_warning": "number",
-    "avg_wait_time_critical": "number",
-    "avg_wait_time_warning": "number",
-    "check_interval_minutes": "number",
-    "created_at": "string",
-    "enabled": "boolean",
-    "id": "string",
-    "service_level_critical": "number",
-    "service_level_warning": "number",
-    "updated_at": "string"
-   },
-   "drift": {
-    "so_na_migration": [],
-    "so_no_types": []
-   },
    "usada_no_front": 1,
    "usada_em_edges": [
     "check-queue-metrics"
@@ -16860,18 +14994,6 @@
     "skill_id->skills"
    ],
    "criada_em": "20260417000338_f03874c1-f8d9-4f2d-bf5c-20ad794cce6f.sql",
-   "colunas_types": {
-    "created_at": "string",
-    "id": "string",
-    "min_proficiency": "number",
-    "queue_name": "string",
-    "skill_id": "string",
-    "weight": "number"
-   },
-   "drift": {
-    "so_na_migration": [],
-    "so_no_types": []
-   },
    "usada_no_front": 0,
    "usada_em_edges": [],
    "triggers": [],
@@ -16996,23 +15118,6 @@
     "user_id->auth"
    ],
    "criada_em": "20251231115936_0cbef64e-8440-4db5-8f3d-164a7da98921.sql",
-   "colunas_types": {
-    "created_at": "string | null",
-    "endpoint": "string",
-    "id": "string",
-    "ip_address": "string",
-    "is_resolved": "boolean | null",
-    "request_count": "number",
-    "resolved_at": "string | null",
-    "resolved_by": "string | null",
-    "severity": "string | null",
-    "threshold": "number",
-    "user_id": "string | null"
-   },
-   "drift": {
-    "so_na_migration": [],
-    "so_no_types": []
-   },
    "usada_no_front": 1,
    "usada_em_edges": [
     "database-cleanup"
@@ -17140,22 +15245,6 @@
     "user_id->auth"
    ],
    "criada_em": "20251231115936_0cbef64e-8440-4db5-8f3d-164a7da98921.sql",
-   "colunas_types": {
-    "block_reason": "string | null",
-    "created_at": "string | null",
-    "endpoint": "string",
-    "id": "string",
-    "ip_address": "string",
-    "is_blocked": "boolean | null",
-    "request_count": "number | null",
-    "user_id": "string | null",
-    "window_end": "string | null",
-    "window_start": "string | null"
-   },
-   "drift": {
-    "so_na_migration": [],
-    "so_no_types": []
-   },
    "usada_no_front": 1,
    "usada_em_edges": [
     "_shared",
@@ -17242,20 +15331,6 @@
    "indices": [],
    "fks": [],
    "criada_em": "20251231115936_0cbef64e-8440-4db5-8f3d-164a7da98921.sql",
-   "colunas_types": {
-    "block_duration_seconds": "number | null",
-    "created_at": "string | null",
-    "endpoint_pattern": "string",
-    "id": "string",
-    "is_enabled": "boolean | null",
-    "max_requests": "number | null",
-    "updated_at": "string | null",
-    "window_seconds": "number | null"
-   },
-   "drift": {
-    "so_na_migration": [],
-    "so_no_types": []
-   },
    "usada_no_front": 1,
    "usada_em_edges": [],
    "triggers": [
@@ -17362,22 +15437,6 @@
     "call_session_id->call_sessions"
    ],
    "criada_em": "20260417113024_b37afec8-ce2c-47c3-9009-50ef0e86b65c.sql",
-   "colunas_types": {
-    "call_session_id": "string | null",
-    "created_at": "string",
-    "error_message": "string | null",
-    "id": "string",
-    "match_count": "number",
-    "pattern_type": "string",
-    "recording_path": "string | null",
-    "redacted_path": "string | null",
-    "segments": "Json",
-    "status": "string"
-   },
-   "drift": {
-    "so_na_migration": [],
-    "so_no_types": []
-   },
    "usada_no_front": 0,
    "usada_em_edges": [
     "redact-sensitive-audio"
@@ -17536,27 +15595,6 @@
     "account_id->accounts"
    ],
    "criada_em": "20260416235642_e9fe6fa3-4307-49a3-9253-09718c07703d.sql",
-   "colunas_types": {
-    "account_id": "string",
-    "closed_at": "string | null",
-    "created_at": "string",
-    "current_value": "number",
-    "due_date": "string",
-    "id": "string",
-    "loss_reason": "string | null",
-    "metadata": "Json | null",
-    "notes": "string | null",
-    "owner_agent_name": "string | null",
-    "probability": "number",
-    "proposed_value": "number",
-    "renewal_type": "string",
-    "status": "string",
-    "updated_at": "string"
-   },
-   "drift": {
-    "so_na_migration": [],
-    "so_no_types": []
-   },
    "usada_no_front": 2,
    "usada_em_edges": [],
    "triggers": [
@@ -17656,20 +15694,6 @@
     "group_id->ring_groups"
    ],
    "criada_em": "20260726200037_ddb39a7d-1e45-4c97-be01-1923e0caea6d.sql",
-   "colunas_types": {
-    "agent_id": "string",
-    "created_at": "string",
-    "delay_seconds": "number",
-    "group_id": "string",
-    "id": "string",
-    "is_enabled": "boolean",
-    "ring_order": "number",
-    "updated_at": "string"
-   },
-   "drift": {
-    "so_na_migration": [],
-    "so_no_types": []
-   },
    "usada_no_front": 1,
    "usada_em_edges": [],
    "triggers": [
@@ -17806,25 +15830,6 @@
    ],
    "fks": [],
    "criada_em": "20260726200037_ddb39a7d-1e45-4c97-be01-1923e0caea6d.sql",
-   "colunas_types": {
-    "created_at": "string",
-    "description": "string | null",
-    "extension": "string | null",
-    "forward_target": "string | null",
-    "id": "string",
-    "is_active": "boolean",
-    "name": "string",
-    "no_answer_action": "string",
-    "ring_timeout_seconds": "number",
-    "skip_busy_agents": "boolean",
-    "step_timeout_seconds": "number",
-    "strategy": "string",
-    "updated_at": "string"
-   },
-   "drift": {
-    "so_na_migration": [],
-    "so_no_types": []
-   },
    "usada_no_front": 1,
    "usada_em_edges": [],
    "triggers": [
@@ -17904,19 +15909,6 @@
    ],
    "fks": [],
    "criada_em": "20260522202120_9602a6a5-b48f-402b-a194-f1c009763fbc.sql",
-   "colunas_types": {
-    "client_ip": "string | null",
-    "created_at": "string | null",
-    "details": "Json | null",
-    "id": "string",
-    "operation": "string",
-    "table_name": "string",
-    "user_id": "string | null"
-   },
-   "drift": {
-    "so_na_migration": [],
-    "so_no_types": []
-   },
    "usada_no_front": 1,
    "usada_em_edges": [],
    "triggers": [],
@@ -17980,16 +15972,6 @@
     "permission_id->permissions"
    ],
    "criada_em": "20251231115936_0cbef64e-8440-4db5-8f3d-164a7da98921.sql",
-   "colunas_types": {
-    "created_at": "string | null",
-    "id": "string",
-    "permission_id": "string",
-    "role": "Database[\"public\"][\"Enums\"][\"app_role\"]"
-   },
-   "drift": {
-    "so_na_migration": [],
-    "so_no_types": []
-   },
    "usada_no_front": 2,
    "usada_em_edges": [],
    "triggers": [
@@ -18116,25 +16098,6 @@
    ],
    "fks": [],
    "criada_em": "20260417001411_2f77b480-8ec1-46a5-af32-2904e651a55a.sql",
-   "colunas_types": {
-    "actions": "Json",
-    "channel": "string | null",
-    "conditions": "Json",
-    "created_at": "string",
-    "created_by": "string | null",
-    "description": "string | null",
-    "id": "string",
-    "is_active": "boolean | null",
-    "last_matched_at": "string | null",
-    "match_count": "number | null",
-    "name": "string",
-    "priority": "number",
-    "updated_at": "string"
-   },
-   "drift": {
-    "so_na_migration": [],
-    "so_no_types": []
-   },
    "usada_no_front": 1,
    "usada_em_edges": [],
    "triggers": [
@@ -18411,25 +16374,6 @@
     "contact_id->contacts"
    ],
    "criada_em": "20251224022711_bcf91fc6-4c52-42e8-b02c-c63b4f495a64.sql",
-   "colunas_types": {
-    "assigned_agent": "string | null",
-    "caller_name": "string",
-    "caller_phone": "string",
-    "completed_at": "string | null",
-    "contact_id": "string | null",
-    "created_at": "string",
-    "created_by": "string | null",
-    "id": "string",
-    "notes": "string | null",
-    "priority": "string",
-    "scheduled_at": "string",
-    "status": "string",
-    "updated_at": "string"
-   },
-   "drift": {
-    "so_na_migration": [],
-    "so_no_types": []
-   },
    "usada_no_front": 2,
    "usada_em_edges": [],
    "triggers": [
@@ -18586,20 +16530,6 @@
     "template_id->scorecard_templates"
    ],
    "criada_em": "20260416234921_cc18cae3-c0a2-4ffd-a96e-7bc43be82ec5.sql",
-   "colunas_types": {
-    "created_at": "string",
-    "description": "string | null",
-    "display_order": "number",
-    "id": "string",
-    "label": "string",
-    "max_score": "number",
-    "template_id": "string",
-    "weight": "number"
-   },
-   "drift": {
-    "so_na_migration": [],
-    "so_no_types": []
-   },
    "usada_no_front": 1,
    "usada_em_edges": [
     "auto-scorecard",
@@ -18686,18 +16616,6 @@
     "scorecard_id->call_scorecards"
    ],
    "criada_em": "20260416234921_cc18cae3-c0a2-4ffd-a96e-7bc43be82ec5.sql",
-   "colunas_types": {
-    "comment": "string | null",
-    "created_at": "string",
-    "criterion_id": "string",
-    "id": "string",
-    "score": "number",
-    "scorecard_id": "string"
-   },
-   "drift": {
-    "so_na_migration": [],
-    "so_no_types": []
-   },
    "usada_no_front": 1,
    "usada_em_edges": [
     "auto-scorecard",
@@ -18777,19 +16695,6 @@
    "indices": [],
    "fks": [],
    "criada_em": "20260416234921_cc18cae3-c0a2-4ffd-a96e-7bc43be82ec5.sql",
-   "colunas_types": {
-    "created_at": "string",
-    "created_by": "string | null",
-    "description": "string | null",
-    "id": "string",
-    "is_active": "boolean",
-    "name": "string",
-    "updated_at": "string"
-   },
-   "drift": {
-    "so_na_migration": [],
-    "so_no_types": []
-   },
    "usada_no_front": 1,
    "usada_em_edges": [
     "auto-scorecard"
@@ -18917,24 +16822,6 @@
    "indices": [],
    "fks": [],
    "criada_em": "20251225192806_31f73fb3-ef04-442d-b4bd-cc6cce94cdb8.sql",
-   "colunas_types": {
-    "alert_type": "string",
-    "created_at": "string",
-    "description": "string",
-    "id": "string",
-    "is_resolved": "boolean",
-    "resolved_at": "string | null",
-    "resolved_by": "string | null",
-    "severity": "string",
-    "source_user_email": "string | null",
-    "source_user_id": "string | null",
-    "title": "string",
-    "trigger_data": "Json | null"
-   },
-   "drift": {
-    "so_na_migration": [],
-    "so_no_types": []
-   },
    "usada_no_front": 2,
    "usada_em_edges": [
     "request-password-reset",
@@ -19081,25 +16968,6 @@
     "to_shift_id->agent_shifts"
    ],
    "criada_em": "20260711153050_e3d3822b-d711-42cf-8514-1f348c336641.sql",
-   "colunas_types": {
-    "approved_at": "string | null",
-    "approved_by": "string | null",
-    "created_at": "string",
-    "from_agent_id": "string",
-    "from_shift_id": "string | null",
-    "id": "string",
-    "metadata": "Json | null",
-    "reason": "string",
-    "score": "number",
-    "status": "string",
-    "to_agent_id": "string",
-    "to_shift_id": "string | null",
-    "updated_at": "string"
-   },
-   "drift": {
-    "so_na_migration": [],
-    "so_no_types": []
-   },
    "usada_no_front": 1,
    "usada_em_edges": [
     "suggest-shift-swaps"
@@ -19208,23 +17076,6 @@
    "indices": [],
    "fks": [],
    "criada_em": "20260417000338_f03874c1-f8d9-4f2d-bf5c-20ad794cce6f.sql",
-   "colunas_types": {
-    "break_minutes": "number",
-    "color": "string | null",
-    "created_at": "string",
-    "created_by": "string | null",
-    "days_of_week": "number[]",
-    "end_time": "string",
-    "id": "string",
-    "is_active": "boolean",
-    "name": "string",
-    "start_time": "string",
-    "updated_at": "string"
-   },
-   "drift": {
-    "so_na_migration": [],
-    "so_no_types": []
-   },
    "usada_no_front": 1,
    "usada_em_edges": [],
    "triggers": [
@@ -19303,19 +17154,6 @@
    "indices": [],
    "fks": [],
    "criada_em": "20260417000338_f03874c1-f8d9-4f2d-bf5c-20ad794cce6f.sql",
-   "colunas_types": {
-    "category": "string",
-    "created_at": "string",
-    "description": "string | null",
-    "id": "string",
-    "is_active": "boolean",
-    "name": "string",
-    "updated_at": "string"
-   },
-   "drift": {
-    "so_na_migration": [],
-    "so_no_types": []
-   },
    "usada_no_front": 1,
    "usada_em_edges": [],
    "triggers": [
@@ -19435,24 +17273,6 @@
    ],
    "fks": [],
    "criada_em": "20260417001411_2f77b480-8ec1-46a5-af32-2904e651a55a.sql",
-   "colunas_types": {
-    "applies_to_tags": "string[] | null",
-    "business_hours_only": "boolean | null",
-    "channel": "string | null",
-    "created_at": "string",
-    "description": "string | null",
-    "first_response_minutes": "number",
-    "id": "string",
-    "is_active": "boolean | null",
-    "name": "string",
-    "priority": "string | null",
-    "resolution_minutes": "number",
-    "updated_at": "string"
-   },
-   "drift": {
-    "so_na_migration": [],
-    "so_no_types": []
-   },
    "usada_no_front": 1,
    "usada_em_edges": [
     "enforce-sla"
@@ -19710,24 +17530,6 @@
     "success_plan_id->success_plans"
    ],
    "criada_em": "20260416235642_e9fe6fa3-4307-49a3-9253-09718c07703d.sql",
-   "colunas_types": {
-    "assigned_to": "string | null",
-    "completed_at": "string | null",
-    "created_at": "string",
-    "description": "string | null",
-    "display_order": "number",
-    "due_date": "string | null",
-    "id": "string",
-    "metadata": "Json | null",
-    "status": "string",
-    "success_plan_id": "string",
-    "title": "string",
-    "updated_at": "string"
-   },
-   "drift": {
-    "so_na_migration": [],
-    "so_no_types": []
-   },
    "usada_no_front": 1,
    "usada_em_edges": [],
    "triggers": [
@@ -19888,28 +17690,6 @@
     "account_id->accounts"
    ],
    "criada_em": "20260416235642_e9fe6fa3-4307-49a3-9253-09718c07703d.sql",
-   "colunas_types": {
-    "account_id": "string",
-    "business_outcome": "string | null",
-    "completed_at": "string | null",
-    "created_at": "string",
-    "id": "string",
-    "metadata": "Json | null",
-    "objective": "string",
-    "owner_agent_name": "string | null",
-    "progress_percent": "number | null",
-    "stakeholders": "Json | null",
-    "start_date": "string",
-    "status": "string",
-    "target_date": "string",
-    "title": "string",
-    "updated_at": "string",
-    "version": "number"
-   },
-   "drift": {
-    "so_na_migration": [],
-    "so_no_types": []
-   },
    "usada_no_front": 1,
    "usada_em_edges": [],
    "triggers": [
@@ -20076,26 +17856,6 @@
     "survey_id->surveys"
    ],
    "criada_em": "20260416235642_e9fe6fa3-4307-49a3-9253-09718c07703d.sql",
-   "colunas_types": {
-    "account_id": "string | null",
-    "answers": "Json",
-    "call_session_id": "string | null",
-    "category": "string | null",
-    "channel": "string | null",
-    "contact_id": "string | null",
-    "created_at": "string",
-    "free_text_feedback": "string | null",
-    "id": "string",
-    "respondent_email": "string | null",
-    "respondent_phone": "string | null",
-    "score": "number | null",
-    "submitted_at": "string",
-    "survey_id": "string"
-   },
-   "drift": {
-    "so_na_migration": [],
-    "so_no_types": []
-   },
    "usada_no_front": 1,
    "usada_em_edges": [
     "compute-account-health",
@@ -20196,22 +17956,6 @@
    "indices": [],
    "fks": [],
    "criada_em": "20260416235642_e9fe6fa3-4307-49a3-9253-09718c07703d.sql",
-   "colunas_types": {
-    "created_at": "string",
-    "created_by": "string | null",
-    "description": "string | null",
-    "id": "string",
-    "is_active": "boolean",
-    "name": "string",
-    "questions": "Json",
-    "survey_type": "string",
-    "trigger_event": "string | null",
-    "updated_at": "string"
-   },
-   "drift": {
-    "so_na_migration": [],
-    "so_no_types": []
-   },
    "usada_no_front": 0,
    "usada_em_edges": [
     "send-survey"
@@ -20278,21 +18022,6 @@
    "indices": [],
    "fks": [],
    "criada_em": "20260507220325_dcddf456-0d72-414d-b77a-68839a03a706.sql",
-   "colunas_types": {
-    "created_at": "string | null",
-    "description": "string | null",
-    "key": "string",
-    "updated_at": "string | null",
-    "value": "Json"
-   },
-   "drift": {
-    "so_na_migration": [
-     "id"
-    ],
-    "so_no_types": [
-     "key"
-    ]
-   },
    "usada_no_front": 1,
    "usada_em_edges": [
     "chatbot-respond",
@@ -20437,25 +18166,6 @@
    ],
    "fks": [],
    "criada_em": "20260417000338_f03874c1-f8d9-4f2d-bf5c-20ad794cce6f.sql",
-   "colunas_types": {
-    "agent_name": "string",
-    "created_at": "string",
-    "end_date": "string",
-    "id": "string",
-    "reason": "string | null",
-    "request_type": "string",
-    "requested_by": "string | null",
-    "reviewed_at": "string | null",
-    "reviewed_by": "string | null",
-    "reviewer_notes": "string | null",
-    "start_date": "string",
-    "status": "string",
-    "updated_at": "string"
-   },
-   "drift": {
-    "so_na_migration": [],
-    "so_no_types": []
-   },
    "usada_no_front": 1,
    "usada_em_edges": [],
    "triggers": [
@@ -20563,22 +18273,6 @@
     "call_flow_id->call_flows"
    ],
    "criada_em": "20260315194850_5c156b99-5d85-4b43-9e09-74edf363cd91.sql",
-   "colunas_types": {
-    "assigned_to": "string | null",
-    "call_flow_id": "string | null",
-    "created_at": "string",
-    "friendly_name": "string | null",
-    "id": "string",
-    "monthly_cost": "number | null",
-    "number": "string",
-    "provisioned_at": "string | null",
-    "status": "string",
-    "updated_at": "string"
-   },
-   "drift": {
-    "so_na_migration": [],
-    "so_no_types": []
-   },
    "usada_no_front": 1,
    "usada_em_edges": [],
    "triggers": [],
@@ -20676,20 +18370,6 @@
     "call_session_id->call_sessions"
    ],
    "criada_em": "20260315194850_5c156b99-5d85-4b43-9e09-74edf363cd91.sql",
-   "colunas_types": {
-    "call_session_id": "string | null",
-    "confidence": "number",
-    "created_at": "string",
-    "first_detected_at": "string",
-    "id": "string",
-    "last_detected_at": "string",
-    "occurrence_count": "number",
-    "topic": "string"
-   },
-   "drift": {
-    "so_na_migration": [],
-    "so_no_types": []
-   },
    "usada_no_front": 1,
    "usada_em_edges": [],
    "triggers": [],
@@ -20780,21 +18460,6 @@
    "indices": [],
    "fks": [],
    "criada_em": "20260315194850_5c156b99-5d85-4b43-9e09-74edf363cd91.sql",
-   "colunas_types": {
-    "avg_sentiment": "number | null",
-    "calls_affected": "number",
-    "created_at": "string",
-    "id": "string",
-    "period_end": "string",
-    "period_start": "string",
-    "topic": "string",
-    "total_occurrences": "number",
-    "trend_direction": "string | null"
-   },
-   "drift": {
-    "so_na_migration": [],
-    "so_no_types": []
-   },
    "usada_no_front": 1,
    "usada_em_edges": [],
    "triggers": [],
@@ -20903,20 +18568,6 @@
     "tracker_id->trackers"
    ],
    "criada_em": "20260416234921_cc18cae3-c0a2-4ffd-a96e-7bc43be82ec5.sql",
-   "colunas_types": {
-    "agent_name": "string | null",
-    "call_session_id": "string",
-    "created_at": "string",
-    "id": "string",
-    "matched_keyword": "string | null",
-    "quote": "string | null",
-    "timestamp_seconds": "number | null",
-    "tracker_id": "string"
-   },
-   "drift": {
-    "so_na_migration": [],
-    "so_no_types": []
-   },
    "usada_no_front": 1,
    "usada_em_edges": [],
    "triggers": [],
@@ -21021,23 +18672,6 @@
    "indices": [],
    "fks": [],
    "criada_em": "20260416234921_cc18cae3-c0a2-4ffd-a96e-7bc43be82ec5.sql",
-   "colunas_types": {
-    "category": "string",
-    "color": "string | null",
-    "created_at": "string",
-    "created_by": "string | null",
-    "description": "string | null",
-    "id": "string",
-    "is_active": "boolean",
-    "keywords": "string[]",
-    "match_type": "string",
-    "name": "string",
-    "updated_at": "string"
-   },
-   "drift": {
-    "so_na_migration": [],
-    "so_no_types": []
-   },
    "usada_no_front": 1,
    "usada_em_edges": [],
    "triggers": [
@@ -21117,18 +18751,6 @@
     "user_id->auth"
    ],
    "criada_em": "20251225193248_4613adbc-ca55-48c4-94aa-3aec14e8d9de.sql",
-   "colunas_types": {
-    "created_at": "string",
-    "description": "string | null",
-    "id": "string",
-    "ip_address": "string",
-    "is_cidr": "boolean",
-    "user_id": "string"
-   },
-   "drift": {
-    "so_na_migration": [],
-    "so_no_types": []
-   },
    "usada_no_front": 1,
    "usada_em_edges": [
     "validate-ip"
@@ -21201,17 +18823,6 @@
     "user_id->auth"
    ],
    "criada_em": "20251225193248_4613adbc-ca55-48c4-94aa-3aec14e8d9de.sql",
-   "colunas_types": {
-    "created_at": "string",
-    "enabled": "boolean",
-    "id": "string",
-    "updated_at": "string",
-    "user_id": "string"
-   },
-   "drift": {
-    "so_na_migration": [],
-    "so_no_types": []
-   },
    "usada_no_front": 2,
    "usada_em_edges": [
     "validate-ip"
@@ -21332,21 +18943,6 @@
     "user_id->auth"
    ],
    "criada_em": "20251231115936_0cbef64e-8440-4db5-8f3d-164a7da98921.sql",
-   "colunas_types": {
-    "backup_codes": "string[] | null",
-    "created_at": "string | null",
-    "id": "string",
-    "last_verified_at": "string | null",
-    "mfa_enabled": "boolean | null",
-    "mfa_method": "string | null",
-    "recovery_email": "string | null",
-    "updated_at": "string | null",
-    "user_id": "string"
-   },
-   "drift": {
-    "so_na_migration": [],
-    "so_no_types": []
-   },
    "usada_no_front": 2,
    "usada_em_edges": [],
    "triggers": [
@@ -21478,23 +19074,6 @@
     "user_id->auth"
    ],
    "criada_em": "20251231125803_b47a2b11-3915-463a-9c94-57b741b7e4ab.sql",
-   "colunas_types": {
-    "backed_up": "boolean | null",
-    "counter": "number",
-    "created_at": "string",
-    "credential_id": "string",
-    "device_type": "string | null",
-    "friendly_name": "string | null",
-    "id": "string",
-    "last_used_at": "string | null",
-    "public_key": "string",
-    "transports": "string[] | null",
-    "user_id": "string"
-   },
-   "drift": {
-    "so_na_migration": [],
-    "so_no_types": []
-   },
    "usada_no_front": 1,
    "usada_em_edges": [
     "webauthn-authenticate",
@@ -21712,35 +19291,6 @@
     "id->auth"
    ],
    "criada_em": "20251224124237_40fde4e2-d0ab-4b62-8898-4171393988c4.sql",
-   "colunas_types": {
-    "agent_id": "string | null",
-    "created_at": "string",
-    "dialer_filter_updated_at": "string | null",
-    "dialer_filter_updated_by_device": "string | null",
-    "dialer_tag_filter": "string | null",
-    "email": "string",
-    "full_name": "string | null",
-    "id": "string",
-    "preferred_device_label": "string | null",
-    "preferred_device_label_updated_at": "string | null",
-    "ringtone_preset": "string | null",
-    "ringtone_updated_at": "string | null",
-    "ringtone_updated_by_device": "string | null",
-    "ringtone_volume": "number | null",
-    "role": "string",
-    "updated_at": "string",
-    "voice_command_history": "Json",
-    "voice_prefs_updated_at": "string | null",
-    "voice_tts_enabled": "boolean",
-    "voice_tts_rate": "number",
-    "voice_tts_voice": "string | null"
-   },
-   "drift": {
-    "so_na_migration": [
-     "avatar_url"
-    ],
-    "so_no_types": []
-   },
    "usada_no_front": 10,
    "usada_em_edges": [
     "cleanup-lock-conflicts",
@@ -21863,21 +19413,6 @@
     "user_id->auth"
    ],
    "criada_em": "20251231115936_0cbef64e-8440-4db5-8f3d-164a7da98921.sql",
-   "colunas_types": {
-    "created_at": "string | null",
-    "expires_at": "string | null",
-    "granted_at": "string | null",
-    "granted_by": "string | null",
-    "id": "string",
-    "is_active": "boolean | null",
-    "role": "Database[\"public\"][\"Enums\"][\"app_role\"]",
-    "updated_at": "string | null",
-    "user_id": "string"
-   },
-   "drift": {
-    "so_na_migration": [],
-    "so_no_types": []
-   },
    "usada_no_front": 3,
    "usada_em_edges": [
     "database-backup",
@@ -22062,26 +19597,6 @@
    "indices": [],
    "fks": [],
    "criada_em": "20260315194850_5c156b99-5d85-4b43-9e09-74edf363cd91.sql",
-   "colunas_types": {
-    "created_at": "string",
-    "duration_seconds": "number | null",
-    "ended_at": "string | null",
-    "host_name": "string | null",
-    "id": "string",
-    "max_participants": "number",
-    "meeting_url": "string | null",
-    "participants": "Json",
-    "recording_path": "string | null",
-    "scheduled_at": "string | null",
-    "started_at": "string | null",
-    "status": "string",
-    "title": "string",
-    "updated_at": "string"
-   },
-   "drift": {
-    "so_na_migration": [],
-    "so_no_types": []
-   },
    "usada_no_front": 1,
    "usada_em_edges": [],
    "triggers": [],
@@ -22246,29 +19761,6 @@
    ],
    "fks": [],
    "criada_em": "20260315194850_5c156b99-5d85-4b43-9e09-74edf363cd91.sql",
-   "colunas_types": {
-    "created_at": "string",
-    "created_by": "string | null",
-    "direction": "string",
-    "error_message": "string | null",
-    "file_path": "string | null",
-    "from_number": "string | null",
-    "id": "string",
-    "ocr_completed_at": "string | null",
-    "ocr_confidence": "number | null",
-    "ocr_search_vector": "unknown",
-    "ocr_text": "string | null",
-    "page_count": "number",
-    "received_at": "string | null",
-    "sent_at": "string | null",
-    "status": "string",
-    "subject": "string | null",
-    "to_number": "string"
-   },
-   "drift": {
-    "so_na_migration": [],
-    "so_no_types": []
-   },
    "usada_no_front": 1,
    "usada_em_edges": [
     "ocr-virtual-fax"
@@ -22395,24 +19887,6 @@
     "user_id->auth"
    ],
    "criada_em": "20260417113024_b37afec8-ce2c-47c3-9009-50ef0e86b65c.sql",
-   "colunas_types": {
-    "confidence_baseline": "number",
-    "created_at": "string",
-    "embedding": "Json",
-    "enrolled_at": "string",
-    "feature_summary": "Json | null",
-    "id": "string",
-    "is_active": "boolean",
-    "label": "string",
-    "last_verified_at": "string | null",
-    "sample_count": "number",
-    "updated_at": "string",
-    "user_id": "string"
-   },
-   "drift": {
-    "so_na_migration": [],
-    "so_no_types": []
-   },
    "usada_no_front": 1,
    "usada_em_edges": [
     "enroll-voice",
@@ -22528,23 +20002,6 @@
    "indices": [],
    "fks": [],
    "criada_em": "20260315194850_5c156b99-5d85-4b43-9e09-74edf363cd91.sql",
-   "colunas_types": {
-    "agent_name": "string | null",
-    "audio_file_path": "string | null",
-    "caller_name": "string | null",
-    "caller_phone": "string",
-    "created_at": "string",
-    "duration_seconds": "number | null",
-    "id": "string",
-    "is_read": "boolean",
-    "is_urgent": "boolean",
-    "read_at": "string | null",
-    "transcription": "string | null"
-   },
-   "drift": {
-    "so_na_migration": [],
-    "so_no_types": []
-   },
    "usada_no_front": 1,
    "usada_em_edges": [],
    "triggers": [],
@@ -22614,18 +20071,6 @@
    "indices": [],
    "fks": [],
    "criada_em": "20260509184955_dfe329e5-9241-40ed-8f9d-28cef0cffb1f.sql",
-   "colunas_types": {
-    "check_interval_seconds": "number",
-    "created_at": "string",
-    "id": "string",
-    "latency_threshold_ms": "number",
-    "occupancy_threshold_percent": "number",
-    "updated_at": "string"
-   },
-   "drift": {
-    "so_na_migration": [],
-    "so_no_types": []
-   },
    "usada_no_front": 1,
    "usada_em_edges": [],
    "triggers": [],
@@ -22760,23 +20205,6 @@
     "call_session_id->call_sessions"
    ],
    "criada_em": "20260417193624_c504362a-a440-413e-9f5e-2bedb08a01a0.sql",
-   "colunas_types": {
-    "acknowledged_at": "string | null",
-    "alert_type": "string",
-    "call_session_id": "string | null",
-    "created_at": "string",
-    "id": "string",
-    "jitter_ms": "number | null",
-    "mos_at_alert": "number | null",
-    "remediation_action": "string | null",
-    "rtt_ms": "number | null",
-    "slope": "number | null",
-    "user_id": "string"
-   },
-   "drift": {
-    "so_na_migration": [],
-    "so_no_types": []
-   },
    "usada_no_front": 3,
    "usada_em_edges": [
     "voip-diagnostic-voice-qa",
@@ -22900,22 +20328,6 @@
    ],
    "fks": [],
    "criada_em": "20260418011716_3af60ac2-4c97-49a3-9070-de71020046dd.sql",
-   "colunas_types": {
-    "action_payload": "Json | null",
-    "action_type": "string",
-    "applied_at": "string",
-    "category": "string",
-    "id": "string",
-    "notes": "string | null",
-    "outcome": "string",
-    "recommendation_id": "string",
-    "severity": "string",
-    "user_id": "string"
-   },
-   "drift": {
-    "so_na_migration": [],
-    "so_no_types": []
-   },
    "usada_no_front": 1,
    "usada_em_edges": [
     "voip-anomaly-remediation",
@@ -23011,19 +20423,6 @@
     "trunk_id->voip_trunks"
    ],
    "criada_em": "20260418143532_ce6a3be9-4e9b-4d97-85ba-276c8ee1354c.sql",
-   "colunas_types": {
-    "checked_at": "string",
-    "created_at": "string",
-    "error_message": "string | null",
-    "id": "string",
-    "latency_ms": "number | null",
-    "reachable": "boolean",
-    "trunk_id": "string"
-   },
-   "drift": {
-    "so_na_migration": [],
-    "so_no_types": []
-   },
    "usada_no_front": 2,
    "usada_em_edges": [
     "health-check",
@@ -23219,28 +20618,6 @@
     "trunk_id->voip_trunks"
    ],
    "criada_em": "20260418144103_3396eae6-b7f0-4fd0-8596-ee6276d550c1.sql",
-   "colunas_types": {
-    "agent_id": "string | null",
-    "call_session_id": "string | null",
-    "created_at": "string",
-    "duration_seconds": "number | null",
-    "ended_at": "string | null",
-    "failover_reason": "string | null",
-    "id": "string",
-    "original_trunk_id": "string | null",
-    "started_at": "string",
-    "trunk_id": "string",
-    "was_failover": "boolean"
-   },
-   "drift": {
-    "so_na_migration": [
-     "active_channels",
-     "latency_ms",
-     "jitter_ms",
-     "timestamp"
-    ],
-    "so_no_types": []
-   },
    "usada_no_front": 3,
    "usada_em_edges": [],
    "triggers": [],
@@ -23458,35 +20835,6 @@
    ],
    "fks": [],
    "criada_em": "20260418141900_bac7392a-79fd-4a8d-8497-2144c6f23337.sql",
-   "colunas_types": {
-    "cost_per_minute_cents": "number",
-    "created_at": "string",
-    "created_by": "string | null",
-    "failover_count": "number | null",
-    "failover_reason": "string | null",
-    "id": "string",
-    "is_active": "boolean",
-    "last_failover_at": "string | null",
-    "last_health_checked_at": "string | null",
-    "last_health_latency_ms": "number | null",
-    "last_health_status": "string | null",
-    "max_channels": "number",
-    "name": "string",
-    "notes": "string | null",
-    "priority": "number",
-    "provider": "Database[\"public\"][\"Enums\"][\"voip_provider\"]",
-    "sip_password_encrypted": "string",
-    "sip_realm": "string | null",
-    "sip_server": "string",
-    "sip_username": "string",
-    "transport": "string",
-    "updated_at": "string",
-    "version": "number"
-   },
-   "drift": {
-    "so_na_migration": [],
-    "so_no_types": []
-   },
    "usada_no_front": 3,
    "usada_em_edges": [
     "voip-failover-notifier",
@@ -23595,18 +20943,6 @@
     "user_id->auth"
    ],
    "criada_em": "20251231125803_b47a2b11-3915-463a-9c94-57b741b7e4ab.sql",
-   "colunas_types": {
-    "challenge": "string",
-    "created_at": "string",
-    "expires_at": "string",
-    "id": "string",
-    "type": "string",
-    "user_id": "string"
-   },
-   "drift": {
-    "so_na_migration": [],
-    "so_no_types": []
-   },
    "usada_no_front": 1,
    "usada_em_edges": [
     "webauthn-authenticate",
@@ -23725,22 +21061,6 @@
     "user_id->auth"
    ],
    "criada_em": "20260712195727_e87753b7-3685-42d0-b3c6-5fee033d22cf.sql",
-   "colunas_types": {
-    "created_at": "string",
-    "duration_ms": "number",
-    "endpoint_hash": "string | null",
-    "failed": "number",
-    "id": "string",
-    "oldest_age_ms": "number",
-    "pending_before": "number",
-    "remaining": "number",
-    "sent": "number",
-    "user_id": "string | null"
-   },
-   "drift": {
-    "so_na_migration": [],
-    "so_no_types": []
-   },
    "usada_no_front": 4,
    "usada_em_edges": [
     "health-check"
@@ -23801,17 +21121,6 @@
    "indices": [],
    "fks": [],
    "criada_em": "20260523172256_ea1ae0b2-2688-4a63-aaf0-242d16a570e9.sql",
-   "colunas_types": {
-    "created_at": "string | null",
-    "id": "string",
-    "provider": "string",
-    "secret_key": "string",
-    "updated_at": "string | null"
-   },
-   "drift": {
-    "so_na_migration": [],
-    "so_no_types": []
-   },
    "usada_no_front": 0,
    "usada_em_edges": [
     "_shared"
@@ -23910,19 +21219,6 @@
     "call_session_id->call_sessions"
    ],
    "criada_em": "20251224021814_cc2dbdc3-ab3c-4fd9-aa8d-7af71ae39f75.sql",
-   "colunas_types": {
-    "agent_name": "string",
-    "call_session_id": "string",
-    "created_at": "string",
-    "id": "string",
-    "is_read": "boolean",
-    "message": "string",
-    "supervisor_name": "string"
-   },
-   "drift": {
-    "so_na_migration": [],
-    "so_no_types": []
-   },
    "usada_no_front": 2,
    "usada_em_edges": [],
    "triggers": [],
