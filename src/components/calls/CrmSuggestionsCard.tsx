@@ -24,10 +24,33 @@ interface CrmSuggestionsCardProps {
 }
 
 export function CrmSuggestionsCard({ callSessionId, contactId }: CrmSuggestionsCardProps) {
-  const { pending, accept, reject } = useCrmFieldSuggestions(callSessionId);
+  const { pending, accept, reject, isLoading, error } = useCrmFieldSuggestions(callSessionId);
   const [editing, setEditing] = useState<Record<string, string>>({});
 
-  if (pending.length === 0) return null;
+  if (error) {
+    return (
+      <Card className="p-3 bg-card/60 backdrop-blur border-destructive/30">
+        <div className="flex items-center gap-2 text-sm font-semibold text-destructive">
+          <Database className="h-4 w-4" />
+          Sugestões para CRM
+        </div>
+        <p role="alert" className="text-xs text-destructive mt-1">
+          Não foi possível carregar as sugestões: {error instanceof Error ? error.message : String(error)}
+        </p>
+      </Card>
+    );
+  }
+
+  // Painel em branco sem explicacao parece defeito (A-001): sempre diz o que esta acontecendo.
+  if (pending.length === 0) {
+    return (
+      <p className="text-xs text-muted-foreground py-1">
+        {isLoading
+          ? 'Buscando sugestões de CRM...'
+          : 'Nenhum campo de CRM identificado nesta chamada.'}
+      </p>
+    );
+  }
 
   const startEdit = (s: CrmFieldSuggestion) => {
     setEditing((e) => ({ ...e, [s.id]: s.suggested_value }));

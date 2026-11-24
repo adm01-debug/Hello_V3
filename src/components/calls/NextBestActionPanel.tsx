@@ -38,7 +38,7 @@ function severityClasses(intent: string, severity?: string) {
 }
 
 export function NextBestActionPanel({ callSessionId, className }: NextBestActionPanelProps) {
-  const { signals, markUsed, isAnalyzing } = useLiveAssist(callSessionId);
+  const { signals, markUsed, isAnalyzing, isLoading, error } = useLiveAssist(callSessionId);
 
   const ranked = useMemo(() => rankSignals(dedupeSignals(signals, 30)).slice(0, 6), [signals]);
 
@@ -56,9 +56,15 @@ export function NextBestActionPanel({ callSessionId, className }: NextBestAction
         </Badge>
       </div>
 
-      {ranked.length === 0 ? (
+      {error ? (
+        <p role="alert" className="text-xs text-destructive py-3 text-center">
+          Não foi possível carregar as sugestões: {error instanceof Error ? error.message : String(error)}
+        </p>
+      ) : ranked.length === 0 ? (
         <p className="text-xs text-muted-foreground py-3 text-center">
-          Aguardando análise da conversa...
+          {isLoading || isAnalyzing
+            ? 'Aguardando análise da conversa...'
+            : 'Nenhuma sugestão para esta conversa até agora.'}
         </p>
       ) : (
         <ScrollArea className="h-44 pr-2">
