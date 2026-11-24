@@ -2,11 +2,16 @@
  "aviso": "GERADO AUTOMATICAMENTE por scripts/ai-context/gerar.mjs — não editar à mão; será sobrescrito.",
  "format_version": 2,
  "git": {
-  "commit": "e1e227dfc55eaad466d8c53bee9706730a286459",
+  "commit": "87d013e5d1ec99de9aaf55032c8b965ffb395410",
   "branch": "main",
-  "data_commit": "2026-11-24T00:22:11-03:00",
+  "data_commit": "2026-11-24T00:23:36-03:00",
   "remote": "https://github.com/adm01-debug/Hello_V3",
   "ultimos_commits": [
+   {
+    "sha": "87d013e",
+    "data": "2026-11-24",
+    "assunto": "chore: suite de testes roda sem .env e sem configuracao manual (#224)"
+   },
    {
     "sha": "e1e227d",
     "data": "2026-11-24",
@@ -126,14 +131,9 @@
     "sha": "617d9e8",
     "data": "2026-11-23",
     "assunto": "fix: scripts destrutivos exigem DB_HOST explicito (#200)"
-   },
-   {
-    "sha": "4271aa3",
-    "data": "2026-11-23",
-    "assunto": "chore: react-router-dom 7.13.1 -> 7.18.6 (corrige open redirect) (#199)"
    }
   ],
-  "arquivos_mudados_7d": 1057,
+  "arquivos_mudados_7d": 1059,
   "pastas_mais_mudadas_30d": [
    {
     "pasta": "covout/lcov-report/hooks",
@@ -145,7 +145,7 @@
    },
    {
     "pasta": "docs/qa/05-PROGRESSO.md",
-    "mudancas": 52
+    "mudancas": 53
    },
    {
     "pasta": "src/hooks/__tests__",
@@ -199,7 +199,7 @@
   "arquivos_mais_mudados_90d": [
    {
     "arquivo": "docs/qa/05-PROGRESSO.md",
-    "mudancas": 52
+    "mudancas": 53
    },
    {
     "arquivo": "docs/estado/funcionalidades-planejadas.md",
@@ -258,6 +258,10 @@
     "mudancas": 5
    },
    {
+    "arquivo": "AGENTS.md",
+    "mudancas": 4
+   },
+   {
     "arquivo": "docs/estado/infra-ci-rotas-integracoes.md",
     "mudancas": 4
    },
@@ -292,16 +296,12 @@
    {
     "arquivo": "supabase/functions/generate-coaching-track/index.ts",
     "mudancas": 4
-   },
-   {
-    "arquivo": "supabase/functions/health-check/index.ts",
-    "mudancas": 4
    }
   ],
   "autores_30d": [
    {
     "autor": "adm01-debug",
-    "commits": 201
+    "commits": 202
    },
    {
     "autor": "Joaquim Ataides",
@@ -316,7 +316,7 @@
  "contagens": {
   "arquivos_total": 1708,
   "arquivos_codigo": 1306,
-  "linhas_codigo": 176225,
+  "linhas_codigo": 176236,
   "rotas": 106,
   "rotas_http_backend": 12,
   "vistas_por_id": 0,
@@ -516,7 +516,7 @@
   },
   "src/test": {
    "arquivos": 2,
-   "linhas": 159
+   "linhas": 170
   },
   "supabase/functions": {
    "arquivos": 194,

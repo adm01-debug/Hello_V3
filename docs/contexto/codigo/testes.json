@@ -2909,7 +2909,7 @@
   {
    "arquivo": "src/test/setup.ts",
    "tipo": "unit",
-   "linhas": 88,
+   "linhas": 99,
    "testa": [],
    "casos": 0
   },

@@ -247,7 +247,7 @@
   {
    "arquivo": "AGENTS.md",
    "titulo": "AGENTS.md — Hello V3",
-   "linhas": 138
+   "linhas": 143
   },
   {
    "arquivo": "CLAUDE.md",
@@ -644,6 +644,10 @@
    },
    {
     "host": "seudominio.bitrix24.com.br",
+    "arquivos": 1
+   },
+   {
+    "host": "test.invalid",
     "arquivos": 1
    },
    {
