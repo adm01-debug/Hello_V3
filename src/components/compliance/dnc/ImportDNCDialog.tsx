@@ -6,27 +6,40 @@ import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, D
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Upload } from 'lucide-react';
 import { DNC_REASONS } from './constants';
+import type { DNCBulkImportResult } from '@/hooks/useDNCCompliance';
 
 interface Props {
-  onImport: (phones: string[], reason: string) => void | Promise<void>;
+  onImport: (phones: string[], reason: string) => DNCBulkImportResult | void | Promise<DNCBulkImportResult | void>;
 }
 
 export function ImportDNCDialog({ onImport }: Props) {
   const [open, setOpen] = useState(false);
   const [text, setText] = useState('');
   const [reason, setReason] = useState('import');
+  const [importing, setImporting] = useState(false);
+  const [result, setResult] = useState<DNCBulkImportResult | null>(null);
 
   const submit = async () => {
     const phones = text.split(/[\n,;]/).map(p => p.trim()).filter(p => p.length > 0);
     if (phones.length === 0) return;
-    await onImport(phones, reason);
-    setText(''); setOpen(false);
+    setImporting(true);
+    try {
+      const res = await onImport(phones, reason);
+      const summary = res ?? { success: phones.length, failed: 0, duplicates: 0 };
+      setResult(summary);
+      // Nao fecha quando algo falhou: o texto continua ali para reenviar.
+      if (summary.failed === 0) {
+        setText(''); setResult(null); setOpen(false);
+      }
+    } finally {
+      setImporting(false);
+    }
   };
 
   const detected = text.split(/[\n,;]/).filter(p => p.trim()).length;
 
   return (
-    <Dialog open={open} onOpenChange={setOpen}>
+    <Dialog open={open} onOpenChange={(next) => { setOpen(next); if (!next) setResult(null); }}>
       <DialogTrigger asChild>
         <Button variant="outline" size="sm"><Upload className="h-4 w-4 mr-2" />Importar</Button>
       </DialogTrigger>
@@ -55,10 +68,19 @@ export function ImportDNCDialog({ onImport }: Props) {
             />
             <p className="text-xs text-muted-foreground">{detected} números detectados</p>
           </div>
+          {result && (
+            <p
+              role="status"
+              className={result.failed > 0 ? 'text-sm text-destructive' : 'text-sm text-muted-foreground'}
+            >
+              {result.success} importados, {result.duplicates} duplicados, {result.failed} falharam
+              {result.failed > 0 ? ' — corrija e envie de novo.' : '.'}
+            </p>
+          )}
         </div>
         <DialogFooter>
           <Button variant="outline" onClick={() => setOpen(false)}>Cancelar</Button>
-          <Button onClick={submit}>Importar</Button>
+          <Button onClick={submit} disabled={importing}>{importing ? 'Importando...' : 'Importar'}</Button>
         </DialogFooter>
       </DialogContent>
     </Dialog>
