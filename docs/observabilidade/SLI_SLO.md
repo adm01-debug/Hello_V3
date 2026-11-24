@@ -16,14 +16,20 @@ Contrato de observabilidade do sistema. SLIs (indicadores medidos) alimentam o `
 
 | SLO | Limite | Status health-check |
 |---|---|---|
-| Trunks disponíveis ≥ 99% | `trunkUptimePct >= 99` | `operational` |
-| Trunks entre 95% e 99% | `95 <= uptime < 99` | `degraded` |
+| Trunks disponíveis ≥ 99,9% | `trunkUptimePct >= 99.9` | `operational` |
+| Trunks entre 95% e 99,9% | `95 <= uptime < 99.9` | `degraded` |
 | Trunks < 95% | `uptime < 95` | `outage` |
 | Erro webhooks < 1% | `errorRate < 1` | `operational` |
 | Erro webhooks 1–5% | `1 <= errorRate < 5` | `degraded` |
 | Erro webhooks ≥ 5% | `errorRate >= 5` | `outage` |
 
 Qualquer componente em `degraded`: health-check global = `degraded`; qualquer `outage` → global `outage`.
+
+A meta é uma só: `SLO_TARGETS` em `supabase/functions/health-check/index.ts` (uptime 99,9%, erro de
+webhook 1%, p95 2000 ms, janela 15 min). O valor de 99,9% é o SLA contratual publicado na página de
+status, e a edge devolve os alvos na resposta (`slo_targets`), junto de `window_minutes`. O painel
+admin (`src/pages/admin/SloDashboard.tsx`) exibe esses valores — não existe meta duplicada no
+frontend. O error budget usa a mesma meta: a tolerância do uptime é 0,1% (não 1%).
 
 ## Alerta
 

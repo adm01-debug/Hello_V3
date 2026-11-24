@@ -29,12 +29,22 @@ interface HealthResponse {
   };
   checked_at: string;
   window_minutes: number;
+  slo_targets?: SloTargets;
 }
 
-const SLO_TARGETS = {
-  trunk_uptime: 99.9,
-  webhook_error_rate: 1.0,
-  webhook_p95_ms: 2000,
+interface SloTargets {
+  trunk_uptime_pct: number;
+  webhook_error_rate_pct: number;
+  webhook_p95_latency_ms: number;
+  window_minutes?: number;
+}
+
+// Só é usado se a edge ainda não devolver `slo_targets` (versão antiga em
+// produção durante o deploy). A meta real vem do servidor: uma fonte só.
+const TARGETS_PADRAO: SloTargets = {
+  trunk_uptime_pct: 99.9,
+  webhook_error_rate_pct: 1,
+  webhook_p95_latency_ms: 2000,
 };
 
 export default function SloDashboard() {
@@ -52,6 +62,8 @@ export default function SloDashboard() {
     refetchInterval: 30_000,
   });
 
+  const targets: SloTargets = data?.slo_targets ?? TARGETS_PADRAO;
+
   return (
     <div className="container mx-auto p-6 space-y-6">
       <header>
@@ -60,8 +72,9 @@ export default function SloDashboard() {
           SLO Dashboard
         </h1>
         <p className="text-sm text-muted-foreground mt-1">
-          Objetivos de nível de serviço em janela de 15 min. Metas: uptime trunks &ge; 99.9%,
-          erro webhook &lt; 1%, latência p95 &lt; 2s.
+          Objetivos de nível de serviço em janela de {targets.window_minutes ?? 15} min. Metas:
+          uptime trunks &ge; {targets.trunk_uptime_pct}%, erro webhook &lt; {targets.webhook_error_rate_pct}%,
+          latência p95 &lt; {(targets.webhook_p95_latency_ms / 1000).toFixed(0)}s.
         </p>
       </header>
 
@@ -91,27 +104,27 @@ export default function SloDashboard() {
               title="Uptime Trunks VoIP"
               icon={<Activity className="h-4 w-4" />}
               value={data.components.trunks.uptime_pct === null ? null : `${data.components.trunks.uptime_pct.toFixed(2)}%`}
-              target={`${SLO_TARGETS.trunk_uptime}%`}
+              target={`${targets.trunk_uptime_pct}%`}
               progress={data.components.trunks.uptime_pct ?? 0}
-              healthy={data.components.trunks.uptime_pct !== null && data.components.trunks.uptime_pct >= SLO_TARGETS.trunk_uptime}
+              healthy={data.components.trunks.uptime_pct !== null && data.components.trunks.uptime_pct >= targets.trunk_uptime_pct}
               subtitle={`${data.components.trunks.checks_15min} health checks / 15min`}
             />
             <SloCard
               title="Erro Webhooks"
               icon={<AlertCircle className="h-4 w-4" />}
               value={data.components.webhooks.error_rate_pct === null ? null : `${data.components.webhooks.error_rate_pct.toFixed(2)}%`}
-              target={`< ${SLO_TARGETS.webhook_error_rate}%`}
+              target={`< ${targets.webhook_error_rate_pct}%`}
               progress={100 - Math.min(100, (data.components.webhooks.error_rate_pct ?? 0) * 20)}
-              healthy={data.components.webhooks.error_rate_pct !== null && data.components.webhooks.error_rate_pct < SLO_TARGETS.webhook_error_rate}
+              healthy={data.components.webhooks.error_rate_pct !== null && data.components.webhooks.error_rate_pct < targets.webhook_error_rate_pct}
               subtitle={`${data.components.webhooks.attempts_15min} tentativas / 15min`}
             />
             <SloCard
               title="Latência webhook p95"
               icon={<Clock className="h-4 w-4" />}
               value={`${data.components.webhooks.p95_latency_ms}ms`}
-              target={`< ${SLO_TARGETS.webhook_p95_ms}ms`}
-              progress={100 - Math.min(100, (data.components.webhooks.p95_latency_ms / SLO_TARGETS.webhook_p95_ms) * 100)}
-              healthy={data.components.webhooks.p95_latency_ms < SLO_TARGETS.webhook_p95_ms}
+              target={`< ${targets.webhook_p95_latency_ms}ms`}
+              progress={100 - Math.min(100, (data.components.webhooks.p95_latency_ms / targets.webhook_p95_latency_ms) * 100)}
+              healthy={data.components.webhooks.p95_latency_ms < targets.webhook_p95_latency_ms}
               subtitle="Janela 15min"
             />
           </div>
