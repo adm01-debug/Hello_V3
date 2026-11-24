@@ -16,7 +16,7 @@ const PRIORITY_VARIANT: Record<string, 'default' | 'secondary' | 'destructive'> 
 
 export function CoachingAssignmentsPanel() {
   const { assignments, isLoading, complete } = useCoachingAssignments();
-  const { generateTrack, isGenerating } = useCoachingTrack();
+  const { generateTrack, isGenerating, rules, lastResult } = useCoachingTrack();
 
   if (isLoading) {
     return (
@@ -59,8 +59,29 @@ export function CoachingAssignmentsPanel() {
 
       {assignments.length === 0 ? (
         <Card>
-          <CardContent className="p-6 text-center text-sm text-muted-foreground">
-            Nenhuma atribuição de coaching pendente.
+          <CardContent className="p-6 text-center text-sm text-muted-foreground space-y-2">
+            <p>Nenhuma atribuição de coaching pendente.</p>
+            {rules ? (
+              <p className="text-xs">
+                Regra do coaching automático: são necessárias {rules.min_samples} avaliações com
+                nota abaixo de {rules.score_threshold.toFixed(1)} nos últimos {rules.window_days}{' '}
+                dias.
+              </p>
+            ) : (
+              <p className="text-xs">
+                Use "Gerar trilhas automáticas" para ver a regra aplicada e a contagem de cada
+                agente.
+              </p>
+            )}
+            {lastResult && lastResult.skipped.length > 0 && (
+              <ul className="mx-auto max-w-md space-y-1 text-left text-xs">
+                {lastResult.skipped.map((s) => (
+                  <li key={s.agent_name}>
+                    <span className="font-medium text-foreground">{s.agent_name}</span>: {s.reason}
+                  </li>
+                ))}
+              </ul>
+            )}
           </CardContent>
         </Card>
       ) : (

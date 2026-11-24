@@ -42,16 +42,30 @@ export interface Skipped {
   reason: string;
 }
 
+export interface CoachingRules {
+  min_samples: number;
+  score_threshold: number;
+  window_days: number;
+}
+
 export interface TrackResult {
   tracks_created: number;
   assignments: Array<{ agent_name: string; title: string; priority: string; status: string }>;
   skipped: Skipped[];
+  rules: CoachingRules;
 }
 
 // Escala real dos scores: agent_performance_score e customer_satisfaction vão de 0 a 5.
 export const SCORE_THRESHOLD = 3.0;
 export const MIN_SAMPLES = 3;
 export const WINDOW_DAYS = 14;
+
+// Fonte única das regras: a interface exibe exatamente o que o motor aplica.
+export const COACHING_RULES: CoachingRules = {
+  min_samples: MIN_SAMPLES,
+  score_threshold: SCORE_THRESHOLD,
+  window_days: WINDOW_DAYS,
+};
 
 export function aggregateStats(sessions: CallSession[]): Map<string, AgentStat> {
   const stats = new Map<string, AgentStat>();

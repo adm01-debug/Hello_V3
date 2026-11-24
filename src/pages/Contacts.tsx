@@ -163,6 +163,8 @@ const Contacts = () => {
     onToggleFavorite: toggleFavorite,
     onSelect: handleContactClick,
     onCall: handleCall,
+    onEdit: handleEdit,
+    onDelete: handleDelete,
   };
 
   const showPagination = total > pageSize;

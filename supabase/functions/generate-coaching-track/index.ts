@@ -5,7 +5,9 @@ import { mesmaString } from "../_shared/constant-time.ts";
 import {
   buildTrackCandidates,
   CallSession,
+  COACHING_RULES,
   TrackResult,
+  WINDOW_DAYS,
 } from "./track-engine.ts";
 import { getCorrelationId, internalErrorResponse } from '../_shared/errors.ts';
 
@@ -58,9 +60,9 @@ serve(async (req) => {
       userId = user.id;
     }
 
-    const since = new Date(Date.now() - 14 * 24 * 60 * 60 * 1000).toISOString();
+    const since = new Date(Date.now() - WINDOW_DAYS * 24 * 60 * 60 * 1000).toISOString();
 
-    // Lê chamadas completas das últimas 14d com os resumos (fonte real dos scores).
+    // Lê chamadas completas da janela de análise com os resumos (fonte real dos scores).
     const { data: sessions, error: sessErr } = await admin
       .from("call_sessions")
       .select(
@@ -145,6 +147,7 @@ serve(async (req) => {
       tracks_created: tracks.length,
       assignments: tracks,
       skipped,
+      rules: COACHING_RULES,
     };
     return json(result, 200, req);
   } catch (err) {
