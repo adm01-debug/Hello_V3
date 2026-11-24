@@ -45,6 +45,36 @@ describe('useIPWhitelist', () => {
     expect(Array.isArray(result.current.globalIPs)).toBe(true);
   });
 
+  it('publishes the read error instead of an empty list', async () => {
+    selectResult = { data: null, error: { message: 'permission denied for table ip_whitelist' } };
+    const { result } = renderHook(() => useIPWhitelist(true));
+    await waitFor(() => expect(result.current.loading).toBe(false));
+
+    expect(result.current.globalIPs).toEqual([]);
+    expect(result.current.error).toBe('permission denied for table ip_whitelist');
+    expect(vi.mocked(toast.error)).toHaveBeenCalledWith('Erro ao carregar dados');
+  });
+
+  it('keeps the loaded data and the error visible until the next successful read', async () => {
+    selectResult = { data: [{ id: '9', ip_address: '10.0.0.1', is_cidr: false, created_at: '2026-01-01' }] };
+    const { result, rerender } = renderHook(({ admin }: { admin: boolean }) => useIPWhitelist(admin), {
+      initialProps: { admin: true },
+    });
+    await waitFor(() => expect(result.current.error).toBeNull());
+
+    selectResult = { data: null, error: { message: 'timeout' } };
+    rerender({ admin: false });
+    rerender({ admin: true });
+    await waitFor(() => expect(result.current.error).toBe('timeout'));
+    expect(result.current.globalIPs.map((ip) => ip.id)).toEqual(['9']);
+
+    selectResult = { data: [{ id: '10', ip_address: '10.0.0.2', is_cidr: false, created_at: '2026-01-02' }] };
+    rerender({ admin: false });
+    rerender({ admin: true });
+    await waitFor(() => expect(result.current.error).toBeNull());
+    expect(result.current.globalIPs.map((ip) => ip.id)).toEqual(['10']);
+  });
+
   it('validates IP format on addGlobalIP', async () => {
     const { result } = renderHook(() => useIPWhitelist(true));
     await waitFor(() => expect(result.current.loading).toBe(false));
