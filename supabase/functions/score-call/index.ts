@@ -1,8 +1,8 @@
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2.45.0";
 
 import { buildCorsHeaders } from "../_shared/cors.ts";
-
-interface Body { callSessionId: string; templateId: string }
+import { validateBody } from "../_shared/validator.ts";
+import { ScoreCallBodySchema } from "../_shared/ai-body-schemas.ts";
 
 Deno.serve(async (req) => {
   const corsHeaders = buildCorsHeaders(req);
@@ -29,7 +29,9 @@ function json(b: unknown, status = 200) {
 
     const supabase = createClient(supabaseUrl, serviceKey);
 
-    const { callSessionId, templateId } = (await req.json()) as Body;
+    const bodyParsed = await validateBody(req, ScoreCallBodySchema, corsHeaders, { endpoint: 'score-call' });
+    if (bodyParsed.errorResponse) return bodyParsed.errorResponse;
+    const { callSessionId, templateId } = bodyParsed.data!;
     if (!callSessionId || !templateId) return json({ error: "callSessionId and templateId required" }, 400);
 
     const { data: session } = await supabase

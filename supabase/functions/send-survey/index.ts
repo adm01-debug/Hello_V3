@@ -1,6 +1,8 @@
 // Send a survey trigger record (in-app notification) — channel delivery handled elsewhere
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2.45.0";
 import { buildCorsHeaders } from "../_shared/cors.ts";
+import { validateBody } from "../_shared/validator.ts";
+import { SendSurveyBodySchema } from "../_shared/ai-body-schemas.ts";
 
 Deno.serve(async (req: Request) => {
   const cors = buildCorsHeaders(req);
@@ -9,14 +11,15 @@ Deno.serve(async (req: Request) => {
   if (negado) return negado;
 
   try {
-    const body = await req.json().catch(() => ({}));
+    const bodyParsed = await validateBody(req, SendSurveyBodySchema, cors, { endpoint: 'send-survey' });
+    if (bodyParsed.errorResponse) return bodyParsed.errorResponse;
     const {
       survey_id,
       account_id,
       contact_id,
       call_session_id,
       channel = "in_app",
-    } = body;
+    } = bodyParsed.data!;
     if (!survey_id) {
       return new Response(JSON.stringify({ error: "survey_id required" }), {
         status: 400,

@@ -2,6 +2,8 @@ import "https://deno.land/x/xhr@0.1.0/mod.ts";
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
 import { buildCorsHeaders } from "../_shared/cors.ts";
+import { validateBody } from '../_shared/validator.ts';
+import { GenerateCoachingBodySchema } from '../_shared/ai-body-schemas.ts';
 
 
 serve(async (req) => {
@@ -47,8 +49,9 @@ serve(async (req) => {
       });
     }
 
-    const body = await req.json();
-    const { agentId } = body;
+    const bodyParsed = await validateBody(req, GenerateCoachingBodySchema, buildCorsHeaders(req), { endpoint: 'generate-coaching' });
+    if (bodyParsed.errorResponse) return bodyParsed.errorResponse;
+    const { agentId } = bodyParsed.data!;
     
     if (!agentId || typeof agentId !== 'string') {
       return new Response(JSON.stringify({ error: 'Dados inválidos' }), {

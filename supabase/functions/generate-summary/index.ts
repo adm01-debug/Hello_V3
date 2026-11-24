@@ -2,6 +2,8 @@ import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
 import { buildCorsHeaders } from "../_shared/cors.ts";
 import { checkRateLimitDB, getClientIp } from "../_shared/rate-limit.ts";
+import { validateBody } from '../_shared/validator.ts';
+import { GenerateSummaryBodySchema } from '../_shared/ai-body-schemas.ts';
 
 serve(async (req) => {
   const cors = buildCorsHeaders(req);
@@ -30,7 +32,9 @@ serve(async (req) => {
       });
     }
 
-    const body = await req.json();
+    const bodyParsed = await validateBody(req, GenerateSummaryBodySchema, cors, { endpoint: 'generate-summary' });
+    if (bodyParsed.errorResponse) return bodyParsed.errorResponse;
+    const body = bodyParsed.data!;
     const callInfo = body?.callInfo;
 
     if (!callInfo?.transcripts || !Array.isArray(callInfo.transcripts) || callInfo.transcripts.length === 0) {

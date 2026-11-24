@@ -1,6 +1,8 @@
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
 import { buildCorsHeaders } from "../_shared/cors.ts";
 import { fetchComPrazo } from "../_shared/resilience.ts";
+import { validateBody } from "../_shared/validator.ts";
+import { VoiceCommandBodySchema } from "../_shared/ai-body-schemas.ts";
 
 
 Deno.serve(async (req) => {
@@ -34,7 +36,9 @@ Deno.serve(async (req) => {
       });
     }
 
-    const { audio } = await req.json();
+    const bodyParsed = await validateBody(req, VoiceCommandBodySchema, buildCorsHeaders(req), { endpoint: 'voice-command' });
+    if (bodyParsed.errorResponse) return bodyParsed.errorResponse;
+    const { audio } = bodyParsed.data!;
     if (!audio) {
       return new Response(JSON.stringify({ error: "Audio data required" }), {
         status: 400,

@@ -3,6 +3,8 @@ import { buildCorsHeaders } from "../_shared/cors.ts";
 import { createClient } from 'npm:@supabase/supabase-js@2';
 import { fetchComPrazo } from "../_shared/resilience.ts";
 import { getCorrelationId, internalErrorResponse } from '../_shared/errors.ts';
+import { validateBody } from "../_shared/validator.ts";
+import { GenerateCoachingPlanBodySchema } from "../_shared/ai-body-schemas.ts";
 
 interface CallSummary {
   agent_performance_score: number | null;
@@ -36,7 +38,9 @@ function json(payload: unknown, status = 200): Response {
     const { data: auth, error: authErr } = await supabase.auth.getClaims(token);
     if (authErr || !auth?.claims) return json({ error: 'Unauthorized' }, 401);
 
-    const { agent_name } = await req.json().catch(() => ({}));
+    const bodyParsed = await validateBody(req, GenerateCoachingPlanBodySchema, corsHeaders, { endpoint: 'generate-coaching-plan' });
+    if (bodyParsed.errorResponse) return bodyParsed.errorResponse;
+    const { agent_name } = bodyParsed.data!;
     if (!agent_name || typeof agent_name !== 'string') {
       return json({ error: 'agent_name required' }, 400);
     }

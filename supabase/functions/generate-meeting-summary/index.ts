@@ -3,6 +3,8 @@ import { buildCorsHeaders } from "../_shared/cors.ts";
 import { checkRateLimitDB, getClientIp } from "../_shared/rate-limit.ts";
 import { fetchComPrazo } from "../_shared/resilience.ts";
 import { getCorrelationId, internalErrorResponse } from '../_shared/errors.ts';
+import { validateBody } from "../_shared/validator.ts";
+import { GenerateMeetingSummaryBodySchema } from "../_shared/ai-body-schemas.ts";
 
 const SYSTEM_PROMPT = `Você é um assistente especializado em gerar notas executivas de reuniões e chamadas de atendimento em português brasileiro.
 Analise a transcrição fornecida e extraia, de forma estruturada e objetiva:
@@ -120,9 +122,10 @@ Deno.serve(async (req) => {
       );
     }
 
-    const body = await req.json().catch(() => ({}));
-    const callSessionId: string | undefined = body?.callSessionId;
-    const force: boolean = body?.force === true;
+    const bodyParsed = await validateBody(req, GenerateMeetingSummaryBodySchema, corsHeaders, { endpoint: 'generate-meeting-summary' });
+    if (bodyParsed.errorResponse) return bodyParsed.errorResponse;
+    const callSessionId: string | undefined = bodyParsed.data!.callSessionId;
+    const force: boolean = bodyParsed.data!.force === true;
     if (!callSessionId) {
       return new Response(JSON.stringify({ error: "callSessionId obrigatório" }), {
         status: 400,
