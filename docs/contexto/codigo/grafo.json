@@ -2,7 +2,7 @@
  "aviso": "GERADO AUTOMATICAMENTE por scripts/ai-context/gerar.mjs — não editar à mão; será sobrescrito.",
  "format_version": 2,
  "nos": 935,
- "arestas": 3704,
+ "arestas": 3705,
  "hubs": [
   {
    "arquivo": "src/integrations/supabase/client.ts",
@@ -146,7 +146,7 @@
   },
   {
    "arquivo": "src/integrations/supabase/types.ts",
-   "importado_por": 17
+   "importado_por": 18
   },
   {
    "arquivo": "src/hooks/useContacts.ts",

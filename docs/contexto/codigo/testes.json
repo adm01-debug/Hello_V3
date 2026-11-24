@@ -540,11 +540,11 @@
   {
    "arquivo": "src/hooks/__tests__/useAuditLog.coverage.test.tsx",
    "tipo": "unit",
-   "linhas": 77,
+   "linhas": 95,
    "testa": [
     "src/hooks/useAuditLog.ts"
    ],
-   "casos": 4
+   "casos": 6
   },
   {
    "arquivo": "src/hooks/__tests__/useAuth.coverage.test.tsx",
@@ -1640,11 +1640,11 @@
   {
    "arquivo": "src/hooks/__tests__/useSupervisorPanel.coverage.test.tsx",
    "tipo": "unit",
-   "linhas": 255,
+   "linhas": 300,
    "testa": [
     "src/hooks/useSupervisorPanel.ts"
    ],
-   "casos": 13
+   "casos": 16
   },
   {
    "arquivo": "src/hooks/__tests__/useSurveys.coverage.test.tsx",

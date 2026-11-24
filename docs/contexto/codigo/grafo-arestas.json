@@ -2818,6 +2818,7 @@
   "src/hooks/useSupervisorPanel.ts": [
    "src/hooks/useCriticalAlertNotifications.ts",
    "src/integrations/supabase/client.ts",
+   "src/integrations/supabase/types.ts",
    "src/lib/logger.ts",
    "src/lib/safe-date.ts",
    "src/lib/utils.ts"

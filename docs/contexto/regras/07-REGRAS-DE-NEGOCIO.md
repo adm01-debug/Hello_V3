@@ -1,6 +1,6 @@
 # 07 · REGRAS DE NEGÓCIO
 
-> Gerado automaticamente por AI Context Sync v1.3.2 · commit `e335d9d8e7` · branch `main` · 2026-11-24 07:06 UTC
+> Gerado automaticamente por AI Context Sync v1.3.2 · commit `ccbea6f935` · branch `main` · 2026-11-24 07:11 UTC
 > Não edite à mão — regras humanas vão em `manual/`.
 
 ## A. Regras escritas por humanos (`manual/` — prioridade máxima, nunca sobrescrito)
@@ -2580,7 +2580,7 @@ _nenhum item encontrado_
 | Não foi possível criar o grupo | `src/hooks/useRingGroups.ts` |
 | Não foi possível remover o grupo | `src/hooks/useRingGroups.ts` |
 | Não foi possível remover o participante | `src/hooks/useRingGroups.ts` |
-| … +270 linhas — lista completa em `context.json` | |
+| … +271 linhas — lista completa em `context.json` | |
 
 ## J. Controle de acesso no código (checagens de perfil/permissão)
 
@@ -2629,7 +2629,7 @@ _nenhum item encontrado_
 | `admin` | `supabase/functions/data-lake-flush/index.ts` |
 | `admin` | `supabase/migrations/20261123000200_fix_has_role_oracle_and_debug_tables.sql` |
 
-## K. Testes como especificação (4336 testes em 384 arquivos — nomes completos em `context.json`)
+## K. Testes como especificação (4341 testes em 384 arquivos — nomes completos em `context.json`)
 
 | Arquivo | Testes | Exemplos do que o sistema DEVE fazer |
 |---|---|---|
@@ -2686,6 +2686,7 @@ _nenhum item encontrado_
 | `src/lib/__tests__/security-alerts-presets.test.ts` | 18 | security-alerts-presets · loadPresets · retorna [] quando storage vazio · retorna [] quando JSON inválido … |
 | `src/hooks/__tests__/useBitrix.coverage.test.tsx` | 17 | useBitrix · checkConfiguration returns true when configured · callBitrixApi returns null when configured === false · getContacts / getLeads / getDeals populate state … |
 | `src/hooks/__tests__/useContactAlerts.coverage.test.tsx` | 17 | useContactAlerts · fetches alerts on mount and computes unread count · fetchAlerts with unreadOnly applies eq filter · fetchAlerts handles error and returns empty … |
+| `src/hooks/__tests__/useSupervisorPanel.coverage.test.tsx` | 17 | useSupervisorPanel (coverage) · loads active calls and queue metrics on mount · selecting a call fetches whisper history · sendWhisper errors when no call/message selected … |
 | `src/hooks/__tests__/useVoiceBiometrics.coverage.test.tsx` | 17 | useVoicePrints · loads voice prints list · enrolls successfully · enroll error path triggers toast.error … |
 | `src/lib/__tests__/softphone-utils.test.ts` | 17 | formatCallDuration · formats 0 seconds · formats under a minute · formats exact minutes … |
 | `src/hooks/__tests__/useLoginLockout.test.ts` | 16 | useLoginLockout · check_login_lockout RPC · returns unlocked for unknown email · returns locked after 5 failed attempts … |
@@ -2700,7 +2701,6 @@ _nenhum item encontrado_
 | `src/lib/__tests__/safe-number.test.ts` | 15 | safe-number · safeParseInt · PBT: nunca retorna NaN, mesmo com entrada hostil · PBT: números válidos são truncados · PBT: respeita min/max clamp … |
 | `src/lib/__tests__/security-alerts-webhook.test.ts` | 15 | security-alerts-webhook · isValidHttpUrl · aceita http/https e rejeita esquemas inválidos · persistência (URL / retries) … |
 | `src/hooks/__tests__/useReauth.coverage.test.tsx` | 14 | useReauth · needsReauth true sem verificação prévia · requestReauth marca isRequired · verifyWithPassword sucesso atualiza lastVerified e dispensa reauth … |
-| `src/hooks/__tests__/useSupervisorPanel.coverage.test.tsx` | 14 | useSupervisorPanel (coverage) · loads active calls and queue metrics on mount · selecting a call fetches whisper history · sendWhisper errors when no call/message selected … |
 | `src/lib/__tests__/dnc-reconcile.test.ts` | 14 | normalizarTelefone · leva o numero BR para a forma canonica +55 · cai para digitos quando nao da para reconhecer a forma BR · reconciliarDNC … |
 | `src/lib/__tests__/safe-date.test.ts` | 14 | safe-date · entradas hostis nunca lançam · PBT: qualquer string arbitrária é tolerada · PBT: qualquer número (inclui NaN, ±Infinity, valores fora do range) é tolerado · null / undefined /  … |
 | `src/lib/__tests__/sync-history.test.ts` | 14 | sync-history · sanitizeEntry só aceita timestamps finitos e positivos · nunca ultrapassa o limite de entradas · appendEntry mantém a entrada mais recente no topo … |
@@ -2808,6 +2808,7 @@ _nenhum item encontrado_
 | `src/components/calls/live-transcription/__tests__/useLiveTranscription.test.ts` | 7 | useLiveTranscription · estado inicial é seguro · define erro quando getUserMedia falha · startRecording ativa gravação e stopRecording faz cleanup … |
 | `src/hooks/__tests__/use-toast.coverage.test.tsx` | 7 | use-toast (coverage) · adds a toast and exposes state via useToast · dismisses a toast and removes it after delay · updates a toast in place … |
 | `src/hooks/__tests__/useAlertHistory.coverage.test.tsx` | 7 | useAlertHistory · loads with empty stats when there are no alerts · computes severity counts, read rate, types and daily stats · applies search, severity and type filters … |
+| `src/hooks/__tests__/useAuditLog.coverage.test.tsx` | 7 | useAuditLog · logEvent chama rpc com os parâmetros corretos · logEvent registra erro quando rpc retorna error · logEvent captura exceção lançada … |
 | `src/hooks/__tests__/useBestTimeToContact.coverage.test.tsx` | 7 | useBestTimeToContact (coverage) · loads pattern and top patterns when contactId provided · does not query single pattern when no contactId (disabled) · recompute success path … |
 | `src/hooks/__tests__/useCallTransfer.coverage.test.tsx` | 7 | useCallTransfer · blind transfer stays pending until confirmed instead of auto-completing on a timer · attended transfer puts call on hold and does not auto-complete · completeTransfer returns early when call not found … |
 | `src/hooks/__tests__/useDashboardLayout.coverage.test.tsx` | 7 | useDashboardLayout · initializes with default layout when nothing stored · initializes from stored layout · saves a new layout and persists to localStorage … |
@@ -2879,7 +2880,6 @@ _nenhum item encontrado_
 | `src/components/calls/__tests__/UnifiedSoftphone.falhas.test.tsx` | 5 | UnifiedSoftphone — estados de falha (etapa 233) · mostra o estado do registro SIP da propria linha no cabecalho · mostra o motivo da falha e tenta de novo quando o operador clica em Tentar agora · repete o registro automaticamente com espera crescente … |
 | `src/components/supervisor/panel/__tests__/TrendChartToggle.test.tsx` | 5 | TrendChartToggle · não monta o gráfico antes do primeiro clique · conserva o gráfico montado ao fechar, para o histórico não zerar · não reinicia o gráfico quando o pai reflete o fechamento … |
 | `src/hooks/__tests__/useAnimatedCounter.coverage.test.tsx` | 5 | useAnimatedCounter · returns 0 initially and animates toward the end value · respects decimals option · early-returns when diff is zero … |
-| `src/hooks/__tests__/useAuditLog.coverage.test.tsx` | 5 | useAuditLog · logEvent chama rpc com os parâmetros corretos · logEvent registra erro quando rpc retorna error · logEvent captura exceção lançada … |
 | `src/hooks/__tests__/useBlockedAccessLogs.coverage.test.tsx` | 5 | useBlockedAccessLogs · fetches logs and processes stats · handles fetch error · filters logs by search, country, reason; clears filters … |
 | `src/hooks/__tests__/useConsent.coverage.test.tsx` | 5 | useConsent · carrega registros sem contactId · carrega registros filtrando por contactId · registra consentimento com sucesso … |
 | `src/hooks/__tests__/useDeals.conflict.test.ts` | 5 | useDeals — OPTIMISTIC_LOCK_CONFLICT · trata conflito com toast PT-BR e dispara refetch · envia version da linha lida no update (lock otimista ativo) · updateStage (kanban) também envia version … |

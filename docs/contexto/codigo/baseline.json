@@ -2,11 +2,16 @@
  "aviso": "GERADO AUTOMATICAMENTE por scripts/ai-context/gerar.mjs — não editar à mão; será sobrescrito.",
  "format_version": 2,
  "git": {
-  "commit": "e335d9d8e7811b4ba6e34668d8a09084d17c5afd",
+  "commit": "ccbea6f9350ee52744da001b917415e40b7e1282",
   "branch": "main",
-  "data_commit": "2026-11-24T04:05:56-03:00",
+  "data_commit": "2026-11-24T04:11:15-03:00",
   "remote": "https://github.com/adm01-debug/Hello_V3",
   "ultimos_commits": [
+   {
+    "sha": "ccbea6f",
+    "data": "2026-11-24",
+    "assunto": "fix: falha na trilha de auditoria passa a ser visivel (etapa 182) (#249)"
+   },
    {
     "sha": "e335d9d",
     "data": "2026-11-24",
@@ -126,14 +131,9 @@
     "sha": "695f5ef",
     "data": "2026-11-24",
     "assunto": "feat: prazo de fetch nas chamadas externas das edges (#226)"
-   },
-   {
-    "sha": "60701bf",
-    "data": "2026-11-24",
-    "assunto": "fix: confirma o retorno agendado com a data gravada e nao reporta escrita que nao gravou nada (#223)"
    }
   ],
-  "arquivos_mudados_7d": 1111,
+  "arquivos_mudados_7d": 1114,
   "pastas_mais_mudadas_30d": [
    {
     "pasta": "covout/lcov-report/hooks",
@@ -141,11 +141,11 @@
    },
    {
     "pasta": "docs/qa/05-PROGRESSO.md",
-    "mudancas": 77
+    "mudancas": 78
    },
    {
     "pasta": "src/hooks/__tests__",
-    "mudancas": 57
+    "mudancas": 59
    },
    {
     "pasta": "covout/lcov-report/lib",
@@ -199,7 +199,7 @@
   "arquivos_mais_mudados_90d": [
    {
     "arquivo": "docs/qa/05-PROGRESSO.md",
-    "mudancas": 77
+    "mudancas": 78
    },
    {
     "arquivo": "docs/estado/funcionalidades-planejadas.md",
@@ -301,7 +301,7 @@
   "autores_30d": [
    {
     "autor": "adm01-debug",
-    "commits": 227
+    "commits": 228
    },
    {
     "autor": "Joaquim Ataides",
@@ -316,7 +316,7 @@
  "contagens": {
   "arquivos_total": 1731,
   "arquivos_codigo": 1328,
-  "linhas_codigo": 178812,
+  "linhas_codigo": 178894,
   "rotas": 106,
   "rotas_http_backend": 12,
   "vistas_por_id": 0,
@@ -492,7 +492,7 @@
   },
   "src/hooks": {
    "arquivos": 353,
-   "linhas": 46883
+   "linhas": 46965
   },
   "src/integrations": {
    "arquivos": 3,
