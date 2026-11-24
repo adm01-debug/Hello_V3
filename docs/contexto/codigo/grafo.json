@@ -2,7 +2,7 @@
  "aviso": "GERADO AUTOMATICAMENTE por scripts/ai-context/gerar.mjs — não editar à mão; será sobrescrito.",
  "format_version": 2,
  "nos": 945,
- "arestas": 3748,
+ "arestas": 3749,
  "hubs": [
   {
    "arquivo": "src/integrations/supabase/client.ts",
@@ -105,6 +105,10 @@
    "importado_por": 25
   },
   {
+   "arquivo": "src/components/ui/empty-state.tsx",
+   "importado_por": 24
+  },
+  {
    "arquivo": "src/components/ui/textarea.tsx",
    "importado_por": 24
   },
@@ -114,10 +118,6 @@
   },
   {
    "arquivo": "src/components/layout/NeonPageLayout.tsx",
-   "importado_por": 23
-  },
-  {
-   "arquivo": "src/components/ui/empty-state.tsx",
    "importado_por": 23
   },
   {

@@ -1,7 +1,7 @@
 # Contexto do projeto para agentes de IA
 
 GERADO AUTOMATICAMENTE por scripts/ai-context/gerar.mjs — não editar à mão; será sobrescrito.
-Publicado em `docs/contexto/codigo/` na branch `contexto` (gerada, nunca abra PR dela) a cada push em `main` e a cada 10 minutos pelo workflow `contexto.yml`; índice único das três fontes em `docs/contexto/00-INDEX.md`. Gere local com `node scripts/ai-context/gerar.mjs`. Commit-base: `edd40a361f6da2b06adb3684bce79a840124fff1` (2026-11-24T15:06:11-03:00).
+Publicado em `docs/contexto/codigo/` na branch `contexto` (gerada, nunca abra PR dela) a cada push em `main` e a cada 10 minutos pelo workflow `contexto.yml`; índice único das três fontes em `docs/contexto/00-INDEX.md`. Gere local com `node scripts/ai-context/gerar.mjs`. Commit-base: `045527091582bc39ee3d12ae150fb53fd469a644` (2026-11-24T15:13:29-03:00).
 
 ## Como usar (leia antes de planejar ou executar qualquer tarefa)
 1. **Tela/rota/menu** → `rotas.json` (url/vista/menu → arquivo → hooks → tabelas → edges; `rotas_http_backend` para APIs) e `modulos.json` (módulo inteiro + dependências entre módulos).
@@ -36,7 +36,7 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 |---|---|
 | arquivos_total | 1744 |
 | arquivos_codigo | 1340 |
-| linhas_codigo | 178096 |
+| linhas_codigo | 178120 |
 | rotas | 106 |
 | rotas_http_backend | 11 |
 | vistas_por_id | 0 |
@@ -371,13 +371,13 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 - possiveis_segredos_no_codigo: 3 — ex.: src/lib/__tests__/security-advanced.test.ts:203, src/lib/__tests__/security-advanced.test.ts:208, src/lib/__tests__/security-advanced.test.ts:213
 
 ## Grafo de código (graphify)
-- 10293 nós · 27237 arestas · 780 comunidades · grafo do commit `edd40a36`
-- comunidades maiores: lucide-react (298), client.ts (231), vitest (200), react (199), traceHeaders (174), usePageTitle (158), usePageTitle.ts (136), validator.ts (117), cn (117), badge.tsx (116), utils.ts (115), @tanstack/react-query (114)
+- 10293 nós · 27243 arestas · 784 comunidades · grafo do commit `04552709`
+- comunidades maiores: card.tsx (277), client.ts (213), usePageTitle (203), react (203), vitest (195), traceHeaders (161), buildCorsHeaders (137), safe-date.ts (125), cn (120), lucide-react (111), @tanstack/react-query (110), utils.ts (104)
 - símbolos mais chamados: cn() (src/lib/utils.ts), usePageTitle() (src/hooks/usePageTitle.ts), safeFormatDatePtBR() (src/lib/safe-date.ts), q() (scripts/supabase_snapshot/snapshot.py), useAuthContext() (src/contexts/AuthContext.tsx), safeFormatDistanceToNow() (src/lib/safe-date.ts), traceHeaders() (src/lib/tracing.ts), withTrace() (src/lib/tracing.ts), formatDuration() (src/lib/utils.ts), safeToLocaleString() (src/lib/safe-date.ts), buildCorsHeaders() (supabase/functions/_shared/cors.ts), .collect() (scripts/supabase_snapshot/test_snapshot.py)
 - consulta local: `graphify query "<pergunta>"`, `graphify path "<A>" "<B>"`, `graphify explain "<X>"`
 
 ## Hotspots (arquivos mais alterados, 90 dias)
-- docs/qa/05-PROGRESSO.md (124)
+- docs/qa/05-PROGRESSO.md (125)
 - docs/estado/funcionalidades-planejadas.md (30)
 - src/components/layout/AppSidebar.tsx (10)
 - src/hooks/useMultiChannelCall.ts (10)
@@ -430,6 +430,7 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 
 
 ## Últimos commits
+- 2026-11-24 `0455270` chore: estados vazios que explicam o que falta (#302)
 - 2026-11-24 `edd40a3` chore: convencao de mensagem de sucesso e textos das telas das ondas 2 e 5 (#301)
 - 2026-11-24 `43be772` fix: meta de SLO unica na edge (99,9%) e painel lendo do servidor (#300)
 - 2026-11-24 `6272242` test: prova a resiliencia das edges com upstream fora do ar (#298)
@@ -444,7 +445,6 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 - 2026-11-24 `9660f91` fix: remove 5 testes-espelho e cobre crypto.getRandomValues no useMFA (etapa 284 parcial) (#289)
 - 2026-11-24 `a96e7c3` fix: revisa os 41 disables de dependencia de efeito e zera o exhaustive-deps (etapa 217) (#288)
 - 2026-11-24 `daac6b1` infra: trigger de recalculo de hold_time a partir dos hold_events (etapa 069) — DDL em producao, aguarda decisao (#274)
-- 2026-11-24 `559db78` chore: gate de lint de acessibilidade e escopo do eslint (etapa 264) (#287)
 
 ## Arquivos deste diretório
 - `docs/contexto/codigo/rotas.json`

@@ -773,7 +773,7 @@
     "CallSessionsList"
    ],
    "export_default": null,
-   "linhas": 142,
+   "linhas": 152,
    "dominio": "components/call-history",
    "hooks_locais": [],
    "tabelas": [],
@@ -4427,7 +4427,7 @@
    "hooks_locais": [],
    "tabelas": [],
    "edges": [],
-   "usado_por": 23,
+   "usado_por": 24,
    "orfao": false
   },
   {
@@ -5955,7 +5955,7 @@
     "Contacts"
    ],
    "export_default": "Contacts",
-   "linhas": 355,
+   "linhas": 361,
    "dominio": "pages",
    "hooks_locais": [
     "useBitrixSync",

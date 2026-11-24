@@ -1,15 +1,15 @@
 {
  "meta": {
-  "sha": "edd40a361f6da2b06adb3684bce79a840124fff1",
+  "sha": "045527091582bc39ee3d12ae150fb53fd469a644",
   "branch": "main",
   "remote": "https://github.com/adm01-debug/Hello_V3",
-  "generated_at": "2026-11-24 18:06 UTC",
+  "generated_at": "2026-11-24 18:14 UTC",
   "files_total": 1791,
   "code_files": 1587,
-  "code_lines": 194146
+  "code_lines": 194170
  },
  "version": "1.3.2",
- "facts_hash": "2b08ef2a96a329f0",
+ "facts_hash": "1e1eabd7d64cfbc3",
  "stack": {
   "frameworks": [
    "React + Vite",
@@ -28580,7 +28580,7 @@
     "rpc_transitive": [
      "log_audit_event"
     ],
-    "deps_count": 45
+    "deps_count": 46
    },
    {
     "path": "",
@@ -33541,7 +33541,7 @@
   {
    "module": "src/components",
    "files": 376,
-   "lines": 44662,
+   "lines": 44680,
    "tables": [
     "accounts",
     "agent_goals",
@@ -34281,7 +34281,7 @@
   {
    "module": "src/pages",
    "files": 148,
-   "lines": 22642,
+   "lines": 22648,
    "tables": [
     "audit_logs",
     "battle_card_triggers",
@@ -58133,7 +58133,11 @@
    },
    {
     "file": "src/components/call-history/__tests__/CallSessionsList.test.tsx",
-    "name": "mostra o vazio normal quando a leitura funcionou"
+    "name": "explica o vazio quando a leitura funcionou"
+   },
+   {
+    "file": "src/components/call-history/__tests__/CallSessionsList.test.tsx",
+    "name": "com filtros aplicados, diz que o filtro esconde resultados e oferece limpar"
    },
    {
     "file": "src/components/calls/__tests__/AudioOutputSelector.test.tsx",
@@ -91574,7 +91578,7 @@
   },
   "src/components/call-history/CallSessionsList.tsx": {
    "path": "src/components/call-history/CallSessionsList.tsx",
-   "lines": 142,
+   "lines": 152,
    "exports": [
     "function CallSessionsList"
    ],
@@ -91593,12 +91597,13 @@
   },
   "src/components/call-history/__tests__/CallSessionsList.test.tsx": {
    "path": "src/components/call-history/__tests__/CallSessionsList.test.tsx",
-   "lines": 32,
+   "lines": 40,
    "is_test": true,
    "tests": [
     "CallSessionsList",
     "avisa que a leitura falhou em vez de dizer que nao ha chamada",
-    "mostra o vazio normal quando a leitura funcionou"
+    "explica o vazio quando a leitura funcionou",
+    "com filtros aplicados, diz que o filtro esconde resultados e oferece limpar"
    ]
   },
   "src/components/call-library/CallPlaylistsPanel.tsx": {
@@ -112258,7 +112263,7 @@
   },
   "src/pages/Contacts.tsx": {
    "path": "src/pages/Contacts.tsx",
-   "lines": 355,
+   "lines": 361,
    "exports": [
     "default Contacts"
    ],
@@ -123798,10 +123803,22 @@
   }
  },
  "git": {
-  "sha": "edd40a361f6da2b06adb3684bce79a840124fff1",
+  "sha": "045527091582bc39ee3d12ae150fb53fd469a644",
   "branch": "main",
   "remote": "https://github.com/adm01-debug/Hello_V3",
   "commits": [
+   {
+    "sha": "0455270",
+    "date": "2026-11-24",
+    "author": "adm01-debug",
+    "subject": "chore: estados vazios que explicam o que falta (#302)",
+    "files": [
+     "docs/qa/05-PROGRESSO.md",
+     "src/components/call-history/CallSessionsList.tsx",
+     "src/components/call-history/__tests__/CallSessionsList.test.tsx",
+     "src/pages/Contacts.tsx"
+    ]
+   },
    {
     "sha": "edd40a3",
     "date": "2026-11-24",
@@ -124243,16 +124260,6 @@
      "docs/qa/05-PROGRESSO.md",
      "src/integrations/supabase/types.ts"
     ]
-   },
-   {
-    "sha": "2772bab",
-    "date": "2026-11-24",
-    "author": "adm01-debug",
-    "subject": "docs: registra o desfecho da apuracao de exclusao de conta LGPD (etapa 132) (#271)",
-    "files": [
-     "docs/agentes/banco.md",
-     "docs/qa/05-PROGRESSO.md"
-    ]
    }
   ],
   "hot_files": [
@@ -124271,6 +124278,10 @@
    [
     "docs/estado/funcionalidades-planejadas.md",
     3
+   ],
+   [
+    "src/pages/Contacts.tsx",
+    2
    ],
    [
     "src/components/calls/UnifiedSoftphone.tsx",
@@ -124309,6 +124320,14 @@
     2
    ],
    [
+    "src/components/call-history/CallSessionsList.tsx",
+    1
+   ],
+   [
+    "src/components/call-history/__tests__/CallSessionsList.test.tsx",
+    1
+   ],
+   [
     "src/hooks/__tests__/useAgentRanking.coverage.test.tsx",
     1
    ],
@@ -124322,18 +124341,6 @@
    ],
    [
     "docs/observabilidade/SLI_SLO.md",
-    1
-   ],
-   [
-    "src/pages/admin/SloDashboard.tsx",
-    1
-   ],
-   [
-    "src/pages/admin/__tests__/SloDashboard.meta.test.tsx",
-    1
-   ],
-   [
-    "supabase/functions/health-check/__tests__/slo-targets_test.ts",
     1
    ]
   ]

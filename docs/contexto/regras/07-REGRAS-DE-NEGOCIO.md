@@ -1,6 +1,6 @@
 # 07 · REGRAS DE NEGÓCIO
 
-> Gerado automaticamente por AI Context Sync v1.3.2 · commit `edd40a361f` · branch `main` · 2026-11-24 18:06 UTC
+> Gerado automaticamente por AI Context Sync v1.3.2 · commit `0455270915` · branch `main` · 2026-11-24 18:14 UTC
 > Não edite à mão — regras humanas vão em `manual/`.
 
 ## A. Regras escritas por humanos (`manual/` — prioridade máxima, nunca sobrescrito)
@@ -2655,7 +2655,7 @@ _nenhum item encontrado_
 | `admin` | `supabase/functions/data-lake-flush/index.ts` |
 | `admin` | `supabase/migrations/20261123000200_fix_has_role_oracle_and_debug_tables.sql` |
 
-## K. Testes como especificação (3570 testes em 386 arquivos — nomes completos em `context.json`)
+## K. Testes como especificação (3571 testes em 386 arquivos — nomes completos em `context.json`)
 
 | Arquivo | Testes | Exemplos do que o sistema DEVE fazer |
 |---|---|---|
@@ -2936,6 +2936,7 @@ _nenhum item encontrado_
 | `supabase/functions/webauthn-challenge/__tests__/index.test.ts` | 5 | webauthn-challenge: OPTIONS devolve preflight CORS vazio · webauthn-challenge: sem e-mail responde 400 · webauthn-challenge: e-mail vazio responde 400 · webauthn-challenge: payload invalido responde 400, nunca 500 … |
 | `tests/e2e/auth.spec.ts` | 5 | Authentication Flow · should redirect to login when not authenticated · should show login form elements · Dashboard and Critical Lists … |
 | `src/components/auth/__tests__/SessionExpiredDialog.test.tsx` | 4 | sessão expirada · mantém o formulário preenchido e reautentica sem sair da tela · mostra o erro de credencial e mantém o diálogo aberto · renova sozinho quando o refresh token ainda vale |
+| `src/components/call-history/__tests__/CallSessionsList.test.tsx` | 4 | CallSessionsList · avisa que a leitura falhou em vez de dizer que nao ha chamada · explica o vazio quando a leitura funcionou · com filtros aplicados, diz que o filtro esconde resultados e oferece limpar |
 | `src/components/calls/__tests__/NextBestActionPanel.test.tsx` | 4 | NextBestActionPanel · mostra o erro da consulta em vez de um painel vazio · distingue carregando de sem sugestao · lista o sinal e marca como usado |
 | `src/components/calls/softphone/__tests__/DialpadTab.a11y.test.tsx` | 4 | DialpadTab - rótulo acessível no apagar (A-123) · expõe  · ConferenceSection - rótulo acessível ao remover participante (A-123) · identifica o participante que será removido |
 | `src/components/coaching/__tests__/CoachingAssignmentsPanel.rules.test.tsx` | 4 | CoachingAssignmentsPanel - regra do coaching automático (A-131) · explica a regra com os números que vieram da edge · mostra a contagem atual de cada agente que ficou de fora · sem regra conhecida, orienta a rodar a geração |
@@ -2958,7 +2959,6 @@ _nenhum item encontrado_
 | `src/hooks/__tests__/useVoipAnomalies.coverage.test.tsx` | 4 | useVoipAnomalies · classifies anomalies (outage/drift/spike) and builds ids · returns empty array when no anomalies present · throws on error |
 | `src/hooks/__tests__/useVoipDiagnosticVoiceQA.coverage.test.tsx` | 4 | useVoipDiagnosticVoiceQA · resolves answer on success (default period) · passes explicit period · throws on error branch |
 | `src/hooks/__tests__/useVoipExecutiveSummary.coverage.test.tsx` | 4 | useVoipExecutiveSummary (coverage) · fetches summary with default period · fetches summary with explicit day period · throws on invoke error |
-| `src/hooks/__tests__/useVoipQualityAlertsSummary.coverage.test.tsx` | 4 | useVoipQualityAlertsSummary · carrega o resumo com sucesso (default week) · aceita período day e month (querystring no nome da function, não em  · propaga erro da edge function |
 | … +86 linhas — lista completa em `context.json` | | |
 
 ## L. Eventos de webhook tratados (contratos com sistemas externos)

@@ -200,11 +200,11 @@
   {
    "arquivo": "src/components/call-history/__tests__/CallSessionsList.test.tsx",
    "tipo": "unit",
-   "linhas": 32,
+   "linhas": 40,
    "testa": [
     "src/components/call-history/CallSessionsList.tsx"
    ],
-   "casos": 2
+   "casos": 3
   },
   {
    "arquivo": "src/components/calls/__tests__/AudioOutputSelector.test.tsx",

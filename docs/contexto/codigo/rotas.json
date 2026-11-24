@@ -1586,9 +1586,10 @@
    "canais_realtime": [],
    "flags": [],
    "papeis": [
-    "searchbox"
+    "searchbox",
+    "status"
    ],
-   "arquivos_puxados": 45
+   "arquivos_puxados": 46
   },
   {
    "protegida": false,
