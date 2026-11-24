@@ -2,6 +2,8 @@ import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
 import { buildCorsHeaders } from "../_shared/cors.ts";
 import { getCorrelationId, internalErrorResponse } from "../_shared/errors.ts";
+import { validateBody } from "../_shared/validator.ts";
+import { OcrVirtualFaxBodySchema } from "../_shared/ai-body-schemas.ts";
 
 serve(async (req) => {
   if (req.method === 'OPTIONS') return new Response(null, { headers: buildCorsHeaders(req) });
@@ -26,8 +28,9 @@ serve(async (req) => {
     const { data: { user }, error } = await supabase.auth.getUser();
     if (error || !user) return new Response(JSON.stringify({ error: 'Não autorizado' }), { status: 401, headers: { ...buildCorsHeaders(req), 'Content-Type': 'application/json' } });
 
-    const body = await req.json().catch(() => ({}));
-    const faxId = typeof body.fax_id === 'string' ? body.fax_id : null;
+    const bodyParsed = await validateBody(req, OcrVirtualFaxBodySchema, buildCorsHeaders(req), { endpoint: 'ocr-virtual-fax' });
+    if (bodyParsed.errorResponse) return bodyParsed.errorResponse;
+    const faxId = bodyParsed.data!.fax_id ?? null;
     if (!faxId) return new Response(JSON.stringify({ error: 'fax_id obrigatório' }), { status: 400, headers: { ...buildCorsHeaders(req), 'Content-Type': 'application/json' } });
 
     // Busca fax
@@ -40,6 +43,12 @@ serve(async (req) => {
     const { data: file, error: dlErr } = await admin.storage.from('virtual-fax-docs').download(fax.file_path);
     if (dlErr || !file) {
       return new Response(JSON.stringify({ error: 'Falha ao baixar arquivo', details: dlErr?.message }), { status: 500, headers: { ...buildCorsHeaders(req), 'Content-Type': 'application/json' } });
+    }
+
+    // Teto de tamanho: o PDF inteiro vira base64 no prompt de visao (A-129 / etapa 048).
+    const MAX_FAX_BYTES = 20 * 1024 * 1024;
+    if (file.size > MAX_FAX_BYTES) {
+      return new Response(JSON.stringify({ error: 'Arquivo maior que o limite de 20MB' }), { status: 413, headers: { ...buildCorsHeaders(req), 'Content-Type': 'application/json' } });
     }
 
     // Converte para base64

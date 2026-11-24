@@ -2,6 +2,8 @@ import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
 import { buildCorsHeaders } from "../_shared/cors.ts";
 import { resilientFetch } from "../_shared/resilience.ts";
+import { validateBody } from "../_shared/validator.ts";
+import { TranscribeRecordingBodySchema } from "../_shared/ai-body-schemas.ts";
 
 
 serve(async (req) => {
@@ -33,8 +35,9 @@ serve(async (req) => {
       });
     }
 
-    const body = await req.json();
-    const { recordingId, filePath } = body;
+    const bodyParsed = await validateBody(req, TranscribeRecordingBodySchema, buildCorsHeaders(req), { endpoint: 'transcribe-recording' });
+    if (bodyParsed.errorResponse) return bodyParsed.errorResponse;
+    const { recordingId, filePath } = bodyParsed.data!;
     
     if (!recordingId || !filePath || typeof recordingId !== 'string' || typeof filePath !== 'string') {
       return new Response(JSON.stringify({ error: 'Dados inválidos' }), {
@@ -63,6 +66,16 @@ serve(async (req) => {
       console.error('Failed to download file:', downloadError);
       return new Response(JSON.stringify({ error: 'Arquivo não encontrado' }), {
         status: 404,
+        headers: { ...buildCorsHeaders(req), 'Content-Type': 'application/json' },
+      });
+    }
+
+    // Teto de tamanho: o arquivo inteiro e enviado para o STT, entao o custo e o tempo
+    // de resposta sao proporcionais ao tamanho (A-129 / etapa 048).
+    const MAX_AUDIO_BYTES = 25 * 1024 * 1024;
+    if (fileData.size > MAX_AUDIO_BYTES) {
+      return new Response(JSON.stringify({ error: 'Arquivo maior que o limite de 25MB' }), {
+        status: 413,
         headers: { ...buildCorsHeaders(req), 'Content-Type': 'application/json' },
       });
     }

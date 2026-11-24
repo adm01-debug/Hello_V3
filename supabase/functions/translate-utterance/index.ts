@@ -2,15 +2,8 @@ import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.45.0';
 import { buildCorsHeaders } from '../_shared/cors.ts';
 import { fetchComPrazo } from "../_shared/resilience.ts";
 import { getCorrelationId, internalErrorResponse } from "../_shared/errors.ts";
-
-interface Body {
-  callSessionId: string;
-  text: string;
-  speaker: 'agent' | 'customer';
-  sourceLang?: string;
-  targetLang: string;
-  segmentId?: string;
-}
+import { validateBody } from '../_shared/validator.ts';
+import { TranslateUtteranceBodySchema } from '../_shared/ai-body-schemas.ts';
 
 const SUPPORTED = ['pt','en','es','fr','it','de','ja','zh'];
 
@@ -35,7 +28,9 @@ Deno.serve(async (req) => {
       return new Response(JSON.stringify({ error: 'Unauthorized' }), { status: 401, headers: { ...cors, 'Content-Type': 'application/json' } });
     }
 
-    const body = (await req.json()) as Body;
+    const bodyParsed = await validateBody(req, TranslateUtteranceBodySchema, cors, { endpoint: 'translate-utterance' });
+    if (bodyParsed.errorResponse) return bodyParsed.errorResponse;
+    const body = bodyParsed.data!;
     if (!body?.callSessionId || !body?.text || !body?.targetLang) {
       return new Response(JSON.stringify({ error: 'callSessionId, text e targetLang obrigatórios' }), { status: 400, headers: { ...cors, 'Content-Type': 'application/json' } });
     }
