@@ -222,7 +222,7 @@
 - [ ] **169** — Explicar na tela a regra do coaching automático — onda 4 — Baixa — Frontend
 - [ ] **170** — Alinhar a meta de SLO entre a tela e o cálculo — onda 4 — Média — Frontend + Edge Function
 - [ ] **171** — Resolver as duas estruturas paralelas de recuperação de senha e verificação de e-mail — onda 4 — Média — Banco + Documentação
-- [ ] **172** — Parar de contar "features de segurança" a partir de um array literal — onda 4 — Média — Frontend
+- [x] **172** — Parar de contar "features de segurança" a partir de um array literal — onda 4 — Média — Frontend
 - [x] **173** — Dar estados e defesa ao gráfico de espera do dashboard — onda 4 — Alta — Frontend
 - [x] **174** — Fazer o painel de conflitos de concorrência mostrar conflitos — onda 4 — Média — Frontend
 - [ ] **175** — Completar o CRUD da lista DNC — onda 4 — Média — Frontend 🔒
