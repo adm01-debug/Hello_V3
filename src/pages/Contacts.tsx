@@ -8,6 +8,7 @@ import {
   Users,
 } from 'lucide-react';
 import { SearchInput } from '@/components/ui/search-input';
+import { EmptyState } from '@/components/ui/empty-state';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
@@ -283,23 +284,28 @@ const Contacts = () => {
                     Sincronizar agora
                   </Button>
                 </>
-              ) : (
+              ) : search || filters !== defaultContactFilters ? (
                 <>
                   <Users className="mx-auto h-12 w-12 text-muted-foreground/30 mb-3" />
                   <p className="text-muted-foreground">Nenhum contato encontrado</p>
-                  {(search || filters !== defaultContactFilters) && (
-                    <Button
-                      variant="link"
-                      className="mt-2 text-primary"
-                      onClick={() => {
-                        setSearch('');
-                        setFilters(defaultContactFilters);
-                      }}
-                    >
-                      Limpar busca e filtros
-                    </Button>
-                  )}
+                  <Button
+                    variant="link"
+                    className="mt-2 text-primary"
+                    onClick={() => {
+                      setSearch('');
+                      setFilters(defaultContactFilters);
+                    }}
+                  >
+                    Limpar busca e filtros
+                  </Button>
                 </>
+              ) : (
+                <EmptyState
+                  iconType="contacts"
+                  title="Nenhum contato encontrado"
+                  description="Sua agenda está vazia. Crie o primeiro contato ou sincronize com o Bitrix24 — o contato fica disponível no discador e nas campanhas."
+                  action={{ label: "Criar contato", onClick: () => setShowCreateDialog(true) }}
+                />
               )}
             </div>
           ) : (

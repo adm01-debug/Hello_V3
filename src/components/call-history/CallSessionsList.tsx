@@ -3,7 +3,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { cn, formatDuration } from '@/lib/utils';
-import { EmptyErrorState } from '@/components/ui/empty-state';
+import { EmptyErrorState, EmptyState } from '@/components/ui/empty-state';
 
 import { SessionWithSummary } from '@/hooks/useCallHistory';
 import { VirtualList } from '@/components/ui/VirtualList';
@@ -104,11 +104,21 @@ export function CallSessionsList({ sessions, isLoading, error, activeFiltersCoun
             size="sm"
           />
         ) : sessions.length === 0 ? (
-          <div className="flex flex-col items-center justify-center py-12 text-center">
-            <Phone className="h-12 w-12 text-muted-foreground/50 mb-4" />
-            <p className="text-muted-foreground">{activeFiltersCount > 0 ? 'Nenhuma chamada encontrada com os filtros aplicados' : 'Nenhuma chamada encontrada'}</p>
-            {activeFiltersCount > 0 && <button className="text-primary underline text-sm mt-2" onClick={onClearFilters}>Limpar filtros</button>}
-          </div>
+          activeFiltersCount > 0 ? (
+            <EmptyState
+              iconType="calls"
+              title="Nenhuma chamada com esses filtros"
+              description="Não há atendimento no período e nos filtros selecionados. O histórico completo continua disponível."
+              action={{ label: "Limpar filtros", onClick: onClearFilters, variant: "outline" }}
+            />
+          ) : (
+            <EmptyState
+              iconType="calls"
+              title="Nenhuma chamada no período"
+              description="As chamadas aparecem aqui assim que a primeira ligação termina — o histórico é gravado no fim do atendimento."
+              hint="Se você já atendeu, confira o período selecionado acima."
+            />
+          )
         ) : (
           <div className="space-y-4">
             <VirtualList
