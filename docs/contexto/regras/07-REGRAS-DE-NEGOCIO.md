@@ -1,6 +1,6 @@
 # 07 · REGRAS DE NEGÓCIO
 
-> Gerado automaticamente por AI Context Sync v1.3.2 · commit `9660f91df9` · branch `main` · 2026-11-24 14:58 UTC
+> Gerado automaticamente por AI Context Sync v1.3.2 · commit `8cf611ed01` · branch `main` · 2026-11-24 15:21 UTC
 > Não edite à mão — regras humanas vão em `manual/`.
 
 ## A. Regras escritas por humanos (`manual/` — prioridade máxima, nunca sobrescrito)
@@ -2652,32 +2652,20 @@ _nenhum item encontrado_
 | `admin` | `supabase/functions/data-lake-flush/index.ts` |
 | `admin` | `supabase/migrations/20261123000200_fix_has_role_oracle_and_debug_tables.sql` |
 
-## K. Testes como especificação (4255 testes em 387 arquivos — nomes completos em `context.json`)
+## K. Testes como especificação (3511 testes em 374 arquivos — nomes completos em `context.json`)
 
 | Arquivo | Testes | Exemplos do que o sistema DEVE fazer |
 |---|---|---|
-| `src/hooks/__tests__/useAlertSoundAndNotifications.test.ts` | 80 | Critical Alert Notifications · Default sound configuration · warning frequency is 520Hz · critical frequency is 880Hz … |
-| `src/hooks/__tests__/useAuthAndDataIntegrity.test.ts` | 80 | Auth System · User roles · has 4 valid roles · hasRole checks inclusion … |
-| `src/hooks/__tests__/useContactsAndCompliance.test.ts` | 80 | Contacts System · Phone normalization · strips non-digit characters · handles already clean number … |
-| `src/hooks/__tests__/useDeviceAndSecurity.test.ts` | 80 | Device Detection · Browser detection · detects Chrome · detects Firefox … |
 | `src/hooks/__tests__/useSecurityHardening.test.ts` | 80 | Security Hardening Verification · RLS Policy Hardening · should have is_active_agent function concept for agent status verification · should enforce agent-scoped access for call_transcriptions … |
-| `src/hooks/__tests__/useUncoveredHooks.test.ts` | 80 | Agent Status Logic · loadSavedAgentId returns null when no saved ID · loadSavedAgentId returns ID when saved · agent status types are valid … |
 | `src/lib/__tests__/security-sanitizers.test.ts` | 80 | Input Sanitizer · escapeHTML · escapes ampersands · escapes less-than … |
 | `src/lib/__tests__/validation-schemas.test.ts` | 67 | Primitive Schemas · uuidSchema accepts valid UUID · uuidSchema rejects invalid · emailSchema accepts valid email … |
 | `src/lib/__tests__/mock-data-integrity.test.ts` | 62 | Mock Data Integrity · Contacts · has at least 5 contacts · all contacts have required fields … |
 | `src/lib/__tests__/edge-cases-stress.test.ts` | 60 | Edge Cases & Boundary Tests · Unicode and special character handling · escapeHTML handles unicode · escapeHTML handles emoji … |
-| `src/hooks/__tests__/useEdgeFunctionIntegrity.test.ts` | 57 | Edge Function: check-contact-alerts · Alert type detection · detects buying signals · no buying signals when empty … |
-| `src/hooks/__tests__/useGamificationAndCallbacks.test.ts` | 57 | Gamification System · Week start calculation · calculates Monday as week start · Friday returns same week Monday … |
 | `src/lib/__tests__/fixes-exhaustive.test.ts` | 54 | generateBackupCodes (CSPRNG) · returns exactly 10 codes · all codes are 6 characters long · all codes use only Crockford alphabet characters … |
-| `src/hooks/__tests__/useCoachingAndRecording.test.ts` | 51 | Coaching System · Recommendation status lifecycle · all statuses are valid · pending → in_progress sets reviewed_at … |
-| `src/hooks/__tests__/useComprehensive.test.ts` | 49 | Password Strength Analysis · empty password returns empty · short password is weak · password without special char is weak … |
-| `src/hooks/__tests__/useWavoipAndReauth.test.ts` | 48 | Wavoip Call System · Status state machine · all statuses are valid · initial state is disconnected … |
 | `src/lib/__tests__/export-audit-notifications.test.ts` | 48 | Export Column Formatting · format function transforms dates · format function handles numbers · format function handles zero … |
 | `src/lib/__tests__/security-infrastructure.test.ts` | 47 | Content Security Policy · builds a valid CSP header with default directives · includes all default directive keys · merges custom directives … |
 | `src/lib/__tests__/error-boundaries.test.tsx` | 42 | ErrorBoundary: Normal rendering · renders children when no error occurs · renders multiple children · ErrorBoundary: Error catching (full mode) … |
 | `src/lib/__tests__/security-advanced.test.ts` | 40 | Rate Limiter · allows requests within limit · tracks remaining requests accurately · blocks when limit exceeded … |
-| `src/hooks/__tests__/useSessionAndAgent.test.ts` | 39 | Session Manager Logic · Session expiration · session expires after 24 hours · expired session is detected … |
-| `src/hooks/__tests__/useEdgeFunctions.test.ts` | 38 | Edge Function Rate Limiter · allows first request from new IP · increments count for same IP · resets after window expires … |
 | `src/lib/__tests__/utilities-comprehensive.test.ts` | 37 | Password Strength · rates empty password as very weak · rates short password as weak · rates 8-char mixed as reasonable … |
 | `src/lib/__tests__/accessibility-improvements.test.ts` | 36 | Accessibility: Dashboard page (Index.tsx) · main element has aria-label · stats section has aria-label for metrics · active calls section has aria-label … |
 | `src/lib/__tests__/security-observability.test.ts` | 35 | Security: Logger PII masking (comprehensive) · masks  · masks case-insensitive keys (Password, TOKEN, etc.) · preserves non-sensitive fields … |
@@ -2922,7 +2910,6 @@ _nenhum item encontrado_
 | `src/hooks/__tests__/useVoipExecutiveNarrative.coverage.test.tsx` | 5 | useVoipExecutiveNarrative (coverage) · is disabled by default and does not fetch · fetches when enabled (week) · fetches with month period … |
 | `src/hooks/__tests__/useVoipMonitoringSettings.coverage.test.tsx` | 5 | useVoipMonitoringSettings (coverage) · loads settings successfully · updates existing settings (id present) · inserts when no existing settings … |
 | `src/hooks/__tests__/useVoipRecommendationHistory.coverage.test.tsx` | 5 | useVoipRecommendationHistory · returns data on success with default options · passes custom period and limit · errors when invoke returns error … |
-| `src/lib/__tests__/cache.stress.test.ts` | 5 | React Query cache — stress (10k entries) · insere 10.000 entradas em < 2s · invalidateQueries em filtro genérico < 500ms · clear() libera todas as entradas … |
 | `src/lib/__tests__/favorite-sync-labels.test.ts` | 5 | maskPhone · preserva apenas os últimos dígitos · nunca vaza mais de 4 dígitos (PBT) · describeFavorite … |
 | `src/lib/__tests__/navigation-progress-store.test.ts` | 5 | navigation-progress-store · starts idle · reports loading between start and finish and notifies subscribers · only stops loading when every concurrent navigation finished … |
 | `src/lib/__tests__/predictive-pace.property.test.ts` | 5 | calculatePredictivePace — property-based (1000 runs) · sugestão sempre dentro de [minPace, maxPace] · sem agentes livres → suggested = minPace · abandono acima do alvo → nunca sobe o pace … |
@@ -2956,7 +2943,20 @@ _nenhum item encontrado_
 | `src/hooks/__tests__/usePageTitle.coverage.test.tsx` | 4 | usePageTitle · sets document title with app name suffix · resets title on unmount · updates title when prop changes |
 | `src/hooks/__tests__/useQualityMetrics.coverage.test.tsx` | 4 | useQualityMetrics / useTrunkUsageMetrics · loads quality metrics · loads trunk usage metrics · propagates errors |
 | `src/hooks/__tests__/useTalkRatio.test.ts` | 4 | useTalkRatio · estado inicial é vazio · analisa com sucesso · captura erro do backend |
-| … +87 linhas — lista completa em `context.json` | | |
+| `src/hooks/__tests__/useTrunkMetrics.coverage.test.tsx` | 4 | useTrunkMetrics · aggregates usage by trunk and by day · returns empty for no data with default days · throws on usage error |
+| `src/hooks/__tests__/useVoipAnomalies.coverage.test.tsx` | 4 | useVoipAnomalies · classifies anomalies (outage/drift/spike) and builds ids · returns empty array when no anomalies present · throws on error |
+| `src/hooks/__tests__/useVoipDiagnosticVoiceQA.coverage.test.tsx` | 4 | useVoipDiagnosticVoiceQA · resolves answer on success (default period) · passes explicit period · throws on error branch |
+| `src/hooks/__tests__/useVoipExecutiveSummary.coverage.test.tsx` | 4 | useVoipExecutiveSummary (coverage) · fetches summary with default period · fetches summary with explicit day period · throws on invoke error |
+| `src/hooks/__tests__/useVoipQualityAlertsSummary.coverage.test.tsx` | 4 | useVoipQualityAlertsSummary · carrega o resumo com sucesso (default week) · aceita período day e month (querystring no nome da function, não em  · propaga erro da edge function |
+| `src/hooks/__tests__/useVoipRecommendationInsights.coverage.test.tsx` | 4 | useVoipRecommendationInsights · carrega insights com sucesso (default week) · aceita período month · propaga erro da edge function |
+| `src/hooks/__tests__/useVoipRecommendations.coverage.test.tsx` | 4 | useVoipRecommendations · loads recommendations successfully · defaults period to week and supports day · throws and surfaces error when invoke returns error |
+| `src/hooks/__tests__/useWebVitals.coverage.test.tsx` | 4 | useWebVitals · loads vitals on mount and refreshes on interval · manual refresh invokes getters · clears interval on unmount |
+| `src/lib/__tests__/a11y-clickable.test.ts` | 4 | clickableRowProps · entrega semantica de controle focavel · ativa com Enter e com Espaco, consumindo o evento · ignora teclas que nao ativam |
+| `src/lib/__tests__/callHistoryCsv.test.ts` | 4 | callHistoryCsv · gera header + linhas separadas por ; · escapa valores com virgula e aspas · deixa vazio campos nulos |
+| `src/lib/__tests__/pendingCallWrites.test.ts` | 4 | pendingCallWrites · enfileira e retira em ordem FIFO · descarta o mais antigo quando chega a 20 itens · clear() esvazia a fila |
+| `src/lib/__tests__/reportCsv.test.ts` | 4 | reportCsv · gera secoes e header do relatorio · escapa nome com virgula · gera arquivo vazio quando nada informado |
+| `src/pages/__tests__/CallHistory.deeplink.test.tsx` | 4 | CallHistory - deep link dos acertos (etapa 157) · sem o parametro session nao abre nenhuma chamada · com ?session=<id> abre a chamada correspondente · nao repete a abertura quando a lista e re-renderizada |
+| … +74 linhas — lista completa em `context.json` | | |
 
 ## L. Eventos de webhook tratados (contratos com sistemas externos)
 

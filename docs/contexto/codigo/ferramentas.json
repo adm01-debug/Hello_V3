@@ -3,7 +3,7 @@
  "format_version": 2,
  "stack": {
   "linguagens": [
-   "TypeScript (1303)",
+   "TypeScript (1290)",
    "SQL (246)",
    "Markdown (121)",
    "JavaScript (30)",
@@ -535,10 +535,6 @@
     "arquivos": 3
    },
    {
-    "host": "example.supabase.co",
-    "arquivos": 3
-   },
-   {
     "host": "ipapi.co",
     "arquivos": 3
    },
@@ -588,6 +584,10 @@
    },
    {
     "host": "evil.com.br",
+    "arquivos": 1
+   },
+   {
+    "host": "example.supabase.co",
     "arquivos": 1
    },
    {
@@ -751,7 +751,7 @@
   "papeis_no_codigo": [
    {
     "papel": "admin",
-    "ocorrencias": 37
+    "ocorrencias": 36
    },
    {
     "papel": "user",
@@ -786,10 +786,6 @@
     "ocorrencias": 5
    },
    {
-    "papel": "viewer",
-    "ocorrencias": 4
-   },
-   {
     "papel": "article",
     "ocorrencias": 3
    },
@@ -799,6 +795,10 @@
    },
    {
     "papel": "navigation",
+    "ocorrencias": 3
+   },
+   {
+    "papel": "viewer",
     "ocorrencias": 3
    },
    {

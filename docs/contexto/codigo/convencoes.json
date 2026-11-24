@@ -22,7 +22,7 @@
    "scripts/regras_negocio (2)"
   ],
   "testes": [
-   "co-localizado (__tests__) (373)",
+   "co-localizado (__tests__) (360)",
    "e2e/ (7)",
    "tests/ (6)"
   ],
@@ -59,11 +59,11 @@
  "commits": {
   "convencao": "conventional commits (observado)",
   "exemplos": [
+   "fix: remove 13 testes-espelho de hooks e de cache (etapa 284 parte 2) (#290)",
    "fix: remove 5 testes-espelho e cobre crypto.getRandomValues no useMFA (etapa 284 parcial) (#289)",
    "fix: revisa os 41 disables de dependencia de efeito e zera o exhaustive-deps (etapa 217) (#288)",
    "infra: trigger de recalculo de hold_time a partir dos hold_events (etapa 069) — DDL em producao, aguarda decisao (#274)",
-   "chore: gate de lint de acessibilidade e escopo do eslint (etapa 264) (#287)",
-   "chore: registra cobertura de menu das rotas protegidas (etapa 265) (#286)"
+   "chore: gate de lint de acessibilidade e escopo do eslint (etapa 264) (#287)"
   ]
  },
  "pr_template": null,

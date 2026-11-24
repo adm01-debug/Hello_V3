@@ -4455,7 +4455,7 @@
   {
    "modulo": "hooks/__tests__",
    "arquivos": 0,
-   "testes": 170,
+   "testes": 158,
    "linhas": 0,
    "itens_menu": [],
    "telas": [],
@@ -5125,7 +5125,7 @@
   {
    "modulo": "lib/__tests__",
    "arquivos": 0,
-   "testes": 77,
+   "testes": 76,
    "linhas": 0,
    "itens_menu": [],
    "telas": [],

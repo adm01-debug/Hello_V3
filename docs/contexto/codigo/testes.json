@@ -5,17 +5,17 @@
   "vitest",
   "playwright"
  ],
- "total": 397,
+ "total": 384,
  "por_tipo": {
   "contrato": 1,
   "e2e": 13,
   "pytest": 2,
-  "unit": 380
+  "unit": 367
  },
  "onde_ficam": [
   {
    "padrao": "co-localizado (__tests__)",
-   "arquivos": 373
+   "arquivos": 360
   },
   {
    "padrao": "e2e/",
@@ -546,13 +546,6 @@
    "casos": 8
   },
   {
-   "arquivo": "src/hooks/__tests__/useAlertSoundAndNotifications.test.ts",
-   "tipo": "unit",
-   "linhas": 379,
-   "testa": [],
-   "casos": 57
-  },
-  {
    "arquivo": "src/hooks/__tests__/useAnimatedCounter.coverage.test.tsx",
    "tipo": "unit",
    "linhas": 70,
@@ -596,13 +589,6 @@
     "src/hooks/useAuth.ts"
    ],
    "casos": 7
-  },
-  {
-   "arquivo": "src/hooks/__tests__/useAuthAndDataIntegrity.test.ts",
-   "tipo": "unit",
-   "linhas": 374,
-   "testa": [],
-   "casos": 63
   },
   {
    "arquivo": "src/hooks/__tests__/useAvatar.test.ts",
@@ -803,13 +789,6 @@
    "casos": 8
   },
   {
-   "arquivo": "src/hooks/__tests__/useCoachingAndRecording.test.ts",
-   "tipo": "unit",
-   "linhas": 256,
-   "testa": [],
-   "casos": 34
-  },
-  {
    "arquivo": "src/hooks/__tests__/useCoachingAssignments.coverage.test.tsx",
    "tipo": "unit",
    "linhas": 116,
@@ -826,13 +805,6 @@
     "src/hooks/useComplianceRules.ts"
    ],
    "casos": 2
-  },
-  {
-   "arquivo": "src/hooks/__tests__/useComprehensive.test.ts",
-   "tipo": "unit",
-   "linhas": 323,
-   "testa": [],
-   "casos": 44
   },
   {
    "arquivo": "src/hooks/__tests__/useConferenceRecording.coverage.test.tsx",
@@ -890,13 +862,6 @@
     "src/hooks/useContacts.ts"
    ],
    "casos": 10
-  },
-  {
-   "arquivo": "src/hooks/__tests__/useContactsAndCompliance.test.ts",
-   "tipo": "unit",
-   "linhas": 445,
-   "testa": [],
-   "casos": 58
   },
   {
    "arquivo": "src/hooks/__tests__/useConversations.coverage.test.tsx",
@@ -1004,13 +969,6 @@
    "casos": 8
   },
   {
-   "arquivo": "src/hooks/__tests__/useDeviceAndSecurity.test.ts",
-   "tipo": "unit",
-   "linhas": 434,
-   "testa": [],
-   "casos": 67
-  },
-  {
    "arquivo": "src/hooks/__tests__/useDeviceDetection.coverage.test.tsx",
    "tipo": "unit",
    "linhas": 76,
@@ -1027,20 +985,6 @@
     "src/hooks/useDNCCompliance.ts"
    ],
    "casos": 8
-  },
-  {
-   "arquivo": "src/hooks/__tests__/useEdgeFunctionIntegrity.test.ts",
-   "tipo": "unit",
-   "linhas": 266,
-   "testa": [],
-   "casos": 36
-  },
-  {
-   "arquivo": "src/hooks/__tests__/useEdgeFunctions.test.ts",
-   "tipo": "unit",
-   "linhas": 290,
-   "testa": [],
-   "casos": 29
   },
   {
    "arquivo": "src/hooks/__tests__/useExecutiveDashboard.coverage.test.tsx",
@@ -1115,13 +1059,6 @@
     "src/hooks/useGamification.ts"
    ],
    "casos": 12
-  },
-  {
-   "arquivo": "src/hooks/__tests__/useGamificationAndCallbacks.test.ts",
-   "tipo": "unit",
-   "linhas": 319,
-   "testa": [],
-   "casos": 41
   },
   {
    "arquivo": "src/hooks/__tests__/useGeoBlocking.coverage.test.tsx",
@@ -1575,13 +1512,6 @@
    "casos": 7
   },
   {
-   "arquivo": "src/hooks/__tests__/useSessionAndAgent.test.ts",
-   "tipo": "unit",
-   "linhas": 210,
-   "testa": [],
-   "casos": 26
-  },
-  {
    "arquivo": "src/hooks/__tests__/useSessionManager.coverage.test.tsx",
    "tipo": "unit",
    "linhas": 134,
@@ -1744,13 +1674,6 @@
     "src/hooks/useTrunkUsageReporter.ts"
    ],
    "casos": 4
-  },
-  {
-   "arquivo": "src/hooks/__tests__/useUncoveredHooks.test.ts",
-   "tipo": "unit",
-   "linhas": 700,
-   "testa": [],
-   "casos": 79
   },
   {
    "arquivo": "src/hooks/__tests__/useUnreadConflicts.coverage.test.tsx",
@@ -1916,13 +1839,6 @@
    "casos": 15
   },
   {
-   "arquivo": "src/hooks/__tests__/useWavoipAndReauth.test.ts",
-   "tipo": "unit",
-   "linhas": 243,
-   "testa": [],
-   "casos": 34
-  },
-  {
    "arquivo": "src/hooks/__tests__/useWavoipCall.coverage.test.tsx",
    "tipo": "unit",
    "linhas": 236,
@@ -2037,13 +1953,6 @@
     "src/lib/blf.ts"
    ],
    "casos": 17
-  },
-  {
-   "arquivo": "src/lib/__tests__/cache.stress.test.ts",
-   "tipo": "unit",
-   "linhas": 49,
-   "testa": [],
-   "casos": 4
   },
   {
    "arquivo": "src/lib/__tests__/call-park.test.ts",

@@ -2,11 +2,16 @@
  "aviso": "GERADO AUTOMATICAMENTE por scripts/ai-context/gerar.mjs — não editar à mão; será sobrescrito.",
  "format_version": 2,
  "git": {
-  "commit": "9660f91df944a417f3bab5cc563a7e430138d406",
+  "commit": "8cf611ed0173c4cae735a2bae78b5d797938249d",
   "branch": "main",
-  "data_commit": "2026-11-24T11:57:56-03:00",
+  "data_commit": "2026-11-24T12:20:41-03:00",
   "remote": "https://github.com/adm01-debug/Hello_V3",
   "ultimos_commits": [
+   {
+    "sha": "8cf611e",
+    "data": "2026-11-24",
+    "assunto": "fix: remove 13 testes-espelho de hooks e de cache (etapa 284 parte 2) (#290)"
+   },
    {
     "sha": "9660f91",
     "data": "2026-11-24",
@@ -126,14 +131,9 @@
     "sha": "f3b6cf1",
     "data": "2026-11-24",
     "assunto": "fix: gravacoes cegas em componentes e login reportam erro (etapa 187) (#255)"
-   },
-   {
-    "sha": "d34fadc",
-    "data": "2026-11-24",
-    "assunto": "chore: veredito explicito nos catch que escondem escrita (etapas 194-195) (#262)"
    }
   ],
-  "arquivos_mudados_7d": 1217,
+  "arquivos_mudados_7d": 1228,
   "pastas_mais_mudadas_30d": [
    {
     "pasta": "covout/lcov-report/hooks",
@@ -141,11 +141,11 @@
    },
    {
     "pasta": "docs/qa/05-PROGRESSO.md",
-    "mudancas": 113
+    "mudancas": 114
    },
    {
     "pasta": "src/hooks/__tests__",
-    "mudancas": 90
+    "mudancas": 102
    },
    {
     "pasta": "covout/lcov-report/lib",
@@ -165,7 +165,7 @@
    },
    {
     "pasta": "src/lib/__tests__",
-    "mudancas": 29
+    "mudancas": 30
    },
    {
     "pasta": "src/components/layout",
@@ -199,7 +199,7 @@
   "arquivos_mais_mudados_90d": [
    {
     "arquivo": "docs/qa/05-PROGRESSO.md",
-    "mudancas": 113
+    "mudancas": 114
    },
    {
     "arquivo": "docs/estado/funcionalidades-planejadas.md",
@@ -301,7 +301,7 @@
   "autores_30d": [
    {
     "autor": "adm01-debug",
-    "commits": 268
+    "commits": 269
    },
    {
     "autor": "Joaquim Ataides",
@@ -314,9 +314,9 @@
   ]
  },
  "contagens": {
-  "arquivos_total": 1741,
-  "arquivos_codigo": 1337,
-  "linhas_codigo": 180682,
+  "arquivos_total": 1728,
+  "arquivos_codigo": 1324,
+  "linhas_codigo": 176394,
   "rotas": 106,
   "rotas_http_backend": 11,
   "vistas_por_id": 0,
@@ -328,7 +328,7 @@
   "tabelas": 169,
   "migrations": 243,
   "cron_jobs": 11,
-  "testes": 397,
+  "testes": 384,
   "workflows": 3,
   "scripts": 35,
   "docs_md": 121
@@ -491,16 +491,16 @@
    "linhas": 312
   },
   "src/hooks": {
-   "arquivos": 350,
-   "linhas": 47051
+   "arquivos": 338,
+   "linhas": 42812
   },
   "src/integrations": {
    "arquivos": 3,
    "linhas": 8179
   },
   "src/lib": {
-   "arquivos": 180,
-   "linhas": 21859
+   "arquivos": 179,
+   "linhas": 21810
   },
   "src/main.tsx": {
    "arquivos": 1,
