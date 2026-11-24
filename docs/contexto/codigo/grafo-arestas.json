@@ -4680,6 +4680,9 @@
   "supabase/functions/_shared/client-ip_test.ts": [
    "supabase/functions/_shared/client-ip.ts"
   ],
+  "supabase/functions/_shared/digest_test.ts": [
+   "supabase/functions/_shared/digest.ts"
+  ],
   "supabase/functions/_shared/errors.ts": [
    "supabase/functions/_shared/observability.ts"
   ],
@@ -5026,7 +5029,8 @@
    "supabase/functions/_shared/validator.ts"
   ],
   "supabase/functions/process-digest/index.ts": [
-   "supabase/functions/_shared/cors.ts"
+   "supabase/functions/_shared/cors.ts",
+   "supabase/functions/_shared/digest.ts"
   ],
   "supabase/functions/realtime-analysis/index.ts": [
    "supabase/functions/_shared/cors.ts",

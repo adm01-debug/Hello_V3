@@ -58,11 +58,11 @@
  "commits": {
   "convencao": "conventional commits (observado)",
   "exemplos": [
+   "fix: le o resumo de notificacoes em lote em vez de por usuario (etapa 249) (#279)",
    "fix: valida IP numa consulta por lista em vez de uma por faixa (etapa 247) (#278)",
    "fix: avisa meta por transicao em vez de repetir o toast (etapa 246) (#277)",
    "fix: agrupa consultas do painel de fila e do discador (etapa 244) (#276)",
-   "fix: para o laco de re-render de 1 Hz do lembrete de espera (etapa 245) (#275)",
-   "fix: pagina a lista de gravacoes e limita as consultas do painel (etapa 236) (#273)"
+   "fix: para o laco de re-render de 1 Hz do lembrete de espera (etapa 245) (#275)"
   ]
  },
  "pr_template": null,

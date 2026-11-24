@@ -30,6 +30,8 @@
   "supabase/functions/_shared/client-ip_test.ts",
   "supabase/functions/_shared/constant-time.ts",
   "supabase/functions/_shared/cors.ts",
+  "supabase/functions/_shared/digest.ts",
+  "supabase/functions/_shared/digest_test.ts",
   "supabase/functions/_shared/errors.ts",
   "supabase/functions/_shared/errors_test.ts",
   "supabase/functions/_shared/external-payload-schemas.ts",
@@ -1884,7 +1886,7 @@
    "nome": "process-digest",
    "entrada": "supabase/functions/process-digest/index.ts",
    "arquivos": 1,
-   "linhas": 109,
+   "linhas": 107,
    "verify_jwt": true,
    "metodos": [
     "OPTIONS"
@@ -1903,7 +1905,8 @@
    "chama_edges": [],
    "hosts_externos": [],
    "usa_shared": [
-    "cors.ts"
+    "cors.ts",
+    "digest.ts"
    ],
    "chamada_pelo_front": [],
    "chamada_por_edges": [],

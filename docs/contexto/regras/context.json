@@ -1,15 +1,15 @@
 {
  "meta": {
-  "sha": "677c45d02d6e43dd9c69a478f204ba8676c278b5",
+  "sha": "4ad967d3d6a6d0a36b060856f83b336e86ccef23",
   "branch": "main",
   "remote": "https://github.com/adm01-debug/Hello_V3",
-  "generated_at": "2026-11-24 10:50 UTC",
-  "files_total": 1787,
-  "code_files": 1583,
-  "code_lines": 196784
+  "generated_at": "2026-11-24 11:21 UTC",
+  "files_total": 1789,
+  "code_files": 1585,
+  "code_lines": 197049
  },
  "version": "1.3.2",
- "facts_hash": "cb3c5f28723ee8b1",
+ "facts_hash": "3e9da9227b168918",
  "stack": {
   "frameworks": [
    "React + Vite",
@@ -153,7 +153,7 @@
   ],
   "package_manager": "bun",
   "languages": {
-   ".ts": 661,
+   ".ts": 663,
    ".tsx": 642,
    ".sql": 245,
    ".mjs": 28,
@@ -34453,8 +34453,8 @@
   },
   {
    "module": "supabase/functions",
-   "files": 210,
-   "lines": 23531,
+   "files": 212,
+   "lines": 23796,
    "tables": [
     "account_lockouts",
     "accounts",
@@ -34552,6 +34552,7 @@
     "client-ip.ts: isIpLiteral, clientIpFromHeaders",
     "constant-time.ts: mesmaString",
     "cors.ts: getCorsOrigin, buildCorsHeaders",
+    "digest.ts: UsuarioDigest, NotificacaoResumo, LeitorNotificacoes, desdeDoUsuario, ResultadoLeitura, lerNotificacoesEmLote",
     "errors.ts: InternalErrorBody, GENERIC_INTERNAL_MESSAGE, getCorrelationId, internalError, internalErrorResponse",
     "external-payload-schemas.ts: BitrixActionSchema, BitrixAction, BitrixRequestSchema, BitrixRequest, paramsSchemaFor, WebhookEventSchema",
     "hmac.ts: verifyWebhookSignature",
@@ -34583,8 +34584,7 @@
     "index.ts: handler",
     "slo-budget.ts: BudgetStatus, BudgetInput, BudgetResult, budget",
     "index.ts: buildBlockedIpEmail, handler",
-    "index.ts: buildNewDeviceEmail, handler",
-    "index.ts: computeWeightedTotal"
+    "index.ts: buildNewDeviceEmail, handler"
    ],
    "docs": [
     "geo-decision.test.ts: Etapa 141: as quatro combinacoes modo x pais + os casos de borda que nao podem ficar silenciosos (modo desconhecido, lista vazia, pais ausente).",
@@ -34612,6 +34612,8 @@
     "supabase/functions/_shared/client-ip_test.ts",
     "supabase/functions/_shared/constant-time.ts",
     "supabase/functions/_shared/cors.ts",
+    "supabase/functions/_shared/digest.ts",
+    "supabase/functions/_shared/digest_test.ts",
     "supabase/functions/_shared/errors.ts",
     "supabase/functions/_shared/errors_test.ts",
     "supabase/functions/_shared/external-payload-schemas.ts",
@@ -34677,9 +34679,7 @@
     "supabase/functions/check-hold-alerts/index.ts",
     "supabase/functions/check-queue-metrics/index.ts",
     "supabase/functions/check-queue-metrics/__tests__/index.test.ts",
-    "supabase/functions/cleanup-lock-conflicts/index.test.ts",
-    "supabase/functions/cleanup-lock-conflicts/index.ts",
-    "supabase/functions/cleanup-lock-conflicts/__tests__/cron_auth_test.ts"
+    "supabase/functions/cleanup-lock-conflicts/index.test.ts"
    ]
   },
   {
@@ -50868,6 +50868,31 @@
     "value": "400"
    },
    {
+    "file": "supabase/functions/_shared/digest.ts",
+    "name": "TAMANHO_PAGINA",
+    "value": "1000"
+   },
+   {
+    "file": "supabase/functions/_shared/digest.ts",
+    "name": "LIMITE_POR_USUARIO",
+    "value": "50"
+   },
+   {
+    "file": "supabase/functions/_shared/digest.ts",
+    "name": "TAMANHO_LOTE",
+    "value": "200"
+   },
+   {
+    "file": "supabase/functions/_shared/digest.ts",
+    "name": "HORAS_DIARIO",
+    "value": "24"
+   },
+   {
+    "file": "supabase/functions/_shared/digest.ts",
+    "name": "HORAS_SEMANAL",
+    "value": "168"
+   },
+   {
     "file": "supabase/functions/_shared/errors.ts",
     "name": "GENERIC_INTERNAL_MESSAGE",
     "value": "\"Erro interno\""
@@ -57157,6 +57182,10 @@
     "line": "const sinceIso = new Date(Date.now() - 14 * 24 * 60 * 60 * 1000).toISOString();"
    },
    {
+    "file": "supabase/functions/_shared/digest.ts",
+    "line": "return new Date(agora - horas * 60 * 60 * 1000).toISOString();"
+   },
+   {
     "file": "supabase/functions/_shared/numeric-schemas.ts",
     "line": "z.number().finite().min(0).max(24 * 60 * 60 * 1000 * 365);"
    },
@@ -57199,10 +57228,6 @@
    {
     "file": "supabase/functions/health-check/index.ts",
     "line": "const since = new Date(Date.now() - 15 * 60 * 1000).toISOString();"
-   },
-   {
-    "file": "supabase/functions/process-digest/index.ts",
-    "line": "const since = new Date(Date.now() - hoursBack * 60 * 60 * 1000).toISOString();"
    },
    {
     "file": "supabase/functions/request-password-reset/index.ts",
@@ -83903,10 +83928,6 @@
    {
     "file": "supabase/functions/ldap-sync/index.ts",
     "limit": "20"
-   },
-   {
-    "file": "supabase/functions/process-digest/index.ts",
-    "limit": "50"
    },
    {
     "file": "supabase/functions/suggest-shift-swaps/index.ts",
@@ -119047,6 +119068,50 @@
    ],
    "doc": "Centralized CORS configuration for all Edge Functions Only known origins are echoed back; unknown origins get no CORS header"
   },
+  "supabase/functions/_shared/digest.ts": {
+   "path": "supabase/functions/_shared/digest.ts",
+   "lines": 116,
+   "exports": [
+    "interface UsuarioDigest",
+    "interface NotificacaoResumo",
+    "type LeitorNotificacoes",
+    "function desdeDoUsuario",
+    "interface ResultadoLeitura",
+    "function lerNotificacoesEmLote",
+    "interface ResumoDoDigest",
+    "function montarMensagem"
+   ],
+   "params": [
+    {
+     "name": "TAMANHO_PAGINA",
+     "value": "1000"
+    },
+    {
+     "name": "LIMITE_POR_USUARIO",
+     "value": "50"
+    },
+    {
+     "name": "TAMANHO_LOTE",
+     "value": "200"
+    },
+    {
+     "name": "HORAS_DIARIO",
+     "value": "24"
+    },
+    {
+     "name": "HORAS_SEMANAL",
+     "value": "168"
+    }
+   ],
+   "doc": "Leitura em lote das notificacoes do resumo (digest). Antes o resumo fazia um `select` por usuario com digest habilitado: 100 usuarios custavam 100 idas ao banco por execucao. Agora e uma leitura por lote de usuarios, com paginacao, e o recorte de cada usuario (janela dele e teto de 50) acontece em m …",
+   "temporal": [
+    "return new Date(agora - horas * 60 * 60 * 1000).toISOString();"
+   ]
+  },
+  "supabase/functions/_shared/digest_test.ts": {
+   "path": "supabase/functions/_shared/digest_test.ts",
+   "lines": 151
+  },
   "supabase/functions/_shared/errors.ts": {
    "path": "supabase/functions/_shared/errors.ts",
    "lines": 68,
@@ -123428,7 +123493,7 @@
   },
   "supabase/functions/process-digest/index.ts": {
    "path": "supabase/functions/process-digest/index.ts",
-   "lines": 109,
+   "lines": 107,
    "tables": [
     {
      "table": "notification_preferences",
@@ -123471,12 +123536,6 @@
      "value": "digest",
      "kind": "escreve"
     }
-   ],
-   "temporal": [
-    "const since = new Date(Date.now() - hoursBack * 60 * 60 * 1000).toISOString();"
-   ],
-   "pagination": [
-    "50"
    ],
    "uses_service_role": true
   },
@@ -127589,10 +127648,22 @@
   }
  },
  "git": {
-  "sha": "677c45d02d6e43dd9c69a478f204ba8676c278b5",
+  "sha": "4ad967d3d6a6d0a36b060856f83b336e86ccef23",
   "branch": "main",
   "remote": "https://github.com/adm01-debug/Hello_V3",
   "commits": [
+   {
+    "sha": "4ad967d",
+    "date": "2026-11-24",
+    "author": "adm01-debug",
+    "subject": "fix: le o resumo de notificacoes em lote em vez de por usuario (etapa 249) (#279)",
+    "files": [
+     "docs/qa/05-PROGRESSO.md",
+     "supabase/functions/_shared/digest.ts",
+     "supabase/functions/_shared/digest_test.ts",
+     "supabase/functions/process-digest/index.ts"
+    ]
+   },
    {
     "sha": "677c45d",
     "date": "2026-11-24",
@@ -128025,23 +128096,16 @@
      "src/hooks/useAuditLog.ts",
      "src/hooks/useSupervisorPanel.ts"
     ]
-   },
-   {
-    "sha": "e335d9d",
-    "date": "2026-11-24",
-    "author": "adm01-debug",
-    "subject": "feat: botao Ver Alertas abre a lista de alertas na propria tela (etapa 167) (#247)",
-    "files": [
-     "docs/qa/05-PROGRESSO.md",
-     "src/pages/RateLimitDashboard.tsx",
-     "src/pages/__tests__/RateLimitDashboard.alerts.test.tsx"
-    ]
    }
   ],
   "hot_files": [
    [
     "docs/qa/05-PROGRESSO.md",
     26
+   ],
+   [
+    "supabase/functions/process-digest/index.ts",
+    2
    ],
    [
     "supabase/functions/validate-ip/index.ts",
@@ -128084,6 +128148,14 @@
     2
    ],
    [
+    "supabase/functions/_shared/digest.ts",
+    1
+   ],
+   [
+    "supabase/functions/_shared/digest_test.ts",
+    1
+   ],
+   [
     "supabase/functions/_shared/ip-range.ts",
     1
    ],
@@ -128105,18 +128177,6 @@
    ],
    [
     "src/hooks/__tests__/useHoldReminder.coverage.test.tsx",
-    1
-   ],
-   [
-    "src/hooks/useHoldReminder.ts",
-    1
-   ],
-   [
-    "src/hooks/__tests__/useCallRecording.coverage.test.tsx",
-    1
-   ],
-   [
-    "src/hooks/__tests__/useRecordings.coverage.test.tsx",
     1
    ]
   ]

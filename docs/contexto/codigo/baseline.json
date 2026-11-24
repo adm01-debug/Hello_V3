@@ -2,11 +2,16 @@
  "aviso": "GERADO AUTOMATICAMENTE por scripts/ai-context/gerar.mjs — não editar à mão; será sobrescrito.",
  "format_version": 2,
  "git": {
-  "commit": "677c45d02d6e43dd9c69a478f204ba8676c278b5",
+  "commit": "4ad967d3d6a6d0a36b060856f83b336e86ccef23",
   "branch": "main",
-  "data_commit": "2026-11-24T07:49:34-03:00",
+  "data_commit": "2026-11-24T08:21:18-03:00",
   "remote": "https://github.com/adm01-debug/Hello_V3",
   "ultimos_commits": [
+   {
+    "sha": "4ad967d",
+    "data": "2026-11-24",
+    "assunto": "fix: le o resumo de notificacoes em lote em vez de por usuario (etapa 249) (#279)"
+   },
    {
     "sha": "677c45d",
     "data": "2026-11-24",
@@ -126,14 +131,9 @@
     "sha": "df0b30e",
     "data": "2026-11-24",
     "assunto": "fix: gravacoes cegas em hooks de dados passam a reportar erro (etapa 187) (#254)"
-   },
-   {
-    "sha": "5215414",
-    "data": "2026-11-24",
-    "assunto": "fix: edges de entrada nao devolvem 200 com escrita perdida (etapa 188) (#256)"
    }
   ],
-  "arquivos_mudados_7d": 1183,
+  "arquivos_mudados_7d": 1185,
   "pastas_mais_mudadas_30d": [
    {
     "pasta": "covout/lcov-report/hooks",
@@ -141,7 +141,7 @@
    },
    {
     "pasta": "docs/qa/05-PROGRESSO.md",
-    "mudancas": 102
+    "mudancas": 103
    },
    {
     "pasta": "src/hooks/__tests__",
@@ -157,7 +157,7 @@
    },
    {
     "pasta": "supabase/functions/_shared",
-    "mudancas": 37
+    "mudancas": 39
    },
    {
     "pasta": "src/lib/__tests__",
@@ -199,7 +199,7 @@
   "arquivos_mais_mudados_90d": [
    {
     "arquivo": "docs/qa/05-PROGRESSO.md",
-    "mudancas": 102
+    "mudancas": 103
    },
    {
     "arquivo": "docs/estado/funcionalidades-planejadas.md",
@@ -301,7 +301,7 @@
   "autores_30d": [
    {
     "autor": "adm01-debug",
-    "commits": 256
+    "commits": 257
    },
    {
     "autor": "Joaquim Ataides",
@@ -314,9 +314,9 @@
   ]
  },
  "contagens": {
-  "arquivos_total": 1740,
-  "arquivos_codigo": 1337,
-  "linhas_codigo": 180772,
+  "arquivos_total": 1742,
+  "arquivos_codigo": 1339,
+  "linhas_codigo": 181037,
   "rotas": 106,
   "rotas_http_backend": 12,
   "vistas_por_id": 0,
@@ -519,8 +519,8 @@
    "linhas": 170
   },
   "supabase/functions": {
-   "arquivos": 210,
-   "linhas": 23531
+   "arquivos": 212,
+   "linhas": 23796
   },
   "tailwind.config.ts": {
    "arquivos": 1,

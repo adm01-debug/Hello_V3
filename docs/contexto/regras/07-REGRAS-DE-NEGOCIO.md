@@ -1,6 +1,6 @@
 # 07 · REGRAS DE NEGÓCIO
 
-> Gerado automaticamente por AI Context Sync v1.3.2 · commit `677c45d02d` · branch `main` · 2026-11-24 10:50 UTC
+> Gerado automaticamente por AI Context Sync v1.3.2 · commit `4ad967d3d6` · branch `main` · 2026-11-24 11:21 UTC
 > Não edite à mão — regras humanas vão em `manual/`.
 
 ## A. Regras escritas por humanos (`manual/` — prioridade máxima, nunca sobrescrito)
@@ -1976,6 +1976,11 @@ _nenhum item encontrado_
 | `ID_MAX` | `100` | `supabase/functions/_shared/ai-body-schemas.ts` |
 | `MINUTE_MS` | `60` | `supabase/functions/_shared/business-hours.ts` |
 | `MAX_ITERATIONS` | `400` | `supabase/functions/_shared/business-hours.ts` |
+| `TAMANHO_PAGINA` | `1000` | `supabase/functions/_shared/digest.ts` |
+| `LIMITE_POR_USUARIO` | `50` | `supabase/functions/_shared/digest.ts` |
+| `TAMANHO_LOTE` | `200` | `supabase/functions/_shared/digest.ts` |
+| `HORAS_DIARIO` | `24` | `supabase/functions/_shared/digest.ts` |
+| `HORAS_SEMANAL` | `168` | `supabase/functions/_shared/digest.ts` |
 | `GENERIC_INTERNAL_MESSAGE` | `"Erro interno"` | `supabase/functions/_shared/errors.ts` |
 | `IPV4_BYTES` | `4` | `supabase/functions/_shared/ip-range.ts` |
 | `IPV6_BYTES` | `16` | `supabase/functions/_shared/ip-range.ts` |
@@ -2120,6 +2125,7 @@ _nenhum item encontrado_
 | `setTimeout(() => setCopiedId(null), 2000);` | `src/pages/VideoConference.tsx` |
 | `sinceIso: new Date(Date.now() - 30 * 24 * 60 * 60 * 1000).toISOString(),` | `src/pages/admin/SecurityAlerts.tsx` |
 | `const sinceIso = new Date(Date.now() - 14 * 24 * 60 * 60 * 1000).toISOString();` | `src/pages/admin/SecurityAuditDashboard.tsx` |
+| `return new Date(agora - horas * 60 * 60 * 1000).toISOString();` | `supabase/functions/_shared/digest.ts` |
 | `z.number().finite().min(0).max(24 * 60 * 60 * 1000 * 365);` | `supabase/functions/_shared/numeric-schemas.ts` |
 | `const fifteenMinutesAgo = new Date(Date.now() - 15 * 60 * 1000).toISOString();` | `supabase/functions/check-goals/index.ts` |
 | `const oneHourAgo = new Date(Date.now() - 60 * 60 * 1000).toISOString();` | `supabase/functions/check-goals/index.ts` |
@@ -2131,7 +2137,6 @@ _nenhum item encontrado_
 | `const since = new Date(Date.now() - WINDOW_DAYS * 24 * 60 * 60 * 1000).toISOString();` | `supabase/functions/generate-coaching-track/index.ts` |
 | `const dueAt = new Date(now.getTime() + 7 * 24 * 60 * 60 * 1000).toISOString();` | `supabase/functions/generate-coaching-track/track-engine.ts` |
 | `const since = new Date(Date.now() - 15 * 60 * 1000).toISOString();` | `supabase/functions/health-check/index.ts` |
-| `const since = new Date(Date.now() - hoursBack * 60 * 60 * 1000).toISOString();` | `supabase/functions/process-digest/index.ts` |
 | `expires_at: new Date(Date.now() + 24 * 60 * 60 * 1000).toISOString()` | `supabase/functions/request-password-reset/index.ts` |
 | `const EFFECTIVENESS_WINDOW_MS = 2 * 60 * 60 * 1000; // 2h` | `supabase/functions/voip-recommendation-insights/index.ts` |
 | `const timeout = setTimeout(() => ctrl.abort(), 4000);` | `supabase/functions/voip-trunks-healthcheck/index.ts` |
@@ -2260,7 +2265,6 @@ _nenhum item encontrado_
 | 2000 | `supabase/functions/generate-coaching-track/index.ts` |
 | 1 | `supabase/functions/health-check/index.ts` |
 | 20 | `supabase/functions/ldap-sync/index.ts` |
-| 50 | `supabase/functions/process-digest/index.ts` |
 | 500 | `supabase/functions/suggest-shift-swaps/index.ts` |
 | 10 | `supabase/functions/sync-crm-queue/index.ts` |
 | 1 | `supabase/functions/validate-geo/index.ts` |
