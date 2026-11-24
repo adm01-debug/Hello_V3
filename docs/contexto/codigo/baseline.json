@@ -2,11 +2,16 @@
  "aviso": "GERADO AUTOMATICAMENTE por scripts/ai-context/gerar.mjs — não editar à mão; será sobrescrito.",
  "format_version": 2,
  "git": {
-  "commit": "608aa86b885be4d184e21de9e0e55c68dc915b63",
+  "commit": "43eafa2a2ed352c9e96c115b502d60d7b4cd1224",
   "branch": "main",
-  "data_commit": "2026-11-24T04:48:55-03:00",
+  "data_commit": "2026-11-24T04:53:17-03:00",
   "remote": "https://github.com/adm01-debug/Hello_V3",
   "ultimos_commits": [
+   {
+    "sha": "43eafa2",
+    "data": "2026-11-24",
+    "assunto": "fix: prazo de resposta nas edges de e-mail e integracao (etapa 210) (#264)"
+   },
    {
     "sha": "608aa86",
     "data": "2026-11-24",
@@ -126,11 +131,6 @@
     "sha": "e78a64b",
     "data": "2026-11-24",
     "assunto": "fix: valida o corpo nas 18 edges de calculo e exportacao (etapa 049) (#235)"
-   },
-   {
-    "sha": "0bba9fb",
-    "data": "2026-11-24",
-    "assunto": "fix: teto de tamanho e validacao de corpo nas 12 edges de IA e transcricao (#234)"
    }
   ],
   "arquivos_mudados_7d": 1129,
@@ -141,7 +141,7 @@
    },
    {
     "pasta": "docs/qa/05-PROGRESSO.md",
-    "mudancas": 84
+    "mudancas": 85
    },
    {
     "pasta": "src/hooks/__tests__",
@@ -199,7 +199,7 @@
   "arquivos_mais_mudados_90d": [
    {
     "arquivo": "docs/qa/05-PROGRESSO.md",
-    "mudancas": 84
+    "mudancas": 85
    },
    {
     "arquivo": "docs/estado/funcionalidades-planejadas.md",
@@ -250,6 +250,10 @@
     "mudancas": 6
    },
    {
+    "arquivo": "supabase/functions/teams-fetch-recordings/index.ts",
+    "mudancas": 6
+   },
+   {
     "arquivo": "supabase/functions/voip-load-test/index.ts",
     "mudancas": 6
    },
@@ -292,16 +296,12 @@
    {
     "arquivo": "supabase/functions/health-check/index.ts",
     "mudancas": 5
-   },
-   {
-    "arquivo": "supabase/functions/request-password-reset/index.ts",
-    "mudancas": 5
    }
   ],
   "autores_30d": [
    {
     "autor": "adm01-debug",
-    "commits": 237
+    "commits": 238
    },
    {
     "autor": "Joaquim Ataides",
@@ -316,7 +316,7 @@
  "contagens": {
   "arquivos_total": 1733,
   "arquivos_codigo": 1330,
-  "linhas_codigo": 179316,
+  "linhas_codigo": 179329,
   "rotas": 106,
   "rotas_http_backend": 12,
   "vistas_por_id": 0,
@@ -520,7 +520,7 @@
   },
   "supabase/functions": {
    "arquivos": 206,
-   "linhas": 23075
+   "linhas": 23088
   },
   "tailwind.config.ts": {
    "arquivos": 1,
@@ -670,7 +670,7 @@
   },
   {
    "arquivo": "supabase/functions/ocr-virtual-fax/index.ts",
-   "linha": 69,
+   "linha": 70,
    "tipo": "TODO",
    "texto": "o texto do documento fornecido em português. Preserve quebras de linha. Sem comentários.' },"
   },

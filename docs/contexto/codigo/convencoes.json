@@ -58,11 +58,11 @@
  "commits": {
   "convencao": "conventional commits (observado)",
   "exemplos": [
+   "fix: prazo de resposta nas edges de e-mail e integracao (etapa 210) (#264)",
    "fix: consultas cegas restantes e estado de erro padronizado (etapas 201-202) (#263)",
    "docs: etapas 191-193 verificadas (ja corrigidas por #180 e #170) (#261)",
    "fix: edges de infra registram falha de gravacao em vez de ignora-la (etapa 188) (#257)",
-   "fix: update de conversa sem linhas afetadas deixa de passar como sucesso (etapa 184) (#251)",
-   "fix: gravacoes cegas em hooks de dados passam a reportar erro (etapa 187) (#254)"
+   "fix: update de conversa sem linhas afetadas deixa de passar como sucesso (etapa 184) (#251)"
   ]
  },
  "pr_template": null,

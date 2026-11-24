@@ -1092,7 +1092,7 @@
    "nome": "elevenlabs-conversation-token",
    "entrada": "supabase/functions/elevenlabs-conversation-token/index.ts",
    "arquivos": 1,
-   "linhas": 92,
+   "linhas": 94,
    "verify_jwt": true,
    "metodos": [
     "OPTIONS"
@@ -1113,6 +1113,7 @@
    "usa_shared": [
     "cors.ts",
     "numeric-body-schemas.ts",
+    "resilience.ts",
     "validator.ts"
    ],
    "chamada_pelo_front": [
@@ -1763,7 +1764,7 @@
    "nome": "notify-blocked-ip",
    "entrada": "supabase/functions/notify-blocked-ip/index.ts",
    "arquivos": 1,
-   "linhas": 148,
+   "linhas": 152,
    "verify_jwt": true,
    "metodos": [
     "OPTIONS"
@@ -1786,6 +1787,7 @@
     "errors.ts",
     "html.ts",
     "rate-limit.ts",
+    "resilience.ts",
     "validate.ts",
     "validator.ts"
    ],
@@ -1801,7 +1803,7 @@
    "nome": "notify-new-device",
    "entrada": "supabase/functions/notify-new-device/index.ts",
    "arquivos": 1,
-   "linhas": 171,
+   "linhas": 175,
    "verify_jwt": true,
    "metodos": [
     "OPTIONS"
@@ -1823,6 +1825,7 @@
     "errors.ts",
     "html.ts",
     "rate-limit.ts",
+    "resilience.ts",
     "validate.ts",
     "validator.ts"
    ],
@@ -1838,7 +1841,7 @@
    "nome": "ocr-virtual-fax",
    "entrada": "supabase/functions/ocr-virtual-fax/index.ts",
    "arquivos": 1,
-   "linhas": 104,
+   "linhas": 105,
    "verify_jwt": true,
    "metodos": [
     "OPTIONS"
@@ -1864,6 +1867,7 @@
     "ai-body-schemas.ts",
     "cors.ts",
     "errors.ts",
+    "resilience.ts",
     "validator.ts"
    ],
    "chamada_pelo_front": [
@@ -2376,7 +2380,7 @@
    "nome": "teams-fetch-recordings",
    "entrada": "supabase/functions/teams-fetch-recordings/index.ts",
    "arquivos": 1,
-   "linhas": 189,
+   "linhas": 191,
    "verify_jwt": true,
    "metodos": [
     "OPTIONS"
@@ -2401,7 +2405,8 @@
    ],
    "usa_shared": [
     "cors.ts",
-    "errors.ts"
+    "errors.ts",
+    "resilience.ts"
    ],
    "chamada_pelo_front": [
     "src/pages/ExternalRecordingsImport.tsx"

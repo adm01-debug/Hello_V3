@@ -1,6 +1,6 @@
 # 07 · REGRAS DE NEGÓCIO
 
-> Gerado automaticamente por AI Context Sync v1.3.2 · commit `608aa86b88` · branch `main` · 2026-11-24 07:49 UTC
+> Gerado automaticamente por AI Context Sync v1.3.2 · commit `43eafa2a2e` · branch `main` · 2026-11-24 07:53 UTC
 > Não edite à mão — regras humanas vão em `manual/`.
 
 ## A. Regras escritas por humanos (`manual/` — prioridade máxima, nunca sobrescrito)
@@ -1985,6 +1985,8 @@ _nenhum item encontrado_
 | `DEFAULT_MIN_SAMPLES` | `10` | `supabase/functions/health-check/slo-budget.ts` |
 | `MAX_ENTRIES` | `5000` | `supabase/functions/ldap-sync/index.ts` |
 | `LDAP_TIMEOUT_MS` | `15000` | `supabase/functions/ldap-sync/index.ts` |
+| `PRAZO_EMAIL_MS` | `8` | `supabase/functions/notify-blocked-ip/index.ts` |
+| `PRAZO_EMAIL_MS` | `8` | `supabase/functions/notify-new-device/index.ts` |
 | `MAX_FAX_BYTES` | `20` | `supabase/functions/ocr-virtual-fax/index.ts` |
 | `MAX_AUDIO_BYTES` | `25` | `supabase/functions/transcribe-recording/index.ts` |
 | `CONCURRENT_CAP` | `3` | `supabase/functions/voip-capacity-forecast/index.ts` |

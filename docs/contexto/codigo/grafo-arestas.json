@@ -4880,6 +4880,7 @@
   "supabase/functions/elevenlabs-conversation-token/index.ts": [
    "supabase/functions/_shared/cors.ts",
    "supabase/functions/_shared/numeric-body-schemas.ts",
+   "supabase/functions/_shared/resilience.ts",
    "supabase/functions/_shared/validator.ts"
   ],
   "supabase/functions/email-inbound/index.ts": [
@@ -4995,6 +4996,7 @@
    "supabase/functions/_shared/errors.ts",
    "supabase/functions/_shared/html.ts",
    "supabase/functions/_shared/rate-limit.ts",
+   "supabase/functions/_shared/resilience.ts",
    "supabase/functions/_shared/validate.ts",
    "supabase/functions/_shared/validator.ts"
   ],
@@ -5004,6 +5006,7 @@
    "supabase/functions/_shared/errors.ts",
    "supabase/functions/_shared/html.ts",
    "supabase/functions/_shared/rate-limit.ts",
+   "supabase/functions/_shared/resilience.ts",
    "supabase/functions/_shared/validate.ts",
    "supabase/functions/_shared/validator.ts"
   ],
@@ -5011,6 +5014,7 @@
    "supabase/functions/_shared/ai-body-schemas.ts",
    "supabase/functions/_shared/cors.ts",
    "supabase/functions/_shared/errors.ts",
+   "supabase/functions/_shared/resilience.ts",
    "supabase/functions/_shared/validator.ts"
   ],
   "supabase/functions/process-digest/index.ts": [
@@ -5085,7 +5089,8 @@
   ],
   "supabase/functions/teams-fetch-recordings/index.ts": [
    "supabase/functions/_shared/cors.ts",
-   "supabase/functions/_shared/errors.ts"
+   "supabase/functions/_shared/errors.ts",
+   "supabase/functions/_shared/resilience.ts"
   ],
   "supabase/functions/transcribe-recording/index.ts": [
    "supabase/functions/_shared/ai-body-schemas.ts",

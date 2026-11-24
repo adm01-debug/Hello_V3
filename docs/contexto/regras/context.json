@@ -1,15 +1,15 @@
 {
  "meta": {
-  "sha": "608aa86b885be4d184e21de9e0e55c68dc915b63",
+  "sha": "43eafa2a2ed352c9e96c115b502d60d7b4cd1224",
   "branch": "main",
   "remote": "https://github.com/adm01-debug/Hello_V3",
-  "generated_at": "2026-11-24 07:49 UTC",
+  "generated_at": "2026-11-24 07:53 UTC",
   "files_total": 1780,
   "code_files": 1576,
-  "code_lines": 195328
+  "code_lines": 195341
  },
  "version": "1.3.2",
- "facts_hash": "ffe7c9d89a74b448",
+ "facts_hash": "42713b029c40b6f9",
  "stack": {
   "frameworks": [
    "React + Vite",
@@ -30147,9 +30147,7 @@
      "SUPABASE_ANON_KEY",
      "SUPABASE_URL"
     ],
-    "external": [
-     "https://api.elevenlabs.io/v1/convai/conversation/…"
-    ],
+    "external": [],
     "invokes": [],
     "doc": "",
     "errors": [],
@@ -30615,9 +30613,7 @@
      "FROM_EMAIL",
      "RESEND_API_KEY"
     ],
-    "external": [
-     "https://api.resend.com/emails"
-    ],
+    "external": [],
     "invokes": [],
     "doc": "",
     "errors": [],
@@ -30642,9 +30638,7 @@
      "FROM_EMAIL",
      "RESEND_API_KEY"
     ],
-    "external": [
-     "https://api.resend.com/emails"
-    ],
+    "external": [],
     "invokes": [],
     "doc": "",
     "errors": [],
@@ -30671,9 +30665,7 @@
      "SUPABASE_SERVICE_ROLE_KEY",
      "SUPABASE_URL"
     ],
-    "external": [
-     "https://openrouter.ai/api/v1/chat/…"
-    ],
+    "external": [],
     "invokes": [],
     "doc": "",
     "errors": [
@@ -31067,9 +31059,7 @@
      "SUPABASE_SERVICE_ROLE_KEY",
      "SUPABASE_URL"
     ],
-    "external": [
-     "https://login.microsoftonline.com/${tenant}/oauth2/v2.0/…"
-    ],
+    "external": [],
     "invokes": [],
     "doc": "",
     "errors": [
@@ -34309,7 +34299,7 @@
   {
    "module": "supabase/functions",
    "files": 206,
-   "lines": 23075,
+   "lines": 23088,
    "tables": [
     "account_lockouts",
     "accounts",
@@ -38558,7 +38548,6 @@
     "supabase/functions/validate-geo/index.ts"
    ],
    "https://api.elevenlabs.io": [
-    "supabase/functions/elevenlabs-conversation-token/index.ts",
     "supabase/functions/voice-transcribe/index.ts"
    ],
    "https://api.ipify.org": [
@@ -38568,9 +38557,7 @@
     "src/components/auth/PasswordStrength.tsx"
    ],
    "https://api.resend.com": [
-    "scripts/ai-context/gerar.unit.mjs",
-    "supabase/functions/notify-blocked-ip/index.ts",
-    "supabase/functions/notify-new-device/index.ts"
+    "scripts/ai-context/gerar.unit.mjs"
    ],
    "https://api.x.com": [
     "scripts/ai-context/cenarios.mjs"
@@ -38580,13 +38567,9 @@
     "src/hooks/useSessionManager.ts",
     "src/pages/Login.tsx"
    ],
-   "https://login.microsoftonline.com": [
-    "supabase/functions/teams-fetch-recordings/index.ts"
-   ],
    "https://openrouter.ai": [
     "supabase/functions/analyze-contact-profile/index.ts",
-    "supabase/functions/analyze-live-utterance/index.ts",
-    "supabase/functions/ocr-virtual-fax/index.ts"
+    "supabase/functions/analyze-live-utterance/index.ts"
    ]
   },
   "dynamic_from": [
@@ -50640,6 +50623,16 @@
     "file": "supabase/functions/ldap-sync/index.ts",
     "name": "LDAP_TIMEOUT_MS",
     "value": "15000"
+   },
+   {
+    "file": "supabase/functions/notify-blocked-ip/index.ts",
+    "name": "PRAZO_EMAIL_MS",
+    "value": "8"
+   },
+   {
+    "file": "supabase/functions/notify-new-device/index.ts",
+    "name": "PRAZO_EMAIL_MS",
+    "value": "8"
    },
    {
     "file": "supabase/functions/ocr-virtual-fax/index.ts",
@@ -121101,10 +121094,7 @@
   },
   "supabase/functions/elevenlabs-conversation-token/index.ts": {
    "path": "supabase/functions/elevenlabs-conversation-token/index.ts",
-   "lines": 92,
-   "external_urls": [
-    "https://api.elevenlabs.io/v1/convai/conversation/…"
-   ],
+   "lines": 94,
    "env": [
     "ELEVENLABS_AGENT_ID",
     "ELEVENLABS_API_KEY",
@@ -122602,18 +122592,21 @@
   },
   "supabase/functions/notify-blocked-ip/index.ts": {
    "path": "supabase/functions/notify-blocked-ip/index.ts",
-   "lines": 148,
+   "lines": 152,
    "exports": [
     "function buildBlockedIpEmail",
     "function handler"
-   ],
-   "external_urls": [
-    "https://api.resend.com/emails"
    ],
    "env": [
     "ADMIN_EMAIL",
     "FROM_EMAIL",
     "RESEND_API_KEY"
+   ],
+   "params": [
+    {
+     "name": "PRAZO_EMAIL_MS",
+     "value": "8"
+    }
    ],
    "side_effects": [
     "notify"
@@ -122635,17 +122628,20 @@
   },
   "supabase/functions/notify-new-device/index.ts": {
    "path": "supabase/functions/notify-new-device/index.ts",
-   "lines": 171,
+   "lines": 175,
    "exports": [
     "function buildNewDeviceEmail",
     "function handler"
    ],
-   "external_urls": [
-    "https://api.resend.com/emails"
-   ],
    "env": [
     "FROM_EMAIL",
     "RESEND_API_KEY"
+   ],
+   "params": [
+    {
+     "name": "PRAZO_EMAIL_MS",
+     "value": "8"
+    }
    ],
    "side_effects": [
     "notify"
@@ -122668,7 +122664,7 @@
   },
   "supabase/functions/ocr-virtual-fax/index.ts": {
    "path": "supabase/functions/ocr-virtual-fax/index.ts",
-   "lines": 104,
+   "lines": 105,
    "tables": [
     {
      "table": "virtual_fax",
@@ -122688,9 +122684,6 @@
    },
    "storage": [
     "virtual-fax-docs"
-   ],
-   "external_urls": [
-    "https://openrouter.ai/api/v1/chat/…"
    ],
    "env": [
     "OPENROUTER_API_KEY",
@@ -123446,15 +123439,12 @@
   },
   "supabase/functions/teams-fetch-recordings/index.ts": {
    "path": "supabase/functions/teams-fetch-recordings/index.ts",
-   "lines": 189,
+   "lines": 191,
    "tables": [
     {
      "table": "call_recordings",
      "op": "insert"
     }
-   ],
-   "external_urls": [
-    "https://login.microsoftonline.com/${tenant}/oauth2/v2.0/…"
    ],
    "env": [
     "MS_CLIENT_ID",
@@ -126867,10 +126857,24 @@
   }
  },
  "git": {
-  "sha": "608aa86b885be4d184e21de9e0e55c68dc915b63",
+  "sha": "43eafa2a2ed352c9e96c115b502d60d7b4cd1224",
   "branch": "main",
   "remote": "https://github.com/adm01-debug/Hello_V3",
   "commits": [
+   {
+    "sha": "43eafa2",
+    "date": "2026-11-24",
+    "author": "adm01-debug",
+    "subject": "fix: prazo de resposta nas edges de e-mail e integracao (etapa 210) (#264)",
+    "files": [
+     "docs/qa/05-PROGRESSO.md",
+     "supabase/functions/elevenlabs-conversation-token/index.ts",
+     "supabase/functions/notify-blocked-ip/index.ts",
+     "supabase/functions/notify-new-device/index.ts",
+     "supabase/functions/ocr-virtual-fax/index.ts",
+     "supabase/functions/teams-fetch-recordings/index.ts"
+    ]
+   },
    {
     "sha": "608aa86",
     "date": "2026-11-24",
@@ -127310,18 +127314,6 @@
      "supabase/functions/translate-utterance/index.ts",
      "supabase/functions/voip-quality-alerts-summary/index.ts"
     ]
-   },
-   {
-    "sha": "ea6b0f0",
-    "date": "2026-11-24",
-    "author": "adm01-debug",
-    "subject": "fix: checar erro nas escritas do discador e parar a campanha quando o claim falha (etapa 080) (#229)",
-    "files": [
-     "docs/qa/05-PROGRESSO.md",
-     "src/hooks/__tests__/usePredictiveDialer.coverage.test.tsx",
-     "src/hooks/predictive-dialer/api.ts",
-     "src/hooks/usePredictiveDialer.ts"
-    ]
    }
   ],
   "hot_files": [
@@ -127332,6 +127324,14 @@
    [
     "supabase/functions/data-lake-flush/index.ts",
     4
+   ],
+   [
+    "supabase/functions/ocr-virtual-fax/index.ts",
+    3
+   ],
+   [
+    "supabase/functions/teams-fetch-recordings/index.ts",
+    3
    ],
    [
     "supabase/functions/sync-crm-queue/index.ts",
@@ -127348,6 +127348,18 @@
    [
     "supabase/functions/approve-password-reset/index.ts",
     3
+   ],
+   [
+    "supabase/functions/elevenlabs-conversation-token/index.ts",
+    2
+   ],
+   [
+    "supabase/functions/notify-blocked-ip/index.ts",
+    2
+   ],
+   [
+    "supabase/functions/notify-new-device/index.ts",
+    2
    ],
    [
     "supabase/functions/enforce-sla/index.ts",
@@ -127383,26 +127395,6 @@
    ],
    [
     "supabase/functions/generate-coaching-track/index.ts",
-    2
-   ],
-   [
-    "src/hooks/__tests__/usePredictiveDialer.coverage.test.tsx",
-    2
-   ],
-   [
-    "src/hooks/usePredictiveDialer.ts",
-    2
-   ],
-   [
-    "supabase/functions/check-calling-hours/index.ts",
-    2
-   ],
-   [
-    "supabase/functions/check-dnc/index.ts",
-    2
-   ],
-   [
-    "supabase/functions/export-data-lake/index.ts",
     2
    ]
   ]
