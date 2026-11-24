@@ -1,6 +1,6 @@
 # 11 · GLOSSÁRIO, DADOS DE REFERÊNCIA E LACUNAS
 
-> Gerado automaticamente por AI Context Sync v1.3.2 · commit `c1e7859369` · branch `main` · 2026-11-24 00:47 UTC
+> Gerado automaticamente por AI Context Sync v1.3.2 · commit `9add2c18a3` · branch `main` · 2026-11-24 00:58 UTC
 > Não edite à mão — regras humanas vão em `manual/`.
 
 ## Glossário do domínio (entidades do sistema)
@@ -245,6 +245,7 @@
 | `OVERFLOW_ACTIONS` (TS) | 'voicemail', 'transfer_queue', 'callback', 'hangup', |  | `src/lib/call-queue.ts` |
 | `SupportedLang` (TS) | pt \| en \| es \| fr \| it \| de \| ja \| zh |  | `src/lib/language-detection.ts` |
 | `Recommendation` (TS) | block \| defer \| low_priority \| normal \| high_priority |  | `src/lib/outbound-scoring.ts` |
+| `EndedCallStatus` (TS) | completed \| missed \| abandoned |  | `src/lib/pendingCallWrites.ts` |
 | `AUDIO_PROMPT_KINDS` (TS) | 'moh', 'greeting', 'position', 'hold_time', 'overflow', 'off_hours', |  | `src/lib/queue-audio.ts` |
 | `ALLOWED_AUDIO_MIME_TYPES` (TS) | 'audio/mpeg', 'audio/mp3', 'audio/wav', 'audio/x-wav', 'audio/ogg', 'audio/webm', 'audio/aac', 'audio/mp4', |  | `src/lib/queue-audio.ts` |
 | `RING_STRATEGIES` (TS) | 'ringall', 'sequential', 'roundrobin', 'random' |  | `src/lib/ring-group.ts` |

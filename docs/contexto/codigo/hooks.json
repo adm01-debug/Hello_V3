@@ -1426,7 +1426,7 @@
    "hooks_exportados": [
     "useCallSession"
    ],
-   "linhas": 244,
+   "linhas": 245,
    "dominio": "hooks",
    "tabelas": [
     "call_analyses",
@@ -2884,7 +2884,7 @@
    "hooks_exportados": [
     "useMultiChannelCall"
    ],
-   "linhas": 332,
+   "linhas": 334,
    "dominio": "hooks",
    "tabelas": [
     "hold_events"

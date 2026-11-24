@@ -1400,6 +1400,7 @@
    "arquivo": "src/lib/pendingCallWrites.ts",
    "camada": "lib",
    "exports": [
+    "EndedCallStatus",
     "PendingCallWrite",
     "clear",
     "count",
@@ -1407,7 +1408,7 @@
     "enqueue"
    ],
    "export_default": null,
-   "linhas": 64,
+   "linhas": 68,
    "tabelas": [],
    "rpcs": [],
    "edges": [],

@@ -584,11 +584,11 @@
   {
    "arquivo": "src/hooks/__tests__/useCallSession.coverage.test.tsx",
    "tipo": "unit",
-   "linhas": 167,
+   "linhas": 189,
    "testa": [
     "src/hooks/useCallSession.ts"
    ],
-   "casos": 10
+   "casos": 12
   },
   {
    "arquivo": "src/hooks/__tests__/useCallSession.test.ts",

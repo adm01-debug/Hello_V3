@@ -1,7 +1,7 @@
 # Contexto do projeto para agentes de IA
 
 GERADO AUTOMATICAMENTE por scripts/ai-context/gerar.mjs — não editar à mão; será sobrescrito.
-Publicado em `docs/contexto/codigo/` na branch `contexto` (gerada, nunca abra PR dela) a cada push em `main` e a cada 10 minutos pelo workflow `contexto.yml`; índice único das três fontes em `docs/contexto/00-INDEX.md`. Gere local com `node scripts/ai-context/gerar.mjs`. Commit-base: `c1e7859369532d89263d194e4287ea4682332ce1` (2026-11-23T21:45:30-03:00).
+Publicado em `docs/contexto/codigo/` na branch `contexto` (gerada, nunca abra PR dela) a cada push em `main` e a cada 10 minutos pelo workflow `contexto.yml`; índice único das três fontes em `docs/contexto/00-INDEX.md`. Gere local com `node scripts/ai-context/gerar.mjs`. Commit-base: `9add2c18a3f672efb3ef70e568ff9936f4268ac6` (2026-11-23T21:57:09-03:00).
 
 ## Como usar (leia antes de planejar ou executar qualquer tarefa)
 1. **Tela/rota/menu** → `rotas.json` (url/vista/menu → arquivo → hooks → tabelas → edges; `rotas_http_backend` para APIs) e `modulos.json` (módulo inteiro + dependências entre módulos).
@@ -36,7 +36,7 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 |---|---|
 | arquivos_total | 1686 |
 | arquivos_codigo | 1284 |
-| linhas_codigo | 174027 |
+| linhas_codigo | 174056 |
 | rotas | 106 |
 | rotas_http_backend | 12 |
 | vistas_por_id | 0 |
@@ -370,22 +370,22 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 - possiveis_segredos_no_codigo: 4 — ex.: scripts/ai-context/cenarios.mjs:103, src/lib/__tests__/security-advanced.test.ts:203, src/lib/__tests__/security-advanced.test.ts:208
 
 ## Grafo de código (graphify)
-- 9932 nós · 25536 arestas · 766 comunidades · grafo do commit `c1e78593`
-- comunidades maiores: lucide-react (248), usePageTitle (173), react (168), traceHeaders (161), cn (160), client.ts (151), vitest (129), ref_https (123), safeFormatDistanceToNow (115), badge.tsx (108), useAuthContext (106), validate.ts (104)
+- 9933 nós · 25538 arestas · 751 comunidades · grafo do commit `9add2c18`
+- comunidades maiores: react (198), badge.tsx (193), client.ts (184), traceHeaders (168), card.tsx (163), vitest (132), utils.ts (126), safe-date.ts (121), @tanstack/react-query (116), ref_https (116), cn (113), Tabela de funcionalidades (105)
 - símbolos mais chamados: cn() (src/lib/utils.ts), usePageTitle() (src/hooks/usePageTitle.ts), safeFormatDatePtBR() (src/lib/safe-date.ts), q() (scripts/supabase_snapshot/snapshot.py), safeFormatDistanceToNow() (src/lib/safe-date.ts), useAuthContext() (src/contexts/AuthContext.tsx), traceHeaders() (src/lib/tracing.ts), withTrace() (src/lib/tracing.ts), formatDuration() (src/lib/utils.ts), safeToLocaleString() (src/lib/safe-date.ts), .collect() (scripts/supabase_snapshot/test_snapshot.py), buildCorsHeaders() (supabase/functions/_shared/cors.ts)
 - consulta local: `graphify query "<pergunta>"`, `graphify path "<A>" "<B>"`, `graphify explain "<X>"`
 
 ## Hotspots (arquivos mais alterados, 90 dias)
-- docs/qa/05-PROGRESSO.md (35)
+- docs/qa/05-PROGRESSO.md (36)
 - docs/estado/funcionalidades-planejadas.md (27)
 - src/components/layout/AppSidebar.tsx (9)
 - docs/audits/pendencias-2026-07.md (8)
 - .github/workflows/ci.yml (7)
 - docs/edge-functions/README.md (7)
+- src/hooks/useMultiChannelCall.ts (7)
 - .github/workflows/contexto.yml (6)
 - src/components/calls/UnifiedSoftphone.tsx (6)
 - src/components/layout/CommandPalette.tsx (6)
-- src/hooks/useMultiChannelCall.ts (6)
 - deno.lock (5)
 - docs/prod-readiness.md (5)
 - inventario/estado/edges.json (5)
@@ -429,6 +429,7 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 
 
 ## Últimos commits
+- 2026-11-23 `9add2c1` fix: grava o desfecho real da chamada em call_sessions (#205)
 - 2026-11-23 `c1e7859` feat: modulo unico de metricas de fila (serviceLevel, abandono, espera) (#204)
 - 2026-11-23 `6f3a7bf` feat: discador preditivo passa pela barreira de DNC e horario legal (#203)
 - 2026-11-23 `5eb9695` feat: barreira de DNC e horario legal dentro de initiateCall (#202)
@@ -443,7 +444,6 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 - 2026-11-23 `ed1d324` chore: remove xlsx, dependencia sem uso e com duas falhas altas sem correcao (E045) (#193)
 - 2026-11-23 `22cb928` fix: request-password-reset responde o mesmo corpo nos quatro caminhos (E031) (#192)
 - 2026-11-23 `a5e32de` fix: chatbot-respond amarra visitor_token a conversa e exige sessao da equipe (E007) (#191)
-- 2026-11-23 `32923f9` fix: embed-kb-article exige papel de staff, valida corpo e limita tamanho (E008) (#190)
 
 ## Arquivos deste diretório
 - `docs/contexto/codigo/rotas.json`

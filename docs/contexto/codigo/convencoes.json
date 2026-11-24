@@ -58,11 +58,11 @@
  "commits": {
   "convencao": "conventional commits (observado)",
   "exemplos": [
+   "fix: grava o desfecho real da chamada em call_sessions (#205)",
    "feat: modulo unico de metricas de fila (serviceLevel, abandono, espera) (#204)",
    "feat: discador preditivo passa pela barreira de DNC e horario legal (#203)",
    "feat: barreira de DNC e horario legal dentro de initiateCall (#202)",
-   "fix: webauthn-authenticate valida o contador do autenticador e ganha rate limit (#201)",
-   "fix: whatsapp-inbound deixa de concatenar telefone no filtro do PostgREST (#198)"
+   "fix: webauthn-authenticate valida o contador do autenticador e ganha rate limit (#201)"
   ]
  },
  "pr_template": null,

@@ -1,6 +1,6 @@
 # 07 · REGRAS DE NEGÓCIO
 
-> Gerado automaticamente por AI Context Sync v1.3.2 · commit `c1e7859369` · branch `main` · 2026-11-24 00:47 UTC
+> Gerado automaticamente por AI Context Sync v1.3.2 · commit `9add2c18a3` · branch `main` · 2026-11-24 00:58 UTC
 > Não edite à mão — regras humanas vão em `manual/`.
 
 ## A. Regras escritas por humanos (`manual/` — prioridade máxima, nunca sobrescrito)
@@ -856,7 +856,7 @@ _nenhum mapa explícito encontrado — transições só existem implicitamente n
 | `status` | `calling` | compara, escreve | `src/components/calls/SipConnectionStatus.tsx`<br>`src/hooks/useSipCall.ts`<br>`src/hooks/useWavoipCall.ts` |
 | `status` | `cancelled` | escreve | `src/hooks/useScheduledCallbacks.ts` |
 | `status` | `checking` | compara, escreve | `src/components/network/NetworkStatusIndicator.tsx`<br>`src/components/observability/HealthTab.tsx`<br>`src/hooks/useHealthCheck.ts`<br>`src/hooks/useNetworkMonitor.ts` |
-| `status` | `completed` | compara, escreve, filtra | `src/components/alerts/AlertsDropdown.tsx`<br>`src/components/call-history/CallSessionsList.tsx`<br>`src/components/callbacks/ScheduledCallbacksList.tsx`<br>`src/components/coaching/CoachingAssignmentsPanel.tsx`<br>`src/components/coaching/CoachingPanel.tsx`<br>… +32 |
+| `status` | `completed` | compara, escreve, filtra | `src/components/alerts/AlertsDropdown.tsx`<br>`src/components/call-history/CallSessionsList.tsx`<br>`src/components/callbacks/ScheduledCallbacksList.tsx`<br>`src/components/coaching/CoachingAssignmentsPanel.tsx`<br>`src/components/coaching/CoachingPanel.tsx`<br>… +31 |
 | `status` | `conference` | compara, escreve | `src/hooks/useMultiChannelCall.ts`<br>`src/hooks/useMultiChannelCallConference.ts` |
 | `status` | `connected` | escreve | `src/data/mockData.ts`<br>`src/hooks/useWavoipCall.ts` |
 | `status` | `connecting` | compara, escreve | `src/components/calls/SipConnectionStatus.tsx`<br>`src/components/calls/WebRTCCall.tsx`<br>`src/components/calls/softphone/ActiveCallDisplay.tsx`<br>`src/hooks/useMultiChannelCall.ts`<br>`src/hooks/useSipCall.ts`<br>… +3 |
@@ -1108,6 +1108,7 @@ _nenhum mapa explícito encontrado — transições só existem implicitamente n
 | OVERFLOW_ACTIONS | 'voicemail', 'transfer_queue', 'callback', 'hangup', | `src/lib/call-queue.ts` |
 | SupportedLang | pt \| en \| es \| fr \| it \| de \| ja \| zh | `src/lib/language-detection.ts` |
 | Recommendation | block \| defer \| low_priority \| normal \| high_priority | `src/lib/outbound-scoring.ts` |
+| EndedCallStatus | completed \| missed \| abandoned | `src/lib/pendingCallWrites.ts` |
 | AUDIO_PROMPT_KINDS | 'moh', 'greeting', 'position', 'hold_time', 'overflow', 'off_hours', | `src/lib/queue-audio.ts` |
 | ALLOWED_AUDIO_MIME_TYPES | 'audio/mpeg', 'audio/mp3', 'audio/wav', 'audio/x-wav', 'audio/ogg', 'audio/webm', 'audio/aac', 'audio/mp4', | `src/lib/queue-audio.ts` |
 | RING_STRATEGIES | 'ringall', 'sequential', 'roundrobin', 'random' | `src/lib/ring-group.ts` |
@@ -2462,7 +2463,7 @@ _nenhum item encontrado_
 | `admin` | `supabase/functions/data-lake-flush/index.ts` |
 | `admin` | `supabase/migrations/20261123000200_fix_has_role_oracle_and_debug_tables.sql` |
 
-## K. Testes como especificação (4200 testes em 357 arquivos — nomes completos em `context.json`)
+## K. Testes como especificação (4202 testes em 357 arquivos — nomes completos em `context.json`)
 
 | Arquivo | Testes | Exemplos do que o sistema DEVE fazer |
 |---|---|---|
@@ -2540,6 +2541,7 @@ _nenhum item encontrado_
 | `src/lib/__tests__/voice-preferences.test.ts` | 14 | voice-preferences (PBT) · clampTtsRate sempre devolve valor finito no intervalo permitido · nextTtsRate percorre apenas passos válidos · ciclo de velocidades é fechado e volta ao início … |
 | `src/lib/__tests__/webhook-health-utils.test.ts` | 14 | ratioColor · retorna muted quando attempts=0 · classifica faixas por ratio · aggregateEndpoints … |
 | `src/lib/notifications/__tests__/index.coverage.test.ts` | 14 | notifications · sendNotification · returns success when edge function succeeds · returns error when edge function returns error … |
+| `src/hooks/__tests__/useCallSession.coverage.test.tsx` | 13 | useCallSession · starts a session successfully · returns null on start error · addTranscript/addAnalysis no-op without session … |
 | `src/hooks/__tests__/useDashboardData.coverage.test.tsx` | 13 | useDashboardData · useDashboardStats success · useDashboardStats error · useAgentsListData success returns data … |
 | `src/hooks/__tests__/useMeetingSummary.coverage.test.tsx` | 13 | useMeetingSummary · loads summary and runs generate/update/share · disabled when no callSessionId · generate handles skipped response … |
 | `src/lib/__tests__/executive-dashboard-utils.test.ts` | 13 | getPeriodLabel · returns correct label for today · returns correct label for week · returns correct label for month … |
@@ -2550,7 +2552,6 @@ _nenhum item encontrado_
 | `src/lib/security/__tests__/hsts-headers.coverage.test.ts` | 12 | buildHSTSHeader · builds header from default config · omits includeSubDomains and preload when false · includes only includeSubDomains when preload is false … |
 | `src/lib/validation/__tests__/zod-schemas.property.test.ts` | 12 | Zod schemas — property-based (1000 runs cada) · uuidSchema aceita UUIDs válidos · uuidSchema rejeita strings arbitrárias não-UUID · emailSchema aceita emails válidos … |
 | `src/hooks/__tests__/useAgentRanking.coverage.test.tsx` | 11 | useAgentRanking (coverage) · fetches agent stats on mount and exposes data · getGoalsForAgent returns saved goals and default fallback · checkGoalAchievements fires success toast when goals met … |
-| `src/hooks/__tests__/useCallSession.coverage.test.tsx` | 11 | useCallSession · starts a session successfully · returns null on start error · addTranscript/addAnalysis no-op without session … |
 | `src/hooks/__tests__/useContacts.coverage.test.tsx` | 11 | useContacts (coverage) · fetches contacts on mount · fetchContacts with search filter · getContactByPhone success and not found … |
 | `src/hooks/__tests__/useLiveAssist.coverage.test.tsx` | 11 | useLiveAssist · is disabled (no fetch) without callSessionId · loads signals and subscribes to realtime when callSessionId present · analyze invokes edge function when throttle allows … |
 | `src/hooks/__tests__/useQueueMetrics.coverage.test.tsx` | 11 | useQueueMetrics · fetches metrics and computes values · conta em espera apenas chamadas on_hold, nunca um status inventado · checkGoalStatus handles gte and lte operators … |
