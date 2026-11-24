@@ -61,7 +61,7 @@ export function UnifiedSoftphone({ onCallStart, onCallEnd, onTranscript }: Unifi
   useConferenceRecording({
     conference,
     onRecordingStarted: () => { logger.create('Softphone').debug('Conference recording started'); toast.info('Gravação da conferência iniciada'); },
-    onRecordingSaved: (fp) => { logger.create('Softphone').debug('Conference recording saved:', fp); toast.success('Gravação da conferência salva'); },
+    onRecordingSaved: (fp) => { logger.create('Softphone').debug('Conference recording saved:', fp); toast.success('Gravação da conferência salva', { description: fp }); },
   });
 
   useEffect(() => { if (wavoip.isConfigured) configureChannel('wavoip', { enabled: true, configured: true }); }, [wavoip.isConfigured, configureChannel]);

@@ -81,6 +81,19 @@ instala mais pacotes que `bun install` em ambiente sem credencial da Lovable.
   com **0 consumidores em produção**: o teste valida a cópia, não o deployado. Divergência entre as duas é
   silenciosa.
 
+## Mensagens de confirmação de sucesso (etapa 267)
+
+Convenção para `toast.success`:
+
+- a mensagem **descreve o que foi gravado**, não um adjetivo: `Contato criado` com o nome na descrição,
+  em vez de "salvo com sucesso";
+- só aparece **depois** da confirmação da gravação — `error` checado e `await` concluído;
+- **nunca** dentro de `catch`: o guard `scripts/guard-supabase-error.mjs` (CI) reprova `toast.success` em `catch`;
+- operação que não grava nada (conectar, abrir, copiar) não usa verbo de gravação.
+
+Fora de escopo: reescrever em massa as mensagens antigas do sistema. As telas que o plano tocou seguem a
+convenção (`useContacts`, `useRoles`, `useAgentRanking`, `UnifiedSoftphone`); telas novas já nascem assim.
+
 ## O que está sólido (para não reescrever sem motivo)
 
 - **Tipagem:** `tsc --noEmit` passa com **0 erros** em ≈165 mil linhas, sem `any` disseminado.

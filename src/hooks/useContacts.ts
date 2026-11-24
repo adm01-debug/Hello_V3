@@ -199,7 +199,7 @@ export const useContacts = () => {
 
       if (error) throw error;
 
-      toast.success('Contato criado com sucesso');
+      toast.success('Contato criado', { description: clean.name });
       await fetchContacts();
       return data as Contact;
     } catch (err: unknown) {
