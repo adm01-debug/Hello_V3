@@ -165,7 +165,7 @@ export function useSendMessage() {
       if (error) throw error;
 
       // Atualizar last_message_at e first_response_at se ainda não houver
-      const { data: conv } = await supabase
+      const { data: conv, error: convError } = await supabase
         .from('conversations')
         .select('first_response_at')
         .eq('id', params.conversationId)
@@ -174,7 +174,14 @@ export function useSendMessage() {
       const updates: Record<string, unknown> = {
         last_message_at: new Date().toISOString(),
       };
-      if (!conv?.first_response_at && !params.isPrivateNote) {
+      if (convError) {
+        // Sem leitura confiável não há como saber se já houve resposta: gravar
+        // first_response_at aqui apagaria o histórico real do SLA.
+        logger.error('useSendMessage.firstResponseCheck', {
+          err: convError,
+          conversationId: params.conversationId,
+        });
+      } else if (!conv?.first_response_at && !params.isPrivateNote) {
         updates.first_response_at = new Date().toISOString();
       }
       await supabase.from('conversations').update(updates).eq('id', params.conversationId);

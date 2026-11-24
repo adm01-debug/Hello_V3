@@ -61,7 +61,8 @@ export function useMultiDeviceRing() {
 
   const updateSettings = useMutation({
     mutationFn: async (settings: Record<string, unknown>) => {
-      const { data: existing } = await supabase.from('agent_ring_settings').select('id').maybeSingle();
+      const { data: existing, error: existingError } = await supabase.from('agent_ring_settings').select('id').maybeSingle();
+      if (existingError) throw existingError;
       if (existing) {
         const { error } = await supabase.from('agent_ring_settings').update(settings).eq('id', existing.id);
         if (error) throw error;

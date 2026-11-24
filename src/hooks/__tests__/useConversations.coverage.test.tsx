@@ -16,6 +16,7 @@ const h = vi.hoisted(() => ({
   onMock: vi.fn(),
   subscribeMock: vi.fn(),
   removeChannelMock: vi.fn(),
+  updates: [] as Record<string, unknown>[],
 }));
 
 vi.mock('@/lib/logger', () => {
@@ -51,7 +52,10 @@ vi.mock('@/integrations/supabase/client', () => {
             order: vi.fn(() => ({ limit: h.limitMock })),
             eq: vi.fn(() => ({ single: h.singleMock })),
           })),
-          update: vi.fn(() => ({ eq: h.updateEqMock })),
+          update: vi.fn((payload: Record<string, unknown>) => {
+            h.updates.push(payload);
+            return { eq: h.updateEqMock };
+          }),
         };
       }),
       channel: vi.fn(() => channelObj),
@@ -81,6 +85,7 @@ beforeEach(() => {
   convChain.then = (resolve: (v: unknown) => unknown) => resolve({ data: [{ id: 'c1' }], error: null });
   h.limitMock.mockReturnValue(convChain);
 
+  h.updates.length = 0;
   h.msgLimitMock.mockResolvedValue({ data: [{ id: 'm1' }], error: null });
   h.insertMock.mockResolvedValue({ error: null });
   h.singleMock.mockResolvedValue({ data: { first_response_at: null }, error: null });
@@ -135,6 +140,7 @@ describe('useSendMessage', () => {
       await result.current.mutateAsync({ conversationId: 'c1', content: 'hi', senderName: 'Ana' });
     });
     expect(toast.success).toHaveBeenCalledWith('Mensagem enviada');
+    expect(h.updates.at(-1)).toHaveProperty('first_response_at');
   });
 
   it('skips first_response when private note or already responded', async () => {
@@ -155,6 +161,16 @@ describe('useSendMessage', () => {
       ).rejects.toBeTruthy();
     });
     expect(toast.error).toHaveBeenCalledWith('Falha ao enviar mensagem');
+  });
+
+  it('não grava first_response_at quando a leitura da conversa falha', async () => {
+    h.singleMock.mockResolvedValueOnce({ data: null, error: { message: 'permission denied' } });
+    const { result } = renderHook(() => useSendMessage(), { wrapper });
+    await act(async () => {
+      await result.current.mutateAsync({ conversationId: 'c1', content: 'hi', senderName: 'Ana' });
+    });
+    expect(h.updates.at(-1)).toHaveProperty('last_message_at');
+    expect(h.updates.at(-1)).not.toHaveProperty('first_response_at');
   });
 });
 

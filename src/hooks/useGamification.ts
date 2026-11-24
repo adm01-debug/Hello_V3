@@ -205,12 +205,20 @@ export function useGamification(agentId?: string) {
 
     const weekStart = getWeekStart();
 
-    const { data: existing } = await supabase
+    const { data: existing, error: existingError } = await supabase
       .from('agent_weekly_stats')
       .select('*')
       .eq('agent_id', agentId)
       .eq('week_start', weekStart)
       .maybeSingle();
+
+    if (existingError) {
+      // Sem leitura confiável, o insert criaria uma segunda linha da semana e o
+      // update partiria de valores zerados: o acumulado se perderia.
+      logger.error('useGamification.updateWeeklyStats.read', { err: existingError, agentId });
+      toast.error('Não foi possível atualizar as estatísticas da semana');
+      return;
+    }
 
     if (existing) {
       const newValues: Record<string, number> = {};
