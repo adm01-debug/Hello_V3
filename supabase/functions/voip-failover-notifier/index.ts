@@ -52,7 +52,8 @@ export const handler = async (req: Request): Promise<Response> => {
         metadata: { failed_trunk_id, backup_trunk_id }
       }));
 
-      await supabase.from("notifications").insert(notifications);
+      const { error: notifyInsertErr } = await supabase.from("notifications").insert(notifications);
+      if (notifyInsertErr) console.error('voip-failover-notifier: falha ao criar notificacoes de failover', notifyInsertErr);
     }
 
     return new Response(JSON.stringify({ success: true, notified_count: agentIds.length }), {
