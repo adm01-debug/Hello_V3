@@ -1,6 +1,6 @@
 # 07 · REGRAS DE NEGÓCIO
 
-> Gerado automaticamente por AI Context Sync v1.3.2 · commit `a96e7c3b66` · branch `main` · 2026-11-24 14:43 UTC
+> Gerado automaticamente por AI Context Sync v1.3.2 · commit `9660f91df9` · branch `main` · 2026-11-24 14:58 UTC
 > Não edite à mão — regras humanas vão em `manual/`.
 
 ## A. Regras escritas por humanos (`manual/` — prioridade máxima, nunca sobrescrito)
@@ -2652,7 +2652,7 @@ _nenhum item encontrado_
 | `admin` | `supabase/functions/data-lake-flush/index.ts` |
 | `admin` | `supabase/migrations/20261123000200_fix_has_role_oracle_and_debug_tables.sql` |
 
-## K. Testes como especificação (4407 testes em 392 arquivos — nomes completos em `context.json`)
+## K. Testes como especificação (4255 testes em 387 arquivos — nomes completos em `context.json`)
 
 | Arquivo | Testes | Exemplos do que o sistema DEVE fazer |
 |---|---|---|
@@ -2675,16 +2675,12 @@ _nenhum item encontrado_
 | `src/lib/__tests__/export-audit-notifications.test.ts` | 48 | Export Column Formatting · format function transforms dates · format function handles numbers · format function handles zero … |
 | `src/lib/__tests__/security-infrastructure.test.ts` | 47 | Content Security Policy · builds a valid CSP header with default directives · includes all default directive keys · merges custom directives … |
 | `src/lib/__tests__/error-boundaries.test.tsx` | 42 | ErrorBoundary: Normal rendering · renders children when no error occurs · renders multiple children · ErrorBoundary: Error catching (full mode) … |
-| `src/hooks/__tests__/useHoldReminder.test.ts` | 41 | Hold Reminder System · Reminder interval configuration · valid intervals are 15, 30, 60 · default interval is 30 … |
 | `src/lib/__tests__/security-advanced.test.ts` | 40 | Rate Limiter · allows requests within limit · tracks remaining requests accurately · blocks when limit exceeded … |
 | `src/hooks/__tests__/useSessionAndAgent.test.ts` | 39 | Session Manager Logic · Session expiration · session expires after 24 hours · expired session is detected … |
 | `src/hooks/__tests__/useEdgeFunctions.test.ts` | 38 | Edge Function Rate Limiter · allows first request from new IP · increments count for same IP · resets after window expires … |
 | `src/lib/__tests__/utilities-comprehensive.test.ts` | 37 | Password Strength · rates empty password as very weak · rates short password as weak · rates 8-char mixed as reasonable … |
 | `src/lib/__tests__/accessibility-improvements.test.ts` | 36 | Accessibility: Dashboard page (Index.tsx) · main element has aria-label · stats section has aria-label for metrics · active calls section has aria-label … |
 | `src/lib/__tests__/security-observability.test.ts` | 35 | Security: Logger PII masking (comprehensive) · masks  · masks case-insensitive keys (Password, TOKEN, etc.) · preserves non-sensitive fields … |
-| `src/hooks/__tests__/useMultiChannelCall.test.ts` | 34 | Multi-Channel Call System · Channel configuration · only sip is enabled by default · all channels are listed … |
-| `src/hooks/__tests__/useMFA.test.ts` | 32 | MFA System · Backup code generation · generates exactly 10 codes · codes are uppercase … |
-| `src/hooks/__tests__/usePredictiveDialer.test.ts` | 30 | Predictive Dialer Logic · Campaign creation defaults · applies correct defaults · Call result handling … |
 | `src/lib/__tests__/encryption-webauthn.test.ts` | 29 | Encryption Utilities · arrayBufferToBase64 · converts empty buffer · converts known bytes … |
 | `src/hooks/__tests__/useBusinessLogic.test.ts` | 28 | Hold Alert Type Consistency · useRealtimeHoldAlerts filters for hold_time_exceeded matching edge function · Hold reminder configuration logic · valid reminder intervals are 15, 30, 60 … |
 | `src/lib/__tests__/dashboard-integration.test.ts` | 27 | Dashboard Integration: All improvements present in Index.tsx · imports memoized StatsCard · imports memoized CallVolumeChart · imports SectionBoundary … |
@@ -2718,7 +2714,6 @@ _nenhum item encontrado_
 | `src/hooks/__tests__/useVoipTrunks.coverage.test.tsx` | 16 | useVoipTrunks (coverage) · lists trunks · lists assignments · throws when invoke returns error … |
 | `src/lib/__tests__/utils.coverage.test.ts` | 16 | utils (coverage) · merges class names · dedups tailwind conflicts · handles conditional / falsy values … |
 | `src/hooks/__tests__/useAvatar.test.ts` | 15 | useAvatar · does not request a signed url when there is no path · resolves a signed url for an existing avatar · clears the url when signing fails … |
-| `src/hooks/__tests__/useCallSession.test.ts` | 15 | Call Session Logic · Session lifecycle · creates session with correct initial status · session ends with completed status … |
 | `src/hooks/__tests__/useCrmFieldSuggestions.coverage.test.tsx` | 15 | useCrmFieldSuggestions · returns empty defaults when no callSessionId (query disabled, no channel) · fetches suggestions and computes pending, wires realtime channel · query error branch throws … |
 | `src/hooks/__tests__/useWavoipCall.coverage.test.tsx` | 15 | useWavoipCall · checks configuration on mount (connected) · checkConfiguration when not connected sets disconnected · checkConfiguration with supabase error sets error state … |
 | `src/lib/__tests__/call-queue.test.ts` | 15 | call-queue :: clampInt · sempre devolve inteiro dentro da faixa · usa o fallback para valores não finitos · call-queue :: normalizeQueueDraft … |
@@ -2956,7 +2951,12 @@ _nenhum item encontrado_
 | `src/hooks/__tests__/useCallScoring.coverage.test.tsx` | 4 | useCallScoring · expõe o estado inicial · calcula score com sucesso · lança erro quando a edge function falha |
 | `src/hooks/__tests__/useContactInsights.coverage.test.tsx` | 4 | useContactInsights · returns empty metrics with no contacts · computes distributions across varied personality profiles · handles fetch error gracefully |
 | `src/hooks/__tests__/useDeals.test.ts` | 4 | useDeals · loads deals · createDeal returns true on success · computeHealth invokes edge function |
-| … +92 linhas — lista completa em `context.json` | | |
+| `src/hooks/__tests__/useHoldMetrics.coverage.test.tsx` | 4 | useHoldMetrics · aggregates 7d metrics · handles 30d and 90d ranges with empty data · handles 90d range |
+| `src/hooks/__tests__/useIPValidation.coverage.test.tsx` | 4 | useIPValidation · returns data on success · handles supabase error branch · handles thrown exception branch |
+| `src/hooks/__tests__/usePageTitle.coverage.test.tsx` | 4 | usePageTitle · sets document title with app name suffix · resets title on unmount · updates title when prop changes |
+| `src/hooks/__tests__/useQualityMetrics.coverage.test.tsx` | 4 | useQualityMetrics / useTrunkUsageMetrics · loads quality metrics · loads trunk usage metrics · propagates errors |
+| `src/hooks/__tests__/useTalkRatio.test.ts` | 4 | useTalkRatio · estado inicial é vazio · analisa com sucesso · captura erro do backend |
+| … +87 linhas — lista completa em `context.json` | | |
 
 ## L. Eventos de webhook tratados (contratos com sistemas externos)
 

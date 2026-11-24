@@ -1,15 +1,15 @@
 {
  "meta": {
-  "sha": "a96e7c3b66863142d6def708768906ffc92129e6",
+  "sha": "9660f91df944a417f3bab5cc563a7e430138d406",
   "branch": "main",
   "remote": "https://github.com/adm01-debug/Hello_V3",
-  "generated_at": "2026-11-24 14:43 UTC",
-  "files_total": 1793,
-  "code_files": 1589,
-  "code_lines": 197702
+  "generated_at": "2026-11-24 14:58 UTC",
+  "files_total": 1788,
+  "code_files": 1584,
+  "code_lines": 196732
  },
  "version": "1.3.2",
- "facts_hash": "25d84ce35e89373a",
+ "facts_hash": "ca35fcd72ef430a6",
  "stack": {
   "frameworks": [
    "React + Vite",
@@ -153,7 +153,7 @@
   ],
   "package_manager": "bun",
   "languages": {
-   ".ts": 663,
+   ".ts": 658,
    ".tsx": 645,
    ".sql": 246,
    ".mjs": 28,
@@ -33777,8 +33777,8 @@
   },
   {
    "module": "src/hooks",
-   "files": 355,
-   "lines": 48021,
+   "files": 350,
+   "lines": 47051,
    "tables": [
     "accounts",
     "active_sessions",
@@ -60309,66 +60309,6 @@
     "name": "sem desfecho informado continua gravando completed"
    },
    {
-    "file": "src/hooks/__tests__/useCallSession.test.ts",
-    "name": "Call Session Logic"
-   },
-   {
-    "file": "src/hooks/__tests__/useCallSession.test.ts",
-    "name": "Session lifecycle"
-   },
-   {
-    "file": "src/hooks/__tests__/useCallSession.test.ts",
-    "name": "creates session with correct initial status"
-   },
-   {
-    "file": "src/hooks/__tests__/useCallSession.test.ts",
-    "name": "session ends with completed status"
-   },
-   {
-    "file": "src/hooks/__tests__/useCallSession.test.ts",
-    "name": "duration is calculated correctly"
-   },
-   {
-    "file": "src/hooks/__tests__/useCallSession.test.ts",
-    "name": "Transcript batching logic"
-   },
-   {
-    "file": "src/hooks/__tests__/useCallSession.test.ts",
-    "name": "batches transcripts before save"
-   },
-   {
-    "file": "src/hooks/__tests__/useCallSession.test.ts",
-    "name": "re-adds failed transcripts to pending"
-   },
-   {
-    "file": "src/hooks/__tests__/useCallSession.test.ts",
-    "name": "clears pending after successful save"
-   },
-   {
-    "file": "src/hooks/__tests__/useCallSession.test.ts",
-    "name": "Analysis saving"
-   },
-   {
-    "file": "src/hooks/__tests__/useCallSession.test.ts",
-    "name": "maps analysis fields correctly"
-   },
-   {
-    "file": "src/hooks/__tests__/useCallSession.test.ts",
-    "name": "sets risk_alert when riskAlert is true"
-   },
-   {
-    "file": "src/hooks/__tests__/useCallSession.test.ts",
-    "name": "Call summary structure"
-   },
-   {
-    "file": "src/hooks/__tests__/useCallSession.test.ts",
-    "name": "summary contains all required fields"
-   },
-   {
-    "file": "src/hooks/__tests__/useCallSession.test.ts",
-    "name": "satisfaction score validates 0-10 range"
-   },
-   {
     "file": "src/hooks/__tests__/useCallTimers.coverage.test.tsx",
     "name": "useCallTimers"
    },
@@ -63185,170 +63125,6 @@
     "name": "does not re-render or recreate the 1 Hz interval when no call is on hold"
    },
    {
-    "file": "src/hooks/__tests__/useHoldReminder.test.ts",
-    "name": "Hold Reminder System"
-   },
-   {
-    "file": "src/hooks/__tests__/useHoldReminder.test.ts",
-    "name": "Reminder interval configuration"
-   },
-   {
-    "file": "src/hooks/__tests__/useHoldReminder.test.ts",
-    "name": "valid intervals are 15, 30, 60"
-   },
-   {
-    "file": "src/hooks/__tests__/useHoldReminder.test.ts",
-    "name": "default interval is 30"
-   },
-   {
-    "file": "src/hooks/__tests__/useHoldReminder.test.ts",
-    "name": "loads valid saved interval"
-   },
-   {
-    "file": "src/hooks/__tests__/useHoldReminder.test.ts",
-    "name": "ignores invalid saved interval"
-   },
-   {
-    "file": "src/hooks/__tests__/useHoldReminder.test.ts",
-    "name": "converts interval to milliseconds"
-   },
-   {
-    "file": "src/hooks/__tests__/useHoldReminder.test.ts",
-    "name": "Alert threshold configuration"
-   },
-   {
-    "file": "src/hooks/__tests__/useHoldReminder.test.ts",
-    "name": "valid thresholds are 30, 60, 120, 180, 300"
-   },
-   {
-    "file": "src/hooks/__tests__/useHoldReminder.test.ts",
-    "name": "default threshold is 60"
-   },
-   {
-    "file": "src/hooks/__tests__/useHoldReminder.test.ts",
-    "name": "critical threshold is 2x warning"
-   },
-   {
-    "file": "src/hooks/__tests__/useHoldReminder.test.ts",
-    "name": "Hold time formatting"
-   },
-   {
-    "file": "src/hooks/__tests__/useHoldReminder.test.ts",
-    "name": "formats seconds only"
-   },
-   {
-    "file": "src/hooks/__tests__/useHoldReminder.test.ts",
-    "name": "formats minutes and seconds"
-   },
-   {
-    "file": "src/hooks/__tests__/useHoldReminder.test.ts",
-    "name": "formats exact minutes"
-   },
-   {
-    "file": "src/hooks/__tests__/useHoldReminder.test.ts",
-    "name": "formats zero seconds"
-   },
-   {
-    "file": "src/hooks/__tests__/useHoldReminder.test.ts",
-    "name": "formats large values"
-   },
-   {
-    "file": "src/hooks/__tests__/useHoldReminder.test.ts",
-    "name": "Reminder throttling"
-   },
-   {
-    "file": "src/hooks/__tests__/useHoldReminder.test.ts",
-    "name": "triggers when enough time has passed"
-   },
-   {
-    "file": "src/hooks/__tests__/useHoldReminder.test.ts",
-    "name": "does not trigger when too recent"
-   },
-   {
-    "file": "src/hooks/__tests__/useHoldReminder.test.ts",
-    "name": "triggers on first reminder (no previous)"
-   },
-   {
-    "file": "src/hooks/__tests__/useHoldReminder.test.ts",
-    "name": "Hold alert deduplication"
-   },
-   {
-    "file": "src/hooks/__tests__/useHoldReminder.test.ts",
-    "name": "triggers warning once per call"
-   },
-   {
-    "file": "src/hooks/__tests__/useHoldReminder.test.ts",
-    "name": "triggers critical independently of warning"
-   },
-   {
-    "file": "src/hooks/__tests__/useHoldReminder.test.ts",
-    "name": "Active alerts list"
-   },
-   {
-    "file": "src/hooks/__tests__/useHoldReminder.test.ts",
-    "name": "keeps last 20 alerts"
-   },
-   {
-    "file": "src/hooks/__tests__/useHoldReminder.test.ts",
-    "name": "clears alerts for calls no longer on hold"
-   },
-   {
-    "file": "src/hooks/__tests__/useHoldReminder.test.ts",
-    "name": "Browser notification for critical"
-   },
-   {
-    "file": "src/hooks/__tests__/useHoldReminder.test.ts",
-    "name": "requires granted permission"
-   },
-   {
-    "file": "src/hooks/__tests__/useHoldReminder.test.ts",
-    "name": "does not notify on denied"
-   },
-   {
-    "file": "src/hooks/__tests__/useHoldReminder.test.ts",
-    "name": "critical requires interaction"
-   },
-   {
-    "file": "src/hooks/__tests__/useHoldReminder.test.ts",
-    "name": "warning auto-closes after 10s"
-   },
-   {
-    "file": "src/hooks/__tests__/useHoldReminder.test.ts",
-    "name": "tags prevent duplicate notifications"
-   },
-   {
-    "file": "src/hooks/__tests__/useHoldReminder.test.ts",
-    "name": "Cleanup on call end"
-   },
-   {
-    "file": "src/hooks/__tests__/useHoldReminder.test.ts",
-    "name": "removes reminder time for ended calls"
-   },
-   {
-    "file": "src/hooks/__tests__/useHoldReminder.test.ts",
-    "name": "removes alerted state for ended calls"
-   },
-   {
-    "file": "src/hooks/__tests__/useHoldReminder.test.ts",
-    "name": "Toggle functions"
-   },
-   {
-    "file": "src/hooks/__tests__/useHoldReminder.test.ts",
-    "name": "toggles reminder enabled"
-   },
-   {
-    "file": "src/hooks/__tests__/useHoldReminder.test.ts",
-    "name": "toggles alerts enabled"
-   },
-   {
-    "file": "src/hooks/__tests__/useHoldReminder.test.ts",
-    "name": "changing interval resets reminder times"
-   },
-   {
-    "file": "src/hooks/__tests__/useHoldReminder.test.ts",
-    "name": "changing threshold resets alerted calls"
-   },
-   {
     "file": "src/hooks/__tests__/useHoldSoundAlert.coverage.test.tsx",
     "name": "useHoldSoundAlert"
    },
@@ -63794,7 +63570,7 @@
    },
    {
     "file": "src/hooks/__tests__/useMFA.coverage.test.tsx",
-    "name": "generateBackupCodes returns 10 codes"
+    "name": "generateBackupCodes gera 10 codigos unicos via crypto.getRandomValues"
    },
    {
     "file": "src/hooks/__tests__/useMFA.coverage.test.tsx",
@@ -63803,134 +63579,6 @@
    {
     "file": "src/hooks/__tests__/useMFA.coverage.test.tsx",
     "name": "handles null settings and listFactors error"
-   },
-   {
-    "file": "src/hooks/__tests__/useMFA.test.ts",
-    "name": "MFA System"
-   },
-   {
-    "file": "src/hooks/__tests__/useMFA.test.ts",
-    "name": "Backup code generation"
-   },
-   {
-    "file": "src/hooks/__tests__/useMFA.test.ts",
-    "name": "generates exactly 10 codes"
-   },
-   {
-    "file": "src/hooks/__tests__/useMFA.test.ts",
-    "name": "codes are uppercase"
-   },
-   {
-    "file": "src/hooks/__tests__/useMFA.test.ts",
-    "name": "codes are 6 characters"
-   },
-   {
-    "file": "src/hooks/__tests__/useMFA.test.ts",
-    "name": "codes are alphanumeric"
-   },
-   {
-    "file": "src/hooks/__tests__/useMFA.test.ts",
-    "name": "generates unique codes"
-   },
-   {
-    "file": "src/hooks/__tests__/useMFA.test.ts",
-    "name": "Factor status checks"
-   },
-   {
-    "file": "src/hooks/__tests__/useMFA.test.ts",
-    "name": "hasActiveMFA returns true when verified factor exists"
-   },
-   {
-    "file": "src/hooks/__tests__/useMFA.test.ts",
-    "name": "hasActiveMFA returns false when no verified factors"
-   },
-   {
-    "file": "src/hooks/__tests__/useMFA.test.ts",
-    "name": "hasTOTP checks both type and status"
-   },
-   {
-    "file": "src/hooks/__tests__/useMFA.test.ts",
-    "name": "hasPhone checks both type and status"
-   },
-   {
-    "file": "src/hooks/__tests__/useMFA.test.ts",
-    "name": "MFA settings update logic"
-   },
-   {
-    "file": "src/hooks/__tests__/useMFA.test.ts",
-    "name": "status transitions set correct timestamps"
-   },
-   {
-    "file": "src/hooks/__tests__/useMFA.test.ts",
-    "name": "completed status sets completed_at"
-   },
-   {
-    "file": "src/hooks/__tests__/useMFA.test.ts",
-    "name": "pending status sets no timestamps"
-   },
-   {
-    "file": "src/hooks/__tests__/useMFA.test.ts",
-    "name": "WebAuthn / Passkey System"
-   },
-   {
-    "file": "src/hooks/__tests__/useMFA.test.ts",
-    "name": "Device type detection"
-   },
-   {
-    "file": "src/hooks/__tests__/useMFA.test.ts",
-    "name": "detects iOS"
-   },
-   {
-    "file": "src/hooks/__tests__/useMFA.test.ts",
-    "name": "detects Android"
-   },
-   {
-    "file": "src/hooks/__tests__/useMFA.test.ts",
-    "name": "detects macOS"
-   },
-   {
-    "file": "src/hooks/__tests__/useMFA.test.ts",
-    "name": "detects Windows"
-   },
-   {
-    "file": "src/hooks/__tests__/useMFA.test.ts",
-    "name": "detects Linux"
-   },
-   {
-    "file": "src/hooks/__tests__/useMFA.test.ts",
-    "name": "returns Unknown for unrecognized UA"
-   },
-   {
-    "file": "src/hooks/__tests__/useMFA.test.ts",
-    "name": "Default friendly name"
-   },
-   {
-    "file": "src/hooks/__tests__/useMFA.test.ts",
-    "name": "generates name with device and date"
-   },
-   {
-    "file": "src/hooks/__tests__/useMFA.test.ts",
-    "name": "Challenge expiration"
-   },
-   {
-    "file": "src/hooks/__tests__/useMFA.test.ts",
-    "name": "expires after 5 minutes"
-   },
-   {
-    "file": "src/hooks/__tests__/useMFA.test.ts",
-    "name": "is invalid after expiry"
-   },
-   {
-    "file": "src/hooks/__tests__/useMFA.test.ts",
-    "name": "Credential counter"
-   },
-   {
-    "file": "src/hooks/__tests__/useMFA.test.ts",
-    "name": "increments on each use"
-   },
-   {
-    "file": "src/hooks/__tests__/useMFA.test.ts",
-    "name": "handles null counter"
    },
    {
     "file": "src/hooks/__tests__/useMeetingSummary.coverage.test.tsx",
@@ -64071,142 +63719,6 @@
    {
     "file": "src/hooks/__tests__/useMultiChannelCall.coverage.test.tsx",
     "name": "endConference directly and conference no-op guards"
-   },
-   {
-    "file": "src/hooks/__tests__/useMultiChannelCall.test.ts",
-    "name": "Multi-Channel Call System"
-   },
-   {
-    "file": "src/hooks/__tests__/useMultiChannelCall.test.ts",
-    "name": "Channel configuration"
-   },
-   {
-    "file": "src/hooks/__tests__/useMultiChannelCall.test.ts",
-    "name": "only sip is enabled by default"
-   },
-   {
-    "file": "src/hooks/__tests__/useMultiChannelCall.test.ts",
-    "name": "all channels are listed"
-   },
-   {
-    "file": "src/hooks/__tests__/useMultiChannelCall.test.ts",
-    "name": "disabled channels are not configured"
-   },
-   {
-    "file": "src/hooks/__tests__/useMultiChannelCall.test.ts",
-    "name": "Call limits"
-   },
-   {
-    "file": "src/hooks/__tests__/useMultiChannelCall.test.ts",
-    "name": "max simultaneous calls is 3"
-   },
-   {
-    "file": "src/hooks/__tests__/useMultiChannelCall.test.ts",
-    "name": "blocks new call when at max"
-   },
-   {
-    "file": "src/hooks/__tests__/useMultiChannelCall.test.ts",
-    "name": "allows new call when under max"
-   },
-   {
-    "file": "src/hooks/__tests__/useMultiChannelCall.test.ts",
-    "name": "allows first call when none active"
-   },
-   {
-    "file": "src/hooks/__tests__/useMultiChannelCall.test.ts",
-    "name": "Call session creation"
-   },
-   {
-    "file": "src/hooks/__tests__/useMultiChannelCall.test.ts",
-    "name": "creates outbound call with correct defaults"
-   },
-   {
-    "file": "src/hooks/__tests__/useMultiChannelCall.test.ts",
-    "name": "Hold time tracking"
-   },
-   {
-    "file": "src/hooks/__tests__/useMultiChannelCall.test.ts",
-    "name": "increments holdCount on each hold"
-   },
-   {
-    "file": "src/hooks/__tests__/useMultiChannelCall.test.ts",
-    "name": "calculates hold duration from startedAt"
-   },
-   {
-    "file": "src/hooks/__tests__/useMultiChannelCall.test.ts",
-    "name": "tracks totalHoldTime across multiple holds"
-   },
-   {
-    "file": "src/hooks/__tests__/useMultiChannelCall.test.ts",
-    "name": "sets status to on-hold when hold starts"
-   },
-   {
-    "file": "src/hooks/__tests__/useMultiChannelCall.test.ts",
-    "name": "Conference calls"
-   },
-   {
-    "file": "src/hooks/__tests__/useMultiChannelCall.test.ts",
-    "name": "requires at least 2 calls for conference"
-   },
-   {
-    "file": "src/hooks/__tests__/useMultiChannelCall.test.ts",
-    "name": "starts conference with 2+ calls"
-   },
-   {
-    "file": "src/hooks/__tests__/useMultiChannelCall.test.ts",
-    "name": "auto-enables recording for conference"
-   },
-   {
-    "file": "src/hooks/__tests__/useMultiChannelCall.test.ts",
-    "name": "participants inherit conference recording state"
-   },
-   {
-    "file": "src/hooks/__tests__/useMultiChannelCall.test.ts",
-    "name": "can add call to existing conference"
-   },
-   {
-    "file": "src/hooks/__tests__/useMultiChannelCall.test.ts",
-    "name": "call history limited to 50 entries"
-   },
-   {
-    "file": "src/hooks/__tests__/useMultiChannelCall.test.ts",
-    "name": "Call status transitions"
-   },
-   {
-    "file": "src/hooks/__tests__/useMultiChannelCall.test.ts",
-    "name": "idle can only transition to connecting"
-   },
-   {
-    "file": "src/hooks/__tests__/useMultiChannelCall.test.ts",
-    "name": "active has multiple valid transitions"
-   },
-   {
-    "file": "src/hooks/__tests__/useMultiChannelCall.test.ts",
-    "name": "ended has no valid transitions"
-   },
-   {
-    "file": "src/hooks/__tests__/useMultiChannelCall.test.ts",
-    "name": "on-hold can go to active or ended"
-   },
-   {
-    "file": "src/hooks/__tests__/useMultiChannelCall.test.ts",
-    "name": "Mute toggle"
-   },
-   {
-    "file": "src/hooks/__tests__/useMultiChannelCall.test.ts",
-    "name": "toggles mute state"
-   },
-   {
-    "file": "src/hooks/__tests__/useMultiChannelCall.test.ts",
-    "name": "Transcript management"
-   },
-   {
-    "file": "src/hooks/__tests__/useMultiChannelCall.test.ts",
-    "name": "adds transcript with correct structure"
-   },
-   {
-    "file": "src/hooks/__tests__/useMultiChannelCall.test.ts",
-    "name": "system messages are allowed"
    },
    {
     "file": "src/hooks/__tests__/useMultiDeviceRing.coverage.test.tsx",
@@ -64471,126 +63983,6 @@
    {
     "file": "src/hooks/__tests__/usePredictiveDialer.coverage.test.tsx",
     "name": "para a campanha quando o claim da fila falha (A-057)"
-   },
-   {
-    "file": "src/hooks/__tests__/usePredictiveDialer.test.ts",
-    "name": "Predictive Dialer Logic"
-   },
-   {
-    "file": "src/hooks/__tests__/usePredictiveDialer.test.ts",
-    "name": "Campaign creation defaults"
-   },
-   {
-    "file": "src/hooks/__tests__/usePredictiveDialer.test.ts",
-    "name": "applies correct defaults"
-   },
-   {
-    "file": "src/hooks/__tests__/usePredictiveDialer.test.ts",
-    "name": "Call result handling"
-   },
-   {
-    "file": "src/hooks/__tests__/usePredictiveDialer.test.ts",
-    "name": "retries on no_answer when under max attempts"
-   },
-   {
-    "file": "src/hooks/__tests__/usePredictiveDialer.test.ts",
-    "name": "retries on busy when under max attempts"
-   },
-   {
-    "file": "src/hooks/__tests__/usePredictiveDialer.test.ts",
-    "name": "completes when max attempts reached on no_answer"
-   },
-   {
-    "file": "src/hooks/__tests__/usePredictiveDialer.test.ts",
-    "name": "completes on answered"
-   },
-   {
-    "file": "src/hooks/__tests__/usePredictiveDialer.test.ts",
-    "name": "completes on wrong_number"
-   },
-   {
-    "file": "src/hooks/__tests__/usePredictiveDialer.test.ts",
-    "name": "schedules callback 1 hour later"
-   },
-   {
-    "file": "src/hooks/__tests__/usePredictiveDialer.test.ts",
-    "name": "completes on voicemail after max attempts"
-   },
-   {
-    "file": "src/hooks/__tests__/usePredictiveDialer.test.ts",
-    "name": "Campaign statistics"
-   },
-   {
-    "file": "src/hooks/__tests__/usePredictiveDialer.test.ts",
-    "name": "increments completed_contacts on completion"
-   },
-   {
-    "file": "src/hooks/__tests__/usePredictiveDialer.test.ts",
-    "name": "increments successful_contacts only on answered"
-   },
-   {
-    "file": "src/hooks/__tests__/usePredictiveDialer.test.ts",
-    "name": "does not increment successful on no_answer"
-   },
-   {
-    "file": "src/hooks/__tests__/usePredictiveDialer.test.ts",
-    "name": "calculates success rate"
-   },
-   {
-    "file": "src/hooks/__tests__/usePredictiveDialer.test.ts",
-    "name": "handles zero division for success rate"
-   },
-   {
-    "file": "src/hooks/__tests__/usePredictiveDialer.test.ts",
-    "name": "Queue ordering"
-   },
-   {
-    "file": "src/hooks/__tests__/usePredictiveDialer.test.ts",
-    "name": "orders by priority descending then created_at ascending"
-   },
-   {
-    "file": "src/hooks/__tests__/usePredictiveDialer.test.ts",
-    "name": "Working hours filter"
-   },
-   {
-    "file": "src/hooks/__tests__/usePredictiveDialer.test.ts",
-    "name": "within working hours allows dialing"
-   },
-   {
-    "file": "src/hooks/__tests__/usePredictiveDialer.test.ts",
-    "name": "outside working hours blocks dialing"
-   },
-   {
-    "file": "src/hooks/__tests__/usePredictiveDialer.test.ts",
-    "name": "null working hours means always allowed"
-   },
-   {
-    "file": "src/hooks/__tests__/usePredictiveDialer.test.ts",
-    "name": "Campaign status transitions"
-   },
-   {
-    "file": "src/hooks/__tests__/usePredictiveDialer.test.ts",
-    "name": "draft can only go to active"
-   },
-   {
-    "file": "src/hooks/__tests__/usePredictiveDialer.test.ts",
-    "name": "active can be paused or completed"
-   },
-   {
-    "file": "src/hooks/__tests__/usePredictiveDialer.test.ts",
-    "name": "completed has no transitions"
-   },
-   {
-    "file": "src/hooks/__tests__/usePredictiveDialer.test.ts",
-    "name": "Total contacts update"
-   },
-   {
-    "file": "src/hooks/__tests__/usePredictiveDialer.test.ts",
-    "name": "adds new items count to existing total"
-   },
-   {
-    "file": "src/hooks/__tests__/usePredictiveDialer.test.ts",
-    "name": "handles first batch correctly"
    },
    {
     "file": "src/hooks/__tests__/useProfile.coverage.test.tsx",
@@ -107864,35 +107256,6 @@
     "sem desfecho informado continua gravando completed"
    ]
   },
-  "src/hooks/__tests__/useCallSession.test.ts": {
-   "path": "src/hooks/__tests__/useCallSession.test.ts",
-   "lines": 129,
-   "is_test": true,
-   "calc_fns": [
-    {
-     "name": "validateScore",
-     "params": "score: number",
-     "body": "Math.max(0, Math.min(10, score));"
-    }
-   ],
-   "tests": [
-    "Call Session Logic",
-    "Session lifecycle",
-    "creates session with correct initial status",
-    "session ends with completed status",
-    "duration is calculated correctly",
-    "Transcript batching logic",
-    "batches transcripts before save",
-    "re-adds failed transcripts to pending",
-    "clears pending after successful save",
-    "Analysis saving",
-    "maps analysis fields correctly",
-    "sets risk_alert when riskAlert is true",
-    "Call summary structure",
-    "summary contains all required fields",
-    "satisfaction score validates 0-10 range"
-   ]
-  },
   "src/hooks/__tests__/useCallTimers.coverage.test.tsx": {
    "path": "src/hooks/__tests__/useCallTimers.coverage.test.tsx",
    "lines": 118,
@@ -108963,60 +108326,6 @@
     "does not re-render or recreate the 1 Hz interval when no call is on hold"
    ]
   },
-  "src/hooks/__tests__/useHoldReminder.test.ts": {
-   "path": "src/hooks/__tests__/useHoldReminder.test.ts",
-   "lines": 264,
-   "is_test": true,
-   "role_checks": [
-    "granted"
-   ],
-   "tests": [
-    "Hold Reminder System",
-    "Reminder interval configuration",
-    "valid intervals are 15, 30, 60",
-    "default interval is 30",
-    "loads valid saved interval",
-    "ignores invalid saved interval",
-    "converts interval to milliseconds",
-    "Alert threshold configuration",
-    "valid thresholds are 30, 60, 120, 180, 300",
-    "default threshold is 60",
-    "critical threshold is 2x warning",
-    "Hold time formatting",
-    "formats seconds only",
-    "formats minutes and seconds",
-    "formats exact minutes",
-    "formats zero seconds",
-    "formats large values",
-    "Reminder throttling",
-    "triggers when enough time has passed",
-    "does not trigger when too recent",
-    "triggers on first reminder (no previous)",
-    "Hold alert deduplication",
-    "triggers warning once per call",
-    "triggers critical independently of warning",
-    "Active alerts list",
-    "keeps last 20 alerts",
-    "clears alerts for calls no longer on hold",
-    "Browser notification for critical",
-    "requires granted permission",
-    "does not notify on denied",
-    "critical requires interaction",
-    "warning auto-closes after 10s",
-    "tags prevent duplicate notifications",
-    "Cleanup on call end",
-    "removes reminder time for ended calls",
-    "removes alerted state for ended calls",
-    "Toggle functions",
-    "toggles reminder enabled",
-    "toggles alerts enabled",
-    "changing interval resets reminder times",
-    "changing threshold resets alerted calls"
-   ],
-   "side_effects": [
-    "notify"
-   ]
-  },
   "src/hooks/__tests__/useHoldSoundAlert.coverage.test.tsx": {
    "path": "src/hooks/__tests__/useHoldSoundAlert.coverage.test.tsx",
    "lines": 78,
@@ -109216,7 +108525,7 @@
   },
   "src/hooks/__tests__/useMFA.coverage.test.tsx": {
    "path": "src/hooks/__tests__/useMFA.coverage.test.tsx",
-   "lines": 127,
+   "lines": 134,
    "is_test": true,
    "tests": [
     "useMFA",
@@ -109225,58 +108534,9 @@
     "enrollPhone success and error",
     "verifyFactor success and error",
     "unenrollFactor success and error",
-    "generateBackupCodes returns 10 codes",
+    "generateBackupCodes gera 10 codigos unicos via crypto.getRandomValues",
     "saveSettings success and error",
     "handles null settings and listFactors error"
-   ]
-  },
-  "src/hooks/__tests__/useMFA.test.ts": {
-   "path": "src/hooks/__tests__/useMFA.test.ts",
-   "lines": 173,
-   "is_test": true,
-   "calc_fns": [
-    {
-     "name": "generateBackupCodes",
-     "params": "",
-     "body": ""
-    }
-   ],
-   "temporal": [
-    "const expiresAt = new Date(now.getTime() + 5 * 60 * 1000);"
-   ],
-   "tests": [
-    "MFA System",
-    "Backup code generation",
-    "generates exactly 10 codes",
-    "codes are uppercase",
-    "codes are 6 characters",
-    "codes are alphanumeric",
-    "generates unique codes",
-    "Factor status checks",
-    "hasActiveMFA returns true when verified factor exists",
-    "hasActiveMFA returns false when no verified factors",
-    "hasTOTP checks both type and status",
-    "hasPhone checks both type and status",
-    "MFA settings update logic",
-    "status transitions set correct timestamps",
-    "completed status sets completed_at",
-    "pending status sets no timestamps",
-    "WebAuthn / Passkey System",
-    "Device type detection",
-    "detects iOS",
-    "detects Android",
-    "detects macOS",
-    "detects Windows",
-    "detects Linux",
-    "returns Unknown for unrecognized UA",
-    "Default friendly name",
-    "generates name with device and date",
-    "Challenge expiration",
-    "expires after 5 minutes",
-    "is invalid after expiry",
-    "Credential counter",
-    "increments on each use",
-    "handles null counter"
    ]
   },
   "src/hooks/__tests__/useMeetingSummary.coverage.test.tsx": {
@@ -109349,59 +108609,6 @@
     "E058: updateCallStatus para active muda o status da chamada sem crash",
     "E059: endCall com chamada active termina sem crash e remove da lista",
     "endConference directly and conference no-op guards"
-   ]
-  },
-  "src/hooks/__tests__/useMultiChannelCall.test.ts": {
-   "path": "src/hooks/__tests__/useMultiChannelCall.test.ts",
-   "lines": 208,
-   "is_test": true,
-   "params": [
-    {
-     "name": "MAX_SIMULTANEOUS_CALLS",
-     "value": "3"
-    }
-   ],
-   "transition_maps": [
-    {
-     "name": "validTransitions",
-     "body": "idle: ['connecting'], connecting: ['ringing', 'ended'], ringing: ['active', 'ended'], active: ['on-hold', 'ended', 'conference', 'transferring'], 'on-hold': ['active', 'ended'], conference: ['active', 'ended'], transferring: ['active', 'ended'], ended: [],"
-    }
-   ],
-   "tests": [
-    "Multi-Channel Call System",
-    "Channel configuration",
-    "only sip is enabled by default",
-    "all channels are listed",
-    "disabled channels are not configured",
-    "Call limits",
-    "max simultaneous calls is 3",
-    "blocks new call when at max",
-    "allows new call when under max",
-    "allows first call when none active",
-    "Call session creation",
-    "creates outbound call with correct defaults",
-    "Hold time tracking",
-    "increments holdCount on each hold",
-    "calculates hold duration from startedAt",
-    "tracks totalHoldTime across multiple holds",
-    "sets status to on-hold when hold starts",
-    "Conference calls",
-    "requires at least 2 calls for conference",
-    "starts conference with 2+ calls",
-    "auto-enables recording for conference",
-    "participants inherit conference recording state",
-    "can add call to existing conference",
-    "call history limited to 50 entries",
-    "Call status transitions",
-    "idle can only transition to connecting",
-    "active has multiple valid transitions",
-    "ended has no valid transitions",
-    "on-hold can go to active or ended",
-    "Mute toggle",
-    "toggles mute state",
-    "Transcript management",
-    "adds transcript with correct structure",
-    "system messages are allowed"
    ]
   },
   "src/hooks/__tests__/useMultiDeviceRing.coverage.test.tsx": {
@@ -109533,49 +108740,6 @@
     "disca normalmente quando o compliance aprova e mantem a tentativa",
     "falha do preDialCheck nao bloqueia a campanha (fail-open ate a etapa 035)",
     "para a campanha quando o claim da fila falha (A-057)"
-   ]
-  },
-  "src/hooks/__tests__/usePredictiveDialer.test.ts": {
-   "path": "src/hooks/__tests__/usePredictiveDialer.test.ts",
-   "lines": 203,
-   "is_test": true,
-   "transition_maps": [
-    {
-     "name": "validTransitions",
-     "body": "draft: ['active'], active: ['paused', 'completed'], paused: ['active', 'completed'], completed: [],"
-    }
-   ],
-   "tests": [
-    "Predictive Dialer Logic",
-    "Campaign creation defaults",
-    "applies correct defaults",
-    "Call result handling",
-    "retries on no_answer when under max attempts",
-    "retries on busy when under max attempts",
-    "completes when max attempts reached on no_answer",
-    "completes on answered",
-    "completes on wrong_number",
-    "schedules callback 1 hour later",
-    "completes on voicemail after max attempts",
-    "Campaign statistics",
-    "increments completed_contacts on completion",
-    "increments successful_contacts only on answered",
-    "does not increment successful on no_answer",
-    "calculates success rate",
-    "handles zero division for success rate",
-    "Queue ordering",
-    "orders by priority descending then created_at ascending",
-    "Working hours filter",
-    "within working hours allows dialing",
-    "outside working hours blocks dialing",
-    "null working hours means always allowed",
-    "Campaign status transitions",
-    "draft can only go to active",
-    "active can be paused or completed",
-    "completed has no transitions",
-    "Total contacts update",
-    "adds new items count to existing total",
-    "handles first batch correctly"
    ]
   },
   "src/hooks/__tests__/useProfile.coverage.test.tsx": {
@@ -127921,10 +127085,25 @@
   }
  },
  "git": {
-  "sha": "a96e7c3b66863142d6def708768906ffc92129e6",
+  "sha": "9660f91df944a417f3bab5cc563a7e430138d406",
   "branch": "main",
   "remote": "https://github.com/adm01-debug/Hello_V3",
   "commits": [
+   {
+    "sha": "9660f91",
+    "date": "2026-11-24",
+    "author": "adm01-debug",
+    "subject": "fix: remove 5 testes-espelho e cobre crypto.getRandomValues no useMFA (etapa 284 parcial) (#289)",
+    "files": [
+     "docs/qa/05-PROGRESSO.md",
+     "src/hooks/__tests__/useCallSession.test.ts",
+     "src/hooks/__tests__/useHoldReminder.test.ts",
+     "src/hooks/__tests__/useMFA.coverage.test.tsx",
+     "src/hooks/__tests__/useMFA.test.ts",
+     "src/hooks/__tests__/useMultiChannelCall.test.ts",
+     "src/hooks/__tests__/usePredictiveDialer.test.ts"
+    ]
+   },
    {
     "sha": "a96e7c3",
     "date": "2026-11-24",
@@ -128395,20 +127574,6 @@
      "src/hooks/__tests__/useContactAlerts.coverage.test.tsx",
      "src/hooks/useContactAlerts.ts"
     ]
-   },
-   {
-    "sha": "43eafa2",
-    "date": "2026-11-24",
-    "author": "adm01-debug",
-    "subject": "fix: prazo de resposta nas edges de e-mail e integracao (etapa 210) (#264)",
-    "files": [
-     "docs/qa/05-PROGRESSO.md",
-     "supabase/functions/elevenlabs-conversation-token/index.ts",
-     "supabase/functions/notify-blocked-ip/index.ts",
-     "supabase/functions/notify-new-device/index.ts",
-     "supabase/functions/ocr-virtual-fax/index.ts",
-     "supabase/functions/teams-fetch-recordings/index.ts"
-    ]
    }
   ],
   "hot_files": [
@@ -128485,11 +127650,11 @@
     2
    ],
    [
-    "src/components/admin/voip/TrunkMetricsTab.tsx",
+    "src/hooks/__tests__/useCallSession.test.ts",
     1
    ],
    [
-    "src/components/agent/BargeInNotification.tsx",
+    "src/hooks/__tests__/useHoldReminder.test.ts",
     1
    ]
   ]

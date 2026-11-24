@@ -5,17 +5,17 @@
   "vitest",
   "playwright"
  ],
- "total": 402,
+ "total": 397,
  "por_tipo": {
   "contrato": 1,
   "e2e": 13,
   "pytest": 2,
-  "unit": 385
+  "unit": 380
  },
  "onde_ficam": [
   {
    "padrao": "co-localizado (__tests__)",
-   "arquivos": 378
+   "arquivos": 373
   },
   {
    "padrao": "e2e/",
@@ -754,13 +754,6 @@
    "casos": 12
   },
   {
-   "arquivo": "src/hooks/__tests__/useCallSession.test.ts",
-   "tipo": "unit",
-   "linhas": 129,
-   "testa": [],
-   "casos": 10
-  },
-  {
    "arquivo": "src/hooks/__tests__/useCallTimers.coverage.test.tsx",
    "tipo": "unit",
    "linhas": 118,
@@ -1178,13 +1171,6 @@
    "casos": 6
   },
   {
-   "arquivo": "src/hooks/__tests__/useHoldReminder.test.ts",
-   "tipo": "unit",
-   "linhas": 264,
-   "testa": [],
-   "casos": 31
-  },
-  {
    "arquivo": "src/hooks/__tests__/useHoldSoundAlert.coverage.test.tsx",
    "tipo": "unit",
    "linhas": 78,
@@ -1308,18 +1294,11 @@
   {
    "arquivo": "src/hooks/__tests__/useMFA.coverage.test.tsx",
    "tipo": "unit",
-   "linhas": 127,
+   "linhas": 134,
    "testa": [
     "src/hooks/useMFA.ts"
    ],
    "casos": 8
-  },
-  {
-   "arquivo": "src/hooks/__tests__/useMFA.test.ts",
-   "tipo": "unit",
-   "linhas": 173,
-   "testa": [],
-   "casos": 28
   },
   {
    "arquivo": "src/hooks/__tests__/useMultiChannelCall.compliance.test.tsx",
@@ -1338,13 +1317,6 @@
     "src/hooks/useMultiChannelCall.ts"
    ],
    "casos": 9
-  },
-  {
-   "arquivo": "src/hooks/__tests__/useMultiChannelCall.test.ts",
-   "tipo": "unit",
-   "linhas": 208,
-   "testa": [],
-   "casos": 25
   },
   {
    "arquivo": "src/hooks/__tests__/useMultiDeviceRing.coverage.test.tsx",
@@ -1416,13 +1388,6 @@
    "testa": [
     "src/hooks/usePredictiveDialer.ts"
    ],
-   "casos": 22
-  },
-  {
-   "arquivo": "src/hooks/__tests__/usePredictiveDialer.test.ts",
-   "tipo": "unit",
-   "linhas": 203,
-   "testa": [],
    "casos": 22
   },
   {
