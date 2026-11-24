@@ -5,6 +5,7 @@
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.45.0';
 import { buildCorsHeaders } from '../_shared/cors.ts';
 import { validate, oneOf } from '../_shared/validate.ts';
+import { getCorrelationId, internalErrorResponse } from '../_shared/errors.ts';
 
 const PERIOD_DAYS: Record<string, number> = { day: 1, week: 7, month: 30 };
 
@@ -118,7 +119,6 @@ Deno.serve(async (req) => {
       requestId,
     }), { status: 200, headers });
   } catch (err) {
-    const message = err instanceof Error ? err.message : 'Unknown error';
-    return new Response(JSON.stringify({ error: message, requestId }), { status: 500, headers });
+    return internalErrorResponse(err, getCorrelationId(req), headers, { fn: 'voip-recommendation-history' });
   }
 });

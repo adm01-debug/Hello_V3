@@ -5,6 +5,7 @@
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.57.4';
 import { buildCorsHeaders } from '../_shared/cors.ts';
 import { validate, string as vstring, oneOf } from '../_shared/validate.ts';
+import { getCorrelationId, internalErrorResponse } from '../_shared/errors.ts';
 
 interface QualityRow {
   mos_avg: number | null;
@@ -113,7 +114,6 @@ Deno.serve(async (req) => {
       { status: 200, headers: baseHeaders },
     );
   } catch (err) {
-    const message = err instanceof Error ? err.message : 'Unknown error';
-    return new Response(JSON.stringify({ error: message, requestId }), { status: 500, headers: baseHeaders });
+    return internalErrorResponse(err, getCorrelationId(req), baseHeaders, { fn: 'voip-sla-report' });
   }
 });

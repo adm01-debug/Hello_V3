@@ -2,6 +2,7 @@ import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
 import { buildCorsHeaders } from "../_shared/cors.ts";
 import { checkRateLimitDB, getClientIp } from "../_shared/rate-limit.ts";
 import { fetchComPrazo } from "../_shared/resilience.ts";
+import { getCorrelationId, internalErrorResponse } from '../_shared/errors.ts';
 
 const SYSTEM_PROMPT = `Você é um assistente especializado em gerar notas executivas de reuniões e chamadas de atendimento em português brasileiro.
 Analise a transcrição fornecida e extraia, de forma estruturada e objetiva:
@@ -293,9 +294,6 @@ Gere o resumo estruturado chamando a função save_meeting_summary.`;
     });
   } catch (e) {
     console.error("generate-meeting-summary fatal", e);
-    return new Response(
-      JSON.stringify({ error: e instanceof Error ? e.message : "Erro desconhecido" }),
-      { status: 500, headers: { ...corsHeaders, "Content-Type": "application/json" } }
-    );
+    return internalErrorResponse(e, getCorrelationId(req), corsHeaders, { fn: 'generate-meeting-summary' });
   }
 });

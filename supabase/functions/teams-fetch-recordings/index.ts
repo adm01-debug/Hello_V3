@@ -1,5 +1,6 @@
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
 import { buildCorsHeaders } from "../_shared/cors.ts";
+import { getCorrelationId, internalErrorResponse } from '../_shared/errors.ts';
 
 const GRAPH_URL = "https://graph.microsoft.com/v1.0";
 
@@ -151,15 +152,7 @@ Deno.serve(async (req) => {
     );
   } catch (err) {
     console.error("[teams-fetch-recordings] error:", err);
-    return new Response(
-      JSON.stringify({
-        error: err instanceof Error ? err.message : "Internal error",
-      }),
-      {
-        status: 500,
-        headers: { ...corsHeaders, "Content-Type": "application/json" },
-      },
-    );
+    return internalErrorResponse(err, getCorrelationId(req), corsHeaders, { fn: 'teams-fetch-recordings' });
   }
 });
 

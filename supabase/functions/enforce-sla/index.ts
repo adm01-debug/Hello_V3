@@ -1,6 +1,7 @@
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2.45.0";
 import { buildCorsHeaders } from "../_shared/cors.ts";
 import { addBusinessMinutes, scheduleFromRows, type BusinessSchedule } from "../_shared/business-hours.ts";
+import { getCorrelationId, internalErrorResponse } from '../_shared/errors.ts';
 
 Deno.serve(async (req) => {
   const cors = buildCorsHeaders(req);
@@ -145,12 +146,7 @@ Deno.serve(async (req) => {
     );
   } catch (error) {
     console.error("enforce-sla error:", error);
-    return new Response(
-      JSON.stringify({
-        error: error instanceof Error ? error.message : "Erro interno",
-      }),
-      { status: 500, headers: { ...cors, "Content-Type": "application/json" } },
-    );
+    return internalErrorResponse(error, getCorrelationId(req), cors, { fn: 'enforce-sla' });
   }
 });
 

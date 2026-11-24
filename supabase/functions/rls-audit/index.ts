@@ -2,6 +2,7 @@
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
 import { buildCorsHeaders } from "../_shared/cors.ts";
+import { getCorrelationId, internalErrorResponse } from '../_shared/errors.ts';
 
 const TABELAS_CRITICAS = [
   "call_control_audit_logs",
@@ -91,8 +92,6 @@ serve(async (req) => {
       },
     });
   } catch (error) {
-    return json({
-      error: error instanceof Error ? error.message : "erro desconhecido",
-    }, 500);
+    return internalErrorResponse(error, getCorrelationId(req), cors, { fn: 'rls-audit' });
   }
 });

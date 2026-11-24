@@ -5,6 +5,7 @@
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.57.4';
 import { buildCorsHeaders } from '../_shared/cors.ts';
 import { validate, number } from '../_shared/validate.ts';
+import { getCorrelationId, internalErrorResponse } from '../_shared/errors.ts';
 
 interface MetricRow {
   created_at: string;
@@ -109,7 +110,6 @@ Deno.serve(async (req) => {
       { status: 200, headers },
     );
   } catch (err) {
-    const message = err instanceof Error ? err.message : 'Unknown error';
-    return new Response(JSON.stringify({ error: message, requestId }), { status: 500, headers });
+    return internalErrorResponse(err, getCorrelationId(req), headers, { fn: 'voip-quality-heatmap' });
   }
 });

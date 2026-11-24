@@ -10,6 +10,7 @@ import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.45.0';
 import { buildCorsHeaders } from '../_shared/cors.ts';
 import { validate, string, number, optional } from '../_shared/validate.ts';
 import { MOS_THRESHOLDS } from '../_shared/mos.ts';
+import { getCorrelationId, internalErrorResponse } from '../_shared/errors.ts';
 
 const BASELINE_DAYS = 7;
 
@@ -211,7 +212,6 @@ Deno.serve(async (req) => {
 
     return new Response(JSON.stringify(result), { status: 200, headers });
   } catch (err) {
-    const message = err instanceof Error ? err.message : 'Unknown error';
-    return new Response(JSON.stringify({ error: message, requestId }), { status: 500, headers });
+    return internalErrorResponse(err, getCorrelationId(req), headers, { fn: 'voip-recommendation-simulate' });
   }
 });

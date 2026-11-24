@@ -7,6 +7,7 @@ import {
   CallSession,
   TrackResult,
 } from "./track-engine.ts";
+import { getCorrelationId, internalErrorResponse } from '../_shared/errors.ts';
 
 interface TrackRow {
   id: string;
@@ -147,11 +148,7 @@ serve(async (req) => {
     };
     return json(result, 200, req);
   } catch (err) {
-    return json(
-      { error: err instanceof Error ? err.message : "unknown" },
-      500,
-      req,
-    );
+    return internalErrorResponse(err, getCorrelationId(req), buildCorsHeaders(req), { fn: 'generate-coaching-track' });
   }
 });
 

@@ -2,6 +2,7 @@ import { buildCorsHeaders } from "../_shared/cors.ts";
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
 import { clientIpFromHeaders } from "../_shared/client-ip.ts";
 import { checkRateLimitDB } from "../_shared/rate-limit.ts";
+import { getCorrelationId, internalErrorResponse } from '../_shared/errors.ts';
 
 // A-021: conta inexistente, pedido pendente, pedido criado e falha ao listar usuarios
 // respondem o mesmo corpo (status 200); distinguir os casos descobria quais emails existem.
@@ -123,10 +124,6 @@ Deno.serve(async (req) => {
 
   } catch (error: unknown) {
     console.error('Error in request-password-reset:', error);
-    const errorMessage = error instanceof Error ? error.message : 'Unknown error';
-    return new Response(
-      JSON.stringify({ error: errorMessage }),
-      { status: 500, headers: { ...buildCorsHeaders(req), 'Content-Type': 'application/json' } }
-    );
+    return internalErrorResponse(error, getCorrelationId(req), buildCorsHeaders(req), { fn: 'request-password-reset' });
   }
 });

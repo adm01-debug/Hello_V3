@@ -1,6 +1,7 @@
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
 import { buildCorsHeaders } from "../_shared/cors.ts";
 import { optional, string, validate } from "../_shared/validate.ts";
+import { getCorrelationId, internalErrorResponse } from '../_shared/errors.ts';
 
 const OPENROUTER_API_KEY = Deno.env.get("OPENROUTER_API_KEY");
 
@@ -156,15 +157,7 @@ Deno.serve(async (req) => {
     );
   } catch (err) {
     console.error("[detect-key-moments] error:", err);
-    return new Response(
-      JSON.stringify({
-        error: err instanceof Error ? err.message : "Internal error",
-      }),
-      {
-        status: 500,
-        headers: { ...corsHeaders, "Content-Type": "application/json" },
-      },
-    );
+    return internalErrorResponse(err, getCorrelationId(req), corsHeaders, { fn: 'detect-key-moments' });
   }
 });
 
