@@ -53,11 +53,19 @@ export function useCallRecording() {
           const filePath = `recordings/${fileName}`;
           const { error: uploadError } = await supabase.storage.from('call-recordings').upload(filePath, blob);
           if (uploadError) throw uploadError;
-          await supabase.from('call_recordings').insert({
+          const { error: recordError } = await supabase.from('call_recordings').insert({
             file_path: filePath, call_session_id: options?.callSessionId || null,
             conference_id: options?.conferenceId || null, participant_count: options?.participantCount || null,
             duration_seconds: null, file_size_bytes: blob.size,
           });
+          if (recordError) {
+            // O áudio está no storage, mas o registro da gravação não existe: sem a
+            // linha em `call_recordings` a chamada fica sem o registro legal do
+            // atendimento. Devolver o caminho aqui faria a tela anunciar sucesso.
+            log.error(`Gravação enviada mas não registrada em call_recordings (${filePath})`, recordError);
+            resolve(null);
+            return;
+          }
           resolve(filePath);
         } catch (err) {
           log.error('Save failed', err);

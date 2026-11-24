@@ -173,8 +173,10 @@ export function useVoipQualityMonitor(
         quality_label: labelFromMos(mosAvg),
         raw_samples: s.slice(-30) as unknown as Record<string, unknown>[],
       };
-      await supabase.from('call_quality_metrics').insert(payload as never);
-      log.info('Quality metrics persisted', { samples: s.length, mosAvg });
+      const { error: metricsError } = await supabase.from('call_quality_metrics').insert(payload as never);
+      // Métrica de qualidade pode ser perdida sem interromper a chamada.
+      if (metricsError) log.error('Failed to persist quality metrics', metricsError);
+      else log.info('Quality metrics persisted', { samples: s.length, mosAvg });
     } catch (err) {
       log.error('Failed to persist quality metrics', err);
     }

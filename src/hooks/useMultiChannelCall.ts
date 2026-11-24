@@ -228,7 +228,9 @@ export function useMultiChannelCall(preDialCheck?: PreDialCheck) {
     }
     try {
       if (action === 'start') {
-        await supabase.from('hold_events').insert({ call_session_id: callSessionId, agent_name: agentName || null, started_at: new Date().toISOString() });
+        const { error: holdError } = await supabase.from('hold_events').insert({ call_session_id: callSessionId, agent_name: agentName || null, started_at: new Date().toISOString() });
+        // Sem o hold gravado a duração de espera do relatório perde este trecho.
+        if (holdError) log.error('persistHoldEvent: falha ao gravar o hold', holdError);
       } else {
         const { data: ev, error: evError } = await supabase.from('hold_events').select('id').eq('call_session_id', callSessionId).is('ended_at', null).order('started_at', { ascending: false }).limit(1).maybeSingle();
         if (evError) {

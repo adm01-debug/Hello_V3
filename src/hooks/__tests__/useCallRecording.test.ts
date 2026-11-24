@@ -66,4 +66,19 @@ describe('useCallRecording', () => {
     expect(result.current.isRecording).toBe(false);
     expect(upload).not.toHaveBeenCalled();
   });
+
+  it('devolve null quando o audio sobe mas a gravacao nao e registrada no banco', async () => {
+    insert.mockResolvedValue({ error: { message: 'new row violates row-level security policy' } });
+    const { result } = renderHook(() => useCallRecording());
+
+    await act(async () => { await result.current.startRecording(); });
+    let saved: string | null = 'pendente';
+    await act(async () => { saved = await result.current.stopAndSaveRecording({ callSessionId: 'sess-1' }); });
+
+    // O audio existe no storage, mas sem a linha em call_recordings a tela nao
+    // pode anunciar sucesso.
+    expect(upload).toHaveBeenCalledTimes(1);
+    expect(insert).toHaveBeenCalledTimes(1);
+    expect(saved).toBeNull();
+  });
 });
