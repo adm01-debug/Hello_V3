@@ -1,7 +1,7 @@
 # Contexto do projeto para agentes de IA
 
 GERADO AUTOMATICAMENTE por scripts/ai-context/gerar.mjs — não editar à mão; será sobrescrito.
-Publicado em `docs/contexto/codigo/` na branch `contexto` (gerada, nunca abra PR dela) a cada push em `main` e a cada 10 minutos pelo workflow `contexto.yml`; índice único das três fontes em `docs/contexto/00-INDEX.md`. Gere local com `node scripts/ai-context/gerar.mjs`. Commit-base: `ba7d9013ae4468c578895384f74e7bbee2530a15` (2026-11-24T12:41:38-03:00).
+Publicado em `docs/contexto/codigo/` na branch `contexto` (gerada, nunca abra PR dela) a cada push em `main` e a cada 10 minutos pelo workflow `contexto.yml`; índice único das três fontes em `docs/contexto/00-INDEX.md`. Gere local com `node scripts/ai-context/gerar.mjs`. Commit-base: `07dfba7a26cd628b69df224cc58f1eef70092674` (2026-11-24T12:52:40-03:00).
 
 ## Como usar (leia antes de planejar ou executar qualquer tarefa)
 1. **Tela/rota/menu** → `rotas.json` (url/vista/menu → arquivo → hooks → tabelas → edges; `rotas_http_backend` para APIs) e `modulos.json` (módulo inteiro + dependências entre módulos).
@@ -36,7 +36,7 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 |---|---|
 | arquivos_total | 1728 |
 | arquivos_codigo | 1324 |
-| linhas_codigo | 176482 |
+| linhas_codigo | 176522 |
 | rotas | 106 |
 | rotas_http_backend | 11 |
 | vistas_por_id | 0 |
@@ -370,13 +370,13 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 - possiveis_segredos_no_codigo: 3 — ex.: src/lib/__tests__/security-advanced.test.ts:203, src/lib/__tests__/security-advanced.test.ts:208, src/lib/__tests__/security-advanced.test.ts:213
 
 ## Grafo de código (graphify)
-- 10209 nós · 26979 arestas · 782 comunidades · grafo do commit `ba7d9013`
-- comunidades maiores: vitest (186), client.ts (182), card.tsx (176), usePageTitle (159), react (139), safe-date.ts (138), utils.ts (131), Badge (117), cn (114), @tanstack/react-query (112), buildCorsHeaders (104), snapshot.py (102)
+- 10209 nós · 26981 arestas · 778 comunidades · grafo do commit `07dfba7a`
+- comunidades maiores: client.ts (193), vitest (181), card.tsx (176), usePageTitle (159), buildCorsHeaders (153), react (139), safe-date.ts (138), utils.ts (131), Badge (117), cn (114), @tanstack/react-query (110), sonner (104)
 - símbolos mais chamados: cn() (src/lib/utils.ts), usePageTitle() (src/hooks/usePageTitle.ts), safeFormatDatePtBR() (src/lib/safe-date.ts), q() (scripts/supabase_snapshot/snapshot.py), safeFormatDistanceToNow() (src/lib/safe-date.ts), useAuthContext() (src/contexts/AuthContext.tsx), traceHeaders() (src/lib/tracing.ts), withTrace() (src/lib/tracing.ts), formatDuration() (src/lib/utils.ts), safeToLocaleString() (src/lib/safe-date.ts), .collect() (scripts/supabase_snapshot/test_snapshot.py), buildCorsHeaders() (supabase/functions/_shared/cors.ts)
 - consulta local: `graphify query "<pergunta>"`, `graphify path "<A>" "<B>"`, `graphify explain "<X>"`
 
 ## Hotspots (arquivos mais alterados, 90 dias)
-- docs/qa/05-PROGRESSO.md (115)
+- docs/qa/05-PROGRESSO.md (116)
 - docs/estado/funcionalidades-planejadas.md (30)
 - src/components/layout/AppSidebar.tsx (10)
 - src/hooks/useMultiChannelCall.ts (10)
@@ -429,6 +429,7 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 
 
 ## Últimos commits
+- 2026-11-24 `07dfba7` fix: invalida cache depois de salvar artigo e verificar voz (etapa 219) (#292)
 - 2026-11-24 `ba7d901` fix: bloqueia duplo clique nas acoes de escrita que duplicavam registro (etapa 218) (#291)
 - 2026-11-24 `8cf611e` fix: remove 13 testes-espelho de hooks e de cache (etapa 284 parte 2) (#290)
 - 2026-11-24 `9660f91` fix: remove 5 testes-espelho e cobre crypto.getRandomValues no useMFA (etapa 284 parcial) (#289)
@@ -443,7 +444,6 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 - 2026-11-24 `9ad7ed6` fix: unifica /history e /call-history num alias com redirect (etapa 266) (#281)
 - 2026-11-24 `e34a65b` fix: pausa o poll dos paineis com a aba oculta e tira o monitor de VoIP das rotas publicas (etapa 253) (#280)
 - 2026-11-24 `4ad967d` fix: le o resumo de notificacoes em lote em vez de por usuario (etapa 249) (#279)
-- 2026-11-24 `677c45d` fix: valida IP numa consulta por lista em vez de uma por faixa (etapa 247) (#278)
 
 ## Arquivos deste diretório
 - `docs/contexto/codigo/rotas.json`

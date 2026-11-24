@@ -1146,12 +1146,12 @@
   {
    "arquivo": "src/hooks/__tests__/useKnowledgeBase.coverage.test.tsx",
    "tipo": "unit",
-   "linhas": 205,
+   "linhas": 223,
    "testa": [
     "src/hooks/useKnowledgeBase.ts",
     "src/integrations/supabase/client.ts"
    ],
-   "casos": 16
+   "casos": 17
   },
   {
    "arquivo": "src/hooks/__tests__/useLearning.coverage.test.tsx",
@@ -1687,12 +1687,12 @@
   {
    "arquivo": "src/hooks/__tests__/useVoiceBiometrics.coverage.test.tsx",
    "tipo": "unit",
-   "linhas": 201,
+   "linhas": 217,
    "testa": [
     "src/hooks/useVoiceBiometrics.ts",
     "src/integrations/supabase/client.ts"
    ],
-   "casos": 13
+   "casos": 14
   },
   {
    "arquivo": "src/hooks/__tests__/useVoiceCommand.coverage.test.tsx",

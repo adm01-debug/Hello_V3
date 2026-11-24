@@ -2,11 +2,16 @@
  "aviso": "GERADO AUTOMATICAMENTE por scripts/ai-context/gerar.mjs — não editar à mão; será sobrescrito.",
  "format_version": 2,
  "git": {
-  "commit": "ba7d9013ae4468c578895384f74e7bbee2530a15",
+  "commit": "07dfba7a26cd628b69df224cc58f1eef70092674",
   "branch": "main",
-  "data_commit": "2026-11-24T12:41:38-03:00",
+  "data_commit": "2026-11-24T12:52:40-03:00",
   "remote": "https://github.com/adm01-debug/Hello_V3",
   "ultimos_commits": [
+   {
+    "sha": "07dfba7",
+    "data": "2026-11-24",
+    "assunto": "fix: invalida cache depois de salvar artigo e verificar voz (etapa 219) (#292)"
+   },
    {
     "sha": "ba7d901",
     "data": "2026-11-24",
@@ -126,14 +131,9 @@
     "sha": "46cc92e",
     "data": "2026-11-24",
     "assunto": "chore: painel de traducao sob demanda tira a rota Calls do teto do bundle (#269)"
-   },
-   {
-    "sha": "ee1f100",
-    "data": "2026-11-24",
-    "assunto": "fix: rotulos acessiveis nos botoes-icone de discador, chamada, contatos e transcricao (etapas 259-261) (#267)"
    }
   ],
-  "arquivos_mudados_7d": 1228,
+  "arquivos_mudados_7d": 1231,
   "pastas_mais_mudadas_30d": [
    {
     "pasta": "covout/lcov-report/hooks",
@@ -141,11 +141,11 @@
    },
    {
     "pasta": "docs/qa/05-PROGRESSO.md",
-    "mudancas": 115
+    "mudancas": 116
    },
    {
     "pasta": "src/hooks/__tests__",
-    "mudancas": 102
+    "mudancas": 104
    },
    {
     "pasta": "covout/lcov-report/lib",
@@ -199,7 +199,7 @@
   "arquivos_mais_mudados_90d": [
    {
     "arquivo": "docs/qa/05-PROGRESSO.md",
-    "mudancas": 115
+    "mudancas": 116
    },
    {
     "arquivo": "docs/estado/funcionalidades-planejadas.md",
@@ -301,7 +301,7 @@
   "autores_30d": [
    {
     "autor": "adm01-debug",
-    "commits": 270
+    "commits": 271
    },
    {
     "autor": "Joaquim Ataides",
@@ -316,7 +316,7 @@
  "contagens": {
   "arquivos_total": 1728,
   "arquivos_codigo": 1324,
-  "linhas_codigo": 176482,
+  "linhas_codigo": 176522,
   "rotas": 106,
   "rotas_http_backend": 11,
   "vistas_por_id": 0,
@@ -492,7 +492,7 @@
   },
   "src/hooks": {
    "arquivos": 338,
-   "linhas": 42812
+   "linhas": 42852
   },
   "src/integrations": {
    "arquivos": 3,

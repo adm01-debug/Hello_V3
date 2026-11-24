@@ -1,15 +1,15 @@
 {
  "meta": {
-  "sha": "ba7d9013ae4468c578895384f74e7bbee2530a15",
+  "sha": "07dfba7a26cd628b69df224cc58f1eef70092674",
   "branch": "main",
   "remote": "https://github.com/adm01-debug/Hello_V3",
-  "generated_at": "2026-11-24 15:42 UTC",
+  "generated_at": "2026-11-24 15:53 UTC",
   "files_total": 1775,
   "code_files": 1571,
-  "code_lines": 192532
+  "code_lines": 192572
  },
  "version": "1.3.2",
- "facts_hash": "8be11ae47f6e64a6",
+ "facts_hash": "d21695329418b9af",
  "stack": {
   "frameworks": [
    "React + Vite",
@@ -33778,7 +33778,7 @@
   {
    "module": "src/hooks",
    "files": 338,
-   "lines": 42812,
+   "lines": 42852,
    "tables": [
     "accounts",
     "active_sessions",
@@ -61013,6 +61013,10 @@
    },
    {
     "file": "src/hooks/__tests__/useKnowledgeBase.coverage.test.tsx",
+    "name": "invalida a lista e o artigo aberto depois de salvar"
+   },
+   {
+    "file": "src/hooks/__tests__/useKnowledgeBase.coverage.test.tsx",
     "name": "useRecordKbView"
    },
    {
@@ -63218,6 +63222,10 @@
    {
     "file": "src/hooks/__tests__/useVoiceBiometrics.coverage.test.tsx",
     "name": "verify error path triggers toast.error"
+   },
+   {
+    "file": "src/hooks/__tests__/useVoiceBiometrics.coverage.test.tsx",
+    "name": "invalida a lista depois de verificar (o banco grava last_verified_at)"
    },
    {
     "file": "src/hooks/__tests__/useVoiceBiometrics.coverage.test.tsx",
@@ -99624,7 +99632,7 @@
   },
   "src/hooks/useKnowledgeBase.ts": {
    "path": "src/hooks/useKnowledgeBase.ts",
-   "lines": 189,
+   "lines": 191,
    "exports": [
     "interface KbCategory",
     "interface KbArticle",
@@ -102660,7 +102668,7 @@
   },
   "src/hooks/useVoiceBiometrics.ts": {
    "path": "src/hooks/useVoiceBiometrics.ts",
-   "lines": 203,
+   "lines": 207,
    "exports": [
     "interface VoicePrint",
     "interface VerifyResult",
@@ -104759,7 +104767,7 @@
   },
   "src/hooks/__tests__/useKnowledgeBase.coverage.test.tsx": {
    "path": "src/hooks/__tests__/useKnowledgeBase.coverage.test.tsx",
-   "lines": 205,
+   "lines": 223,
    "is_test": true,
    "tests": [
     "useKbCategories",
@@ -104780,6 +104788,7 @@
     "saves an article and adds published_at when publishing",
     "keeps an existing published_at",
     "handles an upsert error",
+    "invalida a lista e o artigo aberto depois de salvar",
     "useRecordKbView",
     "records a view with helpful flag and conversation id",
     "records a view with defaults and tolerates insert error"
@@ -105911,7 +105920,7 @@
   },
   "src/hooks/__tests__/useVoiceBiometrics.coverage.test.tsx": {
    "path": "src/hooks/__tests__/useVoiceBiometrics.coverage.test.tsx",
-   "lines": 201,
+   "lines": 217,
    "is_test": true,
    "errors": [
     ", async () => {\n    invokeMock.mockResolvedValue({ data: null, error: { message: "
@@ -105923,6 +105932,7 @@
     "enroll error path triggers toast.error",
     "verifies successfully",
     "verify error path triggers toast.error",
+    "invalida a lista depois de verificar (o banco grava last_verified_at)",
     "removes a voice print",
     "useFraudSignals",
     "loads signals without filters",
@@ -123198,10 +123208,23 @@
   }
  },
  "git": {
-  "sha": "ba7d9013ae4468c578895384f74e7bbee2530a15",
+  "sha": "07dfba7a26cd628b69df224cc58f1eef70092674",
   "branch": "main",
   "remote": "https://github.com/adm01-debug/Hello_V3",
   "commits": [
+   {
+    "sha": "07dfba7",
+    "date": "2026-11-24",
+    "author": "adm01-debug",
+    "subject": "fix: invalida cache depois de salvar artigo e verificar voz (etapa 219) (#292)",
+    "files": [
+     "docs/qa/05-PROGRESSO.md",
+     "src/hooks/__tests__/useKnowledgeBase.coverage.test.tsx",
+     "src/hooks/__tests__/useVoiceBiometrics.coverage.test.tsx",
+     "src/hooks/useKnowledgeBase.ts",
+     "src/hooks/useVoiceBiometrics.ts"
+    ]
+   },
    {
     "sha": "ba7d901",
     "date": "2026-11-24",
@@ -123695,17 +123718,6 @@
      "supabase/functions/validate-ip/index.ts",
      "supabase/functions/webauthn-authenticate/index.ts"
     ]
-   },
-   {
-    "sha": "9cc710b",
-    "date": "2026-11-24",
-    "author": "adm01-debug",
-    "subject": "fix: orcamento de tempo na cadeia edge->edge e no QA de voz (etapa 211) (#265)",
-    "files": [
-     "docs/qa/05-PROGRESSO.md",
-     "supabase/functions/voip-capacity-recommendations/index.ts",
-     "supabase/functions/voip-diagnostic-voice-qa/index.ts"
-    ]
    }
   ],
   "hot_files": [
@@ -123728,6 +123740,10 @@
    [
     "docs/estado/funcionalidades-planejadas.md",
     3
+   ],
+   [
+    "src/hooks/useKnowledgeBase.ts",
+    2
    ],
    [
     "src/pages/BattleCards.tsx",
@@ -123783,10 +123799,6 @@
    ],
    [
     "src/pages/GeoBlocking.tsx",
-    2
-   ],
-   [
-    "supabase/functions/validate-geo/index.ts",
     2
    ]
   ]

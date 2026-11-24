@@ -59,11 +59,11 @@
  "commits": {
   "convencao": "conventional commits (observado)",
   "exemplos": [
+   "fix: invalida cache depois de salvar artigo e verificar voz (etapa 219) (#292)",
    "fix: bloqueia duplo clique nas acoes de escrita que duplicavam registro (etapa 218) (#291)",
    "fix: remove 13 testes-espelho de hooks e de cache (etapa 284 parte 2) (#290)",
    "fix: remove 5 testes-espelho e cobre crypto.getRandomValues no useMFA (etapa 284 parcial) (#289)",
-   "fix: revisa os 41 disables de dependencia de efeito e zera o exhaustive-deps (etapa 217) (#288)",
-   "infra: trigger de recalculo de hold_time a partir dos hold_events (etapa 069) — DDL em producao, aguarda decisao (#274)"
+   "fix: revisa os 41 disables de dependencia de efeito e zera o exhaustive-deps (etapa 217) (#288)"
   ]
  },
  "pr_template": null,

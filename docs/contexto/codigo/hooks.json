@@ -2639,7 +2639,7 @@
     "useRecordKbView",
     "useUpsertArticle"
    ],
-   "linhas": 189,
+   "linhas": 191,
    "dominio": "hooks",
    "tabelas": [
     "kb_article_views",
@@ -4317,7 +4317,7 @@
     "useRedactCall",
     "useVoicePrints"
    ],
-   "linhas": 203,
+   "linhas": 207,
    "dominio": "hooks",
    "tabelas": [
     "fraud_signals",
