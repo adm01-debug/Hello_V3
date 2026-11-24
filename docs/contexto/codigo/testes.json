@@ -1568,11 +1568,11 @@
   {
    "arquivo": "src/hooks/__tests__/useSessionManager.coverage.test.tsx",
    "tipo": "unit",
-   "linhas": 114,
+   "linhas": 134,
    "testa": [
     "src/hooks/useSessionManager.ts"
    ],
-   "casos": 7
+   "casos": 9
   },
   {
    "arquivo": "src/hooks/__tests__/useShifts.coverage.test.tsx",
@@ -1918,11 +1918,11 @@
   {
    "arquivo": "src/hooks/__tests__/useWebAuthn.coverage.test.tsx",
    "tipo": "unit",
-   "linhas": 346,
+   "linhas": 360,
    "testa": [
     "src/hooks/useWebAuthn.ts"
    ],
-   "casos": 24
+   "casos": 25
   },
   {
    "arquivo": "src/hooks/__tests__/useWebVitals.coverage.test.tsx",

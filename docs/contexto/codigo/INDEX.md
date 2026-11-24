@@ -1,7 +1,7 @@
 # Contexto do projeto para agentes de IA
 
 GERADO AUTOMATICAMENTE por scripts/ai-context/gerar.mjs — não editar à mão; será sobrescrito.
-Publicado em `docs/contexto/codigo/` na branch `contexto` (gerada, nunca abra PR dela) a cada push em `main` e a cada 10 minutos pelo workflow `contexto.yml`; índice único das três fontes em `docs/contexto/00-INDEX.md`. Gere local com `node scripts/ai-context/gerar.mjs`. Commit-base: `6ba5cb05cceb6fccdf734998bb5be0e4417663be` (2026-11-24T04:16:30-03:00).
+Publicado em `docs/contexto/codigo/` na branch `contexto` (gerada, nunca abra PR dela) a cada push em `main` e a cada 10 minutos pelo workflow `contexto.yml`; índice único das três fontes em `docs/contexto/00-INDEX.md`. Gere local com `node scripts/ai-context/gerar.mjs`. Commit-base: `3717f08c30b063a61664c9424eee6a2eea83a25c` (2026-11-24T04:18:52-03:00).
 
 ## Como usar (leia antes de planejar ou executar qualquer tarefa)
 1. **Tela/rota/menu** → `rotas.json` (url/vista/menu → arquivo → hooks → tabelas → edges; `rotas_http_backend` para APIs) e `modulos.json` (módulo inteiro + dependências entre módulos).
@@ -36,7 +36,7 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 |---|---|
 | arquivos_total | 1731 |
 | arquivos_codigo | 1328 |
-| linhas_codigo | 178937 |
+| linhas_codigo | 178981 |
 | rotas | 106 |
 | rotas_http_backend | 12 |
 | vistas_por_id | 0 |
@@ -370,13 +370,13 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 - possiveis_segredos_no_codigo: 4 — ex.: scripts/ai-context/cenarios.mjs:103, src/lib/__tests__/security-advanced.test.ts:203, src/lib/__tests__/security-advanced.test.ts:208
 
 ## Grafo de código (graphify)
-- 10148 nós · 26695 arestas · 785 comunidades · grafo do commit `6ba5cb05`
+- 10148 nós · 26695 arestas · 785 comunidades · grafo do commit `3717f08c`
 - comunidades maiores: lucide-react (291), cn (239), vitest (223), client.ts (212), 5. Em uso por rota (188), react (164), usePageTitle (161), Badge (127), safeFormatDistanceToNow (122), Onda 4 — Funcionalidades incompletas (151–180, 30 etapas) (114), buildCorsHeaders (103), snapshot.py (102)
 - símbolos mais chamados: cn() (src/lib/utils.ts), usePageTitle() (src/hooks/usePageTitle.ts), safeFormatDatePtBR() (src/lib/safe-date.ts), q() (scripts/supabase_snapshot/snapshot.py), safeFormatDistanceToNow() (src/lib/safe-date.ts), useAuthContext() (src/contexts/AuthContext.tsx), traceHeaders() (src/lib/tracing.ts), withTrace() (src/lib/tracing.ts), formatDuration() (src/lib/utils.ts), safeToLocaleString() (src/lib/safe-date.ts), .collect() (scripts/supabase_snapshot/test_snapshot.py), buildCorsHeaders() (supabase/functions/_shared/cors.ts)
 - consulta local: `graphify query "<pergunta>"`, `graphify path "<A>" "<B>"`, `graphify explain "<X>"`
 
 ## Hotspots (arquivos mais alterados, 90 dias)
-- docs/qa/05-PROGRESSO.md (79)
+- docs/qa/05-PROGRESSO.md (80)
 - docs/estado/funcionalidades-planejadas.md (27)
 - src/components/layout/AppSidebar.tsx (9)
 - src/hooks/useMultiChannelCall.ts (9)
@@ -429,6 +429,7 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 
 
 ## Últimos commits
+- 2026-11-24 `3717f08` fix: falha em sessao e passkey passa a ser visivel (etapa 183) (#250)
 - 2026-11-24 `6ba5cb0` fix: estatisticas da semana nao falham mais em silencio (etapa 185) (#252)
 - 2026-11-24 `ccbea6f` fix: falha na trilha de auditoria passa a ser visivel (etapa 182) (#249)
 - 2026-11-24 `e335d9d` feat: botao Ver Alertas abre a lista de alertas na propria tela (etapa 167) (#247)
@@ -443,7 +444,6 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 - 2026-11-24 `5bae125` feat: liga Priorizar no discador preditivo (etapa 163) (#239)
 - 2026-11-24 `b21f44f` feat: mostra os acertos dos trackers e leva ao detalhe da chamada (etapa 157) (#238)
 - 2026-11-24 `92474f7` chore: remove o hook de conferencia orfao e defeituoso (etapa 158) (#237)
-- 2026-11-24 `58ca27a` docs: mapa das 46 rotas protegidas sem papel (etapa 090) (#236)
 
 ## Arquivos deste diretório
 - `docs/contexto/codigo/rotas.json`

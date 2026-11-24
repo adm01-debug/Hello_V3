@@ -1,6 +1,6 @@
 # 07 · REGRAS DE NEGÓCIO
 
-> Gerado automaticamente por AI Context Sync v1.3.2 · commit `6ba5cb05cc` · branch `main` · 2026-11-24 07:17 UTC
+> Gerado automaticamente por AI Context Sync v1.3.2 · commit `3717f08c30` · branch `main` · 2026-11-24 07:19 UTC
 > Não edite à mão — regras humanas vão em `manual/`.
 
 ## A. Regras escritas por humanos (`manual/` — prioridade máxima, nunca sobrescrito)
@@ -2580,7 +2580,7 @@ _nenhum item encontrado_
 | Não foi possível atualizar o participante | `src/hooks/useRingGroups.ts` |
 | Não foi possível criar o grupo | `src/hooks/useRingGroups.ts` |
 | Não foi possível remover o grupo | `src/hooks/useRingGroups.ts` |
-| … +272 linhas — lista completa em `context.json` | |
+| … +274 linhas — lista completa em `context.json` | |
 
 ## J. Controle de acesso no código (checagens de perfil/permissão)
 
@@ -2629,7 +2629,7 @@ _nenhum item encontrado_
 | `admin` | `supabase/functions/data-lake-flush/index.ts` |
 | `admin` | `supabase/migrations/20261123000200_fix_has_role_oracle_and_debug_tables.sql` |
 
-## K. Testes como especificação (4343 testes em 384 arquivos — nomes completos em `context.json`)
+## K. Testes como especificação (4346 testes em 384 arquivos — nomes completos em `context.json`)
 
 | Arquivo | Testes | Exemplos do que o sistema DEVE fazer |
 |---|---|---|
@@ -2665,9 +2665,9 @@ _nenhum item encontrado_
 | `src/lib/__tests__/encryption-webauthn.test.ts` | 29 | Encryption Utilities · arrayBufferToBase64 · converts empty buffer · converts known bytes … |
 | `src/hooks/__tests__/useBusinessLogic.test.ts` | 28 | Hold Alert Type Consistency · useRealtimeHoldAlerts filters for hold_time_exceeded matching edge function · Hold reminder configuration logic · valid reminder intervals are 15, 30, 60 … |
 | `src/lib/__tests__/dashboard-integration.test.ts` | 27 | Dashboard Integration: All improvements present in Index.tsx · imports memoized StatsCard · imports memoized CallVolumeChart · imports SectionBoundary … |
+| `src/hooks/__tests__/useWebAuthn.coverage.test.tsx` | 26 | useWebAuthn · loads passkeys and reports support on mount · handles loadPasskeys error path · does not load when no user … |
 | `src/lib/__tests__/agent-assist-utils.test.ts` | 26 | agent-assist-utils · rankSignals · ordena por prioridade × confiança · lida com array vazio … |
 | `src/lib/__tests__/webhook-health-and-export.simulation.test.ts` | 26 | webhook-health-utils · simulação massiva · ratioColor sempre retorna classe válida para qualquer entrada · aggregateEndpoints preserva invariante attempts = sent+failed acumulados · aggregateEndpoints: sortMode  … |
-| `src/hooks/__tests__/useWebAuthn.coverage.test.tsx` | 25 | useWebAuthn · loads passkeys and reports support on mount · handles loadPasskeys error path · does not load when no user … |
 | `src/lib/__tests__/call-park.test.ts` | 25 | call-park :: clampInt · nunca lança e respeita a faixa · tolera símbolos, objetos sem primitivo e NaN · call-park :: normalizeOrbitDraft … |
 | `src/lib/__tests__/dialer-tags-and-ringtone.test.ts` | 23 | normalizeTag · sempre devolve null ou string válida para o CHECK do banco · é idempotente · rejeita entradas não textuais e vazias … |
 | `src/lib/__tests__/queue-audio.test.ts` | 23 | queue-audio :: clampNumber · nunca lança e respeita a faixa para qualquer entrada · tolera símbolos e objetos sem conversão primitiva · queue-audio :: sanitizeFileName … |
@@ -2743,6 +2743,7 @@ _nenhum item encontrado_
 | `src/hooks/__tests__/useMultiChannelCall.coverage.test.tsx` | 10 | useMultiChannelCall · initiates calls, enforces MAX_SIMULTANEOUS_CALLS, switches and ends · updateCallStatus active starts timer, toggles mute/hold/recording, addTranscript · handles no-op branches when no active call id … |
 | `src/hooks/__tests__/useReauth.grant.test.tsx` | 10 | Reauth grant persistido (HMAC) · grava grant assinado no sessionStorage apos verificar · rehidrata lastVerified em nova montagem (nao exige reauth) · descarta grant com assinatura invalida … |
 | `src/hooks/__tests__/useScorecards.coverage.test.tsx` | 10 | useScorecards · loads templates and criteria without callSessionId · exposes the template read error instead of an empty model list · clears the template error on the next successful read … |
+| `src/hooks/__tests__/useSessionManager.coverage.test.tsx` | 10 | useSessionManager · loads sessions and creates current session · revokes a non-current session · revokes the current session and signs out … |
 | `src/hooks/__tests__/useTrackers.coverage.test.tsx` | 10 | useTrackers · loads trackers on mount (success) · logs error when load fails · createTracker success path … |
 | `src/hooks/auth/__tests__/useAuthActions.coverage.test.tsx` | 10 | useAuthActions · signIn success returns data and loads profile · signIn returns supabase error branch · signIn catch branch when request throws … |
 | `src/lib/__tests__/hash-endpoint.test.ts` | 10 | hashEndpoint · gera hash de exatamente 12 caracteres hexadecimais · é determinístico (mesma URL → mesmo hash) · diferencia URLs quase idênticas (path) … |
@@ -2787,7 +2788,6 @@ _nenhum item encontrado_
 | `src/hooks/__tests__/useExecutiveDashboard.coverage.test.tsx` | 8 | useExecutiveDashboard helpers · getPeriodLabel covers all periods and fallback · formatDuration formats minutes and seconds · useExecutiveDashboardData … |
 | `src/hooks/__tests__/useSecurityMonitoringData.coverage.test.tsx` | 8 | useSecurityMonitoringData · fetches logs, alerts and computes stats · erro de leitura vira alarme, nao tranquilidade · limpa o erro na leitura seguinte bem-sucedida … |
 | `src/hooks/__tests__/useSecurityNotifications.coverage.test.tsx` | 8 | useSecurityNotifications · detects support and initial permission · requestPermission granted path · requestPermission denied path … |
-| `src/hooks/__tests__/useSessionManager.coverage.test.tsx` | 8 | useSessionManager · loads sessions and creates current session · revokes a non-current session · revokes the current session and signs out … |
 | `src/hooks/__tests__/useVoipQualityMonitor.coverage.test.tsx` | 8 | useVoipQualityMonitor · returns unknown state when no peer connection · collects stats and computes MOS for a good connection · uses candidate-pair RTT fallback and tolerates packet loss … |
 | `src/hooks/__tests__/useWhatsappRewrite.test.tsx` | 8 | useWhatsappRewrite · invokes whatsapp-rewrite e retorna o texto reescrito · usa tone e context informados · retorna null sem invocar quando a mensagem é vazia … |
 | `src/hooks/auth/__tests__/useAuthProfile.coverage.test.tsx` | 8 | useAuthProfile · returns profile data on success · returns null and logs on error · returns null when query throws … |

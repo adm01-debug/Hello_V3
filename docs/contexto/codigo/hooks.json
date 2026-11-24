@@ -3765,7 +3765,7 @@
    "hooks_exportados": [
     "useSessionManager"
    ],
-   "linhas": 251,
+   "linhas": 257,
    "dominio": "hooks",
    "tabelas": [
     "active_sessions"
@@ -4768,7 +4768,7 @@
    "hooks_exportados": [
     "useWebAuthn"
    ],
-   "linhas": 302,
+   "linhas": 306,
    "dominio": "hooks",
    "tabelas": [
     "user_passkeys",
