@@ -2,12 +2,12 @@
   "format_version": 1,
   "fonte": "scripts/inventario/gerar-rotas.mjs (le src/routes/publicRoutes.tsx, src/routes/protectedRoutes.tsx, src/pages/ e os imports de cada pagina)",
   "resumo": {
-    "rotas": 104,
+    "rotas": 106,
     "rotas_publicas": 11,
-    "rotas_protegidas": 93,
-    "paginas_orfas": 1,
-    "hooks_distintos": 181,
-    "problemas": 1
+    "rotas_protegidas": 95,
+    "paginas_orfas": 0,
+    "hooks_distintos": 201,
+    "problemas": 0
   },
   "rotas": [
     {
@@ -37,7 +37,7 @@
       "protegida": true,
       "papeis": [],
       "declarada_em": "src/routes/protectedRoutes.tsx",
-      "arquivos_lidos": 55,
+      "arquivos_lidos": 59,
       "hooks": [
         {
           "nome": "useAuditLog",
@@ -52,6 +52,10 @@
           "arquivo": "src/hooks/auth/useAuthActions.ts"
         },
         {
+          "nome": "useAuthContext",
+          "arquivo": "src/contexts/AuthContext.tsx"
+        },
+        {
           "nome": "useAuthProfile",
           "arquivo": "src/hooks/auth/useAuthProfile.ts"
         },
@@ -64,8 +68,16 @@
           "arquivo": "src/hooks/auth/useAuthState.ts"
         },
         {
+          "nome": "useCallContext",
+          "arquivo": "src/contexts/CallContext.tsx"
+        },
+        {
           "nome": "useCallHistory",
           "arquivo": "src/hooks/useCallHistory.ts"
+        },
+        {
+          "nome": "useCallSession",
+          "arquivo": "src/hooks/useCallSession.ts"
         },
         {
           "nome": "useCallTimers",
@@ -80,8 +92,8 @@
           "arquivo": "src/hooks/useDialerFavorites.ts"
         },
         {
-          "nome": "useMultiChannelCall",
-          "arquivo": "src/hooks/useMultiChannelCall.ts"
+          "nome": "useDNCCompliance",
+          "arquivo": "src/hooks/useDNCCompliance.ts"
         },
         {
           "nome": "usePageTitle",
@@ -134,11 +146,17 @@
       ],
       "buckets": [],
       "edges": [
+        "analyze-talk-ratio",
+        "detect-key-moments",
+        "generate-meeting-summary",
         "sip-config",
         "voice-command",
         "voice-transcribe"
       ],
       "rpcs": [
+        "add_to_dnc",
+        "check_calling_hours",
+        "check_dnc",
         "get_call_history_with_summaries",
         "log_audit_event",
         "record_trunk_usage"
@@ -146,11 +164,17 @@
       "tabelas": [
         "call_analyses",
         "call_quality_metrics",
+        "call_sessions",
         "call_summaries",
         "call_transcriptions",
+        "call_transcripts_searchable",
+        "calling_hours_config",
+        "compliance_settings",
         "dialer_favorites",
+        "dnc_list",
         "hold_events",
         "user_profiles",
+        "user_roles",
         "voip_quality_alerts"
       ],
       "imports_quebrados": []
@@ -162,11 +186,15 @@
       "protegida": true,
       "papeis": [],
       "declarada_em": "src/routes/protectedRoutes.tsx",
-      "arquivos_lidos": 6,
+      "arquivos_lidos": 9,
       "hooks": [
         {
           "nome": "useAccounts",
           "arquivo": "src/hooks/useAccounts.ts"
+        },
+        {
+          "nome": "useChurnRisk",
+          "arquivo": "src/hooks/useChurnRisk.ts"
         },
         {
           "nome": "usePageTitle",
@@ -180,7 +208,8 @@
       ],
       "rpcs": [],
       "tabelas": [
-        "accounts"
+        "accounts",
+        "churn_risk_signals"
       ],
       "imports_quebrados": []
     },
@@ -258,8 +287,12 @@
         "admin"
       ],
       "declarada_em": "src/routes/protectedRoutes.tsx",
-      "arquivos_lidos": 21,
+      "arquivos_lidos": 23,
       "hooks": [
+        {
+          "nome": "useAuthContext",
+          "arquivo": "src/contexts/AuthContext.tsx"
+        },
         {
           "nome": "useExtensionAudit",
           "arquivo": "src/hooks/useExtensionAudit.ts"
@@ -283,6 +316,10 @@
         {
           "nome": "usePageVisibility",
           "arquivo": "src/hooks/usePageVisibility.ts"
+        },
+        {
+          "nome": "usePermissions",
+          "arquivo": "src/hooks/usePermissions.ts"
         }
       ],
       "buckets": [],
@@ -296,7 +333,9 @@
         "agents",
         "audit_logs",
         "call_sessions",
+        "role_permissions",
         "user_profiles",
+        "user_roles",
         "voip_trunks"
       ],
       "imports_quebrados": []
@@ -310,7 +349,7 @@
         "admin"
       ],
       "declarada_em": "src/routes/protectedRoutes.tsx",
-      "arquivos_lidos": 30,
+      "arquivos_lidos": 31,
       "hooks": [
         {
           "nome": "useAlertPresets",
@@ -360,19 +399,30 @@
     {
       "caminho": "/admin/security-audit",
       "componente": "SecurityAudit",
-      "arquivo": "src/pages/admin/SecurityDashboard.tsx",
+      "arquivo": "src/pages/admin/SecurityAuditDashboard.tsx",
       "protegida": true,
       "papeis": [
         "admin"
       ],
       "declarada_em": "src/routes/protectedRoutes.tsx",
-      "arquivos_lidos": 2,
-      "hooks": [],
+      "arquivos_lidos": 4,
+      "hooks": [
+        {
+          "nome": "useAuthContext",
+          "arquivo": "src/contexts/AuthContext.tsx"
+        },
+        {
+          "nome": "usePageTitle",
+          "arquivo": "src/hooks/usePageTitle.ts"
+        }
+      ],
       "buckets": [],
       "edges": [],
       "rpcs": [],
       "tabelas": [
-        "audit_logs"
+        "audit_logs",
+        "rls_audit_logs",
+        "webhook_flush_metrics"
       ],
       "imports_quebrados": []
     },
@@ -424,7 +474,7 @@
         "admin"
       ],
       "declarada_em": "src/routes/protectedRoutes.tsx",
-      "arquivos_lidos": 15,
+      "arquivos_lidos": 21,
       "hooks": [
         {
           "nome": "useDeleteAssignment",
@@ -842,7 +892,7 @@
       "protegida": true,
       "papeis": [],
       "declarada_em": "src/routes/protectedRoutes.tsx",
-      "arquivos_lidos": 21,
+      "arquivos_lidos": 23,
       "hooks": [
         {
           "nome": "useAuditLog",
@@ -909,8 +959,12 @@
       "protegida": true,
       "papeis": [],
       "declarada_em": "src/routes/protectedRoutes.tsx",
-      "arquivos_lidos": 9,
+      "arquivos_lidos": 13,
       "hooks": [
+        {
+          "nome": "useCallPlaylists",
+          "arquivo": "src/hooks/useCallPlaylists.ts"
+        },
         {
           "nome": "useCallSearch",
           "arquivo": "src/hooks/useCallSearch.ts"
@@ -918,14 +972,27 @@
         {
           "nome": "usePageTitle",
           "arquivo": "src/hooks/usePageTitle.ts"
+        },
+        {
+          "nome": "usePlaylistItems",
+          "arquivo": "src/hooks/useCallPlaylists.ts"
+        },
+        {
+          "nome": "useSurveys",
+          "arquivo": "src/hooks/useSurveys.ts"
         }
       ],
       "buckets": [],
       "edges": [
-        "search-calls"
+        "search-calls",
+        "send-survey"
       ],
       "rpcs": [],
-      "tabelas": [],
+      "tabelas": [
+        "call_playlists",
+        "playlist_items",
+        "survey_responses"
+      ],
       "imports_quebrados": []
     },
     {
@@ -974,7 +1041,8 @@
       "tabelas": [
         "call_park_orbits",
         "parked_calls",
-        "user_profiles"
+        "user_profiles",
+        "user_roles"
       ],
       "imports_quebrados": []
     },
@@ -1032,7 +1100,8 @@
         "call_queue_members",
         "call_queues",
         "queue_audio_prompts",
-        "user_profiles"
+        "user_profiles",
+        "user_roles"
       ],
       "imports_quebrados": []
     },
@@ -1069,15 +1138,27 @@
       "protegida": true,
       "papeis": [],
       "declarada_em": "src/routes/protectedRoutes.tsx",
-      "arquivos_lidos": 31,
+      "arquivos_lidos": 41,
       "hooks": [
         {
           "nome": "useAgentStatus",
           "arquivo": "src/hooks/useAgentStatus.ts"
         },
         {
+          "nome": "useAuthContext",
+          "arquivo": "src/contexts/AuthContext.tsx"
+        },
+        {
+          "nome": "useCallContext",
+          "arquivo": "src/contexts/CallContext.tsx"
+        },
+        {
           "nome": "useCallRecording",
           "arquivo": "src/hooks/useCallRecording.ts"
+        },
+        {
+          "nome": "useCallSession",
+          "arquivo": "src/hooks/useCallSession.ts"
         },
         {
           "nome": "useCallTimers",
@@ -1096,12 +1177,20 @@
           "arquivo": "src/lib/elevenlabs-stub.ts"
         },
         {
+          "nome": "useCulturalHints",
+          "arquivo": "src/hooks/useCulturalHints.ts"
+        },
+        {
           "nome": "useHoldReminder",
           "arquivo": "src/hooks/useHoldReminder.ts"
         },
         {
-          "nome": "useMultiChannelCall",
-          "arquivo": "src/hooks/useMultiChannelCall.ts"
+          "nome": "useLiveSentiment",
+          "arquivo": "src/hooks/useLiveSentiment.ts"
+        },
+        {
+          "nome": "useLiveTranslation",
+          "arquivo": "src/hooks/useLiveTranslation.ts"
         },
         {
           "nome": "useNetworkMonitor",
@@ -1144,8 +1233,13 @@
         "call-recordings"
       ],
       "edges": [
+        "analyze-talk-ratio",
+        "charge",
+        "detect-key-moments",
         "elevenlabs-conversation-token",
+        "generate-meeting-summary",
         "sip-config",
+        "translate-utterance",
         "voice-command",
         "voice-transcribe",
         "wavoip-call"
@@ -1155,9 +1249,16 @@
       ],
       "tabelas": [
         "agents",
+        "call_analyses",
         "call_quality_metrics",
         "call_recordings",
+        "call_sessions",
+        "call_summaries",
+        "call_transcriptions",
+        "call_transcripts_searchable",
+        "cultural_hints",
         "hold_events",
+        "live_sentiment_snapshots",
         "voip_quality_alerts"
       ],
       "imports_quebrados": []
@@ -1169,7 +1270,7 @@
       "protegida": true,
       "papeis": [],
       "declarada_em": "src/routes/protectedRoutes.tsx",
-      "arquivos_lidos": 10,
+      "arquivos_lidos": 15,
       "hooks": [
         {
           "nome": "useAgentStatus",
@@ -1180,25 +1281,45 @@
           "arquivo": "src/hooks/useAuditLog.ts"
         },
         {
+          "nome": "useAuthContext",
+          "arquivo": "src/contexts/AuthContext.tsx"
+        },
+        {
           "nome": "useCoaching",
           "arquivo": "src/hooks/useCoaching.ts"
         },
         {
+          "nome": "useCoachingAssignments",
+          "arquivo": "src/hooks/useCoachingAssignments.ts"
+        },
+        {
+          "nome": "useCoachingTrack",
+          "arquivo": "src/hooks/useCoachingTrack.ts"
+        },
+        {
           "nome": "usePageTitle",
           "arquivo": "src/hooks/usePageTitle.ts"
+        },
+        {
+          "nome": "usePermissions",
+          "arquivo": "src/hooks/usePermissions.ts"
         }
       ],
       "buckets": [],
       "edges": [
         "generate-coaching",
-        "generate-coaching-plan"
+        "generate-coaching-plan",
+        "generate-coaching-track"
       ],
       "rpcs": [
         "log_audit_event"
       ],
       "tabelas": [
         "agents",
-        "coaching_recommendations"
+        "coaching_assignments",
+        "coaching_recommendations",
+        "role_permissions",
+        "user_roles"
       ],
       "imports_quebrados": []
     },
@@ -1212,11 +1333,15 @@
         "admin"
       ],
       "declarada_em": "src/routes/protectedRoutes.tsx",
-      "arquivos_lidos": 21,
+      "arquivos_lidos": 27,
       "hooks": [
         {
           "nome": "useCallingHoursManager",
           "arquivo": "src/components/compliance/calling-hours/useCallingHoursManager.ts"
+        },
+        {
+          "nome": "useComplianceRules",
+          "arquivo": "src/hooks/useComplianceRules.ts"
         },
         {
           "nome": "useDNCCompliance",
@@ -1236,6 +1361,7 @@
       ],
       "tabelas": [
         "calling_hours_config",
+        "compliance_rules",
         "compliance_settings",
         "consent_history",
         "dnc_import_logs",
@@ -1280,7 +1406,7 @@
       "protegida": true,
       "papeis": [],
       "declarada_em": "src/routes/protectedRoutes.tsx",
-      "arquivos_lidos": 24,
+      "arquivos_lidos": 26,
       "hooks": [
         {
           "nome": "useAuditLog",
@@ -1431,6 +1557,7 @@
       ],
       "tabelas": [
         "barge_in_sessions",
+        "call_control_audit_logs",
         "call_sessions",
         "hold_alert_settings",
         "hold_events",
@@ -1478,11 +1605,15 @@
         "admin"
       ],
       "declarada_em": "src/routes/protectedRoutes.tsx",
-      "arquivos_lidos": 20,
+      "arquivos_lidos": 23,
       "hooks": [
         {
           "nome": "useContacts",
           "arquivo": "src/hooks/useContacts.ts"
+        },
+        {
+          "nome": "useDNCCompliance",
+          "arquivo": "src/hooks/useDNCCompliance.ts"
         },
         {
           "nome": "usePageTitle",
@@ -1518,14 +1649,20 @@
         "sip-config"
       ],
       "rpcs": [
+        "add_to_dnc",
+        "check_calling_hours",
+        "check_dnc",
         "record_trunk_usage"
       ],
       "tabelas": [
         "call_quality_metrics",
+        "calling_hours_config",
+        "compliance_settings",
         "contact_interactions",
         "contacts",
         "dialer_campaigns",
         "dialer_queue",
+        "dnc_list",
         "voip_quality_alerts"
       ],
       "imports_quebrados": []
@@ -1573,7 +1710,7 @@
         "admin"
       ],
       "declarada_em": "src/routes/protectedRoutes.tsx",
-      "arquivos_lidos": 29,
+      "arquivos_lidos": 30,
       "hooks": [
         {
           "nome": "useAgentAssistHistory",
@@ -1625,6 +1762,7 @@
         "call_key_moments",
         "call_sessions",
         "call_summaries",
+        "call_transcriptions",
         "call_translations",
         "churn_risk_signals",
         "consent_records",
@@ -1707,7 +1845,7 @@
       "protegida": false,
       "papeis": [],
       "declarada_em": "src/routes/publicRoutes.tsx",
-      "arquivos_lidos": 3,
+      "arquivos_lidos": 9,
       "hooks": [
         {
           "nome": "usePageTitle",
@@ -1720,6 +1858,39 @@
       ],
       "rpcs": [],
       "tabelas": [],
+      "imports_quebrados": []
+    },
+    {
+      "caminho": "/gamification",
+      "componente": "Gamification",
+      "arquivo": "src/pages/Gamification.tsx",
+      "protegida": true,
+      "papeis": [
+        "supervisor",
+        "admin"
+      ],
+      "declarada_em": "src/routes/protectedRoutes.tsx",
+      "arquivos_lidos": 11,
+      "hooks": [
+        {
+          "nome": "useGamification",
+          "arquivo": "src/hooks/useGamification.ts"
+        },
+        {
+          "nome": "usePageTitle",
+          "arquivo": "src/hooks/usePageTitle.ts"
+        }
+      ],
+      "buckets": [],
+      "edges": [],
+      "rpcs": [],
+      "tabelas": [
+        "agent_badges",
+        "agent_goals",
+        "agent_weekly_stats",
+        "agents",
+        "badges"
+      ],
       "imports_quebrados": []
     },
     {
@@ -1761,7 +1932,7 @@
       "protegida": true,
       "papeis": [],
       "declarada_em": "src/routes/protectedRoutes.tsx",
-      "arquivos_lidos": 21,
+      "arquivos_lidos": 23,
       "hooks": [
         {
           "nome": "useAuditLog",
@@ -1926,8 +2097,12 @@
       "protegida": true,
       "papeis": [],
       "declarada_em": "src/routes/protectedRoutes.tsx",
-      "arquivos_lidos": 8,
+      "arquivos_lidos": 12,
       "hooks": [
+        {
+          "nome": "useChatbot",
+          "arquivo": "src/hooks/useChatbot.ts"
+        },
         {
           "nome": "useConversationMessages",
           "arquivo": "src/hooks/useConversations.ts"
@@ -1947,10 +2122,18 @@
         {
           "nome": "useUpdateConversation",
           "arquivo": "src/hooks/useConversations.ts"
+        },
+        {
+          "nome": "useWhatsappRewrite",
+          "arquivo": "src/hooks/useWhatsappRewrite.ts"
         }
       ],
       "buckets": [],
-      "edges": [],
+      "edges": [
+        "charge",
+        "chatbot-respond",
+        "whatsapp-rewrite"
+      ],
       "rpcs": [],
       "tabelas": [
         "conversation_messages",
@@ -1967,7 +2150,7 @@
         "admin"
       ],
       "declarada_em": "src/routes/protectedRoutes.tsx",
-      "arquivos_lidos": 5,
+      "arquivos_lidos": 6,
       "hooks": [
         {
           "nome": "useAuthContext",
@@ -2062,15 +2245,21 @@
         "admin"
       ],
       "declarada_em": "src/routes/protectedRoutes.tsx",
-      "arquivos_lidos": 7,
+      "arquivos_lidos": 9,
       "hooks": [
+        {
+          "nome": "useLDAPSync",
+          "arquivo": "src/hooks/useLDAPSync.ts"
+        },
         {
           "nome": "usePageTitle",
           "arquivo": "src/hooks/usePageTitle.ts"
         }
       ],
       "buckets": [],
-      "edges": [],
+      "edges": [
+        "ldap-sync"
+      ],
       "rpcs": [],
       "tabelas": [],
       "imports_quebrados": []
@@ -2141,7 +2330,8 @@
         "charge",
         "notify-blocked-ip",
         "validate-ip",
-        "webauthn-authenticate"
+        "webauthn-authenticate",
+        "webauthn-challenge"
       ],
       "rpcs": [
         "check_login_lockout",
@@ -2150,7 +2340,6 @@
       ],
       "tabelas": [
         "user_passkeys",
-        "user_profiles",
         "webauthn_challenges"
       ],
       "imports_quebrados": []
@@ -2248,7 +2437,7 @@
         "admin"
       ],
       "declarada_em": "src/routes/protectedRoutes.tsx",
-      "arquivos_lidos": 38,
+      "arquivos_lidos": 40,
       "hooks": [
         {
           "nome": "useAnomalyRemediation",
@@ -2261,6 +2450,10 @@
         {
           "nome": "usePageTitle",
           "arquivo": "src/hooks/usePageTitle.ts"
+        },
+        {
+          "nome": "useRecordVoipRecommendationAction",
+          "arquivo": "src/hooks/useVoipRecommendationActions.ts"
         },
         {
           "nome": "useVoipAnomalies",
@@ -2377,7 +2570,8 @@
       "tabelas": [
         "notification_preferences",
         "notifications",
-        "user_profiles"
+        "user_profiles",
+        "user_roles"
       ],
       "imports_quebrados": []
     },
@@ -2414,7 +2608,7 @@
         "admin"
       ],
       "declarada_em": "src/routes/protectedRoutes.tsx",
-      "arquivos_lidos": 22,
+      "arquivos_lidos": 21,
       "hooks": [
         {
           "nome": "useHealthCheck",
@@ -2528,7 +2722,7 @@
       "protegida": true,
       "papeis": [],
       "declarada_em": "src/routes/protectedRoutes.tsx",
-      "arquivos_lidos": 7,
+      "arquivos_lidos": 8,
       "hooks": [
         {
           "nome": "useAuthContext",
@@ -2539,18 +2733,26 @@
           "arquivo": "src/hooks/usePageTitle.ts"
         },
         {
+          "nome": "useReauth",
+          "arquivo": "src/hooks/useReauth.ts"
+        },
+        {
+          "nome": "useReauthContext",
+          "arquivo": "src/contexts/ReauthContext.tsx"
+        },
+        {
           "nome": "useWebAuthn",
           "arquivo": "src/hooks/useWebAuthn.ts"
         }
       ],
       "buckets": [],
       "edges": [
-        "webauthn-authenticate"
+        "webauthn-authenticate",
+        "webauthn-challenge"
       ],
       "rpcs": [],
       "tabelas": [
         "user_passkeys",
-        "user_profiles",
         "webauthn_challenges"
       ],
       "imports_quebrados": []
@@ -2658,7 +2860,7 @@
         "admin"
       ],
       "declarada_em": "src/routes/protectedRoutes.tsx",
-      "arquivos_lidos": 13,
+      "arquivos_lidos": 14,
       "hooks": [
         {
           "nome": "useDashboardGoals",
@@ -2726,7 +2928,7 @@
       "protegida": true,
       "papeis": [],
       "declarada_em": "src/routes/protectedRoutes.tsx",
-      "arquivos_lidos": 19,
+      "arquivos_lidos": 20,
       "hooks": [
         {
           "nome": "useAgentRanking",
@@ -2893,7 +3095,7 @@
       "protegida": true,
       "papeis": [],
       "declarada_em": "src/routes/protectedRoutes.tsx",
-      "arquivos_lidos": 5,
+      "arquivos_lidos": 6,
       "hooks": [
         {
           "nome": "useCallVolumeData",
@@ -2929,7 +3131,7 @@
       "protegida": false,
       "papeis": [],
       "declarada_em": "src/routes/publicRoutes.tsx",
-      "arquivos_lidos": 5,
+      "arquivos_lidos": 11,
       "hooks": [
         {
           "nome": "usePageTitle",
@@ -2996,7 +3198,8 @@
         "call_queues",
         "ring_group_members",
         "ring_groups",
-        "user_profiles"
+        "user_profiles",
+        "user_roles"
       ],
       "imports_quebrados": []
     },
@@ -3081,8 +3284,12 @@
         "admin"
       ],
       "declarada_em": "src/routes/protectedRoutes.tsx",
-      "arquivos_lidos": 9,
+      "arquivos_lidos": 11,
       "hooks": [
+        {
+          "nome": "useAdherence",
+          "arquivo": "src/hooks/useAdherence.ts"
+        },
         {
           "nome": "usePageTitle",
           "arquivo": "src/hooks/usePageTitle.ts"
@@ -3097,12 +3304,49 @@
         }
       ],
       "buckets": [],
-      "edges": [],
+      "edges": [
+        "compute-adherence"
+      ],
       "rpcs": [],
       "tabelas": [
         "agent_shifts",
         "shift_templates",
         "time_off_requests"
+      ],
+      "imports_quebrados": []
+    },
+    {
+      "caminho": "/scorecards",
+      "componente": "Scorecards",
+      "arquivo": "src/pages/Scorecards.tsx",
+      "protegida": true,
+      "papeis": [
+        "supervisor",
+        "admin"
+      ],
+      "declarada_em": "src/routes/protectedRoutes.tsx",
+      "arquivos_lidos": 5,
+      "hooks": [
+        {
+          "nome": "usePageTitle",
+          "arquivo": "src/hooks/usePageTitle.ts"
+        },
+        {
+          "nome": "useScorecards",
+          "arquivo": "src/hooks/useScorecards.ts"
+        }
+      ],
+      "buckets": [],
+      "edges": [
+        "score-call"
+      ],
+      "rpcs": [],
+      "tabelas": [
+        "call_scorecards",
+        "call_sessions",
+        "scorecard_criteria",
+        "scorecard_responses",
+        "scorecard_templates"
       ],
       "imports_quebrados": []
     },
@@ -3113,7 +3357,7 @@
       "protegida": true,
       "papeis": [],
       "declarada_em": "src/routes/protectedRoutes.tsx",
-      "arquivos_lidos": 9,
+      "arquivos_lidos": 10,
       "hooks": [
         {
           "nome": "useAuthContext",
@@ -3167,7 +3411,7 @@
         "admin"
       ],
       "declarada_em": "src/routes/protectedRoutes.tsx",
-      "arquivos_lidos": 11,
+      "arquivos_lidos": 12,
       "hooks": [
         {
           "nome": "useAuth",
@@ -3209,7 +3453,8 @@
         "audit_logs",
         "login_attempts",
         "security_alerts",
-        "user_profiles"
+        "user_profiles",
+        "user_roles"
       ],
       "imports_quebrados": []
     },
@@ -3255,7 +3500,8 @@
         "check_all_tables_rls_status"
       ],
       "tabelas": [
-        "user_profiles"
+        "user_profiles",
+        "user_roles"
       ],
       "imports_quebrados": []
     },
@@ -3266,7 +3512,7 @@
       "protegida": true,
       "papeis": [],
       "declarada_em": "src/routes/protectedRoutes.tsx",
-      "arquivos_lidos": 8,
+      "arquivos_lidos": 6,
       "hooks": [
         {
           "nome": "useAuthContext",
@@ -3277,16 +3523,16 @@
           "arquivo": "src/hooks/useDeviceDetection.ts"
         },
         {
-          "nome": "useMFA",
-          "arquivo": "src/hooks/useMFA.ts"
-        },
-        {
           "nome": "usePageTitle",
           "arquivo": "src/hooks/usePageTitle.ts"
         },
         {
           "nome": "useReauth",
           "arquivo": "src/hooks/useReauth.ts"
+        },
+        {
+          "nome": "useReauthContext",
+          "arquivo": "src/contexts/ReauthContext.tsx"
         },
         {
           "nome": "useSessionManager",
@@ -3299,8 +3545,7 @@
       ],
       "rpcs": [],
       "tabelas": [
-        "active_sessions",
-        "user_mfa_settings"
+        "active_sessions"
       ],
       "imports_quebrados": []
     },
@@ -3311,11 +3556,15 @@
       "protegida": true,
       "papeis": [],
       "declarada_em": "src/routes/protectedRoutes.tsx",
-      "arquivos_lidos": 14,
+      "arquivos_lidos": 15,
       "hooks": [
         {
           "nome": "useAuthContext",
           "arquivo": "src/contexts/AuthContext.tsx"
+        },
+        {
+          "nome": "useAvatar",
+          "arquivo": "src/hooks/useAvatar.ts"
         },
         {
           "nome": "useBitrix",
@@ -3330,7 +3579,9 @@
           "arquivo": "src/hooks/useProfile.ts"
         }
       ],
-      "buckets": [],
+      "buckets": [
+        "avatars"
+      ],
       "edges": [
         "bitrix-api"
       ],
@@ -3482,7 +3733,7 @@
       "protegida": true,
       "papeis": [],
       "declarada_em": "src/routes/protectedRoutes.tsx",
-      "arquivos_lidos": 6,
+      "arquivos_lidos": 7,
       "hooks": [
         {
           "nome": "usePageTitle",
@@ -3563,11 +3814,15 @@
         "admin"
       ],
       "declarada_em": "src/routes/protectedRoutes.tsx",
-      "arquivos_lidos": 6,
+      "arquivos_lidos": 7,
       "hooks": [
         {
           "nome": "usePageTitle",
           "arquivo": "src/hooks/usePageTitle.ts"
+        },
+        {
+          "nome": "useTrackerMatches",
+          "arquivo": "src/hooks/useTrackers.ts"
         },
         {
           "nome": "useTrackers",
@@ -3613,7 +3868,7 @@
       "protegida": true,
       "papeis": [],
       "declarada_em": "src/routes/protectedRoutes.tsx",
-      "arquivos_lidos": 8,
+      "arquivos_lidos": 9,
       "hooks": [
         {
           "nome": "useAuthContext",
@@ -3626,6 +3881,14 @@
         {
           "nome": "usePageTitle",
           "arquivo": "src/hooks/usePageTitle.ts"
+        },
+        {
+          "nome": "useReauth",
+          "arquivo": "src/hooks/useReauth.ts"
+        },
+        {
+          "nome": "useReauthContext",
+          "arquivo": "src/contexts/ReauthContext.tsx"
         }
       ],
       "buckets": [],
@@ -3821,6 +4084,12 @@
         "/dashboard"
       ]
     },
+    "useAdherence": {
+      "arquivo": "src/hooks/useAdherence.ts",
+      "rotas": [
+        "/scheduling"
+      ]
+    },
     "useAgentAssistHistory": {
       "arquivo": "src/hooks/useLiveAssist.ts",
       "rotas": [
@@ -3934,7 +4203,12 @@
     "useAuthContext": {
       "arquivo": "src/contexts/AuthContext.tsx",
       "rotas": [
+        "/",
+        "/admin/extensions",
+        "/admin/security-audit",
         "/audit-logs",
+        "/calls",
+        "/coaching",
         "/dashboard",
         "/hot-desking",
         "/ip-whitelist",
@@ -3988,6 +4262,12 @@
         "/security-report"
       ]
     },
+    "useAvatar": {
+      "arquivo": "src/hooks/useAvatar.ts",
+      "rotas": [
+        "/settings"
+      ]
+    },
     "useBestTimeToContact": {
       "arquivo": "src/hooks/useBestTimeToContact.ts",
       "rotas": [
@@ -4031,6 +4311,13 @@
         "/analytics"
       ]
     },
+    "useCallContext": {
+      "arquivo": "src/contexts/CallContext.tsx",
+      "rotas": [
+        "/",
+        "/calls"
+      ]
+    },
     "useCallHistory": {
       "arquivo": "src/hooks/useCallHistory.ts",
       "rotas": [
@@ -4043,6 +4330,12 @@
       "arquivo": "src/hooks/useCallPark.ts",
       "rotas": [
         "/call-park"
+      ]
+    },
+    "useCallPlaylists": {
+      "arquivo": "src/hooks/useCallPlaylists.ts",
+      "rotas": [
+        "/call-library"
       ]
     },
     "useCallQueues": {
@@ -4068,6 +4361,13 @@
       "arquivo": "src/hooks/useCallSearch.ts",
       "rotas": [
         "/call-library"
+      ]
+    },
+    "useCallSession": {
+      "arquivo": "src/hooks/useCallSession.ts",
+      "rotas": [
+        "/",
+        "/calls"
       ]
     },
     "useCallTimers": {
@@ -4103,10 +4403,40 @@
         "/dialer/predictive"
       ]
     },
+    "useChatbot": {
+      "arquivo": "src/hooks/useChatbot.ts",
+      "rotas": [
+        "/inbox"
+      ]
+    },
+    "useChurnRisk": {
+      "arquivo": "src/hooks/useChurnRisk.ts",
+      "rotas": [
+        "/accounts"
+      ]
+    },
     "useCoaching": {
       "arquivo": "src/hooks/useCoaching.ts",
       "rotas": [
         "/coaching"
+      ]
+    },
+    "useCoachingAssignments": {
+      "arquivo": "src/hooks/useCoachingAssignments.ts",
+      "rotas": [
+        "/coaching"
+      ]
+    },
+    "useCoachingTrack": {
+      "arquivo": "src/hooks/useCoachingTrack.ts",
+      "rotas": [
+        "/coaching"
+      ]
+    },
+    "useComplianceRules": {
+      "arquivo": "src/hooks/useComplianceRules.ts",
+      "rotas": [
+        "/compliance"
       ]
     },
     "useConferenceRecording": {
@@ -4166,10 +4496,18 @@
         "/dashboard"
       ]
     },
+    "useCulturalHints": {
+      "arquivo": "src/hooks/useCulturalHints.ts",
+      "rotas": [
+        "/calls"
+      ]
+    },
     "useDNCCompliance": {
       "arquivo": "src/hooks/useDNCCompliance.ts",
       "rotas": [
-        "/compliance"
+        "/",
+        "/compliance",
+        "/dialer"
       ]
     },
     "useDashboardGoals": {
@@ -4303,6 +4641,7 @@
     "useGamification": {
       "arquivo": "src/hooks/useGamification.ts",
       "rotas": [
+        "/gamification",
         "/ranking"
       ]
     },
@@ -4379,6 +4718,12 @@
         "/history"
       ]
     },
+    "useLDAPSync": {
+      "arquivo": "src/hooks/useLDAPSync.ts",
+      "rotas": [
+        "/ldap-sync"
+      ]
+    },
     "useLearning": {
       "arquivo": "src/hooks/useLearning.ts",
       "rotas": [
@@ -4395,7 +4740,14 @@
       "arquivo": "src/hooks/useLiveSentiment.ts",
       "rotas": [
         "/call-history",
+        "/calls",
         "/history"
+      ]
+    },
+    "useLiveTranslation": {
+      "arquivo": "src/hooks/useLiveTranslation.ts",
+      "rotas": [
+        "/calls"
       ]
     },
     "useLoginLockout": {
@@ -4408,7 +4760,6 @@
       "arquivo": "src/hooks/useMFA.ts",
       "rotas": [
         "/security",
-        "/sessions",
         "/two-factor-auth"
       ]
     },
@@ -4424,13 +4775,6 @@
         "/call-history",
         "/history",
         "/meeting-summaries"
-      ]
-    },
-    "useMultiChannelCall": {
-      "arquivo": "src/hooks/useMultiChannelCall.ts",
-      "rotas": [
-        "/",
-        "/calls"
       ]
     },
     "useMultiDeviceRing": {
@@ -4474,6 +4818,7 @@
         "/admin/database-health",
         "/admin/extensions",
         "/admin/security-alerts",
+        "/admin/security-audit",
         "/admin/voip-trunks",
         "/admin/webhook-health",
         "/agent-assist",
@@ -4505,6 +4850,7 @@
         "/external-recordings-import",
         "/financial-impact",
         "/forgot-password",
+        "/gamification",
         "/geo-blocking",
         "/history",
         "/hold-alerts",
@@ -4542,6 +4888,7 @@
         "/roles",
         "/routing-rules",
         "/scheduling",
+        "/scorecards",
         "/security",
         "/security-monitoring",
         "/security-report",
@@ -4584,6 +4931,13 @@
         "/executive"
       ]
     },
+    "usePermissions": {
+      "arquivo": "src/hooks/usePermissions.ts",
+      "rotas": [
+        "/admin/extensions",
+        "/coaching"
+      ]
+    },
     "usePersistedTagFilter": {
       "arquivo": "src/hooks/usePersistedTagFilter.ts",
       "rotas": [
@@ -4594,6 +4948,12 @@
       "arquivo": "src/components/voice/overlay/usePhaseColors.ts",
       "rotas": [
         "/"
+      ]
+    },
+    "usePlaylistItems": {
+      "arquivo": "src/hooks/useCallPlaylists.ts",
+      "rotas": [
+        "/call-library"
       ]
     },
     "usePredictiveDialer": {
@@ -4655,13 +5015,29 @@
     "useReauth": {
       "arquivo": "src/hooks/useReauth.ts",
       "rotas": [
-        "/sessions"
+        "/passkeys",
+        "/sessions",
+        "/two-factor-auth"
+      ]
+    },
+    "useReauthContext": {
+      "arquivo": "src/contexts/ReauthContext.tsx",
+      "rotas": [
+        "/passkeys",
+        "/sessions",
+        "/two-factor-auth"
       ]
     },
     "useRecentCallsData": {
       "arquivo": "src/hooks/useDashboardData.ts",
       "rotas": [
         "/dashboard"
+      ]
+    },
+    "useRecordVoipRecommendationAction": {
+      "arquivo": "src/hooks/useVoipRecommendationActions.ts",
+      "rotas": [
+        "/network-diagnostics"
       ]
     },
     "useRecordings": {
@@ -4729,6 +5105,12 @@
       "rotas": [
         "/callbacks",
         "/dashboard"
+      ]
+    },
+    "useScorecards": {
+      "arquivo": "src/hooks/useScorecards.ts",
+      "rotas": [
+        "/scorecards"
       ]
     },
     "useSecurityAlertNotifications": {
@@ -4819,6 +5201,12 @@
         "/dashboard"
       ]
     },
+    "useSurveys": {
+      "arquivo": "src/hooks/useSurveys.ts",
+      "rotas": [
+        "/call-library"
+      ]
+    },
     "useSyncHistory": {
       "arquivo": "src/hooks/useSyncHistory.ts",
       "rotas": [
@@ -4848,6 +5236,12 @@
       "arquivo": "src/hooks/useTimeOff.ts",
       "rotas": [
         "/scheduling"
+      ]
+    },
+    "useTrackerMatches": {
+      "arquivo": "src/hooks/useTrackers.ts",
+      "rotas": [
+        "/trackers"
       ]
     },
     "useTrackers": {
@@ -5086,16 +5480,14 @@
       "rotas": [
         "/admin/security-alerts"
       ]
+    },
+    "useWhatsappRewrite": {
+      "arquivo": "src/hooks/useWhatsappRewrite.ts",
+      "rotas": [
+        "/inbox"
+      ]
     }
   },
-  "paginas_orfas": [
-    "src/pages/admin/SecurityAuditDashboard.tsx"
-  ],
-  "problemas": [
-    {
-      "tipo": "pagina_orfa",
-      "id": "src/pages/admin/SecurityAuditDashboard.tsx",
-      "detalhe": "arquivo em src/pages/ que nenhuma rota alcanca (nem direto, nem por import)"
-    }
-  ]
+  "paginas_orfas": [],
+  "problemas": []
 }
