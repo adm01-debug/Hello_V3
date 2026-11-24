@@ -1,7 +1,7 @@
 # Contexto do projeto para agentes de IA
 
 GERADO AUTOMATICAMENTE por scripts/ai-context/gerar.mjs — não editar à mão; será sobrescrito.
-Publicado em `docs/contexto/codigo/` na branch `contexto` (gerada, nunca abra PR dela) a cada push em `main` e a cada 10 minutos pelo workflow `contexto.yml`; índice único das três fontes em `docs/contexto/00-INDEX.md`. Gere local com `node scripts/ai-context/gerar.mjs`. Commit-base: `4271aa3a221950f0ecd2a3645186d1d282125908` (2026-11-23T20:53:33-03:00).
+Publicado em `docs/contexto/codigo/` na branch `contexto` (gerada, nunca abra PR dela) a cada push em `main` e a cada 10 minutos pelo workflow `contexto.yml`; índice único das três fontes em `docs/contexto/00-INDEX.md`. Gere local com `node scripts/ai-context/gerar.mjs`. Commit-base: `581cd3a1d9817612b20128dcb15e28667b15b45f` (2026-11-23T21:04:54-03:00).
 
 ## Como usar (leia antes de planejar ou executar qualquer tarefa)
 1. **Tela/rota/menu** → `rotas.json` (url/vista/menu → arquivo → hooks → tabelas → edges; `rotas_http_backend` para APIs) e `modulos.json` (módulo inteiro + dependências entre módulos).
@@ -36,7 +36,7 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 |---|---|
 | arquivos_total | 1680 |
 | arquivos_codigo | 1278 |
-| linhas_codigo | 173051 |
+| linhas_codigo | 173111 |
 | rotas | 106 |
 | rotas_http_backend | 12 |
 | vistas_por_id | 0 |
@@ -370,13 +370,13 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 - possiveis_segredos_no_codigo: 4 — ex.: scripts/ai-context/cenarios.mjs:103, src/lib/__tests__/security-advanced.test.ts:203, src/lib/__tests__/security-advanced.test.ts:208
 
 ## Grafo de código (graphify)
-- 9896 nós · 25467 arestas · 766 comunidades · grafo do commit `4271aa3a`
-- comunidades maiores: card.tsx (245), client.ts (199), protectedRoutes.tsx (198), cn (194), react (172), vitest (152), traceHeaders (140), ref_https (126), badge.tsx (121), @tanstack/react-query (115), safeFormatDatePtBR (112), usePageTitle (104)
+- 9898 nós · 25469 arestas · 762 comunidades · grafo do commit `581cd3a1`
+- comunidades maiores: lucide-react (237), client.ts (223), vitest (181), react (173), traceHeaders (148), utils.ts (138), ref_https (115), cn (115), protectedRoutes.tsx (105), validate.ts (104), usePageTitle (103), snapshot.py (102)
 - símbolos mais chamados: cn() (src/lib/utils.ts), usePageTitle() (src/hooks/usePageTitle.ts), safeFormatDatePtBR() (src/lib/safe-date.ts), q() (scripts/supabase_snapshot/snapshot.py), safeFormatDistanceToNow() (src/lib/safe-date.ts), useAuthContext() (src/contexts/AuthContext.tsx), traceHeaders() (src/lib/tracing.ts), withTrace() (src/lib/tracing.ts), formatDuration() (src/lib/utils.ts), safeToLocaleString() (src/lib/safe-date.ts), .collect() (scripts/supabase_snapshot/test_snapshot.py), buildCorsHeaders() (supabase/functions/_shared/cors.ts)
 - consulta local: `graphify query "<pergunta>"`, `graphify path "<A>" "<B>"`, `graphify explain "<X>"`
 
 ## Hotspots (arquivos mais alterados, 90 dias)
-- docs/qa/05-PROGRESSO.md (29)
+- docs/qa/05-PROGRESSO.md (31)
 - docs/estado/funcionalidades-planejadas.md (27)
 - src/components/layout/AppSidebar.tsx (9)
 - docs/audits/pendencias-2026-07.md (8)
@@ -429,6 +429,8 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 
 
 ## Últimos commits
+- 2026-11-23 `581cd3a` fix: whatsapp-inbound deixa de concatenar telefone no filtro do PostgREST (#198)
+- 2026-11-23 `617d9e8` fix: scripts destrutivos exigem DB_HOST explicito (#200)
 - 2026-11-23 `4271aa3` chore: react-router-dom 7.13.1 -> 7.18.6 (corrige open redirect) (#199)
 - 2026-11-23 `4e8548e` fix: email-inbound idempotente para parar o laco de 500 e a conversa duplicada (#197)
 - 2026-11-23 `7375845` chore: migrar 15 edges para buildCorsHeaders(req) e remover export deprecated (#196)
@@ -442,8 +444,6 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 - 2026-11-23 `fa2c38d` fix: notify-blocked-ip exige sessao autenticada, valida corpo e escapa HTML (E010) (#188)
 - 2026-11-23 `22ca6d0` fix: notify-new-device exige sessao autenticada e nao aceita destinatario do corpo (E009) (#187)
 - 2026-11-23 `3d4db07` feat: modulo compartilhado de autenticacao de edge function (E005) (#186)
-- 2026-11-23 `ba0ddcf` fix: search-calls exige autenticacao e deixa de usar a service_role (E004) (#185)
-- 2026-11-23 `9e81eea` fix: bloqueio de login falha fechado quando a verificacao nao responde (E003) (#184)
 
 ## Arquivos deste diretório
 - `docs/contexto/codigo/rotas.json`

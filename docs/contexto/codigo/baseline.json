@@ -2,11 +2,21 @@
  "aviso": "GERADO AUTOMATICAMENTE por scripts/ai-context/gerar.mjs — não editar à mão; será sobrescrito.",
  "format_version": 2,
  "git": {
-  "commit": "4271aa3a221950f0ecd2a3645186d1d282125908",
+  "commit": "581cd3a1d9817612b20128dcb15e28667b15b45f",
   "branch": "main",
-  "data_commit": "2026-11-23T20:53:33-03:00",
+  "data_commit": "2026-11-23T21:04:54-03:00",
   "remote": "https://github.com/adm01-debug/Hello_V3",
   "ultimos_commits": [
+   {
+    "sha": "581cd3a",
+    "data": "2026-11-23",
+    "assunto": "fix: whatsapp-inbound deixa de concatenar telefone no filtro do PostgREST (#198)"
+   },
+   {
+    "sha": "617d9e8",
+    "data": "2026-11-23",
+    "assunto": "fix: scripts destrutivos exigem DB_HOST explicito (#200)"
+   },
    {
     "sha": "4271aa3",
     "data": "2026-11-23",
@@ -121,19 +131,9 @@
     "sha": "0942091",
     "data": "2026-11-23",
     "assunto": "fix: liga painel de integridade a dados reais e remove cartao decorativo (E097-E098) (#176)"
-   },
-   {
-    "sha": "e7889cb",
-    "data": "2026-11-23",
-    "assunto": "fix: health-check e score VoIP nao reportam sem medir (E094-E095) (#174)"
-   },
-   {
-    "sha": "61a323b",
-    "data": "2026-11-23",
-    "assunto": "fix: remove painel decorativo e corrige relatório de segurança (#175)"
    }
   ],
-  "arquivos_mudados_7d": 981,
+  "arquivos_mudados_7d": 983,
   "pastas_mais_mudadas_30d": [
    {
     "pasta": "covout/lcov-report/hooks",
@@ -144,12 +144,12 @@
     "mudancas": 55
    },
    {
-    "pasta": "src/hooks/__tests__",
-    "mudancas": 30
+    "pasta": "docs/qa/05-PROGRESSO.md",
+    "mudancas": 31
    },
    {
-    "pasta": "docs/qa/05-PROGRESSO.md",
-    "mudancas": 29
+    "pasta": "src/hooks/__tests__",
+    "mudancas": 30
    },
    {
     "pasta": "docs/estado/funcionalidades-planejadas.md",
@@ -199,7 +199,7 @@
   "arquivos_mais_mudados_90d": [
    {
     "arquivo": "docs/qa/05-PROGRESSO.md",
-    "mudancas": 29
+    "mudancas": 31
    },
    {
     "arquivo": "docs/estado/funcionalidades-planejadas.md",
@@ -301,7 +301,7 @@
   "autores_30d": [
    {
     "autor": "adm01-debug",
-    "commits": 177
+    "commits": 179
    },
    {
     "autor": "Joaquim Ataides",
@@ -316,7 +316,7 @@
  "contagens": {
   "arquivos_total": 1680,
   "arquivos_codigo": 1278,
-  "linhas_codigo": 173051,
+  "linhas_codigo": 173111,
   "rotas": 106,
   "rotas_http_backend": 12,
   "vistas_por_id": 0,
@@ -380,7 +380,7 @@
   },
   "scripts/apply-call-volume-fix.mjs": {
    "arquivos": 1,
-   "linhas": 43
+   "linhas": 47
   },
   "scripts/audit-edge-functions.ts": {
    "arquivos": 1,
@@ -408,11 +408,11 @@
   },
   "scripts/clean-hold-events.mjs": {
    "arquivos": 1,
-   "linhas": 74
+   "linhas": 78
   },
   "scripts/cleanup-and-count.mjs": {
    "arquivos": 1,
-   "linhas": 80
+   "linhas": 84
   },
   "scripts/codemod-safe-number.mjs": {
    "arquivos": 1,
@@ -420,7 +420,7 @@
   },
   "scripts/fix-user-profile.mjs": {
    "arquivos": 1,
-   "linhas": 87
+   "linhas": 91
   },
   "scripts/guard-edge-numeric.mjs": {
    "arquivos": 1,
@@ -520,7 +520,7 @@
   },
   "supabase/functions": {
    "arquivos": 191,
-   "linhas": 21563
+   "linhas": 21607
   },
   "tailwind.config.ts": {
    "arquivos": 1,

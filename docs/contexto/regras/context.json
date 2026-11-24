@@ -1,15 +1,15 @@
 {
  "meta": {
-  "sha": "4271aa3a221950f0ecd2a3645186d1d282125908",
+  "sha": "581cd3a1d9817612b20128dcb15e28667b15b45f",
   "branch": "main",
   "remote": "https://github.com/adm01-debug/Hello_V3",
-  "generated_at": "2026-11-23 23:54 UTC",
+  "generated_at": "2026-11-24 00:05 UTC",
   "files_total": 1727,
   "code_files": 1524,
-  "code_lines": 189063
+  "code_lines": 189123
  },
  "version": "1.3.2",
- "facts_hash": "c3d2734a52e666ba",
+ "facts_hash": "07b41a8155a5ca5f",
  "stack": {
   "frameworks": [
    "React + Vite",
@@ -33146,7 +33146,7 @@
   {
    "module": "scripts",
    "files": 35,
-   "lines": 9824,
+   "lines": 9840,
    "tables": [
     "a",
     "contacts",
@@ -33176,12 +33176,12 @@
     "test_snapshot.py: OfflineConnection, function, migration, structural_records, SnapshotFixture, SnapshotSQLRecoveryTests"
    ],
    "docs": [
+    "apply-call-volume-fix.mjs: ATENCAO: executa scripts/fix-get-call-volume-stats.sql (CREATE OR REPLACE FUNCTION) no banco apontado. Nao assume host de producao.",
     "audit-edge-functions.ts: !/usr/bin/env bun",
     "check-bundle-budget.mjs: !/usr/bin/env node",
-    "codemod-safe-number.mjs: !/usr/bin/env node",
-    "guard-edge-numeric.mjs: !/usr/bin/env node",
-    "test-api-direct.mjs: Testa exatamente as chamadas que o frontend faz via supabase-js client",
-    "test-auth-flow.mjs: Simula login real do ti@promobrindes e testa queries do frontend"
+    "clean-hold-events.mjs: ATENCAO: apaga TODOS os registros de public.hold_events do banco apontado. Nao assume host de producao.",
+    "cleanup-and-count.mjs: ATENCAO: apaga usuarios de teste em auth.users (email LIKE 'test%@gmail.com') e as identidades orfas em auth.identities do banco apontado. Nao assume host de producao.",
+    "codemod-safe-number.mjs: !/usr/bin/env node"
    ],
    "deps": [
     "#",
@@ -34282,7 +34282,7 @@
   {
    "module": "supabase/functions",
    "files": 191,
-   "lines": 21563,
+   "lines": 21607,
    "tables": [
     "account_lockouts",
     "accounts",
@@ -39110,9 +39110,21 @@
    },
    {
     "file": "supabase/functions/whatsapp-inbound/schema.ts",
+    "name": "phoneSchema",
+    "kind": "string",
+    "body": "",
+    "refines": [
+     "O campo "
+    ],
+    "chain": [
+     "superRefine"
+    ]
+   },
+   {
+    "file": "supabase/functions/whatsapp-inbound/schema.ts",
     "name": "WhatsAppInboundV1Schema",
     "kind": "object",
-    "body": "{ from: z.string().min(1, \"O campo 'from' é obrigatório\"), name: z.string().optional(), message: z.string().min(1, \"O campo 'message' é obrigatório\"), message_id: z.string().optional(), timestamp: z.string().optional(), attachments: z.array(z.object({ url: z.string().url(), type: z.string(), filename: z.string().optional() })).optional() }",
+    "body": "{ from: phoneSchema, name: z.string().optional(), message: z.string().min(1, \"O campo 'message' é obrigatório\"), message_id: z.string().optional(), timestamp: z.string().optional(), attachments: z.array(z.object({ url: z.string().url(), type: z.string(), filename: z.string().optional() })).optional() }",
     "refines": [],
     "chain": []
    }
@@ -39848,6 +39860,10 @@
     "msg": "Credencial ausente: defina SUPABASE_DB_URL ou DB_PASSWORD no ambiente."
    },
    {
+    "file": "scripts/apply-call-volume-fix.mjs",
+    "msg": "Defina DB_HOST (ou SUPABASE_DB_URL) — este script nao assume producao como padrao."
+   },
+   {
     "file": "scripts/check-cfmlmc-db.mjs",
     "msg": "Credencial ausente: defina SUPABASE_DB_URL ou DB_PASSWORD no ambiente."
    },
@@ -39864,12 +39880,24 @@
     "msg": "Credencial ausente: defina SUPABASE_DB_URL ou DB_PASSWORD no ambiente."
    },
    {
+    "file": "scripts/clean-hold-events.mjs",
+    "msg": "Defina DB_HOST (ou SUPABASE_DB_URL) — este script nao assume producao como padrao."
+   },
+   {
     "file": "scripts/cleanup-and-count.mjs",
     "msg": "Credencial ausente: defina SUPABASE_DB_URL ou DB_PASSWORD no ambiente."
    },
    {
+    "file": "scripts/cleanup-and-count.mjs",
+    "msg": "Defina DB_HOST (ou SUPABASE_DB_URL) — este script nao assume producao como padrao."
+   },
+   {
     "file": "scripts/fix-user-profile.mjs",
     "msg": "Credencial ausente: defina SUPABASE_DB_URL ou DB_PASSWORD no ambiente."
+   },
+   {
+    "file": "scripts/fix-user-profile.mjs",
+    "msg": "Defina DB_HOST (ou SUPABASE_DB_URL) — este script nao assume producao como padrao."
    },
    {
     "file": "scripts/inspect-schema.mjs",
@@ -90536,7 +90564,7 @@
   },
   "scripts/apply-call-volume-fix.mjs": {
    "path": "scripts/apply-call-volume-fix.mjs",
-   "lines": 43,
+   "lines": 47,
    "env": [
     "DB_HOST",
     "DB_NAME",
@@ -90546,8 +90574,10 @@
     "SUPABASE_DB_URL"
    ],
    "errors": [
-    "Credencial ausente: defina SUPABASE_DB_URL ou DB_PASSWORD no ambiente."
-   ]
+    "Credencial ausente: defina SUPABASE_DB_URL ou DB_PASSWORD no ambiente.",
+    "Defina DB_HOST (ou SUPABASE_DB_URL) — este script nao assume producao como padrao."
+   ],
+   "doc": "ATENCAO: executa scripts/fix-get-call-volume-stats.sql (CREATE OR REPLACE FUNCTION) no banco apontado. Nao assume host de producao."
   },
   "scripts/audit-edge-functions.ts": {
    "path": "scripts/audit-edge-functions.ts",
@@ -90616,7 +90646,7 @@
   },
   "scripts/clean-hold-events.mjs": {
    "path": "scripts/clean-hold-events.mjs",
-   "lines": 74,
+   "lines": 78,
    "env": [
     "DB_HOST",
     "DB_NAME",
@@ -90626,15 +90656,17 @@
     "SUPABASE_DB_URL"
    ],
    "errors": [
-    "Credencial ausente: defina SUPABASE_DB_URL ou DB_PASSWORD no ambiente."
+    "Credencial ausente: defina SUPABASE_DB_URL ou DB_PASSWORD no ambiente.",
+    "Defina DB_HOST (ou SUPABASE_DB_URL) — este script nao assume producao como padrao."
    ],
+   "doc": "ATENCAO: apaga TODOS os registros de public.hold_events do banco apontado. Nao assume host de producao.",
    "temporal": [
     "WHERE ended_at IS NULL AND started_at < now() - interval '1 hour'"
    ]
   },
   "scripts/cleanup-and-count.mjs": {
    "path": "scripts/cleanup-and-count.mjs",
-   "lines": 80,
+   "lines": 84,
    "env": [
     "DB_HOST",
     "DB_NAME",
@@ -90644,8 +90676,10 @@
     "SUPABASE_DB_URL"
    ],
    "errors": [
-    "Credencial ausente: defina SUPABASE_DB_URL ou DB_PASSWORD no ambiente."
-   ]
+    "Credencial ausente: defina SUPABASE_DB_URL ou DB_PASSWORD no ambiente.",
+    "Defina DB_HOST (ou SUPABASE_DB_URL) — este script nao assume producao como padrao."
+   ],
+   "doc": "ATENCAO: apaga usuarios de teste em auth.users (email LIKE 'test%@gmail.com') e as identidades orfas em auth.identities do banco apontado. Nao assume host de producao."
   },
   "scripts/codemod-safe-number.mjs": {
    "path": "scripts/codemod-safe-number.mjs",
@@ -90679,7 +90713,7 @@
   },
   "scripts/fix-user-profile.mjs": {
    "path": "scripts/fix-user-profile.mjs",
-   "lines": 87,
+   "lines": 91,
    "env": [
     "DB_HOST",
     "DB_NAME",
@@ -90689,8 +90723,10 @@
     "SUPABASE_DB_URL"
    ],
    "errors": [
-    "Credencial ausente: defina SUPABASE_DB_URL ou DB_PASSWORD no ambiente."
-   ]
+    "Credencial ausente: defina SUPABASE_DB_URL ou DB_PASSWORD no ambiente.",
+    "Defina DB_HOST (ou SUPABASE_DB_URL) — este script nao assume producao como padrao."
+   ],
+   "doc": "ATENCAO: grava em public.user_profiles e public.user_roles (INSERT ... ON CONFLICT DO UPDATE) do banco apontado. Nao assume host de producao."
   },
   "scripts/guard-edge-numeric.mjs": {
    "path": "scripts/guard-edge-numeric.mjs",
@@ -123146,7 +123182,7 @@
   },
   "supabase/functions/whatsapp-inbound/index.ts": {
    "path": "supabase/functions/whatsapp-inbound/index.ts",
-   "lines": 180,
+   "lines": 181,
    "tables": [
     {
      "table": "conversation_messages",
@@ -123199,7 +123235,8 @@
      "status"
     ],
     "contacts": [
-     "id"
+     "id",
+     "phone"
     ],
     "agents": [
      "name",
@@ -123249,8 +123286,9 @@
   },
   "supabase/functions/whatsapp-inbound/schema.ts": {
    "path": "supabase/functions/whatsapp-inbound/schema.ts",
-   "lines": 27,
+   "lines": 42,
    "exports": [
+    "const PHONE_REGEX",
     "const WhatsAppInboundV1Schema",
     "const WhatsAppInboundV2Schema",
     "type WhatsAppInboundV1",
@@ -123258,9 +123296,20 @@
    ],
    "zod": [
     {
+     "name": "phoneSchema",
+     "kind": "string",
+     "body": "",
+     "refines": [
+      "O campo "
+     ],
+     "chain": [
+      "superRefine"
+     ]
+    },
+    {
      "name": "WhatsAppInboundV1Schema",
      "kind": "object",
-     "body": "{ from: z.string().min(1, \"O campo 'from' é obrigatório\"), name: z.string().optional(), message: z.string().min(1, \"O campo 'message' é obrigatório\"), message_id: z.string().optional(), timestamp: z.string().optional(), attachments: z.array(z.object({ url: z.string().url(), type: z.string(), filename: z.string().optional() })).optional() }",
+     "body": "{ from: phoneSchema, name: z.string().optional(), message: z.string().min(1, \"O campo 'message' é obrigatório\"), message_id: z.string().optional(), timestamp: z.string().optional(), attachments: z.array(z.object({ url: z.string().url(), type: z.string(), filename: z.string().optional() })).optional() }",
      "refines": [],
      "chain": []
     }
@@ -123268,7 +123317,7 @@
   },
   "supabase/functions/whatsapp-inbound/schema_test.ts": {
    "path": "supabase/functions/whatsapp-inbound/schema_test.ts",
-   "lines": 64,
+   "lines": 92,
    "status_values": [
     {
      "field": "type",
@@ -124526,10 +124575,35 @@
   }
  },
  "git": {
-  "sha": "4271aa3a221950f0ecd2a3645186d1d282125908",
+  "sha": "581cd3a1d9817612b20128dcb15e28667b15b45f",
   "branch": "main",
   "remote": "https://github.com/adm01-debug/Hello_V3",
   "commits": [
+   {
+    "sha": "581cd3a",
+    "date": "2026-11-23",
+    "author": "adm01-debug",
+    "subject": "fix: whatsapp-inbound deixa de concatenar telefone no filtro do PostgREST (#198)",
+    "files": [
+     "docs/qa/05-PROGRESSO.md",
+     "supabase/functions/whatsapp-inbound/index.ts",
+     "supabase/functions/whatsapp-inbound/schema.ts",
+     "supabase/functions/whatsapp-inbound/schema_test.ts"
+    ]
+   },
+   {
+    "sha": "617d9e8",
+    "date": "2026-11-23",
+    "author": "adm01-debug",
+    "subject": "fix: scripts destrutivos exigem DB_HOST explicito (#200)",
+    "files": [
+     "docs/qa/05-PROGRESSO.md",
+     "scripts/apply-call-volume-fix.mjs",
+     "scripts/clean-hold-events.mjs",
+     "scripts/cleanup-and-count.mjs",
+     "scripts/fix-user-profile.mjs"
+    ]
+   },
    {
     "sha": "4271aa3",
     "date": "2026-11-23",
@@ -124904,42 +124978,12 @@
      "src/pages/Reports.tsx",
      "supabase/functions/check-hold-alerts/index.ts"
     ]
-   },
-   {
-    "sha": "9b30ac8",
-    "date": "2026-11-23",
-    "author": "adm01-debug",
-    "subject": "feat: E060 CallContext provider singleton — resolve A-001 (múltiplas instâncias)",
-    "files": [
-     "src/App.tsx",
-     "src/components/calls/ActiveCallBar.tsx",
-     "src/components/calls/UnifiedSoftphone.tsx",
-     "src/contexts/CallContext.tsx",
-     "src/hooks/useMultiChannelCall.ts",
-     "src/pages/PhoneDialer.tsx",
-     "src/pages/__tests__/PhoneDialer.compliance.test.tsx"
-    ]
-   },
-   {
-    "sha": "2e60683",
-    "date": "2026-11-23",
-    "author": "adm01-debug",
-    "subject": "feat: gravar e fechar call_sessions quando chamada conecta e desconecta (#167)",
-    "files": [
-     "docs/agentes/telefonia-voip.md",
-     "src/hooks/__tests__/useMultiChannelCall.coverage.test.tsx",
-     "src/hooks/useMultiChannelCall.ts"
-    ]
    }
   ],
   "hot_files": [
    [
     "docs/qa/05-PROGRESSO.md",
-    28
-   ],
-   [
-    "src/hooks/useMultiChannelCall.ts",
-    4
+    30
    ],
    [
     "bun.lock",
@@ -124994,23 +125038,27 @@
     2
    ],
    [
-    "src/components/calls/ActiveCallBar.tsx",
+    "src/hooks/useMultiChannelCall.ts",
     2
    ],
    [
-    "src/components/calls/UnifiedSoftphone.tsx",
-    2
-   ],
-   [
-    "supabase/functions/email-inbound/__tests__/index.test.ts",
+    "supabase/functions/whatsapp-inbound/index.ts",
     1
    ],
    [
-    "supabase/functions/email-inbound/index.ts",
+    "supabase/functions/whatsapp-inbound/schema.ts",
     1
    ],
    [
-    "supabase/functions/auto-scorecard/index.ts",
+    "supabase/functions/whatsapp-inbound/schema_test.ts",
+    1
+   ],
+   [
+    "scripts/apply-call-volume-fix.mjs",
+    1
+   ],
+   [
+    "scripts/clean-hold-events.mjs",
     1
    ]
   ]

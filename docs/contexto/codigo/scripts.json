@@ -42,8 +42,8 @@
   },
   {
    "arquivo": "scripts/apply-call-volume-fix.mjs",
-   "descricao": null,
-   "linhas": 43,
+   "descricao": "ATENCAO: executa scripts/fix-get-call-volume-stats.sql (CREATE OR REPLACE FUNCTION) no banco apontado. Nao assume host de producao.",
+   "linhas": 47,
    "env": [
     "DB_HOST",
     "DB_NAME",
@@ -138,8 +138,8 @@
   },
   {
    "arquivo": "scripts/clean-hold-events.mjs",
-   "descricao": null,
-   "linhas": 74,
+   "descricao": "ATENCAO: apaga TODOS os registros de public.hold_events do banco apontado. Nao assume host de producao.",
+   "linhas": 78,
    "env": [
     "DB_HOST",
     "DB_NAME",
@@ -154,8 +154,8 @@
   },
   {
    "arquivo": "scripts/cleanup-and-count.mjs",
-   "descricao": null,
-   "linhas": 80,
+   "descricao": "ATENCAO: apaga usuarios de teste em auth.users (email LIKE 'test%@gmail.com') e as identidades orfas em auth.identities do banco apontado. Nao assume host de producao.",
+   "linhas": 84,
    "env": [
     "DB_HOST",
     "DB_NAME",
@@ -190,8 +190,8 @@
   },
   {
    "arquivo": "scripts/fix-user-profile.mjs",
-   "descricao": null,
-   "linhas": 87,
+   "descricao": "ATENCAO: grava em public.user_profiles e public.user_roles (INSERT ... ON CONFLICT DO UPDATE) do banco apontado. Nao assume host de producao.",
+   "linhas": 91,
    "env": [
     "DB_HOST",
     "DB_NAME",

@@ -1,6 +1,6 @@
 # 07 · REGRAS DE NEGÓCIO
 
-> Gerado automaticamente por AI Context Sync v1.3.2 · commit `4271aa3a22` · branch `main` · 2026-11-23 23:54 UTC
+> Gerado automaticamente por AI Context Sync v1.3.2 · commit `581cd3a1d9` · branch `main` · 2026-11-24 00:05 UTC
 > Não edite à mão — regras humanas vão em `manual/`.
 
 ## A. Regras escritas por humanos (`manual/` — prioridade máxima, nunca sobrescrito)
@@ -1286,9 +1286,14 @@ _nenhum mapa explícito encontrado — transições só existem implicitamente n
   ```ts
   { transcript: z.string().min(1, "Transcrição é obrigatória").max(10000), callInfo: z.object({ contactName: z.string().optional(), phone: z.string().optional(), duration: z.string().optional(), type: z.string().optional() }).optional() }
   ```
+- **phoneSchema** (`supabase/functions/whatsapp-inbound/schema.ts`, z.string, encadeia superRefine):
+  ```ts
+  
+  ```
+  - Regras cruzadas (refine): “O campo ”
 - **WhatsAppInboundV1Schema** (`supabase/functions/whatsapp-inbound/schema.ts`, z.object):
   ```ts
-  { from: z.string().min(1, "O campo 'from' é obrigatório"), name: z.string().optional(), message: z.string().min(1, "O campo 'message' é obrigatório"), message_id: z.string().optional(), timestamp: z.string().optional(), attachments: z.array(z.object({ url: z.string().url(), type: z.string(), filename: z.string().optional() })).optional() }
+  { from: phoneSchema, name: z.string().optional(), message: z.string().min(1, "O campo 'message' é obrigatório"), message_id: z.string().optional(), timestamp: z.string().optional(), attachments: z.array(z.object({ url: z.string().url(), type: z.string(), filename: z.string().optional() })).optional() }
   ```
 
 ### F.2 react-hook-form (register/rules)
@@ -2109,12 +2114,16 @@ _nenhum item encontrado_
 | Mensagem | Arquivo |
 |---|---|
 | Credencial ausente: defina SUPABASE_DB_URL ou DB_PASSWORD no ambiente. | `scripts/apply-call-volume-fix.mjs` |
+| Defina DB_HOST (ou SUPABASE_DB_URL) — este script nao assume producao como padrao. | `scripts/apply-call-volume-fix.mjs` |
 | Credencial ausente: defina SUPABASE_DB_URL ou DB_PASSWORD no ambiente. | `scripts/check-cfmlmc-db.mjs` |
 | Credencial ausente: defina SUPABASE_SERVICE_ROLE_KEY no ambiente. | `scripts/check-data.mjs` |
 | Credencial ausente: defina SUPABASE_DB_URL ou DB_PASSWORD no ambiente. | `scripts/check-rls.mjs` |
 | Credencial ausente: defina SUPABASE_DB_URL ou DB_PASSWORD no ambiente. | `scripts/clean-hold-events.mjs` |
+| Defina DB_HOST (ou SUPABASE_DB_URL) — este script nao assume producao como padrao. | `scripts/clean-hold-events.mjs` |
 | Credencial ausente: defina SUPABASE_DB_URL ou DB_PASSWORD no ambiente. | `scripts/cleanup-and-count.mjs` |
+| Defina DB_HOST (ou SUPABASE_DB_URL) — este script nao assume producao como padrao. | `scripts/cleanup-and-count.mjs` |
 | Credencial ausente: defina SUPABASE_DB_URL ou DB_PASSWORD no ambiente. | `scripts/fix-user-profile.mjs` |
+| Defina DB_HOST (ou SUPABASE_DB_URL) — este script nao assume producao como padrao. | `scripts/fix-user-profile.mjs` |
 | Credencial ausente: defina SUPABASE_DB_URL ou DB_PASSWORD no ambiente. | `scripts/inspect-schema.mjs` |
 | Credencial ausente: defina SUPABASE_ANON_KEY no ambiente. | `scripts/test-api-direct.mjs` |
 | Credencial ausente: defina SUPABASE_SERVICE_ROLE_KEY no ambiente. | `scripts/test-api-direct.mjs` |
@@ -2404,11 +2413,7 @@ _nenhum item encontrado_
 | Erro ao atualizar a avaliação | `src/hooks/useScorecards.ts` |
 | Erro ao criar o modelo | `src/hooks/useScorecards.ts` |
 | Erro ao gerar avaliação | `src/hooks/useScorecards.ts` |
-| Informe o nome e ao menos um critério | `src/hooks/useScorecards.ts` |
-| Falha ao marcar como lida | `src/hooks/useSecurityAlertNotifications.ts` |
-| Falha ao marcar como resolvido | `src/hooks/useSecurityAlertNotifications.ts` |
-| Falha ao marcar todos como lidos | `src/hooks/useSecurityAlertNotifications.ts` |
-| … +247 linhas — lista completa em `context.json` | |
+| … +251 linhas — lista completa em `context.json` | |
 
 ## J. Controle de acesso no código (checagens de perfil/permissão)
 

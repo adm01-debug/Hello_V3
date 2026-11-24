@@ -58,11 +58,11 @@
  "commits": {
   "convencao": "conventional commits (observado)",
   "exemplos": [
+   "fix: whatsapp-inbound deixa de concatenar telefone no filtro do PostgREST (#198)",
+   "fix: scripts destrutivos exigem DB_HOST explicito (#200)",
    "chore: react-router-dom 7.13.1 -> 7.18.6 (corrige open redirect) (#199)",
    "fix: email-inbound idempotente para parar o laco de 500 e a conversa duplicada (#197)",
-   "chore: migrar 15 edges para buildCorsHeaders(req) e remover export deprecated (#196)",
-   "fix: rate limit passa a falhar fechado nos endpoints que gastam dinheiro (E012) (#195)",
-   "fix: CORS so ecoa origens conhecidas e omite o header nas desconhecidas (E027) (#194)"
+   "chore: migrar 15 edges para buildCorsHeaders(req) e remover export deprecated (#196)"
   ]
  },
  "pr_template": null,
