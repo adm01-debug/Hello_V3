@@ -2,11 +2,16 @@
  "aviso": "GERADO AUTOMATICAMENTE por scripts/ai-context/gerar.mjs — não editar à mão; será sobrescrito.",
  "format_version": 2,
  "git": {
-  "commit": "8cf611ed0173c4cae735a2bae78b5d797938249d",
+  "commit": "ba7d9013ae4468c578895384f74e7bbee2530a15",
   "branch": "main",
-  "data_commit": "2026-11-24T12:20:41-03:00",
+  "data_commit": "2026-11-24T12:41:38-03:00",
   "remote": "https://github.com/adm01-debug/Hello_V3",
   "ultimos_commits": [
+   {
+    "sha": "ba7d901",
+    "data": "2026-11-24",
+    "assunto": "fix: bloqueia duplo clique nas acoes de escrita que duplicavam registro (etapa 218) (#291)"
+   },
    {
     "sha": "8cf611e",
     "data": "2026-11-24",
@@ -126,11 +131,6 @@
     "sha": "ee1f100",
     "data": "2026-11-24",
     "assunto": "fix: rotulos acessiveis nos botoes-icone de discador, chamada, contatos e transcricao (etapas 259-261) (#267)"
-   },
-   {
-    "sha": "f3b6cf1",
-    "data": "2026-11-24",
-    "assunto": "fix: gravacoes cegas em componentes e login reportam erro (etapa 187) (#255)"
    }
   ],
   "arquivos_mudados_7d": 1228,
@@ -141,7 +141,7 @@
    },
    {
     "pasta": "docs/qa/05-PROGRESSO.md",
-    "mudancas": 114
+    "mudancas": 115
    },
    {
     "pasta": "src/hooks/__tests__",
@@ -172,12 +172,12 @@
     "mudancas": 21
    },
    {
-    "pasta": "covout/lib/security",
-    "mudancas": 18
+    "pasta": "src/pages/__tests__",
+    "mudancas": 19
    },
    {
-    "pasta": "src/pages/__tests__",
-    "mudancas": 17
+    "pasta": "covout/lib/security",
+    "mudancas": 18
    },
    {
     "pasta": "src/components/compliance",
@@ -199,7 +199,7 @@
   "arquivos_mais_mudados_90d": [
    {
     "arquivo": "docs/qa/05-PROGRESSO.md",
-    "mudancas": 114
+    "mudancas": 115
    },
    {
     "arquivo": "docs/estado/funcionalidades-planejadas.md",
@@ -301,7 +301,7 @@
   "autores_30d": [
    {
     "autor": "adm01-debug",
-    "commits": 269
+    "commits": 270
    },
    {
     "autor": "Joaquim Ataides",
@@ -316,7 +316,7 @@
  "contagens": {
   "arquivos_total": 1728,
   "arquivos_codigo": 1324,
-  "linhas_codigo": 176394,
+  "linhas_codigo": 176482,
   "rotas": 106,
   "rotas_http_backend": 11,
   "vistas_por_id": 0,
@@ -480,7 +480,7 @@
   },
   "src/components": {
    "arquivos": 372,
-   "linhas": 44281
+   "linhas": 44286
   },
   "src/contexts": {
    "arquivos": 4,
@@ -508,7 +508,7 @@
   },
   "src/pages": {
    "arquivos": 147,
-   "linhas": 22469
+   "linhas": 22552
   },
   "src/routes": {
    "arquivos": 4,
@@ -637,8 +637,8 @@
    "linhas": 356
   },
   {
-   "arquivo": "src/pages/Contacts.tsx",
-   "linhas": 355
+   "arquivo": "src/pages/PhoneDialer.tsx",
+   "linhas": 356
   }
  ],
  "qualidade": {

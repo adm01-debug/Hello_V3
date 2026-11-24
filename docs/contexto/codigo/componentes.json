@@ -786,7 +786,7 @@
     "SurveysPanel"
    ],
    "export_default": null,
-   "linhas": 91,
+   "linhas": 96,
    "dominio": "components/call-library",
    "hooks_locais": [
     "useSurveys"
@@ -5560,7 +5560,7 @@
     "BattleCards"
    ],
    "export_default": "BattleCards",
-   "linhas": 221,
+   "linhas": 228,
    "dominio": "pages",
    "hooks_locais": [
     "usePageTitle"
@@ -5613,7 +5613,7 @@
     "Cadences"
    ],
    "export_default": "Cadences",
-   "linhas": 151,
+   "linhas": 160,
    "dominio": "pages",
    "hooks_locais": [
     "useCadences",
@@ -6187,7 +6187,7 @@
     "IPWhitelist"
    ],
    "export_default": "IPWhitelist",
-   "linhas": 213,
+   "linhas": 222,
    "dominio": "pages",
    "hooks_locais": [
     "useAuthContext",
@@ -6571,7 +6571,7 @@
     "PhoneDialer"
    ],
    "export_default": "PhoneDialer",
-   "linhas": 347,
+   "linhas": 356,
    "dominio": "pages",
    "hooks_locais": [
     "useCallContext",
@@ -6879,7 +6879,7 @@
     "Scheduling"
    ],
    "export_default": "Scheduling",
-   "linhas": 171,
+   "linhas": 173,
    "dominio": "pages",
    "hooks_locais": [
     "usePageTitle",
@@ -7025,7 +7025,7 @@
     "Skills"
    ],
    "export_default": "Skills",
-   "linhas": 106,
+   "linhas": 108,
    "dominio": "pages",
    "hooks_locais": [
     "usePageTitle",

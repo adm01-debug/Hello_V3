@@ -2788,13 +2788,13 @@
   {
    "arquivo": "src/pages/__tests__/IPWhitelist.test.tsx",
    "tipo": "unit",
-   "linhas": 57,
+   "linhas": 80,
    "testa": [
     "src/contexts/AuthContext.tsx",
     "src/hooks/useIPWhitelist.ts",
     "src/pages/IPWhitelist.tsx"
    ],
-   "casos": 3
+   "casos": 4
   },
   {
    "arquivo": "src/pages/__tests__/Knowledge.reader.test.tsx",
@@ -2817,11 +2817,11 @@
   {
    "arquivo": "src/pages/__tests__/PhoneDialer.compliance.test.tsx",
    "tipo": "unit",
-   "linhas": 103,
+   "linhas": 125,
    "testa": [
     "src/pages/PhoneDialer.tsx"
    ],
-   "casos": 2
+   "casos": 3
   },
   {
    "arquivo": "src/pages/__tests__/QueueMetricsDashboard.test.tsx",

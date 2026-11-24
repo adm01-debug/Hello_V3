@@ -542,7 +542,7 @@
    "modulo": "components/call-library",
    "arquivos": 2,
    "testes": 0,
-   "linhas": 187,
+   "linhas": 192,
    "itens_menu": [],
    "telas": [],
    "rotas_http": [],
@@ -5637,7 +5637,7 @@
    "modulo": "pages",
    "arquivos": 93,
    "testes": 0,
-   "linhas": 17068,
+   "linhas": 17106,
    "itens_menu": [
     "Acessos Bloqueados",
     "Agent Assist",

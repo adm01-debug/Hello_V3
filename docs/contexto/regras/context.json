@@ -1,15 +1,15 @@
 {
  "meta": {
-  "sha": "8cf611ed0173c4cae735a2bae78b5d797938249d",
+  "sha": "ba7d9013ae4468c578895384f74e7bbee2530a15",
   "branch": "main",
   "remote": "https://github.com/adm01-debug/Hello_V3",
-  "generated_at": "2026-11-24 15:21 UTC",
+  "generated_at": "2026-11-24 15:42 UTC",
   "files_total": 1775,
   "code_files": 1571,
-  "code_lines": 192444
+  "code_lines": 192532
  },
  "version": "1.3.2",
- "facts_hash": "02461ad19f31249d",
+ "facts_hash": "8be11ae47f6e64a6",
  "stack": {
   "frameworks": [
    "React + Vite",
@@ -33521,7 +33521,7 @@
   {
    "module": "src/components",
    "files": 372,
-   "lines": 44281,
+   "lines": 44286,
    "tables": [
     "accounts",
     "agent_goals",
@@ -34257,7 +34257,7 @@
   {
    "module": "src/pages",
    "files": 147,
-   "lines": 22469,
+   "lines": 22552,
    "tables": [
     "audit_logs",
     "battle_card_triggers",
@@ -70132,6 +70132,10 @@
     "name": "does not present an empty user table as "
    },
    {
+    "file": "src/pages/__tests__/IPWhitelist.test.tsx",
+    "name": "grava um único IP quando o botão é clicado duas vezes antes da resposta"
+   },
+   {
     "file": "src/pages/__tests__/Knowledge.reader.test.tsx",
     "name": "Knowledge — leitura do artigo (etapa 153)"
    },
@@ -70170,6 +70174,10 @@
    {
     "file": "src/pages/__tests__/PhoneDialer.compliance.test.tsx",
     "name": "inicia a chamada quando o pre-dial check aprova"
+   },
+   {
+    "file": "src/pages/__tests__/PhoneDialer.compliance.test.tsx",
+    "name": "não abre duas chamadas quando o botão de ligar é tocado duas vezes"
    },
    {
     "file": "src/pages/__tests__/QueueMetricsDashboard.test.tsx",
@@ -91218,7 +91226,7 @@
   },
   "src/components/call-library/SurveysPanel.tsx": {
    "path": "src/components/call-library/SurveysPanel.tsx",
-   "lines": 91,
+   "lines": 96,
    "exports": [
     "function SurveysPanel"
    ]
@@ -111510,7 +111518,7 @@
   },
   "src/pages/BattleCards.tsx": {
    "path": "src/pages/BattleCards.tsx",
-   "lines": 221,
+   "lines": 228,
    "exports": [
     "function BattleCards"
    ],
@@ -111582,7 +111590,7 @@
   },
   "src/pages/Cadences.tsx": {
    "path": "src/pages/Cadences.tsx",
-   "lines": 151,
+   "lines": 160,
    "exports": [
     "function Cadences"
    ]
@@ -112011,7 +112019,7 @@
   },
   "src/pages/IPWhitelist.tsx": {
    "path": "src/pages/IPWhitelist.tsx",
-   "lines": 213,
+   "lines": 222,
    "exports": [
     "function IPWhitelist"
    ]
@@ -112478,7 +112486,7 @@
   },
   "src/pages/PhoneDialer.tsx": {
    "path": "src/pages/PhoneDialer.tsx",
-   "lines": 347,
+   "lines": 356,
    "exports": [
     "default PhoneDialer"
    ],
@@ -112723,7 +112731,7 @@
   },
   "src/pages/Scheduling.tsx": {
    "path": "src/pages/Scheduling.tsx",
-   "lines": 171,
+   "lines": 173,
    "exports": [
     "function Scheduling"
    ],
@@ -112991,7 +112999,7 @@
   },
   "src/pages/Skills.tsx": {
    "path": "src/pages/Skills.tsx",
-   "lines": 106,
+   "lines": 108,
    "exports": [
     "function Skills"
    ]
@@ -113496,13 +113504,14 @@
   },
   "src/pages/__tests__/IPWhitelist.test.tsx": {
    "path": "src/pages/__tests__/IPWhitelist.test.tsx",
-   "lines": 57,
+   "lines": 80,
    "is_test": true,
    "tests": [
     "IPWhitelist",
     "alerts when the whitelist could not be read",
     "shows the genuine empty state when the read succeeded",
-    "does not present an empty user table as "
+    "does not present an empty user table as ",
+    "grava um único IP quando o botão é clicado duas vezes antes da resposta"
    ]
   },
   "src/pages/__tests__/Knowledge.reader.test.tsx": {
@@ -113528,7 +113537,7 @@
   },
   "src/pages/__tests__/PhoneDialer.compliance.test.tsx": {
    "path": "src/pages/__tests__/PhoneDialer.compliance.test.tsx",
-   "lines": 103,
+   "lines": 125,
    "is_test": true,
    "errors": [
     ", () => ({\n  ensureNotificationPermission: vi.fn(() => Promise.resolve()),\n  startIncomingCallAlert: vi.fn(),\n}));\nvi.mock("
@@ -113536,7 +113545,8 @@
    "tests": [
     "PhoneDialer compliance guard",
     "bloqueia a chamada quando o pre-dial check reprova",
-    "inicia a chamada quando o pre-dial check aprova"
+    "inicia a chamada quando o pre-dial check aprova",
+    "não abre duas chamadas quando o botão de ligar é tocado duas vezes"
    ]
   },
   "src/pages/__tests__/QueueMetricsDashboard.test.tsx": {
@@ -123188,10 +123198,28 @@
   }
  },
  "git": {
-  "sha": "8cf611ed0173c4cae735a2bae78b5d797938249d",
+  "sha": "ba7d9013ae4468c578895384f74e7bbee2530a15",
   "branch": "main",
   "remote": "https://github.com/adm01-debug/Hello_V3",
   "commits": [
+   {
+    "sha": "ba7d901",
+    "date": "2026-11-24",
+    "author": "adm01-debug",
+    "subject": "fix: bloqueia duplo clique nas acoes de escrita que duplicavam registro (etapa 218) (#291)",
+    "files": [
+     "docs/qa/05-PROGRESSO.md",
+     "src/components/call-library/SurveysPanel.tsx",
+     "src/pages/BattleCards.tsx",
+     "src/pages/Cadences.tsx",
+     "src/pages/IPWhitelist.tsx",
+     "src/pages/PhoneDialer.tsx",
+     "src/pages/Scheduling.tsx",
+     "src/pages/Skills.tsx",
+     "src/pages/__tests__/IPWhitelist.test.tsx",
+     "src/pages/__tests__/PhoneDialer.compliance.test.tsx"
+    ]
+   },
    {
     "sha": "8cf611e",
     "date": "2026-11-24",
@@ -123678,16 +123706,6 @@
      "supabase/functions/voip-capacity-recommendations/index.ts",
      "supabase/functions/voip-diagnostic-voice-qa/index.ts"
     ]
-   },
-   {
-    "sha": "94ed302",
-    "date": "2026-11-24",
-    "author": "adm01-debug",
-    "subject": "chore: verificacao dos timers de realtime nos hooks (etapa 216) (#266)",
-    "files": [
-     "docs/qa/05-PROGRESSO.md",
-     "src/hooks/__tests__/useActiveCallsRealtime.coverage.test.tsx"
-    ]
    }
   ],
   "hot_files": [
@@ -123710,6 +123728,18 @@
    [
     "docs/estado/funcionalidades-planejadas.md",
     3
+   ],
+   [
+    "src/pages/BattleCards.tsx",
+    2
+   ],
+   [
+    "src/pages/Cadences.tsx",
+    2
+   ],
+   [
+    "src/pages/IPWhitelist.tsx",
+    2
    ],
    [
     "src/components/gamification/AchievementCelebration.tsx",
@@ -123748,10 +123778,6 @@
     2
    ],
    [
-    "src/hooks/__tests__/useActiveCallsRealtime.coverage.test.tsx",
-    2
-   ],
-   [
     "src/pages/Recordings.tsx",
     2
    ],
@@ -123762,14 +123788,6 @@
    [
     "supabase/functions/validate-geo/index.ts",
     2
-   ],
-   [
-    "src/hooks/__tests__/useAlertSoundAndNotifications.test.ts",
-    1
-   ],
-   [
-    "src/hooks/__tests__/useAuthAndDataIntegrity.test.ts",
-    1
    ]
   ]
  }

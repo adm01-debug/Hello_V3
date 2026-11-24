@@ -1,6 +1,6 @@
 # 07 · REGRAS DE NEGÓCIO
 
-> Gerado automaticamente por AI Context Sync v1.3.2 · commit `8cf611ed01` · branch `main` · 2026-11-24 15:21 UTC
+> Gerado automaticamente por AI Context Sync v1.3.2 · commit `ba7d9013ae` · branch `main` · 2026-11-24 15:42 UTC
 > Não edite à mão — regras humanas vão em `manual/`.
 
 ## A. Regras escritas por humanos (`manual/` — prioridade máxima, nunca sobrescrito)
@@ -2652,7 +2652,7 @@ _nenhum item encontrado_
 | `admin` | `supabase/functions/data-lake-flush/index.ts` |
 | `admin` | `supabase/migrations/20261123000200_fix_has_role_oracle_and_debug_tables.sql` |
 
-## K. Testes como especificação (3511 testes em 374 arquivos — nomes completos em `context.json`)
+## K. Testes como especificação (3513 testes em 374 arquivos — nomes completos em `context.json`)
 
 | Arquivo | Testes | Exemplos do que o sistema DEVE fazer |
 |---|---|---|
@@ -2917,6 +2917,7 @@ _nenhum item encontrado_
 | `src/lib/export/__tests__/index.coverage.test.ts` | 5 | export/index · exportToCSV downloads with BOM and formatting · exportToCSV no-ops on empty data · exportToJSON downloads … |
 | `src/lib/security/__tests__/encryption.coverage.test.ts` | 5 | encryption (coverage) · round-trips encrypt/decrypt with a generated key · hashData returns base64 string with real crypto · arrayBufferToBase64 and base64ToArrayBuffer are inverse operations … |
 | `src/lib/security/__tests__/security-headers-validator.coverage.test.ts` | 5 | security-headers-validator · returns all headers present when fetch succeeds · returns all headers absent when fetch rejects · handles a mixed set of present/absent headers … |
+| `src/pages/__tests__/IPWhitelist.test.tsx` | 5 | IPWhitelist · alerts when the whitelist could not be read · shows the genuine empty state when the read succeeded · does not present an empty user table as  … |
 | `src/pages/__tests__/Status.test.tsx` | 5 | Status — sem medição (E092) · mostra  · mostra  · Status — erro no carregamento (E093) … |
 | `supabase/functions/_shared/__tests__/rate-limit.test.ts` | 5 | rate-limit: DB liberado devolve allowed · rate-limit: DB bloqueando devolve allowed=false com motivo · rate-limit: erro do banco segue fail-open por padrao · rate-limit: erro do banco nega quando onError=deny … |
 | `supabase/functions/chatbot-respond/__tests__/index.test.ts` | 5 | chatbot-respond: sem visitor_token e sem sessao devolve 401 · chatbot-respond: corpo sem conversation_id devolve 400 · chatbot-respond: conversation_id que nao e UUID devolve 400 · chatbot-respond: user_message acima do teto devolve 422 com o campo apontado … |
@@ -2955,7 +2956,6 @@ _nenhum item encontrado_
 | `src/lib/__tests__/callHistoryCsv.test.ts` | 4 | callHistoryCsv · gera header + linhas separadas por ; · escapa valores com virgula e aspas · deixa vazio campos nulos |
 | `src/lib/__tests__/pendingCallWrites.test.ts` | 4 | pendingCallWrites · enfileira e retira em ordem FIFO · descarta o mais antigo quando chega a 20 itens · clear() esvazia a fila |
 | `src/lib/__tests__/reportCsv.test.ts` | 4 | reportCsv · gera secoes e header do relatorio · escapa nome com virgula · gera arquivo vazio quando nada informado |
-| `src/pages/__tests__/CallHistory.deeplink.test.tsx` | 4 | CallHistory - deep link dos acertos (etapa 157) · sem o parametro session nao abre nenhuma chamada · com ?session=<id> abre a chamada correspondente · nao repete a abertura quando a lista e re-renderizada |
 | … +74 linhas — lista completa em `context.json` | | |
 
 ## L. Eventos de webhook tratados (contratos com sistemas externos)
