@@ -110,7 +110,7 @@ async function checkTrunk(server: string, transport: string): Promise<{ reachabl
  
             if (!swapError) {
               // Registra evento de failover no tronco falho
-              await supabase
+              const { error: failoverCountErr } = await supabase
                 .from("voip_trunks")
                 .update({ 
                   failover_count: (trunk.failover_count || 0) + 1,
@@ -118,6 +118,7 @@ async function checkTrunk(server: string, transport: string): Promise<{ reachabl
                   failover_reason: "Offline status detected by auto-healthcheck"
                 })
                 .eq("id", trunk.id);
+              if (failoverCountErr) console.error('voip-trunks-healthcheck: falha ao atualizar contador de failover', failoverCountErr);
                 
                console.log(`Failover completed successfully from ${trunk.name} to ${backupTrunk.name}`);
                

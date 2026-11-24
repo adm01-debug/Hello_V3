@@ -82,6 +82,19 @@ describe('useTrackers', () => {
     expect(toast.error).toHaveBeenCalled();
   });
 
+  it('toggleTracker mostra erro e nao recarrega quando a gravacao falha', async () => {
+    const { result } = renderHook(() => useTrackers());
+    await waitFor(() => expect(result.current.loading).toBe(false));
+    vi.mocked(supabase.from).mockReturnValueOnce(
+      makeBuilder({ data: null, error: { message: 'denied' } }) as never
+    );
+    const callsBefore = vi.mocked(supabase.from).mock.calls.length;
+    await act(async () => { await result.current.toggleTracker('t1', false); });
+    expect(toast.error).toHaveBeenCalledWith('Erro ao alterar o tracker');
+    // so a chamada do proprio update: sem refresh apos falha
+    expect(vi.mocked(supabase.from).mock.calls.length).toBe(callsBefore + 1);
+  });
+
   it('toggleTracker and refresh', async () => {
     const { result } = renderHook(() => useTrackers());
     await waitFor(() => expect(result.current.loading).toBe(false));

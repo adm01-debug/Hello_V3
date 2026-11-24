@@ -88,13 +88,14 @@ Deno.serve(async (req) => {
     results.account_lockouts = lockoutErr ? `error: ${lockoutErr.message}` : "cleaned";
 
     // Log cleanup event
-    await supabase.from("audit_logs").insert({
+    const { error: cleanupAuditErr } = await supabase.from("audit_logs").insert({
       user_id: user.id,
       user_email: user.email,
       action: "database_cleanup",
       resource_type: "system",
       details: results,
     });
+    if (cleanupAuditErr) console.error('database-cleanup: falha ao auditar limpeza', cleanupAuditErr);
 
     return new Response(
       JSON.stringify({ success: true, message: "Database cleanup completed", results }),

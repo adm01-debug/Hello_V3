@@ -84,10 +84,11 @@ Deno.serve(async (req) => {
     }
 
     if (new Date(resetRequest.expires_at) < new Date()) {
-      await supabase
+      const { error: expireErr } = await supabase
         .from('password_reset_requests')
         .update({ status: 'expired' })
         .eq('id', requestId);
+      if (expireErr) console.error('approve-password-reset: falha ao marcar pedido como expirado', expireErr);
 
       return new Response(
         JSON.stringify({ error: 'Request has expired' }),
@@ -113,7 +114,7 @@ Deno.serve(async (req) => {
     }
 
     // Update request status
-    await supabase
+    const { error: approveErr } = await supabase
       .from('password_reset_requests')
       .update({
         status: 'approved',
@@ -122,9 +123,17 @@ Deno.serve(async (req) => {
         reviewer_email: adminUser.email
       })
       .eq('id', requestId);
+    if (approveErr) {
+      // Essencial: sem isso o pedido continua pendente e o painel mente sobre a aprovacao.
+      console.error('approve-password-reset: falha ao aprovar o pedido', approveErr);
+      return new Response(
+        JSON.stringify({ error: 'Failed to approve request' }),
+        { status: 500, headers: { ...buildCorsHeaders(req), 'Content-Type': 'application/json' } }
+      );
+    }
 
     // Log audit event
-    await supabase.from('audit_logs').insert({
+    const { error: auditErr } = await supabase.from('audit_logs').insert({
       user_id: adminUser.id,
       user_email: adminUser.email,
       action: 'password_reset_approved',
@@ -135,6 +144,7 @@ Deno.serve(async (req) => {
         target_user_id: resetRequest.user_id
       }
     });
+    if (auditErr) console.error('approve-password-reset: falha ao auditar aprovacao', auditErr);
     return new Response(
       JSON.stringify({ 
         success: true, 
