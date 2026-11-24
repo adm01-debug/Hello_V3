@@ -2,6 +2,13 @@
 
 Diff semântico gerado a cada coleta em que algo mudou.
 
+## 2026-11-24 10:13 UTC
+
+- **colunas** adicionado (1): `public.user_profiles.avatar_url`
+- **migrations** adicionado (8): `20261122180000_data_lake_flush_cron_token`, `20261122200000_rls_initplan_remaining`, `20261123000000_fix_anon_rpc_exposure`, `20261123000100_fix_anon_rls_helper_exposure`, `20261123000200_fix_has_role_oracle_and_debug_tables`, `20261123001000_sync_role_creates_missing_profile`, `20261123002000_b6_text_domain_checks`, `20261123020000_add_avatar_storage`
+- **policies (RLS)** adicionado (4): `storage.objects.avatars_delete_own`, `storage.objects.avatars_insert_own`, `storage.objects.avatars_select_own`, `storage.objects.avatars_update_own`
+- **storage buckets** adicionado (1): `avatars`
+
 ## 2026-11-24 00:31 UTC
 
 - **realtime** adicionado (1): `supabase_realtime_messages_publication:realtime.messages_2026_11_27`

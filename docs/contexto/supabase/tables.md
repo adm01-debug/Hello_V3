@@ -153,7 +153,7 @@ Um arquivo por tabela em `tables/<schema>/<tabela>.md` (colunas, constraints, í
 | [public.user_ip_restrictions](tables/public/user_ip_restrictions.md) | table | sim | 2 | 5 | não |  |
 | [public.user_mfa_settings](tables/public/user_mfa_settings.md) | table | sim | 5 | 9 | não |  |
 | [public.user_passkeys](tables/public/user_passkeys.md) | table | sim | 4 | 11 | não |  |
-| [public.user_profiles](tables/public/user_profiles.md) | table | sim | 6 | 21 | não |  |
+| [public.user_profiles](tables/public/user_profiles.md) | table | sim | 6 | 22 | não |  |
 | [public.user_roles](tables/public/user_roles.md) | table | sim | 2 | 9 | não |  |
 | [public.video_conferences](tables/public/video_conferences.md) | table | sim | 4 | 14 | não |  |
 | [public.virtual_fax](tables/public/virtual_fax.md) | table | sim | 4 | 17 | não |  |

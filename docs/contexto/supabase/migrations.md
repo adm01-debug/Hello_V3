@@ -217,7 +217,9 @@ SQL em `migrations/<versao>_<nome>.sql`. Mudanças feitas pelo Dashboard/SQL Edi
 | 20261121125200 | [fix_rls_allow_all](migrations/20261121125200_fix_rls_allow_all.sql) | 0 |
 | 20261122120000 | [20261122120000_coaching_auto_tracks_cron](migrations/20261122120000_20261122120000_coaching_auto_tracks_cron.sql) | 0 |
 | 20261122140000 | [20261122140000_dialer_pacing_cron](migrations/20261122140000_20261122140000_dialer_pacing_cron.sql) | 0 |
+| 20261122180000 | [data_lake_flush_cron_token](migrations/20261122180000_data_lake_flush_cron_token.sql) | 1 |
 | 20261122183000 | [20261122183000_hardening_revoke_internal_functions](migrations/20261122183000_20261122183000_hardening_revoke_internal_functions.sql) | 0 |
+| 20261122200000 | [rls_initplan_remaining](migrations/20261122200000_rls_initplan_remaining.sql) | 1 |
 | 20261122210000 | [20261122210000_optimistic_lock_audit_survives_rollback](migrations/20261122210000_20261122210000_optimistic_lock_audit_survives_rollback.sql) | 0 |
 | 20261122220000 | [20261122220000_lock_conflicts_retention_cron](migrations/20261122220000_20261122220000_lock_conflicts_retention_cron.sql) | 0 |
 | 20261122230000 | [20261122230000_reconcile_admin_role_sources](migrations/20261122230000_20261122230000_reconcile_admin_role_sources.sql) | 0 |
@@ -235,4 +237,10 @@ SQL em `migrations/<versao>_<nome>.sql`. Mudanças feitas pelo Dashboard/SQL Edi
 | 20261122350000 | [20261122350000_revert_parked_calls_scope](migrations/20261122350000_20261122350000_revert_parked_calls_scope.sql) | 0 |
 | 20261122360000 | [20261122360000_storage_policies_rename_and_scope](migrations/20261122360000_20261122360000_storage_policies_rename_and_scope.sql) | 0 |
 | 20261122370000 | [20261122370000_holiday_region_isolation](migrations/20261122370000_20261122370000_holiday_region_isolation.sql) | 0 |
+| 20261123000000 | [fix_anon_rpc_exposure](migrations/20261123000000_fix_anon_rpc_exposure.sql) | 1 |
+| 20261123000100 | [fix_anon_rls_helper_exposure](migrations/20261123000100_fix_anon_rls_helper_exposure.sql) | 1 |
+| 20261123000200 | [fix_has_role_oracle_and_debug_tables](migrations/20261123000200_fix_has_role_oracle_and_debug_tables.sql) | 1 |
+| 20261123001000 | [sync_role_creates_missing_profile](migrations/20261123001000_sync_role_creates_missing_profile.sql) | 1 |
+| 20261123002000 | [b6_text_domain_checks](migrations/20261123002000_b6_text_domain_checks.sql) | 1 |
 | 20261123010000 | [20261123010000_fix_user_delete_cascade](migrations/20261123010000_20261123010000_fix_user_delete_cascade.sql) | 0 |
+| 20261123020000 | [add_avatar_storage](migrations/20261123020000_add_avatar_storage.sql) | 1 |

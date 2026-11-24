@@ -10,7 +10,32 @@ export type Database = {
   // Allows to automatically instantiate createClient with right options
   // instead of createClient<Database, { PostgrestVersion: 'XX' }>(URL, KEY)
   __InternalSupabase: {
-    PostgrestVersion: "14.5"
+    PostgrestVersion: "14.15"
+  }
+  graphql_public: {
+    Tables: {
+      [_ in never]: never
+    }
+    Views: {
+      [_ in never]: never
+    }
+    Functions: {
+      graphql: {
+        Args: {
+          extensions?: Json
+          operationName?: string
+          query?: string
+          variables?: Json
+        }
+        Returns: Json
+      }
+    }
+    Enums: {
+      [_ in never]: never
+    }
+    CompositeTypes: {
+      [_ in never]: never
+    }
   }
   public: {
     Tables: {
@@ -1639,6 +1664,62 @@ export type Database = {
           },
         ]
       }
+      call_records: {
+        Row: {
+          agent_id: string | null
+          agent_name: string | null
+          contact_id: string | null
+          contact_name: string
+          contact_phone: string
+          duration: number | null
+          id: string
+          notes: string | null
+          recording_url: string | null
+          status: string
+          timestamp: string
+          transcription: string | null
+          type: string
+        }
+        Insert: {
+          agent_id?: string | null
+          agent_name?: string | null
+          contact_id?: string | null
+          contact_name: string
+          contact_phone: string
+          duration?: number | null
+          id?: string
+          notes?: string | null
+          recording_url?: string | null
+          status: string
+          timestamp?: string
+          transcription?: string | null
+          type: string
+        }
+        Update: {
+          agent_id?: string | null
+          agent_name?: string | null
+          contact_id?: string | null
+          contact_name?: string
+          contact_phone?: string
+          duration?: number | null
+          id?: string
+          notes?: string | null
+          recording_url?: string | null
+          status?: string
+          timestamp?: string
+          transcription?: string | null
+          type?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "call_records_contact_id_fkey"
+            columns: ["contact_id"]
+            isOneToOne: false
+            referencedRelation: "contacts"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       call_scorecards: {
         Row: {
           agent_name: string | null
@@ -2662,6 +2743,7 @@ export type Database = {
           created_at: string
           email: string | null
           external_id: string | null
+          favorite: boolean | null
           id: string
           name: string
           notes: string | null
@@ -2680,6 +2762,7 @@ export type Database = {
           created_at?: string
           email?: string | null
           external_id?: string | null
+          favorite?: boolean | null
           id?: string
           name: string
           notes?: string | null
@@ -2698,6 +2781,7 @@ export type Database = {
           created_at?: string
           email?: string | null
           external_id?: string | null
+          favorite?: boolean | null
           id?: string
           name?: string
           notes?: string | null
@@ -3601,6 +3685,39 @@ export type Database = {
           token?: string
           user_id?: string
           verified_at?: string | null
+        }
+        Relationships: []
+      }
+      entity_versions: {
+        Row: {
+          change_summary: string | null
+          changed_at: string
+          changed_by: string | null
+          data: Json
+          entity_id: string
+          entity_type: string
+          id: string
+          version_number: number
+        }
+        Insert: {
+          change_summary?: string | null
+          changed_at?: string
+          changed_by?: string | null
+          data?: Json
+          entity_id: string
+          entity_type: string
+          id?: string
+          version_number: number
+        }
+        Update: {
+          change_summary?: string | null
+          changed_at?: string
+          changed_by?: string | null
+          data?: Json
+          entity_id?: string
+          entity_type?: string
+          id?: string
+          version_number?: number
         }
         Relationships: []
       }
@@ -4577,6 +4694,30 @@ export type Database = {
           },
         ]
       }
+      migration_rollbacks: {
+        Row: {
+          id: number
+          reason: string | null
+          rolled_back_at: string | null
+          rolled_back_by: string | null
+          version: string
+        }
+        Insert: {
+          id?: number
+          reason?: string | null
+          rolled_back_at?: string | null
+          rolled_back_by?: string | null
+          version: string
+        }
+        Update: {
+          id?: number
+          reason?: string | null
+          rolled_back_at?: string | null
+          rolled_back_by?: string | null
+          version?: string
+        }
+        Relationships: []
+      }
       notification_preferences: {
         Row: {
           categories: Json
@@ -5132,6 +5273,45 @@ export type Database = {
         }
         Relationships: []
       }
+      queue_items: {
+        Row: {
+          agent_assigned: string | null
+          contact_name: string
+          contact_phone: string
+          created_at: string
+          id: string
+          metadata: Json | null
+          priority: number | null
+          queue_type: string | null
+          status: string
+          wait_time: number | null
+        }
+        Insert: {
+          agent_assigned?: string | null
+          contact_name: string
+          contact_phone: string
+          created_at?: string
+          id?: string
+          metadata?: Json | null
+          priority?: number | null
+          queue_type?: string | null
+          status?: string
+          wait_time?: number | null
+        }
+        Update: {
+          agent_assigned?: string | null
+          contact_name?: string
+          contact_phone?: string
+          created_at?: string
+          id?: string
+          metadata?: Json | null
+          priority?: number | null
+          queue_type?: string | null
+          status?: string
+          wait_time?: number | null
+        }
+        Relationships: []
+      }
       queue_metrics_settings: {
         Row: {
           abandonment_rate_critical: number
@@ -5635,6 +5815,39 @@ export type Database = {
         }
         Relationships: []
       }
+      saved_filters: {
+        Row: {
+          created_at: string
+          entity_type: string
+          filters: Json
+          id: string
+          is_default: boolean
+          name: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          entity_type: string
+          filters?: Json
+          id?: string
+          is_default?: boolean
+          name: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          entity_type?: string
+          filters?: Json
+          id?: string
+          is_default?: boolean
+          name?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
       scheduled_callbacks: {
         Row: {
           assigned_agent: string | null
@@ -5690,6 +5903,36 @@ export type Database = {
             referencedColumns: ["id"]
           },
         ]
+      }
+      schema_migrations: {
+        Row: {
+          applied_at: string | null
+          applied_by: string | null
+          checksum: string | null
+          execution_time_ms: number | null
+          name: string
+          success: boolean | null
+          version: string
+        }
+        Insert: {
+          applied_at?: string | null
+          applied_by?: string | null
+          checksum?: string | null
+          execution_time_ms?: number | null
+          name: string
+          success?: boolean | null
+          version: string
+        }
+        Update: {
+          applied_at?: string | null
+          applied_by?: string | null
+          checksum?: string | null
+          execution_time_ms?: number | null
+          name?: string
+          success?: boolean | null
+          version?: string
+        }
+        Relationships: []
       }
       scorecard_criteria: {
         Row: {
@@ -6713,10 +6956,10 @@ export type Database = {
           ringtone_volume: number | null
           role: string
           updated_at: string
-          voice_command_history: Json
+          voice_command_history: Json | null
           voice_prefs_updated_at: string | null
-          voice_tts_enabled: boolean
-          voice_tts_rate: number
+          voice_tts_enabled: boolean | null
+          voice_tts_rate: number | null
           voice_tts_voice: string | null
         }
         Insert: {
@@ -6736,10 +6979,10 @@ export type Database = {
           ringtone_volume?: number | null
           role?: string
           updated_at?: string
-          voice_command_history?: Json
+          voice_command_history?: Json | null
           voice_prefs_updated_at?: string | null
-          voice_tts_enabled?: boolean
-          voice_tts_rate?: number
+          voice_tts_enabled?: boolean | null
+          voice_tts_rate?: number | null
           voice_tts_voice?: string | null
         }
         Update: {
@@ -6759,10 +7002,10 @@ export type Database = {
           ringtone_volume?: number | null
           role?: string
           updated_at?: string
-          voice_command_history?: Json
+          voice_command_history?: Json | null
           voice_prefs_updated_at?: string | null
-          voice_tts_enabled?: boolean
-          voice_tts_rate?: number
+          voice_tts_enabled?: boolean | null
+          voice_tts_rate?: number | null
           voice_tts_voice?: string | null
         }
         Relationships: [
@@ -7454,6 +7697,40 @@ export type Database = {
         }
         Relationships: []
       }
+      index_usage: {
+        Row: {
+          index_scans: number | null
+          index_size: string | null
+          indexname: unknown
+          schemaname: unknown
+          tablename: unknown
+          tuples_fetched: number | null
+          tuples_read: number | null
+        }
+        Relationships: []
+      }
+      migration_status: {
+        Row: {
+          applied_at: string | null
+          applied_by: string | null
+          execution_time_ms: number | null
+          name: string | null
+          status: string | null
+          success: boolean | null
+          version: string | null
+        }
+        Relationships: []
+      }
+      unused_indexes: {
+        Row: {
+          idx_scan: number | null
+          index_size: string | null
+          indexname: unknown
+          schemaname: unknown
+          tablename: unknown
+        }
+        Relationships: []
+      }
     }
     Functions: {
       add_to_dnc: {
@@ -7465,6 +7742,10 @@ export type Database = {
           p_source?: string
         }
         Returns: string
+      }
+      apply_migration: {
+        Args: { p_checksum: string; p_name: string; p_version: string }
+        Returns: boolean
       }
       apply_predictive_pacing: { Args: never; Returns: Json }
       calculate_predictive_pace: {
@@ -7521,6 +7802,41 @@ export type Database = {
       cleanup_expired_challenges: { Args: never; Returns: undefined }
       cleanup_old_data: { Args: never; Returns: undefined }
       cleanup_old_logs: { Args: never; Returns: undefined }
+      dblink: { Args: { "": string }; Returns: Record<string, unknown>[] }
+      dblink_cancel_query: { Args: { "": string }; Returns: string }
+      dblink_close: { Args: { "": string }; Returns: string }
+      dblink_connect: { Args: { "": string }; Returns: string }
+      dblink_connect_u: { Args: { "": string }; Returns: string }
+      dblink_current_query: { Args: never; Returns: string }
+      dblink_disconnect:
+        | { Args: never; Returns: string }
+        | { Args: { "": string }; Returns: string }
+      dblink_error_message: { Args: { "": string }; Returns: string }
+      dblink_exec: { Args: { "": string }; Returns: string }
+      dblink_fdw_validator: {
+        Args: { catalog: unknown; options: string[] }
+        Returns: undefined
+      }
+      dblink_get_connections: { Args: never; Returns: string[] }
+      dblink_get_notify:
+        | { Args: { conname: string }; Returns: Record<string, unknown>[] }
+        | { Args: never; Returns: Record<string, unknown>[] }
+      dblink_get_pkey: {
+        Args: { "": string }
+        Returns: Database["public"]["CompositeTypes"]["dblink_pkey_results"][]
+        SetofOptions: {
+          from: "*"
+          to: "dblink_pkey_results"
+          isOneToOne: false
+          isSetofReturn: true
+        }
+      }
+      dblink_get_result: {
+        Args: { "": string }
+        Returns: Record<string, unknown>[]
+      }
+      dblink_is_busy: { Args: { "": string }; Returns: number }
+      exec_sql: { Args: { query: string }; Returns: Json }
       expire_parked_calls: { Args: never; Returns: number }
       get_agent_financial_leaderboard: {
         Args: { p_days?: number }
@@ -7642,6 +7958,12 @@ export type Database = {
         Returns: string
       }
       reset_public_index_stats: { Args: never; Returns: Json }
+      rollback_migration: {
+        Args: { p_reason: string; p_version: string }
+        Returns: boolean
+      }
+      show_limit: { Args: never; Returns: number }
+      show_trgm: { Args: { "": string }; Returns: string[] }
       snapshot_deals_daily: { Args: never; Returns: Json }
       validate_audit_insert: { Args: never; Returns: boolean }
     }
@@ -7655,7 +7977,10 @@ export type Database = {
         | "wavoip"
     }
     CompositeTypes: {
-      [_ in never]: never
+      dblink_pkey_results: {
+        position: number | null
+        colname: string | null
+      }
     }
   }
 }
@@ -7668,12 +7993,12 @@ export type Tables<
   DefaultSchemaTableNameOrOptions extends
     | keyof (DefaultSchema["Tables"] & DefaultSchema["Views"])
     | { schema: keyof DatabaseWithoutInternals },
-  TableName extends DefaultSchemaTableNameOrOptions extends {
+  TableName extends (DefaultSchemaTableNameOrOptions extends {
     schema: keyof DatabaseWithoutInternals
   }
     ? keyof (DatabaseWithoutInternals[DefaultSchemaTableNameOrOptions["schema"]]["Tables"] &
         DatabaseWithoutInternals[DefaultSchemaTableNameOrOptions["schema"]]["Views"])
-    : never = never,
+    : never) = never,
 > = DefaultSchemaTableNameOrOptions extends {
   schema: keyof DatabaseWithoutInternals
 }
@@ -7697,11 +8022,11 @@ export type TablesInsert<
   DefaultSchemaTableNameOrOptions extends
     | keyof DefaultSchema["Tables"]
     | { schema: keyof DatabaseWithoutInternals },
-  TableName extends DefaultSchemaTableNameOrOptions extends {
+  TableName extends (DefaultSchemaTableNameOrOptions extends {
     schema: keyof DatabaseWithoutInternals
   }
     ? keyof DatabaseWithoutInternals[DefaultSchemaTableNameOrOptions["schema"]]["Tables"]
-    : never = never,
+    : never) = never,
 > = DefaultSchemaTableNameOrOptions extends {
   schema: keyof DatabaseWithoutInternals
 }
@@ -7722,11 +8047,11 @@ export type TablesUpdate<
   DefaultSchemaTableNameOrOptions extends
     | keyof DefaultSchema["Tables"]
     | { schema: keyof DatabaseWithoutInternals },
-  TableName extends DefaultSchemaTableNameOrOptions extends {
+  TableName extends (DefaultSchemaTableNameOrOptions extends {
     schema: keyof DatabaseWithoutInternals
   }
     ? keyof DatabaseWithoutInternals[DefaultSchemaTableNameOrOptions["schema"]]["Tables"]
-    : never = never,
+    : never) = never,
 > = DefaultSchemaTableNameOrOptions extends {
   schema: keyof DatabaseWithoutInternals
 }
@@ -7747,11 +8072,11 @@ export type Enums<
   DefaultSchemaEnumNameOrOptions extends
     | keyof DefaultSchema["Enums"]
     | { schema: keyof DatabaseWithoutInternals },
-  EnumName extends DefaultSchemaEnumNameOrOptions extends {
+  EnumName extends (DefaultSchemaEnumNameOrOptions extends {
     schema: keyof DatabaseWithoutInternals
   }
     ? keyof DatabaseWithoutInternals[DefaultSchemaEnumNameOrOptions["schema"]]["Enums"]
-    : never = never,
+    : never) = never,
 > = DefaultSchemaEnumNameOrOptions extends {
   schema: keyof DatabaseWithoutInternals
 }
@@ -7764,11 +8089,11 @@ export type CompositeTypes<
   PublicCompositeTypeNameOrOptions extends
     | keyof DefaultSchema["CompositeTypes"]
     | { schema: keyof DatabaseWithoutInternals },
-  CompositeTypeName extends PublicCompositeTypeNameOrOptions extends {
+  CompositeTypeName extends (PublicCompositeTypeNameOrOptions extends {
     schema: keyof DatabaseWithoutInternals
   }
     ? keyof DatabaseWithoutInternals[PublicCompositeTypeNameOrOptions["schema"]]["CompositeTypes"]
-    : never = never,
+    : never) = never,
 > = PublicCompositeTypeNameOrOptions extends {
   schema: keyof DatabaseWithoutInternals
 }
@@ -7778,6 +8103,9 @@ export type CompositeTypes<
     : never
 
 export const Constants = {
+  graphql_public: {
+    Enums: {},
+  },
   public: {
     Enums: {
       app_role: ["admin", "supervisor", "agent", "viewer"],

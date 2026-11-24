@@ -457,6 +457,10 @@ Visão consolidada (inclui `storage.objects` e `realtime.messages`); detalhes po
 | public.whisper_messages | Agents can update own whisper_messages | UPDATE | PERMISSIVE | authenticated | `(is_admin_or_supervisor() OR (agent_name = get_user_agent_name()))` |  |
 | public.whisper_messages | Role-based view whisper_messages | SELECT | PERMISSIVE | authenticated | `(is_admin_or_supervisor() OR (agent_name = get_user_agent_name()))` |  |
 | public.whisper_messages | Supervisors can insert whisper_messages | INSERT | PERMISSIVE | authenticated |  | `is_admin_or_supervisor()` |
+| storage.objects | avatars_delete_own | DELETE | PERMISSIVE | authenticated | `((bucket_id = 'avatars'::text) AND ((storage.foldername(name))[1] = (( SELECT auth.uid() AS uid))::text))` |  |
+| storage.objects | avatars_insert_own | INSERT | PERMISSIVE | authenticated |  | `((bucket_id = 'avatars'::text) AND ((storage.foldername(name))[1] = (( SELECT auth.uid() AS uid))::text))` |
+| storage.objects | avatars_select_own | SELECT | PERMISSIVE | authenticated | `((bucket_id = 'avatars'::text) AND ((storage.foldername(name))[1] = (( SELECT auth.uid() AS uid))::text))` |  |
+| storage.objects | avatars_update_own | UPDATE | PERMISSIVE | authenticated | `((bucket_id = 'avatars'::text) AND ((storage.foldername(name))[1] = (( SELECT auth.uid() AS uid))::text))` | `((bucket_id = 'avatars'::text) AND ((storage.foldername(name))[1] = (( SELECT auth.uid() AS uid))::text))` |
 | storage.objects | storage_delete_authenticated | DELETE | PERMISSIVE | authenticated | `(bucket_id = ANY (ARRAY['call-recordings'::text, 'queue-audio'::text, 'data-lake-exports'::text, 'virtual-fax-docs'::text]))` |  |
 | storage.objects | storage_insert_authenticated | INSERT | PERMISSIVE | authenticated |  | `(bucket_id = ANY (ARRAY['call-recordings'::text, 'queue-audio'::text, 'data-lake-exports'::text, 'virtual-fax-docs'::text]))` |
 | storage.objects | storage_select_authenticated | SELECT | PERMISSIVE | authenticated | `(bucket_id = ANY (ARRAY['call-recordings'::text, 'queue-audio'::text, 'data-lake-exports'::text, 'virtual-fax-docs'::text]))` |  |

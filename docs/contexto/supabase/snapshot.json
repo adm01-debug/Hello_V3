@@ -21369,6 +21369,19 @@
         "type": "text"
       },
       {
+        "comment": "Caminho do objeto no bucket avatars (<user_id>/<timestamp>.<ext>), nao URL publica. Render usa createSignedUrl.",
+        "default": null,
+        "generated": null,
+        "identity": null,
+        "is_enum": false,
+        "name": "avatar_url",
+        "nullable": true,
+        "position": 22,
+        "schema": "public",
+        "table": "user_profiles",
+        "type": "text"
+      },
+      {
         "comment": null,
         "default": "gen_random_uuid()",
         "generated": null,
@@ -47844,9 +47857,21 @@
         "version": "20261122140000"
       },
       {
+        "name": "data_lake_flush_cron_token",
+        "statements": 1,
+        "statements_sha": "9944e742ebe44cb3",
+        "version": "20261122180000"
+      },
+      {
         "name": "20261122183000_hardening_revoke_internal_functions",
         "statements": null,
         "version": "20261122183000"
+      },
+      {
+        "name": "rls_initplan_remaining",
+        "statements": 1,
+        "statements_sha": "50c8c4227c9ed932",
+        "version": "20261122200000"
       },
       {
         "name": "20261122210000_optimistic_lock_audit_survives_rollback",
@@ -47934,9 +47959,45 @@
         "version": "20261122370000"
       },
       {
+        "name": "fix_anon_rpc_exposure",
+        "statements": 1,
+        "statements_sha": "8187699e3ea3da32",
+        "version": "20261123000000"
+      },
+      {
+        "name": "fix_anon_rls_helper_exposure",
+        "statements": 1,
+        "statements_sha": "8e85479e256a60cf",
+        "version": "20261123000100"
+      },
+      {
+        "name": "fix_has_role_oracle_and_debug_tables",
+        "statements": 1,
+        "statements_sha": "b8ad17520b2266b9",
+        "version": "20261123000200"
+      },
+      {
+        "name": "sync_role_creates_missing_profile",
+        "statements": 1,
+        "statements_sha": "762f73b4cfc99c94",
+        "version": "20261123001000"
+      },
+      {
+        "name": "b6_text_domain_checks",
+        "statements": 1,
+        "statements_sha": "dfe5c5b80e56060e",
+        "version": "20261123002000"
+      },
+      {
         "name": "20261123010000_fix_user_delete_cascade",
         "statements": null,
         "version": "20261123010000"
+      },
+      {
+        "name": "add_avatar_storage",
+        "statements": 1,
+        "statements_sha": "408104a499329c20",
+        "version": "20261123020000"
       }
     ],
     "policies": [
@@ -53366,6 +53427,54 @@
       },
       {
         "cmd": "DELETE",
+        "name": "avatars_delete_own",
+        "permissive": "PERMISSIVE",
+        "roles": [
+          "authenticated"
+        ],
+        "schema": "storage",
+        "table": "objects",
+        "using": "((bucket_id = 'avatars'::text) AND ((storage.foldername(name))[1] = (( SELECT auth.uid() AS uid))::text))",
+        "with_check": null
+      },
+      {
+        "cmd": "INSERT",
+        "name": "avatars_insert_own",
+        "permissive": "PERMISSIVE",
+        "roles": [
+          "authenticated"
+        ],
+        "schema": "storage",
+        "table": "objects",
+        "using": null,
+        "with_check": "((bucket_id = 'avatars'::text) AND ((storage.foldername(name))[1] = (( SELECT auth.uid() AS uid))::text))"
+      },
+      {
+        "cmd": "SELECT",
+        "name": "avatars_select_own",
+        "permissive": "PERMISSIVE",
+        "roles": [
+          "authenticated"
+        ],
+        "schema": "storage",
+        "table": "objects",
+        "using": "((bucket_id = 'avatars'::text) AND ((storage.foldername(name))[1] = (( SELECT auth.uid() AS uid))::text))",
+        "with_check": null
+      },
+      {
+        "cmd": "UPDATE",
+        "name": "avatars_update_own",
+        "permissive": "PERMISSIVE",
+        "roles": [
+          "authenticated"
+        ],
+        "schema": "storage",
+        "table": "objects",
+        "using": "((bucket_id = 'avatars'::text) AND ((storage.foldername(name))[1] = (( SELECT auth.uid() AS uid))::text))",
+        "with_check": "((bucket_id = 'avatars'::text) AND ((storage.foldername(name))[1] = (( SELECT auth.uid() AS uid))::text))"
+      },
+      {
+        "cmd": "DELETE",
         "name": "storage_delete_authenticated",
         "permissive": "PERMISSIVE",
         "roles": [
@@ -53758,6 +53867,19 @@
       "work_mem": "2184"
     },
     "storage": [
+      {
+        "allowed_mime_types": [
+          "image/png",
+          "image/jpeg",
+          "image/webp",
+          "image/gif"
+        ],
+        "created_at": "2026-11-24T09:35:48.703088+00:00",
+        "file_size_limit": 2097152,
+        "id": "avatars",
+        "name": "avatars",
+        "public": false
+      },
       {
         "allowed_mime_types": null,
         "created_at": "2026-09-11T13:16:02.246518+00:00",

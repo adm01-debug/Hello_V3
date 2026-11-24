@@ -37,6 +37,7 @@
 | 19 | `voice_command_history` | `jsonb` | sim | `'[]'::jsonb` |  |  |
 | 20 | `voice_prefs_updated_at` | `timestamp with time zone` | sim |  |  |  |
 | 21 | `voice_tts_voice` | `text` | sim |  |  |  |
+| 22 | `avatar_url` | `text` | sim |  |  | Caminho do objeto no bucket avatars (<user_id>/<timestamp>.<ext>), nao URL publica. Render usa createSignedUrl. |
 
 
 ## Constraints
