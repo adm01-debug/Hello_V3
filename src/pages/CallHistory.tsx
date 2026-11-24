@@ -93,7 +93,7 @@ export default function CallHistory() {
          </div>
  
          {/* KPI Cards */}
-         <div className="grid gap-4 grid-cols-1 sm:grid-cols-3">
+         <div className="grid gap-4 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
            <Card variant="neon-interactive">
              <CardContent className="p-4">
                <p className="text-xs uppercase tracking-wider text-muted-foreground">Total (filtros)</p>
