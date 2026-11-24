@@ -12,7 +12,6 @@
    LayoutDashboard, Phone, Users, ShieldCheck, 
    ArrowRight, CheckCircle2, Bot
  } from 'lucide-react';
- import { motion, AnimatePresence } from 'framer-motion';
  
  const steps = [
    {
@@ -85,18 +84,9 @@
      <Dialog open={open} onOpenChange={(v) => !v && handleClose()}>
        <DialogContent className="sm:max-w-md glass-neon border-primary/20">
          <div className="flex flex-col items-center py-6">
-           <AnimatePresence mode="wait">
-             <motion.div
-               key={currentStep}
-               initial={{ scale: 0.8, opacity: 0 }}
-               animate={{ scale: 1, opacity: 1 }}
-               exit={{ scale: 0.8, opacity: 0 }}
-               transition={{ type: 'spring', damping: 20, stiffness: 300 }}
-               className={`p-4 rounded-full bg-primary/10 mb-4`}
-             >
-               <Icon className={`h-12 w-12 ${step.color}`} />
-             </motion.div>
-           </AnimatePresence>
+           <div key={currentStep} className="step-pop p-4 rounded-full bg-primary/10 mb-4">
+             <Icon className={`h-12 w-12 ${step.color}`} />
+           </div>
  
            <DialogHeader className="text-center">
              <DialogTitle className="text-2xl font-bold text-gradient">

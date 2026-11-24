@@ -3,8 +3,10 @@ import { supabase } from '@/integrations/supabase/client';
 import { toast } from 'sonner';
 import { logger } from '@/lib/logger';
 import { reportError } from '@/lib/error-tracking';
-import { contactInputSchema, mapContactError } from '@/lib/validation/contact-schema';
 import { normalizeBrPhone, stripNonDigits, isE164 } from '@/lib/phone-normalization';
+
+// Os validadores de contato (zod) entram por import dinâmico dentro de `createContact`/`updateContact`:
+// este hook está no chunk de entrada e o schema só é necessário no envio do formulário (etapa 251).
 
 const log = logger.create('Contacts');
 
@@ -132,6 +134,7 @@ export const useContacts = () => {
   }, []);
 
   const createContact = useCallback(async (input: CreateContactInput): Promise<Contact | null> => {
+    const { contactInputSchema, mapContactError } = await import('@/lib/validation/contact-schema');
     const parsed = contactInputSchema.safeParse(input);
     if (!parsed.success) {
       const first = parsed.error.errors[0];
@@ -189,6 +192,7 @@ export const useContacts = () => {
     }
 
     const { version, ...rest } = updates;
+    const { contactInputSchema, mapContactError } = await import('@/lib/validation/contact-schema');
     const parsed = contactInputSchema.partial().safeParse(rest);
     if (!parsed.success) {
       const first = parsed.error.errors[0];

@@ -698,6 +698,44 @@
     left: 100%;
   }
 
+  /* Entrada de página, pop do tour e barra de progresso (etapa 251: sem framer-motion no shell) */
+  @keyframes pageEnter {
+    from { opacity: 0; transform: translateY(12px) scale(0.995); filter: blur(4px); }
+    to { opacity: 1; transform: translateY(0) scale(1); filter: blur(0); }
+  }
+
+  @keyframes stepPop {
+    0% { opacity: 0; transform: scale(0.8); }
+    60% { transform: scale(1.03); }
+    100% { opacity: 1; transform: scale(1); }
+  }
+
+  @keyframes navProgressFadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+
+  @keyframes navProgressGrow {
+    from { width: 0%; }
+    to { width: 92%; }
+  }
+
+  .page-enter {
+    animation: pageEnter 0.35s cubic-bezier(0.25, 0.1, 0.25, 1) both;
+  }
+
+  .step-pop {
+    animation: stepPop 0.32s cubic-bezier(0.34, 1.4, 0.64, 1) both;
+  }
+
+  .nav-progress-fade {
+    animation: navProgressFadeIn 0.2s ease-out both;
+  }
+
+  .nav-progress-grow {
+    animation: navProgressGrow 0.8s cubic-bezier(0.25, 0.1, 0.25, 1) both;
+  }
+
   /* Staggered section animation */
   .stagger-section > * {
     animation: slideUp 0.5s ease-out both;
@@ -722,5 +760,6 @@
     .border-neon-animated { animation: none; }
     .card-shine::before { display: none; }
     .stagger-section > * { animation: none; }
+    .page-enter, .step-pop, .nav-progress-fade, .nav-progress-grow { animation: none; }
   }
 }
