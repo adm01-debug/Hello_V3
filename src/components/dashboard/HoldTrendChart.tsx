@@ -2,8 +2,11 @@ import { useEffect, useState, useRef } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
-import { TrendingUp, Clock } from 'lucide-react';
+import { TrendingUp, Clock, AlertTriangle } from 'lucide-react';
 import { supabase } from '@/integrations/supabase/client';
+import { logger } from '@/lib/logger';
+
+const log = logger.create('HoldTrendChart');
 
 interface DataPoint {
   time: string;
@@ -14,6 +17,7 @@ interface DataPoint {
 
 export const HoldTrendChart = () => {
   const [data, setData] = useState<DataPoint[]>([]);
+  const [error, setError] = useState<string | null>(null);
   const maxDataPoints = 30; // Keep last 30 data points (5 minutes at 10s intervals)
   const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
 
@@ -29,9 +33,24 @@ export const HoldTrendChart = () => {
         .is('ended_at', null)
     ]);
 
+    if (callsResult.error || holdsResult.error) {
+      const message = callsResult.error?.message ?? holdsResult.error?.message ?? 'erro desconhecido';
+      log.warn(`Falha ao consultar a evolucao de espera: ${message}`);
+      setError(message);
+      return;
+    }
+
     const activeCalls = callsResult.data?.length || 0;
     const activeHolds = holdsResult.data?.length || 0;
-    const inCall = activeCalls - activeHolds;
+    const bruto = activeCalls - activeHolds;
+
+    if (bruto < 0) {
+      // Mais holds abertos que chamadas ativas = dado inconsistente. O piso evita a serie
+      // negativa, mas o caso continua visivel no log em vez de sumir (A-003/A-009).
+      log.warn(`holds abertos (${activeHolds}) maior que chamadas ativas (${activeCalls}); aplicando piso 0`);
+    }
+    const inCall = Math.max(0, bruto);
+    setError(null);
 
     const now = new Date();
     const timeStr = now.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit', second: '2-digit' });
@@ -43,7 +62,7 @@ export const HoldTrendChart = () => {
           time: timeStr,
           timestamp: now.getTime(),
           onHold: activeHolds,
-          inCall: Math.max(0, inCall)
+          inCall
         }
       ];
       // Keep only last maxDataPoints
@@ -111,11 +130,9 @@ export const HoldTrendChart = () => {
           <div className="flex items-center gap-2">
             <Badge 
               variant="outline" 
-              className={`$
-                {currentOnHold > 0 
-                  ? 'border-destructive/50 text-destructive' 
-                  : 'border-success/50 text-success'
-              }`}
+              className={currentOnHold > 0
+                ? 'border-destructive/50 text-destructive'
+                : 'border-success/50 text-success'}
             >
               {currentOnHold} em espera
             </Badge>
@@ -135,7 +152,15 @@ export const HoldTrendChart = () => {
         </p>
       </CardHeader>
       <CardContent>
-        {data.length < 2 ? (
+        {error ? (
+          <div role="alert" className="flex items-center justify-center h-[200px] text-destructive">
+            <div className="text-center">
+              <AlertTriangle className="h-6 w-6 mx-auto mb-2" />
+              <p className="text-sm">Não foi possível carregar a evolução de espera.</p>
+              <p className="text-xs text-muted-foreground mt-1">{error}</p>
+            </div>
+          </div>
+        ) : data.length < 2 ? (
           <div className="flex items-center justify-center h-[200px] text-muted-foreground">
             <div className="text-center">
               <div className="animate-spin rounded-full h-6 w-6 border-b-2 border-primary mx-auto mb-2" />
