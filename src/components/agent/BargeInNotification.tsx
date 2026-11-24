@@ -72,6 +72,7 @@ export const BargeInNotification = ({ agentName }: BargeInNotificationProps) => 
     return () => {
       supabase.removeChannel(channel);
     };
+    // Motivo: assinatura de canal realtime; refazer o efeito a cada render derrubaria e reassinaria o canal.
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [agentName]);
 

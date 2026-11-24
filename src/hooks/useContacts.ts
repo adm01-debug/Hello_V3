@@ -126,6 +126,7 @@ export const useContacts = () => {
     } finally {
       setIsLoading(false);
     }
+    // Motivo: `contacts.length` so e lido no caminho de erro; incluido, recriaria `fetchContacts` a cada carga e o efeito que a consome buscaria em laco.
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 

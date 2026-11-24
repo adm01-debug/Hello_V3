@@ -47,6 +47,7 @@ export function AchievementCelebration({ badge, agentName, onClose }: Achievemen
     }, 5000);
 
     return () => clearTimeout(timer);
+    // Motivo: `handleClose` vem de prop e muda de identidade; incluido, o timer de 5s reiniciaria a cada render.
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 

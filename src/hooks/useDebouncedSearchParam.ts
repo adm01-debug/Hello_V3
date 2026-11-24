@@ -49,6 +49,7 @@ export function useDebouncedSearchParam({
     if (urlValue !== inputValue && urlValue !== lastWrittenRef.current) {
       setInputValue(urlValue);
     }
+    // Motivo: o efeito escreve em `inputValue` (sincronizacao com a URL); inclui-lo criaria laco.
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [urlValue]);
 

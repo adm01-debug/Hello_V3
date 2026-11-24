@@ -196,6 +196,7 @@ export function useCallHistory() {
       if (topicFilter && !(session.summary?.main_topics || []).some(t => t.toLowerCase().includes(topicFilter.toLowerCase()))) return false;
       return true;
     });
+    // Motivo: `getDateRange` e recriada a cada render; os campos de data ja estao no array.
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [sessions, searchQuery, dateRangePreset, customDateFrom, customDateTo, sentimentFilter, durationFilter, topicFilter]);
 

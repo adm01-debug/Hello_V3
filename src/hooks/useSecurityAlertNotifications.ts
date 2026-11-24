@@ -137,6 +137,7 @@ export function useSecurityAlertNotifications({
     observer.observe(el);
     return () => observer.disconnect();
   // `alerts` é estável (objeto do useInfiniteQuery); as flags abaixo são o que de fato muda.
+  // Motivo: `alerts` e o objeto do useInfiniteQuery, novo a cada mudanca de estado; os campos realmente usados ja estao no array.
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [alerts.hasNextPage, alerts.isFetchingNextPage, alerts.isFetchNextPageError, alerts.fetchNextPage]);
 

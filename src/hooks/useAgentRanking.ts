@@ -62,6 +62,7 @@ export function useAgentRanking() {
     fetchAgentStats();
     fetchPerformanceHistory();
     fetchAgentGoals();
+    // Motivo: `fetchAgentStats` e recriada a cada render; incluida no array o efeito buscaria em laco.
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [period]);
 
@@ -69,6 +70,7 @@ export function useAgentRanking() {
     if (agents.length > 0 && agentGoals.size >= 0) {
       checkGoalAchievements();
     }
+    // Motivo: `checkGoalAchievements` e recriada a cada render e grava metas; incluida no array o efeito rodaria em laco.
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [agents, agentGoals]);
 
@@ -80,6 +82,7 @@ export function useAgentRanking() {
         case 'performance': return b.avgPerformance - a.avgPerformance;
         default: return b.score - a.score;
       }
+    // Motivo: o efeito escreve em `agents`; inclui-lo no array criaria laco de ordenacao.
     });
     setAgents(sorted);
     // eslint-disable-next-line react-hooks/exhaustive-deps

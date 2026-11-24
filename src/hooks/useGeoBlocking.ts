@@ -118,6 +118,7 @@ export function useGeoBlocking() {
 
   useEffect(() => {
     if (!settingsLoading && !settings) initializeSettings.mutate();
+    // Motivo: `initializeSettings` e o objeto da mutation, com identidade nova a cada render; incluido, a mutation dispararia em laco.
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [settingsLoading, settings]);
 

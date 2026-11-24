@@ -58,6 +58,7 @@ export function useAlerts() {
       supabase.removeChannel(callChannel);
       supabase.removeChannel(contactChannel);
     };
+    // Motivo: assinatura de canais realtime; as funcoes de fetch sao recriadas a cada render e refazer o efeito derrubaria as subscriptions.
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 

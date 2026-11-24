@@ -85,12 +85,14 @@ export function useSecurityDashboard(userId: string | undefined) {
 
   useEffect(() => {
     if (userId) loadSecurityData();
+    // Motivo: `loadSecurityData` e recriada a cada render; incluida no array o efeito buscaria em laco.
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [userId]);
 
   useEffect(() => {
     // Com erro de leitura nao se recalcula nota: a partir de alertas vazios o
     // calculo devolvia uma pontuacao otimista fabricada.
+    // Motivo: `calculateSecurityScore` e `recentAlerts` mudam de identidade a cada medicao; incluidos, a nota recalcularia em laco.
     if (!mfaLoading && userId && !error) calculateSecurityScore(ipRestrictionEnabled, recentAlerts);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [mfaSettings, sessions, ipRestrictionEnabled, mfaLoading, error]);

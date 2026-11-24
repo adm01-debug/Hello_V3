@@ -1,4 +1,4 @@
-import { useCallback, useRef } from 'react';
+import { useCallback, useMemo, useRef } from 'react';
 import { supabase } from '@/integrations/supabase/client';
 import { logger } from '@/lib/logger';
 
@@ -55,5 +55,6 @@ export function useTrunkUsageReporter() {
     }
   }, []);
 
-  return { startTracking, endTracking };
+  // Objeto estavel: os consumidores usam `usageReporter` como dependencia de efeito.
+  return useMemo(() => ({ startTracking, endTracking }), [startTracking, endTracking]);
 }

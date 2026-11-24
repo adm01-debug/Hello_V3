@@ -58,6 +58,7 @@ export function QualityAlertsCard() {
     }
   };
 
+  // Motivo: `load` e recriada a cada render; incluida no array o efeito buscaria em laco.
   // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => { load(); }, [filter]);
 

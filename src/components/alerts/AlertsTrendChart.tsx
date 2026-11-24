@@ -36,6 +36,7 @@ export function AlertsTrendChart() {
 
   useEffect(() => {
     fetchAlerts();
+    // Motivo: `fetchAlerts` e recriada a cada render; incluida no array o efeito buscaria em laco.
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [dateRange]);
 

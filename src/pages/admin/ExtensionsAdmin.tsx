@@ -34,6 +34,7 @@ export default function ExtensionsAdmin() {
     const params = new URLSearchParams(window.location.search);
     const tab = params.get('tab');
     if (tab && tab !== activeTab) setActiveTab(tab);
+    // Motivo: o efeito escreve em `activeTab` lendo a URL; inclui-lo no array criaria laco.
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [window.location.search]);
 

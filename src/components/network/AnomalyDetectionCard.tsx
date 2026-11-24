@@ -50,6 +50,7 @@ function buildSparkline(a: DetectedAnomaly) {
 export const AnomalyDetectionCard = () => {
   const { data, isLoading } = useVoipAnomalies();
   const remediate = useAnomalyRemediation();
+  // Motivo: valor derivado de `data` e recriado a cada render; incluido no array o calculo refaria sem parar.
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const anomalies = data ?? [];
 
@@ -76,7 +77,9 @@ export const AnomalyDetectionCard = () => {
         autoFiredRef.current.add(a.id);
         remediate.mutate({ anomalyId: a.id, metric: a.metric, kind: a.kind, silent: false });
       });
+  // Motivo: valor derivado de `data` e recriado a cada render; incluido no array o calculo refaria sem parar.
     // eslint-disable-next-line react-hooks/exhaustive-deps
+      // Motivo: valor derivado de `data` e recriado a cada render; incluido no array o calculo refaria sem parar.
   }, [autoEnabled, anomalies, dismissed, remediate]);
 
   // eslint-disable-next-line react-hooks/exhaustive-deps

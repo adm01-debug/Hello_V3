@@ -66,6 +66,7 @@ export function CoachingPanel() {
     if (currentAgent?.id && !selectedAgentId) {
       setSelectedAgentId(currentAgent.id);
     }
+    // Motivo: selecao inicial do agente: incluir `selectedAgentId` reexecutaria o efeito apenas para reafirmar o mesmo valor.
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentAgent]);
 
@@ -86,6 +87,7 @@ export function CoachingPanel() {
         logCoachingAccess(rec.id, agents.find(a => a.id === selectedAgentId)?.name);
       });
     }
+    // Motivo: `recommendations`, `agents` e `logCoachingAccess` tem identidade nova a cada render; incluidos, o log de auditoria se repetiria em laco.
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [recommendations.length, selectedAgentId]);
 
