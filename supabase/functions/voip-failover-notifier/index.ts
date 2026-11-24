@@ -2,6 +2,8 @@ import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
 import { buildCorsHeaders } from "../_shared/cors.ts";
 import { getCorrelationId, internalErrorResponse } from '../_shared/errors.ts';
+import { VoipFailoverNotifierBodySchema } from "../_shared/numeric-body-schemas.ts";
+import { validateBody } from "../_shared/validator.ts";
 
 export const handler = async (req: Request): Promise<Response> => {
   const cors = buildCorsHeaders(req);
@@ -23,7 +25,9 @@ export const handler = async (req: Request): Promise<Response> => {
 
     const supabase = createClient(supabaseUrl, supabaseKey);
 
-    const { failed_trunk_id, backup_trunk_id, reason } = await req.json();
+    const validation = await validateBody(req, VoipFailoverNotifierBodySchema, buildCorsHeaders(req), { endpoint: 'voip-failover-notifier' });
+    if (validation.errorResponse) return validation.errorResponse;
+    const { failed_trunk_id, backup_trunk_id, reason } = validation.data!;
 
     // 1. Busca detalhes dos troncos
     const { data: failedTrunk } = await supabase.from("voip_trunks").select("name").eq("id", failed_trunk_id).single();

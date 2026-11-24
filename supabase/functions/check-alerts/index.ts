@@ -1,15 +1,9 @@
 import { serve } from "https://deno.land/std@0.190.0/http/server.ts";
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
 import { buildCorsHeaders } from "../_shared/cors.ts";
+import { CheckAlertsBodySchema } from "../_shared/numeric-body-schemas.ts";
+import { validateBody } from "../_shared/validator.ts";
 
-
-interface AlertCheckRequest {
-  callSessionId: string;
-  sentiment?: string;
-  satisfaction?: number;
-  urgency?: string;
-  callerName?: string;
-}
 
 serve(async (req) => {
   if (req.method === 'OPTIONS') {
@@ -44,7 +38,9 @@ serve(async (req) => {
     const supabaseServiceKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!;
     const supabaseAdmin = createClient(supabaseUrl, supabaseServiceKey);
 
-    const body: AlertCheckRequest = await req.json();
+    const validation = await validateBody(req, CheckAlertsBodySchema, buildCorsHeaders(req), { endpoint: 'check-alerts' });
+    if (validation.errorResponse) return validation.errorResponse;
+    const body = validation.data!;
     
     // Validate input
     if (!body.callSessionId || typeof body.callSessionId !== 'string') {

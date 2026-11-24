@@ -1,6 +1,8 @@
 import { buildCorsHeaders } from "../_shared/cors.ts";
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
 import { getCorrelationId, internalErrorResponse } from '../_shared/errors.ts';
+import { ApprovePasswordResetBodySchema } from "../_shared/numeric-body-schemas.ts";
+import { validateBody } from "../_shared/validator.ts";
 
 Deno.serve(async (req) => {
   if (req.method === 'OPTIONS') {
@@ -48,7 +50,9 @@ Deno.serve(async (req) => {
       );
     }
 
-    const body = await req.json();
+    const validation = await validateBody(req, ApprovePasswordResetBodySchema, buildCorsHeaders(req), { endpoint: 'approve-password-reset' });
+    if (validation.errorResponse) return validation.errorResponse;
+    const body = validation.data!;
     const { requestId, action } = body;
 
     if (!requestId || action !== 'approve') {

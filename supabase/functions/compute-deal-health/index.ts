@@ -1,6 +1,8 @@
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2.45.0";
 
 import { buildCorsHeaders } from "../_shared/cors.ts";
+import { ComputeDealHealthBodySchema } from "../_shared/numeric-body-schemas.ts";
+import { validateBody } from "../_shared/validator.ts";
 
 interface Body { dealId: string }
 
@@ -30,7 +32,9 @@ function json(body: unknown, status = 200) {
 
     const supabase = createClient(supabaseUrl, serviceKey);
 
-    const { dealId } = (await req.json()) as Body;
+    const validation = await validateBody(req, ComputeDealHealthBodySchema, buildCorsHeaders(req), { endpoint: 'compute-deal-health' });
+    if (validation.errorResponse) return validation.errorResponse;
+    const { dealId } = validation.data!;
     if (!dealId) return json({ error: "dealId required" }, 400);
 
     const { data: deal, error: dealErr } = await supabase

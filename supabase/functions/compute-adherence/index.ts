@@ -1,6 +1,8 @@
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2.45.0";
 
 import { buildCorsHeaders } from "../_shared/cors.ts";
+import { ComputeAdherenceBodySchema } from "../_shared/numeric-body-schemas.ts";
+import { validateBody } from "../_shared/validator.ts";
 
 Deno.serve(async (req) => {
   const corsHeaders = buildCorsHeaders(req);
@@ -23,7 +25,9 @@ Deno.serve(async (req) => {
       return new Response(JSON.stringify({ error: "Unauthorized" }), { status: 401, headers: corsHeaders });
     }
 
-    const body = await req.json().catch(() => ({}));
+    const validation = await validateBody(req, ComputeAdherenceBodySchema, buildCorsHeaders(req), { endpoint: 'compute-adherence' });
+    if (validation.errorResponse) return validation.errorResponse;
+    const body = validation.data!;
     const date = body.date || new Date().toISOString().split("T")[0];
 
     // Buscar shifts do dia

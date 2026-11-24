@@ -1,6 +1,8 @@
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
 import { buildCorsHeaders } from "../_shared/cors.ts";
+import { SipConfigBodySchema } from "../_shared/numeric-body-schemas.ts";
+import { validateBody } from "../_shared/validator.ts";
 
 const SECRET = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY") ?? "fallback-key";
 
@@ -51,7 +53,9 @@ serve(async (req) => {
         { status: 401, headers: { ...cors, 'Content-Type': 'application/json' } });
     }
 
-    const { action } = await req.json().catch(() => ({ action: 'check' }));
+    const validation = await validateBody(req, SipConfigBodySchema, buildCorsHeaders(req), { endpoint: 'sip-config' });
+    if (validation.errorResponse) return validation.errorResponse;
+    const { action = 'check' } = validation.data!;
     const adminClient = createClient(supabaseUrl, Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!);
 
     const { data: profile } = await adminClient
