@@ -85,7 +85,10 @@ export function useQueueAudioPrompts() {
       const { error } = await supabase.from('queue_audio_prompts').insert(payload);
       if (error) {
         // Rollback do arquivo para não deixar órfão no bucket.
-        await supabase.storage.from(BUCKET).remove([path]);
+        const { error: rollbackError } = await supabase.storage.from(BUCKET).remove([path]);
+        if (rollbackError) {
+          log.warn('Áudio órfão no bucket após falha de registro', { path, rollbackError });
+        }
         throw error;
       }
     },
@@ -120,10 +123,16 @@ export function useQueueAudioPrompts() {
 
   const deletePrompt = useMutation({
     mutationFn: async (prompt: QueueAudioPrompt) => {
+      // Objeto antes da linha, na mesma ordem da edge cleanup-recordings: se o
+      // arquivo não sair do bucket, a linha continua e ninguém fica com um
+      // áudio que toca para o cliente sem registro que o alcance.
+      const { error: storageError } = await supabase.storage
+        .from(BUCKET)
+        .remove([prompt.storage_path]);
+      if (storageError) throw storageError;
+
       const { error } = await supabase.from('queue_audio_prompts').delete().eq('id', prompt.id);
       if (error) throw error;
-      // Arquivo removido depois: se falhar, o registro já não aparece na UI.
-      await supabase.storage.from(BUCKET).remove([prompt.storage_path]);
     },
     onSuccess: () => {
       toast.success('Áudio removido');

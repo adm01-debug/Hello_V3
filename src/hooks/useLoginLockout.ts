@@ -85,11 +85,14 @@ export function useLoginLockout() {
     ipAddress?: string
   ): Promise<void> => {
     try {
-      await supabase.rpc('record_successful_login', {
+      const { error } = await supabase.rpc('record_successful_login', {
         p_email: email.toLowerCase(),
         p_ip_address: ipAddress ?? undefined,
         p_user_agent: navigator.userAgent
       });
+      if (error) {
+        logger.error('Error recording successful login:', error);
+      }
 
       setLockoutStatus(null);
     } catch (err) {

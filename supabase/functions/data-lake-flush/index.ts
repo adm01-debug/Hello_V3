@@ -149,7 +149,7 @@ async function flushDataset(
       if (upErr) throw upErr;
     }
 
-    await supabase
+    const { error: exportOkErr } = await supabase
       .from("data_lake_exports")
       .update({
         status: "completed",
@@ -159,6 +159,7 @@ async function flushDataset(
         completed_at: new Date().toISOString(),
       })
       .eq("id", job.id);
+    if (exportOkErr) console.error('data-lake-flush: falha ao concluir registro de exportacao', exportOkErr);
 
     return {
       dataset,
@@ -168,7 +169,7 @@ async function flushDataset(
     };
   } catch (err) {
     const message = err instanceof Error ? err.message : String(err);
-    await supabase
+    const { error: exportFailErr } = await supabase
       .from("data_lake_exports")
       .update({
         status: "failed",
@@ -176,6 +177,7 @@ async function flushDataset(
         completed_at: new Date().toISOString(),
       })
       .eq("id", job.id);
+    if (exportFailErr) console.error('data-lake-flush: falha ao marcar exportacao como falha', exportFailErr);
     const correlationId = crypto.randomUUID();
     console.error('[data-lake-flush] flush falhou', { dataset, correlation_id: correlationId, error: message });
     return { dataset, job_id: job.id, code: 'internal_error', message: 'Falha no flush deste dataset', correlation_id: correlationId };

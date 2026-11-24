@@ -48,7 +48,15 @@ export function useTrackers() {
   }, [refresh]);
 
   const toggleTracker = useCallback(async (id: string, isActive: boolean) => {
-    await supabase.from("trackers").update({ is_active: isActive }).eq("id", id);
+    const { error } = await supabase
+      .from("trackers")
+      .update({ is_active: isActive })
+      .eq("id", id);
+    if (error) {
+      logger.error("Erro ao alterar tracker:", error);
+      toast.error("Erro ao alterar o tracker");
+      return;
+    }
     refresh();
   }, [refresh]);
 

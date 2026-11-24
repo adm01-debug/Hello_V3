@@ -104,7 +104,7 @@ Deno.serve(async (req) => {
     }
 
     // Create security alert for admins
-    await supabase.from('security_alerts').insert({
+    const { error: alertError } = await supabase.from('security_alerts').insert({
       alert_type: 'password_reset_request',
       severity: 'info',
       title: 'Nova Solicitação de Reset de Senha',
@@ -116,6 +116,8 @@ Deno.serve(async (req) => {
         user_agent: req.headers.get('user-agent')
       }
     });
+    // Best-effort: o pedido de reset ja existe; o alerta e aviso ao admin.
+    if (alertError) console.error('request-password-reset: falha ao criar alerta de seguranca', alertError);
 
     return new Response(
       JSON.stringify(RESPOSTA_GENERICA),

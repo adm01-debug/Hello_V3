@@ -114,7 +114,7 @@ Deno.serve(async (req) => {
         breaches++;
 
         // Criar alerta in-app
-        await supabase.from("notifications").insert({
+        const { error: breachNotifyErr } = await supabase.from("notifications").insert({
           user_id: null,
           type: "sla_breach",
           title: "SLA violado",
@@ -127,11 +127,14 @@ Deno.serve(async (req) => {
             agent: conv.assigned_agent_name,
             type: firstResponseBreached ? "first_response" : "resolution",
           },
-        }).then(() => null, () => null);
+        });
+        // Best-effort: a violacao de SLA ja esta contabilizada; o aviso fica no log.
+        if (breachNotifyErr) console.error('enforce-sla: falha ao criar alerta de SLA', breachNotifyErr);
       }
 
       if (Object.keys(updates).length > 0) {
-        await supabase.from("conversations").update(updates).eq("id", conv.id);
+        const { error: convUpdateErr } = await supabase.from("conversations").update(updates).eq("id", conv.id);
+        if (convUpdateErr) console.error('enforce-sla: falha ao gravar violacao de SLA', convUpdateErr);
       }
     }
 

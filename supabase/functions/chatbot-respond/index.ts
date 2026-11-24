@@ -236,7 +236,7 @@ Responda de forma clara, cordial e objetiva. Use markdown leve quando útil.`;
      const shouldHandoff = parsed.handoff || parsed.confidence < activeThreshold;
 
     // Inserir mensagem do bot na conversa
-    await supabase.from('conversation_messages').insert({
+    const { error: botMsgErr } = await supabase.from('conversation_messages').insert({
       conversation_id: body.conversation_id,
       direction: 'outbound',
       sender_type: 'bot',
@@ -246,8 +246,11 @@ Responda de forma clara, cordial e objetiva. Use markdown leve quando útil.`;
       metadata: { intent: parsed.intent, confidence: parsed.confidence },
     });
 
+    // Essencial: sem a mensagem o cliente nunca recebe a resposta.
+    if (botMsgErr) throw botMsgErr;
+
     // Auditar interação
-    await supabase.from('bot_conversations').insert({
+    const { error: auditErr } = await supabase.from('bot_conversations').insert({
       conversation_id: body.conversation_id,
       user_message: body.user_message,
       bot_response: parsed.response,
@@ -259,12 +262,16 @@ Responda de forma clara, cordial e objetiva. Use markdown leve quando útil.`;
       response_time_ms: responseTimeMs,
       model_used: MODEL,
     });
+    if (auditErr) console.error('chatbot-respond: falha ao gravar auditoria do bot', auditErr);
 
     if (shouldHandoff) {
-      await supabase
+      // A resposta ja foi entregue: devolver 500 aqui faria o chamador reenviar e duplicar
+      // a mensagem. A falha fica registrada e a conversa permanece com o bot.
+      const { error: handoffErr } = await supabase
         .from('conversations')
         .update({ status: 'pending', priority: 'high' })
         .eq('id', body.conversation_id);
+      if (handoffErr) console.error('chatbot-respond: falha ao marcar handoff', handoffErr);
     }
 
     return new Response(

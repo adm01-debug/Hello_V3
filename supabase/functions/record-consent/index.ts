@@ -84,12 +84,15 @@ Deno.serve(async (req) => {
       return new Response(JSON.stringify({ error: error.message }), { status: 500, headers: { ...cors, 'Content-Type': 'application/json' } });
     }
 
-    await supabase.rpc('log_audit_event', {
+    // Best-effort: o consentimento ja esta gravado; negar o direito do titular
+    // porque a trilha falhou seria pior que a lacuna de auditoria (que fica no log).
+    const { error: auditError } = await supabase.rpc('log_audit_event', {
       p_action: granted ? 'consent_granted' : 'consent_revoked',
       p_resource_type: 'consent_record',
       p_resource_id: inserted.id,
       p_details: { channel: data.channel, consent_type: data.consent_type, contact_id: data.contact_id },
     });
+    if (auditError) console.error('record-consent: falha ao auditar consentimento', auditError);
 
     return new Response(JSON.stringify({ success: true, record: inserted }), {
       status: 200, headers: { ...cors, 'Content-Type': 'application/json' },
