@@ -1,6 +1,17 @@
 import "@testing-library/jest-dom";
 import { vi } from 'vitest';
 
+// O .env nao e versionado: sem estes valores a suite nem coleta os arquivos que
+// importam o cliente do Supabase (erro "Missing VITE_SUPABASE_URL"). Valores
+// obviamente falsos mantem a suite rodando em qualquer maquina e garantem que
+// nenhum teste aponte para producao por engano.
+if (!import.meta.env.VITE_SUPABASE_URL) {
+  import.meta.env.VITE_SUPABASE_URL = 'https://test.invalid';
+}
+if (!import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY) {
+  import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY = 'test-publishable-key';
+}
+
 // Mock matchMedia
 Object.defineProperty(window, "matchMedia", {
   writable: true,

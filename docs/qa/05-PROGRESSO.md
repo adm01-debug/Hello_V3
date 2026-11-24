@@ -268,7 +268,7 @@
 - [ ] **211** — Prazo e proteção na cadeia edge→edge — onda 5 — Média — Edge Function
 - [ ] **212** — Guard de CI para `fetch` sem prazo — onda 5 — Média — CI
 - [ ] **213** — Padronizar o contrato de erro das edge functions — onda 5 — Baixa — Edge Function
-- [ ] **214** — Fazer a suíte de testes rodar sem configuração manual — onda 5 — Baixa — Testes
+- [x] **214** — Fazer a suíte de testes rodar sem configuração manual — onda 5 — Baixa — Testes · (`src/test/setup.ts` preenche `VITE_SUPABASE_URL=https://test.invalid` e `VITE_SUPABASE_PUBLISHABLE_KEY=test-publishable-key` quando ausentes; `AGENTS.md:32` documenta. Verificação num shell sem nenhuma variável `VITE_*`: `useFinancialImpact.property.test.ts` e `executive-dashboard-utils.test.ts` — que falhavam na coleta com "Missing VITE_SUPABASE_URL" — passam (5 + 11 testes); suíte completa: 298 arquivos e 3376 testes passando. Restam 4 arquivos que falham **localmente** com `zod` `undefined` sob o runtime do Bun (`useContacts.coverage`, `validation-schemas`, `zod-schemas.property`) — causa diferente e nenhuma relação com env; a `main` está verde nos mesmos arquivos (run 45313951657, sha d1b586c) — e 1 teste de `Status.tsx` que falha só local)
 - [ ] **215** — Retentativa com espera nas chamadas ao Bitrix — onda 5 — Média — Frontend
 - [ ] **216** — Encerrar as assinaturas de realtime em todos os caminhos — onda 5 — Baixa — Hooks
 - [ ] **217** — Remover os `eslint-disable` de dependências de efeito, um a um — onda 5 — Média — Hooks
