@@ -304,18 +304,20 @@ export function useAgentRanking() {
           if (session && status === 'completed') {
             const satisfaction = Math.floor(Math.random() * 5) + 5;
             const performance = Math.floor(Math.random() * 4) + 6;
-            await supabase.from('call_summaries').insert({
+            const { error: summaryError } = await supabase.from('call_summaries').insert({
               call_session_id: session.id, summary: `Atendimento realizado por ${agentName}. Cliente atendido com sucesso.`,
               overall_sentiment: sentiments[Math.floor(Math.random() * sentiments.length)],
               customer_satisfaction: satisfaction, agent_performance_score: performance,
               main_topics: [topics[Math.floor(Math.random() * topics.length)]], next_steps: ['Acompanhar caso', 'Enviar documentação'],
             });
-            await supabase.from('call_analyses').insert({
+            if (summaryError) logger.error('Error creating test summary:', summaryError);
+            const { error: analysisError } = await supabase.from('call_analyses').insert({
               call_session_id: session.id, sentiment: sentiments[Math.floor(Math.random() * sentiments.length)],
               emotion: ['satisfied', 'neutral', 'frustrated'][Math.floor(Math.random() * 3)],
               urgency: ['low', 'medium', 'high'][Math.floor(Math.random() * 3)],
               suggestion: 'Manter padrão de atendimento', message_analyzed: 'Análise da chamada completa',
             });
+            if (analysisError) logger.error('Error creating test analysis:', analysisError);
           }
         }
       }

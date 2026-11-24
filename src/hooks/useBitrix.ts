@@ -133,8 +133,9 @@ export const useBitrix = () => {
         throw new Error('Bitrix24 não retornou dados de usuários');
       }
       const users = result.data;
+      let failedUsers = 0;
       for (const user of users) {
-        await supabase.from('bitrix_users').upsert({
+        const { error: upsertError } = await supabase.from('bitrix_users').upsert({
           id: user.ID,
           name: user.NAME,
           last_name: user.LAST_NAME,
@@ -143,6 +144,13 @@ export const useBitrix = () => {
           personal_phone: user.PERSONAL_PHONE,
           active: user.ACTIVE === 'Y'
         });
+        if (upsertError) {
+          failedUsers += 1;
+          logger.error('Falha ao salvar agente do Bitrix:', upsertError);
+        }
+      }
+      if (failedUsers > 0) {
+        throw new Error(`${failedUsers} de ${users.length} agentes não foram salvos`);
       }
       await markSyncSuccess(attemptId);
       toast.success('Agentes sincronizados com sucesso');
@@ -168,12 +176,20 @@ export const useBitrix = () => {
         throw new Error('Bitrix24 não retornou departamentos');
       }
       const departments = result.data;
+      let failedDepartments = 0;
       for (const dept of departments) {
-        await supabase.from('bitrix_departments').upsert({
+        const { error: upsertError } = await supabase.from('bitrix_departments').upsert({
           id: dept.ID,
           name: dept.NAME,
           parent_id: dept.PARENT
         });
+        if (upsertError) {
+          failedDepartments += 1;
+          logger.error('Falha ao salvar departamento do Bitrix:', upsertError);
+        }
+      }
+      if (failedDepartments > 0) {
+        throw new Error(`${failedDepartments} de ${departments.length} departamentos não foram salvos`);
       }
       await markSyncSuccess(attemptId);
       toast.success('Departamentos sincronizados');
@@ -259,11 +275,15 @@ export const useBitrix = () => {
      }
  
      // Enfileirar registro de chamada se falhar
-     await supabase.from('crm_sync_queue').insert({
+     const { error: queueError } = await supabase.from('crm_sync_queue').insert({
        action: 'register_call',
        payload: callData as unknown as Json,
        status: 'pending'
      });
+     if (queueError) {
+       // Sem a fila, o registro da chamada se perde: o chamador recebe null como falha.
+       logger.error('Falha ao enfileirar registro de chamada:', queueError);
+     }
  
      return null;
    }, [callBitrixApi]);
