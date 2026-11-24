@@ -1,6 +1,6 @@
 # 07 · REGRAS DE NEGÓCIO
 
-> Gerado automaticamente por AI Context Sync v1.3.2 · commit `4ad967d3d6` · branch `main` · 2026-11-24 11:21 UTC
+> Gerado automaticamente por AI Context Sync v1.3.2 · commit `e34a65b4e0` · branch `main` · 2026-11-24 11:34 UTC
 > Não edite à mão — regras humanas vão em `manual/`.
 
 ## A. Regras escritas por humanos (`manual/` — prioridade máxima, nunca sobrescrito)
@@ -1905,6 +1905,7 @@ _nenhum item encontrado_
 | `PING_TIMEOUT_MS` | `5000` | `src/hooks/useNetworkMonitor.ts` |
 | `LATENCY_OK` | `150` | `src/hooks/useNetworkMonitor.ts` |
 | `LATENCY_UNSTABLE` | `400` | `src/hooks/useNetworkMonitor.ts` |
+| `COLUNAS_TRONCO` | `'id, trunk_id, duration_seconds, was_failover, created_at'` | `src/hooks/useQualityMetrics.ts` |
 | `BUCKET` | `'queue-audio'` | `src/hooks/useQueueAudioPrompts.ts` |
 | `SAFETY_POLL_MS` | `60` | `src/hooks/useQueueMetrics.ts` |
 | `REALTIME_DEBOUNCE_MS` | `1` | `src/hooks/useQueueMetrics.ts` |
@@ -2646,7 +2647,7 @@ _nenhum item encontrado_
 | `admin` | `supabase/functions/data-lake-flush/index.ts` |
 | `admin` | `supabase/migrations/20261123000200_fix_has_role_oracle_and_debug_tables.sql` |
 
-## K. Testes como especificação (4388 testes em 390 arquivos — nomes completos em `context.json`)
+## K. Testes como especificação (4396 testes em 391 arquivos — nomes completos em `context.json`)
 
 | Arquivo | Testes | Exemplos do que o sistema DEVE fazer |
 |---|---|---|
@@ -2797,6 +2798,7 @@ _nenhum item encontrado_
 | `supabase/functions/voip-recommendation-insights/__tests__/index.test.ts` | 9 | rejeita requisição sem JWT · rejeita período inválido (validação oneOf) · buildHeatmap gera 7×24 = 168 buckets · buildHeatmap incrementa bucket correto … |
 | `supabase/functions/webauthn-authenticate/__tests__/verify.test.ts` | 9 | verify: assercao legitima e aceita e devolve signCount · verify: assinatura de OUTRA chave e rejeitada · verify: desafio diferente e rejeitado (replay) · verify: origem estranha e rejeitada (phishing) … |
 | `src/__tests__/rls/audit-logs.test.ts` | 8 | RLS — audit_logs (imutabilidade + admin-only read) · admin pode ler logs de auditoria · admin pode inserir via função RPC · admin NÃO pode atualizar logs (imutabilidade) … |
+| `src/hooks/__tests__/pageVisibility.gating.test.tsx` | 8 | etapa 253: poll de painel respeita a visibilidade da aba · ${file} usa usePageVisibility · ${file} nao tem refetchInterval sempre ligado · useQualityMetrics entrega refetchInterval falso com a aba oculta … |
 | `src/hooks/__tests__/useAccounts.coverage.test.tsx` | 8 | useAccounts coverage · handles load error · create success · create error returns null … |
 | `src/hooks/__tests__/useAchievementNotifications.coverage.test.tsx` | 8 | useAchievementNotifications (coverage) · não injeta badge inválida quando o enriquecimento falha · subscribes to channels and exposes initial state · handles a new badge award and shows a toast (no agent filter) … |
 | `src/hooks/__tests__/useAgentStatus.coverage.test.tsx` | 8 | useAgentStatus (coverage) · fetches agents on mount · setAgent selects and toasts; clearAgent clears · updateStatus returns false without selected agent … |
@@ -2949,8 +2951,7 @@ _nenhum item encontrado_
 | `src/hooks/__tests__/useContactInsights.coverage.test.tsx` | 4 | useContactInsights · returns empty metrics with no contacts · computes distributions across varied personality profiles · handles fetch error gracefully |
 | `src/hooks/__tests__/useDeals.test.ts` | 4 | useDeals · loads deals · createDeal returns true on success · computeHealth invokes edge function |
 | `src/hooks/__tests__/useHoldMetrics.coverage.test.tsx` | 4 | useHoldMetrics · aggregates 7d metrics · handles 30d and 90d ranges with empty data · handles 90d range |
-| `src/hooks/__tests__/useIPValidation.coverage.test.tsx` | 4 | useIPValidation · returns data on success · handles supabase error branch · handles thrown exception branch |
-| … +90 linhas — lista completa em `context.json` | | |
+| … +91 linhas — lista completa em `context.json` | | |
 
 ## L. Eventos de webhook tratados (contratos com sistemas externos)
 

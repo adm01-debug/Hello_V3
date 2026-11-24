@@ -2256,6 +2256,7 @@
    "src/lib/logger.ts"
   ],
   "src/hooks/useAdherence.ts": [
+   "src/hooks/usePageVisibility.ts",
    "src/integrations/supabase/client.ts"
   ],
   "src/hooks/useAgentFinancialLeaderboard.ts": [
@@ -2472,6 +2473,7 @@
    "src/lib/logger.ts"
   ],
   "src/hooks/useDashboardData.ts": [
+   "src/hooks/usePageVisibility.ts",
    "src/integrations/supabase/client.ts",
    "src/lib/logger.ts"
   ],
@@ -2694,6 +2696,7 @@
    "src/lib/logger.ts"
   ],
   "src/hooks/useQualityMetrics.ts": [
+   "src/hooks/usePageVisibility.ts",
    "src/integrations/supabase/client.ts"
   ],
   "src/hooks/useQualityTrendAnalyzer.ts": [
@@ -2897,6 +2900,7 @@
    "src/lib/voice-speech.ts"
   ],
   "src/hooks/useVoipAnomalies.ts": [
+   "src/hooks/usePageVisibility.ts",
    "src/integrations/supabase/client.ts",
    "src/lib/logger.ts"
   ],

@@ -704,7 +704,7 @@
    "hooks_exportados": [
     "useAdherence"
    ],
-   "linhas": 24,
+   "linhas": 26,
    "dominio": "hooks",
    "tabelas": [],
    "rpcs": [],
@@ -712,6 +712,7 @@
     "compute-adherence"
    ],
    "hooks_internos": [
+    "usePageVisibility",
     "useQuery"
    ],
    "canais_realtime": [],
@@ -1898,7 +1899,7 @@
     "useQueueStatsData",
     "useRecentCallsData"
    ],
-   "linhas": 121,
+   "linhas": 127,
    "dominio": "hooks",
    "tabelas": [
     "call_sessions"
@@ -1910,7 +1911,9 @@
     "get_queue_stats"
    ],
    "edges": [],
-   "hooks_internos": [],
+   "hooks_internos": [
+    "usePageVisibility"
+   ],
    "canais_realtime": [],
    "usado_por": 6,
    "usado_por_arquivos": [
@@ -3112,12 +3115,16 @@
     "useEffect"
    ],
    "canais_realtime": [],
-   "usado_por": 4,
+   "usado_por": 8,
    "usado_por_arquivos": [
+    "src/hooks/useAdherence.ts",
     "src/hooks/useBlfBoard.ts",
+    "src/hooks/useDashboardData.ts",
     "src/hooks/useExtensionsOverview.ts",
+    "src/hooks/useQualityMetrics.ts",
     "src/hooks/useQueueMetrics.ts",
-    "src/hooks/useSecurityMonitoringData.ts"
+    "src/hooks/useSecurityMonitoringData.ts",
+    "src/hooks/useVoipAnomalies.ts"
    ],
    "coberto_por_testes": 0
   },
@@ -3278,7 +3285,7 @@
     "useQualityMetrics",
     "useTrunkUsageMetrics"
    ],
-   "linhas": 57,
+   "linhas": 66,
    "dominio": "hooks",
    "tabelas": [
     "call_quality_metrics",
@@ -3287,6 +3294,7 @@
    "rpcs": [],
    "edges": [],
    "hooks_internos": [
+    "usePageVisibility",
     "useQuery"
    ],
    "canais_realtime": [],
@@ -3295,7 +3303,7 @@
     "src/components/executive/RealtimeQualityDashboard.tsx",
     "src/hooks/useQualityAlerts.ts"
    ],
-   "coberto_por_testes": 1
+   "coberto_por_testes": 2
   },
   {
    "arquivo": "src/hooks/useQualityTrendAnalyzer.ts",
@@ -4389,12 +4397,13 @@
    "hooks_exportados": [
     "useVoipAnomalies"
    ],
-   "linhas": 72,
+   "linhas": 74,
    "dominio": "hooks",
    "tabelas": [],
    "rpcs": [],
    "edges": [],
    "hooks_internos": [
+    "usePageVisibility",
     "useQuery"
    ],
    "canais_realtime": [],
@@ -4403,7 +4412,7 @@
     "src/components/network/AnomalyDetectionCard.tsx",
     "src/hooks/useAnomalyRemediation.ts"
    ],
-   "coberto_por_testes": 1
+   "coberto_por_testes": 2
   },
   {
    "arquivo": "src/hooks/useVoipAutoRemediation.ts",

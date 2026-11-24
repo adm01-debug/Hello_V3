@@ -5,17 +5,17 @@
   "vitest",
   "playwright"
  ],
- "total": 400,
+ "total": 401,
  "por_tipo": {
   "contrato": 1,
   "e2e": 13,
   "pytest": 2,
-  "unit": 383
+  "unit": 384
  },
  "onde_ficam": [
   {
    "padrao": "co-localizado (__tests__)",
-   "arquivos": 376
+   "arquivos": 377
   },
   {
    "padrao": "e2e/",
@@ -422,6 +422,16 @@
     "src/hooks/useMultiChannelCall.ts"
    ],
    "casos": 3
+  },
+  {
+   "arquivo": "src/hooks/__tests__/pageVisibility.gating.test.tsx",
+   "tipo": "unit",
+   "linhas": 103,
+   "testa": [
+    "src/hooks/useQualityMetrics.ts",
+    "src/hooks/useVoipAnomalies.ts"
+   ],
+   "casos": 7
   },
   {
    "arquivo": "src/hooks/__tests__/use-mobile.coverage.test.tsx",
@@ -3745,7 +3755,7 @@
   "src/hooks/usePredictiveDialer.ts": 1,
   "src/hooks/useProfile.ts": 1,
   "src/hooks/useQualityAlerts.ts": 1,
-  "src/hooks/useQualityMetrics.ts": 1,
+  "src/hooks/useQualityMetrics.ts": 2,
   "src/hooks/useQualityTrendAnalyzer.ts": 1,
   "src/hooks/useQueueAudioPrompts.ts": 1,
   "src/hooks/useQueueMetrics.ts": 1,
@@ -3779,7 +3789,7 @@
   "src/hooks/useUnreadConflicts.ts": 1,
   "src/hooks/useVoiceBiometrics.ts": 1,
   "src/hooks/useVoiceCommand.ts": 1,
-  "src/hooks/useVoipAnomalies.ts": 1,
+  "src/hooks/useVoipAnomalies.ts": 2,
   "src/hooks/useVoipAutoRemediation.ts": 1,
   "src/hooks/useVoipCapacityRecommendations.ts": 1,
   "src/hooks/useVoipDiagnosticVoiceQA.ts": 1,

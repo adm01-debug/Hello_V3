@@ -1099,6 +1099,7 @@
     "useDashboardStats",
     "useGoalViolations",
     "useHoldSoundAlert",
+    "usePageVisibility",
     "useQueueStatsData",
     "useRecentCallsData"
    ],
@@ -1318,6 +1319,7 @@
     "useLiveAssist",
     "useMeetingSummariesList",
     "useMeetingSummary",
+    "usePageVisibility",
     "usePendingActionItems",
     "useQualityMetrics",
     "useSaveAssignment",
@@ -2245,6 +2247,7 @@
    "hooks_locais": [
     "useAnomalyRemediation",
     "useNetworkMonitor",
+    "usePageVisibility",
     "useRecordVoipRecommendationAction",
     "useVoipAnomalies",
     "useVoipCapacityRecommendations",
@@ -2818,7 +2821,8 @@
    "rotas_http": [],
    "componentes": 1,
    "hooks_locais": [
-    "useAdherence"
+    "useAdherence",
+    "usePageVisibility"
    ],
    "hooks_definidos": [],
    "edges": [
@@ -3494,7 +3498,7 @@
    "modulo": "hooks",
    "arquivos": 168,
    "testes": 0,
-   "linhas": 21419,
+   "linhas": 21438,
    "itens_menu": [],
    "telas": [],
    "rotas_http": [],
@@ -4453,7 +4457,7 @@
   {
    "modulo": "hooks/__tests__",
    "arquivos": 0,
-   "testes": 174,
+   "testes": 175,
    "linhas": 0,
    "itens_menu": [],
    "telas": [],

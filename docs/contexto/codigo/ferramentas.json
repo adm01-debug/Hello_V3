@@ -3,7 +3,7 @@
  "format_version": 2,
  "stack": {
   "linguagens": [
-   "TypeScript (1305)",
+   "TypeScript (1306)",
    "SQL (245)",
    "Markdown (121)",
    "JavaScript (30)",
@@ -1022,7 +1022,6 @@
  "providers": {
   "entrada": "src/main.tsx",
   "providers": [
-   "AchievementNotificationProvider",
    "AuthProvider",
    "BrowserRouter",
    "CallProvider",

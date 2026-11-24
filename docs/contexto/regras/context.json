@@ -1,15 +1,15 @@
 {
  "meta": {
-  "sha": "4ad967d3d6a6d0a36b060856f83b336e86ccef23",
+  "sha": "e34a65b4e03dd801bbafbe2a3fbbba9eda518284",
   "branch": "main",
   "remote": "https://github.com/adm01-debug/Hello_V3",
-  "generated_at": "2026-11-24 11:21 UTC",
-  "files_total": 1789,
-  "code_files": 1585,
-  "code_lines": 197049
+  "generated_at": "2026-11-24 11:34 UTC",
+  "files_total": 1790,
+  "code_files": 1586,
+  "code_lines": 197174
  },
  "version": "1.3.2",
- "facts_hash": "3e9da9227b168918",
+ "facts_hash": "be168978775b9a26",
  "stack": {
   "frameworks": [
    "React + Vite",
@@ -154,7 +154,7 @@
   "package_manager": "bun",
   "languages": {
    ".ts": 663,
-   ".tsx": 642,
+   ".tsx": 643,
    ".sql": 245,
    ".mjs": 28,
    ".py": 5,
@@ -28797,7 +28797,7 @@
      "get_dashboard_stats",
      "get_queue_stats"
     ],
-    "deps_count": 69
+    "deps_count": 70
    },
    {
     "path": "",
@@ -28903,7 +28903,7 @@
      "voip-sla-report"
     ],
     "rpc_transitive": [],
-    "deps_count": 58
+    "deps_count": 59
    },
    {
     "path": "",
@@ -28954,7 +28954,7 @@
     "rpc_transitive": [
      "check_all_tables_rls_status"
     ],
-    "deps_count": 30
+    "deps_count": 31
    },
    {
     "path": "",
@@ -29173,7 +29173,7 @@
      "get_dashboard_stats",
      "get_queue_stats"
     ],
-    "deps_count": 12
+    "deps_count": 13
    },
    {
     "path": "",
@@ -29255,7 +29255,7 @@
      "compute-adherence"
     ],
     "rpc_transitive": [],
-    "deps_count": 21
+    "deps_count": 22
    },
    {
     "path": "",
@@ -33249,6 +33249,10 @@
    {
     "guard": "ProtectedRoute",
     "file": "src/App.tsx"
+   },
+   {
+    "guard": "ProtectedRoute",
+    "file": "src/hooks/__tests__/pageVisibility.gating.test.tsx"
    }
   ]
  },
@@ -33430,7 +33434,7 @@
   {
    "module": "src",
    "files": 3,
-   "lines": 167,
+   "lines": 170,
    "tables": [
     "webhook_flush_metrics"
    ],
@@ -33748,8 +33752,8 @@
   },
   {
    "module": "src/hooks",
-   "files": 354,
-   "lines": 47681,
+   "files": 355,
+   "lines": 47803,
    "tables": [
     "accounts",
     "active_sessions",
@@ -33930,8 +33934,10 @@
     "@testing-library/react",
     "date-fns",
     "fast-check",
+    "fs",
     "jssip",
     "node:crypto",
+    "path",
     "react",
     "react-router-dom",
     "sonner",
@@ -50513,6 +50519,11 @@
     "value": "400"
    },
    {
+    "file": "src/hooks/useQualityMetrics.ts",
+    "name": "COLUNAS_TRONCO",
+    "value": "'id, trunk_id, duration_seconds, was_failover, created_at'"
+   },
+   {
     "file": "src/hooks/useQueueAudioPrompts.ts",
     "name": "BUCKET",
     "value": "'queue-audio'"
@@ -58456,6 +58467,38 @@
    {
     "file": "src/hooks/__tests__/callLifecycle-integration.test.tsx",
     "name": "sem INSERT se chamada for encerrada antes de ficar ativa"
+   },
+   {
+    "file": "src/hooks/__tests__/pageVisibility.gating.test.tsx",
+    "name": "etapa 253: poll de painel respeita a visibilidade da aba"
+   },
+   {
+    "file": "src/hooks/__tests__/pageVisibility.gating.test.tsx",
+    "name": "${file} usa usePageVisibility"
+   },
+   {
+    "file": "src/hooks/__tests__/pageVisibility.gating.test.tsx",
+    "name": "${file} nao tem refetchInterval sempre ligado"
+   },
+   {
+    "file": "src/hooks/__tests__/pageVisibility.gating.test.tsx",
+    "name": "useQualityMetrics entrega refetchInterval falso com a aba oculta"
+   },
+   {
+    "file": "src/hooks/__tests__/pageVisibility.gating.test.tsx",
+    "name": "useQualityMetrics entrega o intervalo do painel com a aba visivel"
+   },
+   {
+    "file": "src/hooks/__tests__/pageVisibility.gating.test.tsx",
+    "name": "useVoipAnomalies entrega refetchInterval falso com a aba oculta"
+   },
+   {
+    "file": "src/hooks/__tests__/pageVisibility.gating.test.tsx",
+    "name": "App monta GlobalServices dentro da area autenticada, nao acima do roteador"
+   },
+   {
+    "file": "src/hooks/__tests__/pageVisibility.gating.test.tsx",
+    "name": "painel de qualidade nao pede select(*) — metrica operacional tem colunas fixas"
    },
    {
     "file": "src/hooks/__tests__/use-mobile.coverage.test.tsx",
@@ -90477,6 +90520,10 @@
    {
     "guard": "ProtectedRoute",
     "file": "src/App.tsx"
+   },
+   {
+    "guard": "ProtectedRoute",
+    "file": "src/hooks/__tests__/pageVisibility.gating.test.tsx"
    }
   ],
   "protected_routes": [
@@ -93611,7 +93658,7 @@
   },
   "src/App.tsx": {
    "path": "src/App.tsx",
-   "lines": 121,
+   "lines": 124,
    "exports": [
     "default App"
    ],
@@ -99715,7 +99762,7 @@
   },
   "src/hooks/useAdherence.ts": {
    "path": "src/hooks/useAdherence.ts",
-   "lines": 24,
+   "lines": 26,
    "exports": [
     "interface AdherenceData",
     "function useAdherence"
@@ -101749,7 +101796,7 @@
   },
   "src/hooks/useDashboardData.ts": {
    "path": "src/hooks/useDashboardData.ts",
-   "lines": 121,
+   "lines": 127,
    "exports": [
     "function useRecentCallsData",
     "function useQueueStatsData"
@@ -104003,7 +104050,7 @@
   },
   "src/hooks/useQualityMetrics.ts": {
    "path": "src/hooks/useQualityMetrics.ts",
-   "lines": 57,
+   "lines": 66,
    "exports": [
     "interface QualityMetric",
     "interface TrunkUsageMetric",
@@ -104018,6 +104065,12 @@
     {
      "table": "voip_trunk_usage_metrics",
      "op": "select"
+    }
+   ],
+   "params": [
+    {
+     "name": "COLUNAS_TRONCO",
+     "value": "'id, trunk_id, duration_seconds, was_failover, created_at'"
     }
    ],
    "hooks": [
@@ -106126,7 +106179,7 @@
   },
   "src/hooks/useVoipAnomalies.ts": {
    "path": "src/hooks/useVoipAnomalies.ts",
-   "lines": 72,
+   "lines": 74,
    "exports": [
     "type AnomalyKind",
     "type AnomalyMetric",
@@ -106897,6 +106950,24 @@
     "INSERT em call_sessions ao ficar ativa com campos corretos",
     "UPDATE em call_sessions ao encerrar chamada",
     "sem INSERT se chamada for encerrada antes de ficar ativa"
+   ]
+  },
+  "src/hooks/__tests__/pageVisibility.gating.test.tsx": {
+   "path": "src/hooks/__tests__/pageVisibility.gating.test.tsx",
+   "lines": 103,
+   "is_test": true,
+   "guards": [
+    "ProtectedRoute"
+   ],
+   "tests": [
+    "etapa 253: poll de painel respeita a visibilidade da aba",
+    "${file} usa usePageVisibility",
+    "${file} nao tem refetchInterval sempre ligado",
+    "useQualityMetrics entrega refetchInterval falso com a aba oculta",
+    "useQualityMetrics entrega o intervalo do painel com a aba visivel",
+    "useVoipAnomalies entrega refetchInterval falso com a aba oculta",
+    "App monta GlobalServices dentro da area autenticada, nao acima do roteador",
+    "painel de qualidade nao pede select(*) — metrica operacional tem colunas fixas"
    ]
   },
   "src/hooks/__tests__/use-mobile.coverage.test.tsx": {
@@ -127648,10 +127719,26 @@
   }
  },
  "git": {
-  "sha": "4ad967d3d6a6d0a36b060856f83b336e86ccef23",
+  "sha": "e34a65b4e03dd801bbafbe2a3fbbba9eda518284",
   "branch": "main",
   "remote": "https://github.com/adm01-debug/Hello_V3",
   "commits": [
+   {
+    "sha": "e34a65b",
+    "date": "2026-11-24",
+    "author": "adm01-debug",
+    "subject": "fix: pausa o poll dos paineis com a aba oculta e tira o monitor de VoIP das rotas publicas (etapa 253) (#280)",
+    "files": [
+     "docs/agentes/mapa-repo.md",
+     "docs/qa/05-PROGRESSO.md",
+     "src/App.tsx",
+     "src/hooks/__tests__/pageVisibility.gating.test.tsx",
+     "src/hooks/useAdherence.ts",
+     "src/hooks/useDashboardData.ts",
+     "src/hooks/useQualityMetrics.ts",
+     "src/hooks/useVoipAnomalies.ts"
+    ]
+   },
    {
     "sha": "4ad967d",
     "date": "2026-11-24",
@@ -128083,25 +128170,16 @@
      "src/hooks/__tests__/useGamification.coverage.test.tsx",
      "src/hooks/useGamification.ts"
     ]
-   },
-   {
-    "sha": "ccbea6f",
-    "date": "2026-11-24",
-    "author": "adm01-debug",
-    "subject": "fix: falha na trilha de auditoria passa a ser visivel (etapa 182) (#249)",
-    "files": [
-     "docs/qa/05-PROGRESSO.md",
-     "src/hooks/__tests__/useAuditLog.coverage.test.tsx",
-     "src/hooks/__tests__/useSupervisorPanel.coverage.test.tsx",
-     "src/hooks/useAuditLog.ts",
-     "src/hooks/useSupervisorPanel.ts"
-    ]
    }
   ],
   "hot_files": [
    [
     "docs/qa/05-PROGRESSO.md",
     26
+   ],
+   [
+    "docs/agentes/mapa-repo.md",
+    2
    ],
    [
     "supabase/functions/process-digest/index.ts",
@@ -128148,35 +128226,31 @@
     2
    ],
    [
+    "src/App.tsx",
+    1
+   ],
+   [
+    "src/hooks/__tests__/pageVisibility.gating.test.tsx",
+    1
+   ],
+   [
+    "src/hooks/useAdherence.ts",
+    1
+   ],
+   [
+    "src/hooks/useDashboardData.ts",
+    1
+   ],
+   [
+    "src/hooks/useQualityMetrics.ts",
+    1
+   ],
+   [
+    "src/hooks/useVoipAnomalies.ts",
+    1
+   ],
+   [
     "supabase/functions/_shared/digest.ts",
-    1
-   ],
-   [
-    "supabase/functions/_shared/digest_test.ts",
-    1
-   ],
-   [
-    "supabase/functions/_shared/ip-range.ts",
-    1
-   ],
-   [
-    "supabase/functions/_shared/ip-range_test.ts",
-    1
-   ],
-   [
-    "docs/agentes/mapa-repo.md",
-    1
-   ],
-   [
-    "src/hooks/__tests__/usePredictiveDialer.coverage.test.tsx",
-    1
-   ],
-   [
-    "src/hooks/usePredictiveDialer.ts",
-    1
-   ],
-   [
-    "src/hooks/__tests__/useHoldReminder.coverage.test.tsx",
     1
    ]
   ]
