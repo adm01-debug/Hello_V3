@@ -1,9 +1,10 @@
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback, useRef } from 'react';
 import { supabase } from '@/integrations/supabase/client';
 import { toast } from 'sonner';
 
 import { DashboardGoal } from '@/components/dashboard/DashboardGoalsSettings';
 import { logger } from '@/lib/logger';
+import { usePageVisibility } from '@/hooks/usePageVisibility';
 
 import { safeFormatDate } from "@/lib/safe-date";
 import { mensagemDeErro } from '@/lib/error-message';
@@ -13,6 +14,14 @@ import { mensagemDeErro } from '@/lib/error-message';
 // 'waiting' nunca existiu em call_sessions — a contagem "em espera" ficava
 // permanentemente zerada no dashboard.
 const CHAMADA_EM_CURSO = ['active', 'ringing', 'on_hold'] as const;
+
+// E244: o painel consultava o banco a cada 5 s E a cada evento de realtime sem
+// agrupamento (3 consultas por leitura). Em pico de call center isso virava
+// centenas de consultas por minuto justamente na hora de maior carga. O realtime
+// passa a ser a fonte principal, com 1 s de agrupamento por rajada; o poll fica
+// so como rede de seguranca para quando o canal cair.
+const SAFETY_POLL_MS = 60_000;
+const REALTIME_DEBOUNCE_MS = 1_000;
 
 export interface QueueMetrics {
   activeCalls: number;
@@ -54,6 +63,10 @@ export function useQueueMetrics() {
   const [checkingGoals, setCheckingGoals] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [hasLoaded, setHasLoaded] = useState(false);
+
+  const isVisible = usePageVisibility();
+  const isVisibleRef = useRef(isVisible);
+  const realtimeDebounceRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   const fetchGoals = async () => {
     const { data, error } = await supabase.from('dashboard_goals').select('*').eq('is_active', true);
@@ -161,14 +174,35 @@ export function useQueueMetrics() {
 
   useEffect(() => { fetchGoals(); }, []);
 
+  // Aba oculta nao precisa de numeros frescos (ninguem esta olhando); ao voltar a
+  // ficar visivel, lemos uma vez para nao exibir dado velho.
+  useEffect(() => {
+    const estavaOculta = !isVisibleRef.current;
+    isVisibleRef.current = isVisible;
+    if (estavaOculta && isVisible) fetchMetrics();
+  }, [isVisible, fetchMetrics]);
+
   useEffect(() => {
     fetchMetrics();
-    const interval = setInterval(fetchMetrics, 5000);
+    const interval = setInterval(() => { if (isVisibleRef.current) fetchMetrics(); }, SAFETY_POLL_MS);
+    // Uma rajada de eventos (varias chamadas mudando de status em sequencia)
+    // produz uma unica leitura depois de 1 s de silencio.
+    const agendarLeitura = () => {
+      if (realtimeDebounceRef.current) clearTimeout(realtimeDebounceRef.current);
+      realtimeDebounceRef.current = setTimeout(() => {
+        realtimeDebounceRef.current = null;
+        if (isVisibleRef.current) fetchMetrics();
+      }, REALTIME_DEBOUNCE_MS);
+    };
     const channel = supabase.channel('queue-metrics')
-      .on('postgres_changes', { event: '*', schema: 'public', table: 'call_sessions' }, () => fetchMetrics())
-      .on('postgres_changes', { event: '*', schema: 'public', table: 'agents' }, () => fetchMetrics())
+      .on('postgres_changes', { event: '*', schema: 'public', table: 'call_sessions' }, agendarLeitura)
+      .on('postgres_changes', { event: '*', schema: 'public', table: 'agents' }, agendarLeitura)
       .subscribe();
-    return () => { clearInterval(interval); supabase.removeChannel(channel); };
+    return () => {
+      clearInterval(interval);
+      if (realtimeDebounceRef.current) clearTimeout(realtimeDebounceRef.current);
+      supabase.removeChannel(channel);
+    };
   }, [fetchMetrics]);
 
   const runGoalsCheck = async () => {

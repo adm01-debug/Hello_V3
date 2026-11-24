@@ -492,6 +492,28 @@ describe('usePredictiveDialer', () => {
     expect(mockSupabase.removeChannel).toHaveBeenCalled();
   });
 
+  // E244: uma rajada de eventos da mesma tabela virava uma leitura por evento.
+  it('agrupa rajada de eventos de realtime numa unica leitura', async () => {
+    selectResult = { data: [sampleCampaign], error: null };
+    const { unmount } = renderHook(() => usePredictiveDialer());
+    await waitFor(() => expect(mockSupabase.channel).toHaveBeenCalled());
+
+    const handlerCampanhas = channelObj.on.mock.calls
+      .find((c) => (c[1] as { table?: string })?.table === 'dialer_campaigns')?.[2];
+    expect(typeof handlerCampanhas).toBe('function');
+
+    mockSupabase.from.mockClear();
+    vi.useFakeTimers();
+    act(() => { for (let i = 0; i < 10; i++) (handlerCampanhas as () => void)(); });
+    expect(mockSupabase.from).not.toHaveBeenCalled();
+
+    act(() => { vi.advanceTimersByTime(1000); });
+    vi.useRealTimers();
+
+    await waitFor(() => expect(mockSupabase.from).toHaveBeenCalledTimes(1));
+    unmount();
+  });
+
   it('pula o contato e grava o motivo quando o compliance bloqueia', async () => {
     const updates: Array<Record<string, unknown>> = [];
     mockSupabase.from.mockImplementation(() => {
