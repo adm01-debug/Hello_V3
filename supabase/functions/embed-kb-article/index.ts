@@ -5,6 +5,7 @@ import { requireRole } from "../_shared/auth.ts";
 import { string, optional, uuid, validate } from "../_shared/validate.ts";
 import { createErrorResponse } from "../_shared/validator.ts";
 import { checkRateLimitDB, getClientIp } from "../_shared/rate-limit.ts";
+import { getCorrelationId, internalErrorResponse } from '../_shared/errors.ts';
 
 const MAX_TEXT = 20_000;
 
@@ -111,7 +112,7 @@ export async function handler(req: Request): Promise<Response> {
     return json({ success: true, embedding });
   } catch (error) {
     console.error("embed-kb-article error:", error);
-    return json({ error: error instanceof Error ? error.message : String(error) }, 500);
+    return internalErrorResponse(error, getCorrelationId(req), buildCorsHeaders(req), { fn: 'embed-kb-article' });
   }
 }
 

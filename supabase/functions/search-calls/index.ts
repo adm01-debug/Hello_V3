@@ -1,6 +1,7 @@
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
 import { buildCorsHeaders } from "../_shared/cors.ts";
 import { validate, string, optional, number } from "../_shared/validate.ts";
+import { getCorrelationId, internalErrorResponse } from '../_shared/errors.ts';
 
 export async function handler(req: Request): Promise<Response> {
   const cors = buildCorsHeaders(req);
@@ -129,9 +130,7 @@ export async function handler(req: Request): Promise<Response> {
     });
   } catch (err) {
     console.error('[search-calls] error:', err);
-    return new Response(JSON.stringify({ error: err instanceof Error ? err.message : 'Internal error' }), {
-      status: 500, headers: { ...cors, 'Content-Type': 'application/json' },
-    });
+    return internalErrorResponse(err, getCorrelationId(req), cors, { fn: 'search-calls' });
   }
 }
 

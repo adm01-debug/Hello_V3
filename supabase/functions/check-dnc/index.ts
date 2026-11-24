@@ -3,6 +3,7 @@
 // entao a checagem de "Do Not Call" nunca chegava ao front nem ao discador.
 import { buildCorsHeaders } from "../_shared/cors.ts";
 import { createClient } from "npm:@supabase/supabase-js@2";
+import { getCorrelationId, internalErrorResponse } from '../_shared/errors.ts';
 
 function json(body: unknown, status: number, req: Request): Response {
   return new Response(JSON.stringify(body), {
@@ -38,7 +39,6 @@ Deno.serve(async (req) => {
 
     return json({ phone, blocked: data === true }, 200, req);
   } catch (err) {
-    const message = err instanceof Error ? err.message : String(err);
-    return json({ error: message }, 500, req);
+    return internalErrorResponse(err, getCorrelationId(req), buildCorsHeaders(req), { fn: 'check-dnc' });
   }
 });

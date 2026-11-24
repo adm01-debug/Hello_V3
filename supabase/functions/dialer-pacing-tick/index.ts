@@ -2,6 +2,7 @@
 import { buildCorsHeaders } from "../_shared/cors.ts";
 import { createClient } from "npm:@supabase/supabase-js@2";
 import { mesmaString } from "../_shared/constant-time.ts";
+import { getCorrelationId, internalErrorResponse } from '../_shared/errors.ts';
 
 Deno.serve(async (req) => {
   const CORS = buildCorsHeaders(req);
@@ -25,11 +26,7 @@ Deno.serve(async (req) => {
       status: 200,
     });
   } catch (err) {
-    const message = err instanceof Error ? err.message : String(err);
-    return new Response(JSON.stringify({ error: message }), {
-      headers: { ...CORS, "Content-Type": "application/json" },
-      status: 500,
-    });
+    return internalErrorResponse(err, getCorrelationId(req), CORS, { fn: 'dialer-pacing-tick' });
   }
 });
 

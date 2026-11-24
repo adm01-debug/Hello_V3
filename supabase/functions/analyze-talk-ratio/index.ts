@@ -1,6 +1,7 @@
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
 import { buildCorsHeaders } from "../_shared/cors.ts";
 import { validate, string, array, number, optional, oneOf } from "../_shared/validate.ts";
+import { getCorrelationId, internalErrorResponse } from '../_shared/errors.ts';
 
 interface Segment {
   speaker: string;
@@ -129,8 +130,6 @@ Deno.serve(async (req) => {
     });
   } catch (err) {
     console.error('[analyze-talk-ratio] error:', err);
-    return new Response(JSON.stringify({ error: err instanceof Error ? err.message : 'Internal error' }), {
-      status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json' },
-    });
+    return internalErrorResponse(err, getCorrelationId(req), corsHeaders, { fn: 'analyze-talk-ratio' });
   }
 });
