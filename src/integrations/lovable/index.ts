@@ -28,7 +28,11 @@ export const lovable = {
       }
 
       try {
-        await supabase.auth.setSession(result.tokens);
+        // setSession resolve com { error } em vez de lancar.
+        const { error } = (await supabase.auth.setSession(result.tokens)) ?? {};
+        if (error) {
+          return { error: error instanceof Error ? error : new Error(String(error)) };
+        }
       } catch (e) {
         return { error: e instanceof Error ? e : new Error(String(e)) };
       }

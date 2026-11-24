@@ -242,7 +242,11 @@
 - [ ] **184** — Verificar o erro nas gravações de conversas e mensagens — onda 5 — Média — Hooks
 - [ ] **185** — Verificar o erro nas gravações de gamificação e ranking — onda 5 — Média — Hooks
 - [ ] **186** — Verificar o erro nas operações de armazenamento — onda 5 — Média — Hooks
-- [ ] **187** — Varrer e corrigir as gravações cegas restantes — onda 5 — Média — Hooks
+- [x] **187** — Varrer e corrigir as gravações cegas restantes — onda 5 — Média — Hooks
+  - Varredura `grep -rn "^\s*await supabase" src/ --include=*.ts --include=*.tsx | grep -v __tests__`: de 35 originais sobraram 24; dessas, 8 já estavam cobertas pelas etapas 181–186 (em PR) e as demais foram tratadas em 2 PRs.
+  - Parte 1 (hooks): `useTrackers.toggleTracker` (erro → toast e sem recarregar), `useBitrix.syncAgents`/`syncDepartments` (conta falhas por linha, loga e lança → marca a tentativa como falha), `useBitrix.registerCall` (fila `crm_sync_queue` logada), `useLiveAssist.analyze`/`markUsed`, `useAgentRanking` (seed), `useAvatar` (rollback e órfãos logados), `useLoginLockout.recordSuccessfulLogin` (erro do RPC logado). Testes: 71 passed + 2 casos novos.
+  - Parte 2 (UI/integração): `BattleCardAlert` (insert em `coaching_timestamps` sem checagem não mostrava mais sucesso), `SystemMaintenancePanel` (`log_audit_event` com aviso de auditoria não registrada), `CommandPalette` (sair só navega quando o `signOut` confirma), `WhisperNotification` (`is_read` mantém o aviso na tela quando a gravação falha), `integrations/lovable` (`setSession` resolve com `{ error }`, não lança).
+  - Legítimos ignorados por desenho: nenhum `void supabase…` restante precisou ser criado; os casos best-effort (avatar antigo) ficaram com log explícito.
 - [ ] **188** — Fazer o mesmo nas edge functions — onda 5 — Média — Edge Function
 - [ ] **189** — Parar de engolir falha nos alertas de contato — onda 5 — Média — Hooks
 - [ ] **190** — Parar de engolir falha na gravação de contatos — onda 5 — Média — Hooks

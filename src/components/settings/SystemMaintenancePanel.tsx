@@ -6,6 +6,7 @@ import { Button } from '@/components/ui/button';
 import { supabase } from '@/integrations/supabase/client';
 import { useMutation } from '@tanstack/react-query';
 import { toast } from 'sonner';
+import { logger } from '@/lib/logger';
 
 const BACKGROUND_FUNCTIONS = [
   { name: 'check-alerts', label: 'Verificar Alertas de Metas', description: 'Verifica desvios das metas do dashboard', icon: ShieldAlert },
@@ -26,17 +27,26 @@ export function SystemMaintenancePanel() {
        if (error) throw error;
        
        // Log the maintenance action via secure RPC
-       await supabase.rpc('log_audit_event', {
+       const { error: auditError } = await supabase.rpc('log_audit_event', {
          p_action: `Manual Execution: ${fnName}`,
          p_resource_type: 'system_maintenance',
          p_details: data || {}
        });
-       
-       return data;
+       if (auditError) {
+         logger.error('SystemMaintenancePanel: falha ao registrar auditoria:', auditError);
+       }
+
+       return { data, auditError };
      },
-     onSuccess: (data, fnName) => {
+     onSuccess: (result, fnName) => {
        setRunningFn(null);
-       toast.success(`${fnName} executado com sucesso`, { description: JSON.stringify(data).slice(0, 100) });
+       if (result.auditError) {
+         toast.warning(`${fnName} executado, mas a auditoria não registrou a ação`, {
+           description: String(result.auditError),
+         });
+         return;
+       }
+       toast.success(`${fnName} executado com sucesso`, { description: JSON.stringify(result.data).slice(0, 100) });
      },
     onError: (err, fnName) => {
       setRunningFn(null);
