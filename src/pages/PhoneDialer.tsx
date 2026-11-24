@@ -59,6 +59,7 @@ const PhoneDialer = () => {
 
   const current = call.currentCall;
   const incomingSessionIdRef = useRef<string | null>(null);
+  const dialingRef = useRef(false);
 
   /**
    * Espelha convites SIP entrantes no estado multicanal para que a tela de
@@ -144,34 +145,42 @@ const PhoneDialer = () => {
 
   const startCall = useCallback(
     async (rawNumber: string, contactName?: string) => {
+      // Reentrância: dois toques rápidos no "ligar" passariam pelo pre-dial check antes do estado
+      // de chamada mudar e abririam duas sessões. O ref bloqueia a segunda chamada na hora.
+      if (dialingRef.current) return;
       const number = sanitizeDialInput(rawNumber);
       if (!isDialable(number)) {
         toast.error('Número inválido', { description: 'Informe pelo menos 3 dígitos.' });
         return;
       }
 
-      // Bloqueia discagem violando DNC ou fora da janela de horário permitida.
-      const { canDial, reasons } = await preDialCheck(number);
-      if (!canDial) {
-        toast.error('Chamada bloqueada por compliance', { description: reasons.join(' · ') });
-        return;
-      }
+      dialingRef.current = true;
+      try {
+        // Bloqueia discagem violando DNC ou fora da janela de horário permitida.
+        const { canDial, reasons } = await preDialCheck(number);
+        if (!canDial) {
+          toast.error('Chamada bloqueada por compliance', { description: reasons.join(' · ') });
+          return;
+        }
 
-      const session = await call.initiateCall(call.activeChannel, number, contactName);
-      if (!session) {
-        toast.error('Limite de chamadas simultâneas atingido');
-        return;
+        const session = await call.initiateCall(call.activeChannel, number, contactName);
+        if (!session) {
+          toast.error('Limite de chamadas simultâneas atingido');
+          return;
+        }
+        setLastDialed(number);
+        // Gesto do usuário: momento válido para pedir permissão de notificação.
+        void ensureNotificationPermission();
+        call.updateCallStatus('ringing', session.id);
+        if (call.activeChannel === 'sip') {
+          void sip.startCall(number).then((ok) => {
+            if (!ok) call.endCall(session.id);
+          });
+        }
+        toast.success('Chamada iniciada', { description: `Canal ${call.activeChannel.toUpperCase()}` });
+      } finally {
+        dialingRef.current = false;
       }
-      setLastDialed(number);
-      // Gesto do usuário: momento válido para pedir permissão de notificação.
-      void ensureNotificationPermission();
-      call.updateCallStatus('ringing', session.id);
-      if (call.activeChannel === 'sip') {
-        void sip.startCall(number).then((ok) => {
-          if (!ok) call.endCall(session.id);
-        });
-      }
-      toast.success('Chamada iniciada', { description: `Canal ${call.activeChannel.toUpperCase()}` });
     },
     [call, sip, preDialCheck],
   );
