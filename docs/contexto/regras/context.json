@@ -1,15 +1,15 @@
 {
  "meta": {
-  "sha": "8aa5275b04273a9df91dc44492a4ff3a40130fc6",
+  "sha": "e335d9d8e7811b4ba6e34668d8a09084d17c5afd",
   "branch": "main",
   "remote": "https://github.com/adm01-debug/Hello_V3",
-  "generated_at": "2026-11-24 07:04 UTC",
-  "files_total": 1777,
-  "code_files": 1573,
-  "code_lines": 194775
+  "generated_at": "2026-11-24 07:06 UTC",
+  "files_total": 1778,
+  "code_files": 1574,
+  "code_lines": 194824
  },
  "version": "1.3.2",
- "facts_hash": "9f4fa6bacd055d70",
+ "facts_hash": "46f30946900a4499",
  "stack": {
   "frameworks": [
    "React + Vite",
@@ -154,7 +154,7 @@
   "package_manager": "bun",
   "languages": {
    ".ts": 657,
-   ".tsx": 636,
+   ".tsx": 637,
    ".sql": 245,
    ".mjs": 28,
    ".py": 5,
@@ -34079,8 +34079,8 @@
   },
   {
    "module": "src/pages",
-   "files": 145,
-   "lines": 22287,
+   "files": 146,
+   "lines": 22336,
    "tables": [
     "audit_logs",
     "battle_card_triggers",
@@ -73065,6 +73065,14 @@
    {
     "file": "src/pages/__tests__/QueueMetricsDashboard.test.tsx",
     "name": "nao mostra erro quando a leitura funciona"
+   },
+   {
+    "file": "src/pages/__tests__/RateLimitDashboard.alerts.test.tsx",
+    "name": "RateLimitDashboard — "
+   },
+   {
+    "file": "src/pages/__tests__/RateLimitDashboard.alerts.test.tsx",
+    "name": "abre a lista de alertas na propria tela, sem perder o contexto do incidente"
    },
    {
     "file": "src/pages/__tests__/SecurityDashboard.test.tsx",
@@ -116288,7 +116296,7 @@
   },
   "src/pages/RateLimitDashboard.tsx": {
    "path": "src/pages/RateLimitDashboard.tsx",
-   "lines": 165,
+   "lines": 168,
    "exports": [
     "function RateLimitDashboard"
    ],
@@ -117208,6 +117216,15 @@
     "avisa que nada foi lido e nao desenha numeros quando a leitura falhou",
     "mantem os numeros anteriores rotulados quando a atualizacao falha",
     "nao mostra erro quando a leitura funciona"
+   ]
+  },
+  "src/pages/__tests__/RateLimitDashboard.alerts.test.tsx": {
+   "path": "src/pages/__tests__/RateLimitDashboard.alerts.test.tsx",
+   "lines": 46,
+   "is_test": true,
+   "tests": [
+    "RateLimitDashboard — ",
+    "abre a lista de alertas na propria tela, sem perder o contexto do incidente"
    ]
   },
   "src/pages/__tests__/SecurityDashboard.test.tsx": {
@@ -126686,10 +126703,21 @@
   }
  },
  "git": {
-  "sha": "8aa5275b04273a9df91dc44492a4ff3a40130fc6",
+  "sha": "e335d9d8e7811b4ba6e34668d8a09084d17c5afd",
   "branch": "main",
   "remote": "https://github.com/adm01-debug/Hello_V3",
   "commits": [
+   {
+    "sha": "e335d9d",
+    "date": "2026-11-24",
+    "author": "adm01-debug",
+    "subject": "feat: botao Ver Alertas abre a lista de alertas na propria tela (etapa 167) (#247)",
+    "files": [
+     "docs/qa/05-PROGRESSO.md",
+     "src/pages/RateLimitDashboard.tsx",
+     "src/pages/__tests__/RateLimitDashboard.alerts.test.tsx"
+    ]
+   },
    {
     "sha": "8aa5275",
     "date": "2026-11-24",
@@ -127140,21 +127168,6 @@
      "src/pages/IPWhitelist.tsx",
      "src/pages/__tests__/IPWhitelist.test.tsx"
     ]
-   },
-   {
-    "sha": "da41888",
-    "date": "2026-11-23",
-    "author": "adm01-debug",
-    "subject": "fix: registrar falha de leitura onde o erro era descartado (#219)",
-    "files": [
-     "docs/qa/05-PROGRESSO.md",
-     "src/hooks/__tests__/useAchievementNotifications.coverage.test.tsx",
-     "src/hooks/__tests__/useAlerts.coverage.test.tsx",
-     "src/hooks/useAchievementNotifications.ts",
-     "src/hooks/useAgentRanking.ts",
-     "src/hooks/useAlerts.ts",
-     "src/hooks/useMultiChannelCall.ts"
-    ]
    }
   ],
   "hot_files": [
@@ -127181,10 +127194,6 @@
    [
     "supabase/functions/chatbot-respond/index.ts",
     3
-   ],
-   [
-    "src/hooks/useMultiChannelCall.ts",
-    2
    ],
    [
     "supabase/functions/generate-coaching-track/index.ts",
@@ -127236,6 +127245,10 @@
    ],
    [
     "supabase/functions/ocr-virtual-fax/index.ts",
+    2
+   ],
+   [
+    "supabase/functions/translate-summary/index.ts",
     2
    ]
   ]

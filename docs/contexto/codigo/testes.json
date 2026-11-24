@@ -5,17 +5,17 @@
   "vitest",
   "playwright"
  ],
- "total": 393,
+ "total": 394,
  "por_tipo": {
   "contrato": 1,
   "e2e": 13,
   "pytest": 2,
-  "unit": 376
+  "unit": 377
  },
  "onde_ficam": [
   {
    "padrao": "co-localizado (__tests__)",
-   "arquivos": 369
+   "arquivos": 370
   },
   {
    "padrao": "e2e/",
@@ -2908,6 +2908,15 @@
    "casos": 3
   },
   {
+   "arquivo": "src/pages/__tests__/RateLimitDashboard.alerts.test.tsx",
+   "tipo": "unit",
+   "linhas": 46,
+   "testa": [
+    "src/pages/RateLimitDashboard.tsx"
+   ],
+   "casos": 1
+  },
+  {
    "arquivo": "src/pages/__tests__/SecurityDashboard.test.tsx",
    "tipo": "unit",
    "linhas": 55,
@@ -3810,6 +3819,7 @@
   "src/pages/Login.tsx": 2,
   "src/pages/PhoneDialer.tsx": 1,
   "src/pages/QueueMetricsDashboard.tsx": 1,
+  "src/pages/RateLimitDashboard.tsx": 1,
   "src/pages/SecurityDashboard.tsx": 1,
   "src/pages/SecurityMonitoring.tsx": 1,
   "src/pages/SecurityReport.tsx": 1,
@@ -3912,7 +3922,6 @@
    "src/pages/PredictiveDialer.tsx",
    "src/pages/QRProvisioning.tsx",
    "src/pages/QueueMetricsAlertSettings.tsx",
-   "src/pages/RateLimitDashboard.tsx",
    "src/pages/Recordings.tsx",
    "src/pages/Register.tsx",
    "src/pages/Renewals.tsx",
