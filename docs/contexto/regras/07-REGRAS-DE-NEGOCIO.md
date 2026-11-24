@@ -1,6 +1,6 @@
 # 07 · REGRAS DE NEGÓCIO
 
-> Gerado automaticamente por AI Context Sync v1.3.2 · commit `b21f44f9c3` · branch `main` · 2026-11-24 06:09 UTC
+> Gerado automaticamente por AI Context Sync v1.3.2 · commit `5bae12541d` · branch `main` · 2026-11-24 06:12 UTC
 > Não edite à mão — regras humanas vão em `manual/`.
 
 ## A. Regras escritas por humanos (`manual/` — prioridade máxima, nunca sobrescrito)
@@ -2373,6 +2373,7 @@ _nenhum item encontrado_
 | Erro ao sincronizar com Bitrix24 | `src/components/contacts/useBitrixSync.ts` |
 | Não foi possível registrar uso | `src/components/conversation-intelligence/BattleCardAlert.tsx` |
 |  className= | `src/components/dashboard/HoldTrendChart.tsx` |
+| Erro ao priorizar contato | `src/components/dialer/PredictiveDialerPanel.tsx` |
 | Não foi possível exportar o histórico | `src/components/dialer/phone/SyncHistoryPanel.tsx` |
 | >           <div className= | `src/components/error-boundary/ErrorBoundary.tsx` |
 | >         <Card className= | `src/components/error-boundary/ErrorBoundary.tsx` |
@@ -2579,8 +2580,7 @@ _nenhum item encontrado_
 | ; import { getCurrentDeviceLabel, sanitizeDeviceLabel } from  | `src/hooks/useRingtoneSettings.ts` |
 | Falha ao remover regra | `src/hooks/useRoutingRules.ts` |
 | Falha ao salvar regra | `src/hooks/useRoutingRules.ts` |
-| Falha ao executar enforcement de SLA | `src/hooks/useSLA.ts` |
-| … +261 linhas — lista completa em `context.json` | |
+| … +262 linhas — lista completa em `context.json` | |
 
 ## J. Controle de acesso no código (checagens de perfil/permissão)
 
@@ -2629,7 +2629,7 @@ _nenhum item encontrado_
 | `admin` | `supabase/functions/data-lake-flush/index.ts` |
 | `admin` | `supabase/migrations/20261123000200_fix_has_role_oracle_and_debug_tables.sql` |
 
-## K. Testes como especificação (4305 testes em 376 arquivos — nomes completos em `context.json`)
+## K. Testes como especificação (4306 testes em 376 arquivos — nomes completos em `context.json`)
 
 | Arquivo | Testes | Exemplos do que o sistema DEVE fazer |
 |---|---|---|
@@ -2671,10 +2671,10 @@ _nenhum item encontrado_
 | `src/lib/__tests__/call-park.test.ts` | 25 | call-park :: clampInt · nunca lança e respeita a faixa · tolera símbolos, objetos sem primitivo e NaN · call-park :: normalizeOrbitDraft … |
 | `src/lib/__tests__/dialer-tags-and-ringtone.test.ts` | 23 | normalizeTag · sempre devolve null ou string válida para o CHECK do banco · é idempotente · rejeita entradas não textuais e vazias … |
 | `src/lib/__tests__/queue-audio.test.ts` | 23 | queue-audio :: clampNumber · nunca lança e respeita a faixa para qualquer entrada · tolera símbolos e objetos sem conversão primitiva · queue-audio :: sanitizeFileName … |
+| `src/hooks/__tests__/usePredictiveDialer.coverage.test.tsx` | 22 | usePredictiveDialer · fetches campaigns on mount and exposes API · handles fetchCampaigns error branch · fetchQueue success and error branches … |
 | `src/lib/__tests__/performance-optimizations.test.ts` | 22 | Performance: React.memo wrapping · ${name} is wrapped with React.memo · ${name} imports memo from react · ${name} exports as named export with memo … |
 | `src/lib/__tests__/ring-group.test.ts` | 22 | sanitizeExtension · sempre produz null ou uma string aceita pelo CHECK do banco · descarta caracteres inválidos preservando os válidos · clampInt … |
 | `src/hooks/__tests__/useKnowledgeBase.coverage.test.tsx` | 21 | useKbCategories · returns published categories · surfaces a query error · useKbArticles … |
-| `src/hooks/__tests__/usePredictiveDialer.coverage.test.tsx` | 21 | usePredictiveDialer · fetches campaigns on mount and exposes API · handles fetchCampaigns error branch · fetchQueue success and error branches … |
 | `src/lib/__tests__/blf.test.ts` | 21 | blf: helpers puros · safeText normaliza tipos inesperados · agentKey ignora acentos, caixa e espaços múltiplos · maskPhone preserva no máximo os 4 últimos dígitos … |
 | `src/lib/__tests__/error-tracking.test.ts` | 21 | Error Tracking Module · Module exports · exports initErrorTracking function · exports getErrorReports function … |
 | `src/lib/__tests__/logger.test.ts` | 21 | Logger Module · Basic logging methods · logger.debug calls console.debug · logger.info calls console.info … |

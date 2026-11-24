@@ -1322,11 +1322,11 @@
   {
    "arquivo": "src/hooks/__tests__/usePredictiveDialer.coverage.test.tsx",
    "tipo": "unit",
-   "linhas": 576,
+   "linhas": 600,
    "testa": [
     "src/hooks/usePredictiveDialer.ts"
    ],
-   "casos": 20
+   "casos": 21
   },
   {
    "arquivo": "src/hooks/__tests__/usePredictiveDialer.test.ts",

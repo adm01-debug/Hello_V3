@@ -1,7 +1,7 @@
 # Contexto do projeto para agentes de IA
 
 GERADO AUTOMATICAMENTE por scripts/ai-context/gerar.mjs — não editar à mão; será sobrescrito.
-Publicado em `docs/contexto/codigo/` na branch `contexto` (gerada, nunca abra PR dela) a cada push em `main` e a cada 10 minutos pelo workflow `contexto.yml`; índice único das três fontes em `docs/contexto/00-INDEX.md`. Gere local com `node scripts/ai-context/gerar.mjs`. Commit-base: `b21f44f9c311455388dedf2d22445e74ad0f0852` (2026-11-24T03:09:19-03:00).
+Publicado em `docs/contexto/codigo/` na branch `contexto` (gerada, nunca abra PR dela) a cada push em `main` e a cada 10 minutos pelo workflow `contexto.yml`; índice único das três fontes em `docs/contexto/00-INDEX.md`. Gere local com `node scripts/ai-context/gerar.mjs`. Commit-base: `5bae12541d71aa68100e3b60f256e6933ea71a0a` (2026-11-24T03:12:10-03:00).
 
 ## Como usar (leia antes de planejar ou executar qualquer tarefa)
 1. **Tela/rota/menu** → `rotas.json` (url/vista/menu → arquivo → hooks → tabelas → edges; `rotas_http_backend` para APIs) e `modulos.json` (módulo inteiro + dependências entre módulos).
@@ -36,7 +36,7 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 |---|---|
 | arquivos_total | 1720 |
 | arquivos_codigo | 1318 |
-| linhas_codigo | 177330 |
+| linhas_codigo | 177378 |
 | rotas | 106 |
 | rotas_http_backend | 12 |
 | vistas_por_id | 0 |
@@ -370,13 +370,13 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 - possiveis_segredos_no_codigo: 4 — ex.: scripts/ai-context/cenarios.mjs:103, src/lib/__tests__/security-advanced.test.ts:203, src/lib/__tests__/security-advanced.test.ts:208
 
 ## Grafo de código (graphify)
-- 10088 nós · 26332 arestas · 776 comunidades · grafo do commit `b21f44f9`
-- comunidades maiores: lucide-react (225), vitest (220), badge.tsx (190), usePageTitle (186), react (172), traceHeaders (161), button.tsx (142), protectedRoutes.tsx (128), buildCorsHeaders (123), client.ts (122), utils.ts (116), cn (113)
+- 10088 nós · 26337 arestas · 774 comunidades · grafo do commit `5bae1254`
+- comunidades maiores: lucide-react (265), protectedRoutes.tsx (209), badge.tsx (197), vitest (194), react (180), traceHeaders (163), usePageTitle (153), client.ts (129), utils.ts (116), cn (113), @tanstack/react-query (112), Tabela de funcionalidades (111)
 - símbolos mais chamados: cn() (src/lib/utils.ts), usePageTitle() (src/hooks/usePageTitle.ts), safeFormatDatePtBR() (src/lib/safe-date.ts), q() (scripts/supabase_snapshot/snapshot.py), safeFormatDistanceToNow() (src/lib/safe-date.ts), useAuthContext() (src/contexts/AuthContext.tsx), traceHeaders() (src/lib/tracing.ts), withTrace() (src/lib/tracing.ts), formatDuration() (src/lib/utils.ts), safeToLocaleString() (src/lib/safe-date.ts), .collect() (scripts/supabase_snapshot/test_snapshot.py), buildCorsHeaders() (supabase/functions/_shared/cors.ts)
 - consulta local: `graphify query "<pergunta>"`, `graphify path "<A>" "<B>"`, `graphify explain "<X>"`
 
 ## Hotspots (arquivos mais alterados, 90 dias)
-- docs/qa/05-PROGRESSO.md (67)
+- docs/qa/05-PROGRESSO.md (68)
 - docs/estado/funcionalidades-planejadas.md (27)
 - src/components/layout/AppSidebar.tsx (9)
 - docs/audits/pendencias-2026-07.md (8)
@@ -429,6 +429,7 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 
 
 ## Últimos commits
+- 2026-11-24 `5bae125` feat: liga Priorizar no discador preditivo (etapa 163) (#239)
 - 2026-11-24 `b21f44f` feat: mostra os acertos dos trackers e leva ao detalhe da chamada (etapa 157) (#238)
 - 2026-11-24 `92474f7` chore: remove o hook de conferencia orfao e defeituoso (etapa 158) (#237)
 - 2026-11-24 `58ca27a` docs: mapa das 46 rotas protegidas sem papel (etapa 090) (#236)
@@ -443,7 +444,6 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 - 2026-11-24 `5118972` fix: prazo e 503 unico nas 11 edges de IA que chamavam o provedor direto (E209) (#227)
 - 2026-11-24 `890ceeb` fix: descarta pagina do historico que chega depois da troca de filtro (#225)
 - 2026-11-24 `695f5ef` feat: prazo de fetch nas chamadas externas das edges (#226)
-- 2026-11-24 `60701bf` fix: confirma o retorno agendado com a data gravada e nao reporta escrita que nao gravou nada (#223)
 
 ## Arquivos deste diretório
 - `docs/contexto/codigo/rotas.json`
