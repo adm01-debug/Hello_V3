@@ -1,5 +1,6 @@
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2.45.0";
 import { buildCorsHeaders } from "../_shared/cors.ts";
+import { fetchComPrazo } from "../_shared/resilience.ts";
 
 export interface CapacityRecommendation {
   id: string;
@@ -151,9 +152,19 @@ Deno.serve(async (req) => {
     const url = new URL(req.url);
     const horizon = Math.min(168, Math.max(1, Number(url.searchParams.get('horizon') ?? 24))); // safe-numeric-ok: valor já validado por schema Zod ou vindo de linha do DB tipada
 
-    // Reusa edge function de forecast via invoke interno
+    // Reusa edge function de forecast via invoke interno. A plataforma da 20 s por
+    // requisicao: o salto edge->edge recebe no maximo metade, senao as duas edges
+    // lentas somam o tempo e a resposta nunca volta.
     const forecastUrl = `${Deno.env.get('SUPABASE_URL')}/functions/v1/voip-quality-forecast?horizon=${horizon}`;
-    const fcResp = await fetch(forecastUrl, { headers: { Authorization: auth } });
+    let fcResp: Response;
+    try {
+      fcResp = await fetchComPrazo(forecastUrl, { headers: { Authorization: auth } }, 10_000);
+    } catch (err) {
+      console.error('[voip-capacity-recommendations] previsao sem resposta no prazo:', err);
+      return new Response(JSON.stringify({ error: 'Servico de previsao indisponivel', request_id: requestId }), {
+        status: 503, headers: { ...corsHeaders, 'Content-Type': 'application/json', 'x-request-id': requestId },
+      });
+    }
     const fcData = await fcResp.json();
 
     if (!fcResp.ok || !fcData.forecast) {
