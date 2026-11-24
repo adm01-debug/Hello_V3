@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback, useRef } from 'react';
 import { supabase } from '@/integrations/supabase/client';
 import { toast } from 'sonner';
 import { logger } from '@/lib/logger';
@@ -32,6 +32,9 @@ export function useAgentStatus() {
   const [currentAgent, setCurrentAgent] = useState<Agent | null>(null);
   const [agents, setAgents] = useState<Agent[]>([]);
   const [isLoading, setIsLoading] = useState(false);
+  // O token fica em ref: `beforeunload` nao espera promessa, entao a leitura
+  // da sessao precisa ter acontecido antes de a aba descarregar.
+  const accessTokenRef = useRef<string | null>(null);
 
   const fetchAgents = useCallback(async () => {
     setIsLoading(true);
@@ -110,23 +113,61 @@ export function useAgentStatus() {
   }, [currentAgentId]);
 
   useEffect(() => {
-    const handleBeforeUnload = async () => {
-      if (currentAgentId) {
-        // Use session JWT for RLS compliance instead of anon key
-        const { data: { session } } = await supabase.auth.getSession();
-        const token = session?.access_token || import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY;
-        const url = `${import.meta.env.VITE_SUPABASE_URL}/rest/v1/agents?id=eq.${currentAgentId}`;
-        const headers = {
-          'Content-Type': 'application/json',
-          'apikey': import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY,
-          'Authorization': `Bearer ${token}`,
-          'Prefer': 'return=minimal',
-        };
-        fetch(url, { method: 'PATCH', headers, body: JSON.stringify({ status: 'offline' }), keepalive: true }).catch(() => {});
+    let active = true;
+
+    // Mantem o token pronto para uso sincrono no descarregamento (RLS exige o JWT).
+    void supabase.auth.getSession()
+      .then(({ data: { session }, error }) => {
+        if (!active) return;
+        if (error) log.warn('Falha ao ler a sessao para o encerramento', error);
+        accessTokenRef.current = session?.access_token ?? null;
+      })
+      .catch((error) => log.warn('Falha ao ler a sessao para o encerramento', error));
+
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
+      accessTokenRef.current = session?.access_token ?? null;
+    });
+
+    return () => {
+      active = false;
+      subscription.unsubscribe();
+    };
+  }, []);
+
+  useEffect(() => {
+    let sent = false;
+
+    const markOffline = () => {
+      if (!currentAgentId || sent) return;
+      // `beforeunload`/`pagehide` sao sincronos: nada de `await` aqui. O token
+      // ja esta no ref e o `keepalive` e o que o navegador despacha ao fechar.
+      sent = true;
+      const token = accessTokenRef.current || import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY;
+      const url = `${import.meta.env.VITE_SUPABASE_URL}/rest/v1/agents?id=eq.${currentAgentId}`;
+      const headers = {
+        'Content-Type': 'application/json',
+        'apikey': import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY,
+        'Authorization': `Bearer ${token}`,
+        'Prefer': 'return=minimal',
+      };
+      try {
+        void fetch(url, { method: 'PATCH', headers, body: JSON.stringify({ status: 'offline' }), keepalive: true })
+          .then((response) => {
+            if (!response.ok) log.warn(`Encerramento nao confirmado pelo servidor: HTTP ${response.status}`);
+          })
+          .catch((error) => log.warn('Falha ao marcar o agente como offline no encerramento', error));
+      } catch (error) {
+        log.warn('Falha ao disparar o encerramento do agente', error);
       }
     };
-    window.addEventListener('beforeunload', handleBeforeUnload);
-    return () => { window.removeEventListener('beforeunload', handleBeforeUnload); };
+
+    // `pagehide` cobre mobile e o cache de ida-e-volta, onde `beforeunload` nao dispara.
+    window.addEventListener('beforeunload', markOffline);
+    window.addEventListener('pagehide', markOffline);
+    return () => {
+      window.removeEventListener('beforeunload', markOffline);
+      window.removeEventListener('pagehide', markOffline);
+    };
   }, [currentAgentId]);
 
   return {
