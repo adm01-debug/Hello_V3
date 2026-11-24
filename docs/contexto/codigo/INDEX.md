@@ -1,7 +1,7 @@
 # Contexto do projeto para agentes de IA
 
 GERADO AUTOMATICAMENTE por scripts/ai-context/gerar.mjs — não editar à mão; será sobrescrito.
-Publicado em `docs/contexto/codigo/` na branch `contexto` (gerada, nunca abra PR dela) a cada push em `main` e a cada 10 minutos pelo workflow `contexto.yml`; índice único das três fontes em `docs/contexto/00-INDEX.md`. Gere local com `node scripts/ai-context/gerar.mjs`. Commit-base: `df0b30e806e3bf7fe83e7d210fb7a6edfd75f7b5` (2026-11-24T04:33:23-03:00).
+Publicado em `docs/contexto/codigo/` na branch `contexto` (gerada, nunca abra PR dela) a cada push em `main` e a cada 10 minutos pelo workflow `contexto.yml`; índice único das três fontes em `docs/contexto/00-INDEX.md`. Gere local com `node scripts/ai-context/gerar.mjs`. Commit-base: `3c972829924dfb7a047ccd212686d1968c987b91` (2026-11-24T04:35:07-03:00).
 
 ## Como usar (leia antes de planejar ou executar qualquer tarefa)
 1. **Tela/rota/menu** → `rotas.json` (url/vista/menu → arquivo → hooks → tabelas → edges; `rotas_http_backend` para APIs) e `modulos.json` (módulo inteiro + dependências entre módulos).
@@ -36,7 +36,7 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 |---|---|
 | arquivos_total | 1732 |
 | arquivos_codigo | 1329 |
-| linhas_codigo | 179186 |
+| linhas_codigo | 179232 |
 | rotas | 106 |
 | rotas_http_backend | 12 |
 | vistas_por_id | 0 |
@@ -370,13 +370,13 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 - possiveis_segredos_no_codigo: 4 — ex.: scripts/ai-context/cenarios.mjs:103, src/lib/__tests__/security-advanced.test.ts:203, src/lib/__tests__/security-advanced.test.ts:208
 
 ## Grafo de código (graphify)
-- 10152 nós · 26706 arestas · 781 comunidades · grafo do commit `df0b30e8`
-- comunidades maiores: card.tsx (255), react (222), vitest (200), protectedRoutes.tsx (194), lucide-react (188), traceHeaders (169), button.tsx (153), badge.tsx (135), @tanstack/react-query (126), cn (124), buildCorsHeaders (105), usePageTitle (103)
+- 10152 nós · 26708 arestas · 778 comunidades · grafo do commit `3c972829`
+- comunidades maiores: card.tsx (227), react (215), vitest (206), @tanstack/react-query (186), usePageTitle (172), button.tsx (153), safe-date.ts (134), buildCorsHeaders (133), cn (118), lucide-react (118), badge.tsx (117), CallDetailDialog.tsx (110)
 - símbolos mais chamados: cn() (src/lib/utils.ts), usePageTitle() (src/hooks/usePageTitle.ts), safeFormatDatePtBR() (src/lib/safe-date.ts), q() (scripts/supabase_snapshot/snapshot.py), safeFormatDistanceToNow() (src/lib/safe-date.ts), useAuthContext() (src/contexts/AuthContext.tsx), traceHeaders() (src/lib/tracing.ts), withTrace() (src/lib/tracing.ts), formatDuration() (src/lib/utils.ts), safeToLocaleString() (src/lib/safe-date.ts), .collect() (scripts/supabase_snapshot/test_snapshot.py), buildCorsHeaders() (supabase/functions/_shared/cors.ts)
 - consulta local: `graphify query "<pergunta>"`, `graphify path "<A>" "<B>"`, `graphify explain "<X>"`
 
 ## Hotspots (arquivos mais alterados, 90 dias)
-- docs/qa/05-PROGRESSO.md (81)
+- docs/qa/05-PROGRESSO.md (82)
 - docs/estado/funcionalidades-planejadas.md (27)
 - src/components/layout/AppSidebar.tsx (9)
 - src/hooks/useMultiChannelCall.ts (9)
@@ -429,6 +429,7 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 
 
 ## Últimos commits
+- 2026-11-24 `3c97282` fix: update de conversa sem linhas afetadas deixa de passar como sucesso (etapa 184) (#251)
 - 2026-11-24 `df0b30e` fix: gravacoes cegas em hooks de dados passam a reportar erro (etapa 187) (#254)
 - 2026-11-24 `5215414` fix: edges de entrada nao devolvem 200 com escrita perdida (etapa 188) (#256)
 - 2026-11-24 `e08bab6` fix: remocao de audio de fila checa storage antes do banco (etapa 186) (#253)
@@ -443,7 +444,6 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 - 2026-11-24 `a032d25` fix: tratar o erro de banco nas gravacoes do ciclo de chamada (#243)
 - 2026-11-24 `95304bc` feat: ligar botões Configurar e adicionar testes de áudio (#242)
 - 2026-11-24 `024aa1e` feat: explica na tela a regra do coaching automatico (etapa 169) (#241)
-- 2026-11-24 `0b5b0b3` fix: resolve o menu mais opcoes do cartao de contato (etapa 166) (#240)
 
 ## Arquivos deste diretório
 - `docs/contexto/codigo/rotas.json`

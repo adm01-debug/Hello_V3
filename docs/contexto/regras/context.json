@@ -1,15 +1,15 @@
 {
  "meta": {
-  "sha": "df0b30e806e3bf7fe83e7d210fb7a6edfd75f7b5",
+  "sha": "3c972829924dfb7a047ccd212686d1968c987b91",
   "branch": "main",
   "remote": "https://github.com/adm01-debug/Hello_V3",
-  "generated_at": "2026-11-24 07:33 UTC",
+  "generated_at": "2026-11-24 07:35 UTC",
   "files_total": 1779,
   "code_files": 1575,
-  "code_lines": 195198
+  "code_lines": 195244
  },
  "version": "1.3.2",
- "facts_hash": "2c75491210ef6c23",
+ "facts_hash": "16fbdc3a8c158c5f",
  "stack": {
   "frameworks": [
    "React + Vite",
@@ -33602,7 +33602,7 @@
   {
    "module": "src/hooks",
    "files": 354,
-   "lines": 47225,
+   "lines": 47271,
    "tables": [
     "accounts",
     "active_sessions",
@@ -40996,11 +40996,19 @@
    },
    {
     "file": "src/hooks/useConversations.ts",
+    "msg": "Conversa não atualizada: sem permissão ou conversa inexistente"
+   },
+   {
+    "file": "src/hooks/useConversations.ts",
     "msg": "Falha ao atualizar"
    },
    {
     "file": "src/hooks/useConversations.ts",
     "msg": "Falha ao enviar mensagem"
+   },
+   {
+    "file": "src/hooks/useConversations.ts",
+    "msg": "Mensagem enviada, mas a conversa não foi atualizada na lista. Recarregue antes de continuar."
    },
    {
     "file": "src/hooks/useCrmFieldSuggestions.ts",
@@ -60904,6 +60912,10 @@
    },
    {
     "file": "src/hooks/__tests__/useConversations.coverage.test.tsx",
+    "name": "avisa quando o update da conversa não afeta nenhuma linha (RLS sem policy)"
+   },
+   {
+    "file": "src/hooks/__tests__/useConversations.coverage.test.tsx",
     "name": "não grava first_response_at quando a leitura da conversa falha"
    },
    {
@@ -60913,6 +60925,10 @@
    {
     "file": "src/hooks/__tests__/useConversations.coverage.test.tsx",
     "name": "updates successfully"
+   },
+   {
+    "file": "src/hooks/__tests__/useConversations.coverage.test.tsx",
+    "name": "falha quando o update não afeta nenhuma linha"
    },
    {
     "file": "src/hooks/__tests__/useConversations.coverage.test.tsx",
@@ -100850,7 +100866,7 @@
   },
   "src/hooks/useConversations.ts": {
    "path": "src/hooks/useConversations.ts",
-   "lines": 221,
+   "lines": 242,
    "exports": [
     "type ConversationChannel",
     "type ConversationStatus",
@@ -100882,11 +100898,11 @@
     },
     {
      "table": "conversations",
-     "op": "update"
+     "op": "select,update"
     },
     {
      "table": "conversations",
-     "op": "update"
+     "op": "select,update"
     }
    ],
    "table_cols": {
@@ -100903,8 +100919,10 @@
     "messages-${conversationId}"
    ],
    "errors": [
+    "Conversa não atualizada: sem permissão ou conversa inexistente",
     "Falha ao atualizar",
-    "Falha ao enviar mensagem"
+    "Falha ao enviar mensagem",
+    "Mensagem enviada, mas a conversa não foi atualizada na lista. Recarregue antes de continuar."
    ],
    "enums": [
     {
@@ -107353,7 +107371,7 @@
   },
   "src/hooks/__tests__/useConversations.coverage.test.tsx": {
    "path": "src/hooks/__tests__/useConversations.coverage.test.tsx",
-   "lines": 197,
+   "lines": 222,
    "is_test": true,
    "rule_comments": [
     "conversations query: select->order->limit returns a chainable that .eq returns itself; awaited resolves"
@@ -107370,9 +107388,11 @@
     "sends message and sets first_response_at",
     "skips first_response when private note or already responded",
     "handles insert error",
+    "avisa quando o update da conversa não afeta nenhuma linha (RLS sem policy)",
     "não grava first_response_at quando a leitura da conversa falha",
     "useUpdateConversation",
     "updates successfully",
+    "falha quando o update não afeta nenhuma linha",
     "handles error"
    ]
   },
@@ -126806,10 +126826,21 @@
   }
  },
  "git": {
-  "sha": "df0b30e806e3bf7fe83e7d210fb7a6edfd75f7b5",
+  "sha": "3c972829924dfb7a047ccd212686d1968c987b91",
   "branch": "main",
   "remote": "https://github.com/adm01-debug/Hello_V3",
   "commits": [
+   {
+    "sha": "3c97282",
+    "date": "2026-11-24",
+    "author": "adm01-debug",
+    "subject": "fix: update de conversa sem linhas afetadas deixa de passar como sucesso (etapa 184) (#251)",
+    "files": [
+     "docs/qa/05-PROGRESSO.md",
+     "src/hooks/__tests__/useConversations.coverage.test.tsx",
+     "src/hooks/useConversations.ts"
+    ]
+   },
    {
     "sha": "df0b30e",
     "date": "2026-11-24",
@@ -127256,17 +127287,6 @@
      "docs/qa/05-PROGRESSO.md",
      "src/hooks/__tests__/useCallHistory.coverage.test.tsx",
      "src/hooks/useCallHistory.ts"
-    ]
-   },
-   {
-    "sha": "695f5ef",
-    "date": "2026-11-24",
-    "author": "adm01-debug",
-    "subject": "feat: prazo de fetch nas chamadas externas das edges (#226)",
-    "files": [
-     "docs/qa/05-PROGRESSO.md",
-     "supabase/functions/_shared/__tests__/resilient-fetch.test.ts",
-     "supabase/functions/_shared/resilience.ts"
     ]
    }
   ],

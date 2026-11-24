@@ -1786,7 +1786,7 @@
     "useSendMessage",
     "useUpdateConversation"
    ],
-   "linhas": 221,
+   "linhas": 242,
    "dominio": "hooks",
    "tabelas": [
     "conversation_messages",

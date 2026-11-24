@@ -866,11 +866,11 @@
   {
    "arquivo": "src/hooks/__tests__/useConversations.coverage.test.tsx",
    "tipo": "unit",
-   "linhas": 197,
+   "linhas": 222,
    "testa": [
     "src/hooks/useConversations.ts"
    ],
-   "casos": 11
+   "casos": 13
   },
   {
    "arquivo": "src/hooks/__tests__/useCriticalAlertNotifications.coverage.test.tsx",

@@ -1,6 +1,6 @@
 # 07 · REGRAS DE NEGÓCIO
 
-> Gerado automaticamente por AI Context Sync v1.3.2 · commit `df0b30e806` · branch `main` · 2026-11-24 07:33 UTC
+> Gerado automaticamente por AI Context Sync v1.3.2 · commit `3c97282992` · branch `main` · 2026-11-24 07:35 UTC
 > Não edite à mão — regras humanas vão em `manual/`.
 
 ## A. Regras escritas por humanos (`manual/` — prioridade máxima, nunca sobrescrito)
@@ -2479,8 +2479,10 @@ _nenhum item encontrado_
 | Erro ao remover contato | `src/hooks/useContacts.ts` |
 | Este contato foi alterado por outro usuário. Recarregando... | `src/hooks/useContacts.ts` |
 | ID de contato inválido | `src/hooks/useContacts.ts` |
+| Conversa não atualizada: sem permissão ou conversa inexistente | `src/hooks/useConversations.ts` |
 | Falha ao atualizar | `src/hooks/useConversations.ts` |
 | Falha ao enviar mensagem | `src/hooks/useConversations.ts` |
+| Mensagem enviada, mas a conversa não foi atualizada na lista. Recarregue antes de continuar. | `src/hooks/useConversations.ts` |
 | callSessionId ausente | `src/hooks/useCrmFieldSuggestions.ts` |
 | Erro ao adicionar | `src/hooks/useDNCCompliance.ts` |
 | Erro ao remover | `src/hooks/useDNCCompliance.ts` |
@@ -2578,9 +2580,7 @@ _nenhum item encontrado_
 | Não foi possível alterar o status do grupo | `src/hooks/useRingGroups.ts` |
 | Não foi possível atualizar o grupo | `src/hooks/useRingGroups.ts` |
 | Não foi possível atualizar o participante | `src/hooks/useRingGroups.ts` |
-| Não foi possível criar o grupo | `src/hooks/useRingGroups.ts` |
-| Não foi possível remover o grupo | `src/hooks/useRingGroups.ts` |
-| … +275 linhas — lista completa em `context.json` | |
+| … +277 linhas — lista completa em `context.json` | |
 
 ## J. Controle de acesso no código (checagens de perfil/permissão)
 
@@ -2629,7 +2629,7 @@ _nenhum item encontrado_
 | `admin` | `supabase/functions/data-lake-flush/index.ts` |
 | `admin` | `supabase/migrations/20261123000200_fix_has_role_oracle_and_debug_tables.sql` |
 
-## K. Testes como especificação (4351 testes em 385 arquivos — nomes completos em `context.json`)
+## K. Testes como especificação (4353 testes em 385 arquivos — nomes completos em `context.json`)
 
 | Arquivo | Testes | Exemplos do que o sistema DEVE fazer |
 |---|---|---|
@@ -2686,6 +2686,7 @@ _nenhum item encontrado_
 | `src/hooks/__tests__/useSecurityHooks.test.ts` | 18 | usePermissions · Permission checking logic · hasPermission returns true for existing permission · hasPermission returns false for missing permission … |
 | `src/lib/__tests__/security-alerts-presets.test.ts` | 18 | security-alerts-presets · loadPresets · retorna [] quando storage vazio · retorna [] quando JSON inválido … |
 | `src/hooks/__tests__/useContactAlerts.coverage.test.tsx` | 17 | useContactAlerts · fetches alerts on mount and computes unread count · fetchAlerts with unreadOnly applies eq filter · fetchAlerts handles error and returns empty … |
+| `src/hooks/__tests__/useConversations.coverage.test.tsx` | 17 | useConversations · fetches with filters applied · handles fetch error · useConversationMessages … |
 | `src/hooks/__tests__/useSupervisorPanel.coverage.test.tsx` | 17 | useSupervisorPanel (coverage) · loads active calls and queue metrics on mount · selecting a call fetches whisper history · sendWhisper errors when no call/message selected … |
 | `src/hooks/__tests__/useVoiceBiometrics.coverage.test.tsx` | 17 | useVoicePrints · loads voice prints list · enrolls successfully · enroll error path triggers toast.error … |
 | `src/lib/__tests__/softphone-utils.test.ts` | 17 | formatCallDuration · formats 0 seconds · formats under a minute · formats exact minutes … |
@@ -2694,7 +2695,6 @@ _nenhum item encontrado_
 | `src/lib/__tests__/utils.coverage.test.ts` | 16 | utils (coverage) · merges class names · dedups tailwind conflicts · handles conditional / falsy values … |
 | `src/hooks/__tests__/useAvatar.test.ts` | 15 | useAvatar · does not request a signed url when there is no path · resolves a signed url for an existing avatar · clears the url when signing fails … |
 | `src/hooks/__tests__/useCallSession.test.ts` | 15 | Call Session Logic · Session lifecycle · creates session with correct initial status · session ends with completed status … |
-| `src/hooks/__tests__/useConversations.coverage.test.tsx` | 15 | useConversations · fetches with filters applied · handles fetch error · useConversationMessages … |
 | `src/hooks/__tests__/useCrmFieldSuggestions.coverage.test.tsx` | 15 | useCrmFieldSuggestions · returns empty defaults when no callSessionId (query disabled, no channel) · fetches suggestions and computes pending, wires realtime channel · query error branch throws … |
 | `src/hooks/__tests__/useWavoipCall.coverage.test.tsx` | 15 | useWavoipCall · checks configuration on mount (connected) · checkConfiguration when not connected sets disconnected · checkConfiguration with supabase error sets error state … |
 | `src/lib/__tests__/call-queue.test.ts` | 15 | call-queue :: clampInt · sempre devolve inteiro dentro da faixa · usa o fallback para valores não finitos · call-queue :: normalizeQueueDraft … |

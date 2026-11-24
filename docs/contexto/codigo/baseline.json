@@ -2,11 +2,16 @@
  "aviso": "GERADO AUTOMATICAMENTE por scripts/ai-context/gerar.mjs — não editar à mão; será sobrescrito.",
  "format_version": 2,
  "git": {
-  "commit": "df0b30e806e3bf7fe83e7d210fb7a6edfd75f7b5",
+  "commit": "3c972829924dfb7a047ccd212686d1968c987b91",
   "branch": "main",
-  "data_commit": "2026-11-24T04:33:23-03:00",
+  "data_commit": "2026-11-24T04:35:07-03:00",
   "remote": "https://github.com/adm01-debug/Hello_V3",
   "ultimos_commits": [
+   {
+    "sha": "3c97282",
+    "data": "2026-11-24",
+    "assunto": "fix: update de conversa sem linhas afetadas deixa de passar como sucesso (etapa 184) (#251)"
+   },
    {
     "sha": "df0b30e",
     "data": "2026-11-24",
@@ -126,11 +131,6 @@
     "sha": "48a60a2",
     "data": "2026-11-24",
     "assunto": "fix: onda 2 da E050 - nao vazar erro interno em mais 13 edges (#231)"
-   },
-   {
-    "sha": "668bf69",
-    "data": "2026-11-24",
-    "assunto": "fix: nao vazar mensagem de erro interna nas edges (E050 onda 1) (#230)"
    }
   ],
   "arquivos_mudados_7d": 1122,
@@ -141,11 +141,11 @@
    },
    {
     "pasta": "docs/qa/05-PROGRESSO.md",
-    "mudancas": 81
+    "mudancas": 82
    },
    {
     "pasta": "src/hooks/__tests__",
-    "mudancas": 65
+    "mudancas": 66
    },
    {
     "pasta": "covout/lcov-report/lib",
@@ -199,7 +199,7 @@
   "arquivos_mais_mudados_90d": [
    {
     "arquivo": "docs/qa/05-PROGRESSO.md",
-    "mudancas": 81
+    "mudancas": 82
    },
    {
     "arquivo": "docs/estado/funcionalidades-planejadas.md",
@@ -301,7 +301,7 @@
   "autores_30d": [
    {
     "autor": "adm01-debug",
-    "commits": 233
+    "commits": 234
    },
    {
     "autor": "Joaquim Ataides",
@@ -316,7 +316,7 @@
  "contagens": {
   "arquivos_total": 1732,
   "arquivos_codigo": 1329,
-  "linhas_codigo": 179186,
+  "linhas_codigo": 179232,
   "rotas": 106,
   "rotas_http_backend": 12,
   "vistas_por_id": 0,
@@ -492,7 +492,7 @@
   },
   "src/hooks": {
    "arquivos": 354,
-   "linhas": 47225
+   "linhas": 47271
   },
   "src/integrations": {
    "arquivos": 3,
