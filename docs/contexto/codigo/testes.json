@@ -5,17 +5,17 @@
   "vitest",
   "playwright"
  ],
- "total": 364,
+ "total": 365,
  "por_tipo": {
   "contrato": 1,
   "e2e": 13,
   "pytest": 2,
-  "unit": 347
+  "unit": 348
  },
  "onde_ficam": [
   {
    "padrao": "co-localizado (__tests__)",
-   "arquivos": 340
+   "arquivos": 341
   },
   {
    "padrao": "e2e/",
@@ -3192,6 +3192,15 @@
    "casos": 3
   },
   {
+   "arquivo": "supabase/functions/webauthn-authenticate/__tests__/contador.test.ts",
+   "tipo": "unit",
+   "linhas": 231,
+   "testa": [
+    "supabase/functions/webauthn-authenticate/index.ts"
+   ],
+   "casos": 4
+  },
+  {
    "arquivo": "supabase/functions/webauthn-authenticate/__tests__/index.test.ts",
    "tipo": "unit",
    "linhas": 67,
@@ -3553,7 +3562,7 @@
   "supabase/functions/voip-recommendation-simulate/index.ts": 1,
   "supabase/functions/voip-recommendations/index.ts": 1,
   "supabase/functions/voip-trunks-healthcheck/index.ts": 1,
-  "supabase/functions/webauthn-authenticate/index.ts": 1,
+  "supabase/functions/webauthn-authenticate/index.ts": 2,
   "supabase/functions/webauthn-authenticate/verify.ts": 1,
   "supabase/functions/webauthn-challenge/index.ts": 1,
   "supabase/functions/whatsapp-inbound/schema.ts": 1

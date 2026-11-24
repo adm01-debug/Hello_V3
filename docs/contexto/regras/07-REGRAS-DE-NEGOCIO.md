@@ -1,6 +1,6 @@
 # 07 · REGRAS DE NEGÓCIO
 
-> Gerado automaticamente por AI Context Sync v1.3.2 · commit `581cd3a1d9` · branch `main` · 2026-11-24 00:05 UTC
+> Gerado automaticamente por AI Context Sync v1.3.2 · commit `adaa1e721b` · branch `main` · 2026-11-24 00:33 UTC
 > Não edite à mão — regras humanas vão em `manual/`.
 
 ## A. Regras escritas por humanos (`manual/` — prioridade máxima, nunca sobrescrito)
@@ -2462,7 +2462,7 @@ _nenhum item encontrado_
 | `admin` | `supabase/functions/data-lake-flush/index.ts` |
 | `admin` | `supabase/migrations/20261123000200_fix_has_role_oracle_and_debug_tables.sql` |
 
-## K. Testes como especificação (4166 testes em 354 arquivos — nomes completos em `context.json`)
+## K. Testes como especificação (4170 testes em 355 arquivos — nomes completos em `context.json`)
 
 | Arquivo | Testes | Exemplos do que o sistema DEVE fazer |
 |---|---|---|
@@ -2766,7 +2766,7 @@ _nenhum item encontrado_
 | `src/lib/__tests__/callHistoryCsv.test.ts` | 4 | callHistoryCsv · gera header + linhas separadas por ; · escapa valores com virgula e aspas · deixa vazio campos nulos |
 | `src/lib/__tests__/pendingCallWrites.test.ts` | 4 | pendingCallWrites · enfileira e retira em ordem FIFO · descarta o mais antigo quando chega a 20 itens · clear() esvazia a fila |
 | `src/lib/__tests__/reportCsv.test.ts` | 4 | reportCsv · gera secoes e header do relatorio · escapa nome com virgula · gera arquivo vazio quando nada informado |
-| … +54 linhas — lista completa em `context.json` | | |
+| … +55 linhas — lista completa em `context.json` | | |
 
 ## L. Eventos de webhook tratados (contratos com sistemas externos)
 
@@ -3064,6 +3064,7 @@ _nenhum item encontrado_
 | validação Zod-like via _shared/validate, tracing via x-request-id. | `supabase/functions/voip-sla-report/index.ts` |
 | do body: um atacante nao pode assumir a conta de outro usuario. | `supabase/functions/webauthn-authenticate/index.ts` |
 | O e-mail NAO pode vir do corpo do request: a edge e publica, e um | `supabase/functions/webauthn-authenticate/index.ts` |
+| comparamos - apenas registramos. | `supabase/functions/webauthn-authenticate/index.ts` |
 | * Antes desta correcao a edge apenas conferia se o `credential_id` existia | `supabase/functions/webauthn-authenticate/verify.ts` |
 | rpIdHash (32 bytes) deve bater com o RP configurado (o host). | `supabase/functions/webauthn-authenticate/verify.ts` |
 | * Normaliza telefone para comparação (apenas dígitos). */ | `supabase/functions/whatsapp-inbound/idempotency.ts` |

@@ -5031,6 +5031,7 @@
   ],
   "supabase/functions/webauthn-authenticate/index.ts": [
    "supabase/functions/_shared/cors.ts",
+   "supabase/functions/_shared/rate-limit.ts",
    "supabase/functions/webauthn-authenticate/verify.ts"
   ],
   "supabase/functions/webauthn-challenge/index.ts": [

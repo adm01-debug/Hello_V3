@@ -21,7 +21,7 @@
    "scripts/regras_negocio (2)"
   ],
   "testes": [
-   "co-localizado (__tests__) (340)",
+   "co-localizado (__tests__) (341)",
    "e2e/ (7)",
    "tests/ (6)"
   ],
@@ -58,11 +58,11 @@
  "commits": {
   "convencao": "conventional commits (observado)",
   "exemplos": [
+   "fix: webauthn-authenticate valida o contador do autenticador e ganha rate limit (#201)",
    "fix: whatsapp-inbound deixa de concatenar telefone no filtro do PostgREST (#198)",
    "fix: scripts destrutivos exigem DB_HOST explicito (#200)",
    "chore: react-router-dom 7.13.1 -> 7.18.6 (corrige open redirect) (#199)",
-   "fix: email-inbound idempotente para parar o laco de 500 e a conversa duplicada (#197)",
-   "chore: migrar 15 edges para buildCorsHeaders(req) e remover export deprecated (#196)"
+   "fix: email-inbound idempotente para parar o laco de 500 e a conversa duplicada (#197)"
   ]
  },
  "pr_template": null,

@@ -2,11 +2,16 @@
  "aviso": "GERADO AUTOMATICAMENTE por scripts/ai-context/gerar.mjs — não editar à mão; será sobrescrito.",
  "format_version": 2,
  "git": {
-  "commit": "581cd3a1d9817612b20128dcb15e28667b15b45f",
+  "commit": "adaa1e721b778af41e9e9ff40dcee71c61b43026",
   "branch": "main",
-  "data_commit": "2026-11-23T21:04:54-03:00",
+  "data_commit": "2026-11-23T21:32:31-03:00",
   "remote": "https://github.com/adm01-debug/Hello_V3",
   "ultimos_commits": [
+   {
+    "sha": "adaa1e7",
+    "data": "2026-11-23",
+    "assunto": "fix: webauthn-authenticate valida o contador do autenticador e ganha rate limit (#201)"
+   },
    {
     "sha": "581cd3a",
     "data": "2026-11-23",
@@ -126,14 +131,9 @@
     "sha": "00fa64c",
     "data": "2026-11-23",
     "assunto": "fix: rotula corretamente os canais do softphone (E100) (#177)"
-   },
-   {
-    "sha": "0942091",
-    "data": "2026-11-23",
-    "assunto": "fix: liga painel de integridade a dados reais e remove cartao decorativo (E097-E098) (#176)"
    }
   ],
-  "arquivos_mudados_7d": 983,
+  "arquivos_mudados_7d": 984,
   "pastas_mais_mudadas_30d": [
    {
     "pasta": "covout/lcov-report/hooks",
@@ -145,7 +145,7 @@
    },
    {
     "pasta": "docs/qa/05-PROGRESSO.md",
-    "mudancas": 31
+    "mudancas": 32
    },
    {
     "pasta": "src/hooks/__tests__",
@@ -199,7 +199,7 @@
   "arquivos_mais_mudados_90d": [
    {
     "arquivo": "docs/qa/05-PROGRESSO.md",
-    "mudancas": 31
+    "mudancas": 32
    },
    {
     "arquivo": "docs/estado/funcionalidades-planejadas.md",
@@ -301,7 +301,7 @@
   "autores_30d": [
    {
     "autor": "adm01-debug",
-    "commits": 179
+    "commits": 180
    },
    {
     "autor": "Joaquim Ataides",
@@ -314,9 +314,9 @@
   ]
  },
  "contagens": {
-  "arquivos_total": 1680,
-  "arquivos_codigo": 1278,
-  "linhas_codigo": 173111,
+  "arquivos_total": 1681,
+  "arquivos_codigo": 1279,
+  "linhas_codigo": 173415,
   "rotas": 106,
   "rotas_http_backend": 12,
   "vistas_por_id": 0,
@@ -328,7 +328,7 @@
   "tabelas": 169,
   "migrations": 242,
   "cron_jobs": 11,
-  "testes": 364,
+  "testes": 365,
   "workflows": 3,
   "scripts": 34,
   "docs_md": 120
@@ -519,8 +519,8 @@
    "linhas": 159
   },
   "supabase/functions": {
-   "arquivos": 191,
-   "linhas": 21607
+   "arquivos": 192,
+   "linhas": 21911
   },
   "tailwind.config.ts": {
    "arquivos": 1,

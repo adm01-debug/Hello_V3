@@ -3276,7 +3276,7 @@
    "nome": "webauthn-authenticate",
    "entrada": "supabase/functions/webauthn-authenticate/index.ts",
    "arquivos": 2,
-   "linhas": 333,
+   "linhas": 406,
    "verify_jwt": true,
    "metodos": [
     "OPTIONS"
@@ -3299,7 +3299,8 @@
     "lalamove.app"
    ],
    "usa_shared": [
-    "cors.ts"
+    "cors.ts",
+    "rate-limit.ts"
    ],
    "chamada_pelo_front": [
     "src/hooks/useWebAuthn.ts"
@@ -3307,7 +3308,7 @@
    "chamada_por_edges": [],
    "chamada_por_sql_ou_cron": false,
    "orfa": false,
-   "testes": 2
+   "testes": 3
   },
   {
    "nome": "webauthn-challenge",
