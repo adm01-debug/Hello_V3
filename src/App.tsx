@@ -2,7 +2,7 @@ import { Suspense } from "react";
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { QueryClient, QueryClientProvider, QueryCache, MutationCache } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
  import { AppLayout } from "@/components/layout/AppLayout";
  import { GlobalServices } from "@/components/layout/GlobalServices";
@@ -10,7 +10,10 @@ import { AchievementNotificationProvider } from "@/components/gamification/Achie
 import { AuthProvider } from "@/contexts/AuthContext";
 import { CallProvider } from "@/contexts/CallContext";
 import { ReauthProvider } from "@/contexts/ReauthContext";
+import { SessionExpiryProvider } from "@/contexts/SessionExpiryContext";
 import { ReauthDialog } from "@/components/auth/ReauthDialog";
+import { SessionExpiredDialog } from "@/components/auth/SessionExpiredDialog";
+import { isSessionExpiredError, notifySessionExpired } from "@/lib/session-expiry";
 import { ProtectedRoute } from "@/components/auth/ProtectedRoute";
 import { ThemeProvider } from "@/contexts/ThemeContext";
 import { SkeletonDashboard } from "@/components/ui/skeleton-loader";
@@ -19,7 +22,16 @@ import { publicRoutes } from "@/routes/publicRoutes";
 import { protectedRoutes } from "@/routes/protectedRoutes";
 import { NavigationProgressMarker } from "@/components/navigation/NavigationProgressMarker";
 
+// Ponto único de erro de autenticação: qualquer consulta ou mutação que volte
+// com 401/JWT vencido abre o diálogo de reautenticação em vez de mostrar um
+// erro genérico e derrubar o formulário do usuário.
+const handleGlobalError = (error: unknown) => {
+  if (isSessionExpiredError(error)) notifySessionExpired();
+};
+
 const queryClient = new QueryClient({
+  queryCache: new QueryCache({ onError: handleGlobalError }),
+  mutationCache: new MutationCache({ onError: handleGlobalError }),
   defaultOptions: {
     queries: {
       staleTime: 5 * 60 * 1000,
@@ -55,6 +67,7 @@ const App = () => (
         <BrowserRouter>
           <ThemeProvider>
             <AuthProvider>
+                          <SessionExpiryProvider>
               <CallProvider>
               <ReauthProvider>
               <Routes>
@@ -110,8 +123,10 @@ const App = () => (
                 />
               </Routes>
               <ReauthDialog />
+                            <SessionExpiredDialog />
               </ReauthProvider>
               </CallProvider>
+                            </SessionExpiryProvider>
             </AuthProvider>
           </ThemeProvider>
         </BrowserRouter>
