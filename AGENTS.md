@@ -30,6 +30,11 @@ Detalhe em `docs/agentes/<tema>.md`; divergiu da realidade → corrija no mesmo 
 - Diagnóstico antes de patch: logs e estado real, ponto exato (arquivo:linha), causa; várias causas → liste
   todas, corrija a pedida.
 - Antes da PR: `bun run type-check`, `npx eslint <arquivos>` e `npx vitest run <caminho>` do que tocou.
+  A suíte roda **sem** `.env` e sem configuração manual: `src/test/setup.ts` preenche
+  `VITE_SUPABASE_URL`/`VITE_SUPABASE_PUBLISHABLE_KEY` com valores obviamente falsos
+  (`https://test.invalid`) quando faltam, então nenhum teste aponta para produção por engano.
+  Localmente, 4 arquivos ainda falham na coleta com `zod` chegando `undefined` sob o runtime do
+  Bun (`z.object`/`z.string`); não é regressão — a `main` está verde nesses mesmos arquivos.
   Só erro seu conta; erro herdado da `main` → "Próximos passos". **A `main` está com CI vermelho desde
   2026-07-26, por uma linha** (`docs/agentes/github-ci.md`): CI vermelho na sua PR não prova que você
   quebrou algo — confira qual passo falhou antes de qualquer patch.
