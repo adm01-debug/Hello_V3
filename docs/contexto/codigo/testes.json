@@ -532,7 +532,7 @@
   {
    "arquivo": "src/hooks/__tests__/useAgentRanking.coverage.test.tsx",
    "tipo": "unit",
-   "linhas": 197,
+   "linhas": 199,
    "testa": [
     "src/hooks/useAgentRanking.ts"
    ],

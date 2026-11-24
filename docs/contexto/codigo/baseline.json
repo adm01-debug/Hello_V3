@@ -2,11 +2,16 @@
  "aviso": "GERADO AUTOMATICAMENTE por scripts/ai-context/gerar.mjs — não editar à mão; será sobrescrito.",
  "format_version": 2,
  "git": {
-  "commit": "43be772f23228e92858b764d9bdfa41c23e319d4",
+  "commit": "edd40a361f6da2b06adb3684bce79a840124fff1",
   "branch": "main",
-  "data_commit": "2026-11-24T14:50:53-03:00",
+  "data_commit": "2026-11-24T15:06:11-03:00",
   "remote": "https://github.com/adm01-debug/Hello_V3",
   "ultimos_commits": [
+   {
+    "sha": "edd40a3",
+    "data": "2026-11-24",
+    "assunto": "chore: convencao de mensagem de sucesso e textos das telas das ondas 2 e 5 (#301)"
+   },
    {
     "sha": "43be772",
     "data": "2026-11-24",
@@ -126,14 +131,9 @@
     "sha": "4204df7",
     "data": "2026-11-24",
     "assunto": "fix: avisa meta por transicao em vez de repetir o toast (etapa 246) (#277)"
-   },
-   {
-    "sha": "efbd573",
-    "data": "2026-11-24",
-    "assunto": "fix: agrupa consultas do painel de fila e do discador (etapa 244) (#276)"
    }
   ],
-  "arquivos_mudados_7d": 1251,
+  "arquivos_mudados_7d": 1252,
   "pastas_mais_mudadas_30d": [
    {
     "pasta": "covout/lcov-report/hooks",
@@ -141,11 +141,11 @@
    },
    {
     "pasta": "docs/qa/05-PROGRESSO.md",
-    "mudancas": 123
+    "mudancas": 124
    },
    {
     "pasta": "src/hooks/__tests__",
-    "mudancas": 106
+    "mudancas": 107
    },
    {
     "pasta": "covout/lcov-report/lib",
@@ -153,7 +153,7 @@
    },
    {
     "pasta": "src/components/calls",
-    "mudancas": 40
+    "mudancas": 41
    },
    {
     "pasta": "supabase/functions/_shared",
@@ -199,7 +199,7 @@
   "arquivos_mais_mudados_90d": [
    {
     "arquivo": "docs/qa/05-PROGRESSO.md",
-    "mudancas": 123
+    "mudancas": 124
    },
    {
     "arquivo": "docs/estado/funcionalidades-planejadas.md",
@@ -218,12 +218,12 @@
     "mudancas": 9
    },
    {
-    "arquivo": "supabase/functions/data-lake-flush/index.ts",
+    "arquivo": "src/components/calls/UnifiedSoftphone.tsx",
     "mudancas": 9
    },
    {
-    "arquivo": "src/components/calls/UnifiedSoftphone.tsx",
-    "mudancas": 8
+    "arquivo": "supabase/functions/data-lake-flush/index.ts",
+    "mudancas": 9
    },
    {
     "arquivo": "src/components/layout/CommandPalette.tsx",
@@ -231,6 +231,10 @@
    },
    {
     "arquivo": ".github/workflows/ci.yml",
+    "mudancas": 7
+   },
+   {
+    "arquivo": "docs/agentes/mapa-repo.md",
     "mudancas": 7
    },
    {
@@ -246,11 +250,11 @@
     "mudancas": 6
    },
    {
-    "arquivo": "docs/agentes/mapa-repo.md",
+    "arquivo": "src/hooks/__tests__/useQueueMetrics.coverage.test.tsx",
     "mudancas": 6
    },
    {
-    "arquivo": "src/hooks/__tests__/useQueueMetrics.coverage.test.tsx",
+    "arquivo": "src/hooks/useAgentRanking.ts",
     "mudancas": 6
    },
    {
@@ -292,16 +296,12 @@
    {
     "arquivo": "AGENTS.md",
     "mudancas": 5
-   },
-   {
-    "arquivo": "deno.lock",
-    "mudancas": 5
    }
   ],
   "autores_30d": [
    {
     "autor": "adm01-debug",
-    "commits": 278
+    "commits": 279
    },
    {
     "autor": "Joaquim Ataides",
@@ -316,7 +316,7 @@
  "contagens": {
   "arquivos_total": 1744,
   "arquivos_codigo": 1340,
-  "linhas_codigo": 178092,
+  "linhas_codigo": 178096,
   "rotas": 106,
   "rotas_http_backend": 11,
   "vistas_por_id": 0,
@@ -492,7 +492,7 @@
   },
   "src/hooks": {
    "arquivos": 339,
-   "linhas": 43037
+   "linhas": 43041
   },
   "src/integrations": {
    "arquivos": 3,

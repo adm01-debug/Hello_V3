@@ -1,15 +1,15 @@
 {
  "meta": {
-  "sha": "43be772f23228e92858b764d9bdfa41c23e319d4",
+  "sha": "edd40a361f6da2b06adb3684bce79a840124fff1",
   "branch": "main",
   "remote": "https://github.com/adm01-debug/Hello_V3",
-  "generated_at": "2026-11-24 17:51 UTC",
+  "generated_at": "2026-11-24 18:06 UTC",
   "files_total": 1791,
   "code_files": 1587,
-  "code_lines": 194142
+  "code_lines": 194146
  },
  "version": "1.3.2",
- "facts_hash": "d5a9c0ff541f7b71",
+ "facts_hash": "2b08ef2a96a329f0",
  "stack": {
   "frameworks": [
    "React + Vite",
@@ -33802,7 +33802,7 @@
   {
    "module": "src/hooks",
    "files": 339,
-   "lines": 43037,
+   "lines": 43041,
    "tables": [
     "accounts",
     "active_sessions",
@@ -96770,7 +96770,7 @@
   },
   "src/hooks/useAgentRanking.ts": {
    "path": "src/hooks/useAgentRanking.ts",
-   "lines": 341,
+   "lines": 343,
    "exports": [
     "interface AgentStats",
     "interface AgentGoals",
@@ -104063,7 +104063,7 @@
   },
   "src/hooks/__tests__/useAgentRanking.coverage.test.tsx": {
    "path": "src/hooks/__tests__/useAgentRanking.coverage.test.tsx",
-   "lines": 197,
+   "lines": 199,
    "is_test": true,
    "tests": [
     "useAgentRanking (coverage)",
@@ -123798,10 +123798,26 @@
   }
  },
  "git": {
-  "sha": "43be772f23228e92858b764d9bdfa41c23e319d4",
+  "sha": "edd40a361f6da2b06adb3684bce79a840124fff1",
   "branch": "main",
   "remote": "https://github.com/adm01-debug/Hello_V3",
   "commits": [
+   {
+    "sha": "edd40a3",
+    "date": "2026-11-24",
+    "author": "adm01-debug",
+    "subject": "chore: convencao de mensagem de sucesso e textos das telas das ondas 2 e 5 (#301)",
+    "files": [
+     "docs/agentes/mapa-repo.md",
+     "docs/qa/05-PROGRESSO.md",
+     "src/components/calls/UnifiedSoftphone.tsx",
+     "src/hooks/__tests__/useAgentRanking.coverage.test.tsx",
+     "src/hooks/useAgentRanking.ts",
+     "src/hooks/useContacts.ts",
+     "src/pages/roles/__tests__/useRoles.test.ts",
+     "src/pages/roles/useRoles.ts"
+    ]
+   },
    {
     "sha": "43be772",
     "date": "2026-11-24",
@@ -124237,21 +124253,6 @@
      "docs/agentes/banco.md",
      "docs/qa/05-PROGRESSO.md"
     ]
-   },
-   {
-    "sha": "b887757",
-    "date": "2026-11-24",
-    "author": "adm01-debug",
-    "subject": "fix: validate-geo e a tela de geo honram o modo allowlist/blocklist (etapa 141) (#270)",
-    "files": [
-     "docs/qa/05-PROGRESSO.md",
-     "src/hooks/__tests__/useGeoBlocking.coverage.test.tsx",
-     "src/hooks/useGeoBlocking.ts",
-     "src/pages/GeoBlocking.tsx",
-     "supabase/functions/__tests__/geo-decision.test.ts",
-     "supabase/functions/validate-geo/decide.ts",
-     "supabase/functions/validate-geo/index.ts"
-    ]
    }
   ],
   "hot_files": [
@@ -124261,22 +124262,26 @@
    ],
    [
     "docs/agentes/mapa-repo.md",
-    4
+    5
    ],
    [
     "src/hooks/useContacts.ts",
-    3
+    4
    ],
    [
     "docs/estado/funcionalidades-planejadas.md",
     3
    ],
    [
-    "scripts/audit-edge-functions.ts",
+    "src/components/calls/UnifiedSoftphone.tsx",
     2
    ],
    [
-    "supabase/functions/validate-geo/index.ts",
+    "src/hooks/useAgentRanking.ts",
+    2
+   ],
+   [
+    "scripts/audit-edge-functions.ts",
     2
    ],
    [
@@ -124296,16 +124301,24 @@
     2
    ],
    [
-    "src/hooks/useGeoBlocking.ts",
-    2
-   ],
-   [
     "src/hooks/__tests__/useQueueMetrics.coverage.test.tsx",
     2
    ],
    [
     "src/hooks/useQueueMetrics.ts",
     2
+   ],
+   [
+    "src/hooks/__tests__/useAgentRanking.coverage.test.tsx",
+    1
+   ],
+   [
+    "src/pages/roles/__tests__/useRoles.test.ts",
+    1
+   ],
+   [
+    "src/pages/roles/useRoles.ts",
+    1
    ],
    [
     "docs/observabilidade/SLI_SLO.md",
@@ -124321,18 +124334,6 @@
    ],
    [
     "supabase/functions/health-check/__tests__/slo-targets_test.ts",
-    1
-   ],
-   [
-    "supabase/functions/health-check/index.ts",
-    1
-   ],
-   [
-    "supabase/functions/_shared/testing/backend-falso.ts",
-    1
-   ],
-   [
-    "supabase/functions/analyze-call/__tests__/upstream-falha.test.ts",
     1
    ]
   ]

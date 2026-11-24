@@ -1,7 +1,7 @@
 # Contexto do projeto para agentes de IA
 
 GERADO AUTOMATICAMENTE por scripts/ai-context/gerar.mjs — não editar à mão; será sobrescrito.
-Publicado em `docs/contexto/codigo/` na branch `contexto` (gerada, nunca abra PR dela) a cada push em `main` e a cada 10 minutos pelo workflow `contexto.yml`; índice único das três fontes em `docs/contexto/00-INDEX.md`. Gere local com `node scripts/ai-context/gerar.mjs`. Commit-base: `43be772f23228e92858b764d9bdfa41c23e319d4` (2026-11-24T14:50:53-03:00).
+Publicado em `docs/contexto/codigo/` na branch `contexto` (gerada, nunca abra PR dela) a cada push em `main` e a cada 10 minutos pelo workflow `contexto.yml`; índice único das três fontes em `docs/contexto/00-INDEX.md`. Gere local com `node scripts/ai-context/gerar.mjs`. Commit-base: `edd40a361f6da2b06adb3684bce79a840124fff1` (2026-11-24T15:06:11-03:00).
 
 ## Como usar (leia antes de planejar ou executar qualquer tarefa)
 1. **Tela/rota/menu** → `rotas.json` (url/vista/menu → arquivo → hooks → tabelas → edges; `rotas_http_backend` para APIs) e `modulos.json` (módulo inteiro + dependências entre módulos).
@@ -36,7 +36,7 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 |---|---|
 | arquivos_total | 1744 |
 | arquivos_codigo | 1340 |
-| linhas_codigo | 178092 |
+| linhas_codigo | 178096 |
 | rotas | 106 |
 | rotas_http_backend | 11 |
 | vistas_por_id | 0 |
@@ -371,27 +371,27 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 - possiveis_segredos_no_codigo: 3 — ex.: src/lib/__tests__/security-advanced.test.ts:203, src/lib/__tests__/security-advanced.test.ts:208, src/lib/__tests__/security-advanced.test.ts:213
 
 ## Grafo de código (graphify)
-- 10292 nós · 27232 arestas · 775 comunidades · grafo do commit `43be772f`
-- comunidades maiores: lucide-react (305), badge.tsx (188), react (186), cn (185), client.ts (185), vitest (165), traceHeaders (142), usePageTitle (134), @tanstack/react-query (124), sonner (113), gerar.mjs (109), 5. Em uso por rota (104)
+- 10293 nós · 27237 arestas · 780 comunidades · grafo do commit `edd40a36`
+- comunidades maiores: lucide-react (298), client.ts (231), vitest (200), react (199), traceHeaders (174), usePageTitle (158), usePageTitle.ts (136), validator.ts (117), cn (117), badge.tsx (116), utils.ts (115), @tanstack/react-query (114)
 - símbolos mais chamados: cn() (src/lib/utils.ts), usePageTitle() (src/hooks/usePageTitle.ts), safeFormatDatePtBR() (src/lib/safe-date.ts), q() (scripts/supabase_snapshot/snapshot.py), useAuthContext() (src/contexts/AuthContext.tsx), safeFormatDistanceToNow() (src/lib/safe-date.ts), traceHeaders() (src/lib/tracing.ts), withTrace() (src/lib/tracing.ts), formatDuration() (src/lib/utils.ts), safeToLocaleString() (src/lib/safe-date.ts), buildCorsHeaders() (supabase/functions/_shared/cors.ts), .collect() (scripts/supabase_snapshot/test_snapshot.py)
 - consulta local: `graphify query "<pergunta>"`, `graphify path "<A>" "<B>"`, `graphify explain "<X>"`
 
 ## Hotspots (arquivos mais alterados, 90 dias)
-- docs/qa/05-PROGRESSO.md (123)
+- docs/qa/05-PROGRESSO.md (124)
 - docs/estado/funcionalidades-planejadas.md (30)
 - src/components/layout/AppSidebar.tsx (10)
 - src/hooks/useMultiChannelCall.ts (10)
 - docs/audits/pendencias-2026-07.md (9)
+- src/components/calls/UnifiedSoftphone.tsx (9)
 - supabase/functions/data-lake-flush/index.ts (9)
-- src/components/calls/UnifiedSoftphone.tsx (8)
 - src/components/layout/CommandPalette.tsx (8)
 - .github/workflows/ci.yml (7)
+- docs/agentes/mapa-repo.md (7)
 - docs/edge-functions/README.md (7)
 - supabase/functions/validate-geo/index.ts (7)
 - .github/workflows/contexto.yml (6)
-- docs/agentes/mapa-repo.md (6)
 - src/hooks/__tests__/useQueueMetrics.coverage.test.tsx (6)
-- src/hooks/useQueueMetrics.ts (6)
+- src/hooks/useAgentRanking.ts (6)
 
 ## Workflows
 - `ci.yml` — CI (pull_request, push)
@@ -430,6 +430,7 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 
 
 ## Últimos commits
+- 2026-11-24 `edd40a3` chore: convencao de mensagem de sucesso e textos das telas das ondas 2 e 5 (#301)
 - 2026-11-24 `43be772` fix: meta de SLO unica na edge (99,9%) e painel lendo do servidor (#300)
 - 2026-11-24 `6272242` test: prova a resiliencia das edges com upstream fora do ar (#298)
 - 2026-11-24 `b616330` fix: guard de CI contra fetch sem prazo e migra os 5 ultimos fetch (#297)
@@ -444,7 +445,6 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 - 2026-11-24 `a96e7c3` fix: revisa os 41 disables de dependencia de efeito e zera o exhaustive-deps (etapa 217) (#288)
 - 2026-11-24 `daac6b1` infra: trigger de recalculo de hold_time a partir dos hold_events (etapa 069) — DDL em producao, aguarda decisao (#274)
 - 2026-11-24 `559db78` chore: gate de lint de acessibilidade e escopo do eslint (etapa 264) (#287)
-- 2026-11-24 `fa17b61` chore: registra cobertura de menu das rotas protegidas (etapa 265) (#286)
 
 ## Arquivos deste diretório
 - `docs/contexto/codigo/rotas.json`
