@@ -1,15 +1,15 @@
 {
  "meta": {
-  "sha": "f3b6cf19d89cc2e849883a58a845bc65c2b8b5e5",
+  "sha": "ee1f10094fa38e2c43f8a6e976fa649032962add",
   "branch": "main",
   "remote": "https://github.com/adm01-debug/Hello_V3",
-  "generated_at": "2026-11-24 08:08 UTC",
-  "files_total": 1780,
-  "code_files": 1576,
-  "code_lines": 195487
+  "generated_at": "2026-11-24 08:23 UTC",
+  "files_total": 1782,
+  "code_files": 1578,
+  "code_lines": 195618
  },
  "version": "1.3.2",
- "facts_hash": "b91018e0746d0ddd",
+ "facts_hash": "d615480de7c3ca1f",
  "stack": {
   "frameworks": [
    "React + Vite",
@@ -154,7 +154,7 @@
   "package_manager": "bun",
   "languages": {
    ".ts": 657,
-   ".tsx": 639,
+   ".tsx": 641,
    ".sql": 245,
    ".mjs": 28,
    ".py": 5,
@@ -32191,7 +32191,7 @@
     "file": ".github/workflows/inventario-estado-semanal.yml"
    }
   ],
-  "components_count": 370,
+  "components_count": 372,
   "hooks": [
    {
     "name": "useContacts",
@@ -33337,8 +33337,8 @@
   },
   {
    "module": "src/components",
-   "files": 370,
-   "lines": 44153,
+   "files": 372,
+   "lines": 44284,
    "tables": [
     "accounts",
     "agent_goals",
@@ -57803,6 +57803,22 @@
     "name": "stopRecording é idempotente quando nada foi iniciado"
    },
    {
+    "file": "src/components/calls/softphone/__tests__/DialpadTab.a11y.test.tsx",
+    "name": "DialpadTab - rótulo acessível no apagar (A-123)"
+   },
+   {
+    "file": "src/components/calls/softphone/__tests__/DialpadTab.a11y.test.tsx",
+    "name": "expõe "
+   },
+   {
+    "file": "src/components/calls/softphone/__tests__/DialpadTab.a11y.test.tsx",
+    "name": "ConferenceSection - rótulo acessível ao remover participante (A-123)"
+   },
+   {
+    "file": "src/components/calls/softphone/__tests__/DialpadTab.a11y.test.tsx",
+    "name": "identifica o participante que será removido"
+   },
+   {
     "file": "src/components/calls/softphone/__tests__/HistoryTab.test.tsx",
     "name": "HistoryTab — botao de ligar de volta (etapa 165)"
    },
@@ -57873,6 +57889,18 @@
    {
     "file": "src/components/contacts/__tests__/ContactCard.test.tsx",
     "name": "clicar no cartão continua selecionando o contato"
+   },
+   {
+    "file": "src/components/contacts/__tests__/ContactCard.test.tsx",
+    "name": "ContactCard - favoritar com nome acessível (A-123)"
+   },
+   {
+    "file": "src/components/contacts/__tests__/ContactCard.test.tsx",
+    "name": "anuncia a ação e o estado do botão de favoritos"
+   },
+   {
+    "file": "src/components/contacts/__tests__/ContactCard.test.tsx",
+    "name": "inverte o rótulo e o aria-pressed quando já é favorito"
    },
    {
     "file": "src/components/dashboard/__tests__/HoldTrendChart.test.tsx",
@@ -58009,6 +58037,14 @@
    {
     "file": "src/components/network/__tests__/QualityForecastCard.test.tsx",
     "name": "nao afirma sucesso quando o insert falha"
+   },
+   {
+    "file": "src/components/recordings/__tests__/TranscriptionDialog.a11y.test.tsx",
+    "name": "TranscriptionDialog - rótulos acessíveis na busca (A-123)"
+   },
+   {
+    "file": "src/components/recordings/__tests__/TranscriptionDialog.a11y.test.tsx",
+    "name": "nomeia o campo de busca e anuncia a posição das ocorrências"
    },
    {
     "file": "src/components/supervisor/panel/__tests__/TrendChartToggle.test.tsx",
@@ -94355,7 +94391,7 @@
   },
   "src/components/calls/ActiveCallsIndicator.tsx": {
    "path": "src/components/calls/ActiveCallsIndicator.tsx",
-   "lines": 179,
+   "lines": 181,
    "exports": [
     "function ActiveCallsIndicator"
    ]
@@ -94961,7 +94997,7 @@
   },
   "src/components/calls/softphone/DialpadTab.tsx": {
    "path": "src/components/calls/softphone/DialpadTab.tsx",
-   "lines": 154,
+   "lines": 155,
    "exports": [
     "function DialpadTab"
    ]
@@ -95008,6 +95044,17 @@
     "const channelColors",
     "function formatCallDuration",
     "function getInitials"
+   ]
+  },
+  "src/components/calls/softphone/__tests__/DialpadTab.a11y.test.tsx": {
+   "path": "src/components/calls/softphone/__tests__/DialpadTab.a11y.test.tsx",
+   "lines": 60,
+   "is_test": true,
+   "tests": [
+    "DialpadTab - rótulo acessível no apagar (A-123)",
+    "expõe ",
+    "ConferenceSection - rótulo acessível ao remover participante (A-123)",
+    "identifica o participante que será removido"
    ]
   },
   "src/components/calls/softphone/__tests__/HistoryTab.test.tsx": {
@@ -95439,7 +95486,7 @@
   },
   "src/components/contacts/ContactCard.tsx": {
    "path": "src/components/contacts/ContactCard.tsx",
-   "lines": 207,
+   "lines": 210,
    "exports": [
     "const ContactCard"
    ]
@@ -95559,13 +95606,16 @@
   },
   "src/components/contacts/__tests__/ContactCard.test.tsx": {
    "path": "src/components/contacts/__tests__/ContactCard.test.tsx",
-   "lines": 73,
+   "lines": 92,
    "is_test": true,
    "tests": [
     "ContactCard - menu ",
     "expõe o acionador ",
     "o botão de e-mail aponta para mailto e não seleciona o cartão",
-    "clicar no cartão continua selecionando o contato"
+    "clicar no cartão continua selecionando o contato",
+    "ContactCard - favoritar com nome acessível (A-123)",
+    "anuncia a ação e o estado do botão de favoritos",
+    "inverte o rótulo e o aria-pressed quando já é favorito"
    ]
   },
   "src/components/conversation-intelligence/BattleCardAlert.tsx": {
@@ -97745,7 +97795,16 @@
   },
   "src/components/recordings/TranscriptionDialog.tsx": {
    "path": "src/components/recordings/TranscriptionDialog.tsx",
-   "lines": 221
+   "lines": 223
+  },
+  "src/components/recordings/__tests__/TranscriptionDialog.a11y.test.tsx": {
+   "path": "src/components/recordings/__tests__/TranscriptionDialog.a11y.test.tsx",
+   "lines": 44,
+   "is_test": true,
+   "tests": [
+    "TranscriptionDialog - rótulos acessíveis na busca (A-123)",
+    "nomeia o campo de busca e anuncia a posição das ocorrências"
+   ]
   },
   "src/components/ringgroups/RingGroupCard.tsx": {
    "path": "src/components/ringgroups/RingGroupCard.tsx",
@@ -126943,10 +127002,28 @@
   }
  },
  "git": {
-  "sha": "f3b6cf19d89cc2e849883a58a845bc65c2b8b5e5",
+  "sha": "ee1f10094fa38e2c43f8a6e976fa649032962add",
   "branch": "main",
   "remote": "https://github.com/adm01-debug/Hello_V3",
   "commits": [
+   {
+    "sha": "ee1f100",
+    "date": "2026-11-24",
+    "author": "adm01-debug",
+    "subject": "fix: rotulos acessiveis nos botoes-icone de discador, chamada, contatos e transcricao (etapas 259-261) (#267)",
+    "files": [
+     "docs/qa/05-PROGRESSO.md",
+     "src/components/calls/ActiveCallsIndicator.tsx",
+     "src/components/calls/ConferenceSection.tsx",
+     "src/components/calls/softphone/DialpadTab.tsx",
+     "src/components/calls/softphone/__tests__/DialpadTab.a11y.test.tsx",
+     "src/components/contacts/ContactCard.tsx",
+     "src/components/contacts/ContactDetailSheet.tsx",
+     "src/components/contacts/__tests__/ContactCard.test.tsx",
+     "src/components/recordings/TranscriptionDialog.tsx",
+     "src/components/recordings/__tests__/TranscriptionDialog.a11y.test.tsx"
+    ]
+   },
    {
     "sha": "f3b6cf1",
     "date": "2026-11-24",
@@ -127332,23 +127409,20 @@
      "src/pages/__tests__/CallHistory.deeplink.test.tsx",
      "src/pages/__tests__/Trackers.matches.test.tsx"
     ]
-   },
-   {
-    "sha": "92474f7",
-    "date": "2026-11-24",
-    "author": "adm01-debug",
-    "subject": "chore: remove o hook de conferencia orfao e defeituoso (etapa 158) (#237)",
-    "files": [
-     "docs/qa/05-PROGRESSO.md",
-     "src/hooks/__tests__/useMultiChannelCallConference.coverage.test.tsx",
-     "src/hooks/useMultiChannelCallConference.ts"
-    ]
    }
   ],
   "hot_files": [
    [
     "docs/qa/05-PROGRESSO.md",
     27
+   ],
+   [
+    "src/components/contacts/ContactCard.tsx",
+    2
+   ],
+   [
+    "src/components/contacts/__tests__/ContactCard.test.tsx",
+    2
    ],
    [
     "src/hooks/useCallSession.ts",
@@ -127365,6 +127439,34 @@
    [
     "src/hooks/useVoipQualityMonitor.ts",
     2
+   ],
+   [
+    "src/components/calls/ActiveCallsIndicator.tsx",
+    1
+   ],
+   [
+    "src/components/calls/ConferenceSection.tsx",
+    1
+   ],
+   [
+    "src/components/calls/softphone/DialpadTab.tsx",
+    1
+   ],
+   [
+    "src/components/calls/softphone/__tests__/DialpadTab.a11y.test.tsx",
+    1
+   ],
+   [
+    "src/components/contacts/ContactDetailSheet.tsx",
+    1
+   ],
+   [
+    "src/components/recordings/TranscriptionDialog.tsx",
+    1
+   ],
+   [
+    "src/components/recordings/__tests__/TranscriptionDialog.a11y.test.tsx",
+    1
    ],
    [
     "src/components/agent/WhisperNotification.tsx",
@@ -127388,42 +127490,6 @@
    ],
    [
     "src/hooks/telemetry/useTelemetry.ts",
-    1
-   ],
-   [
-    "src/hooks/useExtensionAudit.ts",
-    1
-   ],
-   [
-    "src/hooks/useKnowledgeBase.ts",
-    1
-   ],
-   [
-    "src/hooks/useNotifications.ts",
-    1
-   ],
-   [
-    "src/hooks/usePersistedTagFilter.ts",
-    1
-   ],
-   [
-    "src/hooks/useQualityTrendAnalyzer.ts",
-    1
-   ],
-   [
-    "src/hooks/useRingtoneSettings.ts",
-    1
-   ],
-   [
-    "src/hooks/useVoicePreferences.ts",
-    1
-   ],
-   [
-    "src/hooks/__tests__/useContacts.coverage.test.tsx",
-    1
-   ],
-   [
-    "src/hooks/useContacts.ts",
     1
    ]
   ]

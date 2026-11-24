@@ -5,17 +5,17 @@
   "vitest",
   "playwright"
  ],
- "total": 396,
+ "total": 398,
  "por_tipo": {
   "contrato": 1,
   "e2e": 13,
   "pytest": 2,
-  "unit": 379
+  "unit": 381
  },
  "onde_ficam": [
   {
    "padrao": "co-localizado (__tests__)",
-   "arquivos": 372
+   "arquivos": 374
   },
   {
    "padrao": "e2e/",
@@ -250,6 +250,18 @@
    "casos": 6
   },
   {
+   "arquivo": "src/components/calls/softphone/__tests__/DialpadTab.a11y.test.tsx",
+   "tipo": "unit",
+   "linhas": 60,
+   "testa": [
+    "src/components/calls/ConferenceSection.tsx",
+    "src/components/calls/softphone/DialpadTab.tsx",
+    "src/components/ui/tooltip.tsx",
+    "src/hooks/useMultiChannelCall.ts"
+   ],
+   "casos": 2
+  },
+  {
    "arquivo": "src/components/calls/softphone/__tests__/HistoryTab.test.tsx",
    "tipo": "unit",
    "linhas": 51,
@@ -291,12 +303,12 @@
   {
    "arquivo": "src/components/contacts/__tests__/ContactCard.test.tsx",
    "tipo": "unit",
-   "linhas": 73,
+   "linhas": 92,
    "testa": [
     "src/components/contacts/ContactCard.tsx",
     "src/hooks/useContacts.ts"
    ],
-   "casos": 3
+   "casos": 5
   },
   {
    "arquivo": "src/components/dashboard/__tests__/HoldTrendChart.test.tsx",
@@ -372,6 +384,16 @@
     "src/components/network/QualityForecastCard.tsx"
    ],
    "casos": 3
+  },
+  {
+   "arquivo": "src/components/recordings/__tests__/TranscriptionDialog.a11y.test.tsx",
+   "tipo": "unit",
+   "linhas": 44,
+   "testa": [
+    "src/components/recordings/TranscriptionDialog.tsx",
+    "src/hooks/useRecordings.ts"
+   ],
+   "casos": 1
   },
   {
    "arquivo": "src/components/supervisor/panel/__tests__/TrendChartToggle.test.tsx",
@@ -3576,12 +3598,14 @@
   "src/components/auth/ProtectedRoute.tsx": 1,
   "src/components/call-history/CallSessionsList.tsx": 1,
   "src/components/calls/AudioOutputSelector.tsx": 1,
+  "src/components/calls/ConferenceSection.tsx": 1,
   "src/components/calls/CrmSuggestionsCard.tsx": 1,
   "src/components/calls/NextBestActionPanel.tsx": 1,
   "src/components/calls/PostCallSummary.tsx": 1,
   "src/components/calls/UnifiedSoftphone.tsx": 1,
   "src/components/calls/WebRTCCall.tsx": 1,
   "src/components/calls/live-transcription/useLiveTranscription.ts": 1,
+  "src/components/calls/softphone/DialpadTab.tsx": 1,
   "src/components/calls/softphone/TabContents.tsx": 1,
   "src/components/calls/softphone/constants.tsx": 1,
   "src/components/coaching/CoachingAssignmentsPanel.tsx": 1,
@@ -3599,10 +3623,12 @@
   "src/components/gamification/WeeklyRanking.tsx": 1,
   "src/components/layout/AppSidebar.tsx": 1,
   "src/components/network/QualityForecastCard.tsx": 1,
+  "src/components/recordings/TranscriptionDialog.tsx": 1,
   "src/components/supervisor/panel/TrendChartToggle.tsx": 1,
   "src/components/supervisor/panel/types.ts": 1,
   "src/components/ui/search-input.tsx": 1,
   "src/components/ui/sidebar.tsx": 1,
+  "src/components/ui/tooltip.tsx": 1,
   "src/components/voice/voice-intent.ts": 1,
   "src/contexts/AuthContext.tsx": 1,
   "src/contexts/ReauthContext.tsx": 2,
@@ -3690,7 +3716,7 @@
   "src/hooks/useLoginLockout.ts": 1,
   "src/hooks/useMFA.ts": 1,
   "src/hooks/useMeetingSummary.ts": 3,
-  "src/hooks/useMultiChannelCall.ts": 8,
+  "src/hooks/useMultiChannelCall.ts": 9,
   "src/hooks/useMultiDeviceRing.ts": 1,
   "src/hooks/useNetworkMonitor.ts": 1,
   "src/hooks/useNotifications.ts": 1,
@@ -3708,7 +3734,7 @@
   "src/hooks/useRateLimitData.ts": 1,
   "src/hooks/useRealtimeHoldAlerts.ts": 2,
   "src/hooks/useReauth.ts": 2,
-  "src/hooks/useRecordings.ts": 1,
+  "src/hooks/useRecordings.ts": 2,
   "src/hooks/useRenewals.ts": 1,
   "src/hooks/useRoutingRules.ts": 1,
   "src/hooks/useSLA.ts": 1,

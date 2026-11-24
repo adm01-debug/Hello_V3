@@ -855,7 +855,7 @@
     "ActiveCallsIndicator"
    ],
    "export_default": null,
-   "linhas": 179,
+   "linhas": 181,
    "dominio": "components/calls",
    "hooks_locais": [
     "useHoldReminder"
@@ -1082,7 +1082,7 @@
     "DialpadTab"
    ],
    "export_default": null,
-   "linhas": 154,
+   "linhas": 155,
    "dominio": "components/calls",
    "hooks_locais": [],
    "tabelas": [],
@@ -1504,7 +1504,7 @@
     "ContactCard"
    ],
    "export_default": null,
-   "linhas": 207,
+   "linhas": 210,
    "dominio": "components/contacts",
    "hooks_locais": [],
    "tabelas": [],
@@ -3542,7 +3542,7 @@
     "TranscriptionDialog"
    ],
    "export_default": null,
-   "linhas": 221,
+   "linhas": 223,
    "dominio": "components/recordings",
    "hooks_locais": [],
    "tabelas": [],

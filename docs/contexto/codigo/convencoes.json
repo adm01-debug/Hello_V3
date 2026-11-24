@@ -21,7 +21,7 @@
    "scripts/regras_negocio (2)"
   ],
   "testes": [
-   "co-localizado (__tests__) (372)",
+   "co-localizado (__tests__) (374)",
    "e2e/ (7)",
    "tests/ (6)"
   ],
@@ -58,11 +58,11 @@
  "commits": {
   "convencao": "conventional commits (observado)",
   "exemplos": [
+   "fix: rotulos acessiveis nos botoes-icone de discador, chamada, contatos e transcricao (etapas 259-261) (#267)",
    "fix: gravacoes cegas em componentes e login reportam erro (etapa 187) (#255)",
    "chore: veredito explicito nos catch que escondem escrita (etapas 194-195) (#262)",
    "fix: avisar quando a interacao nao entra no historico do contato (etapa 190) (#260)",
-   "fix: registrar falha nas gravacoes das edge functions (etapa 188) (#258)",
-   "fix: orcamento de tempo na cadeia edge->edge e no QA de voz (etapa 211) (#265)"
+   "fix: registrar falha nas gravacoes das edge functions (etapa 188) (#258)"
   ]
  },
  "pr_template": null,

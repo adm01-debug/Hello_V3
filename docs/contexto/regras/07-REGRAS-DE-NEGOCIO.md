@@ -1,6 +1,6 @@
 # 07 · REGRAS DE NEGÓCIO
 
-> Gerado automaticamente por AI Context Sync v1.3.2 · commit `f3b6cf19d8` · branch `main` · 2026-11-24 08:08 UTC
+> Gerado automaticamente por AI Context Sync v1.3.2 · commit `ee1f10094f` · branch `main` · 2026-11-24 08:23 UTC
 > Não edite à mão — regras humanas vão em `manual/`.
 
 ## A. Regras escritas por humanos (`manual/` — prioridade máxima, nunca sobrescrito)
@@ -2632,7 +2632,7 @@ _nenhum item encontrado_
 | `admin` | `supabase/functions/data-lake-flush/index.ts` |
 | `admin` | `supabase/migrations/20261123000200_fix_has_role_oracle_and_debug_tables.sql` |
 
-## K. Testes como especificação (4357 testes em 386 arquivos — nomes completos em `context.json`)
+## K. Testes como especificação (4366 testes em 388 arquivos — nomes completos em `context.json`)
 
 | Arquivo | Testes | Exemplos do que o sistema DEVE fazer |
 |---|---|---|
@@ -2809,6 +2809,7 @@ _nenhum item encontrado_
 | `src/components/admin/extensions/__tests__/HealthScoreBadge.test.tsx` | 7 | HealthScoreBadge — 100+ cenários · exibe ícone good (ShieldCheck) quando score >= 80 · exibe ícone warn (AlertTriangle) quando 50-79 · exibe ícone bad (Heart) quando < 50 … |
 | `src/components/calls/__tests__/WebRTCCall.test.tsx` | 7 | WebRTCCall · anexa o stream remoto ao elemento <audio> quando ontrack dispara · configura transceiver bidirecional e injeta a track local no sender · alterna a track do sender ao clicar em silenciar/ativar microfone … |
 | `src/components/calls/live-transcription/__tests__/useLiveTranscription.test.ts` | 7 | useLiveTranscription · estado inicial é seguro · define erro quando getUserMedia falha · startRecording ativa gravação e stopRecording faz cleanup … |
+| `src/components/contacts/__tests__/ContactCard.test.tsx` | 7 | ContactCard - menu  · expõe o acionador  · o botão de e-mail aponta para mailto e não seleciona o cartão · clicar no cartão continua selecionando o contato … |
 | `src/hooks/__tests__/use-toast.coverage.test.tsx` | 7 | use-toast (coverage) · adds a toast and exposes state via useToast · dismisses a toast and removes it after delay · updates a toast in place … |
 | `src/hooks/__tests__/useAlertHistory.coverage.test.tsx` | 7 | useAlertHistory · loads with empty stats when there are no alerts · computes severity counts, read rate, types and daily stats · applies search, severity and type filters … |
 | `src/hooks/__tests__/useAuditLog.coverage.test.tsx` | 7 | useAuditLog · logEvent chama rpc com os parâmetros corretos · logEvent registra erro quando rpc retorna error · logEvent captura exceção lançada … |
@@ -2920,9 +2921,9 @@ _nenhum item encontrado_
 | `supabase/functions/webauthn-challenge/__tests__/index.test.ts` | 5 | webauthn-challenge: OPTIONS devolve preflight CORS vazio · webauthn-challenge: sem e-mail responde 400 · webauthn-challenge: e-mail vazio responde 400 · webauthn-challenge: payload invalido responde 400, nunca 500 … |
 | `tests/e2e/auth.spec.ts` | 5 | Authentication Flow · should redirect to login when not authenticated · should show login form elements · Dashboard and Critical Lists … |
 | `src/components/calls/__tests__/NextBestActionPanel.test.tsx` | 4 | NextBestActionPanel · mostra o erro da consulta em vez de um painel vazio · distingue carregando de sem sugestao · lista o sinal e marca como usado |
+| `src/components/calls/softphone/__tests__/DialpadTab.a11y.test.tsx` | 4 | DialpadTab - rótulo acessível no apagar (A-123) · expõe  · ConferenceSection - rótulo acessível ao remover participante (A-123) · identifica o participante que será removido |
 | `src/components/coaching/__tests__/CoachingAssignmentsPanel.rules.test.tsx` | 4 | CoachingAssignmentsPanel - regra do coaching automático (A-131) · explica a regra com os números que vieram da edge · mostra a contagem atual de cada agente que ficou de fora · sem regra conhecida, orienta a rodar a geração |
 | `src/components/compliance/dnc/__tests__/ReconcileDNCDialog.test.tsx` | 4 | ReconcileDNCDialog · aponta exatamente o numero ausente da lista · reenvia apenas os ausentes e recontabiliza · mostra o erro da consulta em vez de dizer que esta tudo certo |
-| `src/components/contacts/__tests__/ContactCard.test.tsx` | 4 | ContactCard - menu  · expõe o acionador  · o botão de e-mail aponta para mailto e não seleciona o cartão · clicar no cartão continua selecionando o contato |
 | `src/components/executive/__tests__/OmnichannelCard.test.tsx` | 4 | OmnichannelCard · renderiza KPIs principais (abertas, SLA, violações) · exibe badge de SLA quando há violações · lista todos os canais com contagem |
 | `src/components/network/__tests__/QualityForecastCard.test.tsx` | 4 | QualityForecastCard — recomendacao de capacity registra leitura (E178) · nao promete execucao: o botao diz  · grava a acao com outcome dismissed e os dados da recomendacao · nao afirma sucesso quando o insert falha |
 | `src/hooks/__tests__/callLifecycle-integration.test.tsx` | 4 | Ciclo de vida da chamada — integracao (E064) · INSERT em call_sessions ao ficar ativa com campos corretos · UPDATE em call_sessions ao encerrar chamada · sem INSERT se chamada for encerrada antes de ficar ativa |
@@ -2935,8 +2936,7 @@ _nenhum item encontrado_
 | `src/hooks/__tests__/useHoldMetrics.coverage.test.tsx` | 4 | useHoldMetrics · aggregates 7d metrics · handles 30d and 90d ranges with empty data · handles 90d range |
 | `src/hooks/__tests__/useIPValidation.coverage.test.tsx` | 4 | useIPValidation · returns data on success · handles supabase error branch · handles thrown exception branch |
 | `src/hooks/__tests__/usePageTitle.coverage.test.tsx` | 4 | usePageTitle · sets document title with app name suffix · resets title on unmount · updates title when prop changes |
-| `src/hooks/__tests__/useQualityMetrics.coverage.test.tsx` | 4 | useQualityMetrics / useTrunkUsageMetrics · loads quality metrics · loads trunk usage metrics · propagates errors |
-| … +86 linhas — lista completa em `context.json` | | |
+| … +88 linhas — lista completa em `context.json` | | |
 
 ## L. Eventos de webhook tratados (contratos com sistemas externos)
 

@@ -101,11 +101,15 @@
    "importado_por": 27
   },
   {
+   "arquivo": "src/hooks/useMultiChannelCall.ts",
+   "importado_por": 25
+  },
+  {
    "arquivo": "src/components/ui/textarea.tsx",
    "importado_por": 24
   },
   {
-   "arquivo": "src/hooks/useMultiChannelCall.ts",
+   "arquivo": "src/components/ui/tooltip.tsx",
    "importado_por": 24
   },
   {
@@ -114,10 +118,6 @@
   },
   {
    "arquivo": "src/components/ui/empty-state.tsx",
-   "importado_por": 23
-  },
-  {
-   "arquivo": "src/components/ui/tooltip.tsx",
    "importado_por": 23
   },
   {
