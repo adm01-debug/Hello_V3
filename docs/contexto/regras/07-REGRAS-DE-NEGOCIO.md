@@ -1,6 +1,6 @@
 # 07 · REGRAS DE NEGÓCIO
 
-> Gerado automaticamente por AI Context Sync v1.3.2 · commit `4204df7f86` · branch `main` · 2026-11-24 10:28 UTC
+> Gerado automaticamente por AI Context Sync v1.3.2 · commit `677c45d02d` · branch `main` · 2026-11-24 10:50 UTC
 > Não edite à mão — regras humanas vão em `manual/`.
 
 ## A. Regras escritas por humanos (`manual/` — prioridade máxima, nunca sobrescrito)
@@ -1977,6 +1977,8 @@ _nenhum item encontrado_
 | `MINUTE_MS` | `60` | `supabase/functions/_shared/business-hours.ts` |
 | `MAX_ITERATIONS` | `400` | `supabase/functions/_shared/business-hours.ts` |
 | `GENERIC_INTERNAL_MESSAGE` | `"Erro interno"` | `supabase/functions/_shared/errors.ts` |
+| `IPV4_BYTES` | `4` | `supabase/functions/_shared/ip-range.ts` |
+| `IPV6_BYTES` | `16` | `supabase/functions/_shared/ip-range.ts` |
 | `DEFAULT_FETCH_TIMEOUT_MS` | `15` | `supabase/functions/_shared/resilience.ts` |
 | `DEFAULT_THRESHOLD` | `0.7` | `supabase/functions/chatbot-respond/index.ts` |
 | `MODEL` | `'google/gemini-2.5-flash'` | `supabase/functions/chatbot-respond/index.ts` |
@@ -3207,6 +3209,8 @@ _nenhum item encontrado_
 | Agenda sem nenhuma janela utilizável não pode travar o job: cai no prazo | `supabase/functions/_shared/business-hours.ts` |
 | * Retorna o IP do cliente apenas quando ele e um literal valido; senao null. */ | `supabase/functions/_shared/client-ip.ts` |
 | Webhook também não deve lançar | `supabase/functions/_shared/external-payload-schemas_test.ts` |
+| `::` representa no minimo um grupo zerado. | `supabase/functions/_shared/ip-range.ts` |
+| da validacao de IP. `is_cidr` nao e consultado porque o prefixo diz tudo. | `supabase/functions/_shared/ip-range.ts` |
 | * Classifica um MOS. O antigo limite de 3,6 para "mediano" foi dobrado em | `supabase/functions/_shared/mos.ts` |
 | e garante que apenas números finitos sejam aceitos. | `supabase/functions/_shared/numeric-schemas_test.ts` |
 | * Espera media em segundos, apenas sobre chamadas com espera mensuravel. */ | `supabase/functions/_shared/queue-metrics.ts` |

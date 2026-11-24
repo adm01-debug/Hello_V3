@@ -36,6 +36,8 @@
   "supabase/functions/_shared/external-payload-schemas_test.ts",
   "supabase/functions/_shared/hmac.ts",
   "supabase/functions/_shared/html.ts",
+  "supabase/functions/_shared/ip-range.ts",
+  "supabase/functions/_shared/ip-range_test.ts",
   "supabase/functions/_shared/mos.ts",
   "supabase/functions/_shared/mos_test.ts",
   "supabase/functions/_shared/numeric-body-schemas.ts",
@@ -2575,7 +2577,7 @@
    "nome": "validate-ip",
    "entrada": "supabase/functions/validate-ip/index.ts",
    "arquivos": 1,
-   "linhas": 147,
+   "linhas": 119,
    "verify_jwt": true,
    "metodos": [
     "OPTIONS"
@@ -2586,9 +2588,7 @@
     "user_allowed_ips",
     "user_ip_restrictions"
    ],
-   "rpcs": [
-    "check_ip_in_cidr"
-   ],
+   "rpcs": [],
    "env": [
     "SUPABASE_ANON_KEY",
     "SUPABASE_SERVICE_ROLE_KEY",
@@ -2600,7 +2600,8 @@
    "usa_shared": [
     "client-ip.ts",
     "cors.ts",
-    "errors.ts"
+    "errors.ts",
+    "ip-range.ts"
    ],
    "chamada_pelo_front": [
     "src/hooks/useIPValidation.ts"

@@ -21266,11 +21266,6 @@
    "usada_em": 1
   },
   {
-   "nome": "check_ip_in_cidr",
-   "definida": true,
-   "usada_em": 1
-  },
-  {
    "nome": "check_login_lockout",
    "definida": true,
    "usada_em": 1

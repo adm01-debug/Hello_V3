@@ -4692,6 +4692,9 @@
   "supabase/functions/_shared/external-payload-schemas_test.ts": [
    "supabase/functions/_shared/external-payload-schemas.ts"
   ],
+  "supabase/functions/_shared/ip-range_test.ts": [
+   "supabase/functions/_shared/ip-range.ts"
+  ],
   "supabase/functions/_shared/mos_test.ts": [
    "supabase/functions/_shared/mos.ts"
   ],
@@ -5127,7 +5130,8 @@
   "supabase/functions/validate-ip/index.ts": [
    "supabase/functions/_shared/client-ip.ts",
    "supabase/functions/_shared/cors.ts",
-   "supabase/functions/_shared/errors.ts"
+   "supabase/functions/_shared/errors.ts",
+   "supabase/functions/_shared/ip-range.ts"
   ],
   "supabase/functions/verify-voice/index.ts": [
    "supabase/functions/_shared/ai-body-schemas.ts",
