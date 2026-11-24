@@ -6,10 +6,10 @@
 
 | Marca | Significado |
 |---|---|
-| `[ ]` | **171** |
+| `[ ]` | **165** |
 | `[>]` | em andamento (branch criada) |
 | `[P]` | 0 |
-| `[~]` | 0 |
+| `[~]` | 1 |
 | `[x]` | 129 |
 | `[-]` | 0 |
 
@@ -350,7 +350,7 @@
 
 - [ ] **282** — Fazer a auditoria de dependências reprovar sem baseline — onda 8 — Alta — CI 🔒
 - [ ] **283** — Triar os 23 achados de SSRF do baseline — onda 8 — Média — Edge Function
-- [ ] **284** — Remover ou reescrever os 29 testes que não testam nada — onda 8 — Alta — Testes
+- [~] **284** — Remover ou reescrever os 29 testes que não testam nada — onda 8 — Alta — Testes · (parcial 5/29: a varredura com aspas simples e duplas encontrou exatamente 29 arquivos sem import de `@/`, `./` ou `../`; removidos 5 espelhos com prova de que o mesmo módulo tem teste real — `useMFA.test.ts` (`src/hooks/useMFA.ts` coberto por `useMFA.coverage.test.tsx`; o bloco WebAuthn era cópia literal de `useWebAuthn.ts:291-299`, exercitado em `useWebAuthn.coverage.test.tsx:135`), `useCallSession.test.ts` (12 testes reais), `useHoldReminder.test.ts` (6), `useMultiChannelCall.test.ts` (9), `usePredictiveDialer.test.ts` (22); `useMFA.coverage.test.tsx` passou a verificar `crypto.getRandomValues` — 10 chamadas de 6 bytes e 10 códigos únicos em `[A-HJ-NP-Z2-9]{6}` —, antes o espelho checava um gerador local com `Math.random`; `bunx vitest run --silent` = 317 arquivos / 3432 testes / 0 falhas (antes 322/3543) e `tsc --noEmit` rc=0; **pendente**: os 7 de `src/__tests__/rls/` seguem bloqueados pela 053 (o plano proíbe apagá-los antes de existir o teste de RLS real, e a 053 está `[ ]` 🔒) e 17 agregadores (`useDeviceAndSecurity`, `useUncoveredHooks`, `useSecurityHardening` etc.) exigem mapear o sujeito arquivo por arquivo; **A-045 não aplicado**: com `--coverage --coverage.include='src/**/*.{ts,tsx}'` o teste `src/lib/__tests__/security-alerts-webhook-history.property.test.ts:42` estoura o timeout (1045 ms isolado, >10000 ms instrumentado), e como `ci.yml:54` roda `--coverage`, ampliar o include hoje quebraria o CI)
 - [ ] **285** — Fazer os 31 testes E2E órfãos rodarem, ou removê-los — onda 8 — Alta — Testes 🔒
 - [ ] **286** — Um validador só para as edge functions — onda 8 — Média — Edge Function
 - [ ] **287** — Pôr o catálogo de edge functions no CI — onda 8 — Média — CI 🔒
