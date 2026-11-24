@@ -1,15 +1,15 @@
 {
  "meta": {
-  "sha": "daac6b11709cae837c3cc7c52471990a2a068f34",
+  "sha": "a96e7c3b66863142d6def708768906ffc92129e6",
   "branch": "main",
   "remote": "https://github.com/adm01-debug/Hello_V3",
-  "generated_at": "2026-11-24 14:12 UTC",
+  "generated_at": "2026-11-24 14:43 UTC",
   "files_total": 1793,
   "code_files": 1589,
-  "code_lines": 197674
+  "code_lines": 197702
  },
  "version": "1.3.2",
- "facts_hash": "eabb8d1e67acea25",
+ "facts_hash": "25d84ce35e89373a",
  "stack": {
   "frameworks": [
    "React + Vite",
@@ -33521,7 +33521,7 @@
   {
    "module": "src/components",
    "files": 372,
-   "lines": 44271,
+   "lines": 44281,
    "tables": [
     "accounts",
     "agent_goals",
@@ -33778,7 +33778,7 @@
   {
    "module": "src/hooks",
    "files": 355,
-   "lines": 48007,
+   "lines": 48021,
    "tables": [
     "accounts",
     "active_sessions",
@@ -34258,7 +34258,7 @@
   {
    "module": "src/pages",
    "files": 147,
-   "lines": 22465,
+   "lines": 22469,
    "tables": [
     "audit_logs",
     "battle_card_triggers",
@@ -42925,6 +42925,10 @@
     "text": "Sem call aqui o motivo ja foi dito ao operador: limite de linhas no"
    },
    {
+    "file": "src/components/coaching/CoachingPanel.tsx",
+    "text": "Motivo: selecao inicial do agente: incluir `selectedAgentId` reexecutaria o efeito apenas para reafirmar o mesmo valor."
+   },
+   {
     "file": "src/components/compliance/ComplianceSettings.tsx",
     "text": "LGPD Consent Required */}"
    },
@@ -43311,6 +43315,10 @@
    {
     "file": "src/lib/validation/voip-trunk.ts",
     "text": "Extraído do componente para a camada central de validação."
+   },
+   {
+    "file": "src/pages/AgentRanking.tsx",
+    "text": "Motivo: selecao inicial do agente: incluir `selectedAgentId` reexecutaria o efeito apenas para reafirmar o mesmo valor."
    },
    {
     "file": "src/pages/PhoneDialer.tsx",
@@ -94258,7 +94266,7 @@
   },
   "src/components/admin/voip/TrunkMetricsTab.tsx": {
    "path": "src/components/admin/voip/TrunkMetricsTab.tsx",
-   "lines": 168,
+   "lines": 166,
    "exports": [
     "function TrunkMetricsTab"
    ]
@@ -94321,7 +94329,7 @@
   },
   "src/components/agent/BargeInNotification.tsx": {
    "path": "src/components/agent/BargeInNotification.tsx",
-   "lines": 134,
+   "lines": 135,
    "exports": [
     "const BargeInNotification"
    ],
@@ -94356,7 +94364,7 @@
   },
   "src/components/agent/WhisperNotification.tsx": {
    "path": "src/components/agent/WhisperNotification.tsx",
-   "lines": 265,
+   "lines": 266,
    "exports": [
     "const WhisperNotification"
    ],
@@ -94539,7 +94547,7 @@
   },
   "src/components/alerts/AlertsTrendChart.tsx": {
    "path": "src/components/alerts/AlertsTrendChart.tsx",
-   "lines": 336,
+   "lines": 337,
    "exports": [
     "function AlertsTrendChart"
    ],
@@ -95165,7 +95173,7 @@
   },
   "src/components/calls/UnifiedSoftphone.tsx": {
    "path": "src/components/calls/UnifiedSoftphone.tsx",
-   "lines": 371,
+   "lines": 372,
    "exports": [
     "function UnifiedSoftphone"
    ],
@@ -95717,7 +95725,7 @@
   },
   "src/components/coaching/CoachingPanel.tsx": {
    "path": "src/components/coaching/CoachingPanel.tsx",
-   "lines": 376,
+   "lines": 378,
    "exports": [
     "function CoachingPanel"
    ],
@@ -95747,6 +95755,9 @@
      "value": "in_progress",
      "kind": "compara"
     }
+   ],
+   "rule_comments": [
+    "Motivo: selecao inicial do agente: incluir `selectedAgentId` reexecutaria o efeito apenas para reafirmar o mesmo valor."
    ]
   },
   "src/components/coaching/__tests__/CoachingAssignmentsPanel.rules.test.tsx": {
@@ -97224,7 +97235,7 @@
   },
   "src/components/gamification/AchievementCelebration.tsx": {
    "path": "src/components/gamification/AchievementCelebration.tsx",
-   "lines": 178,
+   "lines": 179,
    "exports": [
     "function AchievementCelebration"
    ],
@@ -97539,7 +97550,7 @@
   },
   "src/components/network/AnomalyDetectionCard.tsx": {
    "path": "src/components/network/AnomalyDetectionCard.tsx",
-   "lines": 264,
+   "lines": 267,
    "exports": [
     "const AnomalyDetectionCard"
    ],
@@ -97640,7 +97651,7 @@
   },
   "src/components/network/QualityAlertsCard.tsx": {
    "path": "src/components/network/QualityAlertsCard.tsx",
-   "lines": 168,
+   "lines": 169,
    "exports": [
     "function QualityAlertsCard"
    ],
@@ -98412,7 +98423,7 @@
   },
   "src/components/recordings/TranscriptionDialog.tsx": {
    "path": "src/components/recordings/TranscriptionDialog.tsx",
-   "lines": 223
+   "lines": 224
   },
   "src/components/recordings/__tests__/TranscriptionDialog.a11y.test.tsx": {
    "path": "src/components/recordings/__tests__/TranscriptionDialog.a11y.test.tsx",
@@ -99846,7 +99857,7 @@
   },
   "src/hooks/useActiveCallsRealtime.ts": {
    "path": "src/hooks/useActiveCallsRealtime.ts",
-   "lines": 120,
+   "lines": 122,
    "exports": [
     "function useActiveCallsRealtime"
    ],
@@ -99930,7 +99941,7 @@
   },
   "src/hooks/useAgentRanking.ts": {
    "path": "src/hooks/useAgentRanking.ts",
-   "lines": 338,
+   "lines": 341,
    "exports": [
     "interface AgentStats",
     "interface AgentGoals",
@@ -100141,7 +100152,7 @@
   },
   "src/hooks/useAlerts.ts": {
    "path": "src/hooks/useAlerts.ts",
-   "lines": 286,
+   "lines": 287,
    "exports": [
     "interface CallAlert",
     "interface ContactAlert",
@@ -100363,7 +100374,7 @@
   },
   "src/hooks/useAuth.ts": {
    "path": "src/hooks/useAuth.ts",
-   "lines": 97,
+   "lines": 96,
    "exports": [
     "function useAuth"
    ],
@@ -100719,7 +100730,7 @@
   },
   "src/hooks/useCallAnalytics.ts": {
    "path": "src/hooks/useCallAnalytics.ts",
-   "lines": 134,
+   "lines": 135,
    "exports": [
     "type DateRange",
     "function useCallAnalytics"
@@ -100774,7 +100785,7 @@
   },
   "src/hooks/useCallHistory.ts": {
    "path": "src/hooks/useCallHistory.ts",
-   "lines": 239,
+   "lines": 240,
    "exports": [
     "interface CallSession",
     "interface SessionWithSummary",
@@ -101581,7 +101592,7 @@
   },
   "src/hooks/useContacts.ts": {
    "path": "src/hooks/useContacts.ts",
-   "lines": 416,
+   "lines": 417,
    "exports": [
     "interface Contact",
     "interface ContactInteraction",
@@ -102190,7 +102201,7 @@
   },
   "src/hooks/useDebouncedSearchParam.ts": {
    "path": "src/hooks/useDebouncedSearchParam.ts",
-   "lines": 106,
+   "lines": 107,
    "exports": [
     "interface UseDebouncedSearchParamOptions",
     "interface UseDebouncedSearchParamResult",
@@ -102246,7 +102257,7 @@
   },
   "src/hooks/useDeviceLabel.ts": {
    "path": "src/hooks/useDeviceLabel.ts",
-   "lines": 120,
+   "lines": 119,
    "exports": [
     "function useDeviceLabel"
    ],
@@ -102643,7 +102654,7 @@
   },
   "src/hooks/useGamification.ts": {
    "path": "src/hooks/useGamification.ts",
-   "lines": 327,
+   "lines": 328,
    "exports": [
     "interface Badge",
     "interface AgentBadge",
@@ -102721,7 +102732,7 @@
   },
   "src/hooks/useGeoBlocking.ts": {
    "path": "src/hooks/useGeoBlocking.ts",
-   "lines": 138,
+   "lines": 139,
    "exports": [
     "interface GeoSettings",
     "interface GeoRestriction",
@@ -102794,7 +102805,7 @@
   },
   "src/hooks/useGoalViolations.ts": {
    "path": "src/hooks/useGoalViolations.ts",
-   "lines": 113,
+   "lines": 115,
    "exports": [
     "interface GoalViolation",
     "interface DailyTrend",
@@ -105129,7 +105140,7 @@
   },
   "src/hooks/useSecurityAlertNotifications.ts": {
    "path": "src/hooks/useSecurityAlertNotifications.ts",
-   "lines": 230,
+   "lines": 231,
    "exports": [
     "function useSecurityAlertNotifications"
    ],
@@ -105203,7 +105214,7 @@
   },
   "src/hooks/useSecurityDashboard.ts": {
    "path": "src/hooks/useSecurityDashboard.ts",
-   "lines": 104,
+   "lines": 106,
    "exports": [
     "interface SecurityAlert",
     "function useSecurityDashboard"
@@ -105491,7 +105502,7 @@
   },
   "src/hooks/useSipCall.ts": {
    "path": "src/hooks/useSipCall.ts",
-   "lines": 422,
+   "lines": 420,
    "exports": [
     "type SipStatus",
     "interface IncomingCallInfo",
@@ -106153,7 +106164,7 @@
   },
   "src/hooks/useTrunkUsageReporter.ts": {
    "path": "src/hooks/useTrunkUsageReporter.ts",
-   "lines": 60,
+   "lines": 61,
    "exports": [
     "function useTrunkUsageReporter"
    ],
@@ -116182,12 +116193,15 @@
   },
   "src/pages/AgentRanking.tsx": {
    "path": "src/pages/AgentRanking.tsx",
-   "lines": 99,
+   "lines": 100,
    "exports": [
     "function AgentRanking"
    ],
    "env": [
     "DEV"
+   ],
+   "rule_comments": [
+    "Motivo: selecao inicial do agente: incluir `selectedAgentId` reexecutaria o efeito apenas para reafirmar o mesmo valor."
    ]
   },
   "src/pages/AlertHistory.tsx": {
@@ -116923,7 +116937,7 @@
   },
   "src/pages/NetworkDiagnostics.tsx": {
    "path": "src/pages/NetworkDiagnostics.tsx",
-   "lines": 339,
+   "lines": 340,
    "exports": [
     "default NetworkDiagnostics"
    ],
@@ -118404,7 +118418,7 @@
   },
   "src/pages/admin/ExtensionsAdmin.tsx": {
    "path": "src/pages/admin/ExtensionsAdmin.tsx",
-   "lines": 213,
+   "lines": 214,
    "exports": [
     "function ExtensionsAdmin"
    ],
@@ -118435,7 +118449,7 @@
   },
   "src/pages/admin/SecurityAuditDashboard.tsx": {
    "path": "src/pages/admin/SecurityAuditDashboard.tsx",
-   "lines": 311,
+   "lines": 312,
    "exports": [
     "function SecurityAuditDashboard"
    ],
@@ -127907,10 +127921,49 @@
   }
  },
  "git": {
-  "sha": "daac6b11709cae837c3cc7c52471990a2a068f34",
+  "sha": "a96e7c3b66863142d6def708768906ffc92129e6",
   "branch": "main",
   "remote": "https://github.com/adm01-debug/Hello_V3",
   "commits": [
+   {
+    "sha": "a96e7c3",
+    "date": "2026-11-24",
+    "author": "adm01-debug",
+    "subject": "fix: revisa os 41 disables de dependencia de efeito e zera o exhaustive-deps (etapa 217) (#288)",
+    "files": [
+     "docs/qa/05-PROGRESSO.md",
+     "src/components/admin/voip/TrunkMetricsTab.tsx",
+     "src/components/agent/BargeInNotification.tsx",
+     "src/components/agent/WhisperNotification.tsx",
+     "src/components/alerts/AlertsTrendChart.tsx",
+     "src/components/calls/UnifiedSoftphone.tsx",
+     "src/components/coaching/CoachingPanel.tsx",
+     "src/components/gamification/AchievementCelebration.tsx",
+     "src/components/network/AnomalyDetectionCard.tsx",
+     "src/components/network/QualityAlertsCard.tsx",
+     "src/components/recordings/TranscriptionDialog.tsx",
+     "src/hooks/useActiveCallsRealtime.ts",
+     "src/hooks/useAgentRanking.ts",
+     "src/hooks/useAlerts.ts",
+     "src/hooks/useAuth.ts",
+     "src/hooks/useCallAnalytics.ts",
+     "src/hooks/useCallHistory.ts",
+     "src/hooks/useContacts.ts",
+     "src/hooks/useDebouncedSearchParam.ts",
+     "src/hooks/useDeviceLabel.ts",
+     "src/hooks/useGamification.ts",
+     "src/hooks/useGeoBlocking.ts",
+     "src/hooks/useGoalViolations.ts",
+     "src/hooks/useSecurityAlertNotifications.ts",
+     "src/hooks/useSecurityDashboard.ts",
+     "src/hooks/useSipCall.ts",
+     "src/hooks/useTrunkUsageReporter.ts",
+     "src/pages/AgentRanking.tsx",
+     "src/pages/NetworkDiagnostics.tsx",
+     "src/pages/admin/ExtensionsAdmin.tsx",
+     "src/pages/admin/SecurityAuditDashboard.tsx"
+    ]
+   },
    {
     "sha": "daac6b1",
     "date": "2026-11-24",
@@ -128356,23 +128409,6 @@
      "supabase/functions/ocr-virtual-fax/index.ts",
      "supabase/functions/teams-fetch-recordings/index.ts"
     ]
-   },
-   {
-    "sha": "608aa86",
-    "date": "2026-11-24",
-    "author": "adm01-debug",
-    "subject": "fix: consultas cegas restantes e estado de erro padronizado (etapas 201-202) (#263)",
-    "files": [
-     "docs/qa/05-PROGRESSO.md",
-     "src/components/alerts/AlertsDropdown.tsx",
-     "src/components/call-history/CallDetailDialog.tsx",
-     "src/components/executive/ConversationIntelligenceCard.tsx",
-     "src/components/gamification/WeeklyRanking.tsx",
-     "src/components/gamification/__tests__/WeeklyRanking.test.tsx",
-     "src/pages/QueueMetricsDashboard.tsx",
-     "src/pages/SecurityDashboard.tsx",
-     "src/pages/roles/useRoles.ts"
-    ]
    }
   ],
   "hot_files": [
@@ -128381,16 +128417,36 @@
     28
    ],
    [
+    "src/hooks/useContacts.ts",
+    4
+   ],
+   [
     "docs/agentes/mapa-repo.md",
     4
    ],
    [
-    "src/hooks/useContacts.ts",
+    "src/components/agent/WhisperNotification.tsx",
     3
    ],
    [
     "docs/estado/funcionalidades-planejadas.md",
     3
+   ],
+   [
+    "src/components/gamification/AchievementCelebration.tsx",
+    2
+   ],
+   [
+    "src/components/recordings/TranscriptionDialog.tsx",
+    2
+   ],
+   [
+    "src/hooks/useActiveCallsRealtime.ts",
+    2
+   ],
+   [
+    "src/hooks/useGeoBlocking.ts",
+    2
    ],
    [
     "src/hooks/__tests__/useContacts.coverage.test.tsx",
@@ -128429,31 +128485,11 @@
     2
    ],
    [
-    "src/components/agent/WhisperNotification.tsx",
-    2
-   ],
-   [
-    "src/components/alerts/AlertsDropdown.tsx",
-    2
-   ],
-   [
-    "supabase/migrations/20261123030000_hold_time_from_events.sql",
+    "src/components/admin/voip/TrunkMetricsTab.tsx",
     1
    ],
    [
-    "bun.lock",
-    1
-   ],
-   [
-    "eslint.config.js",
-    1
-   ],
-   [
-    "package.json",
-    1
-   ],
-   [
-    "scripts/ai-context/cenarios.mjs",
+    "src/components/agent/BargeInNotification.tsx",
     1
    ]
   ]

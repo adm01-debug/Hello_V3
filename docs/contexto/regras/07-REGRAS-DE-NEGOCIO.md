@@ -1,6 +1,6 @@
 # 07 · REGRAS DE NEGÓCIO
 
-> Gerado automaticamente por AI Context Sync v1.3.2 · commit `daac6b1170` · branch `main` · 2026-11-24 14:12 UTC
+> Gerado automaticamente por AI Context Sync v1.3.2 · commit `a96e7c3b66` · branch `main` · 2026-11-24 14:43 UTC
 > Não edite à mão — regras humanas vão em `manual/`.
 
 ## A. Regras escritas por humanos (`manual/` — prioridade máxima, nunca sobrescrito)
@@ -3112,6 +3112,7 @@ _nenhum item encontrado_
 | Requer mínimo de 8 caracteres e caractere especial como obrigatórios | `src/components/auth/PasswordStrength.tsx` |
 | sipCall é estável (criado uma vez); setDbSessionId usa apenas um ref interno | `src/components/calls/UnifiedSoftphone.tsx` |
 | Sem call aqui o motivo ja foi dito ao operador: limite de linhas no | `src/components/calls/UnifiedSoftphone.tsx` |
+| Motivo: selecao inicial do agente: incluir `selectedAgentId` reexecutaria o efeito apenas para reafirmar o mesmo valor. | `src/components/coaching/CoachingPanel.tsx` |
 | LGPD Consent Required */} | `src/components/compliance/ComplianceSettings.tsx` |
 | Renderiza nada quando há apenas a opção "Todos" (nenhuma etiqueta em uso), | `src/components/dialer/phone/FavoriteTagFilter.tsx` |
 | não carrega (profile === null), mantém apenas os itens sem `roles`, | `src/components/layout/AppSidebar.tsx` |
@@ -3209,6 +3210,7 @@ _nenhum item encontrado_
 | * Espera media em segundos, apenas sobre chamadas com espera mensuravel. */ | `src/lib/metrics/queue.ts` |
 | * Zod schemas for runtime validation of API responses and form inputs. | `src/lib/validation/schemas.ts` |
 | Extraído do componente para a camada central de validação. | `src/lib/validation/voip-trunk.ts` |
+| Motivo: selecao inicial do agente: incluir `selectedAgentId` reexecutaria o efeito apenas para reafirmar o mesmo valor. | `src/pages/AgentRanking.tsx` |
 | Gesto do usuário: momento válido para pedir permissão de notificação. | `src/pages/PhoneDialer.tsx` |
 | ').order('created_at', { ascending: false }).limit(100); | `src/pages/SecurityMonitoring.tsx` |
 | ').order('created_at', { ascending: false }).limit(200), | `src/pages/TranslationCenter.tsx` |

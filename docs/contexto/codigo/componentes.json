@@ -290,7 +290,7 @@
     "TrunkMetricsTab"
    ],
    "export_default": null,
-   "linhas": 168,
+   "linhas": 166,
    "dominio": "components/admin",
    "hooks_locais": [
     "useTrunkMetrics"
@@ -394,7 +394,7 @@
     "BargeInNotification"
    ],
    "export_default": null,
-   "linhas": 134,
+   "linhas": 135,
    "dominio": "components/agent",
    "hooks_locais": [],
    "tabelas": [
@@ -410,7 +410,7 @@
     "WhisperNotification"
    ],
    "export_default": null,
-   "linhas": 265,
+   "linhas": 266,
    "dominio": "components/agent",
    "hooks_locais": [],
    "tabelas": [
@@ -547,7 +547,7 @@
     "AlertsTrendChart"
    ],
    "export_default": null,
-   "linhas": 336,
+   "linhas": 337,
    "dominio": "components/alerts",
    "hooks_locais": [],
    "tabelas": [
@@ -1140,7 +1140,7 @@
     "UnifiedSoftphone"
    ],
    "export_default": null,
-   "linhas": 371,
+   "linhas": 372,
    "dominio": "components/calls",
    "hooks_locais": [
     "useAgentStatus",
@@ -1244,7 +1244,7 @@
     "CoachingPanel"
    ],
    "export_default": null,
-   "linhas": 376,
+   "linhas": 378,
    "dominio": "components/coaching",
    "hooks_locais": [
     "useAgentStatus",
@@ -2472,7 +2472,7 @@
     "AchievementCelebration"
    ],
    "export_default": null,
-   "linhas": 178,
+   "linhas": 179,
    "dominio": "components/gamification",
    "hooks_locais": [],
    "tabelas": [],
@@ -2819,7 +2819,7 @@
     "AnomalyDetectionCard"
    ],
    "export_default": null,
-   "linhas": 264,
+   "linhas": 267,
    "dominio": "components/network",
    "hooks_locais": [
     "useAnomalyRemediation",
@@ -2900,7 +2900,7 @@
     "QualityAlertsCard"
    ],
    "export_default": null,
-   "linhas": 168,
+   "linhas": 169,
    "dominio": "components/network",
    "hooks_locais": [],
    "tabelas": [
@@ -3542,7 +3542,7 @@
     "TranscriptionDialog"
    ],
    "export_default": null,
-   "linhas": 223,
+   "linhas": 224,
    "dominio": "components/recordings",
    "hooks_locais": [],
    "tabelas": [],
@@ -5321,7 +5321,7 @@
     "ExtensionsAdmin"
    ],
    "export_default": "ExtensionsAdmin",
-   "linhas": 213,
+   "linhas": 214,
    "dominio": "pages/admin",
    "hooks_locais": [
     "useExtensionsAdmin",
@@ -5362,7 +5362,7 @@
     "SecurityAuditDashboard"
    ],
    "export_default": "SecurityAuditDashboard",
-   "linhas": 311,
+   "linhas": 312,
    "dominio": "pages/admin",
    "hooks_locais": [
     "useAuthContext",
@@ -5472,7 +5472,7 @@
     "AgentRanking"
    ],
    "export_default": "AgentRanking",
-   "linhas": 99,
+   "linhas": 100,
    "dominio": "pages",
    "hooks_locais": [
     "useAgentRanking",
@@ -6387,7 +6387,7 @@
     "NetworkDiagnostics"
    ],
    "export_default": "NetworkDiagnostics",
-   "linhas": 339,
+   "linhas": 340,
    "dominio": "pages",
    "hooks_locais": [
     "useNetworkMonitor",

@@ -672,7 +672,7 @@
    "hooks_exportados": [
     "useActiveCallsRealtime"
    ],
-   "linhas": 120,
+   "linhas": 122,
    "dominio": "hooks",
    "tabelas": [
     "call_sessions",
@@ -743,7 +743,7 @@
    "hooks_exportados": [
     "useAgentRanking"
    ],
-   "linhas": 338,
+   "linhas": 341,
    "dominio": "hooks",
    "tabelas": [
     "agent_goals",
@@ -849,7 +849,7 @@
    "hooks_exportados": [
     "useAlerts"
    ],
-   "linhas": 286,
+   "linhas": 287,
    "dominio": "hooks",
    "tabelas": [
     "call_alerts",
@@ -993,7 +993,7 @@
    "hooks_exportados": [
     "useAuth"
    ],
-   "linhas": 97,
+   "linhas": 96,
    "dominio": "hooks",
    "tabelas": [],
    "rpcs": [],
@@ -1216,7 +1216,7 @@
    "hooks_exportados": [
     "useCallAnalytics"
    ],
-   "linhas": 134,
+   "linhas": 135,
    "dominio": "hooks",
    "tabelas": [
     "call_sessions",
@@ -1242,7 +1242,7 @@
    "hooks_exportados": [
     "useCallHistory"
    ],
-   "linhas": 239,
+   "linhas": 240,
    "dominio": "hooks",
    "tabelas": [
     "call_analyses",
@@ -1746,7 +1746,7 @@
    "hooks_exportados": [
     "useContacts"
    ],
-   "linhas": 416,
+   "linhas": 417,
    "dominio": "hooks",
    "tabelas": [
     "contact_interactions",
@@ -2053,7 +2053,7 @@
    "hooks_exportados": [
     "useDebouncedSearchParam"
    ],
-   "linhas": 106,
+   "linhas": 107,
    "dominio": "hooks",
    "tabelas": [],
    "rpcs": [],
@@ -2104,7 +2104,7 @@
    "hooks_exportados": [
     "useDeviceLabel"
    ],
-   "linhas": 120,
+   "linhas": 119,
    "dominio": "hooks",
    "tabelas": [
     "user_profiles"
@@ -2373,7 +2373,7 @@
    "hooks_exportados": [
     "useGamification"
    ],
-   "linhas": 327,
+   "linhas": 328,
    "dominio": "hooks",
    "tabelas": [
     "agent_badges",
@@ -2404,7 +2404,7 @@
    "hooks_exportados": [
     "useGeoBlocking"
    ],
-   "linhas": 138,
+   "linhas": 139,
    "dominio": "hooks",
    "tabelas": [
     "geo_access_logs",
@@ -2434,7 +2434,7 @@
    "hooks_exportados": [
     "useGoalViolations"
    ],
-   "linhas": 113,
+   "linhas": 115,
    "dominio": "hooks",
    "tabelas": [
     "goal_violations"
@@ -3664,7 +3664,7 @@
    "hooks_exportados": [
     "useSecurityAlertNotifications"
    ],
-   "linhas": 230,
+   "linhas": 231,
    "dominio": "hooks",
    "tabelas": [
     "notifications"
@@ -3693,7 +3693,7 @@
    "hooks_exportados": [
     "useSecurityDashboard"
    ],
-   "linhas": 104,
+   "linhas": 106,
    "dominio": "hooks",
    "tabelas": [
     "blocked_access_logs",
@@ -3855,7 +3855,7 @@
    "hooks_exportados": [
     "useSipCall"
    ],
-   "linhas": 422,
+   "linhas": 420,
    "dominio": "hooks",
    "tabelas": [],
    "rpcs": [],
@@ -4246,7 +4246,7 @@
    "hooks_exportados": [
     "useTrunkUsageReporter"
    ],
-   "linhas": 60,
+   "linhas": 61,
    "dominio": "hooks",
    "tabelas": [],
    "rpcs": [
@@ -4254,7 +4254,8 @@
    ],
    "edges": [],
    "hooks_internos": [
-    "useCallback"
+    "useCallback",
+    "useMemo"
    ],
    "canais_realtime": [],
    "usado_por": 1,
