@@ -32,7 +32,14 @@ function makeBuilder() {
     // updateCallback chains .eq().select().single(). So eq() returns an object
     // that is both thenable (resolves updateResult) and chainable.
     const afterEq: Record<string, unknown> = {};
-    afterEq.select = vi.fn(() => ({ single: vi.fn(() => Promise.resolve(insertResult)) }));
+    // updateCallback encadeia .eq().select().single(); complete/cancel encadeiam
+    // .eq().select('id') e o resultado do update e aguardado direto.
+    afterEq.select = vi.fn(() => {
+      const selected: Record<string, unknown> = {};
+      selected.single = vi.fn(() => Promise.resolve(insertResult));
+      selected.then = (cb: (r: QueryResult) => unknown) => Promise.resolve(updateResult).then(cb);
+      return selected;
+    });
     afterEq.then = (cb: (r: QueryResult) => unknown) => Promise.resolve(updateResult).then(cb);
     const upd: Record<string, unknown> = {};
     upd.eq = vi.fn(() => afterEq);
@@ -40,7 +47,10 @@ function makeBuilder() {
   });
   builder.delete = vi.fn(() => {
     const del: Record<string, unknown> = {};
-    del.eq = vi.fn(() => Promise.resolve(deleteResult));
+    const removed: Record<string, unknown> = {};
+    removed.then = (cb: (r: QueryResult) => unknown) => Promise.resolve(deleteResult).then(cb);
+    removed.select = vi.fn(() => removed);
+    del.eq = vi.fn(() => removed);
     return del;
   });
   builder.then = (cb: (r: QueryResult) => unknown) =>
@@ -65,6 +75,7 @@ vi.mock('@/lib/logger', () => ({
   logger: { create: () => ({ debug: vi.fn(), info: vi.fn(), warn: vi.fn(), error: vi.fn() }) },
 }));
 
+import { toast } from 'sonner';
 import { useScheduledCallbacks } from '../useScheduledCallbacks';
 
 const sampleCb = {
@@ -80,8 +91,8 @@ describe('useScheduledCallbacks', () => {
     selectResult = { data: [sampleCb], error: null };
     countResult = { count: 3, error: null };
     insertResult = { data: sampleCb, error: null };
-    updateResult = { error: null };
-    deleteResult = { error: null };
+    updateResult = { data: [{ id: 'c1' }], error: null };
+    deleteResult = { data: [{ id: 'c1' }], error: null };
   });
 
   it('loads pending callbacks and upcoming count on mount', async () => {
@@ -189,5 +200,46 @@ describe('useScheduledCallbacks', () => {
     await act(async () => {
       expect(await result.current.deleteCallback('c1')).toBe(false);
     });
+  });
+
+  it('confirma o retorno com a data do registro gravado, nao a que foi digitada', async () => {
+    const { result } = renderHook(() => useScheduledCallbacks());
+    await waitFor(() => expect(result.current.isLoading).toBe(false));
+
+    insertResult = {
+      data: { ...sampleCb, scheduled_at: '2026-07-01T12:00:00Z' },
+      error: null,
+    };
+
+    await act(async () => {
+      await result.current.createCallback({
+        caller_name: 'Jane', caller_phone: '999', scheduled_at: '2026-06-14T10:00:00Z',
+      });
+    });
+
+    const confirmacoes = vi.mocked(toast.success).mock.calls.map((c) => String(c[0]));
+    expect(confirmacoes.some((m) => m.startsWith('Retorno agendado para 01/07'))).toBe(true);
+    expect(confirmacoes.some((m) => m.includes('14/06'))).toBe(false);
+  });
+
+  it('nao confirma sucesso quando a escrita nao afeta nenhuma linha', async () => {
+    const { result } = renderHook(() => useScheduledCallbacks());
+    await waitFor(() => expect(result.current.isLoading).toBe(false));
+
+    updateResult = { data: [], error: null };
+    await act(async () => {
+      expect(await result.current.completeCallback('c1')).toBe(false);
+    });
+    await act(async () => {
+      expect(await result.current.cancelCallback('c1')).toBe(false);
+    });
+
+    deleteResult = { data: [], error: null };
+    await act(async () => {
+      expect(await result.current.deleteCallback('c1')).toBe(false);
+    });
+
+    expect(toast.error).toHaveBeenCalled();
+    expect(toast.success).not.toHaveBeenCalled();
   });
 });
