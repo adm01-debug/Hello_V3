@@ -1,6 +1,6 @@
 # 07 · REGRAS DE NEGÓCIO
 
-> Gerado automaticamente por AI Context Sync v1.3.2 · commit `9add2c18a3` · branch `main` · 2026-11-24 00:58 UTC
+> Gerado automaticamente por AI Context Sync v1.3.2 · commit `6be7a63836` · branch `main` · 2026-11-24 01:03 UTC
 > Não edite à mão — regras humanas vão em `manual/`.
 
 ## A. Regras escritas por humanos (`manual/` — prioridade máxima, nunca sobrescrito)
@@ -2463,7 +2463,7 @@ _nenhum item encontrado_
 | `admin` | `supabase/functions/data-lake-flush/index.ts` |
 | `admin` | `supabase/migrations/20261123000200_fix_has_role_oracle_and_debug_tables.sql` |
 
-## K. Testes como especificação (4202 testes em 357 arquivos — nomes completos em `context.json`)
+## K. Testes como especificação (4205 testes em 358 arquivos — nomes completos em `context.json`)
 
 | Arquivo | Testes | Exemplos do que o sistema DEVE fazer |
 |---|---|---|
@@ -2767,7 +2767,7 @@ _nenhum item encontrado_
 | `src/hooks/__tests__/useWebVitals.coverage.test.tsx` | 4 | useWebVitals · loads vitals on mount and refreshes on interval · manual refresh invokes getters · clears interval on unmount |
 | `src/lib/__tests__/a11y-clickable.test.ts` | 4 | clickableRowProps · entrega semantica de controle focavel · ativa com Enter e com Espaco, consumindo o evento · ignora teclas que nao ativam |
 | `src/lib/__tests__/callHistoryCsv.test.ts` | 4 | callHistoryCsv · gera header + linhas separadas por ; · escapa valores com virgula e aspas · deixa vazio campos nulos |
-| … +57 linhas — lista completa em `context.json` | | |
+| … +58 linhas — lista completa em `context.json` | | |
 
 ## L. Eventos de webhook tratados (contratos com sistemas externos)
 

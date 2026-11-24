@@ -21,7 +21,7 @@
    "scripts/regras_negocio (2)"
   ],
   "testes": [
-   "co-localizado (__tests__) (343)",
+   "co-localizado (__tests__) (344)",
    "e2e/ (7)",
    "tests/ (6)"
   ],
@@ -58,11 +58,11 @@
  "commits": {
   "convencao": "conventional commits (observado)",
   "exemplos": [
+   "fix: importacao de DNC passa a conferir o resultado real da RPC (#206)",
    "fix: grava o desfecho real da chamada em call_sessions (#205)",
    "feat: modulo unico de metricas de fila (serviceLevel, abandono, espera) (#204)",
    "feat: discador preditivo passa pela barreira de DNC e horario legal (#203)",
-   "feat: barreira de DNC e horario legal dentro de initiateCall (#202)",
-   "fix: webauthn-authenticate valida o contador do autenticador e ganha rate limit (#201)"
+   "feat: barreira de DNC e horario legal dentro de initiateCall (#202)"
   ]
  },
  "pr_template": null,

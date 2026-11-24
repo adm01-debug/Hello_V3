@@ -1394,7 +1394,7 @@
     "ImportDNCDialog"
    ],
    "export_default": null,
-   "linhas": 67,
+   "linhas": 89,
    "dominio": "components/compliance",
    "hooks_locais": [],
    "tabelas": [],

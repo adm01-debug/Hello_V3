@@ -5,17 +5,17 @@
   "vitest",
   "playwright"
  ],
- "total": 367,
+ "total": 368,
  "por_tipo": {
   "contrato": 1,
   "e2e": 13,
   "pytest": 2,
-  "unit": 350
+  "unit": 351
  },
  "onde_ficam": [
   {
    "padrao": "co-localizado (__tests__)",
-   "arquivos": 343
+   "arquivos": 344
   },
   {
    "padrao": "e2e/",
@@ -203,6 +203,16 @@
     "src/components/calls/live-transcription/useLiveTranscription.ts"
    ],
    "casos": 6
+  },
+  {
+   "arquivo": "src/components/compliance/dnc/__tests__/ImportDNCDialog.test.tsx",
+   "tipo": "unit",
+   "linhas": 29,
+   "testa": [
+    "src/components/compliance/dnc/ImportDNCDialog.tsx",
+    "src/hooks/useDNCCompliance.ts"
+   ],
+   "casos": 2
   },
   {
    "arquivo": "src/components/dialer/phone/__tests__/phone-dialer.test.ts",
@@ -866,7 +876,7 @@
   {
    "arquivo": "src/hooks/__tests__/useDNCCompliance.coverage.test.tsx",
    "tipo": "unit",
-   "linhas": 186,
+   "linhas": 187,
    "testa": [
     "src/hooks/useDNCCompliance.ts"
    ],
@@ -3308,6 +3318,7 @@
   "src/components/calls/WebRTCCall.tsx": 1,
   "src/components/calls/live-transcription/useLiveTranscription.ts": 1,
   "src/components/calls/softphone/constants.tsx": 1,
+  "src/components/compliance/dnc/ImportDNCDialog.tsx": 1,
   "src/components/dashboard/CallVolumeChart.tsx": 1,
   "src/components/dashboard/StatsCard.tsx": 1,
   "src/components/dialer/phone/phone-utils.ts": 1,
@@ -3372,7 +3383,7 @@
   "src/hooks/useCriticalAlertNotifications.ts": 1,
   "src/hooks/useCrmFieldSuggestions.ts": 1,
   "src/hooks/useCulturalHints.ts": 1,
-  "src/hooks/useDNCCompliance.ts": 1,
+  "src/hooks/useDNCCompliance.ts": 2,
   "src/hooks/useDashboardData.ts": 1,
   "src/hooks/useDashboardGoals.ts": 1,
   "src/hooks/useDashboardLayout.ts": 1,

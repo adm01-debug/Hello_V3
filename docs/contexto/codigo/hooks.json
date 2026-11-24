@@ -2150,7 +2150,7 @@
    "hooks_exportados": [
     "useDNCCompliance"
    ],
-   "linhas": 304,
+   "linhas": 310,
    "dominio": "hooks",
    "tabelas": [
     "calling_hours_config",
@@ -2171,15 +2171,16 @@
     "useState"
    ],
    "canais_realtime": [],
-   "usado_por": 5,
+   "usado_por": 6,
    "usado_por_arquivos": [
     "src/components/compliance/ComplianceSettings.tsx",
     "src/components/compliance/DNCListManager.tsx",
+    "src/components/compliance/dnc/ImportDNCDialog.tsx",
     "src/components/dialer/PredictiveDialerPanel.tsx",
     "src/contexts/CallContext.tsx",
     "src/pages/PhoneDialer.tsx"
    ],
-   "coberto_por_testes": 1
+   "coberto_por_testes": 2
   },
   {
    "arquivo": "src/hooks/useExecutiveDashboard.ts",

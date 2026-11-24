@@ -2,11 +2,16 @@
  "aviso": "GERADO AUTOMATICAMENTE por scripts/ai-context/gerar.mjs — não editar à mão; será sobrescrito.",
  "format_version": 2,
  "git": {
-  "commit": "9add2c18a3f672efb3ef70e568ff9936f4268ac6",
+  "commit": "6be7a6383601f1d519b334cd8bf3ec38424ac880",
   "branch": "main",
-  "data_commit": "2026-11-23T21:57:09-03:00",
+  "data_commit": "2026-11-23T22:02:30-03:00",
   "remote": "https://github.com/adm01-debug/Hello_V3",
   "ultimos_commits": [
+   {
+    "sha": "6be7a63",
+    "data": "2026-11-23",
+    "assunto": "fix: importacao de DNC passa a conferir o resultado real da RPC (#206)"
+   },
    {
     "sha": "9add2c1",
     "data": "2026-11-23",
@@ -126,14 +131,9 @@
     "sha": "560302d",
     "data": "2026-11-23",
     "assunto": "fix: unifica o limiar de qualidade MOS em uma lib (E113) (#182)"
-   },
-   {
-    "sha": "5e20177",
-    "data": "2026-11-23",
-    "assunto": "fix: SLA passa a respeitar horario comercial e feriados (E111) (#181)"
    }
   ],
-  "arquivos_mudados_7d": 992,
+  "arquivos_mudados_7d": 997,
   "pastas_mais_mudadas_30d": [
    {
     "pasta": "covout/lcov-report/hooks",
@@ -145,11 +145,11 @@
    },
    {
     "pasta": "docs/qa/05-PROGRESSO.md",
-    "mudancas": 36
+    "mudancas": 37
    },
    {
     "pasta": "src/hooks/__tests__",
-    "mudancas": 35
+    "mudancas": 36
    },
    {
     "pasta": "docs/estado/funcionalidades-planejadas.md",
@@ -176,6 +176,10 @@
     "mudancas": 16
    },
    {
+    "pasta": "src/components/compliance",
+    "mudancas": 10
+   },
+   {
     "pasta": "src/components/network",
     "mudancas": 9
    },
@@ -190,16 +194,12 @@
    {
     "pasta": "src/components/dashboard",
     "mudancas": 8
-   },
-   {
-    "pasta": "src/pages/admin",
-    "mudancas": 8
    }
   ],
   "arquivos_mais_mudados_90d": [
    {
     "arquivo": "docs/qa/05-PROGRESSO.md",
-    "mudancas": 36
+    "mudancas": 37
    },
    {
     "arquivo": "docs/estado/funcionalidades-planejadas.md",
@@ -301,7 +301,7 @@
   "autores_30d": [
    {
     "autor": "adm01-debug",
-    "commits": 184
+    "commits": 185
    },
    {
     "autor": "Joaquim Ataides",
@@ -314,9 +314,9 @@
   ]
  },
  "contagens": {
-  "arquivos_total": 1686,
-  "arquivos_codigo": 1284,
-  "linhas_codigo": 174056,
+  "arquivos_total": 1687,
+  "arquivos_codigo": 1285,
+  "linhas_codigo": 174114,
   "rotas": 106,
   "rotas_http_backend": 12,
   "vistas_por_id": 0,
@@ -328,7 +328,7 @@
   "tabelas": 169,
   "migrations": 242,
   "cron_jobs": 11,
-  "testes": 367,
+  "testes": 368,
   "workflows": 3,
   "scripts": 34,
   "docs_md": 120
@@ -479,8 +479,8 @@
    "linhas": 450
   },
   "src/components": {
-   "arquivos": 355,
-   "linhas": 42595
+   "arquivos": 356,
+   "linhas": 42646
   },
   "src/contexts": {
    "arquivos": 4,
@@ -492,7 +492,7 @@
   },
   "src/hooks": {
    "arquivos": 354,
-   "linhas": 46333
+   "linhas": 46340
   },
   "src/integrations": {
    "arquivos": 3,
