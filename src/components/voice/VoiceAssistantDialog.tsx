@@ -60,7 +60,7 @@ export function VoiceAssistantDialog({ open, onOpenChange, onIntent }: VoiceAssi
   const textInputRef = useRef<HTMLInputElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
   const returnFocusRef = useRef<HTMLElement | null>(null);
-  const restoreTimerRef = useRef<number | null>(null);
+  const devolverFocoRef = useRef<HTMLElement | null>(null);
   const wasOpenRef = useRef(false);
   const ttsEnabledRef = useRef(ttsEnabled);
   ttsEnabledRef.current = ttsEnabled;
@@ -178,10 +178,6 @@ export function VoiceAssistantDialog({ open, onOpenChange, onIntent }: VoiceAssi
   // overlay e, ao fechar, o foco ficava perdido no body.
   useEffect(() => {
     if (!open) return;
-    if (restoreTimerRef.current !== null) {
-      window.clearTimeout(restoreTimerRef.current);
-      restoreTimerRef.current = null;
-    }
     const anterior = document.activeElement;
     returnFocusRef.current = anterior instanceof HTMLElement ? anterior : null;
     containerRef.current?.focus();
@@ -200,27 +196,23 @@ export function VoiceAssistantDialog({ open, onOpenChange, onIntent }: VoiceAssi
     document.addEventListener('focusin', onFocusIn);
     return () => {
       document.removeEventListener('focusin', onFocusIn);
-      const alvo = returnFocusRef.current;
+      devolverFocoRef.current = returnFocusRef.current;
       returnFocusRef.current = null;
+      const alvo = devolverFocoRef.current;
       if (alvo && document.contains(alvo)) alvo.focus();
-      // O conteudo do dialogo ainda sai do DOM durante a animacao de fechamento e o
-      // foco pode parar no body ou num no removido. Devolve ao gatilho quando o
-      // overlay termina de sair; um clique do usuario cancela a devolucao.
-      const desistir = () => {
-        if (restoreTimerRef.current !== null) {
-          window.clearTimeout(restoreTimerRef.current);
-          restoreTimerRef.current = null;
-        }
-      };
-      document.addEventListener('pointerdown', desistir, { capture: true, once: true });
-      if (restoreTimerRef.current !== null) window.clearTimeout(restoreTimerRef.current);
-      restoreTimerRef.current = window.setTimeout(() => {
-        document.removeEventListener('pointerdown', desistir, { capture: true });
-        restoreTimerRef.current = null;
-        if (alvo && document.contains(alvo) && document.activeElement !== alvo) alvo.focus();
-      }, 400);
     };
   }, [open]);
+
+  // O conteudo do dialogo so sai do DOM quando a animacao de fechamento termina e o
+  // foco pode ficar preso dentro dele ou perdido no body. Devolver ao gatilho neste
+  // ponto e o ultimo momento possivel: nada mais mexe no foco depois do desmonte.
+  useEffect(() => {
+    if (open || isClosing) return;
+    const alvo = devolverFocoRef.current;
+    if (!alvo) return;
+    devolverFocoRef.current = null;
+    if (document.contains(alvo) && document.activeElement !== alvo) alvo.focus();
+  }, [open, isClosing]);
 
   // Atalhos de teclado
   useEffect(() => {

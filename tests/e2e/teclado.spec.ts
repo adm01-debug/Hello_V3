@@ -296,22 +296,26 @@ test.describe('Etapa 273 - navegacao por teclado no fluxo de chamada', () => {
     const lerFocoFinal = () =>
       page.evaluate(() => {
         const el = document.activeElement as HTMLElement | null;
-        if (!el) return { ok: false, ativo: 'null' };
-        const texto = `${el.getAttribute('aria-label') ?? ''} ${el.textContent ?? ''}`
+        const dialogos = Array.from(document.querySelectorAll('[role="dialog"][aria-modal="true"]'));
+        const inertes = document.querySelectorAll('[inert]').length;
+        if (!el) return { ok: false, ativo: 'null', extra: `dialogos=${dialogos.length} inert=${inertes}` };
+        const rotulo = `${el.getAttribute('aria-label') ?? ''} ${el.textContent ?? ''}`
           .replace(/\s+/g, ' ')
-          .trim()
-          .toLowerCase();
+          .trim();
+        const marca = el.getAttribute('data-marco273');
+        const dentroDialogo = !!el.closest('[role="dialog"][aria-modal="true"]');
         return {
-          ok: el.getAttribute('data-marco273') === 'gatilho' || texto.includes('assistente de voz'),
-          ativo: `${el.tagName.toLowerCase()}#${el.id}.${String(el.className).slice(0, 40)}`,
+          ok: marca === 'gatilho' || (!dentroDialogo && rotulo.toLowerCase().includes('assistente de voz')),
+          ativo: `${el.tagName.toLowerCase()}[${rotulo.slice(0, 60)}]`,
+          extra: `marca=${marca} noDialogo=${dentroDialogo} dialogos=${dialogos.length} inert=${inertes}`,
         };
       });
 
-    let leitura = { ok: false, ativo: 'nao lido' };
+    let leitura = { ok: false, ativo: 'nao lido', extra: '' };
     const limiteFoco = Date.now() + 5_000;
     while (!leitura.ok && Date.now() < limiteFoco) {
       leitura = await comPrazo(lerFocoFinal(), 15_000, 'ler-foco-final');
-      process.stdout.write(`FOCO-273 ativo=${leitura.ativo} gatilho=${leitura.ok}\n`);
+      process.stdout.write(`FOCO-273 ativo=${leitura.ativo} ${leitura.extra} gatilho=${leitura.ok}\n`);
       if (!leitura.ok) await new Promise((seguir) => setTimeout(seguir, 100));
     }
     const devolveu = leitura.ok;
