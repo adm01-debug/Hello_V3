@@ -128,6 +128,19 @@ const adminNavItems = [
 
 type NavItemType = { title: string; url: string; icon: React.ElementType };
 
+// Uniao dos itens dos 7 grupos. Exportada para o teste de cobertura de navegacao
+// (etapa 265) comparar rota protegida x item de menu.
+// eslint-disable-next-line react-refresh/only-export-components -- constante de configuracao consumida pelo teste; regra e so de HMR
+export const sidebarNavItems: NavItemType[] = [
+  ...mainNavItems,
+  ...crmNavItems,
+  ...omnichannelNavItems,
+  ...toolsNavItems,
+  ...securityNavItems,
+  ...settingsNavItems,
+  ...adminNavItems,
+];
+
 interface NavGroupProps {
   label: string;
   items: NavItemType[];

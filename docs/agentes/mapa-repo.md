@@ -201,3 +201,32 @@ Esta tabela **nao** declara papel nenhum — e insumo para a decisao. "O que a t
 - `/history` e a rota canonica do `CallHistory`; `/call-history` e **alias** (`CallHistoryAlias`, `protectedRoutes.tsx`) que redireciona para `/history` preservando a query string — nao e mais uma segunda montagem do mesmo componente (etapa 266).
 - `/dashboard` (`Index`) e `/` (`PhoneDialer`) coexistem: a raiz autenticada e o discador, e o menu aponta para `/dashboard`.
 - O catch-all `*` (`NotFound`) nao deve receber `roles:`: precisa continuar acessivel a qualquer sessao autenticada.
+
+## Cobertura de menu das rotas protegidas (etapa 265)
+
+**Medido no arquivo em 24/11/2026**, não no relatório de agosto (que contava 15 rotas sem menu):
+`src/routes/protectedRoutes.tsx` tem **95 rotas** (94 telas + o catch-all `*`), `AppSidebar.tsx` tem
+**93 itens** somando os 7 grupos (`mainNavItems`, `crmNavItems`, `omnichannelNavItems`, `toolsNavItems`,
+`securityNavItems`, `settingsNavItems`, `adminNavItems`), a `CommandPalette` 79 e o `MobileBottomNav` 5.
+
+| Cruzamento | Resultado |
+|---|---|
+| Rotas protegidas sem item de menu | **1** — só `/call-history` |
+| Itens de menu sem rota correspondente | 0 (nenhum link morto) |
+| Itens de menu repetidos | 0 |
+| Itens da paleta de comandos sem rota | 0 (79/79) |
+
+### Decisão por rota (as três respostas que o plano aceita)
+
+| Caso | Decisão | Motivo |
+|---|---|---|
+| 93 rotas com item de menu | **no menu** — nenhuma mudança | já era o estado do arquivo; o achado A-086 estava desatualizado |
+| `/call-history` | **registrada como link direto** | alias que redireciona para `/history` preservando a query (etapa 266); o acesso real é o deep link `src/pages/CallLibrary.tsx` → `/call-history?session=…`; um item de menu seria uma segunda entrada para a mesma tela |
+| Nenhuma rota | **removida** | nenhuma funcionalidade foi substituída |
+| `*` | fora da conta | catch-all do `NotFound`, não é tela de negócio |
+
+**Por que não fica só no documento:** um rota nova sem entrada de navegação volta a passar despercebida.
+`src/components/layout/__tests__/AppSidebar.test.tsx` (bloco `E265`) cruza `protectedRoutes` com
+`sidebarNavItems` (exportado de `AppSidebar.tsx`) e aceita rota sem menu **apenas** se ela estiver em
+`DIRECT_LINK_ROUTES`; o mesmo teste exige que o link direto continue existindo como rota — quando a
+etapa 266 apagar `/call-history`, o teste falha e obriga a limpar a lista.
