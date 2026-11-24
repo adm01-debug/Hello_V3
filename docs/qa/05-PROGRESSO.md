@@ -6,11 +6,11 @@
 
 | Marca | Significado |
 |---|---|
-| `[ ]` | **176** |
+| `[ ]` | **175** |
 | `[>]` | em andamento (branch criada) |
 | `[P]` | 0 |
 | `[~]` | 0 |
-| `[x]` | 124 |
+| `[x]` | 125 |
 | `[-]` | 0 |
 
 **`[x]` exige evidência.** Escreva ao lado, entre parênteses, o comando ou a consulta que você rodou e o resultado. Sem isso, a marca é `[~]`.
@@ -24,11 +24,11 @@
 | | Quantidade |
 |---|---:|
 | Total de etapas | 300 |
-| `[x]` concluídas | 124 |
+| `[x]` concluídas | 125 |
 | `[P]` aguardando o dono | 0 |
 | `[~]` parciais | 0 |
 | `[-]` descartadas | 0 |
-| `[ ]` não iniciadas | **176** |
+| `[ ]` não iniciadas | **175** |
 
 *Atualize esta tabela ao fim de cada onda.*
 
