@@ -28,7 +28,7 @@ interface Parada {
   visivel: boolean;
 }
 
-const MAX_TABS = 60;
+const MAX_TABS = 40;
 
 /** Meta do plano: percorrer o fluxo com Tab/Enter/Esc, sem mouse. */
 const ROTA_DISCADOR = '/';
@@ -142,7 +142,19 @@ test.describe('Etapa 273 - navegacao por teclado no fluxo de chamada', () => {
     page,
     context,
   }) => {
-    test.setTimeout(300_000);
+    test.setTimeout(180_000);
+
+    const marco = (etapa: string) => process.stdout.write(`MARCO-273 ${etapa}\n`);
+    // O dialogo anima um overlay de tela cheia; no headless sem GPU uma acao
+    // pode ficar na fila para sempre. Prazo por passo = fail rapido com o
+    // nome do passo, em vez de estourar o timeout de 15 min do job.
+    const comPrazo = <T,>(promessa: Promise<T>, ms: number, etapa: string): Promise<T> =>
+      Promise.race([
+        promessa,
+        new Promise<T>((_, rejeitar) =>
+          setTimeout(() => rejeitar(new Error(`MARCO-273 ${etapa}: sem resposta em ${ms} ms`)), ms),
+        ),
+      ]);
 
     const seeded = await seedAdminSession(context, page);
     await page.goto('/dashboard');
@@ -155,50 +167,83 @@ test.describe('Etapa 273 - navegacao por teclado no fluxo de chamada', () => {
     await page.goto(ROTA_DISCADOR, { waitUntil: 'domcontentloaded' });
     await page.waitForLoadState('networkidle').catch(() => undefined);
     await page.evaluate(() => (document.activeElement as HTMLElement | null)?.blur());
+    // O overlay do assistente e blur de tela cheia com cor animada: no headless
+    // sem GPU isso satura o renderer e engasga o teclado. Desligar o blur aqui
+    // mede o comportamento de foco, nao o custo de pintura.
+    await page.addStyleTag({ content: '*{backdrop-filter:none !important;}' });
+    marco('disco-pronto');
 
     const gatilho = page.getByRole('button', { name: /assistente de voz/i }).first();
     await expect(gatilho, 'o gatilho do assistente de voz nao existe no discador').toBeVisible();
+    marco('gatilho-visivel');
 
     // Chega ao gatilho so com Tab, como faria quem opera sem mouse.
     let achou = false;
     for (let i = 0; i < MAX_TABS; i += 1) {
-      await page.keyboard.press('Tab');
-      if (await gatilho.evaluate((el) => el === document.activeElement)) {
+      await comPrazo(page.keyboard.press('Tab'), 15_000, `tab-ate-gatilho-${i + 1}`);
+      if (await comPrazo(gatilho.evaluate((el) => el === document.activeElement), 15_000, `ler-foco-${i + 1}`)) {
         achou = true;
         break;
       }
     }
     expect(achou, 'o Tab nunca alcancou o gatilho do assistente de voz').toBe(true);
+    marco('gatilho-focado');
 
-    await page.keyboard.press('Enter');
+    await comPrazo(page.keyboard.press('Enter'), 15_000, 'enter-no-gatilho');
     const dialogo = page.locator('[role="dialog"][aria-modal="true"]').first();
-    await expect(dialogo, 'Enter no gatilho nao abriu o dialogo').toBeVisible({ timeout: 10_000 });
-
-    const estado = await page.evaluate(() => {
-      const d = document.querySelector('[role="dialog"][aria-modal="true"]');
-      const ativo = document.activeElement as HTMLElement | null;
-      return { dentro: !!d && !!ativo && d.contains(ativo), focado: ativo?.tagName.toLowerCase() ?? 'null' };
-    });
-    process.stdout.write(
-      `DIALOGO-273 focoDentro=${estado.dentro} elementoFocado=${estado.focado}\n`,
+    await comPrazo(
+      expect(dialogo, 'Enter no gatilho nao abriu o dialogo').toBeVisible({ timeout: 10_000 }),
+      20_000,
+      'dialogo-visivel',
     );
+    marco('dialogo-aberto');
+
+    const estado = await comPrazo(
+      page.evaluate(() => {
+        const d = document.querySelector('[role="dialog"][aria-modal="true"]');
+        const ativo = document.activeElement as HTMLElement | null;
+        return {
+          dentro: !!d && !!ativo && d.contains(ativo),
+          focado: ativo?.tagName.toLowerCase() ?? 'null',
+        };
+      }),
+      20_000,
+      'medir-foco-inicial',
+    );
+    process.stdout.write(`DIALOGO-273 focoDentro=${estado.dentro} elementoFocado=${estado.focado}\n`);
     expect(estado.dentro, 'o foco nao entrou no dialogo: o Tab continua na tela de tras').toBe(true);
+    marco('foco-dentro');
 
     // Tres Tabs: o foco nao pode escapar do modal.
     for (let i = 0; i < 3; i += 1) {
-      await page.keyboard.press('Tab');
-      const aindaDentro = await page.evaluate(() => {
-        const d = document.querySelector('[role="dialog"][aria-modal="true"]');
-        return !!d && !!document.activeElement && d.contains(document.activeElement);
-      });
+      await comPrazo(page.keyboard.press('Tab'), 15_000, `tab-no-dialogo-${i + 1}`);
+      const aindaDentro = await comPrazo(
+        page.evaluate(() => {
+          const d = document.querySelector('[role="dialog"][aria-modal="true"]');
+          return !!d && !!document.activeElement && d.contains(document.activeElement);
+        }),
+        15_000,
+        `medir-tab-no-dialogo-${i + 1}`,
+      );
       expect(aindaDentro, `o foco escapou do dialogo na tabulacao ${i + 1}`).toBe(true);
+      marco(`tab-preso-${i + 1}`);
     }
 
-    await page.keyboard.press('Escape');
-    await expect(dialogo, 'Esc nao fechou o dialogo').toBeHidden({ timeout: 10_000 });
+    await comPrazo(page.keyboard.press('Escape'), 15_000, 'escape');
+    await comPrazo(
+      expect(dialogo, 'Esc nao fechou o dialogo').toBeHidden({ timeout: 10_000 }),
+      20_000,
+      'dialogo-fechado',
+    );
+    marco('dialogo-fechado');
 
-    const devolveu = await gatilho.evaluate((el) => el === document.activeElement);
+    const devolveu = await comPrazo(
+      gatilho.evaluate((el) => el === document.activeElement),
+      15_000,
+      'ler-foco-final',
+    );
     process.stdout.write(`ESC-273 dialogoFechou=true focoNoGatilho=${devolveu}\n`);
     expect(devolveu, 'o foco nao voltou ao gatilho depois de fechar com Esc').toBe(true);
+    marco('fim');
   });
 });
