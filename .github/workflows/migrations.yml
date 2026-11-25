@@ -1,19 +1,29 @@
-# Aplica UMA migration de supabase/migrations/ no banco oficial, sob demanda.
-#
-#   gatilho: workflow_dispatch (nunca push/pull_request -- DDL em producao nao roda sozinho)
-#   prova:   o mesmo arquivo executa dentro de BEGIN/ROLLBACK antes (dry-run) e so depois grava,
-#            com --single-transaction + ON_ERROR_STOP=1, e registra a versao em public.schema_migrations
-#   motivo:  o repo tem 243 migrations e nenhum workflow as aplica; `supabase db push` tentaria
-#            reaplicar o historico inteiro de uma vez. Por isso a aplicacao e por arquivo, explicita.
-#   segredo: SUPABASE_DB_URL (pooler session). A URL nunca e impressa nos logs.
+# docs:
+#   gatilho: dispatch manual (nenhum push aplica DDL em producao)
+#   prova: dry-run executa o arquivo e reverte; APLICAR grava e registra em public.schema_migrations
+#   modos: arquivo | pendentes | verificar
+#     arquivo    -> aplica (ou simula) UM arquivo de supabase/migrations/
+#     pendentes  -> lista o que existe no repositorio e nao esta em public.schema_migrations e aplica em ordem
+#     verificar  -> roda supabase/tests/*_rls_test.sql (transacoes revertidas no fim, nada fica gravado)
+#   falha: nome fora do padrao, arquivo inexistente, versao ja aplicada, erro de SQL, secret ausente
 name: Aplicar migration (manual)
 
 on:
   workflow_dispatch:
     inputs:
-      arquivo:
-        description: 'Arquivo em supabase/migrations (ex.: 20261123120000_user_preferences.sql)'
+      modo:
+        description: 'arquivo = um arquivo | pendentes = fila do que falta no banco | verificar = testes de RLS'
         required: true
+        default: arquivo
+        type: choice
+        options:
+          - arquivo
+          - pendentes
+          - verificar
+      arquivo:
+        description: 'Nome do arquivo em supabase/migrations (obrigatorio no modo arquivo)'
+        required: false
+        default: ''
         type: string
       confirmar:
         description: 'Digite APLICAR para gravar de verdade; qualquer outro valor faz apenas dry-run'
@@ -21,7 +31,7 @@ on:
         default: dry-run
         type: string
       ref:
-        description: 'Branch de onde ler o arquivo (vazio = branch padrao). Permite aplicar a migration de uma PR antes do merge'
+        description: 'Branch de onde ler os arquivos (vazio = branch padrao). Permite aplicar a migration de uma PR antes do merge'
         required: false
         default: ''
         type: string
@@ -36,18 +46,35 @@ concurrency:
 jobs:
   aplicar:
     runs-on: ubuntu-24.04
-    timeout-minutes: 10
+    timeout-minutes: 15
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           ref: ${{ inputs.ref || github.ref }}
 
-      - name: Validar o arquivo de entrada
+      - name: Conferir credencial
         env:
-          ARQUIVO: ${{ inputs.arquivo }}
+          SUPABASE_DB_URL: ${{ secrets.SUPABASE_DB_URL }}
         run: |
           set -euo pipefail
-          if ! printf '%s' "$ARQUIVO" | grep -Eq '^[0-9]{14}_[A-Za-z0-9_]+\.sql$'; then
+          if [ -z "${SUPABASE_DB_URL:-}" ]; then
+            echo "::error::Secret SUPABASE_DB_URL ausente no repositorio"; exit 1
+          fi
+          psql "$SUPABASE_DB_URL" -tA -v ON_ERROR_STOP=1 -c "select current_user" >/dev/null
+          echo "credencial ok"
+
+      - name: Validar arquivo de entrada
+        if: inputs.modo == 'arquivo'
+        id: alvo
+        env:
+          ENTRADA: ${{ inputs.arquivo }}
+        run: |
+          set -euo pipefail
+          ARQUIVO="$ENTRADA"
+          if [ -z "$ARQUIVO" ]; then
+            echo "::error::Informe o nome do arquivo (ex.: 20261123120000_user_preferences.sql)"; exit 1
+          fi
+          if ! printf '%s' "$ARQUIVO" | grep -qE '^[0-9]{14}_[A-Za-z0-9_-]+\.sql$'; then
             echo "::error::Nome invalido: $ARQUIVO (esperado AAAAMMDDHHMMSS_nome.sql)"; exit 1
           fi
           if [ ! -f "supabase/migrations/$ARQUIVO" ]; then
@@ -59,38 +86,108 @@ jobs:
             echo "VERSAO=$versao"
             echo "CHECKSUM=$(sha256sum "supabase/migrations/$ARQUIVO" | cut -d' ' -f1)"
           } >> "$GITHUB_ENV"
-          echo "arquivo validado: $ARQUIVO (versao $versao)"
 
       - name: Conferir se a versao ja foi aplicada
+        if: inputs.modo == 'arquivo'
         env:
           SUPABASE_DB_URL: ${{ secrets.SUPABASE_DB_URL }}
         run: |
           set -euo pipefail
-          if [ -z "${SUPABASE_DB_URL:-}" ]; then
-            echo "::error::Secret SUPABASE_DB_URL ausente no repositorio"; exit 1
-          fi
           registros=$(psql "$SUPABASE_DB_URL" -tA -v ON_ERROR_STOP=1 \
             -c "select count(*) from public.schema_migrations where version = '${VERSAO}'")
           echo "registros em public.schema_migrations para ${VERSAO}: ${registros}"
+          if [ "$registros" != "0" ]; then
+            echo "::error::Versao ${VERSAO} ja aplicada (${ARQUIVO}). Nada a fazer."; exit 1
+          fi
 
       - name: Dry-run (executa e reverte dentro da mesma sessao)
-        if: ${{ inputs.confirmar != 'APLICAR' }}
+        if: inputs.modo == 'arquivo' && inputs.confirmar != 'APLICAR'
         env:
           SUPABASE_DB_URL: ${{ secrets.SUPABASE_DB_URL }}
         run: |
           set -euo pipefail
-          psql "$SUPABASE_DB_URL" -v ON_ERROR_STOP=1 -q \
+          psql "$SUPABASE_DB_URL" -v ON_ERROR_STOP=1 \
             -c 'begin;' -f "supabase/migrations/${ARQUIVO}" -c 'rollback;'
           echo "dry-run ok: ${ARQUIVO} executou sem erro e foi revertido. Nada foi gravado."
 
       - name: Aplicar em producao
-        if: ${{ inputs.confirmar == 'APLICAR' }}
+        if: inputs.modo == 'arquivo' && inputs.confirmar == 'APLICAR'
         env:
           SUPABASE_DB_URL: ${{ secrets.SUPABASE_DB_URL }}
         run: |
           set -euo pipefail
           psql "$SUPABASE_DB_URL" -v ON_ERROR_STOP=1 --single-transaction -q \
             -f "supabase/migrations/${ARQUIVO}"
-          psql "$SUPABASE_DB_URL" -v ON_ERROR_STOP=1 -tA \
+          psql "$SUPABASE_DB_URL" -tA -v ON_ERROR_STOP=1 \
             -c "select public.apply_migration('${VERSAO}', '${ARQUIVO}', '${CHECKSUM}')"
           echo "aplicada: ${ARQUIVO}"
+
+      - name: Levantar a fila (arquivos sem registro no banco)
+        if: inputs.modo == 'pendentes'
+        env:
+          SUPABASE_DB_URL: ${{ secrets.SUPABASE_DB_URL }}
+        run: |
+          set -euo pipefail
+          psql "$SUPABASE_DB_URL" -tA -v ON_ERROR_STOP=1 \
+            -c "select version from public.schema_migrations" | sort > /tmp/aplicadas.txt
+          find supabase/migrations -maxdepth 1 -type f -name '*.sql' -printf '%f\n' \
+            | grep -E '^[0-9]{14}_[A-Za-z0-9_-]+\.sql$' | sort > /tmp/arquivos.txt
+          sed -E 's/^([0-9]{14})_.*/\1/' /tmp/arquivos.txt | sort > /tmp/versoes_brutas.txt
+          cp /tmp/versoes_brutas.txt /tmp/versoes.txt
+          echo "arquivos no repositorio: $(wc -l < /tmp/arquivos.txt)"
+          colisoes=$(uniq -d /tmp/versoes_brutas.txt || true)
+          erro_colisao=0
+          for v in $colisoes; do
+            arquivos_dup=$(grep "^${v}_" /tmp/arquivos.txt | tr '\n' ' ')
+            if grep -qx "$v" /tmp/aplicadas.txt; then
+              echo "::warning::version ${v} tem mais de um arquivo (${arquivos_dup}) e ja esta registrada no banco: uma das partes pode nunca ter sido aplicada e o historico nao distingue qual. Confira manualmente."
+            else
+              echo "::error::version ${v} tem mais de um arquivo (${arquivos_dup}) e nao esta registrada: aplicar seria ambiguo."
+              erro_colisao=1
+            fi
+          done
+          if [ "$erro_colisao" = "1" ]; then exit 1; fi
+          echo "versoes registradas no banco: $(wc -l < /tmp/aplicadas.txt)"
+          comm -23 /tmp/versoes.txt /tmp/aplicadas.txt > /tmp/pendentes.txt
+          echo "pendentes: $(wc -l < /tmp/pendentes.txt)"
+          while read -r v; do
+            echo "::warning::pendente ${v}: $(grep "^${v}_" /tmp/arquivos.txt)"
+          done < /tmp/pendentes.txt
+          echo "PENDENTES=$(tr '\n' ' ' < /tmp/pendentes.txt)" >> "$GITHUB_ENV"
+
+      - name: Aplicar a fila em ordem
+        if: inputs.modo == 'pendentes' && inputs.confirmar == 'APLICAR'
+        env:
+          SUPABASE_DB_URL: ${{ secrets.SUPABASE_DB_URL }}
+        run: |
+          set -euo pipefail
+          if [ -z "${PENDENTES:-}" ]; then echo "nada pendente"; exit 0; fi
+          for v in $PENDENTES; do
+            arquivo=$(grep "^${v}_" /tmp/arquivos.txt)
+            echo "::group::Aplicando ${arquivo}"
+            psql "$SUPABASE_DB_URL" -v ON_ERROR_STOP=1 --single-transaction -q \
+              -f "supabase/migrations/${arquivo}"
+            checksum=$(sha256sum "supabase/migrations/${arquivo}" | cut -d' ' -f1)
+            psql "$SUPABASE_DB_URL" -tA -v ON_ERROR_STOP=1 \
+              -c "select public.apply_migration('${v}', '${arquivo}', '${checksum}')"
+            echo "aplicada: ${arquivo}"
+            echo "::endgroup::"
+          done
+
+      - name: Testes de RLS (transacao revertida em cada arquivo)
+        if: inputs.modo == 'verificar'
+        env:
+          SUPABASE_DB_URL: ${{ secrets.SUPABASE_DB_URL }}
+        run: |
+          set -euo pipefail
+          shopt -s nullglob
+          testes=(supabase/tests/*_rls_test.sql)
+          if [ ${#testes[@]} -eq 0 ]; then
+            echo "::error::Nenhum supabase/tests/*_rls_test.sql encontrado"; exit 1
+          fi
+          for t in "${testes[@]}"; do
+            echo "::group::${t}"
+            psql "$SUPABASE_DB_URL" -v ON_ERROR_STOP=1 -f "$t"
+            echo "::endgroup::"
+          done
+          echo "todos os testes de RLS passaram"
