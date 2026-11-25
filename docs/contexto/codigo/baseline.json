@@ -2,11 +2,16 @@
  "aviso": "GERADO AUTOMATICAMENTE por scripts/ai-context/gerar.mjs — não editar à mão; será sobrescrito.",
  "format_version": 2,
  "git": {
-  "commit": "e34a05c14a9ed183990d839f184cd647d60b49b9",
+  "commit": "6943f538416dcf6ae2498e8b5dbb6cd70945163f",
   "branch": "main",
-  "data_commit": "2026-11-25T19:08:30-03:00",
+  "data_commit": "2026-11-25T19:24:53-03:00",
   "remote": "https://github.com/adm01-debug/Hello_V3",
   "ultimos_commits": [
+   {
+    "sha": "6943f53",
+    "data": "2026-11-25",
+    "assunto": "chore: corrigir achados A-216/A-217 e criar gate contra regressao de RLS no historico de migrations"
+   },
    {
     "sha": "e34a05c",
     "data": "2026-11-25",
@@ -126,14 +131,9 @@
     "sha": "960c999",
     "data": "2026-11-25",
     "assunto": "feat: preferencias de notificacao e audio persistem (E076) (#171)"
-   },
-   {
-    "sha": "db63479",
-    "data": "2026-11-25",
-    "assunto": "infra: workflow manual para aplicar migration no banco oficial (#311)"
    }
   ],
-  "arquivos_mudados_7d": 1303,
+  "arquivos_mudados_7d": 1304,
   "pastas_mais_mudadas_30d": [
    {
     "pasta": "covout/lcov-report/hooks",
@@ -310,7 +310,7 @@
   ]
  },
  "contagens": {
-  "arquivos_total": 1758,
+  "arquivos_total": 1759,
   "arquivos_codigo": 1351,
   "linhas_codigo": 179838,
   "rotas": 106,
@@ -324,7 +324,7 @@
   "tabelas": 170,
   "migrations": 245,
   "cron_jobs": 11,
-  "testes": 413,
+  "testes": 414,
   "workflows": 4,
   "scripts": 36,
   "docs_md": 121

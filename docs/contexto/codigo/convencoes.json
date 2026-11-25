@@ -59,11 +59,11 @@
  "commits": {
   "convencao": "conventional commits (observado)",
   "exemplos": [
+   "chore: corrigir achados A-216/A-217 e criar gate contra regressao de RLS no historico de migrations",
    "fix: renumerar migration duplicada que quebrava a Supabase Preview",
    "fix: bloquear discagem quando DNC/horario nao puder ser verificado (etapa 035)",
    "fix: painel de chamadas ativas avisa quando a leitura falha (A-218) (#332)",
-   "fix: botao de excluir contato com icone proprio e acoes de UI que mentiam (#331)",
-   "fix: ligar do cartao de contato e do retorno discam de verdade (#330)"
+   "fix: botao de excluir contato com icone proprio e acoes de UI que mentiam (#331)"
   ]
  },
  "pr_template": null,
