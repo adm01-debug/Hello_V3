@@ -1,6 +1,6 @@
 # 07 · REGRAS DE NEGÓCIO
 
-> Gerado automaticamente por AI Context Sync v1.3.2 · commit `abcba36164` · branch `main` · 2026-11-25 18:19 UTC
+> Gerado automaticamente por AI Context Sync v1.3.2 · commit `0fc57cdc85` · branch `main` · 2026-11-25 19:32 UTC
 > Não edite à mão — regras humanas vão em `manual/`.
 
 ## A. Regras escritas por humanos (`manual/` — prioridade máxima, nunca sobrescrito)
@@ -2656,7 +2656,7 @@ _nenhum item encontrado_
 | `admin` | `supabase/functions/data-lake-flush/index.ts` |
 | `admin` | `supabase/migrations/20261123000200_fix_has_role_oracle_and_debug_tables.sql` |
 
-## K. Testes como especificação (3615 testes em 393 arquivos — nomes completos em `context.json`)
+## K. Testes como especificação (3623 testes em 395 arquivos — nomes completos em `context.json`)
 
 | Arquivo | Testes | Exemplos do que o sistema DEVE fazer |
 |---|---|---|
@@ -2927,6 +2927,7 @@ _nenhum item encontrado_
 | `src/lib/security/__tests__/encryption.coverage.test.ts` | 5 | encryption (coverage) · round-trips encrypt/decrypt with a generated key · hashData returns base64 string with real crypto · arrayBufferToBase64 and base64ToArrayBuffer are inverse operations … |
 | `src/lib/security/__tests__/security-headers-validator.coverage.test.ts` | 5 | security-headers-validator · returns all headers present when fetch succeeds · returns all headers absent when fetch rejects · handles a mixed set of present/absent headers … |
 | `src/pages/__tests__/IPWhitelist.test.tsx` | 5 | IPWhitelist · alerts when the whitelist could not be read · shows the genuine empty state when the read succeeded · does not present an empty user table as  … |
+| `src/pages/__tests__/SLAPolicies.enforce.test.tsx` | 5 | SLAPolicies — enforcement e violacoes (etapas 151 e 179) · o botao de verificacao dispara o enforcement · mostra as violacoes por canal, so os canais com violacao · lista as conversas em violacao … |
 | `src/pages/__tests__/Status.test.tsx` | 5 | Status — sem medição (E092) · mostra  · mostra  · Status — erro no carregamento (E093) … |
 | `supabase/functions/_shared/__tests__/rate-limit.test.ts` | 5 | rate-limit: DB liberado devolve allowed · rate-limit: DB bloqueando devolve allowed=false com motivo · rate-limit: erro do banco segue fail-open por padrao · rate-limit: erro do banco nega quando onError=deny … |
 | `supabase/functions/analyze-call/__tests__/upstream-falha.test.ts` | 5 | analyze-call: caminho feliz devolve a analise estruturada · analyze-call: IA sem prazo devolve 503 AI_UNAVAILABLE sem gravar nada · analyze-call: 500 do provedor devolve 503 AI_SERVICE_UNAVAILABLE · analyze-call: 429 do provedor devolve 503 AI_SERVICE_UNAVAILABLE … |
@@ -2959,8 +2960,7 @@ _nenhum item encontrado_
 | `src/hooks/__tests__/useNotificationPreferences.test.tsx` | 4 | useNotificationPreferences · retorna DEFAULT_PREFERENCES quando nao ha registro · carrega preferencias do banco · upsert no salvar usa onConflict user_id |
 | `src/hooks/__tests__/usePageTitle.coverage.test.tsx` | 4 | usePageTitle · sets document title with app name suffix · resets title on unmount · updates title when prop changes |
 | `src/hooks/__tests__/useQualityMetrics.coverage.test.tsx` | 4 | useQualityMetrics / useTrunkUsageMetrics · loads quality metrics · loads trunk usage metrics · propagates errors |
-| `src/hooks/__tests__/useTalkRatio.test.ts` | 4 | useTalkRatio · estado inicial é vazio · analisa com sucesso · captura erro do backend |
-| … +93 linhas — lista completa em `context.json` | | |
+| … +95 linhas — lista completa em `context.json` | | |
 
 ## L. Eventos de webhook tratados (contratos com sistemas externos)
 

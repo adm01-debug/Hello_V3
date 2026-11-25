@@ -2,11 +2,16 @@
  "aviso": "GERADO AUTOMATICAMENTE por scripts/ai-context/gerar.mjs — não editar à mão; será sobrescrito.",
  "format_version": 2,
  "git": {
-  "commit": "abcba36164cceb9978eab3cc14216200cc28eba5",
+  "commit": "0fc57cdc85647f692ab328211e68ff7c63adbb3f",
   "branch": "main",
-  "data_commit": "2026-11-25T15:16:27-03:00",
+  "data_commit": "2026-11-25T16:32:15-03:00",
   "remote": "https://github.com/adm01-debug/Hello_V3",
   "ultimos_commits": [
+   {
+    "sha": "0fc57cd",
+    "data": "2026-11-25",
+    "assunto": "feat: liga enforcement de SLA, violacoes e registro de leitura da base (#326)"
+   },
    {
     "sha": "abcba36",
     "data": "2026-11-25",
@@ -126,14 +131,9 @@
     "sha": "0413e5a",
     "data": "2026-11-24",
     "assunto": "chore: remove i18n.json e public/locales sem consumidores (#303)"
-   },
-   {
-    "sha": "0455270",
-    "data": "2026-11-24",
-    "assunto": "chore: estados vazios que explicam o que falta (#302)"
    }
   ],
-  "arquivos_mudados_7d": 1280,
+  "arquivos_mudados_7d": 1283,
   "pastas_mais_mudadas_30d": [
    {
     "pasta": "covout/lcov-report/hooks",
@@ -141,7 +141,7 @@
    },
    {
     "pasta": "src/hooks/__tests__",
-    "mudancas": 276
+    "mudancas": 277
    },
    {
     "pasta": "docs/qa/05-PROGRESSO.md",
@@ -314,9 +314,9 @@
   ]
  },
  "contagens": {
-  "arquivos_total": 1754,
-  "arquivos_codigo": 1349,
-  "linhas_codigo": 180345,
+  "arquivos_total": 1756,
+  "arquivos_codigo": 1351,
+  "linhas_codigo": 180575,
   "rotas": 106,
   "rotas_http_backend": 11,
   "vistas_por_id": 0,
@@ -328,7 +328,7 @@
   "tabelas": 170,
   "migrations": 244,
   "cron_jobs": 11,
-  "testes": 404,
+  "testes": 406,
   "workflows": 4,
   "scripts": 36,
   "docs_md": 121
@@ -496,7 +496,7 @@
   },
   "src/hooks": {
    "arquivos": 342,
-   "linhas": 43460
+   "linhas": 43471
   },
   "src/integrations": {
    "arquivos": 3,
@@ -511,8 +511,8 @@
    "linhas": 44
   },
   "src/pages": {
-   "arquivos": 149,
-   "linhas": 23117
+   "arquivos": 151,
+   "linhas": 23336
   },
   "src/routes": {
    "arquivos": 4,

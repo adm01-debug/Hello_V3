@@ -1,15 +1,15 @@
 {
  "meta": {
-  "sha": "abcba36164cceb9978eab3cc14216200cc28eba5",
+  "sha": "0fc57cdc85647f692ab328211e68ff7c63adbb3f",
   "branch": "main",
   "remote": "https://github.com/adm01-debug/Hello_V3",
-  "generated_at": "2026-11-25 18:19 UTC",
-  "files_total": 1801,
-  "code_files": 1598,
-  "code_lines": 196275
+  "generated_at": "2026-11-25 19:32 UTC",
+  "files_total": 1803,
+  "code_files": 1600,
+  "code_lines": 196505
  },
  "version": "1.3.2",
- "facts_hash": "c48b3587e1fe0e4c",
+ "facts_hash": "063ba5e56bfd2845",
  "stack": {
   "frameworks": [
    "React + Vite",
@@ -162,7 +162,7 @@
   "package_manager": "bun",
   "languages": {
    ".ts": 658,
-   ".tsx": 656,
+   ".tsx": 658,
    ".sql": 248,
    ".mjs": 29,
    ".py": 5,
@@ -29418,7 +29418,7 @@
      "enforce-sla"
     ],
     "rpc_transitive": [],
-    "deps_count": 17
+    "deps_count": 18
    },
    {
     "path": "",
@@ -33968,7 +33968,7 @@
   {
    "module": "src/hooks",
    "files": 342,
-   "lines": 43460,
+   "lines": 43471,
    "tables": [
     "accounts",
     "active_sessions",
@@ -34447,8 +34447,8 @@
   },
   {
    "module": "src/pages",
-   "files": 149,
-   "lines": 23117,
+   "files": 151,
+   "lines": 23336,
    "tables": [
     "audit_logs",
     "battle_card_triggers",
@@ -70793,6 +70793,18 @@
     "name": "editor le o artigo e consegue ir para a edicao a partir dele"
    },
    {
+    "file": "src/pages/__tests__/Knowledge.viewTracking.test.tsx",
+    "name": "Knowledge — registro de visualizacao (etapa 152)"
+   },
+   {
+    "file": "src/pages/__tests__/Knowledge.viewTracking.test.tsx",
+    "name": "registra a visualizacao ao abrir o artigo"
+   },
+   {
+    "file": "src/pages/__tests__/Knowledge.viewTracking.test.tsx",
+    "name": "grava o feedback de utilidade e nao deixa votar duas vezes"
+   },
+   {
     "file": "src/pages/__tests__/Login.lockout.test.tsx",
     "name": "Login — bloqueio de força bruta falha fechado (E003)"
    },
@@ -70855,6 +70867,26 @@
    {
     "file": "src/pages/__tests__/Recordings.pagination.test.tsx",
     "name": "esconde o botao quando nao ha mais paginas"
+   },
+   {
+    "file": "src/pages/__tests__/SLAPolicies.enforce.test.tsx",
+    "name": "SLAPolicies — enforcement e violacoes (etapas 151 e 179)"
+   },
+   {
+    "file": "src/pages/__tests__/SLAPolicies.enforce.test.tsx",
+    "name": "o botao de verificacao dispara o enforcement"
+   },
+   {
+    "file": "src/pages/__tests__/SLAPolicies.enforce.test.tsx",
+    "name": "mostra as violacoes por canal, so os canais com violacao"
+   },
+   {
+    "file": "src/pages/__tests__/SLAPolicies.enforce.test.tsx",
+    "name": "lista as conversas em violacao"
+   },
+   {
+    "file": "src/pages/__tests__/SLAPolicies.enforce.test.tsx",
+    "name": "bloqueia o botao enquanto a verificacao roda"
    },
    {
     "file": "src/pages/__tests__/SecurityDashboard.test.tsx",
@@ -102512,9 +102544,10 @@
   },
   "src/hooks/useSLA.ts": {
    "path": "src/hooks/useSLA.ts",
-   "lines": 114,
+   "lines": 124,
    "exports": [
     "interface SlaPolicy",
+    "interface SlaComplianceRow",
     "function useSlaPolicies",
     "function useSlaCompliance",
     "function useUpsertSlaPolicy",
@@ -106530,7 +106563,7 @@
   },
   "src/hooks/__tests__/useSLA.coverage.test.tsx": {
    "path": "src/hooks/__tests__/useSLA.coverage.test.tsx",
-   "lines": 163,
+   "lines": 164,
    "is_test": true,
    "tests": [
     "useSLA",
@@ -113357,7 +113390,7 @@
   },
   "src/pages/Knowledge.tsx": {
    "path": "src/pages/Knowledge.tsx",
-   "lines": 308,
+   "lines": 350,
    "exports": [
     "function Knowledge"
    ],
@@ -114026,7 +114059,7 @@
   },
   "src/pages/SLAPolicies.tsx": {
    "path": "src/pages/SLAPolicies.tsx",
-   "lines": 193,
+   "lines": 240,
    "exports": [
     "function SLAPolicies"
    ]
@@ -114842,13 +114875,23 @@
   },
   "src/pages/__tests__/Knowledge.reader.test.tsx": {
    "path": "src/pages/__tests__/Knowledge.reader.test.tsx",
-   "lines": 68,
+   "lines": 69,
    "is_test": true,
    "tests": [
     "Knowledge — leitura do artigo (etapa 153)",
     "agente abre o conteudo completo do artigo, nao so o resumo",
     "mostra o erro de carregamento com opcao de tentar de novo",
     "editor le o artigo e consegue ir para a edicao a partir dele"
+   ]
+  },
+  "src/pages/__tests__/Knowledge.viewTracking.test.tsx": {
+   "path": "src/pages/__tests__/Knowledge.viewTracking.test.tsx",
+   "lines": 54,
+   "is_test": true,
+   "tests": [
+    "Knowledge — registro de visualizacao (etapa 152)",
+    "registra a visualizacao ao abrir o artigo",
+    "grava o feedback de utilidade e nao deixa votar duas vezes"
    ]
   },
   "src/pages/__tests__/Login.lockout.test.tsx": {
@@ -114903,6 +114946,18 @@
     "Recordings (paginacao)",
     "mostra o total real do banco e carrega a proxima pagina ao clicar",
     "esconde o botao quando nao ha mais paginas"
+   ]
+  },
+  "src/pages/__tests__/SLAPolicies.enforce.test.tsx": {
+   "path": "src/pages/__tests__/SLAPolicies.enforce.test.tsx",
+   "lines": 75,
+   "is_test": true,
+   "tests": [
+    "SLAPolicies — enforcement e violacoes (etapas 151 e 179)",
+    "o botao de verificacao dispara o enforcement",
+    "mostra as violacoes por canal, so os canais com violacao",
+    "lista as conversas em violacao",
+    "bloqueia o botao enquanto a verificacao roda"
    ]
   },
   "src/pages/__tests__/SecurityDashboard.test.tsx": {
@@ -124745,10 +124800,25 @@
   }
  },
  "git": {
-  "sha": "abcba36164cceb9978eab3cc14216200cc28eba5",
+  "sha": "0fc57cdc85647f692ab328211e68ff7c63adbb3f",
   "branch": "main",
   "remote": "https://github.com/adm01-debug/Hello_V3",
   "commits": [
+   {
+    "sha": "0fc57cd",
+    "date": "2026-11-25",
+    "author": "adm01-debug",
+    "subject": "feat: liga enforcement de SLA, violacoes e registro de leitura da base (#326)",
+    "files": [
+     "src/hooks/__tests__/useSLA.coverage.test.tsx",
+     "src/hooks/useSLA.ts",
+     "src/pages/Knowledge.tsx",
+     "src/pages/SLAPolicies.tsx",
+     "src/pages/__tests__/Knowledge.reader.test.tsx",
+     "src/pages/__tests__/Knowledge.viewTracking.test.tsx",
+     "src/pages/__tests__/SLAPolicies.enforce.test.tsx"
+    ]
+   },
    {
     "sha": "abcba36",
     "date": "2026-11-25",
@@ -125095,23 +125165,12 @@
      "supabase/functions/voice-transcribe/index.ts",
      "supabase/functions/voip-trunks-healthcheck/index.ts"
     ]
-   },
-   {
-    "sha": "8aeb115",
-    "date": "2026-11-24",
-    "author": "adm01-debug",
-    "subject": "fix: sincroniza o fim de sessao entre abas pelo evento storage (#296)",
-    "files": [
-     "docs/qa/05-PROGRESSO.md",
-     "src/hooks/__tests__/useAuth.coverage.test.tsx",
-     "src/hooks/useAuth.ts"
-    ]
    }
   ],
   "hot_files": [
    [
     "docs/qa/05-PROGRESSO.md",
-    14
+    13
    ],
    [
     ".github/workflows/migrations.yml",
@@ -125170,23 +125229,23 @@
     2
    ],
    [
-    "src/components/calls/__tests__/UnifiedSoftphone.falhas.test.tsx",
+    "src/hooks/__tests__/useSLA.coverage.test.tsx",
     1
    ],
    [
-    "docs/estado/dados-schema-migrations.md",
+    "src/hooks/useSLA.ts",
     1
    ],
    [
-    "supabase/migrations/20250102000000_performance_indexes.sql",
+    "src/pages/Knowledge.tsx",
     1
    ],
    [
-    "supabase/migrations/20261125120000_indices_auditoria_e_busca_contatos.sql",
+    "src/pages/SLAPolicies.tsx",
     1
    ],
    [
-    "supabase/tests/user_preferences_rls_test.sql",
+    "src/pages/__tests__/Knowledge.reader.test.tsx",
     1
    ]
   ]

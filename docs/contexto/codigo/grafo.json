@@ -2,7 +2,7 @@
  "aviso": "GERADO AUTOMATICAMENTE por scripts/ai-context/gerar.mjs — não editar à mão; será sobrescrito.",
  "format_version": 2,
  "nos": 947,
- "arestas": 3756,
+ "arestas": 3757,
  "hubs": [
   {
    "arquivo": "src/integrations/supabase/client.ts",
@@ -30,7 +30,7 @@
   },
   {
    "arquivo": "src/lib/safe-date.ts",
-   "importado_por": 107
+   "importado_por": 108
   },
   {
    "arquivo": "supabase/functions/_shared/cors.ts",

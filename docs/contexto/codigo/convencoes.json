@@ -22,7 +22,7 @@
    "scripts/regras_negocio (2)"
   ],
   "testes": [
-   "co-localizado (__tests__) (376)",
+   "co-localizado (__tests__) (378)",
    "tests/ (9)",
    "e2e/ (7)"
   ],
@@ -59,11 +59,11 @@
  "commits": {
   "convencao": "conventional commits (observado)",
   "exemplos": [
+   "feat: liga enforcement de SLA, violacoes e registro de leitura da base (#326)",
    "feat: inscricao e acompanhamento de contatos na cadencia (#325)",
    "chore: marca a etapa 086 como concluida no backlog (#324)",
    "feat: permite editar e excluir cadencia e passo (etapa 086) (#323)",
-   "fix: microfone da barra de chamada nao silenciava o audio (#322)",
-   "fix: espera da chamada agora grava hold_events (#321)"
+   "fix: microfone da barra de chamada nao silenciava o audio (#322)"
   ]
  },
  "pr_template": null,

@@ -6244,7 +6244,7 @@
     "Knowledge"
    ],
    "export_default": "Knowledge",
-   "linhas": 308,
+   "linhas": 350,
    "dominio": "pages",
    "hooks_locais": [
     "useAuthContext",
@@ -6252,6 +6252,7 @@
     "useKbArticles",
     "useKbCategories",
     "usePageTitle",
+    "useRecordKbView",
     "useUpsertArticle"
    ],
    "tabelas": [],
@@ -7082,9 +7083,10 @@
     "SLAPolicies"
    ],
    "export_default": "SLAPolicies",
-   "linhas": 193,
+   "linhas": 240,
    "dominio": "pages",
    "hooks_locais": [
+    "useEnforceSla",
     "usePageTitle",
     "useSlaCompliance",
     "useSlaPolicies",

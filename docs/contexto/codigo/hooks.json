@@ -3971,7 +3971,7 @@
     "useSlaPolicies",
     "useUpsertSlaPolicy"
    ],
-   "linhas": 114,
+   "linhas": 124,
    "dominio": "hooks",
    "tabelas": [
     "conversations",
