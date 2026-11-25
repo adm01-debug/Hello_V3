@@ -223,15 +223,27 @@ export function useCadenceEnrollments(agentName?: string) {
   const [enrollments, setEnrollments] = useState<CadenceEnrollment[]>([]);
   const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
+  const fetchEnrollments = useCallback(() => {
     let q = supabase.from("cadence_enrollments").select("*").order("next_action_at", { ascending: true });
     if (agentName) q = q.eq("agent_name", agentName);
-    q.then(({ data, error }) => {
+    return q.then(({ data, error }) => {
       if (error) logger.error("useCadenceEnrollments", error);
       else setEnrollments((data ?? []) as CadenceEnrollment[]);
       setLoading(false);
     });
   }, [agentName]);
 
-  return { enrollments, loading };
+  useEffect(() => { fetchEnrollments(); }, [fetchEnrollments]);
+
+  const updateEnrollmentStatus = useCallback(async (
+    id: string,
+    status: CadenceEnrollment["status"],
+  ) => {
+    const { error } = await supabase.from("cadence_enrollments").update({ status } as never).eq("id", id);
+    if (error) { toast.error("Erro ao atualizar inscrição"); return false; }
+    fetchEnrollments();
+    return true;
+  }, [fetchEnrollments]);
+
+  return { enrollments, loading, refresh: fetchEnrollments, updateEnrollmentStatus };
 }

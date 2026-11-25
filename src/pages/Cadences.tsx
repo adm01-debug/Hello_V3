@@ -1,6 +1,8 @@
-import { useState } from "react";
-import { Plus, Phone, MessageSquare, CheckSquare, Mail, Pencil, Trash2, Power } from "lucide-react";
-import { useCadences, type Cadence, type CadenceStep } from "@/hooks/useCadences";
+import { useMemo, useState } from "react";
+import { Plus, Phone, MessageSquare, CheckSquare, Mail, Pencil, Trash2, Power, UserPlus, Play, Pause, X } from "lucide-react";
+import { useCadences, useCadenceEnrollments, type Cadence, type CadenceStep, type CadenceEnrollment } from "@/hooks/useCadences";
+import { useContacts } from "@/hooks/useContacts";
+import { useAgentStatus } from "@/hooks/useAgentStatus";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -24,12 +26,21 @@ const STEP_ICONS: Record<string, typeof Phone> = {
   call: Phone, whatsapp: MessageSquare, task: CheckSquare, email: Mail,
 };
 
+const ENROLLMENT_LABEL: Record<CadenceEnrollment["status"], string> = {
+  active: "Ativa", paused: "Pausada", completed: "Concluída", cancelled: "Cancelada",
+};
+
 export default function Cadences() {
   usePageTitle("Cadências");
   const {
     cadences, steps, loading, totalCount, hasMore, loadingMore, loadMore,
-    createCadence, addStep, updateCadence, deleteCadence, updateStep, deleteStep,
+    createCadence, addStep, updateCadence, deleteCadence, updateStep, deleteStep, enrollContact,
   } = useCadences();
+  const { currentAgent } = useAgentStatus();
+  const { contacts } = useContacts();
+  const { enrollments, refresh: refreshEnrollments, updateEnrollmentStatus } = useCadenceEnrollments();
+  const [enrollFor, setEnrollFor] = useState<Cadence | null>(null);
+  const [contactSearch, setContactSearch] = useState("");
   const [open, setOpen] = useState(false);
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
@@ -100,6 +111,41 @@ export default function Cadences() {
     finally { setSubmitting(false); }
   };
 
+  const handleEnroll = async (contactId: string) => {
+    if (!enrollFor || submitting) return;
+    setSubmitting(true);
+    try {
+      const ok = await enrollContact(enrollFor.id, contactId, currentAgent?.name);
+      if (ok) { refreshEnrollments(); setEnrollFor(null); setContactSearch(""); }
+    } finally { setSubmitting(false); }
+  };
+
+  const handleEnrollmentStatus = async (id: string, status: CadenceEnrollment["status"]) => {
+    if (submitting) return;
+    setSubmitting(true);
+    try { await updateEnrollmentStatus(id, status); }
+    finally { setSubmitting(false); }
+  };
+
+  const contactNameById = useMemo(
+    () => new Map(contacts.map((c) => [c.id, c.name])),
+    [contacts],
+  );
+  const catalogContacts = useMemo(() => {
+    const enrolled = new Set(
+      enrollments
+        .filter((e) => e.cadence_id === enrollFor?.id && (e.status === "active" || e.status === "paused"))
+        .map((e) => e.contact_id),
+    );
+    const term = contactSearch.trim().toLowerCase();
+    return (term
+      ? contacts.filter((c) =>
+          c.name?.toLowerCase().includes(term) || c.phone?.toLowerCase().includes(term))
+      : contacts
+    ).map((c) => ({ contact: c, alreadyEnrolled: enrolled.has(c.id) }));
+  }, [contacts, contactSearch, enrollments, enrollFor]);
+  const enrollableContacts = catalogContacts.slice(0, 50);
+
   const openEditStep = (s: CadenceStep) => {
     setEditingStep(s);
     setStepForm({
@@ -164,6 +210,7 @@ export default function Cadences() {
         <div className="grid gap-4 md:grid-cols-2">
           {cadences.map((c) => {
             const cSteps = steps.filter((s) => s.cadence_id === c.id);
+            const cEnroll = enrollments.filter((e) => e.cadence_id === c.id);
             return (
               <Card key={c.id}>
                 <CardHeader>
@@ -171,6 +218,14 @@ export default function Cadences() {
                     <span className="truncate">{c.name}</span>
                     <div className="flex items-center gap-1 shrink-0">
                       <Badge variant={c.is_active ? "default" : "secondary"}>{c.is_active ? "Ativa" : "Inativa"}</Badge>
+                      <Button
+                        variant="ghost"
+                        size="icon"
+                        aria-label={`Inscrever contato na cadência ${c.name}`}
+                        onClick={() => { setEnrollFor(c); setContactSearch(""); }}
+                      >
+                        <UserPlus className="h-4 w-4" />
+                      </Button>
                       <Button variant="ghost" size="icon" aria-label={`Editar cadência ${c.name}`} onClick={() => openEditCadence(c)}>
                         <Pencil className="h-4 w-4" />
                       </Button>
@@ -245,6 +300,38 @@ export default function Cadences() {
                       </div>
                     </DialogContent>
                   </Dialog>
+                  {cEnroll.length > 0 && (
+                    <div className="mt-4 space-y-1 border-t pt-3">
+                      <p className="text-xs font-medium text-muted-foreground">Inscritos ({cEnroll.length})</p>
+                      {cEnroll.map((e) => (
+                        <div key={e.id} className="flex items-center justify-between gap-2 text-sm">
+                          <span className="truncate">
+                            {e.contact_id ? contactNameById.get(e.contact_id) ?? "Contato" : "Sem contato"}
+                          </span>
+                          <div className="flex items-center gap-1 shrink-0">
+                            <Badge variant={e.status === "active" ? "default" : "secondary"}>
+                              {ENROLLMENT_LABEL[e.status]}
+                            </Badge>
+                            {e.status === "active" && (
+                              <Button variant="ghost" size="icon" aria-label="Pausar inscrição" onClick={() => handleEnrollmentStatus(e.id, "paused")}>
+                                <Pause className="h-3.5 w-3.5" />
+                              </Button>
+                            )}
+                            {e.status === "paused" && (
+                              <Button variant="ghost" size="icon" aria-label="Retomar inscrição" onClick={() => handleEnrollmentStatus(e.id, "active")}>
+                                <Play className="h-3.5 w-3.5" />
+                              </Button>
+                            )}
+                            {(e.status === "active" || e.status === "paused") && (
+                              <Button variant="ghost" size="icon" aria-label="Cancelar inscrição" onClick={() => handleEnrollmentStatus(e.id, "cancelled")}>
+                                <X className="h-3.5 w-3.5 text-destructive" />
+                              </Button>
+                            )}
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  )}
                 </CardContent>
               </Card>
             );
@@ -261,6 +348,40 @@ export default function Cadences() {
           </p>
         </div>
       )}
+
+      <Dialog open={!!enrollFor} onOpenChange={(o) => { if (!o) { setEnrollFor(null); setContactSearch(""); } }}>
+        <DialogContent>
+          <DialogHeader><DialogTitle>Inscrever contato</DialogTitle></DialogHeader>
+          <DialogDescription>
+            Escolha um contato para iniciar a cadência {enrollFor?.name ?? ""}.
+          </DialogDescription>
+          <div className="space-y-3">
+            <Input
+              placeholder="Buscar por nome ou telefone"
+              value={contactSearch}
+              onChange={(e) => setContactSearch(e.target.value)}
+            />
+            <div className="max-h-64 overflow-y-auto space-y-1">
+              {enrollableContacts.length === 0 ? (
+                <p className="text-sm text-muted-foreground">Nenhum contato encontrado.</p>
+              ) : enrollableContacts.map(({ contact: ct, alreadyEnrolled }) => (
+                <button
+                  key={ct.id}
+                  type="button"
+                  className="flex w-full items-center justify-between gap-2 rounded px-2 py-1.5 text-left text-sm hover:bg-muted disabled:opacity-50 disabled:hover:bg-transparent"
+                  onClick={() => handleEnroll(ct.id)}
+                  disabled={submitting || alreadyEnrolled}
+                >
+                  <span className="truncate">{ct.name || ct.phone || ct.email || "Sem nome"}</span>
+                  <span className="shrink-0 text-xs text-muted-foreground">
+                    {alreadyEnrolled ? "Já inscrito" : ct.phone}
+                  </span>
+                </button>
+              ))}
+            </div>
+          </div>
+        </DialogContent>
+      </Dialog>
 
       <Dialog open={!!editingCadence} onOpenChange={(o) => { if (!o) setEditingCadence(null); }}>
         <DialogContent>
