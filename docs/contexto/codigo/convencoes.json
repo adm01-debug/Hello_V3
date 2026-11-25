@@ -59,11 +59,11 @@
  "commits": {
   "convencao": "conventional commits (observado)",
   "exemplos": [
+   "fix: microfone da barra de chamada nao silenciava o audio (#322)",
    "fix: espera da chamada agora grava hold_events (#321)",
    "feat: alerta semanal da fila de migrations (#320)",
    "fix: renumera e enxuga a migration de indices morta (#318)",
-   "fix: dry-run do migrations.yml nao pode gravar de verdade (#319)",
-   "fix: normalizar nome registrado antes de comparar com o arquivo (#317)"
+   "fix: dry-run do migrations.yml nao pode gravar de verdade (#319)"
   ]
  },
  "pr_template": null,

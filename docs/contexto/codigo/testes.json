@@ -209,11 +209,11 @@
   {
    "arquivo": "src/components/calls/__tests__/ActiveCallBar.espera.test.tsx",
    "tipo": "unit",
-   "linhas": 67,
+   "linhas": 101,
    "testa": [
     "src/components/calls/ActiveCallBar.tsx"
    ],
-   "casos": 2
+   "casos": 5
   },
   {
    "arquivo": "src/components/calls/__tests__/AudioOutputSelector.test.tsx",
@@ -255,11 +255,11 @@
   {
    "arquivo": "src/components/calls/__tests__/UnifiedSoftphone.falhas.test.tsx",
    "tipo": "unit",
-   "linhas": 143,
+   "linhas": 162,
    "testa": [
     "src/components/calls/UnifiedSoftphone.tsx"
    ],
-   "casos": 4
+   "casos": 6
   },
   {
    "arquivo": "src/components/calls/__tests__/WebRTCCall.test.tsx",

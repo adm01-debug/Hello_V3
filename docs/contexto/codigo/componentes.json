@@ -852,7 +852,7 @@
     "ActiveCallBar"
    ],
    "export_default": null,
-   "linhas": 379,
+   "linhas": 380,
    "dominio": "components/calls",
    "hooks_locais": [
     "useCallContext",
@@ -1158,7 +1158,7 @@
     "UnifiedSoftphone"
    ],
    "export_default": null,
-   "linhas": 372,
+   "linhas": 380,
    "dominio": "components/calls",
    "hooks_locais": [
     "useAgentStatus",

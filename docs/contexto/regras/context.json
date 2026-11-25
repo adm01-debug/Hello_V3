@@ -1,15 +1,15 @@
 {
  "meta": {
-  "sha": "ba31d8bfce3fd9db4224dea3b6e46c7e25aa3f17",
+  "sha": "31ec3c629089e0e8d1b00e92846e4352800faf9e",
   "branch": "main",
   "remote": "https://github.com/adm01-debug/Hello_V3",
-  "generated_at": "2026-11-25 15:28 UTC",
+  "generated_at": "2026-11-25 16:21 UTC",
   "files_total": 1799,
   "code_files": 1596,
-  "code_lines": 195502
+  "code_lines": 195564
  },
  "version": "1.3.2",
- "facts_hash": "97d5b8b14361b686",
+ "facts_hash": "15874c88a80ca46e",
  "stack": {
   "frameworks": [
    "React + Vite",
@@ -33704,7 +33704,7 @@
   {
    "module": "src/components",
    "files": 377,
-   "lines": 44862,
+   "lines": 44924,
    "tables": [
     "accounts",
     "agent_goals",
@@ -58402,6 +58402,22 @@
     "name": "mostra o estado de espera vindo do contexto, nao de um estado local"
    },
    {
+    "file": "src/components/calls/__tests__/ActiveCallBar.espera.test.tsx",
+    "name": "ActiveCallBar: botao de microfone"
+   },
+   {
+    "file": "src/components/calls/__tests__/ActiveCallBar.espera.test.tsx",
+    "name": "pede o mute ao contexto da chamada, que e quem silencia o audio"
+   },
+   {
+    "file": "src/components/calls/__tests__/ActiveCallBar.espera.test.tsx",
+    "name": "nao guarda estado local: o icone so muda quando o contexto muda"
+   },
+   {
+    "file": "src/components/calls/__tests__/ActiveCallBar.espera.test.tsx",
+    "name": "mostra o estado de mute vindo do contexto"
+   },
+   {
     "file": "src/components/calls/__tests__/AudioOutputSelector.test.tsx",
     "name": "AudioOutputSelector"
    },
@@ -58500,6 +58516,14 @@
    {
     "file": "src/components/calls/__tests__/UnifiedSoftphone.falhas.test.tsx",
     "name": "instrui o agente quando o microfone e negado"
+   },
+   {
+    "file": "src/components/calls/__tests__/UnifiedSoftphone.falhas.test.tsx",
+    "name": "aplica no audio do SIP o mute pedido pelo estado da chamada"
+   },
+   {
+    "file": "src/components/calls/__tests__/UnifiedSoftphone.falhas.test.tsx",
+    "name": "nao mexe no audio do SIP quando a chamada e de outro canal"
    },
    {
     "file": "src/components/calls/__tests__/WebRTCCall.test.tsx",
@@ -92198,7 +92222,7 @@
   },
   "src/components/calls/ActiveCallBar.tsx": {
    "path": "src/components/calls/ActiveCallBar.tsx",
-   "lines": 379,
+   "lines": 380,
    "exports": [
     "function ActiveCallBar"
    ],
@@ -92434,7 +92458,7 @@
   },
   "src/components/calls/UnifiedSoftphone.tsx": {
    "path": "src/components/calls/UnifiedSoftphone.tsx",
-   "lines": 372,
+   "lines": 380,
    "exports": [
     "function UnifiedSoftphone"
    ],
@@ -92661,12 +92685,16 @@
   },
   "src/components/calls/__tests__/ActiveCallBar.espera.test.tsx": {
    "path": "src/components/calls/__tests__/ActiveCallBar.espera.test.tsx",
-   "lines": 67,
+   "lines": 101,
    "is_test": true,
    "tests": [
     "ActiveCallBar: botao de espera",
     "pede a espera ao contexto da chamada, que e quem grava o hold_event",
-    "mostra o estado de espera vindo do contexto, nao de um estado local"
+    "mostra o estado de espera vindo do contexto, nao de um estado local",
+    "ActiveCallBar: botao de microfone",
+    "pede o mute ao contexto da chamada, que e quem silencia o audio",
+    "nao guarda estado local: o icone so muda quando o contexto muda",
+    "mostra o estado de mute vindo do contexto"
    ]
   },
   "src/components/calls/__tests__/AudioOutputSelector.test.tsx": {
@@ -92728,14 +92756,16 @@
   },
   "src/components/calls/__tests__/UnifiedSoftphone.falhas.test.tsx": {
    "path": "src/components/calls/__tests__/UnifiedSoftphone.falhas.test.tsx",
-   "lines": 143,
+   "lines": 162,
    "is_test": true,
    "tests": [
     "UnifiedSoftphone — estados de falha (etapa 233)",
     "mostra o estado do registro SIP da propria linha no cabecalho",
     "mostra o motivo da falha e tenta de novo quando o operador clica em Tentar agora",
     "repete o registro automaticamente com espera crescente",
-    "instrui o agente quando o microfone e negado"
+    "instrui o agente quando o microfone e negado",
+    "aplica no audio do SIP o mute pedido pelo estado da chamada",
+    "nao mexe no audio do SIP quando a chamada e de outro canal"
    ]
   },
   "src/components/calls/__tests__/WebRTCCall.test.tsx": {
@@ -124413,10 +124443,22 @@
   }
  },
  "git": {
-  "sha": "ba31d8bfce3fd9db4224dea3b6e46c7e25aa3f17",
+  "sha": "31ec3c629089e0e8d1b00e92846e4352800faf9e",
   "branch": "main",
   "remote": "https://github.com/adm01-debug/Hello_V3",
   "commits": [
+   {
+    "sha": "31ec3c6",
+    "date": "2026-11-25",
+    "author": "adm01-debug",
+    "subject": "fix: microfone da barra de chamada nao silenciava o audio (#322)",
+    "files": [
+     "src/components/calls/ActiveCallBar.tsx",
+     "src/components/calls/UnifiedSoftphone.tsx",
+     "src/components/calls/__tests__/ActiveCallBar.espera.test.tsx",
+     "src/components/calls/__tests__/UnifiedSoftphone.falhas.test.tsx"
+    ]
+   },
    {
     "sha": "ba31d8b",
     "date": "2026-11-25",
@@ -124768,33 +124810,32 @@
      "src/components/notification-center/__tests__/useNotificationCenter.cache.test.tsx",
      "src/components/notification-center/useNotificationCenter.ts"
     ]
-   },
-   {
-    "sha": "07dfba7",
-    "date": "2026-11-24",
-    "author": "adm01-debug",
-    "subject": "fix: invalida cache depois de salvar artigo e verificar voz (etapa 219) (#292)",
-    "files": [
-     "docs/qa/05-PROGRESSO.md",
-     "src/hooks/__tests__/useKnowledgeBase.coverage.test.tsx",
-     "src/hooks/__tests__/useVoiceBiometrics.coverage.test.tsx",
-     "src/hooks/useKnowledgeBase.ts",
-     "src/hooks/useVoiceBiometrics.ts"
-    ]
    }
   ],
   "hot_files": [
    [
     "docs/qa/05-PROGRESSO.md",
-    17
+    16
    ],
    [
     ".github/workflows/migrations.yml",
     9
    ],
    [
+    "src/components/calls/UnifiedSoftphone.tsx",
+    3
+   ],
+   [
     ".github/workflows/ci.yml",
     3
+   ],
+   [
+    "src/components/calls/ActiveCallBar.tsx",
+    2
+   ],
+   [
+    "src/components/calls/__tests__/ActiveCallBar.espera.test.tsx",
+    2
    ],
    [
     "src/components/voice/VoiceAssistantDialog.tsx",
@@ -124802,10 +124843,6 @@
    ],
    [
     "tests/e2e/teclado.spec.ts",
-    2
-   ],
-   [
-    "src/components/calls/UnifiedSoftphone.tsx",
     2
    ],
    [
@@ -124821,11 +124858,7 @@
     2
    ],
    [
-    "src/components/calls/ActiveCallBar.tsx",
-    1
-   ],
-   [
-    "src/components/calls/__tests__/ActiveCallBar.espera.test.tsx",
+    "src/components/calls/__tests__/UnifiedSoftphone.falhas.test.tsx",
     1
    ],
    [
@@ -124858,10 +124891,6 @@
    ],
    [
     "src/hooks/useNotificationPreferences.ts",
-    1
-   ],
-   [
-    "src/integrations/supabase/types.ts",
     1
    ]
   ]
