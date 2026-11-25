@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
-import { Phone, User, Calendar, Check, X, Trash2, Bell, AlertTriangle, MoreHorizontal } from 'lucide-react';
+import { Phone, User, Calendar, Check, X, Trash2, Bell, AlertTriangle, MoreHorizontal, Loader2 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
@@ -22,6 +22,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { isPast, isToday, isTomorrow, differenceInMinutes } from 'date-fns';
 import { ptBR } from 'date-fns/locale';
 import { useScheduledCallbacks, ScheduledCallback } from '@/hooks/useScheduledCallbacks';
+import { useLockedWrite } from '@/hooks/useLockedWrite';
 import { ScheduleCallbackDialog } from './ScheduleCallbackDialog';
 import { toast } from 'sonner';
 import { safeFormatDatePtBR, safeFormatDistanceToNow } from "@/lib/safe-date";
@@ -38,6 +39,7 @@ export function ScheduledCallbacksList() {
   
   const [activeTab, setActiveTab] = useState('pending');
   const notifiedCallbacks = useRef<Set<string>>(new Set());
+  const { runLocked, isLocked } = useLockedWrite();
 
   // Check for upcoming callbacks and notify
   useEffect(() => {
@@ -93,17 +95,14 @@ export function ScheduledCallbacksList() {
     // Here you would integrate with the actual call system
   };
 
-  const handleComplete = async (callback: ScheduledCallback) => {
-    await completeCallback(callback.id);
-  };
+  const handleComplete = (callback: ScheduledCallback) =>
+    runLocked(callback.id, () => completeCallback(callback.id));
 
-  const handleCancel = async (callback: ScheduledCallback) => {
-    await cancelCallback(callback.id);
-  };
+  const handleCancel = (callback: ScheduledCallback) =>
+    runLocked(callback.id, () => cancelCallback(callback.id));
 
-  const handleDelete = async (callback: ScheduledCallback) => {
-    await deleteCallback(callback.id);
-  };
+  const handleDelete = (callback: ScheduledCallback) =>
+    runLocked(callback.id, () => deleteCallback(callback.id));
 
   const getPriorityColor = (priority: string) => {
     switch (priority) {
@@ -206,6 +205,7 @@ export function ScheduledCallbacksList() {
                     <CallbackCard
                       key={callback.id}
                       callback={callback}
+                      isBusy={isLocked(callback.id)}
                       onCall={handleCall}
                       onComplete={handleComplete}
                       onCancel={handleCancel}
@@ -227,6 +227,7 @@ export function ScheduledCallbacksList() {
 
 interface CallbackCardProps {
   callback: ScheduledCallback;
+  isBusy: boolean;
   onCall: (callback: ScheduledCallback) => void;
   onComplete: (callback: ScheduledCallback) => void;
   onCancel: (callback: ScheduledCallback) => void;
@@ -238,6 +239,7 @@ interface CallbackCardProps {
 
 function CallbackCard({
   callback,
+  isBusy,
   onCall,
   onComplete,
   onCancel,
@@ -314,6 +316,7 @@ function CallbackCard({
                     variant="ghost" 
                     className="h-8 w-8 text-success hover:text-success hover:bg-success/10"
                     onClick={() => onCall(callback)}
+                    disabled={isBusy}
                   >
                     <Phone className="h-4 w-4" />
                   </Button>
@@ -323,8 +326,8 @@ function CallbackCard({
 
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
-                  <Button aria-label={`Mais opções do retorno de ${callback.caller_name}`} size="icon" variant="ghost" className="h-8 w-8">
-                    <MoreHorizontal className="h-4 w-4" />
+                  <Button aria-label={`Mais opções do retorno de ${callback.caller_name}`} size="icon" variant="ghost" className="h-8 w-8" disabled={isBusy}>
+                    {isBusy ? <Loader2 className="h-4 w-4 animate-spin" /> : <MoreHorizontal className="h-4 w-4" />}
                   </Button>
                 </DropdownMenuTrigger>
                 <DropdownMenuContent align="end">
