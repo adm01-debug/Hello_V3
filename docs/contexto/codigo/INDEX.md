@@ -1,7 +1,7 @@
 # Contexto do projeto para agentes de IA
 
 GERADO AUTOMATICAMENTE por scripts/ai-context/gerar.mjs — não editar à mão; será sobrescrito.
-Publicado em `docs/contexto/codigo/` na branch `contexto` (gerada, nunca abra PR dela) a cada push em `main` e a cada 10 minutos pelo workflow `contexto.yml`; índice único das três fontes em `docs/contexto/00-INDEX.md`. Gere local com `node scripts/ai-context/gerar.mjs`. Commit-base: `0fc57cdc85647f692ab328211e68ff7c63adbb3f` (2026-11-25T16:32:15-03:00).
+Publicado em `docs/contexto/codigo/` na branch `contexto` (gerada, nunca abra PR dela) a cada push em `main` e a cada 10 minutos pelo workflow `contexto.yml`; índice único das três fontes em `docs/contexto/00-INDEX.md`. Gere local com `node scripts/ai-context/gerar.mjs`. Commit-base: `f214b17034cada820c3b8365c856f72a1b93599e` (2026-11-25T16:41:21-03:00).
 
 ## Como usar (leia antes de planejar ou executar qualquer tarefa)
 1. **Tela/rota/menu** → `rotas.json` (url/vista/menu → arquivo → hooks → tabelas → edges; `rotas_http_backend` para APIs) e `modulos.json` (módulo inteiro + dependências entre módulos).
@@ -14,7 +14,7 @@ Publicado em `docs/contexto/codigo/` na branch `contexto` (gerada, nunca abra PR
 Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua tarefa; não carregue tudo.
 
 ## Stack
-- linguagens: TypeScript (1316), SQL (248), Markdown (121), JavaScript (31), JSON (16), Python (5), YAML (4), Shell (2)
+- linguagens: TypeScript (1317), SQL (248), Markdown (121), JavaScript (31), JSON (16), Python (5), YAML (4), Shell (2)
 - linguagem_principal: TypeScript
 - framework: React
 - backend_http: n/d
@@ -34,9 +34,9 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 ## Números
 | item | qtd |
 |---|---|
-| arquivos_total | 1756 |
-| arquivos_codigo | 1351 |
-| linhas_codigo | 180575 |
+| arquivos_total | 1757 |
+| arquivos_codigo | 1352 |
+| linhas_codigo | 180690 |
 | rotas | 106 |
 | rotas_http_backend | 11 |
 | vistas_por_id | 0 |
@@ -48,7 +48,7 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 | tabelas | 170 |
 | migrations | 244 |
 | cron_jobs | 11 |
-| testes | 406 |
+| testes | 407 |
 | workflows | 4 |
 | scripts | 36 |
 | docs_md | 121 |
@@ -58,7 +58,7 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 - componentes: src/components (320), src/pages (126), src/contexts (5)
 - hooks: src/hooks (175), src/components (12), src/contexts (5)
 - servicos_logica: src/lib (90), src/integrations (3), scripts/regras_negocio (2)
-- testes: co-localizado (__tests__) (378), tests/ (9), e2e/ (7)
+- testes: co-localizado (__tests__) (379), tests/ (9), e2e/ (7)
 - edge_functions: supabase/functions
 - migrations: supabase/migrations
 - scripts: scripts/inventario (7), scripts/regras_negocio (3), scripts/ai-context (2)
@@ -73,15 +73,15 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 | components/ai | 0 | 0 | 7 | 1 | 2 | 1 |
 | components/alerts | 0 | 0 | 5 | 0 | 0 | 3 |
 | components/auth | 0 | 0 | 8 | 13 | 2 | 6 |
-| components/calls | 0 | 0 | 27 | 39 | 12 | 25 |
+| components/calls | 0 | 0 | 27 | 42 | 15 | 27 |
 | components/compliance | 0 | 0 | 18 | 3 | 0 | 7 |
 | components/contacts | 0 | 0 | 13 | 6 | 3 | 6 |
 | components/conversation-intelligence | 0 | 0 | 7 | 4 | 2 | 5 |
 | components/dashboard | 0 | 0 | 12 | 12 | 1 | 5 |
 | components/dialer | 0 | 0 | 16 | 18 | 1 | 11 |
-| components/executive | 0 | 0 | 17 | 27 | 6 | 21 |
+| components/executive | 0 | 0 | 17 | 26 | 6 | 21 |
 | components/gamification | 0 | 0 | 7 | 3 | 0 | 5 |
-| components/layout | 0 | 0 | 9 | 225 | 68 | 147 |
+| components/layout | 0 | 0 | 9 | 224 | 68 | 147 |
 | components/network | 0 | 0 | 17 | 16 | 12 | 3 |
 | components/observability | 0 | 0 | 6 | 0 | 0 | 0 |
 | components/queue-alerts | 0 | 0 | 8 | 1 | 0 | 1 |
@@ -92,17 +92,17 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 | components/ui | 0 | 0 | 56 | 7 | 0 | 0 |
 | components/voice | 0 | 0 | 7 | 4 | 2 | 1 |
 | contexts | 0 | 0 | 5 | 15 | 3 | 11 |
-| hooks | 0 | 0 | 169 | 210 | 57 | 124 |
+| hooks | 0 | 0 | 169 | 209 | 57 | 124 |
 | hooks/auth | 0 | 0 | 5 | 5 | 0 | 2 |
-| lib | 0 | 0 | 52 | 117 | 30 | 71 |
+| lib | 0 | 0 | 52 | 116 | 30 | 71 |
 | lib/security | 0 | 0 | 17 | 0 | 0 | 0 |
 | lib/validation | 0 | 0 | 5 | 7 | 1 | 0 |
-| pages | 87 | 93 | 93 | 194 | 67 | 139 |
+| pages | 87 | 93 | 93 | 193 | 67 | 139 |
 | pages/admin | 9 | 9 | 16 | 36 | 4 | 18 |
 | pages/call-analytics | 0 | 0 | 7 | 1 | 0 | 2 |
 | pages/marketing | 0 | 3 | 4 | 0 | 0 | 0 |
 | pages/roles | 0 | 0 | 6 | 1 | 0 | 3 |
-| routes | 0 | 1 | 3 | 213 | 69 | 145 |
+| routes | 0 | 1 | 3 | 212 | 69 | 145 |
 
 ## Rotas (url → arquivo)
 - `/` [tela] → src/pages/PhoneDialer.tsx
@@ -371,13 +371,13 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 - possiveis_segredos_no_codigo: 3 — ex.: src/lib/__tests__/security-advanced.test.ts:203, src/lib/__tests__/security-advanced.test.ts:208, src/lib/__tests__/security-advanced.test.ts:213
 
 ## Grafo de código (graphify)
-- 10356 nós · 27406 arestas · 781 comunidades · grafo do commit `0fc57cdc`
-- comunidades maiores: lucide-react (275), vitest (237), react (215), button.tsx (193), badge.tsx (191), usePageTitle (180), traceHeaders (164), safe-date.ts (163), @tanstack/react-query (118), cn (116), validate.ts (108), buildCorsHeaders (105)
+- 10362 nós · 27418 arestas · 799 comunidades · grafo do commit `f214b170`
+- comunidades maiores: cn (312), lucide-react (284), badge.tsx (180), vitest (173), client.ts (169), react (166), buildCorsHeaders (125), @tanstack/react-query (109), sonner (105), validate.ts (104), ONDA 2 — Fluxos principais quebrados (056–100) (100), protectedRoutes.tsx (99)
 - símbolos mais chamados: cn() (src/lib/utils.ts), usePageTitle() (src/hooks/usePageTitle.ts), safeFormatDatePtBR() (src/lib/safe-date.ts), useAuthContext() (src/contexts/AuthContext.tsx), q() (scripts/supabase_snapshot/snapshot.py), safeFormatDistanceToNow() (src/lib/safe-date.ts), traceHeaders() (src/lib/tracing.ts), withTrace() (src/lib/tracing.ts), formatDuration() (src/lib/utils.ts), safeToLocaleString() (src/lib/safe-date.ts), buildCorsHeaders() (supabase/functions/_shared/cors.ts), .collect() (scripts/supabase_snapshot/test_snapshot.py)
 - consulta local: `graphify query "<pergunta>"`, `graphify path "<A>" "<B>"`, `graphify explain "<X>"`
 
 ## Hotspots (arquivos mais alterados, 90 dias)
-- docs/qa/05-PROGRESSO.md (133)
+- docs/qa/05-PROGRESSO.md (134)
 - docs/estado/funcionalidades-planejadas.md (31)
 - src/components/calls/UnifiedSoftphone.tsx (12)
 - src/components/layout/AppSidebar.tsx (11)
@@ -386,9 +386,9 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 - supabase/functions/data-lake-flush/index.ts (10)
 - .github/workflows/ci.yml (9)
 - .github/workflows/migrations.yml (9)
+- src/components/calls/ActiveCallBar.tsx (9)
 - src/components/layout/CommandPalette.tsx (9)
 - docs/agentes/mapa-repo.md (8)
-- src/components/calls/ActiveCallBar.tsx (8)
 - supabase/functions/validate-geo/index.ts (8)
 - docs/edge-functions/README.md (7)
 - src/hooks/__tests__/useQueueMetrics.coverage.test.tsx (7)
@@ -431,6 +431,7 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 
 
 ## Últimos commits
+- 2026-11-25 `f214b17` feat: verifica voz ao vivo na chamada e remove resumo de reuniao duplicado (etapas 154,155) (#327)
 - 2026-11-25 `0fc57cd` feat: liga enforcement de SLA, violacoes e registro de leitura da base (#326)
 - 2026-11-25 `abcba36` feat: inscricao e acompanhamento de contatos na cadencia (#325)
 - 2026-11-25 `2e71e7b` chore: marca a etapa 086 como concluida no backlog (#324)
@@ -445,7 +446,6 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 - 2026-11-25 `5df6b47` fix: comparar migration pelo slug do nome e permitir registrar sem executar (#315)
 - 2026-11-25 `c450a16` fix: fila de migrations compara com o historico real do projeto (#314)
 - 2026-11-25 `6873e82` infra: fila de migrations em um clique e teste de RLS (#313)
-- 2026-11-25 `4707eca` infra: atualiza checkout e upload-artifact para as versoes atuais (v7) (#312)
 
 ## Arquivos deste diretório
 - `docs/contexto/codigo/rotas.json`

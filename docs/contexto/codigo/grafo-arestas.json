@@ -412,6 +412,7 @@
    "src/contexts/CallContext.tsx",
    "src/hooks/useContacts.ts",
    "src/hooks/useLiveAssist.ts",
+   "src/hooks/useVoiceBiometrics.ts",
    "src/integrations/supabase/client.ts",
    "src/lib/agent-assist-utils.ts",
    "src/lib/logger.ts",

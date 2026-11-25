@@ -2,11 +2,16 @@
  "aviso": "GERADO AUTOMATICAMENTE por scripts/ai-context/gerar.mjs — não editar à mão; será sobrescrito.",
  "format_version": 2,
  "git": {
-  "commit": "0fc57cdc85647f692ab328211e68ff7c63adbb3f",
+  "commit": "f214b17034cada820c3b8365c856f72a1b93599e",
   "branch": "main",
-  "data_commit": "2026-11-25T16:32:15-03:00",
+  "data_commit": "2026-11-25T16:41:21-03:00",
   "remote": "https://github.com/adm01-debug/Hello_V3",
   "ultimos_commits": [
+   {
+    "sha": "f214b17",
+    "data": "2026-11-25",
+    "assunto": "feat: verifica voz ao vivo na chamada e remove resumo de reuniao duplicado (etapas 154,155) (#327)"
+   },
    {
     "sha": "0fc57cd",
     "data": "2026-11-25",
@@ -126,14 +131,9 @@
     "sha": "a0781e2",
     "data": "2026-11-24",
     "assunto": "test: captura as telas internas em 3 larguras e mede transbordo (etapa 270) (#304)"
-   },
-   {
-    "sha": "0413e5a",
-    "data": "2026-11-24",
-    "assunto": "chore: remove i18n.json e public/locales sem consumidores (#303)"
    }
   ],
-  "arquivos_mudados_7d": 1283,
+  "arquivos_mudados_7d": 1285,
   "pastas_mais_mudadas_30d": [
    {
     "pasta": "covout/lcov-report/hooks",
@@ -141,11 +141,11 @@
    },
    {
     "pasta": "src/hooks/__tests__",
-    "mudancas": 277
+    "mudancas": 278
    },
    {
     "pasta": "docs/qa/05-PROGRESSO.md",
-    "mudancas": 133
+    "mudancas": 134
    },
    {
     "pasta": "covout/lcov-report/lib",
@@ -157,7 +157,7 @@
    },
    {
     "pasta": "src/components/calls",
-    "mudancas": 84
+    "mudancas": 87
    },
    {
     "pasta": "src/components/ui",
@@ -199,7 +199,7 @@
   "arquivos_mais_mudados_90d": [
    {
     "arquivo": "docs/qa/05-PROGRESSO.md",
-    "mudancas": 133
+    "mudancas": 134
    },
    {
     "arquivo": "docs/estado/funcionalidades-planejadas.md",
@@ -234,15 +234,15 @@
     "mudancas": 9
    },
    {
+    "arquivo": "src/components/calls/ActiveCallBar.tsx",
+    "mudancas": 9
+   },
+   {
     "arquivo": "src/components/layout/CommandPalette.tsx",
     "mudancas": 9
    },
    {
     "arquivo": "docs/agentes/mapa-repo.md",
-    "mudancas": 8
-   },
-   {
-    "arquivo": "src/components/calls/ActiveCallBar.tsx",
     "mudancas": 8
    },
    {
@@ -301,7 +301,7 @@
   "autores_30d": [
    {
     "autor": "adm01-debug",
-    "commits": 296
+    "commits": 297
    },
    {
     "autor": "Joaquim Ataides",
@@ -309,14 +309,14 @@
    },
    {
     "autor": "github-actions[bot]",
-    "commits": 2
+    "commits": 1
    }
   ]
  },
  "contagens": {
-  "arquivos_total": 1756,
-  "arquivos_codigo": 1351,
-  "linhas_codigo": 180575,
+  "arquivos_total": 1757,
+  "arquivos_codigo": 1352,
+  "linhas_codigo": 180690,
   "rotas": 106,
   "rotas_http_backend": 11,
   "vistas_por_id": 0,
@@ -328,7 +328,7 @@
   "tabelas": 170,
   "migrations": 244,
   "cron_jobs": 11,
-  "testes": 406,
+  "testes": 407,
   "workflows": 4,
   "scripts": 36,
   "docs_md": 121
@@ -483,8 +483,8 @@
    "linhas": 450
   },
   "src/components": {
-   "arquivos": 377,
-   "linhas": 44924
+   "arquivos": 378,
+   "linhas": 45088
   },
   "src/contexts": {
    "arquivos": 5,
@@ -496,7 +496,7 @@
   },
   "src/hooks": {
    "arquivos": 342,
-   "linhas": 43471
+   "linhas": 43422
   },
   "src/integrations": {
    "arquivos": 3,
@@ -585,6 +585,10 @@
    "linhas": 415
   },
   {
+   "arquivo": "src/components/calls/ActiveCallBar.tsx",
+   "linhas": 413
+  },
+  {
    "arquivo": "src/components/queues/QueueFormDialog.tsx",
    "linhas": 396
   },
@@ -607,10 +611,6 @@
   {
    "arquivo": "src/pages/Inbox.tsx",
    "linhas": 382
-  },
-  {
-   "arquivo": "src/components/calls/ActiveCallBar.tsx",
-   "linhas": 380
   },
   {
    "arquivo": "src/components/calls/UnifiedSoftphone.tsx",

@@ -852,12 +852,13 @@
     "ActiveCallBar"
    ],
    "export_default": null,
-   "linhas": 380,
+   "linhas": 413,
    "dominio": "components/calls",
    "hooks_locais": [
     "useCallContext",
     "useContacts",
-    "useLiveAssist"
+    "useLiveAssist",
+    "useLiveVoiceVerification"
    ],
    "tabelas": [],
    "edges": [

@@ -2857,12 +2857,11 @@
   {
    "arquivo": "src/hooks/useMeetingSummary.ts",
    "hooks_exportados": [
-    "useAutoMeetingSummary",
     "useMeetingSummariesList",
     "useMeetingSummary",
     "usePendingActionItems"
    ],
-   "linhas": 260,
+   "linhas": 227,
    "dominio": "hooks",
    "tabelas": [
     "meeting_summaries"
@@ -2872,7 +2871,6 @@
     "generate-meeting-summary"
    ],
    "hooks_internos": [
-    "useCallback",
     "useEffect",
     "useMutation",
     "useQuery",
@@ -4394,8 +4392,9 @@
     "useState"
    ],
    "canais_realtime": [],
-   "usado_por": 1,
+   "usado_por": 2,
    "usado_por_arquivos": [
+    "src/components/calls/ActiveCallBar.tsx",
     "src/pages/VoiceSecurity.tsx"
    ],
    "coberto_por_testes": 1

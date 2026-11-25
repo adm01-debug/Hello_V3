@@ -1912,7 +1912,6 @@
    "definida_em": "src/routes/protectedRoutes.tsx",
    "hooks": [
     "useAgentAssistHistory",
-    "useAutoMeetingSummary",
     "useCallback",
     "useConversationMessages",
     "useConversations",
@@ -1940,7 +1939,6 @@
    ],
    "hooks_locais": [
     "useAgentAssistHistory",
-    "useAutoMeetingSummary",
     "useConversationMessages",
     "useConversations",
     "useDealForecast",
@@ -2200,7 +2198,6 @@
    "definida_em": "src/routes/protectedRoutes.tsx",
    "hooks": [
     "useAuditLog",
-    "useAutoMeetingSummary",
     "useCallHistory",
     "useCallback",
     "useDebouncedSearchParam",
@@ -2223,7 +2220,6 @@
    ],
    "hooks_locais": [
     "useAuditLog",
-    "useAutoMeetingSummary",
     "useCallHistory",
     "useDebouncedSearchParam",
     "useKeyMoments",
@@ -2794,7 +2790,6 @@
    "arquivo": "src/pages/MeetingSummaries.tsx",
    "definida_em": "src/routes/protectedRoutes.tsx",
    "hooks": [
-    "useAutoMeetingSummary",
     "useCallback",
     "useDebouncedSearchParam",
     "useEffect",
@@ -2810,7 +2805,6 @@
     "useState"
    ],
    "hooks_locais": [
-    "useAutoMeetingSummary",
     "useDebouncedSearchParam",
     "useMeetingSummariesList",
     "useMeetingSummary",
