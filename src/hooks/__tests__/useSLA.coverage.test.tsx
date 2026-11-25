@@ -114,6 +114,7 @@ describe('useSLA', () => {
     expect(result.current.data?.breached).toBe(1);
     expect(result.current.data?.byChannel.whatsapp.total).toBe(2);
     expect(result.current.data?.byChannel.unknown.total).toBe(1);
+    expect(result.current.data?.breaches.map((b) => b.id)).toEqual(['c1']);
   });
 
   it('useSlaCompliance error path', async () => {

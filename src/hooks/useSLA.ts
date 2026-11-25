@@ -19,6 +19,14 @@ export interface SlaPolicy {
   updated_at: string;
 }
 
+export interface SlaComplianceRow {
+  id: string;
+  sla_breached: boolean | null;
+  status: string | null;
+  channel: string | null;
+  created_at: string;
+}
+
 export function useSlaPolicies() {
   return useQuery({
     queryKey: ['sla-policies'],
@@ -51,18 +59,20 @@ export function useSlaCompliance() {
         throw error;
       }
       const total = data?.length ?? 0;
-      const breached = (data ?? []).filter((c) => c.sla_breached).length;
+      const rows = (data ?? []) as SlaComplianceRow[];
+      const breaches = rows.filter((c) => c.sla_breached);
+      const breached = breaches.length;
       const compliancePct = total > 0 ? Math.round(((total - breached) / total) * 100) : 100;
 
       const byChannel: Record<string, { total: number; breached: number }> = {};
-      for (const c of data ?? []) {
+      for (const c of rows) {
         const ch = c.channel ?? 'unknown';
         if (!byChannel[ch]) byChannel[ch] = { total: 0, breached: 0 };
         byChannel[ch].total++;
         if (c.sla_breached) byChannel[ch].breached++;
       }
 
-      return { total, breached, compliancePct, byChannel };
+      return { total, breached, compliancePct, byChannel, breaches };
     },
   });
 }

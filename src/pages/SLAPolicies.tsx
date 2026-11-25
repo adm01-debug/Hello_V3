@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Clock, Plus, CheckCircle2 } from 'lucide-react';
+import { Clock, Plus, CheckCircle2, Zap, AlertTriangle } from 'lucide-react';
 import { NeonPageLayout } from '@/components/layout/NeonPageLayout';
 import { NeonPageHeader } from '@/components/layout/NeonPageHeader';
 import { Card } from '@/components/ui/card';
@@ -11,7 +11,8 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from '
 import { Switch } from '@/components/ui/switch';
 import { EmptyState } from '@/components/ui/empty-state';
 import { usePageTitle } from '@/hooks/usePageTitle';
-import { useSlaPolicies, useUpsertSlaPolicy, useSlaCompliance, type SlaPolicy } from '@/hooks/useSLA';
+import { useSlaPolicies, useUpsertSlaPolicy, useSlaCompliance, useEnforceSla, type SlaPolicy } from '@/hooks/useSLA';
+import { safeFormatDistanceToNow } from '@/lib/safe-date';
 
 export default function SLAPolicies() {
   usePageTitle('Políticas SLA');
@@ -19,6 +20,7 @@ export default function SLAPolicies() {
   const { data: policies = [] } = useSlaPolicies();
   const { data: compliance } = useSlaCompliance();
   const upsert = useUpsertSlaPolicy();
+  const enforce = useEnforceSla();
   const [editing, setEditing] = useState<Partial<SlaPolicy> | null>(null);
 
   const handleSave = () => {
@@ -44,9 +46,20 @@ export default function SLAPolicies() {
         description="Defina prazos de primeira resposta e resolução por canal e prioridade"
         icon={<Clock />}
         actions={
-          <Button onClick={() => setEditing({ is_active: true, channel: 'all', priority: 'normal' })} className="gap-2">
-            <Plus className="h-4 w-4" /> Nova política
-          </Button>
+          <div className="flex items-center gap-2">
+            <Button
+              variant="outline"
+              onClick={() => enforce.mutate()}
+              disabled={enforce.isPending}
+              className="gap-2"
+            >
+              <Zap className="h-4 w-4" />
+              {enforce.isPending ? 'Verificando...' : 'Executar verificação'}
+            </Button>
+            <Button onClick={() => setEditing({ is_active: true, channel: 'all', priority: 'normal' })} className="gap-2">
+              <Plus className="h-4 w-4" /> Nova política
+            </Button>
+          </div>
         }
       />
 
@@ -65,6 +78,40 @@ export default function SLAPolicies() {
             <div className="text-3xl font-bold text-destructive">{compliance.breached}</div>
           </Card>
         </div>
+      )}
+
+      {compliance && compliance.breached > 0 && (
+        <Card className="p-4 mb-4 bg-card/50 backdrop-blur border-destructive/30">
+          <div className="flex items-center gap-2 mb-3">
+            <AlertTriangle className="h-4 w-4 text-destructive" />
+            <h2 className="font-semibold">Violações nos últimos 7 dias</h2>
+          </div>
+          <div className="flex flex-wrap gap-2 mb-3">
+            {Object.entries(compliance.byChannel)
+              .filter(([, v]) => v.breached > 0)
+              .map(([ch, v]) => (
+                <Badge key={ch} variant="outline" className="gap-1">
+                  {ch}
+                  <span className="text-destructive font-mono">{v.breached}</span>
+                  <span className="text-muted-foreground">/ {v.total}</span>
+                </Badge>
+              ))}
+          </div>
+          <div className="space-y-1 max-h-64 overflow-y-auto">
+            {compliance.breaches.slice(0, 20).map((b) => (
+              <div key={b.id} className="flex items-center justify-between gap-2 text-sm border-t pt-1">
+                <span className="truncate font-mono text-xs">{b.id.slice(0, 8)}</span>
+                <div className="flex items-center gap-2 shrink-0">
+                  <Badge variant="outline" className="text-[10px]">{b.channel ?? 'sem canal'}</Badge>
+                  <Badge variant="secondary" className="text-[10px]">{b.status ?? '—'}</Badge>
+                  <span className="text-xs text-muted-foreground">
+                    {safeFormatDistanceToNow(b.created_at)}
+                  </span>
+                </div>
+              </div>
+            ))}
+          </div>
+        </Card>
       )}
 
       {policies.length === 0 ? (
