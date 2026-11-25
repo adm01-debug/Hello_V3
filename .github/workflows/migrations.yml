@@ -1,6 +1,9 @@
 # docs:
 #   gatilho: dispatch manual (nenhum push aplica DDL em producao)
 #   prova: dry-run executa o arquivo e reverte; APLICAR grava e registra em public.schema_migrations
+#   transacao: linhas BEGIN;/COMMIT;/ROLLBACK; do proprio arquivo sao neutralizadas antes de
+#     executar -- o COMMIT do arquivo encerraria a transacao externa e o dry-run gravaria de
+#     verdade. Quem controla a transacao e o psql (--single-transaction / begin+rollback)
 #   modos: arquivo | pendentes | registrar | verificar
 #     arquivo    -> aplica (ou simula) UM arquivo de supabase/migrations/
 #     registrar  -> anota no historico um arquivo que ja esta no banco, SEM executar o SQL
@@ -122,8 +125,18 @@ jobs:
           SUPABASE_DB_URL: ${{ secrets.SUPABASE_DB_URL }}
         run: |
           set -euo pipefail
+          # Seis arquivos do repositorio trazem BEGIN;/COMMIT; proprios. Dentro do begin/rollback
+          # abaixo, o COMMIT do arquivo encerra a transacao externa e grava de verdade (o rollback
+          # seguinte vira no-op) -- enquanto o step anuncia "nada foi gravado". Neutraliza essas
+          # linhas e mantem a numeracao, para o erro de SQL continuar apontando a linha certa.
+          sed -E 's/^([[:space:]]*)(begin|commit|rollback)([[:space:]]+(work|transaction))?([[:space:]]*;.*)$/\1-- dry-run: \2 neutralizado/I' \
+            "supabase/migrations/${ARQUIVO}" > /tmp/dryrun.sql
+          if grep -Eiq '^[[:space:]]*(begin|commit|rollback)([[:space:]]+(work|transaction))?[[:space:]]*;' /tmp/dryrun.sql; then
+            echo "::error::sobrou comando de transacao em ${ARQUIVO}; recusando um dry-run que poderia gravar"
+            exit 1
+          fi
           psql "$SUPABASE_DB_URL" -v ON_ERROR_STOP=1 \
-            -c 'begin;' -f "supabase/migrations/${ARQUIVO}" -c 'rollback;'
+            -c 'begin;' -f /tmp/dryrun.sql -c 'rollback;'
           echo "dry-run ok: ${ARQUIVO} executou sem erro e foi revertido. Nada foi gravado."
 
       - name: Aplicar em producao
@@ -132,8 +145,12 @@ jobs:
           SUPABASE_DB_URL: ${{ secrets.SUPABASE_DB_URL }}
         run: |
           set -euo pipefail
+          # Mesmo motivo do dry-run: o COMMIT; do arquivo encerraria o --single-transaction e as
+          # statements seguintes rodariam fora de transacao (aplicacao pela metade se algo falhar).
+          sed -E 's/^([[:space:]]*)(begin|commit|rollback)([[:space:]]+(work|transaction))?([[:space:]]*;.*)$/\1-- aplicar: \2 neutralizado (--single-transaction faz o papel)/I' \
+            "supabase/migrations/${ARQUIVO}" > /tmp/aplicar.sql
           psql "$SUPABASE_DB_URL" -v ON_ERROR_STOP=1 --single-transaction -q \
-            -f "supabase/migrations/${ARQUIVO}"
+            -f /tmp/aplicar.sql
           psql "$SUPABASE_DB_URL" -tA -v ON_ERROR_STOP=1 \
             -c "select public.apply_migration('${VERSAO}', '${ARQUIVO}', '${CHECKSUM}')"
           echo "aplicada: ${ARQUIVO}"
@@ -219,8 +236,10 @@ jobs:
             arquivo="${nome}.sql"
             v="${nome%%_*}"
             echo "::group::Aplicando ${arquivo}"
+            sed -E 's/^([[:space:]]*)(begin|commit|rollback)([[:space:]]+(work|transaction))?([[:space:]]*;.*)$/\1-- aplicar: \2 neutralizado (--single-transaction faz o papel)/I' \
+              "supabase/migrations/${arquivo}" > /tmp/fila.sql
             psql "$SUPABASE_DB_URL" -v ON_ERROR_STOP=1 --single-transaction -q \
-              -f "supabase/migrations/${arquivo}"
+              -f /tmp/fila.sql
             checksum=$(sha256sum "supabase/migrations/${arquivo}" | cut -d' ' -f1)
             psql "$SUPABASE_DB_URL" -tA -v ON_ERROR_STOP=1 \
               -c "select public.apply_migration('${v}', '${arquivo}', '${checksum}')"
