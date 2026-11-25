@@ -21,7 +21,6 @@
     Wrench,
     LifeBuoy,
     MessageSquare,
-    Sparkles,
   } from 'lucide-react';
  import { toast } from 'sonner';
  import { usePageTitle } from '@/hooks/usePageTitle';
@@ -171,19 +170,6 @@
                  </div>
                </div>
                
-               <div className="rounded-lg border border-primary/20 bg-primary/5 p-4 flex items-center justify-between gap-4">
-                 <div>
-                   <h4 className="font-medium text-primary flex items-center gap-2">
-                     <Sparkles className="h-4 w-4" />
-                     Programa Beta
-                   </h4>
-                   <p className="text-xs text-muted-foreground mt-1">Ative o acesso antecipado a novas funcionalidades de IA e automação.</p>
-                 </div>
-                 <Switch
-                   checked={audio.betaProgram}
-                   onCheckedChange={(checked) => setAudio((prev) => ({ ...prev, betaProgram: checked }))}
-                 />
-               </div>
              </CardContent>
            </Card>
          </TabsContent>
