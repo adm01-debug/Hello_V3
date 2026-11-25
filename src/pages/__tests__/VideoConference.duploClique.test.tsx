@@ -46,8 +46,10 @@ describe('VideoConference - duplo clique (etapa 218)', () => {
     fireEvent.change(screen.getByPlaceholderText('Reunião de equipe'), { target: { value: 'Sprint review' } });
 
     const criar = screen.getByRole('button', { name: 'Criar' });
-    fireEvent.click(criar);
-    fireEvent.click(criar);
+    act(() => {
+      criar.dispatchEvent(new MouseEvent('click', { bubbles: true }));
+      criar.dispatchEvent(new MouseEvent('click', { bubbles: true }));
+    });
 
     await vi.waitFor(() => expect(h.insert).toHaveBeenCalled());
     await new Promise((r) => setTimeout(r, 20));
