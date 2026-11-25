@@ -1,7 +1,7 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { renderHook, waitFor, act } from '@testing-library/react';
 import { toast } from 'sonner';
-import { useCadences } from '../useCadences';
+import { useCadences, useCadenceEnrollments } from '../useCadences';
 
 interface QueryResult { data: unknown; error: { message: string } | null }
 
@@ -14,6 +14,9 @@ const rows: Record<string, unknown[]> = {
     { id: 's1', cadence_id: 'c1', step_order: 1, step_type: 'call', delay_days: 0, delay_hours: 0, subject: null, body: null },
     { id: 's2', cadence_id: 'c1', step_order: 2, step_type: 'email', delay_days: 1, delay_hours: 0, subject: 'a', body: 'b' },
     { id: 's3', cadence_id: 'c1', step_order: 3, step_type: 'task', delay_days: 2, delay_hours: 0, subject: null, body: null },
+  ],
+  cadence_enrollments: [
+    { id: 'e1', cadence_id: 'c1', contact_id: 'ct1', deal_id: null, agent_name: 'Ana', current_step: 0, status: 'active', next_action_at: '2026-11-25T10:00:00Z' },
   ],
 };
 
@@ -142,5 +145,38 @@ describe('useCadences: edicao e exclusao', () => {
       { table: 'cadence_steps', payload: { step_order: 1 }, match: { id: 's2' } },
       { table: 'cadence_steps', payload: { step_order: 2 }, match: { id: 's3' } },
     ]);
+  });
+});
+describe('useCadenceEnrollments: acompanhamento e status', () => {
+  beforeEach(() => {
+    vi.clearAllMocks();
+    updates.length = 0;
+    mutationResult = { data: null, error: null };
+  });
+
+  it('carrega as inscricoes existentes', async () => {
+    const { result } = renderHook(() => useCadenceEnrollments());
+    await waitFor(() => expect(result.current.loading).toBe(false));
+    expect(result.current.enrollments).toHaveLength(1);
+    expect(result.current.enrollments[0].status).toBe('active');
+  });
+
+  it('atualiza o status da inscricao pelo id e recarrega', async () => {
+    const { result } = renderHook(() => useCadenceEnrollments());
+    await waitFor(() => expect(result.current.loading).toBe(false));
+    let ok: boolean | undefined;
+    await act(async () => { ok = await result.current.updateEnrollmentStatus('e1', 'paused'); });
+    expect(ok).toBe(true);
+    expect(updates).toContainEqual({ table: 'cadence_enrollments', payload: { status: 'paused' }, match: { id: 'e1' } });
+  });
+
+  it('devolve false e avisa quando o banco recusa a atualizacao', async () => {
+    mutationResult = { data: null, error: { message: 'denied' } };
+    const { result } = renderHook(() => useCadenceEnrollments());
+    await waitFor(() => expect(result.current.loading).toBe(false));
+    let ok: boolean | undefined;
+    await act(async () => { ok = await result.current.updateEnrollmentStatus('e1', 'cancelled'); });
+    expect(ok).toBe(false);
+    expect(toast.error).toHaveBeenCalled();
   });
 });
