@@ -50,7 +50,6 @@ interface AnalysisEntry {
 
 export function ActiveCallBar() {
   const [muted, setMuted] = useState(false);
-  const [onHold, setOnHold] = useState(false);
   const [showAIAnalysis, setShowAIAnalysis] = useState(false);
   const [showTranscription, setShowTranscription] = useState(false);
   const [transcripts, setTranscripts] = useState<TranscriptEntry[]>([]);
@@ -58,7 +57,7 @@ export function ActiveCallBar() {
   const [endedSessionId, setEndedSessionId] = useState<string | null>(null);
   const [endedContactId, setEndedContactId] = useState<string | null>(null);
 
-  const { activeCalls, activeCallId, endCall, currentSession, endDbSession, addCallAnalysis, addDbTranscript } = useCallContext();
+  const { activeCalls, activeCallId, endCall, toggleHold, currentSession, endDbSession, addCallAnalysis, addDbTranscript } = useCallContext();
   // call é derivado do contexto compartilhado — sem estado local
   const rawCall = activeCalls.find(c => c.id === activeCallId) ?? null;
   const duration = rawCall?.duration ?? 0;
@@ -106,6 +105,9 @@ export function ActiveCallBar() {
     contactPhone: rawCall.phoneNumber,
     type: rawCall.direction === 'inbound' ? 'incoming' as const : 'outgoing' as const,
   };
+  // E066: a espera vive no estado da chamada (contexto) para gravar hold_events —
+  // estado local aqui só animava a barra e nunca chegava ao banco.
+  const onHold = call.isOnHold;
 
   const handleHangup = async () => {
     if (currentSession) {
@@ -309,7 +311,7 @@ export function ActiveCallBar() {
             <Button aria-label={onHold ? 'Retomar a chamada' : 'Colocar a chamada em espera'} aria-pressed={onHold}
               variant="ghost"
               size="icon"
-              onClick={() => setOnHold(!onHold)}
+              onClick={() => toggleHold(call.id)}
               className={cn(onHold && 'bg-warning/10 text-warning hover:bg-warning/20 hover:text-warning')}
             >
               {onHold ? <Play className="h-4 w-4" /> : <Pause className="h-4 w-4" />}
