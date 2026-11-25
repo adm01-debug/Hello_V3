@@ -393,6 +393,7 @@
    "src/components/ui/tooltip.tsx",
    "src/hooks/useLockedWrite.ts",
    "src/hooks/useScheduledCallbacks.ts",
+   "src/lib/dialerLink.ts",
    "src/lib/safe-date.ts"
   ],
   "src/components/calls/ActiveCallBar.tsx": [
@@ -3438,6 +3439,7 @@
    "src/hooks/useContacts.ts",
    "src/hooks/useDebouncedSearchParam.ts",
    "src/hooks/usePageTitle.ts",
+   "src/lib/dialerLink.ts",
    "src/lib/utils.ts"
   ],
   "src/pages/Deals.tsx": [

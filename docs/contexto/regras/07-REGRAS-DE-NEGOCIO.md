@@ -1,6 +1,6 @@
 # 07 · REGRAS DE NEGÓCIO
 
-> Gerado automaticamente por AI Context Sync v1.3.2 · commit `89fede103b` · branch `main` · 2026-11-25 20:33 UTC
+> Gerado automaticamente por AI Context Sync v1.3.2 · commit `bb76af52aa` · branch `main` · 2026-11-25 20:50 UTC
 > Não edite à mão — regras humanas vão em `manual/`.
 
 ## A. Regras escritas por humanos (`manual/` — prioridade máxima, nunca sobrescrito)
@@ -2648,7 +2648,7 @@ _nenhum item encontrado_
 | `admin` | `supabase/functions/data-lake-flush/index.ts` |
 | `admin` | `supabase/migrations/20261123000200_fix_has_role_oracle_and_debug_tables.sql` |
 
-## K. Testes como especificação (3626 testes em 397 arquivos — nomes completos em `context.json`)
+## K. Testes como especificação (3635 testes em 400 arquivos — nomes completos em `context.json`)
 
 | Arquivo | Testes | Exemplos do que o sistema DEVE fazer |
 |---|---|---|
@@ -2952,7 +2952,7 @@ _nenhum item encontrado_
 | `src/hooks/__tests__/useIPValidation.coverage.test.tsx` | 4 | useIPValidation · returns data on success · handles supabase error branch · handles thrown exception branch |
 | `src/hooks/__tests__/useLockedWrite.test.ts` | 4 | useLockedWrite · ignora o segundo clique enquanto a gravacao da mesma linha esta em voo · libera a trava mesmo quando a gravacao falha · nao bloqueia linhas diferentes |
 | `src/hooks/__tests__/useNotificationPreferences.test.tsx` | 4 | useNotificationPreferences · retorna DEFAULT_PREFERENCES quando nao ha registro · carrega preferencias do banco · upsert no salvar usa onConflict user_id |
-| … +97 linhas — lista completa em `context.json` | | |
+| … +100 linhas — lista completa em `context.json` | | |
 
 ## L. Eventos de webhook tratados (contratos com sistemas externos)
 

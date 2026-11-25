@@ -585,8 +585,8 @@
   {
    "modulo": "components/callbacks",
    "arquivos": 2,
-   "testes": 0,
-   "linhas": 653,
+   "testes": 1,
+   "linhas": 657,
    "itens_menu": [],
    "telas": [],
    "rotas_http": [],
@@ -629,6 +629,7 @@
    "pacotes_externos": [
     "date-fns",
     "lucide-react",
+    "react-router-dom",
     "sonner"
    ]
   },
@@ -4692,9 +4693,9 @@
   },
   {
    "modulo": "lib",
-   "arquivos": 52,
+   "arquivos": 53,
    "testes": 0,
-   "linhas": 6502,
+   "linhas": 6519,
    "itens_menu": [],
    "telas": [],
    "rotas_http": [],
@@ -5592,7 +5593,7 @@
    "modulo": "pages",
    "arquivos": 93,
    "testes": 0,
-   "linhas": 17522,
+   "linhas": 17548,
    "itens_menu": [
     "Acessos Bloqueados",
     "Agent Assist",
@@ -6390,7 +6391,7 @@
   {
    "modulo": "pages/__tests__",
    "arquivos": 0,
-   "testes": 20,
+   "testes": 22,
    "linhas": 0,
    "itens_menu": [],
    "telas": [],

@@ -52,6 +52,7 @@
     "useQueryClient",
     "useRef",
     "useRingtoneSettings",
+    "useSearchParams",
     "useSipCall",
     "useState",
     "useSyncHistory",
@@ -1230,6 +1231,7 @@
     "useCallback",
     "useEffect",
     "useLockedWrite",
+    "useNavigate",
     "usePageTitle",
     "useScheduledCallbacks",
     "useState"
@@ -1251,7 +1253,7 @@
    "papeis": [
     "status"
    ],
-   "arquivos_puxados": 23
+   "arquivos_puxados": 24
   },
   {
    "protegida": false,
@@ -1569,6 +1571,7 @@
     "useFormField",
     "useId",
     "useMemo",
+    "useNavigate",
     "usePageTitle",
     "useRef",
     "useSearchParams",
@@ -1604,7 +1607,7 @@
     "searchbox",
     "status"
    ],
-   "arquivos_puxados": 46
+   "arquivos_puxados": 47
   },
   {
    "protegida": false,
@@ -1757,7 +1760,7 @@
     "img",
     "status"
    ],
-   "arquivos_puxados": 75
+   "arquivos_puxados": 76
   },
   {
    "protegida": false,

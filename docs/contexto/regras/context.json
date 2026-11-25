@@ -1,15 +1,15 @@
 {
  "meta": {
-  "sha": "89fede103b1a3351a8eff1620966ecc25bd084e4",
+  "sha": "bb76af52aa4f827b23f945e6360a5794d6eaa6d5",
   "branch": "main",
   "remote": "https://github.com/adm01-debug/Hello_V3",
-  "generated_at": "2026-11-25 20:33 UTC",
-  "files_total": 1798,
-  "code_files": 1595,
-  "code_lines": 195298
+  "generated_at": "2026-11-25 20:50 UTC",
+  "files_total": 1802,
+  "code_files": 1599,
+  "code_lines": 195619
  },
  "version": "1.3.2",
- "facts_hash": "90db7e9e35cb22a8",
+ "facts_hash": "74db317ac4394999",
  "stack": {
   "frameworks": [
    "React + Vite",
@@ -161,8 +161,8 @@
   ],
   "package_manager": "bun",
   "languages": {
-   ".ts": 660,
-   ".tsx": 651,
+   ".ts": 661,
+   ".tsx": 654,
    ".sql": 248,
    ".mjs": 29,
    ".py": 5,
@@ -28611,7 +28611,7 @@
     ],
     "invokes_transitive": [],
     "rpc_transitive": [],
-    "deps_count": 23
+    "deps_count": 24
    },
    {
     "path": "",
@@ -28734,7 +28734,7 @@
     "rpc_transitive": [
      "log_audit_event"
     ],
-    "deps_count": 46
+    "deps_count": 47
    },
    {
     "path": "",
@@ -28975,7 +28975,7 @@
      "get_dashboard_stats",
      "get_queue_stats"
     ],
-    "deps_count": 71
+    "deps_count": 72
    },
    {
     "path": "",
@@ -32538,7 +32538,7 @@
     "file": ".github/workflows/migrations.yml"
    }
   ],
-  "components_count": 369,
+  "components_count": 370,
   "hooks": [
    {
     "name": "useContacts",
@@ -33706,8 +33706,8 @@
   },
   {
    "module": "src/components",
-   "files": 369,
-   "lines": 43552,
+   "files": 370,
+   "lines": 43625,
    "tables": [
     "accounts",
     "agent_goals",
@@ -33891,6 +33891,7 @@
     "src/components/call-library/SurveysPanel.tsx",
     "src/components/callbacks/ScheduleCallbackDialog.tsx",
     "src/components/callbacks/ScheduledCallbacksList.tsx",
+    "src/components/callbacks/__tests__/ScheduledCallbacksList.ligarAgora.test.tsx",
     "src/components/calls/ActiveCallBar.tsx",
     "src/components/calls/ActiveCallsIndicator.tsx",
     "src/components/calls/AudioOutputSelector.tsx",
@@ -33910,8 +33911,7 @@
     "src/components/calls/__tests__/AudioOutputSelector.test.tsx",
     "src/components/calls/__tests__/CrmSuggestionsCard.test.tsx",
     "src/components/calls/__tests__/NextBestActionPanel.test.tsx",
-    "src/components/calls/__tests__/UnifiedSoftphone.falhas.test.tsx",
-    "src/components/calls/live-transcription/TranscriptList.tsx"
+    "src/components/calls/__tests__/UnifiedSoftphone.falhas.test.tsx"
    ]
   },
   {
@@ -34276,8 +34276,8 @@
   },
   {
    "module": "src/lib",
-   "files": 181,
-   "lines": 21913,
+   "files": 182,
+   "lines": 21930,
    "tables": [
     "active_sessions",
     "call_quality_metrics",
@@ -34294,6 +34294,7 @@
     "dialer-favorite-tags.ts: MAX_TAG_LENGTH, TAG_PRESETS, UNTAGGED_LABEL, TaggedItem, FavoriteGroup, normalizeTag",
     "dialer-favorites-order.ts: OrderableFavorite, moveItem, normalizePositions, diffPositions, reorderFavorites",
     "dialer-filter-storage.ts: FilterStorageLike, buildFilterStorageKey, sanitizeStoredFilter, loadTagFilter, saveTagFilter",
+    "dialerLink.ts: dialerUrl",
     "elevenlabs-stub.ts: useConversation",
     "error-message.ts: mensagemDeErro",
     "error-tracking.ts: reportError, initErrorTracking, getErrorReports",
@@ -34323,8 +34324,7 @@
     "security-alerts-webhook-validation.ts: WEBHOOK_URL_MAX_LENGTH, WEBHOOK_SECRET_MIN_LENGTH, WEBHOOK_SECRET_MAX_LENGTH, WebhookDraft, WebhookField, WebhookValidationResult",
     "security-alerts-webhook.ts: WEBHOOK_MAX_ATTEMPTS_MIN, WEBHOOK_MAX_ATTEMPTS_MAX, WEBHOOK_MAX_ATTEMPTS_DEFAULT, WEBHOOK_BASE_DELAY_MIN, WEBHOOK_BASE_DELAY_MAX, WEBHOOK_BASE_DELAY_DEFAULT",
     "security-report-data.ts: SecurityFeature, SecurityDecision, securityFeatures, securityDecisions",
-    "session-expiry.ts: SESSION_EXPIRED_EVENT, isSessionExpiredError, notifySessionExpired",
-    "sync-history.ts: MAX_SYNC_HISTORY_ENTRIES, SyncHistoryEntry, SyncHistoryStorageLike, buildSyncHistoryKey, sanitizeEntry, appendEntry"
+    "session-expiry.ts: SESSION_EXPIRED_EVENT, isSessionExpiredError, notifySessionExpired"
    ],
    "docs": [
     "agent-assist-utils.ts: Utilitários puros para Real-Time Agent Assist. Sem efeitos colaterais — fáceis de testar.",
@@ -34372,6 +34372,7 @@
     "src/lib/dialer-favorite-tags.ts",
     "src/lib/dialer-favorites-order.ts",
     "src/lib/dialer-filter-storage.ts",
+    "src/lib/dialerLink.ts",
     "src/lib/elevenlabs-stub.ts",
     "src/lib/error-message.ts",
     "src/lib/error-tracking.ts",
@@ -34441,14 +34442,13 @@
     "src/lib/__tests__/favorite-sync-labels.test.ts",
     "src/lib/__tests__/fixes-exhaustive.test.ts",
     "src/lib/__tests__/guard-edge-numeric.test.ts",
-    "src/lib/__tests__/hash-endpoint.test.ts",
-    "src/lib/__tests__/health-score.property.test.ts"
+    "src/lib/__tests__/hash-endpoint.test.ts"
    ]
   },
   {
    "module": "src/pages",
-   "files": 152,
-   "lines": 23393,
+   "files": 154,
+   "lines": 23624,
    "tables": [
     "audit_logs",
     "battle_card_triggers",
@@ -58345,6 +58345,14 @@
     "name": "com filtros aplicados, diz que o filtro esconde resultados e oferece limpar"
    },
    {
+    "file": "src/components/callbacks/__tests__/ScheduledCallbacksList.ligarAgora.test.tsx",
+    "name": "ScheduledCallbacksList - Ligar agora"
+   },
+   {
+    "file": "src/components/callbacks/__tests__/ScheduledCallbacksList.ligarAgora.test.tsx",
+    "name": "manda o retorno para o discador com numero, nome e discagem automatica"
+   },
+   {
     "file": "src/components/calls/__tests__/ActiveCallBar.espera.test.tsx",
     "name": "ActiveCallBar: botao de espera"
    },
@@ -70613,6 +70621,18 @@
     "name": "diz quantos conflitos estao sendo mostrados quando passa de 50"
    },
    {
+    "file": "src/pages/__tests__/Contacts.ligar.test.tsx",
+    "name": "Contacts - Ligar"
+   },
+   {
+    "file": "src/pages/__tests__/Contacts.ligar.test.tsx",
+    "name": "leva o numero e o nome para o discador, ja mandando discar"
+   },
+   {
+    "file": "src/pages/__tests__/Contacts.ligar.test.tsx",
+    "name": "avisa quando o contato nao tem telefone em vez de abrir o discador"
+   },
+   {
     "file": "src/pages/__tests__/ExecutiveDashboard.test.tsx",
     "name": "ExecutiveDashboard"
    },
@@ -70695,6 +70715,22 @@
    {
     "file": "src/pages/__tests__/PhoneDialer.compliance.test.tsx",
     "name": "não abre duas chamadas quando o botão de ligar é tocado duas vezes"
+   },
+   {
+    "file": "src/pages/__tests__/PhoneDialer.discagemExterna.test.tsx",
+    "name": "PhoneDialer - discagem pedida por outra tela"
+   },
+   {
+    "file": "src/pages/__tests__/PhoneDialer.discagemExterna.test.tsx",
+    "name": "disca sozinho quando a URL pede (auto=1)"
+   },
+   {
+    "file": "src/pages/__tests__/PhoneDialer.discagemExterna.test.tsx",
+    "name": "apenas preenche o numero quando a URL nao pede discagem"
+   },
+   {
+    "file": "src/pages/__tests__/PhoneDialer.discagemExterna.test.tsx",
+    "name": "limpa os parametros da URL depois de consumir"
    },
    {
     "file": "src/pages/__tests__/QueueMetricsDashboard.test.tsx",
@@ -92150,7 +92186,7 @@
   },
   "src/components/callbacks/ScheduledCallbacksList.tsx": {
    "path": "src/components/callbacks/ScheduledCallbacksList.tsx",
-   "lines": 359,
+   "lines": 363,
    "exports": [
     "function ScheduledCallbacksList"
    ],
@@ -92226,6 +92262,15 @@
    ],
    "side_effects": [
     "notify"
+   ]
+  },
+  "src/components/callbacks/__tests__/ScheduledCallbacksList.ligarAgora.test.tsx": {
+   "path": "src/components/callbacks/__tests__/ScheduledCallbacksList.ligarAgora.test.tsx",
+   "lines": 69,
+   "is_test": true,
+   "tests": [
+    "ScheduledCallbacksList - Ligar agora",
+    "manda o retorno para o discador com numero, nome e discagem automatica"
    ]
   },
   "src/components/calls/ActiveCallBar.tsx": {
@@ -107785,6 +107830,14 @@
    ],
    "doc": "Persistência do filtro de etiquetas do discador. Lógica pura sobre um `Storage` injetável (default: `localStorage`), para que a suíte de testes possa exercitar cenários adversos (quota estourada, JSON corrompido, valores não textuais) sem depender do ambiente do navegador. A chave é escopada por usu …"
   },
+  "src/lib/dialerLink.ts": {
+   "path": "src/lib/dialerLink.ts",
+   "lines": 17,
+   "exports": [
+    "function dialerUrl"
+   ],
+   "doc": "URL do discador (rota \"/\") com o numero ja preenchido. O audio da chamada so existe na instancia de SIP montada pelo discador, entao qualquer tela que \"liga\" navega para la em vez de abrir um estado de chamada sem audio. `autoDial` faz o discador disparar a chamada ao abrir."
+  },
   "src/lib/elevenlabs-stub.ts": {
    "path": "src/lib/elevenlabs-stub.ts",
    "lines": 29,
@@ -112783,7 +112836,7 @@
   },
   "src/pages/Contacts.tsx": {
    "path": "src/pages/Contacts.tsx",
-   "lines": 361,
+   "lines": 372,
    "exports": [
     "default Contacts"
    ],
@@ -113471,7 +113524,7 @@
   },
   "src/pages/PhoneDialer.tsx": {
    "path": "src/pages/PhoneDialer.tsx",
-   "lines": 356,
+   "lines": 371,
    "exports": [
     "default PhoneDialer"
    ],
@@ -114502,6 +114555,16 @@
     "diz quantos conflitos estao sendo mostrados quando passa de 50"
    ]
   },
+  "src/pages/__tests__/Contacts.ligar.test.tsx": {
+   "path": "src/pages/__tests__/Contacts.ligar.test.tsx",
+   "lines": 96,
+   "is_test": true,
+   "tests": [
+    "Contacts - Ligar",
+    "leva o numero e o nome para o discador, ja mandando discar",
+    "avisa quando o contato nao tem telefone em vez de abrir o discador"
+   ]
+  },
   "src/pages/__tests__/ExecutiveDashboard.test.tsx": {
    "path": "src/pages/__tests__/ExecutiveDashboard.test.tsx",
    "lines": 41,
@@ -114566,6 +114629,20 @@
     "bloqueia a chamada quando o pre-dial check reprova",
     "inicia a chamada quando o pre-dial check aprova",
     "não abre duas chamadas quando o botão de ligar é tocado duas vezes"
+   ]
+  },
+  "src/pages/__tests__/PhoneDialer.discagemExterna.test.tsx": {
+   "path": "src/pages/__tests__/PhoneDialer.discagemExterna.test.tsx",
+   "lines": 109,
+   "is_test": true,
+   "errors": [
+    ", () => ({\n  ensureNotificationPermission: vi.fn(() => Promise.resolve()),\n  startIncomingCallAlert: vi.fn(),\n}));\nvi.mock("
+   ],
+   "tests": [
+    "PhoneDialer - discagem pedida por outra tela",
+    "disca sozinho quando a URL pede (auto=1)",
+    "apenas preenche o numero quando a URL nao pede discagem",
+    "limpa os parametros da URL depois de consumir"
    ]
   },
   "src/pages/__tests__/QueueMetricsDashboard.test.tsx": {
@@ -124460,10 +124537,26 @@
   }
  },
  "git": {
-  "sha": "89fede103b1a3351a8eff1620966ecc25bd084e4",
+  "sha": "bb76af52aa4f827b23f945e6360a5794d6eaa6d5",
   "branch": "main",
   "remote": "https://github.com/adm01-debug/Hello_V3",
   "commits": [
+   {
+    "sha": "bb76af5",
+    "date": "2026-11-25",
+    "author": "adm01-debug",
+    "subject": "fix: ligar do cartao de contato e do retorno discam de verdade (#330)",
+    "files": [
+     "docs/qa/05-PROGRESSO.md",
+     "src/components/callbacks/ScheduledCallbacksList.tsx",
+     "src/components/callbacks/__tests__/ScheduledCallbacksList.ligarAgora.test.tsx",
+     "src/lib/dialerLink.ts",
+     "src/pages/Contacts.tsx",
+     "src/pages/PhoneDialer.tsx",
+     "src/pages/__tests__/Contacts.ligar.test.tsx",
+     "src/pages/__tests__/PhoneDialer.discagemExterna.test.tsx"
+    ]
+   },
    {
     "sha": "89fede1",
     "date": "2026-11-25",
@@ -124822,22 +124915,6 @@
      "src/components/call-history/__tests__/CallSessionsList.test.tsx",
      "src/pages/Contacts.tsx"
     ]
-   },
-   {
-    "sha": "edd40a3",
-    "date": "2026-11-24",
-    "author": "adm01-debug",
-    "subject": "chore: convencao de mensagem de sucesso e textos das telas das ondas 2 e 5 (#301)",
-    "files": [
-     "docs/agentes/mapa-repo.md",
-     "docs/qa/05-PROGRESSO.md",
-     "src/components/calls/UnifiedSoftphone.tsx",
-     "src/hooks/__tests__/useAgentRanking.coverage.test.tsx",
-     "src/hooks/useAgentRanking.ts",
-     "src/hooks/useContacts.ts",
-     "src/pages/roles/__tests__/useRoles.test.ts",
-     "src/pages/roles/useRoles.ts"
-    ]
    }
   ],
   "hot_files": [
@@ -124851,7 +124928,7 @@
    ],
    [
     "src/components/calls/UnifiedSoftphone.tsx",
-    4
+    3
    ],
    [
     "src/components/calls/ActiveCallBar.tsx",
@@ -124864,6 +124941,18 @@
    [
     ".github/workflows/ci.yml",
     3
+   ],
+   [
+    "src/components/callbacks/ScheduledCallbacksList.tsx",
+    2
+   ],
+   [
+    "src/pages/Contacts.tsx",
+    2
+   ],
+   [
+    "src/pages/PhoneDialer.tsx",
+    2
    ],
    [
     "src/pages/Settings.tsx",
@@ -124908,18 +124997,6 @@
    [
     "src/pages/Calls.tsx",
     2
-   ],
-   [
-    "tests/e2e/screenshots.spec.ts",
-    2
-   ],
-   [
-    "docs/agentes/mapa-repo.md",
-    2
-   ],
-   [
-    "src/components/callbacks/ScheduledCallbacksList.tsx",
-    1
    ]
   ]
  }

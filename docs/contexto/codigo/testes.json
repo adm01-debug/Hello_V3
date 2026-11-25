@@ -5,17 +5,17 @@
   "vitest",
   "playwright"
  ],
- "total": 408,
+ "total": 411,
  "por_tipo": {
   "contrato": 1,
   "e2e": 16,
   "pytest": 2,
-  "unit": 387
+  "unit": 390
  },
  "onde_ficam": [
   {
    "padrao": "co-localizado (__tests__)",
-   "arquivos": 380
+   "arquivos": 383
   },
   {
    "padrao": "tests/",
@@ -205,6 +205,15 @@
     "src/components/call-history/CallSessionsList.tsx"
    ],
    "casos": 3
+  },
+  {
+   "arquivo": "src/components/callbacks/__tests__/ScheduledCallbacksList.ligarAgora.test.tsx",
+   "tipo": "unit",
+   "linhas": 69,
+   "testa": [
+    "src/components/callbacks/ScheduledCallbacksList.tsx"
+   ],
+   "casos": 1
   },
   {
    "arquivo": "src/components/calls/__tests__/ActiveCallBar.espera.test.tsx",
@@ -2871,6 +2880,15 @@
    "casos": 3
   },
   {
+   "arquivo": "src/pages/__tests__/Contacts.ligar.test.tsx",
+   "tipo": "unit",
+   "linhas": 96,
+   "testa": [
+    "src/pages/Contacts.tsx"
+   ],
+   "casos": 2
+  },
+  {
    "arquivo": "src/pages/__tests__/ExecutiveDashboard.test.tsx",
    "tipo": "unit",
    "linhas": 41,
@@ -2922,6 +2940,16 @@
    "tipo": "unit",
    "linhas": 125,
    "testa": [
+    "src/pages/PhoneDialer.tsx"
+   ],
+   "casos": 3
+  },
+  {
+   "arquivo": "src/pages/__tests__/PhoneDialer.discagemExterna.test.tsx",
+   "tipo": "unit",
+   "linhas": 109,
+   "testa": [
+    "src/lib/dialerLink.ts",
     "src/pages/PhoneDialer.tsx"
    ],
    "casos": 3
@@ -3724,6 +3752,7 @@
   "src/components/auth/ProtectedRoute.tsx": 3,
   "src/components/auth/SessionExpiredDialog.tsx": 1,
   "src/components/call-history/CallSessionsList.tsx": 1,
+  "src/components/callbacks/ScheduledCallbacksList.tsx": 1,
   "src/components/calls/ActiveCallBar.tsx": 2,
   "src/components/calls/AudioOutputSelector.tsx": 1,
   "src/components/calls/ConferenceSection.tsx": 1,
@@ -3925,6 +3954,7 @@
   "src/lib/dialer-favorites-order.ts": 1,
   "src/lib/dialer-filter-storage.ts": 1,
   "src/lib/dialer/predictive-pace.ts": 1,
+  "src/lib/dialerLink.ts": 1,
   "src/lib/dnc/reconcile.ts": 1,
   "src/lib/error-message.ts": 1,
   "src/lib/error-tracking.ts": 1,
@@ -3994,11 +4024,12 @@
   "src/pages/Cadences.tsx": 1,
   "src/pages/CallHistory.tsx": 1,
   "src/pages/ConcurrencyConflicts.tsx": 1,
+  "src/pages/Contacts.tsx": 1,
   "src/pages/ExecutiveDashboard.tsx": 1,
   "src/pages/IPWhitelist.tsx": 1,
   "src/pages/Knowledge.tsx": 2,
   "src/pages/Login.tsx": 2,
-  "src/pages/PhoneDialer.tsx": 1,
+  "src/pages/PhoneDialer.tsx": 2,
   "src/pages/QueueMetricsDashboard.tsx": 1,
   "src/pages/RateLimitDashboard.tsx": 1,
   "src/pages/Recordings.tsx": 1,
@@ -4079,7 +4110,6 @@
    "src/pages/Coaching.tsx",
    "src/pages/Compliance.tsx",
    "src/pages/ContactInsights.tsx",
-   "src/pages/Contacts.tsx",
    "src/pages/Deals.tsx",
    "src/pages/Dialer.tsx",
    "src/pages/ExternalRecordingsImport.tsx",

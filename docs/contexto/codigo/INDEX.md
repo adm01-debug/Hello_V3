@@ -1,7 +1,7 @@
 # Contexto do projeto para agentes de IA
 
 GERADO AUTOMATICAMENTE por scripts/ai-context/gerar.mjs — não editar à mão; será sobrescrito.
-Publicado em `docs/contexto/codigo/` na branch `contexto` (gerada, nunca abra PR dela) a cada push em `main` e a cada 10 minutos pelo workflow `contexto.yml`; índice único das três fontes em `docs/contexto/00-INDEX.md`. Gere local com `node scripts/ai-context/gerar.mjs`. Commit-base: `89fede103b1a3351a8eff1620966ecc25bd084e4` (2026-11-25T17:32:40-03:00).
+Publicado em `docs/contexto/codigo/` na branch `contexto` (gerada, nunca abra PR dela) a cada push em `main` e a cada 10 minutos pelo workflow `contexto.yml`; índice único das três fontes em `docs/contexto/00-INDEX.md`. Gere local com `node scripts/ai-context/gerar.mjs`. Commit-base: `bb76af52aa4f827b23f945e6360a5794d6eaa6d5` (2026-11-25T17:50:15-03:00).
 
 ## Como usar (leia antes de planejar ou executar qualquer tarefa)
 1. **Tela/rota/menu** → `rotas.json` (url/vista/menu → arquivo → hooks → tabelas → edges; `rotas_http_backend` para APIs) e `modulos.json` (módulo inteiro + dependências entre módulos).
@@ -14,7 +14,7 @@ Publicado em `docs/contexto/codigo/` na branch `contexto` (gerada, nunca abra PR
 Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua tarefa; não carregue tudo.
 
 ## Stack
-- linguagens: TypeScript (1311), SQL (248), Markdown (121), JavaScript (31), JSON (16), Python (5), YAML (4), Shell (2)
+- linguagens: TypeScript (1315), SQL (248), Markdown (121), JavaScript (31), JSON (16), Python (5), YAML (4), Shell (2)
 - linguagem_principal: TypeScript
 - framework: React
 - backend_http: n/d
@@ -34,9 +34,9 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 ## Números
 | item | qtd |
 |---|---|
-| arquivos_total | 1751 |
-| arquivos_codigo | 1346 |
-| linhas_codigo | 179368 |
+| arquivos_total | 1755 |
+| arquivos_codigo | 1350 |
+| linhas_codigo | 179689 |
 | rotas | 106 |
 | rotas_http_backend | 11 |
 | vistas_por_id | 0 |
@@ -48,7 +48,7 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 | tabelas | 170 |
 | migrations | 244 |
 | cron_jobs | 11 |
-| testes | 408 |
+| testes | 411 |
 | workflows | 4 |
 | scripts | 36 |
 | docs_md | 121 |
@@ -57,13 +57,13 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 - telas: src/pages (105), src/routes (1)
 - componentes: src/components (313), src/pages (126), src/contexts (5)
 - hooks: src/hooks (176), src/components (12), src/contexts (5)
-- servicos_logica: src/lib (90), src/integrations (3), scripts/regras_negocio (2)
-- testes: co-localizado (__tests__) (380), tests/ (9), e2e/ (7)
+- servicos_logica: src/lib (91), src/integrations (3), scripts/regras_negocio (2)
+- testes: co-localizado (__tests__) (383), tests/ (9), e2e/ (7)
 - edge_functions: supabase/functions
 - migrations: supabase/migrations
 - scripts: scripts/inventario (7), scripts/regras_negocio (3), scripts/ai-context (2)
 - docs: (raiz) (5), docs (3), .github (1)
-- nomenclatura: {"componentes":"PascalCase (88%)","hooks":"use + PascalCase","servicos":"kebab-case (65%)","edge_functions":"kebab-case (100%)","tabelas":"snake_case (90%)"}
+- nomenclatura: {"componentes":"PascalCase (88%)","hooks":"use + PascalCase","servicos":"kebab-case (64%)","edge_functions":"kebab-case (100%)","tabelas":"snake_case (90%)"}
 - instruções para agentes no repo: AGENTS.md, CLAUDE.md
 
 ## Módulos (menu → domínio)
@@ -93,7 +93,7 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 | contexts | 0 | 0 | 5 | 15 | 3 | 11 |
 | hooks | 0 | 0 | 170 | 209 | 57 | 124 |
 | hooks/auth | 0 | 0 | 5 | 5 | 0 | 2 |
-| lib | 0 | 0 | 52 | 118 | 30 | 71 |
+| lib | 0 | 0 | 53 | 118 | 30 | 71 |
 | lib/security | 0 | 0 | 17 | 0 | 0 | 0 |
 | lib/validation | 0 | 0 | 5 | 7 | 1 | 0 |
 | pages | 87 | 93 | 93 | 195 | 67 | 139 |
@@ -370,13 +370,13 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 - possiveis_segredos_no_codigo: 3 — ex.: src/lib/__tests__/security-advanced.test.ts:203, src/lib/__tests__/security-advanced.test.ts:208, src/lib/__tests__/security-advanced.test.ts:213
 
 ## Grafo de código (graphify)
-- 10327 nós · 27271 arestas · 790 comunidades · grafo do commit `89fede10`
-- comunidades maiores: card.tsx (256), client.ts (193), vitest (158), usePageTitle.ts (154), react (144), react-router-dom (136), safeFormatDatePtBR (129), lucide-react (126), cn (122), useAuthContext (118), safe-date.ts (115), buildCorsHeaders (111)
+- 10344 nós · 27316 arestas · 793 comunidades · grafo do commit `bb76af52`
+- comunidades maiores: lucide-react (301), cn (227), client.ts (188), badge.tsx (181), react (179), vitest (157), buildCorsHeaders (152), protectedRoutes.tsx (120), sonner (116), @tanstack/react-query (107), Contacts.tsx (100), 5. Em uso por rota (96)
 - símbolos mais chamados: cn() (src/lib/utils.ts), usePageTitle() (src/hooks/usePageTitle.ts), safeFormatDatePtBR() (src/lib/safe-date.ts), useAuthContext() (src/contexts/AuthContext.tsx), q() (scripts/supabase_snapshot/snapshot.py), safeFormatDistanceToNow() (src/lib/safe-date.ts), traceHeaders() (src/lib/tracing.ts), withTrace() (src/lib/tracing.ts), safeToLocaleString() (src/lib/safe-date.ts), buildCorsHeaders() (supabase/functions/_shared/cors.ts), .collect() (scripts/supabase_snapshot/test_snapshot.py), formatDuration() (src/lib/utils.ts)
 - consulta local: `graphify query "<pergunta>"`, `graphify path "<A>" "<B>"`, `graphify explain "<X>"`
 
 ## Hotspots (arquivos mais alterados, 90 dias)
-- docs/qa/05-PROGRESSO.md (136)
+- docs/qa/05-PROGRESSO.md (137)
 - docs/estado/funcionalidades-planejadas.md (31)
 - src/components/calls/UnifiedSoftphone.tsx (13)
 - src/components/layout/AppSidebar.tsx (11)
@@ -388,9 +388,9 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 - src/components/calls/ActiveCallBar.tsx (9)
 - src/components/layout/CommandPalette.tsx (9)
 - docs/agentes/mapa-repo.md (8)
+- src/pages/PhoneDialer.tsx (8)
 - supabase/functions/validate-geo/index.ts (8)
 - docs/edge-functions/README.md (7)
-- src/hooks/__tests__/useQueueMetrics.coverage.test.tsx (7)
 
 ## Workflows
 - `ci.yml` — CI (pull_request, push)
@@ -430,6 +430,7 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 
 
 ## Últimos commits
+- 2026-11-25 `bb76af5` fix: ligar do cartao de contato e do retorno discam de verdade (#330)
 - 2026-11-25 `89fede1` fix: proteger gravacao de preferencias e callbacks contra duplo clique (#329)
 - 2026-11-25 `7245964` chore: remover componentes orfaos (etapa 296) e reaproveitar saida de audio e alertas de contato (#328)
 - 2026-11-25 `f214b17` feat: verifica voz ao vivo na chamada e remove resumo de reuniao duplicado (etapas 154,155) (#327)
@@ -444,7 +445,6 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 - 2026-11-25 `c9aede0` fix: dry-run do migrations.yml nao pode gravar de verdade (#319)
 - 2026-11-25 `fffd1cc` fix: normalizar nome registrado antes de comparar com o arquivo (#317)
 - 2026-11-25 `f95122a` fix: colisao de versao nao impede o diagnostico da fila (#316)
-- 2026-11-25 `5df6b47` fix: comparar migration pelo slug do nome e permitir registrar sem executar (#315)
 
 ## Arquivos deste diretório
 - `docs/contexto/codigo/rotas.json`

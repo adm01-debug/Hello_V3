@@ -2,11 +2,16 @@
  "aviso": "GERADO AUTOMATICAMENTE por scripts/ai-context/gerar.mjs — não editar à mão; será sobrescrito.",
  "format_version": 2,
  "git": {
-  "commit": "89fede103b1a3351a8eff1620966ecc25bd084e4",
+  "commit": "bb76af52aa4f827b23f945e6360a5794d6eaa6d5",
   "branch": "main",
-  "data_commit": "2026-11-25T17:32:40-03:00",
+  "data_commit": "2026-11-25T17:50:15-03:00",
   "remote": "https://github.com/adm01-debug/Hello_V3",
   "ultimos_commits": [
+   {
+    "sha": "bb76af5",
+    "data": "2026-11-25",
+    "assunto": "fix: ligar do cartao de contato e do retorno discam de verdade (#330)"
+   },
    {
     "sha": "89fede1",
     "data": "2026-11-25",
@@ -126,14 +131,9 @@
     "sha": "a67d708",
     "data": "2026-11-24",
     "assunto": "fix: teclado no fluxo de chamada - foco preso no dialogo e devolvido ao gatilho (etapa 273) (#308)"
-   },
-   {
-    "sha": "61fd9f9",
-    "data": "2026-11-24",
-    "assunto": "fix: alvo de toque de 44 px no celular (etapa 272) (#307)"
    }
   ],
-  "arquivos_mudados_7d": 1295,
+  "arquivos_mudados_7d": 1299,
   "pastas_mais_mudadas_30d": [
    {
     "pasta": "covout/lcov-report/hooks",
@@ -145,7 +145,7 @@
    },
    {
     "pasta": "docs/qa/05-PROGRESSO.md",
-    "mudancas": 136
+    "mudancas": 137
    },
    {
     "pasta": "covout/lcov-report/lib",
@@ -199,7 +199,7 @@
   "arquivos_mais_mudados_90d": [
    {
     "arquivo": "docs/qa/05-PROGRESSO.md",
-    "mudancas": 136
+    "mudancas": 137
    },
    {
     "arquivo": "docs/estado/funcionalidades-planejadas.md",
@@ -246,6 +246,10 @@
     "mudancas": 8
    },
    {
+    "arquivo": "src/pages/PhoneDialer.tsx",
+    "mudancas": 8
+   },
+   {
     "arquivo": "supabase/functions/validate-geo/index.ts",
     "mudancas": 8
    },
@@ -267,10 +271,6 @@
    },
    {
     "arquivo": "src/pages/Calls.tsx",
-    "mudancas": 7
-   },
-   {
-    "arquivo": "src/pages/PhoneDialer.tsx",
     "mudancas": 7
    },
    {
@@ -314,9 +314,9 @@
   ]
  },
  "contagens": {
-  "arquivos_total": 1751,
-  "arquivos_codigo": 1346,
-  "linhas_codigo": 179368,
+  "arquivos_total": 1755,
+  "arquivos_codigo": 1350,
+  "linhas_codigo": 179689,
   "rotas": 106,
   "rotas_http_backend": 11,
   "vistas_por_id": 0,
@@ -328,7 +328,7 @@
   "tabelas": 170,
   "migrations": 244,
   "cron_jobs": 11,
-  "testes": 408,
+  "testes": 411,
   "workflows": 4,
   "scripts": 36,
   "docs_md": 121
@@ -483,8 +483,8 @@
    "linhas": 450
   },
   "src/components": {
-   "arquivos": 369,
-   "linhas": 43552
+   "arquivos": 370,
+   "linhas": 43625
   },
   "src/contexts": {
    "arquivos": 5,
@@ -503,16 +503,16 @@
    "linhas": 8224
   },
   "src/lib": {
-   "arquivos": 181,
-   "linhas": 21913
+   "arquivos": 182,
+   "linhas": 21930
   },
   "src/main.tsx": {
    "arquivos": 1,
    "linhas": 44
   },
   "src/pages": {
-   "arquivos": 152,
-   "linhas": 23393
+   "arquivos": 154,
+   "linhas": 23624
   },
   "src/routes": {
    "arquivos": 4,
@@ -621,6 +621,10 @@
    "linhas": 373
   },
   {
+   "arquivo": "src/pages/Contacts.tsx",
+   "linhas": 372
+  },
+  {
    "arquivo": "supabase/functions/ldap-sync/index.ts",
    "linhas": 372
   },
@@ -629,20 +633,16 @@
    "linhas": 371
   },
   {
+   "arquivo": "src/pages/PhoneDialer.tsx",
+   "linhas": 371
+  },
+  {
    "arquivo": "src/pages/TopicDetection.tsx",
    "linhas": 370
   },
   {
-   "arquivo": "src/pages/Contacts.tsx",
-   "linhas": 361
-  },
-  {
    "arquivo": "src/components/callbacks/ScheduledCallbacksList.tsx",
-   "linhas": 359
-  },
-  {
-   "arquivo": "src/lib/security-alerts-webhook.ts",
-   "linhas": 359
+   "linhas": 363
   }
  ],
  "qualidade": {

@@ -819,7 +819,7 @@
     "ScheduledCallbacksList"
    ],
    "export_default": null,
-   "linhas": 359,
+   "linhas": 363,
    "dominio": "components/callbacks",
    "hooks_locais": [
     "useLockedWrite",
@@ -5855,7 +5855,7 @@
     "Contacts"
    ],
    "export_default": "Contacts",
-   "linhas": 361,
+   "linhas": 372,
    "dominio": "pages",
    "hooks_locais": [
     "useBitrixSync",
@@ -6507,7 +6507,7 @@
     "PhoneDialer"
    ],
    "export_default": "PhoneDialer",
-   "linhas": 356,
+   "linhas": 371,
    "dominio": "pages",
    "hooks_locais": [
     "useCallContext",
