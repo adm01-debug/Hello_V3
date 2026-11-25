@@ -9,7 +9,7 @@
    "JavaScript (31)",
    "JSON (16)",
    "Python (5)",
-   "YAML (3)",
+   "YAML (4)",
    "Shell (2)"
   ],
   "linguagem_principal": "TypeScript",
@@ -235,6 +235,29 @@
     "actions/setup-node",
     "actions/upload-artifact",
     "peter-evans/create-pull-request"
+   ]
+  },
+  {
+   "arquivo": ".github/workflows/migrations.yml",
+   "nome": "Aplicar migration (manual)",
+   "gatilhos": [
+    "workflow_dispatch"
+   ],
+   "crons": [],
+   "branches": [],
+   "jobs": [
+    "aplicar"
+   ],
+   "permissoes": [
+    "contents: read"
+   ],
+   "scripts_usados": [],
+   "npm_scripts": [],
+   "secrets": [
+    "SUPABASE_DB_URL"
+   ],
+   "actions": [
+    "actions/checkout"
    ]
   }
  ],

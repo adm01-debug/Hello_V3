@@ -1,7 +1,7 @@
 # Contexto do projeto para agentes de IA
 
 GERADO AUTOMATICAMENTE por scripts/ai-context/gerar.mjs — não editar à mão; será sobrescrito.
-Publicado em `docs/contexto/codigo/` na branch `contexto` (gerada, nunca abra PR dela) a cada push em `main` e a cada 10 minutos pelo workflow `contexto.yml`; índice único das três fontes em `docs/contexto/00-INDEX.md`. Gere local com `node scripts/ai-context/gerar.mjs`. Commit-base: `c9c5a2d07fb31e03218f57d0f5f8bae1520289df` (2026-11-25T07:23:42-03:00).
+Publicado em `docs/contexto/codigo/` na branch `contexto` (gerada, nunca abra PR dela) a cada push em `main` e a cada 10 minutos pelo workflow `contexto.yml`; índice único das três fontes em `docs/contexto/00-INDEX.md`. Gere local com `node scripts/ai-context/gerar.mjs`. Commit-base: `db63479320a2b246c9c3c4e55036b38232139799` (2026-11-25T08:12:20-03:00).
 
 ## Como usar (leia antes de planejar ou executar qualquer tarefa)
 1. **Tela/rota/menu** → `rotas.json` (url/vista/menu → arquivo → hooks → tabelas → edges; `rotas_http_backend` para APIs) e `modulos.json` (módulo inteiro + dependências entre módulos).
@@ -14,7 +14,7 @@ Publicado em `docs/contexto/codigo/` na branch `contexto` (gerada, nunca abra PR
 Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua tarefa; não carregue tudo.
 
 ## Stack
-- linguagens: TypeScript (1309), SQL (246), Markdown (121), JavaScript (31), JSON (16), Python (5), YAML (3), Shell (2)
+- linguagens: TypeScript (1309), SQL (246), Markdown (121), JavaScript (31), JSON (16), Python (5), YAML (4), Shell (2)
 - linguagem_principal: TypeScript
 - framework: React
 - backend_http: n/d
@@ -34,7 +34,7 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 ## Números
 | item | qtd |
 |---|---|
-| arquivos_total | 1746 |
+| arquivos_total | 1747 |
 | arquivos_codigo | 1344 |
 | linhas_codigo | 179249 |
 | rotas | 106 |
@@ -49,7 +49,7 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 | migrations | 243 |
 | cron_jobs | 11 |
 | testes | 399 |
-| workflows | 3 |
+| workflows | 4 |
 | scripts | 36 |
 | docs_md | 121 |
 
@@ -371,7 +371,7 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 - possiveis_segredos_no_codigo: 3 — ex.: src/lib/__tests__/security-advanced.test.ts:203, src/lib/__tests__/security-advanced.test.ts:208, src/lib/__tests__/security-advanced.test.ts:213
 
 ## Grafo de código (graphify)
-- 10322 nós · 27308 arestas · 770 comunidades · grafo do commit `c9c5a2d0`
+- 10322 nós · 27308 arestas · 770 comunidades · grafo do commit `db634793`
 - comunidades maiores: lucide-react (311), client.ts (213), vitest (204), react (178), buildCorsHeaders (157), traceHeaders (154), usePageTitle (137), utils.ts (135), cn (118), usePageTitle.ts (116), @tanstack/react-query (114), CallDetailDialog.tsx (106)
 - símbolos mais chamados: cn() (src/lib/utils.ts), usePageTitle() (src/hooks/usePageTitle.ts), safeFormatDatePtBR() (src/lib/safe-date.ts), q() (scripts/supabase_snapshot/snapshot.py), useAuthContext() (src/contexts/AuthContext.tsx), safeFormatDistanceToNow() (src/lib/safe-date.ts), traceHeaders() (src/lib/tracing.ts), withTrace() (src/lib/tracing.ts), formatDuration() (src/lib/utils.ts), safeToLocaleString() (src/lib/safe-date.ts), buildCorsHeaders() (supabase/functions/_shared/cors.ts), .collect() (scripts/supabase_snapshot/test_snapshot.py)
 - consulta local: `graphify query "<pergunta>"`, `graphify path "<A>" "<B>"`, `graphify explain "<X>"`
@@ -397,6 +397,7 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 - `ci.yml` — CI (pull_request, push)
 - `contexto.yml` — Contexto para agentes de IA (10 min) (push, schedule, workflow_dispatch; cron 3 * * * *)
 - `inventario-estado-semanal.yml` — Inventário do estado real (semanal) (schedule, workflow_dispatch; cron 23 10 * * 1)
+- `migrations.yml` — Aplicar migration (manual) (workflow_dispatch)
 
 ## Scripts npm
 - `dev`: `vite`
@@ -430,6 +431,7 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 
 
 ## Últimos commits
+- 2026-11-25 `db63479` infra: workflow manual para aplicar migration no banco oficial (#311)
 - 2026-11-25 `c9c5a2d` infra: publica as capturas da conferencia de celular como artefato do CI (#305)
 - 2026-11-25 `fdbcd32` chore: guard de CI contra gravacoes cegas no cliente Supabase (#299)
 - 2026-11-24 `ddf4d95` fix: foco sempre volta ao gatilho ao fechar o assistente de voz (e2e do teclado deterministico) (#310)
@@ -444,7 +446,6 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 - 2026-11-24 `6272242` test: prova a resiliencia das edges com upstream fora do ar (#298)
 - 2026-11-24 `b616330` fix: guard de CI contra fetch sem prazo e migra os 5 ultimos fetch (#297)
 - 2026-11-24 `8aeb115` fix: sincroniza o fim de sessao entre abas pelo evento storage (#296)
-- 2026-11-24 `4a65b1f` feat: preserva o formulario e reautentica quando a sessao expira (#295)
 
 ## Arquivos deste diretório
 - `docs/contexto/codigo/rotas.json`

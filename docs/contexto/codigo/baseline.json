@@ -2,11 +2,16 @@
  "aviso": "GERADO AUTOMATICAMENTE por scripts/ai-context/gerar.mjs — não editar à mão; será sobrescrito.",
  "format_version": 2,
  "git": {
-  "commit": "c9c5a2d07fb31e03218f57d0f5f8bae1520289df",
+  "commit": "db63479320a2b246c9c3c4e55036b38232139799",
   "branch": "main",
-  "data_commit": "2026-11-25T07:23:42-03:00",
+  "data_commit": "2026-11-25T08:12:20-03:00",
   "remote": "https://github.com/adm01-debug/Hello_V3",
   "ultimos_commits": [
+   {
+    "sha": "db63479",
+    "data": "2026-11-25",
+    "assunto": "infra: workflow manual para aplicar migration no banco oficial (#311)"
+   },
    {
     "sha": "c9c5a2d",
     "data": "2026-11-25",
@@ -126,14 +131,9 @@
     "sha": "559db78",
     "data": "2026-11-24",
     "assunto": "chore: gate de lint de acessibilidade e escopo do eslint (etapa 264) (#287)"
-   },
-   {
-    "sha": "fa17b61",
-    "data": "2026-11-24",
-    "assunto": "chore: registra cobertura de menu das rotas protegidas (etapa 265) (#286)"
    }
   ],
-  "arquivos_mudados_7d": 1269,
+  "arquivos_mudados_7d": 1270,
   "pastas_mais_mudadas_30d": [
    {
     "pasta": "covout/lcov-report/hooks",
@@ -301,7 +301,7 @@
   "autores_30d": [
    {
     "autor": "adm01-debug",
-    "commits": 288
+    "commits": 289
    },
    {
     "autor": "Joaquim Ataides",
@@ -314,7 +314,7 @@
   ]
  },
  "contagens": {
-  "arquivos_total": 1746,
+  "arquivos_total": 1747,
   "arquivos_codigo": 1344,
   "linhas_codigo": 179249,
   "rotas": 106,
@@ -329,7 +329,7 @@
   "migrations": 243,
   "cron_jobs": 11,
   "testes": 399,
-  "workflows": 3,
+  "workflows": 4,
   "scripts": 36,
   "docs_md": 121
  },
