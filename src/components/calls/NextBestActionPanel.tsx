@@ -1,4 +1,4 @@
-import { useMemo } from 'react';
+import { useMemo, useState } from 'react';
 import { Sparkles, AlertTriangle, ShieldAlert, MessageSquare, ThumbsUp, X, Check } from 'lucide-react';
 import { Card } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
@@ -41,6 +41,12 @@ export function NextBestActionPanel({ callSessionId, className }: NextBestAction
   const { signals, markUsed, isAnalyzing, isLoading, error } = useLiveAssist(callSessionId);
 
   const ranked = useMemo(() => rankSignals(dedupeSignals(signals, 30)).slice(0, 6), [signals]);
+  // A-212: "Ignorar" nao pode chamar markUsed — o botao registrava a sugestao como
+  // usada e alimentava o aprendizado com o sinal errado. O descarte e local nesta
+  // sessao: live_assist_signals so tem was_used, entao persistir o descarte exige
+  // coluna nova (DDL).
+  const [dispensadas, setDispensadas] = useState<Set<string>>(new Set());
+  const visiveis = ranked.filter((s) => !dispensadas.has(s.id));
 
   if (!callSessionId) return null;
 
@@ -52,7 +58,7 @@ export function NextBestActionPanel({ callSessionId, className }: NextBestAction
           <span className="text-sm font-semibold">Next-Best-Action</span>
         </div>
         <Badge variant="outline" className="text-xs">
-          {ranked.length} sinal{ranked.length === 1 ? '' : 's'}
+          {visiveis.length} sinal{visiveis.length === 1 ? '' : 's'}
         </Badge>
       </div>
 
@@ -60,7 +66,7 @@ export function NextBestActionPanel({ callSessionId, className }: NextBestAction
         <p role="alert" className="text-xs text-destructive py-3 text-center">
           Não foi possível carregar as sugestões: {error instanceof Error ? error.message : String(error)}
         </p>
-      ) : ranked.length === 0 ? (
+      ) : visiveis.length === 0 ? (
         <p className="text-xs text-muted-foreground py-3 text-center">
           {isLoading || isAnalyzing
             ? 'Aguardando análise da conversa...'
@@ -69,7 +75,7 @@ export function NextBestActionPanel({ callSessionId, className }: NextBestAction
       ) : (
         <ScrollArea className="h-44 pr-2">
           <div className="space-y-2">
-            {ranked.map((s: LiveAssistSignal) => {
+            {visiveis.map((s: LiveAssistSignal) => {
               const Icon = ICONS[s.intent] ?? Sparkles;
               const sev = (s.metadata as Record<string, unknown>)?.severity as string | undefined;
               return (
@@ -105,7 +111,7 @@ export function NextBestActionPanel({ callSessionId, className }: NextBestAction
                           variant="ghost"
                           className="h-5 w-5"
                           title="Ignorar"
-                          onClick={() => markUsed(s.id)}
+                          onClick={() => setDispensadas((prev) => new Set(prev).add(s.id))}
                         >
                           <X className="h-3 w-3" />
                         </Button>

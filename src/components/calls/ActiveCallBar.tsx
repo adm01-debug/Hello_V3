@@ -6,9 +6,6 @@ import {
   MicOff, 
   Pause, 
   Play,
-  PhoneForwarded,
-  Volume2,
-  MoreHorizontal,
   Bot,
   FileText,
   Fingerprint,
@@ -340,14 +337,6 @@ export function ActiveCallBar() {
               {onHold ? <Play className="h-4 w-4" /> : <Pause className="h-4 w-4" />}
             </Button>
 
-            <Button aria-label="Ligar ou desligar o alto-falante" variant="ghost" size="icon">
-              <Volume2 className="h-4 w-4" />
-            </Button>
-
-            <Button aria-label="Transferir a chamada" variant="ghost" size="icon">
-              <PhoneForwarded className="h-4 w-4" />
-            </Button>
-
             <Button
               aria-label="Verificar a voz do cliente nesta chamada"
               variant="ghost"
@@ -357,10 +346,6 @@ export function ActiveCallBar() {
               className={cn(lastVerdict?.match === false && 'bg-destructive/10 text-destructive hover:bg-destructive/20 hover:text-destructive')}
             >
               {isVerifying ? <Loader2 className="h-4 w-4 animate-spin" /> : <Fingerprint className="h-4 w-4" />}
-            </Button>
-
-            <Button aria-label="Mais opções da chamada" variant="ghost" size="icon">
-              <MoreHorizontal className="h-4 w-4" />
             </Button>
 
             <div className="mx-2 h-6 w-px bg-border" />
