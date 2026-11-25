@@ -1,9 +1,9 @@
 {
  "meta": {
-  "sha": "c450a16ec4c3bb0d8e57c0fb1a22ba702a9e4903",
+  "sha": "5df6b4768dbdd509c0eb85c5d33f567e63831a8a",
   "branch": "main",
   "remote": "https://github.com/adm01-debug/Hello_V3",
-  "generated_at": "2026-11-25 12:10 UTC",
+  "generated_at": "2026-11-25 12:24 UTC",
   "files_total": 1798,
   "code_files": 1595,
   "code_lines": 195681
@@ -124385,10 +124385,19 @@
   }
  },
  "git": {
-  "sha": "c450a16ec4c3bb0d8e57c0fb1a22ba702a9e4903",
+  "sha": "5df6b4768dbdd509c0eb85c5d33f567e63831a8a",
   "branch": "main",
   "remote": "https://github.com/adm01-debug/Hello_V3",
   "commits": [
+   {
+    "sha": "5df6b47",
+    "date": "2026-11-25",
+    "author": "adm01-debug",
+    "subject": "fix: comparar migration pelo slug do nome e permitir registrar sem executar (#315)",
+    "files": [
+     ".github/workflows/migrations.yml"
+    ]
+   },
    {
     "sha": "c450a16",
     "date": "2026-11-25",
@@ -124813,28 +124822,16 @@
      "scripts/test-dashboard-rpcs.mjs",
      "scripts/test-rls-access.mjs"
     ]
-   },
-   {
-    "sha": "fa17b61",
-    "date": "2026-11-24",
-    "author": "adm01-debug",
-    "subject": "chore: registra cobertura de menu das rotas protegidas (etapa 265) (#286)",
-    "files": [
-     "docs/agentes/mapa-repo.md",
-     "docs/qa/05-PROGRESSO.md",
-     "src/components/layout/AppSidebar.tsx",
-     "src/components/layout/__tests__/AppSidebar.test.tsx"
-    ]
    }
   ],
   "hot_files": [
    [
     "docs/qa/05-PROGRESSO.md",
-    23
+    22
    ],
    [
     ".github/workflows/migrations.yml",
-    4
+    5
    ],
    [
     ".github/workflows/ci.yml",
@@ -124842,10 +124839,6 @@
    ],
    [
     "src/components/calls/UnifiedSoftphone.tsx",
-    3
-   ],
-   [
-    "docs/agentes/mapa-repo.md",
     3
    ],
    [
@@ -124866,6 +124859,10 @@
    ],
    [
     "tests/e2e/screenshots.spec.ts",
+    2
+   ],
+   [
+    "docs/agentes/mapa-repo.md",
     2
    ],
    [

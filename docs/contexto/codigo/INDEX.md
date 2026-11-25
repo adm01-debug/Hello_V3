@@ -1,7 +1,7 @@
 # Contexto do projeto para agentes de IA
 
 GERADO AUTOMATICAMENTE por scripts/ai-context/gerar.mjs — não editar à mão; será sobrescrito.
-Publicado em `docs/contexto/codigo/` na branch `contexto` (gerada, nunca abra PR dela) a cada push em `main` e a cada 10 minutos pelo workflow `contexto.yml`; índice único das três fontes em `docs/contexto/00-INDEX.md`. Gere local com `node scripts/ai-context/gerar.mjs`. Commit-base: `c450a16ec4c3bb0d8e57c0fb1a22ba702a9e4903` (2026-11-25T09:09:18-03:00).
+Publicado em `docs/contexto/codigo/` na branch `contexto` (gerada, nunca abra PR dela) a cada push em `main` e a cada 10 minutos pelo workflow `contexto.yml`; índice único das três fontes em `docs/contexto/00-INDEX.md`. Gere local com `node scripts/ai-context/gerar.mjs`. Commit-base: `5df6b4768dbdd509c0eb85c5d33f567e63831a8a` (2026-11-25T09:20:41-03:00).
 
 ## Como usar (leia antes de planejar ou executar qualquer tarefa)
 1. **Tela/rota/menu** → `rotas.json` (url/vista/menu → arquivo → hooks → tabelas → edges; `rotas_http_backend` para APIs) e `modulos.json` (módulo inteiro + dependências entre módulos).
@@ -371,7 +371,7 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 - possiveis_segredos_no_codigo: 3 — ex.: src/lib/__tests__/security-advanced.test.ts:203, src/lib/__tests__/security-advanced.test.ts:208, src/lib/__tests__/security-advanced.test.ts:213
 
 ## Grafo de código (graphify)
-- 10335 nós · 27339 arestas · 778 comunidades · grafo do commit `c450a16e`
+- 10335 nós · 27339 arestas · 778 comunidades · grafo do commit `5df6b476`
 - comunidades maiores: card.tsx (243), client.ts (197), react (178), vitest (172), 5. Em uso por rota (152), lucide-react (144), Tabela de funcionalidades (136), utils.ts (134), cn (131), usePageTitle.ts (127), buildCorsHeaders (119), @tanstack/react-query (115)
 - símbolos mais chamados: cn() (src/lib/utils.ts), usePageTitle() (src/hooks/usePageTitle.ts), safeFormatDatePtBR() (src/lib/safe-date.ts), useAuthContext() (src/contexts/AuthContext.tsx), q() (scripts/supabase_snapshot/snapshot.py), safeFormatDistanceToNow() (src/lib/safe-date.ts), traceHeaders() (src/lib/tracing.ts), withTrace() (src/lib/tracing.ts), formatDuration() (src/lib/utils.ts), safeToLocaleString() (src/lib/safe-date.ts), buildCorsHeaders() (supabase/functions/_shared/cors.ts), .collect() (scripts/supabase_snapshot/test_snapshot.py)
 - consulta local: `graphify query "<pergunta>"`, `graphify path "<A>" "<B>"`, `graphify explain "<X>"`
@@ -431,6 +431,7 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 
 
 ## Últimos commits
+- 2026-11-25 `5df6b47` fix: comparar migration pelo slug do nome e permitir registrar sem executar (#315)
 - 2026-11-25 `c450a16` fix: fila de migrations compara com o historico real do projeto (#314)
 - 2026-11-25 `6873e82` infra: fila de migrations em um clique e teste de RLS (#313)
 - 2026-11-25 `4707eca` infra: atualiza checkout e upload-artifact para as versoes atuais (v7) (#312)
@@ -445,7 +446,6 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 - 2026-11-24 `a0781e2` test: captura as telas internas em 3 larguras e mede transbordo (etapa 270) (#304)
 - 2026-11-24 `0413e5a` chore: remove i18n.json e public/locales sem consumidores (#303)
 - 2026-11-24 `0455270` chore: estados vazios que explicam o que falta (#302)
-- 2026-11-24 `edd40a3` chore: convencao de mensagem de sucesso e textos das telas das ondas 2 e 5 (#301)
 
 ## Arquivos deste diretório
 - `docs/contexto/codigo/rotas.json`
