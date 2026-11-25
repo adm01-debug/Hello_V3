@@ -23,6 +23,8 @@ import { isPast, isToday, isTomorrow, differenceInMinutes } from 'date-fns';
 import { ptBR } from 'date-fns/locale';
 import { useScheduledCallbacks, ScheduledCallback } from '@/hooks/useScheduledCallbacks';
 import { useLockedWrite } from '@/hooks/useLockedWrite';
+import { useNavigate } from 'react-router-dom';
+import { dialerUrl } from '@/lib/dialerLink';
 import { ScheduleCallbackDialog } from './ScheduleCallbackDialog';
 import { toast } from 'sonner';
 import { safeFormatDatePtBR, safeFormatDistanceToNow } from "@/lib/safe-date";
@@ -40,6 +42,7 @@ export function ScheduledCallbacksList() {
   const [activeTab, setActiveTab] = useState('pending');
   const notifiedCallbacks = useRef<Set<string>>(new Set());
   const { runLocked, isLocked } = useLockedWrite();
+  const navigate = useNavigate();
 
   // Check for upcoming callbacks and notify
   useEffect(() => {
@@ -91,8 +94,9 @@ export function ScheduledCallbacksList() {
   };
 
   const handleCall = (callback: ScheduledCallback) => {
-    toast.info(`Iniciando chamada para ${callback.caller_phone}...`);
-    // Here you would integrate with the actual call system
+    // Sem audio fora do discador: leva o numero para a rota "/" e ja disca la,
+    // onde o pre-dial check de DNC/horario roda antes de qualquer sessao SIP.
+    navigate(dialerUrl(callback.caller_phone, callback.caller_name, { autoDial: true }));
   };
 
   const handleComplete = (callback: ScheduledCallback) =>
