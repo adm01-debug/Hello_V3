@@ -1,6 +1,6 @@
 # 07 · REGRAS DE NEGÓCIO
 
-> Gerado automaticamente por AI Context Sync v1.3.2 · commit `7245964631` · branch `main` · 2026-11-25 20:16 UTC
+> Gerado automaticamente por AI Context Sync v1.3.2 · commit `89fede103b` · branch `main` · 2026-11-25 20:33 UTC
 > Não edite à mão — regras humanas vão em `manual/`.
 
 ## A. Regras escritas por humanos (`manual/` — prioridade máxima, nunca sobrescrito)
@@ -2648,7 +2648,7 @@ _nenhum item encontrado_
 | `admin` | `supabase/functions/data-lake-flush/index.ts` |
 | `admin` | `supabase/migrations/20261123000200_fix_has_role_oracle_and_debug_tables.sql` |
 
-## K. Testes como especificação (3619 testes em 395 arquivos — nomes completos em `context.json`)
+## K. Testes como especificação (3626 testes em 397 arquivos — nomes completos em `context.json`)
 
 | Arquivo | Testes | Exemplos do que o sistema DEVE fazer |
 |---|---|---|
@@ -2950,9 +2950,9 @@ _nenhum item encontrado_
 | `src/hooks/__tests__/useDeals.test.ts` | 4 | useDeals · loads deals · createDeal returns true on success · computeHealth invokes edge function |
 | `src/hooks/__tests__/useHoldMetrics.coverage.test.tsx` | 4 | useHoldMetrics · aggregates 7d metrics · handles 30d and 90d ranges with empty data · handles 90d range |
 | `src/hooks/__tests__/useIPValidation.coverage.test.tsx` | 4 | useIPValidation · returns data on success · handles supabase error branch · handles thrown exception branch |
+| `src/hooks/__tests__/useLockedWrite.test.ts` | 4 | useLockedWrite · ignora o segundo clique enquanto a gravacao da mesma linha esta em voo · libera a trava mesmo quando a gravacao falha · nao bloqueia linhas diferentes |
 | `src/hooks/__tests__/useNotificationPreferences.test.tsx` | 4 | useNotificationPreferences · retorna DEFAULT_PREFERENCES quando nao ha registro · carrega preferencias do banco · upsert no salvar usa onConflict user_id |
-| `src/hooks/__tests__/usePageTitle.coverage.test.tsx` | 4 | usePageTitle · sets document title with app name suffix · resets title on unmount · updates title when prop changes |
-| … +95 linhas — lista completa em `context.json` | | |
+| … +97 linhas — lista completa em `context.json` | | |
 
 ## L. Eventos de webhook tratados (contratos com sistemas externos)
 

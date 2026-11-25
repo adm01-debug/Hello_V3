@@ -2,11 +2,16 @@
  "aviso": "GERADO AUTOMATICAMENTE por scripts/ai-context/gerar.mjs — não editar à mão; será sobrescrito.",
  "format_version": 2,
  "git": {
-  "commit": "72459646315375e50d37d6b86d1a6cd54d7d904f",
+  "commit": "89fede103b1a3351a8eff1620966ecc25bd084e4",
   "branch": "main",
-  "data_commit": "2026-11-25T17:15:18-03:00",
+  "data_commit": "2026-11-25T17:32:40-03:00",
   "remote": "https://github.com/adm01-debug/Hello_V3",
   "ultimos_commits": [
+   {
+    "sha": "89fede1",
+    "data": "2026-11-25",
+    "assunto": "fix: proteger gravacao de preferencias e callbacks contra duplo clique (#329)"
+   },
    {
     "sha": "7245964",
     "data": "2026-11-25",
@@ -126,14 +131,9 @@
     "sha": "61fd9f9",
     "data": "2026-11-24",
     "assunto": "fix: alvo de toque de 44 px no celular (etapa 272) (#307)"
-   },
-   {
-    "sha": "fc9a215",
-    "data": "2026-11-24",
-    "assunto": "fix: telas internas cabem na largura do celular (etapa 271) (#306)"
    }
   ],
-  "arquivos_mudados_7d": 1292,
+  "arquivos_mudados_7d": 1295,
   "pastas_mais_mudadas_30d": [
    {
     "pasta": "covout/lcov-report/hooks",
@@ -141,11 +141,11 @@
    },
    {
     "pasta": "src/hooks/__tests__",
-    "mudancas": 279
+    "mudancas": 280
    },
    {
     "pasta": "docs/qa/05-PROGRESSO.md",
-    "mudancas": 135
+    "mudancas": 136
    },
    {
     "pasta": "covout/lcov-report/lib",
@@ -199,7 +199,7 @@
   "arquivos_mais_mudados_90d": [
    {
     "arquivo": "docs/qa/05-PROGRESSO.md",
-    "mudancas": 135
+    "mudancas": 136
    },
    {
     "arquivo": "docs/estado/funcionalidades-planejadas.md",
@@ -314,21 +314,21 @@
   ]
  },
  "contagens": {
-  "arquivos_total": 1748,
-  "arquivos_codigo": 1343,
-  "linhas_codigo": 179210,
+  "arquivos_total": 1751,
+  "arquivos_codigo": 1346,
+  "linhas_codigo": 179368,
   "rotas": 106,
   "rotas_http_backend": 11,
   "vistas_por_id": 0,
   "itens_menu": 96,
   "modulos": 81,
   "componentes": 446,
-  "hooks": 195,
+  "hooks": 196,
   "edge_functions": 98,
   "tabelas": 170,
   "migrations": 244,
   "cron_jobs": 11,
-  "testes": 406,
+  "testes": 408,
   "workflows": 4,
   "scripts": 36,
   "docs_md": 121
@@ -484,7 +484,7 @@
   },
   "src/components": {
    "arquivos": 369,
-   "linhas": 43549
+   "linhas": 43552
   },
   "src/contexts": {
    "arquivos": 5,
@@ -495,8 +495,8 @@
    "linhas": 312
   },
   "src/hooks": {
-   "arquivos": 342,
-   "linhas": 43447
+   "arquivos": 344,
+   "linhas": 43545
   },
   "src/integrations": {
    "arquivos": 3,
@@ -511,8 +511,8 @@
    "linhas": 44
   },
   "src/pages": {
-   "arquivos": 151,
-   "linhas": 23336
+   "arquivos": 152,
+   "linhas": 23393
   },
   "src/routes": {
    "arquivos": 4,
@@ -637,12 +637,12 @@
    "linhas": 361
   },
   {
-   "arquivo": "src/lib/security-alerts-webhook.ts",
+   "arquivo": "src/components/callbacks/ScheduledCallbacksList.tsx",
    "linhas": 359
   },
   {
-   "arquivo": "src/components/callbacks/ScheduledCallbacksList.tsx",
-   "linhas": 356
+   "arquivo": "src/lib/security-alerts-webhook.ts",
+   "linhas": 359
   }
  ],
  "qualidade": {

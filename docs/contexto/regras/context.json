@@ -1,15 +1,15 @@
 {
  "meta": {
-  "sha": "72459646315375e50d37d6b86d1a6cd54d7d904f",
+  "sha": "89fede103b1a3351a8eff1620966ecc25bd084e4",
   "branch": "main",
   "remote": "https://github.com/adm01-debug/Hello_V3",
-  "generated_at": "2026-11-25 20:16 UTC",
-  "files_total": 1795,
-  "code_files": 1592,
-  "code_lines": 195140
+  "generated_at": "2026-11-25 20:33 UTC",
+  "files_total": 1798,
+  "code_files": 1595,
+  "code_lines": 195298
  },
  "version": "1.3.2",
- "facts_hash": "b2fa40148a1b58a1",
+ "facts_hash": "90db7e9e35cb22a8",
  "stack": {
   "frameworks": [
    "React + Vite",
@@ -161,8 +161,8 @@
   ],
   "package_manager": "bun",
   "languages": {
-   ".ts": 658,
-   ".tsx": 650,
+   ".ts": 660,
+   ".tsx": 651,
    ".sql": 248,
    ".mjs": 29,
    ".py": 5,
@@ -28611,7 +28611,7 @@
     ],
     "invokes_transitive": [],
     "rpc_transitive": [],
-    "deps_count": 22
+    "deps_count": 23
    },
    {
     "path": "",
@@ -28975,7 +28975,7 @@
      "get_dashboard_stats",
      "get_queue_stats"
     ],
-    "deps_count": 70
+    "deps_count": 71
    },
    {
     "path": "",
@@ -33001,6 +33001,10 @@
     "file": "src/hooks/useLiveTranslation.ts"
    },
    {
+    "name": "useLockedWrite",
+    "file": "src/hooks/useLockedWrite.ts"
+   },
+   {
     "name": "useLoginLockout",
     "file": "src/hooks/useLoginLockout.ts"
    },
@@ -33703,7 +33707,7 @@
   {
    "module": "src/components",
    "files": 369,
-   "lines": 43549,
+   "lines": 43552,
    "tables": [
     "accounts",
     "agent_goals",
@@ -33963,8 +33967,8 @@
   },
   {
    "module": "src/hooks",
-   "files": 342,
-   "lines": 43447,
+   "files": 344,
+   "lines": 43545,
    "tables": [
     "accounts",
     "active_sessions",
@@ -34443,8 +34447,8 @@
   },
   {
    "module": "src/pages",
-   "files": 151,
-   "lines": 23336,
+   "files": 152,
+   "lines": 23393,
    "tables": [
     "audit_logs",
     "battle_card_triggers",
@@ -61545,6 +61549,22 @@
     "name": "reset clears segments and internal refs"
    },
    {
+    "file": "src/hooks/__tests__/useLockedWrite.test.ts",
+    "name": "useLockedWrite"
+   },
+   {
+    "file": "src/hooks/__tests__/useLockedWrite.test.ts",
+    "name": "ignora o segundo clique enquanto a gravacao da mesma linha esta em voo"
+   },
+   {
+    "file": "src/hooks/__tests__/useLockedWrite.test.ts",
+    "name": "libera a trava mesmo quando a gravacao falha"
+   },
+   {
+    "file": "src/hooks/__tests__/useLockedWrite.test.ts",
+    "name": "nao bloqueia linhas diferentes"
+   },
+   {
     "file": "src/hooks/__tests__/useLoginLockout.coverage.test.tsx",
     "name": "useLoginLockout"
    },
@@ -70771,6 +70791,18 @@
    {
     "file": "src/pages/__tests__/SecurityReport.test.tsx",
     "name": "a cobertura de RLS continua sendo medida pela RPC"
+   },
+   {
+    "file": "src/pages/__tests__/Settings.duploClique.test.tsx",
+    "name": "Settings — protecao contra duplo clique ao salvar"
+   },
+   {
+    "file": "src/pages/__tests__/Settings.duploClique.test.tsx",
+    "name": "desabilita os dois botoes de salvar enquanto a gravacao esta em voo"
+   },
+   {
+    "file": "src/pages/__tests__/Settings.duploClique.test.tsx",
+    "name": "protege tambem o botao da aba de audio"
    },
    {
     "file": "src/pages/__tests__/Status.test.tsx",
@@ -92118,7 +92150,7 @@
   },
   "src/components/callbacks/ScheduledCallbacksList.tsx": {
    "path": "src/components/callbacks/ScheduledCallbacksList.tsx",
-   "lines": 356,
+   "lines": 359,
    "exports": [
     "function ScheduledCallbacksList"
    ],
@@ -100630,6 +100662,16 @@
     "invoke("
    ]
   },
+  "src/hooks/useLockedWrite.ts": {
+   "path": "src/hooks/useLockedWrite.ts",
+   "lines": 32,
+   "exports": [
+    "const useLockedWrite"
+   ],
+   "hooks": [
+    "useLockedWrite"
+   ]
+  },
   "src/hooks/useLoginLockout.ts": {
    "path": "src/hooks/useLoginLockout.ts",
    "lines": 120,
@@ -105677,6 +105719,17 @@
     "handles invoke error",
     "does not add a segment when data has no translated field",
     "reset clears segments and internal refs"
+   ]
+  },
+  "src/hooks/__tests__/useLockedWrite.test.ts": {
+   "path": "src/hooks/__tests__/useLockedWrite.test.ts",
+   "lines": 66,
+   "is_test": true,
+   "tests": [
+    "useLockedWrite",
+    "ignora o segundo clique enquanto a gravacao da mesma linha esta em voo",
+    "libera a trava mesmo quando a gravacao falha",
+    "nao bloqueia linhas diferentes"
    ]
   },
   "src/hooks/__tests__/useLoginLockout.coverage.test.tsx": {
@@ -114589,6 +114642,16 @@
     "nao exibe mais o KPI de features como indicador",
     "declara a origem de cada controle listado",
     "a cobertura de RLS continua sendo medida pela RPC"
+   ]
+  },
+  "src/pages/__tests__/Settings.duploClique.test.tsx": {
+   "path": "src/pages/__tests__/Settings.duploClique.test.tsx",
+   "lines": 57,
+   "is_test": true,
+   "tests": [
+    "Settings — protecao contra duplo clique ao salvar",
+    "desabilita os dois botoes de salvar enquanto a gravacao esta em voo",
+    "protege tambem o botao da aba de audio"
    ]
   },
   "src/pages/__tests__/Status.test.tsx": {
@@ -124397,10 +124460,24 @@
   }
  },
  "git": {
-  "sha": "72459646315375e50d37d6b86d1a6cd54d7d904f",
+  "sha": "89fede103b1a3351a8eff1620966ecc25bd084e4",
   "branch": "main",
   "remote": "https://github.com/adm01-debug/Hello_V3",
   "commits": [
+   {
+    "sha": "89fede1",
+    "date": "2026-11-25",
+    "author": "adm01-debug",
+    "subject": "fix: proteger gravacao de preferencias e callbacks contra duplo clique (#329)",
+    "files": [
+     "docs/qa/05-PROGRESSO.md",
+     "src/components/callbacks/ScheduledCallbacksList.tsx",
+     "src/hooks/__tests__/useLockedWrite.test.ts",
+     "src/hooks/useLockedWrite.ts",
+     "src/pages/Settings.tsx",
+     "src/pages/__tests__/Settings.duploClique.test.tsx"
+    ]
+   },
    {
     "sha": "7245964",
     "date": "2026-11-25",
@@ -124761,20 +124838,6 @@
      "src/pages/roles/__tests__/useRoles.test.ts",
      "src/pages/roles/useRoles.ts"
     ]
-   },
-   {
-    "sha": "43be772",
-    "date": "2026-11-24",
-    "author": "adm01-debug",
-    "subject": "fix: meta de SLO unica na edge (99,9%) e painel lendo do servidor (#300)",
-    "files": [
-     "docs/observabilidade/SLI_SLO.md",
-     "docs/qa/05-PROGRESSO.md",
-     "src/pages/admin/SloDashboard.tsx",
-     "src/pages/admin/__tests__/SloDashboard.meta.test.tsx",
-     "supabase/functions/health-check/__tests__/slo-targets_test.ts",
-     "supabase/functions/health-check/index.ts"
-    ]
    }
   ],
   "hot_files": [
@@ -124801,6 +124864,10 @@
    [
     ".github/workflows/ci.yml",
     3
+   ],
+   [
+    "src/pages/Settings.tsx",
+    2
    ],
    [
     "src/components/calls/WebRTCCall.tsx",
@@ -124851,11 +124918,7 @@
     2
    ],
    [
-    "docs/estado/hooks-dormentes.md",
-    1
-   ],
-   [
-    "scripts/inventario/gerar-hooks-dormentes.mjs",
+    "src/components/callbacks/ScheduledCallbacksList.tsx",
     1
    ]
   ]

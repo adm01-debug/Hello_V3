@@ -819,9 +819,10 @@
     "ScheduledCallbacksList"
    ],
    "export_default": null,
-   "linhas": 356,
+   "linhas": 359,
    "dominio": "components/callbacks",
    "hooks_locais": [
+    "useLockedWrite",
     "useScheduledCallbacks"
    ],
    "tabelas": [],

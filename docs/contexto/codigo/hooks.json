@@ -1,7 +1,7 @@
 {
  "aviso": "GERADO AUTOMATICAMENTE por scripts/ai-context/gerar.mjs — não editar à mão; será sobrescrito.",
  "format_version": 2,
- "total": 195,
+ "total": 196,
  "hooks": [
   {
    "arquivo": "scripts/ai-context/cenarios.mjs",
@@ -2826,6 +2826,26 @@
    "usado_por": 1,
    "usado_por_arquivos": [
     "src/components/translation/LiveTranslationPanel.tsx"
+   ],
+   "coberto_por_testes": 1
+  },
+  {
+   "arquivo": "src/hooks/useLockedWrite.ts",
+   "hooks_exportados": [
+    "useLockedWrite"
+   ],
+   "linhas": 32,
+   "dominio": "hooks",
+   "tabelas": [],
+   "rpcs": [],
+   "edges": [],
+   "hooks_internos": [
+    "useCallback"
+   ],
+   "canais_realtime": [],
+   "usado_por": 1,
+   "usado_por_arquivos": [
+    "src/components/callbacks/ScheduledCallbacksList.tsx"
    ],
    "coberto_por_testes": 1
   },

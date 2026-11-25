@@ -1229,11 +1229,13 @@
    "hooks": [
     "useCallback",
     "useEffect",
+    "useLockedWrite",
     "usePageTitle",
     "useScheduledCallbacks",
     "useState"
    ],
    "hooks_locais": [
+    "useLockedWrite",
     "usePageTitle",
     "useScheduledCallbacks"
    ],
@@ -1249,7 +1251,7 @@
    "papeis": [
     "status"
    ],
-   "arquivos_puxados": 22
+   "arquivos_puxados": 23
   },
   {
    "protegida": false,
@@ -1671,6 +1673,7 @@
     "useDashboardStats",
     "useEffect",
     "useHoldSoundAlert",
+    "useLockedWrite",
     "useMemo",
     "useNavigate",
     "usePageTitle",
@@ -1703,6 +1706,7 @@
     "useDashboardLayout",
     "useDashboardStats",
     "useHoldSoundAlert",
+    "useLockedWrite",
     "usePageTitle",
     "usePageVisibility",
     "useQueueMetrics",
@@ -1753,7 +1757,7 @@
     "img",
     "status"
    ],
-   "arquivos_puxados": 74
+   "arquivos_puxados": 75
   },
   {
    "protegida": false,
