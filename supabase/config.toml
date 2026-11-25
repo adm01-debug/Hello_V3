@@ -21,3 +21,8 @@ verify_jwt = false
 
 [functions.data-lake-flush]
 verify_jwt = false
+
+# Endpoint publico de lockout (usuario deslogado antes de autenticar). A edge
+# roda com service role e limita por IP; o gateway nao pode exigir JWT aqui.
+[functions.login-attempt]
+verify_jwt = false
