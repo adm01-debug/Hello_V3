@@ -2,11 +2,16 @@
  "aviso": "GERADO AUTOMATICAMENTE por scripts/ai-context/gerar.mjs — não editar à mão; será sobrescrito.",
  "format_version": 2,
  "git": {
-  "commit": "ddf4d95303953f8ca4b3777ba35b25b6b15188bc",
+  "commit": "fdbcd32d157e91af13890b2a5f47fd8ab23c90d9",
   "branch": "main",
-  "data_commit": "2026-11-24T19:50:05-03:00",
+  "data_commit": "2026-11-25T07:22:37-03:00",
   "remote": "https://github.com/adm01-debug/Hello_V3",
   "ultimos_commits": [
+   {
+    "sha": "fdbcd32",
+    "data": "2026-11-25",
+    "assunto": "chore: guard de CI contra gravacoes cegas no cliente Supabase (#299)"
+   },
    {
     "sha": "ddf4d95",
     "data": "2026-11-24",
@@ -126,14 +131,9 @@
     "sha": "711098f",
     "data": "2026-11-24",
     "assunto": "feat: pagina contatos, negocios e contas de 50 em 50 (etapa 237) (#285)"
-   },
-   {
-    "sha": "d32534f",
-    "data": "2026-11-24",
-    "assunto": "chore: fixa o orcamento de bundle a mao a partir da meta (etapa 252) (#284)"
    }
   ],
-  "arquivos_mudados_7d": 1268,
+  "arquivos_mudados_7d": 1269,
   "pastas_mais_mudadas_30d": [
    {
     "pasta": "covout/lcov-report/hooks",
@@ -141,7 +141,7 @@
    },
    {
     "pasta": "docs/qa/05-PROGRESSO.md",
-    "mudancas": 130
+    "mudancas": 131
    },
    {
     "pasta": "src/hooks/__tests__",
@@ -199,7 +199,7 @@
   "arquivos_mais_mudados_90d": [
    {
     "arquivo": "docs/qa/05-PROGRESSO.md",
-    "mudancas": 130
+    "mudancas": 131
    },
    {
     "arquivo": "docs/estado/funcionalidades-planejadas.md",
@@ -226,16 +226,16 @@
     "mudancas": 9
    },
    {
+    "arquivo": ".github/workflows/ci.yml",
+    "mudancas": 8
+   },
+   {
     "arquivo": "docs/agentes/mapa-repo.md",
     "mudancas": 8
    },
    {
     "arquivo": "src/components/layout/CommandPalette.tsx",
     "mudancas": 8
-   },
-   {
-    "arquivo": ".github/workflows/ci.yml",
-    "mudancas": 7
    },
    {
     "arquivo": "docs/edge-functions/README.md",
@@ -247,6 +247,10 @@
    },
    {
     "arquivo": ".github/workflows/contexto.yml",
+    "mudancas": 6
+   },
+   {
+    "arquivo": "AGENTS.md",
     "mudancas": 6
    },
    {
@@ -292,16 +296,12 @@
    {
     "arquivo": "supabase/functions/score-call/index.ts",
     "mudancas": 6
-   },
-   {
-    "arquivo": "supabase/functions/teams-fetch-recordings/index.ts",
-    "mudancas": 6
    }
   ],
   "autores_30d": [
    {
     "autor": "adm01-debug",
-    "commits": 286
+    "commits": 287
    },
    {
     "autor": "Joaquim Ataides",
@@ -314,9 +314,9 @@
   ]
  },
  "contagens": {
-  "arquivos_total": 1745,
-  "arquivos_codigo": 1343,
-  "linhas_codigo": 179008,
+  "arquivos_total": 1746,
+  "arquivos_codigo": 1344,
+  "linhas_codigo": 179249,
   "rotas": 106,
   "rotas_http_backend": 11,
   "vistas_por_id": 0,
@@ -330,7 +330,7 @@
   "cron_jobs": 11,
   "testes": 399,
   "workflows": 3,
-  "scripts": 35,
+  "scripts": 36,
   "docs_md": 121
  },
  "por_pasta": {
@@ -425,6 +425,10 @@
   "scripts/guard-edge-numeric.mjs": {
    "arquivos": 1,
    "linhas": 207
+  },
+  "scripts/guard-supabase-error.mjs": {
+   "arquivos": 1,
+   "linhas": 241
   },
   "scripts/inspect-schema.mjs": {
    "arquivos": 1,
@@ -643,7 +647,7 @@
  ],
  "qualidade": {
   "any": 12,
-  "console_log": 194,
+  "console_log": 198,
   "ts_ignore": 0,
   "eslint_disable": 1,
   "todos": 5,

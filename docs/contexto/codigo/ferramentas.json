@@ -6,7 +6,7 @@
    "TypeScript (1309)",
    "SQL (246)",
    "Markdown (121)",
-   "JavaScript (30)",
+   "JavaScript (31)",
    "JSON (16)",
    "Python (5)",
    "YAML (3)",
@@ -138,7 +138,8 @@
     "scripts/check-bundle-budget.mjs",
     "scripts/ci/check-claude-md-integrity.mjs",
     "scripts/codemod-safe-number.mjs",
-    "scripts/guard-edge-numeric.mjs"
+    "scripts/guard-edge-numeric.mjs",
+    "scripts/guard-supabase-error.mjs"
    ],
    "npm_scripts": [
     "build",
@@ -247,7 +248,7 @@
   {
    "arquivo": "AGENTS.md",
    "titulo": "AGENTS.md — Hello V3",
-   "linhas": 147
+   "linhas": 148
   },
   {
    "arquivo": "CLAUDE.md",

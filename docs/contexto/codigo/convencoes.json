@@ -59,11 +59,11 @@
  "commits": {
   "convencao": "conventional commits (observado)",
   "exemplos": [
+   "chore: guard de CI contra gravacoes cegas no cliente Supabase (#299)",
    "fix: foco sempre volta ao gatilho ao fechar o assistente de voz (e2e do teclado deterministico) (#310)",
    "fix: teclado no fluxo de chamada - foco preso no dialogo e devolvido ao gatilho (etapa 273) (#308)",
    "fix: alvo de toque de 44 px no celular (etapa 272) (#307)",
-   "fix: telas internas cabem na largura do celular (etapa 271) (#306)",
-   "test: captura as telas internas em 3 larguras e mede transbordo (etapa 270) (#304)"
+   "fix: telas internas cabem na largura do celular (etapa 271) (#306)"
   ]
  },
  "pr_template": null,

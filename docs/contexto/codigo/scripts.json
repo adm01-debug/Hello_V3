@@ -1,7 +1,7 @@
 {
  "aviso": "GERADO AUTOMATICAMENTE por scripts/ai-context/gerar.mjs — não editar à mão; será sobrescrito.",
  "format_version": 2,
- "total": 35,
+ "total": 36,
  "scripts": [
   {
    "arquivo": "scripts/ai-context/cenarios.mjs",
@@ -217,6 +217,17 @@
    "arquivo": "scripts/guard-edge-numeric.mjs",
    "descricao": "* Guard: garante que Edge Functions Supabase usem schemas numéricos defensivos.",
    "linhas": 207,
+   "env": [],
+   "npm_scripts": [],
+   "workflows": [
+    "ci.yml"
+   ],
+   "orfao": false
+  },
+  {
+   "arquivo": "scripts/guard-supabase-error.mjs",
+   "descricao": "* Guard: impede a volta das gravacoes cegas no cliente Supabase.",
+   "linhas": 241,
    "env": [],
    "npm_scripts": [],
    "workflows": [

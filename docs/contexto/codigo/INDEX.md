@@ -1,7 +1,7 @@
 # Contexto do projeto para agentes de IA
 
 GERADO AUTOMATICAMENTE por scripts/ai-context/gerar.mjs — não editar à mão; será sobrescrito.
-Publicado em `docs/contexto/codigo/` na branch `contexto` (gerada, nunca abra PR dela) a cada push em `main` e a cada 10 minutos pelo workflow `contexto.yml`; índice único das três fontes em `docs/contexto/00-INDEX.md`. Gere local com `node scripts/ai-context/gerar.mjs`. Commit-base: `ddf4d95303953f8ca4b3777ba35b25b6b15188bc` (2026-11-24T19:50:05-03:00).
+Publicado em `docs/contexto/codigo/` na branch `contexto` (gerada, nunca abra PR dela) a cada push em `main` e a cada 10 minutos pelo workflow `contexto.yml`; índice único das três fontes em `docs/contexto/00-INDEX.md`. Gere local com `node scripts/ai-context/gerar.mjs`. Commit-base: `fdbcd32d157e91af13890b2a5f47fd8ab23c90d9` (2026-11-25T07:22:37-03:00).
 
 ## Como usar (leia antes de planejar ou executar qualquer tarefa)
 1. **Tela/rota/menu** → `rotas.json` (url/vista/menu → arquivo → hooks → tabelas → edges; `rotas_http_backend` para APIs) e `modulos.json` (módulo inteiro + dependências entre módulos).
@@ -14,7 +14,7 @@ Publicado em `docs/contexto/codigo/` na branch `contexto` (gerada, nunca abra PR
 Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua tarefa; não carregue tudo.
 
 ## Stack
-- linguagens: TypeScript (1309), SQL (246), Markdown (121), JavaScript (30), JSON (16), Python (5), YAML (3), Shell (2)
+- linguagens: TypeScript (1309), SQL (246), Markdown (121), JavaScript (31), JSON (16), Python (5), YAML (3), Shell (2)
 - linguagem_principal: TypeScript
 - framework: React
 - backend_http: n/d
@@ -34,9 +34,9 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 ## Números
 | item | qtd |
 |---|---|
-| arquivos_total | 1745 |
-| arquivos_codigo | 1343 |
-| linhas_codigo | 179008 |
+| arquivos_total | 1746 |
+| arquivos_codigo | 1344 |
+| linhas_codigo | 179249 |
 | rotas | 106 |
 | rotas_http_backend | 11 |
 | vistas_por_id | 0 |
@@ -50,7 +50,7 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 | cron_jobs | 11 |
 | testes | 399 |
 | workflows | 3 |
-| scripts | 35 |
+| scripts | 36 |
 | docs_md | 121 |
 
 ## Onde ficam as coisas
@@ -371,27 +371,27 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 - possiveis_segredos_no_codigo: 3 — ex.: src/lib/__tests__/security-advanced.test.ts:203, src/lib/__tests__/security-advanced.test.ts:208, src/lib/__tests__/security-advanced.test.ts:213
 
 ## Grafo de código (graphify)
-- 10308 nós · 27283 arestas · 791 comunidades · grafo do commit `ddf4d953`
-- comunidades maiores: client.ts (263), lucide-react (222), protectedRoutes.tsx (187), vitest (179), react (159), traceHeaders (149), @tanstack/react-query (130), cn (127), buildCorsHeaders (125), badge.tsx (122), Button (115), generate.py (93)
+- 10322 nós · 27308 arestas · 770 comunidades · grafo do commit `fdbcd32d`
+- comunidades maiores: lucide-react (311), client.ts (213), vitest (204), react (178), buildCorsHeaders (157), traceHeaders (154), usePageTitle (137), utils.ts (135), cn (118), usePageTitle.ts (116), @tanstack/react-query (114), CallDetailDialog.tsx (106)
 - símbolos mais chamados: cn() (src/lib/utils.ts), usePageTitle() (src/hooks/usePageTitle.ts), safeFormatDatePtBR() (src/lib/safe-date.ts), q() (scripts/supabase_snapshot/snapshot.py), useAuthContext() (src/contexts/AuthContext.tsx), safeFormatDistanceToNow() (src/lib/safe-date.ts), traceHeaders() (src/lib/tracing.ts), withTrace() (src/lib/tracing.ts), formatDuration() (src/lib/utils.ts), safeToLocaleString() (src/lib/safe-date.ts), buildCorsHeaders() (supabase/functions/_shared/cors.ts), .collect() (scripts/supabase_snapshot/test_snapshot.py)
 - consulta local: `graphify query "<pergunta>"`, `graphify path "<A>" "<B>"`, `graphify explain "<X>"`
 
 ## Hotspots (arquivos mais alterados, 90 dias)
-- docs/qa/05-PROGRESSO.md (130)
+- docs/qa/05-PROGRESSO.md (131)
 - docs/estado/funcionalidades-planejadas.md (30)
 - src/components/calls/UnifiedSoftphone.tsx (10)
 - src/components/layout/AppSidebar.tsx (10)
 - src/hooks/useMultiChannelCall.ts (10)
 - docs/audits/pendencias-2026-07.md (9)
 - supabase/functions/data-lake-flush/index.ts (9)
+- .github/workflows/ci.yml (8)
 - docs/agentes/mapa-repo.md (8)
 - src/components/layout/CommandPalette.tsx (8)
-- .github/workflows/ci.yml (7)
 - docs/edge-functions/README.md (7)
 - supabase/functions/validate-geo/index.ts (7)
 - .github/workflows/contexto.yml (6)
+- AGENTS.md (6)
 - src/hooks/__tests__/useQueueMetrics.coverage.test.tsx (6)
-- src/hooks/useAgentRanking.ts (6)
 
 ## Workflows
 - `ci.yml` — CI (pull_request, push)
@@ -418,7 +418,7 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 
 ## Documentos (raiz e docs/)
 - `.github/SECURITY.md` — Security Policy (35 linhas)
-- `AGENTS.md` — AGENTS.md — Hello V3 (147 linhas)
+- `AGENTS.md` — AGENTS.md — Hello V3 (148 linhas)
 - `CLAUDE.md` (2 linhas)
 - `ESTADO_ATUAL.md` — Estado Atual do Sistema — Auditoria de Estado (349 linhas)
 - `README.md` — 📞 Bitrix Call Connect - VoIP Enterprise & AI Intelligence (79 linhas)
@@ -430,6 +430,7 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 
 
 ## Últimos commits
+- 2026-11-25 `fdbcd32` chore: guard de CI contra gravacoes cegas no cliente Supabase (#299)
 - 2026-11-24 `ddf4d95` fix: foco sempre volta ao gatilho ao fechar o assistente de voz (e2e do teclado deterministico) (#310)
 - 2026-11-24 `a67d708` fix: teclado no fluxo de chamada - foco preso no dialogo e devolvido ao gatilho (etapa 273) (#308)
 - 2026-11-24 `61fd9f9` fix: alvo de toque de 44 px no celular (etapa 272) (#307)
@@ -444,7 +445,6 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 - 2026-11-24 `8aeb115` fix: sincroniza o fim de sessao entre abas pelo evento storage (#296)
 - 2026-11-24 `4a65b1f` feat: preserva o formulario e reautentica quando a sessao expira (#295)
 - 2026-11-24 `ca6e6dc` fix: restaura estado anterior no rollback das mutacoes otimistas de favoritos (#294)
-- 2026-11-24 `48f3644` fix: separa o cache de notificacoes por usuario (etapa 221) (#293)
 
 ## Arquivos deste diretório
 - `docs/contexto/codigo/rotas.json`
