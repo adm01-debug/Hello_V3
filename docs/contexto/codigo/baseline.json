@@ -2,11 +2,16 @@
  "aviso": "GERADO AUTOMATICAMENTE por scripts/ai-context/gerar.mjs — não editar à mão; será sobrescrito.",
  "format_version": 2,
  "git": {
-  "commit": "5df6b4768dbdd509c0eb85c5d33f567e63831a8a",
+  "commit": "f95122a33d4b029990a9865d045a3745054ebbf3",
   "branch": "main",
-  "data_commit": "2026-11-25T09:20:41-03:00",
+  "data_commit": "2026-11-25T09:33:21-03:00",
   "remote": "https://github.com/adm01-debug/Hello_V3",
   "ultimos_commits": [
+   {
+    "sha": "f95122a",
+    "data": "2026-11-25",
+    "assunto": "fix: colisao de versao nao impede o diagnostico da fila (#316)"
+   },
    {
     "sha": "5df6b47",
     "data": "2026-11-25",
@@ -126,11 +131,6 @@
     "sha": "07dfba7",
     "data": "2026-11-24",
     "assunto": "fix: invalida cache depois de salvar artigo e verificar voz (etapa 219) (#292)"
-   },
-   {
-    "sha": "ba7d901",
-    "data": "2026-11-24",
-    "assunto": "fix: bloqueia duplo clique nas acoes de escrita que duplicavam registro (etapa 218) (#291)"
    }
   ],
   "arquivos_mudados_7d": 1275,
@@ -203,30 +203,34 @@
    },
    {
     "arquivo": "docs/estado/funcionalidades-planejadas.md",
-    "mudancas": 30
+    "mudancas": 31
    },
    {
     "arquivo": ".github/workflows/ci.yml",
-    "mudancas": 10
+    "mudancas": 11
    },
    {
     "arquivo": "src/components/calls/UnifiedSoftphone.tsx",
-    "mudancas": 10
+    "mudancas": 11
    },
    {
     "arquivo": "src/components/layout/AppSidebar.tsx",
-    "mudancas": 10
+    "mudancas": 11
    },
    {
     "arquivo": "src/hooks/useMultiChannelCall.ts",
-    "mudancas": 10
+    "mudancas": 11
    },
    {
     "arquivo": "docs/audits/pendencias-2026-07.md",
-    "mudancas": 9
+    "mudancas": 10
    },
    {
     "arquivo": "supabase/functions/data-lake-flush/index.ts",
+    "mudancas": 10
+   },
+   {
+    "arquivo": "src/components/layout/CommandPalette.tsx",
     "mudancas": 9
    },
    {
@@ -234,74 +238,70 @@
     "mudancas": 8
    },
    {
-    "arquivo": "src/components/layout/CommandPalette.tsx",
+    "arquivo": "supabase/functions/validate-geo/index.ts",
     "mudancas": 8
+   },
+   {
+    "arquivo": "AGENTS.md",
+    "mudancas": 7
    },
    {
     "arquivo": "docs/edge-functions/README.md",
     "mudancas": 7
    },
    {
-    "arquivo": "supabase/functions/validate-geo/index.ts",
+    "arquivo": "src/hooks/__tests__/useQueueMetrics.coverage.test.tsx",
     "mudancas": 7
    },
    {
-    "arquivo": ".github/workflows/contexto.yml",
-    "mudancas": 6
-   },
-   {
-    "arquivo": "AGENTS.md",
-    "mudancas": 6
-   },
-   {
-    "arquivo": "src/hooks/__tests__/useQueueMetrics.coverage.test.tsx",
-    "mudancas": 6
-   },
-   {
     "arquivo": "src/hooks/useAgentRanking.ts",
-    "mudancas": 6
+    "mudancas": 7
    },
    {
     "arquivo": "src/hooks/useQueueMetrics.ts",
-    "mudancas": 6
+    "mudancas": 7
    },
    {
     "arquivo": "src/pages/Calls.tsx",
-    "mudancas": 6
+    "mudancas": 7
    },
    {
     "arquivo": "src/pages/PhoneDialer.tsx",
-    "mudancas": 6
+    "mudancas": 7
    },
    {
     "arquivo": "src/routes/protectedRoutes.tsx",
-    "mudancas": 6
+    "mudancas": 7
    },
    {
     "arquivo": "supabase/functions/auto-scorecard/index.ts",
-    "mudancas": 6
+    "mudancas": 7
    },
    {
     "arquivo": "supabase/functions/chatbot-respond/index.ts",
-    "mudancas": 6
+    "mudancas": 7
    },
    {
     "arquivo": "supabase/functions/generate-coaching-track/index.ts",
-    "mudancas": 6
+    "mudancas": 7
    },
    {
     "arquivo": "supabase/functions/health-check/index.ts",
-    "mudancas": 6
+    "mudancas": 7
    },
    {
     "arquivo": "supabase/functions/score-call/index.ts",
-    "mudancas": 6
+    "mudancas": 7
+   },
+   {
+    "arquivo": "supabase/functions/teams-fetch-recordings/index.ts",
+    "mudancas": 7
    }
   ],
   "autores_30d": [
    {
     "autor": "adm01-debug",
-    "commits": 294
+    "commits": 295
    },
    {
     "autor": "Joaquim Ataides",

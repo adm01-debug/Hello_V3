@@ -59,11 +59,11 @@
  "commits": {
   "convencao": "conventional commits (observado)",
   "exemplos": [
+   "fix: colisao de versao nao impede o diagnostico da fila (#316)",
    "fix: comparar migration pelo slug do nome e permitir registrar sem executar (#315)",
    "fix: fila de migrations compara com o historico real do projeto (#314)",
    "infra: fila de migrations em um clique e teste de RLS (#313)",
-   "infra: atualiza checkout e upload-artifact para as versoes atuais (v7) (#312)",
-   "feat: preferencias de notificacao e audio persistem (E076) (#171)"
+   "infra: atualiza checkout e upload-artifact para as versoes atuais (v7) (#312)"
   ]
  },
  "pr_template": null,

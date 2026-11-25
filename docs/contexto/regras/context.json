@@ -1,9 +1,9 @@
 {
  "meta": {
-  "sha": "5df6b4768dbdd509c0eb85c5d33f567e63831a8a",
+  "sha": "f95122a33d4b029990a9865d045a3745054ebbf3",
   "branch": "main",
   "remote": "https://github.com/adm01-debug/Hello_V3",
-  "generated_at": "2026-11-25 12:24 UTC",
+  "generated_at": "2026-11-25 12:35 UTC",
   "files_total": 1798,
   "code_files": 1595,
   "code_lines": 195681
@@ -124385,10 +124385,19 @@
   }
  },
  "git": {
-  "sha": "5df6b4768dbdd509c0eb85c5d33f567e63831a8a",
+  "sha": "f95122a33d4b029990a9865d045a3745054ebbf3",
   "branch": "main",
   "remote": "https://github.com/adm01-debug/Hello_V3",
   "commits": [
+   {
+    "sha": "f95122a",
+    "date": "2026-11-25",
+    "author": "adm01-debug",
+    "subject": "fix: colisao de versao nao impede o diagnostico da fila (#316)",
+    "files": [
+     ".github/workflows/migrations.yml"
+    ]
+   },
    {
     "sha": "5df6b47",
     "date": "2026-11-25",
@@ -124799,39 +124808,16 @@
     "files": [
      "supabase/migrations/20261123030000_hold_time_from_events.sql"
     ]
-   },
-   {
-    "sha": "559db78",
-    "date": "2026-11-24",
-    "author": "adm01-debug",
-    "subject": "chore: gate de lint de acessibilidade e escopo do eslint (etapa 264) (#287)",
-    "files": [
-     "bun.lock",
-     "docs/qa/05-PROGRESSO.md",
-     "eslint.config.js",
-     "package.json",
-     "scripts/ai-context/cenarios.mjs",
-     "scripts/ai-context/gerar.mjs",
-     "scripts/check-data.mjs",
-     "scripts/ci/check-claude-md-integrity.mjs",
-     "scripts/inventario/gerar-banco.mjs",
-     "scripts/inventario/gerar-rotas.mjs",
-     "scripts/inventario/mudou-conteudo.mjs",
-     "scripts/test-api-direct.mjs",
-     "scripts/test-auth-flow.mjs",
-     "scripts/test-dashboard-rpcs.mjs",
-     "scripts/test-rls-access.mjs"
-    ]
    }
   ],
   "hot_files": [
    [
     "docs/qa/05-PROGRESSO.md",
-    22
+    21
    ],
    [
     ".github/workflows/migrations.yml",
-    5
+    6
    ],
    [
     ".github/workflows/ci.yml",
