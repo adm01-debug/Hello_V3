@@ -69,8 +69,8 @@ Denominador: 207 arquivos `.sql` / 13.329 linhas.
 | View | Evidência |
 |---|---|
 | `migration_status` | `supabase/migrations/20250101000000_versioning.sql:77` |
-| `index_usage` | `supabase/migrations/20250102000000_performance_indexes.sql:135` |
-| `unused_indexes` | `supabase/migrations/20250102000000_performance_indexes.sql:148` |
+| `index_usage` | `supabase/migrations/20261125120000_indices_auditoria_e_busca_contatos.sql:46` |
+| `unused_indexes` | `supabase/migrations/20261125120000_indices_auditoria_e_busca_contatos.sql:58` |
 | `slow_queries` | `supabase/migrations/20250104000000_query_monitoring.sql:4` |
 | `public.financial_impact_daily` | `supabase/migrations/20260711153050_e3d3822b-d711-42cf-8514-1f348c336641.sql:101` |
 
@@ -503,23 +503,28 @@ seguras como "sem consumidor direto"; as 10 da segunda são apenas indícios.
 
 ## Migrations suspeitas
 
-### 1. Timestamp duplicado — colisão de ordem
+### 1. Timestamp duplicado — colisão de ordem (par de 2025 resolvido)
 
-`20250102000000_hello_production.sql` e `20250102000000_performance_indexes.sql` têm **o mesmo
-timestamp**. A ordem de aplicação entre elas depende do desempate alfabético do nome, não da
-intenção. `hello_production` cria as tabelas; `performance_indexes` cria índices sobre elas — se
-a ordem inverter, quebra.
+`20250102000000_hello_production.sql` e `20250102000000_performance_indexes.sql` tinham **o mesmo
+timestamp**; a ordem de aplicação dependia do desempate alfabético do nome e o segundo arquivo
+nunca entrou no ledger. Ele foi renomeado para
+`20261125120000_indices_auditoria_e_busca_contatos.sql`, preservando o que ainda falta no banco
+(índice trigram em `contacts.name`, índice por ação em `audit_logs`, as duas views de diagnóstico)
+e descartando os blocos cujo alvo não existe no schema real (`calls`, `users`, `transcriptions`,
+`contacts.user_id`, `audit_logs.severity/success`). O par de novembro de 2026 segue pendente
+(etapa 133).
 
-### 2. Oito migrations fora do padrão de nomenclatura
+### 2. Sete migrations fora do padrão de nomenclatura
 
 Padrão da ferramenta: `<timestamp>_<uuid>.sql`. Fogem dele:
 `20241231000000_saved_filters.sql`, `20241231000001_entity_versions.sql`,
 `20250101000000_versioning.sql`, `20250102000000_hello_production.sql`,
-`20250102000000_performance_indexes.sql`, `20250103000000_triggers.sql`,
-`20250104000000_query_monitoring.sql` e `20260805130000_fix_user_profiles_recursion.sql`.
+`20250103000000_triggers.sql`, `20250104000000_query_monitoring.sql` e
+`20260805130000_fix_user_profiles_recursion.sql`.
 
-As 7 primeiras formam o bloco inicial escrito à mão — e são exatamente as que produzem o
-DRIFT-B (6 tabelas + 4 views ausentes de `types.ts`). `20250101000000_versioning.sql:2` traz o
+As 6 primeiras (mais o arquivo renomeado do item 1) formam o bloco inicial escrito à mão — e são
+exatamente as que produzem o DRIFT-B (6 tabelas + 4 views ausentes de `types.ts`).
+`20250101000000_versioning.sql:2` traz o
 comentário `-- Run: psql -d hello < supabase/migrations/...`, ou seja, foi desenhada para
 execução manual via `psql`, fora do pipeline de migrations.
 
