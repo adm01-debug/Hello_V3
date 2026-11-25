@@ -2,11 +2,16 @@
  "aviso": "GERADO AUTOMATICAMENTE por scripts/ai-context/gerar.mjs — não editar à mão; será sobrescrito.",
  "format_version": 2,
  "git": {
-  "commit": "227252ff07f93192f1c17173a0c6acac0ea19be3",
+  "commit": "ba31d8bfce3fd9db4224dea3b6e46c7e25aa3f17",
   "branch": "main",
-  "data_commit": "2026-11-25T10:43:11-03:00",
+  "data_commit": "2026-11-25T12:28:06-03:00",
   "remote": "https://github.com/adm01-debug/Hello_V3",
   "ultimos_commits": [
+   {
+    "sha": "ba31d8b",
+    "data": "2026-11-25",
+    "assunto": "fix: espera da chamada agora grava hold_events (#321)"
+   },
    {
     "sha": "227252f",
     "data": "2026-11-25",
@@ -126,14 +131,9 @@
     "sha": "b616330",
     "data": "2026-11-24",
     "assunto": "fix: guard de CI contra fetch sem prazo e migra os 5 ultimos fetch (#297)"
-   },
-   {
-    "sha": "8aeb115",
-    "data": "2026-11-24",
-    "assunto": "fix: sincroniza o fim de sessao entre abas pelo evento storage (#296)"
    }
   ],
-  "arquivos_mudados_7d": 1277,
+  "arquivos_mudados_7d": 1278,
   "pastas_mais_mudadas_30d": [
    {
     "pasta": "covout/lcov-report/hooks",
@@ -157,7 +157,7 @@
    },
    {
     "pasta": "src/components/calls",
-    "mudancas": 78
+    "mudancas": 80
    },
    {
     "pasta": "src/components/ui",
@@ -250,6 +250,10 @@
     "mudancas": 7
    },
    {
+    "arquivo": "src/components/calls/ActiveCallBar.tsx",
+    "mudancas": 7
+   },
+   {
     "arquivo": "src/hooks/__tests__/useQueueMetrics.coverage.test.tsx",
     "mudancas": 7
    },
@@ -292,10 +296,6 @@
    {
     "arquivo": "supabase/functions/score-call/index.ts",
     "mudancas": 7
-   },
-   {
-    "arquivo": "supabase/functions/teams-fetch-recordings/index.ts",
-    "mudancas": 7
    }
   ],
   "autores_30d": [
@@ -314,9 +314,9 @@
   ]
  },
  "contagens": {
-  "arquivos_total": 1751,
-  "arquivos_codigo": 1346,
-  "linhas_codigo": 179503,
+  "arquivos_total": 1752,
+  "arquivos_codigo": 1347,
+  "linhas_codigo": 179572,
   "rotas": 106,
   "rotas_http_backend": 11,
   "vistas_por_id": 0,
@@ -328,7 +328,7 @@
   "tabelas": 170,
   "migrations": 244,
   "cron_jobs": 11,
-  "testes": 401,
+  "testes": 402,
   "workflows": 4,
   "scripts": 36,
   "docs_md": 121
@@ -483,8 +483,8 @@
    "linhas": 450
   },
   "src/components": {
-   "arquivos": 376,
-   "linhas": 44793
+   "arquivos": 377,
+   "linhas": 44862
   },
   "src/contexts": {
    "arquivos": 5,
@@ -605,12 +605,12 @@
    "linhas": 382
   },
   {
-   "arquivo": "src/components/coaching/CoachingPanel.tsx",
-   "linhas": 378
+   "arquivo": "src/components/calls/ActiveCallBar.tsx",
+   "linhas": 379
   },
   {
-   "arquivo": "src/components/calls/ActiveCallBar.tsx",
-   "linhas": 377
+   "arquivo": "src/components/coaching/CoachingPanel.tsx",
+   "linhas": 378
   },
   {
    "arquivo": "src/components/ai/AICallAnalysis.tsx",

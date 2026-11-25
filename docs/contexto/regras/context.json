@@ -1,15 +1,15 @@
 {
  "meta": {
-  "sha": "227252ff07f93192f1c17173a0c6acac0ea19be3",
+  "sha": "ba31d8bfce3fd9db4224dea3b6e46c7e25aa3f17",
   "branch": "main",
   "remote": "https://github.com/adm01-debug/Hello_V3",
-  "generated_at": "2026-11-25 13:43 UTC",
-  "files_total": 1798,
-  "code_files": 1595,
-  "code_lines": 195433
+  "generated_at": "2026-11-25 15:28 UTC",
+  "files_total": 1799,
+  "code_files": 1596,
+  "code_lines": 195502
  },
  "version": "1.3.2",
- "facts_hash": "4e1209cbf41e7af1",
+ "facts_hash": "97d5b8b14361b686",
  "stack": {
   "frameworks": [
    "React + Vite",
@@ -162,7 +162,7 @@
   "package_manager": "bun",
   "languages": {
    ".ts": 658,
-   ".tsx": 653,
+   ".tsx": 654,
    ".sql": 248,
    ".mjs": 29,
    ".py": 5,
@@ -32535,7 +32535,7 @@
     "file": ".github/workflows/migrations.yml"
    }
   ],
-  "components_count": 376,
+  "components_count": 377,
   "hooks": [
    {
     "name": "useContacts",
@@ -33703,8 +33703,8 @@
   },
   {
    "module": "src/components",
-   "files": 376,
-   "lines": 44793,
+   "files": 377,
+   "lines": 44862,
    "tables": [
     "accounts",
     "agent_goals",
@@ -33907,8 +33907,8 @@
     "src/components/calls/VoipQualityIndicator.tsx",
     "src/components/calls/WebRTCCall.tsx",
     "src/components/calls/WebRTCMetricsPanel.tsx",
-    "src/components/calls/__tests__/AudioOutputSelector.test.tsx",
-    "src/components/calls/__tests__/CrmSuggestionsCard.test.tsx"
+    "src/components/calls/__tests__/ActiveCallBar.espera.test.tsx",
+    "src/components/calls/__tests__/AudioOutputSelector.test.tsx"
    ]
   },
   {
@@ -58388,6 +58388,18 @@
    {
     "file": "src/components/call-history/__tests__/CallSessionsList.test.tsx",
     "name": "com filtros aplicados, diz que o filtro esconde resultados e oferece limpar"
+   },
+   {
+    "file": "src/components/calls/__tests__/ActiveCallBar.espera.test.tsx",
+    "name": "ActiveCallBar: botao de espera"
+   },
+   {
+    "file": "src/components/calls/__tests__/ActiveCallBar.espera.test.tsx",
+    "name": "pede a espera ao contexto da chamada, que e quem grava o hold_event"
+   },
+   {
+    "file": "src/components/calls/__tests__/ActiveCallBar.espera.test.tsx",
+    "name": "mostra o estado de espera vindo do contexto, nao de um estado local"
    },
    {
     "file": "src/components/calls/__tests__/AudioOutputSelector.test.tsx",
@@ -92186,7 +92198,7 @@
   },
   "src/components/calls/ActiveCallBar.tsx": {
    "path": "src/components/calls/ActiveCallBar.tsx",
-   "lines": 377,
+   "lines": 379,
    "exports": [
     "function ActiveCallBar"
    ],
@@ -92645,6 +92657,16 @@
    "lines": 116,
    "exports": [
     "function WebRTCMetricsPanel"
+   ]
+  },
+  "src/components/calls/__tests__/ActiveCallBar.espera.test.tsx": {
+   "path": "src/components/calls/__tests__/ActiveCallBar.espera.test.tsx",
+   "lines": 67,
+   "is_test": true,
+   "tests": [
+    "ActiveCallBar: botao de espera",
+    "pede a espera ao contexto da chamada, que e quem grava o hold_event",
+    "mostra o estado de espera vindo do contexto, nao de um estado local"
    ]
   },
   "src/components/calls/__tests__/AudioOutputSelector.test.tsx": {
@@ -124391,10 +124413,20 @@
   }
  },
  "git": {
-  "sha": "227252ff07f93192f1c17173a0c6acac0ea19be3",
+  "sha": "ba31d8bfce3fd9db4224dea3b6e46c7e25aa3f17",
   "branch": "main",
   "remote": "https://github.com/adm01-debug/Hello_V3",
   "commits": [
+   {
+    "sha": "ba31d8b",
+    "date": "2026-11-25",
+    "author": "adm01-debug",
+    "subject": "fix: espera da chamada agora grava hold_events (#321)",
+    "files": [
+     "src/components/calls/ActiveCallBar.tsx",
+     "src/components/calls/__tests__/ActiveCallBar.espera.test.tsx"
+    ]
+   },
    {
     "sha": "227252f",
     "date": "2026-11-25",
@@ -124749,30 +124781,12 @@
      "src/hooks/useKnowledgeBase.ts",
      "src/hooks/useVoiceBiometrics.ts"
     ]
-   },
-   {
-    "sha": "ba7d901",
-    "date": "2026-11-24",
-    "author": "adm01-debug",
-    "subject": "fix: bloqueia duplo clique nas acoes de escrita que duplicavam registro (etapa 218) (#291)",
-    "files": [
-     "docs/qa/05-PROGRESSO.md",
-     "src/components/call-library/SurveysPanel.tsx",
-     "src/pages/BattleCards.tsx",
-     "src/pages/Cadences.tsx",
-     "src/pages/IPWhitelist.tsx",
-     "src/pages/PhoneDialer.tsx",
-     "src/pages/Scheduling.tsx",
-     "src/pages/Skills.tsx",
-     "src/pages/__tests__/IPWhitelist.test.tsx",
-     "src/pages/__tests__/PhoneDialer.compliance.test.tsx"
-    ]
    }
   ],
   "hot_files": [
    [
     "docs/qa/05-PROGRESSO.md",
-    18
+    17
    ],
    [
     ".github/workflows/migrations.yml",
@@ -124799,16 +124813,20 @@
     2
    ],
    [
-    "src/pages/PhoneDialer.tsx",
-    2
-   ],
-   [
     "tests/e2e/screenshots.spec.ts",
     2
    ],
    [
     "docs/agentes/mapa-repo.md",
     2
+   ],
+   [
+    "src/components/calls/ActiveCallBar.tsx",
+    1
+   ],
+   [
+    "src/components/calls/__tests__/ActiveCallBar.espera.test.tsx",
+    1
    ],
    [
     "docs/estado/dados-schema-migrations.md",
@@ -124844,10 +124862,6 @@
    ],
    [
     "src/integrations/supabase/types.ts",
-    1
-   ],
-   [
-    "src/pages/Settings.tsx",
     1
    ]
   ]

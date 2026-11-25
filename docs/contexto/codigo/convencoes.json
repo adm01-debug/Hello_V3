@@ -22,7 +22,7 @@
    "scripts/regras_negocio (2)"
   ],
   "testes": [
-   "co-localizado (__tests__) (373)",
+   "co-localizado (__tests__) (374)",
    "tests/ (9)",
    "e2e/ (7)"
   ],
@@ -59,11 +59,11 @@
  "commits": {
   "convencao": "conventional commits (observado)",
   "exemplos": [
+   "fix: espera da chamada agora grava hold_events (#321)",
    "feat: alerta semanal da fila de migrations (#320)",
    "fix: renumera e enxuga a migration de indices morta (#318)",
    "fix: dry-run do migrations.yml nao pode gravar de verdade (#319)",
-   "fix: normalizar nome registrado antes de comparar com o arquivo (#317)",
-   "fix: colisao de versao nao impede o diagnostico da fila (#316)"
+   "fix: normalizar nome registrado antes de comparar com o arquivo (#317)"
   ]
  },
  "pr_template": null,

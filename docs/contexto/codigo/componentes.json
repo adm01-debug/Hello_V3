@@ -852,7 +852,7 @@
     "ActiveCallBar"
    ],
    "export_default": null,
-   "linhas": 377,
+   "linhas": 379,
    "dominio": "components/calls",
    "hooks_locais": [
     "useCallContext",
