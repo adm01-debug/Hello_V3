@@ -2,11 +2,16 @@
  "aviso": "GERADO AUTOMATICAMENTE por scripts/ai-context/gerar.mjs — não editar à mão; será sobrescrito.",
  "format_version": 2,
  "git": {
-  "commit": "4707eca460e82edd45e3b741ae3aa251dffed756",
+  "commit": "6873e8260a193212df95f4eff8df32ddea163e60",
   "branch": "main",
-  "data_commit": "2026-11-25T08:31:24-03:00",
+  "data_commit": "2026-11-25T08:56:13-03:00",
   "remote": "https://github.com/adm01-debug/Hello_V3",
   "ultimos_commits": [
+   {
+    "sha": "6873e82",
+    "data": "2026-11-25",
+    "assunto": "infra: fila de migrations em um clique e teste de RLS (#313)"
+   },
    {
     "sha": "4707eca",
     "data": "2026-11-25",
@@ -126,14 +131,9 @@
     "sha": "9660f91",
     "data": "2026-11-24",
     "assunto": "fix: remove 5 testes-espelho e cobre crypto.getRandomValues no useMFA (etapa 284 parcial) (#289)"
-   },
-   {
-    "sha": "a96e7c3",
-    "data": "2026-11-24",
-    "assunto": "fix: revisa os 41 disables de dependencia de efeito e zera o exhaustive-deps (etapa 217) (#288)"
    }
   ],
-  "arquivos_mudados_7d": 1274,
+  "arquivos_mudados_7d": 1275,
   "pastas_mais_mudadas_30d": [
    {
     "pasta": "covout/lcov-report/hooks",
@@ -301,7 +301,7 @@
   "autores_30d": [
    {
     "autor": "adm01-debug",
-    "commits": 291
+    "commits": 292
    },
    {
     "autor": "Joaquim Ataides",
@@ -314,7 +314,7 @@
   ]
  },
  "contagens": {
-  "arquivos_total": 1750,
+  "arquivos_total": 1751,
   "arquivos_codigo": 1346,
   "linhas_codigo": 179503,
   "rotas": 106,
@@ -328,7 +328,7 @@
   "tabelas": 170,
   "migrations": 244,
   "cron_jobs": 11,
-  "testes": 400,
+  "testes": 401,
   "workflows": 4,
   "scripts": 36,
   "docs_md": 121
