@@ -5649,10 +5649,13 @@
     "Cadences"
    ],
    "export_default": "Cadences",
-   "linhas": 326,
+   "linhas": 447,
    "dominio": "pages",
    "hooks_locais": [
+    "useAgentStatus",
+    "useCadenceEnrollments",
     "useCadences",
+    "useContacts",
     "usePageTitle"
    ],
    "tabelas": [],

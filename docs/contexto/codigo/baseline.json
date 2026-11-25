@@ -2,11 +2,16 @@
  "aviso": "GERADO AUTOMATICAMENTE por scripts/ai-context/gerar.mjs — não editar à mão; será sobrescrito.",
  "format_version": 2,
  "git": {
-  "commit": "2e71e7b36a8761213169169b0495204896676cdd",
+  "commit": "abcba36164cceb9978eab3cc14216200cc28eba5",
   "branch": "main",
-  "data_commit": "2026-11-25T14:52:43-03:00",
+  "data_commit": "2026-11-25T15:16:27-03:00",
   "remote": "https://github.com/adm01-debug/Hello_V3",
   "ultimos_commits": [
+   {
+    "sha": "abcba36",
+    "data": "2026-11-25",
+    "assunto": "feat: inscricao e acompanhamento de contatos na cadencia (#325)"
+   },
    {
     "sha": "2e71e7b",
     "data": "2026-11-25",
@@ -126,11 +131,6 @@
     "sha": "0455270",
     "data": "2026-11-24",
     "assunto": "chore: estados vazios que explicam o que falta (#302)"
-   },
-   {
-    "sha": "edd40a3",
-    "data": "2026-11-24",
-    "assunto": "chore: convencao de mensagem de sucesso e textos das telas das ondas 2 e 5 (#301)"
    }
   ],
   "arquivos_mudados_7d": 1280,
@@ -141,7 +141,7 @@
    },
    {
     "pasta": "src/hooks/__tests__",
-    "mudancas": 275
+    "mudancas": 276
    },
    {
     "pasta": "docs/qa/05-PROGRESSO.md",
@@ -153,7 +153,7 @@
    },
    {
     "pasta": "src/lib/__tests__",
-    "mudancas": 99
+    "mudancas": 95
    },
    {
     "pasta": "src/components/calls",
@@ -165,7 +165,7 @@
    },
    {
     "pasta": "supabase/functions/_shared",
-    "mudancas": 56
+    "mudancas": 54
    },
    {
     "pasta": "covout/lib/security",
@@ -218,16 +218,16 @@
     "mudancas": 11
    },
    {
-    "arquivo": ".github/workflows/ci.yml",
-    "mudancas": 10
-   },
-   {
     "arquivo": "docs/audits/pendencias-2026-07.md",
     "mudancas": 10
    },
    {
     "arquivo": "supabase/functions/data-lake-flush/index.ts",
     "mudancas": 10
+   },
+   {
+    "arquivo": ".github/workflows/ci.yml",
+    "mudancas": 9
    },
    {
     "arquivo": ".github/workflows/migrations.yml",
@@ -290,11 +290,11 @@
     "mudancas": 7
    },
    {
-    "arquivo": "supabase/functions/health-check/index.ts",
+    "arquivo": "supabase/functions/score-call/index.ts",
     "mudancas": 7
    },
    {
-    "arquivo": "supabase/functions/score-call/index.ts",
+    "arquivo": "supabase/functions/teams-fetch-recordings/index.ts",
     "mudancas": 7
    }
   ],
@@ -316,7 +316,7 @@
  "contagens": {
   "arquivos_total": 1754,
   "arquivos_codigo": 1349,
-  "linhas_codigo": 180116,
+  "linhas_codigo": 180345,
   "rotas": 106,
   "rotas_http_backend": 11,
   "vistas_por_id": 0,
@@ -496,7 +496,7 @@
   },
   "src/hooks": {
    "arquivos": 342,
-   "linhas": 43411
+   "linhas": 43460
   },
   "src/integrations": {
    "arquivos": 3,
@@ -512,7 +512,7 @@
   },
   "src/pages": {
    "arquivos": 149,
-   "linhas": 22937
+   "linhas": 23117
   },
   "src/routes": {
    "arquivos": 4,
@@ -567,6 +567,10 @@
   {
    "arquivo": "src/components/voice/VoiceAssistantDialog.tsx",
    "linhas": 632
+  },
+  {
+   "arquivo": "src/pages/Cadences.tsx",
+   "linhas": 447
   },
   {
    "arquivo": "src/hooks/useSipCall.ts",
@@ -639,10 +643,6 @@
   {
    "arquivo": "src/lib/security-alerts-webhook.ts",
    "linhas": 359
-  },
-  {
-   "arquivo": "src/components/callbacks/ScheduledCallbacksList.tsx",
-   "linhas": 356
   }
  ],
  "qualidade": {

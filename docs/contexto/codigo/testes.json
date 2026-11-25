@@ -707,11 +707,11 @@
   {
    "arquivo": "src/hooks/__tests__/useCadences.crud.test.tsx",
    "tipo": "unit",
-   "linhas": 146,
+   "linhas": 183,
    "testa": [
     "src/hooks/useCadences.ts"
    ],
-   "casos": 8
+   "casos": 11
   },
   {
    "arquivo": "src/hooks/__tests__/useCallAnalytics.coverage.test.tsx",
@@ -2835,11 +2835,11 @@
   {
    "arquivo": "src/pages/__tests__/Cadences.crud.test.tsx",
    "tipo": "unit",
-   "linhas": 89,
+   "linhas": 148,
    "testa": [
     "src/pages/Cadences.tsx"
    ],
-   "casos": 5
+   "casos": 10
   },
   {
    "arquivo": "src/pages/__tests__/CallHistory.deeplink.test.tsx",

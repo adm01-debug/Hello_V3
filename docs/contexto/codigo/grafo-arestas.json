@@ -3329,7 +3329,9 @@
    "src/components/ui/label.tsx",
    "src/components/ui/select.tsx",
    "src/components/ui/textarea.tsx",
+   "src/hooks/useAgentStatus.ts",
    "src/hooks/useCadences.ts",
+   "src/hooks/useContacts.ts",
    "src/hooks/usePageTitle.ts"
   ],
   "src/pages/CallAnalytics.tsx": [

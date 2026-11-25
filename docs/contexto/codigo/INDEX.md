@@ -1,7 +1,7 @@
 # Contexto do projeto para agentes de IA
 
 GERADO AUTOMATICAMENTE por scripts/ai-context/gerar.mjs — não editar à mão; será sobrescrito.
-Publicado em `docs/contexto/codigo/` na branch `contexto` (gerada, nunca abra PR dela) a cada push em `main` e a cada 10 minutos pelo workflow `contexto.yml`; índice único das três fontes em `docs/contexto/00-INDEX.md`. Gere local com `node scripts/ai-context/gerar.mjs`. Commit-base: `2e71e7b36a8761213169169b0495204896676cdd` (2026-11-25T14:52:43-03:00).
+Publicado em `docs/contexto/codigo/` na branch `contexto` (gerada, nunca abra PR dela) a cada push em `main` e a cada 10 minutos pelo workflow `contexto.yml`; índice único das três fontes em `docs/contexto/00-INDEX.md`. Gere local com `node scripts/ai-context/gerar.mjs`. Commit-base: `abcba36164cceb9978eab3cc14216200cc28eba5` (2026-11-25T15:16:27-03:00).
 
 ## Como usar (leia antes de planejar ou executar qualquer tarefa)
 1. **Tela/rota/menu** → `rotas.json` (url/vista/menu → arquivo → hooks → tabelas → edges; `rotas_http_backend` para APIs) e `modulos.json` (módulo inteiro + dependências entre módulos).
@@ -36,7 +36,7 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 |---|---|
 | arquivos_total | 1754 |
 | arquivos_codigo | 1349 |
-| linhas_codigo | 180116 |
+| linhas_codigo | 180345 |
 | rotas | 106 |
 | rotas_http_backend | 11 |
 | vistas_por_id | 0 |
@@ -371,8 +371,8 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 - possiveis_segredos_no_codigo: 3 — ex.: src/lib/__tests__/security-advanced.test.ts:203, src/lib/__tests__/security-advanced.test.ts:208, src/lib/__tests__/security-advanced.test.ts:213
 
 ## Grafo de código (graphify)
-- 10349 nós · 27376 arestas · 770 comunidades · grafo do commit `2e71e7b3`
-- comunidades maiores: lucide-react (343), cn (302), react (240), safe-date.ts (193), vitest (179), logger.ts (151), buildCorsHeaders (150), validator.ts (128), client.ts (127), usePageTitle (124), Button (115), sonner (107)
+- 10350 nós · 27387 arestas · 787 comunidades · grafo do commit `abcba361`
+- comunidades maiores: lucide-react (324), cn (219), button.tsx (210), vitest (182), logger.ts (149), safe-date.ts (135), client.ts (132), usePageTitle (123), 5. Em uso por rota (122), @tanstack/react-query (113), react (111), CallDetailDialog.tsx (109)
 - símbolos mais chamados: cn() (src/lib/utils.ts), usePageTitle() (src/hooks/usePageTitle.ts), safeFormatDatePtBR() (src/lib/safe-date.ts), useAuthContext() (src/contexts/AuthContext.tsx), q() (scripts/supabase_snapshot/snapshot.py), safeFormatDistanceToNow() (src/lib/safe-date.ts), traceHeaders() (src/lib/tracing.ts), withTrace() (src/lib/tracing.ts), formatDuration() (src/lib/utils.ts), safeToLocaleString() (src/lib/safe-date.ts), buildCorsHeaders() (supabase/functions/_shared/cors.ts), .collect() (scripts/supabase_snapshot/test_snapshot.py)
 - consulta local: `graphify query "<pergunta>"`, `graphify path "<A>" "<B>"`, `graphify explain "<X>"`
 
@@ -382,9 +382,9 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 - src/components/calls/UnifiedSoftphone.tsx (12)
 - src/components/layout/AppSidebar.tsx (11)
 - src/hooks/useMultiChannelCall.ts (11)
-- .github/workflows/ci.yml (10)
 - docs/audits/pendencias-2026-07.md (10)
 - supabase/functions/data-lake-flush/index.ts (10)
+- .github/workflows/ci.yml (9)
 - .github/workflows/migrations.yml (9)
 - src/components/layout/CommandPalette.tsx (9)
 - docs/agentes/mapa-repo.md (8)
@@ -431,6 +431,7 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 
 
 ## Últimos commits
+- 2026-11-25 `abcba36` feat: inscricao e acompanhamento de contatos na cadencia (#325)
 - 2026-11-25 `2e71e7b` chore: marca a etapa 086 como concluida no backlog (#324)
 - 2026-11-25 `19d29d8` feat: permite editar e excluir cadencia e passo (etapa 086) (#323)
 - 2026-11-25 `31ec3c6` fix: microfone da barra de chamada nao silenciava o audio (#322)
@@ -445,7 +446,6 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 - 2026-11-25 `6873e82` infra: fila de migrations em um clique e teste de RLS (#313)
 - 2026-11-25 `4707eca` infra: atualiza checkout e upload-artifact para as versoes atuais (v7) (#312)
 - 2026-11-25 `960c999` feat: preferencias de notificacao e audio persistem (E076) (#171)
-- 2026-11-25 `db63479` infra: workflow manual para aplicar migration no banco oficial (#311)
 
 ## Arquivos deste diretório
 - `docs/contexto/codigo/rotas.json`

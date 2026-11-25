@@ -1,6 +1,6 @@
 # 07 · REGRAS DE NEGÓCIO
 
-> Gerado automaticamente por AI Context Sync v1.3.2 · commit `2e71e7b36a` · branch `main` · 2026-11-25 18:15 UTC
+> Gerado automaticamente por AI Context Sync v1.3.2 · commit `abcba36164` · branch `main` · 2026-11-25 18:19 UTC
 > Não edite à mão — regras humanas vão em `manual/`.
 
 ## A. Regras escritas por humanos (`manual/` — prioridade máxima, nunca sobrescrito)
@@ -847,7 +847,7 @@ _nenhum mapa explícito encontrado — transições só existem implicitamente n
 | `status` | `TIMED_OUT` | compara | `src/hooks/useHealthCheck.ts` |
 | `status` | `abandoned` | compara, filtra | `src/components/dashboard/RecentCalls.tsx`<br>`src/hooks/useQueueMetrics.ts`<br>`src/hooks/useSupervisorPanel.ts`<br>`src/pages/CallHistory.tsx`<br>`supabase/functions/check-goals/index.ts`<br>… +1 |
 | `status` | `accepted` | escreve | `src/hooks/useCrmFieldSuggestions.ts` |
-| `status` | `active` | compara, escreve, filtra | `src/components/agent/BargeInNotification.tsx`<br>`src/components/calls/ActiveCallBar.tsx`<br>`src/components/calls/SipConnectionStatus.tsx`<br>`src/components/calls/UnifiedSoftphone.tsx`<br>`src/components/calls/WebRTCCall.tsx`<br>… +20 |
+| `status` | `active` | compara, escreve, filtra | `src/components/agent/BargeInNotification.tsx`<br>`src/components/calls/ActiveCallBar.tsx`<br>`src/components/calls/SipConnectionStatus.tsx`<br>`src/components/calls/UnifiedSoftphone.tsx`<br>`src/components/calls/WebRTCCall.tsx`<br>… +21 |
 | `status` | `agent_high` | compara | `src/components/conversation-intelligence/TalkRatioChart.tsx` |
 | `status` | `agent_low` | escreve | `src/hooks/useTalkRatio.ts`<br>`src/lib/talkRatio.ts` |
 | `status` | `approved` | compara, escreve | `src/hooks/useScorecards.ts`<br>`src/hooks/useShiftSwapSuggestions.ts`<br>`src/hooks/useTimeOff.ts`<br>`src/pages/PasswordResetApproval.tsx`<br>`src/pages/Scheduling.tsx`<br>… +2 |
@@ -903,7 +903,7 @@ _nenhum mapa explícito encontrado — transições só existem implicitamente n
 | `status` | `overdue` | compara, escreve | `src/components/callbacks/ScheduledCallbacksList.tsx` |
 | `status` | `parked` | compara, escreve, filtra | `src/components/park/ParkOrbitCard.tsx`<br>`src/hooks/useBlfBoard.ts`<br>`src/hooks/useCallPark.ts`<br>`src/lib/call-park.ts` |
 | `status` | `partial` | compara | `src/components/admin/ldap/LDAPLogsTab.tsx`<br>`src/pages/SecurityReport.tsx` |
-| `status` | `paused` | compara, escreve | `src/components/dialer/PredictiveDialerPanel.tsx`<br>`src/hooks/predictive-dialer/api.ts` |
+| `status` | `paused` | compara, escreve | `src/components/dialer/PredictiveDialerPanel.tsx`<br>`src/hooks/predictive-dialer/api.ts`<br>`src/pages/Cadences.tsx` |
 | `status` | `pending` | compara, escreve, filtra | `src/components/callbacks/ScheduledCallbacksList.tsx`<br>`src/components/coaching/CoachingPanel.tsx`<br>`src/components/dialer/PredictiveDialerPanel.tsx`<br>`src/components/executive/OmnichannelCard.tsx`<br>`src/components/executive/PendingFollowupsCard.tsx`<br>… +21 |
 | `status` | `processing` | compara, escreve | `src/hooks/useDataLakeExports.ts`<br>`supabase/functions/data-lake-flush/index.ts`<br>`supabase/functions/export-data-lake/index.ts`<br>`supabase/functions/sync-crm-queue/index.ts` |
 | `status` | `published` | compara, filtra | `src/hooks/useKnowledgeBase.ts`<br>`src/pages/Knowledge.tsx`<br>`supabase/functions/chatbot-respond/index.ts` |
@@ -2484,6 +2484,7 @@ _nenhum item encontrado_
 | Erro ao adicionar etapa | `src/hooks/useCadences.ts` |
 | Erro ao atualizar cadência | `src/hooks/useCadences.ts` |
 | Erro ao atualizar etapa | `src/hooks/useCadences.ts` |
+| Erro ao atualizar inscrição | `src/hooks/useCadences.ts` |
 | Erro ao criar cadência | `src/hooks/useCadences.ts` |
 | Erro ao excluir cadência | `src/hooks/useCadences.ts` |
 | Erro ao excluir etapa | `src/hooks/useCadences.ts` |
@@ -2606,8 +2607,7 @@ _nenhum item encontrado_
 | Erro ao desbloquear IP | `src/hooks/useRateLimitData.ts` |
 | Erro ao limpar logs | `src/hooks/useRateLimitData.ts` |
 | Erro ao resolver alerta | `src/hooks/useRateLimitData.ts` |
-| Novo alerta de rate limit! | `src/hooks/useRateLimitData.ts` |
-| … +293 linhas — lista completa em `context.json` | |
+| … +294 linhas — lista completa em `context.json` | |
 
 ## J. Controle de acesso no código (checagens de perfil/permissão)
 
@@ -2656,7 +2656,7 @@ _nenhum item encontrado_
 | `admin` | `supabase/functions/data-lake-flush/index.ts` |
 | `admin` | `supabase/migrations/20261123000200_fix_has_role_oracle_and_debug_tables.sql` |
 
-## K. Testes como especificação (3606 testes em 393 arquivos — nomes completos em `context.json`)
+## K. Testes como especificação (3615 testes em 393 arquivos — nomes completos em `context.json`)
 
 | Arquivo | Testes | Exemplos do que o sistema DEVE fazer |
 |---|---|---|
@@ -2720,6 +2720,7 @@ _nenhum item encontrado_
 | `src/lib/__tests__/webhook-health-utils.test.ts` | 14 | ratioColor · retorna muted quando attempts=0 · classifica faixas por ratio · aggregateEndpoints … |
 | `src/lib/notifications/__tests__/index.coverage.test.ts` | 14 | notifications · sendNotification · returns success when edge function succeeds · returns error when edge function returns error … |
 | `src/hooks/__tests__/useAgentRanking.coverage.test.tsx` | 13 | useAgentRanking (coverage) · exposes the read error instead of an empty ranking · clears the ranking error after the next successful read · fetches agent stats on mount and exposes data … |
+| `src/hooks/__tests__/useCadences.crud.test.tsx` | 13 | useCadences: edicao e exclusao · updateCadence envia o patch junto com a version atual e recarrega · updateCadence alterna is_active mantendo a version do registro · updateCadence trata conflito de version recarregando a lista … |
 | `src/hooks/__tests__/useCallSession.coverage.test.tsx` | 13 | useCallSession · starts a session successfully · returns null on start error · addTranscript/addAnalysis no-op without session … |
 | `src/hooks/__tests__/useDashboardData.coverage.test.tsx` | 13 | useDashboardData · useDashboardStats success · useDashboardStats error · useAgentsListData success returns data … |
 | `src/hooks/__tests__/useGamification.coverage.test.tsx` | 13 | useGamification · loads data successfully and computes rankings · runs without agentId (skips agent-scoped fetches) · handles fetch errors on all tables … |
@@ -2742,6 +2743,7 @@ _nenhum item encontrado_
 | `src/lib/__tests__/holdReminderSounds.coverage.test.tsx` | 11 | holdReminderSounds · createNotificationSound plays two oscillators (timer branch) · createUrgentSound plays three beeps over time · formatHoldTime formats both branches … |
 | `src/lib/__tests__/tracing.coverage.test.ts` | 11 | tracing (coverage) · exports header name constants · returns undefined trace id/operation when no scope is active · withTrace generates id, sets operation, and clears on success … |
 | `src/lib/__tests__/voice-biometrics.coverage.test.ts` | 11 | voice-biometrics: isValidEmbedding · accepts an array of correct dimension with finite numbers · rejects non-arrays · rejects wrong-length arrays … |
+| `src/pages/__tests__/Cadences.crud.test.tsx` | 11 | Cadences: acoes de edicao e exclusao na tela · mostra os controles de editar, ativar/desativar e excluir na cadencia · desativar a cadencia grava is_active=false pelo id · salvar o dialogo de edicao envia nome e descricao … |
 | `supabase/functions/_shared/__tests__/resilient-fetch.test.ts` | 11 | resilientFetch: sucesso em 2xx passa direto · resilientFetch: 500 é reciclado e sucede na 3ª tentativa · resilientFetch: 404 NÃO é reciclado · resilientFetch: 500 esgota retries e propaga … |
 | `supabase/functions/health-check/__tests__/slo-budget_test.ts` | 11 | budget - sem falhas mantem o budget intacto · budget - falha igual a tolerancia zera o budget · budget - falha acima da tolerancia escala o burn rate · budget - metade da tolerancia entra em warning … |
 | `supabase/functions/voip-executive-summary/__tests__/index.test.ts` | 11 | computeHealthScore — perfeito = 100 · computeHealthScore — fórmula ponderada correta · computeHealthScore — cobre só as dimensões medidas · computeHealthScore — cobertura < 2 devolve null … |
@@ -2769,7 +2771,6 @@ _nenhum item encontrado_
 | `src/components/ui/__tests__/search-input.test.tsx` | 9 | SearchInput · renderiza com placeholder e valor · chama onValueChange ao digitar · mostra botão limpar somente quando há valor … |
 | `src/hooks/__tests__/useAccounts.coverage.test.tsx` | 9 | useAccounts coverage · handles load error · create success · create error returns null … |
 | `src/hooks/__tests__/useAlertsExport.test.ts` | 9 | useAlertsExport · exporta CSV com escopo  · filtra por scope= · filtra por scope= … |
-| `src/hooks/__tests__/useCadences.crud.test.tsx` | 9 | useCadences: edicao e exclusao · updateCadence envia o patch junto com a version atual e recarrega · updateCadence alterna is_active mantendo a version do registro · updateCadence trata conflito de version recarregando a lista … |
 | `src/hooks/__tests__/useCallPlaylists.coverage.test.tsx` | 9 | useCallPlaylists (coverage) · loads playlists on mount · handles list error · createPlaylist success and error … |
 | `src/hooks/__tests__/useCallTimers.coverage.test.tsx` | 9 | useCallTimers · startDurationTimer increments duration each second · startDurationTimer clears existing timer when restarted · stopDurationTimer stops increments … |
 | `src/hooks/__tests__/useCoaching.coverage.test.tsx` | 9 | useCoaching · returns empty without agentId (no fetch) · fetches recommendations and subscribes · handles fetch error … |
@@ -2883,7 +2884,6 @@ _nenhum item encontrado_
 | `src/lib/__tests__/webrtc-config.test.ts` | 6 | getIceServers · retorna STUN servers padrão sem TURN quando envs ausentes · inclui TURN quando todas as envs estão presentes · não inclui TURN quando falta uma das credenciais … |
 | `src/lib/audio/__tests__/deviceTest.test.ts` | 6 | deviceTest · explica a recusa de permissão e não vaza stream · mede o nível e libera o microfone ao parar · avisa quando não há microfone disponível … |
 | `src/lib/audit/__tests__/index.coverage.test.ts` | 6 | audit/index (coverage) · logAuditEvent returns id on success · logAuditEvent defaults details to empty object and resourceId undefined · logAuditEvent returns null on supabase error … |
-| `src/pages/__tests__/Cadences.crud.test.tsx` | 6 | Cadences: acoes de edicao e exclusao na tela · mostra os controles de editar, ativar/desativar e excluir na cadencia · desativar a cadencia grava is_active=false pelo id · salvar o dialogo de edicao envia nome e descricao … |
 | `src/routes/__tests__/callHistoryAlias.test.tsx` | 6 | alias /call-history -> /history (etapa 266) · /call-history nao renderiza mais CallHistory, e sim o alias · /history continua entregando a pagina real · redireciona /call-history para /history … |
 | `supabase/functions/__tests__/optimistic-lock.test.ts` | 6 | optimistic-lock: migration canonica do trigger existe · optimistic-lock: detecta divergencia de versao e lanca OPTIMISTIC_LOCK_CONFLICT · optimistic-lock: incrementa a versao quando nao ha divergencia · optimistic-lock: conflito e auditado em optimistic_lock_conflicts … |
 | `supabase/functions/_shared/__tests__/allowed-hosts.test.ts` | 6 | aceita hosts públicos https · bloqueia loopback, metadata e esquemas perigosos · faixas privadas são liberáveis apenas com allowPrivate · metadata continua bloqueada mesmo com allowPrivate … |

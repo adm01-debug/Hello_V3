@@ -820,12 +820,13 @@
    "canais_realtime": [
     "agents-status"
    ],
-   "usado_por": 4,
+   "usado_por": 5,
    "usado_por_arquivos": [
     "src/components/calls/UnifiedSoftphone.tsx",
     "src/components/coaching/CoachingPanel.tsx",
     "src/components/gamification/AchievementNotificationProvider.tsx",
-    "src/pages/AgentRanking.tsx"
+    "src/pages/AgentRanking.tsx",
+    "src/pages/Cadences.tsx"
    ],
    "coberto_por_testes": 1
   },
@@ -1218,7 +1219,7 @@
     "useCadenceEnrollments",
     "useCadences"
    ],
-   "linhas": 238,
+   "linhas": 250,
    "dominio": "hooks",
    "tabelas": [
     "cadence_enrollments",
@@ -1790,7 +1791,7 @@
     "useState"
    ],
    "canais_realtime": [],
-   "usado_por": 11,
+   "usado_por": 12,
    "usado_por_arquivos": [
     "src/components/calls/ActiveCallBar.tsx",
     "src/components/contacts/ContactCard.tsx",
@@ -1802,6 +1803,7 @@
     "src/components/contacts/useBitrixSync.ts",
     "src/components/dialer/AddContactsDialog.tsx",
     "src/hooks/useContactInsights.ts",
+    "src/pages/Cadences.tsx",
     "src/pages/Contacts.tsx"
    ],
    "coberto_por_testes": 4

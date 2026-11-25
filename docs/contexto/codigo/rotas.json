@@ -970,30 +970,40 @@
    "arquivo": "src/pages/Cadences.tsx",
    "definida_em": "src/routes/protectedRoutes.tsx",
    "hooks": [
+    "useAgentStatus",
     "useCadenceEnrollments",
     "useCadences",
     "useCallback",
+    "useContacts",
     "useEffect",
+    "useMemo",
     "usePageTitle",
     "useRef",
     "useState"
    ],
    "hooks_locais": [
+    "useAgentStatus",
     "useCadenceEnrollments",
     "useCadences",
+    "useContacts",
     "usePageTitle"
    ],
    "tabelas": [
+    "agents",
     "cadence_enrollments",
     "cadence_steps",
-    "cadences"
+    "cadences",
+    "contact_interactions",
+    "contacts"
    ],
    "rpcs": [],
    "edges": [],
-   "canais_realtime": [],
+   "canais_realtime": [
+    "agents-status"
+   ],
    "flags": [],
    "papeis": [],
-   "arquivos_puxados": 16
+   "arquivos_puxados": 21
   },
   {
    "protegida": false,

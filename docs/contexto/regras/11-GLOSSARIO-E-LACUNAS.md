@@ -1,6 +1,6 @@
 # 11 · GLOSSÁRIO, DADOS DE REFERÊNCIA E LACUNAS
 
-> Gerado automaticamente por AI Context Sync v1.3.2 · commit `2e71e7b36a` · branch `main` · 2026-11-25 18:15 UTC
+> Gerado automaticamente por AI Context Sync v1.3.2 · commit `abcba36164` · branch `main` · 2026-11-25 18:19 UTC
 > Não edite à mão — regras humanas vão em `manual/`.
 
 ## Glossário do domínio (entidades do sistema)
@@ -299,7 +299,7 @@
 | status | valor `operational` para `status` usado no código não existe em nenhum enum do banco/TS | `compara:src/components/dashboard/SystemIntegrityDashboard.tsx`<br>`compara:src/pages/admin/SloDashboard.tsx`<br>`escreve:src/components/dashboard/SystemIntegrityDashboard.tsx`<br>`escreve:src/pages/admin/SloDashboard.tsx` |
 | status | valor `degraded` para `status` usado no código não existe em nenhum enum do banco/TS | `compara:src/components/dashboard/SystemIntegrityDashboard.tsx`<br>`compara:src/components/executive/VoipInfrastructureTab.tsx`<br>`compara:src/components/observability/HealthTab.tsx`<br>`compara:src/pages/admin/SloDashboard.tsx` |
 | status | valor `dialing` para `status` usado no código não existe em nenhum enum do banco/TS | `compara:src/components/dialer/PredictiveDialerPanel.tsx`<br>`escreve:src/hooks/predictive-dialer/api.ts` |
-| status | valor `paused` para `status` usado no código não existe em nenhum enum do banco/TS | `compara:src/components/dialer/PredictiveDialerPanel.tsx`<br>`escreve:src/hooks/predictive-dialer/api.ts` |
+| status | valor `paused` para `status` usado no código não existe em nenhum enum do banco/TS | `compara:src/components/dialer/PredictiveDialerPanel.tsx`<br>`compara:src/pages/Cadences.tsx`<br>`escreve:src/hooks/predictive-dialer/api.ts` |
 | status | valor `down` para `status` usado no código não existe em nenhum enum do banco/TS | `compara:src/components/observability/HealthTab.tsx`<br>`compara:src/hooks/useHealthCheck.ts`<br>`escreve:src/hooks/useHealthCheck.ts` |
 | status | valor `ok` para `status` usado no código não existe em nenhum enum do banco/TS | `compara:src/components/queue/QueueGoalsTab.tsx`<br>`compara:src/hooks/useQueueMetrics.ts`<br>`compara:src/pages/QueueMetricsDashboard.tsx`<br>`compara:supabase/functions/check-goals/index.ts` |
 | status | valor `accepted` para `status` usado no código não existe em nenhum enum do banco/TS | `escreve:src/hooks/useCrmFieldSuggestions.ts` |
