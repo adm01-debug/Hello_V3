@@ -5,17 +5,17 @@
   "vitest",
   "playwright"
  ],
- "total": 411,
+ "total": 412,
  "por_tipo": {
   "contrato": 1,
   "e2e": 16,
   "pytest": 2,
-  "unit": 390
+  "unit": 391
  },
  "onde_ficam": [
   {
    "padrao": "co-localizado (__tests__)",
-   "arquivos": 383
+   "arquivos": 384
   },
   {
    "padrao": "tests/",
@@ -351,6 +351,15 @@
    "casos": 5
   },
   {
+   "arquivo": "src/components/dashboard/__tests__/ActiveCallsRealtime.erroLeitura.test.tsx",
+   "tipo": "unit",
+   "linhas": 45,
+   "testa": [
+    "src/components/dashboard/ActiveCallsRealtime.tsx"
+   ],
+   "casos": 2
+  },
+  {
    "arquivo": "src/components/dashboard/__tests__/HoldTrendChart.test.tsx",
    "tipo": "unit",
    "linhas": 92,
@@ -531,12 +540,12 @@
   {
    "arquivo": "src/hooks/__tests__/useActiveCallsRealtime.coverage.test.tsx",
    "tipo": "unit",
-   "linhas": 106,
+   "linhas": 122,
    "testa": [
     "src/hooks/useActiveCallsRealtime.ts",
     "src/integrations/supabase/client.ts"
    ],
-   "casos": 5
+   "casos": 6
   },
   {
    "arquivo": "src/hooks/__tests__/useAdherence.test.tsx",
@@ -3768,6 +3777,7 @@
   "src/components/compliance/dnc/ImportDNCDialog.tsx": 1,
   "src/components/compliance/dnc/ReconcileDNCDialog.tsx": 1,
   "src/components/contacts/ContactCard.tsx": 1,
+  "src/components/dashboard/ActiveCallsRealtime.tsx": 1,
   "src/components/dashboard/CallVolumeChart.tsx": 1,
   "src/components/dashboard/HoldTrendChart.tsx": 1,
   "src/components/dashboard/RecentCalls.tsx": 1,

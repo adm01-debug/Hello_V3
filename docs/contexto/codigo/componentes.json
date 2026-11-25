@@ -1685,7 +1685,7 @@
     "ActiveCallsRealtime"
    ],
    "export_default": null,
-   "linhas": 117,
+   "linhas": 122,
    "dominio": "components/dashboard",
    "hooks_locais": [
     "useActiveCallsRealtime"

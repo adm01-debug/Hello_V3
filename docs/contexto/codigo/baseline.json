@@ -2,11 +2,16 @@
  "aviso": "GERADO AUTOMATICAMENTE por scripts/ai-context/gerar.mjs — não editar à mão; será sobrescrito.",
  "format_version": 2,
  "git": {
-  "commit": "7e936758a7b8780087d3ac845c0e34a4a0f8ab69",
+  "commit": "4ec7dd5f768548f13b4b6dde47bd0f6313442352",
   "branch": "main",
-  "data_commit": "2026-11-25T18:12:40-03:00",
+  "data_commit": "2026-11-25T18:25:18-03:00",
   "remote": "https://github.com/adm01-debug/Hello_V3",
   "ultimos_commits": [
+   {
+    "sha": "4ec7dd5",
+    "data": "2026-11-25",
+    "assunto": "fix: painel de chamadas ativas avisa quando a leitura falha (A-218) (#332)"
+   },
    {
     "sha": "7e93675",
     "data": "2026-11-25",
@@ -126,14 +131,9 @@
     "sha": "fdbcd32",
     "data": "2026-11-25",
     "assunto": "chore: guard de CI contra gravacoes cegas no cliente Supabase (#299)"
-   },
-   {
-    "sha": "ddf4d95",
-    "data": "2026-11-24",
-    "assunto": "fix: foco sempre volta ao gatilho ao fechar o assistente de voz (e2e do teclado deterministico) (#310)"
    }
   ],
-  "arquivos_mudados_7d": 1299,
+  "arquivos_mudados_7d": 1300,
   "pastas_mais_mudadas_30d": [
    {
     "pasta": "covout/lcov-report/hooks",
@@ -141,11 +141,11 @@
    },
    {
     "pasta": "src/hooks/__tests__",
-    "mudancas": 280
+    "mudancas": 281
    },
    {
     "pasta": "docs/qa/05-PROGRESSO.md",
-    "mudancas": 138
+    "mudancas": 139
    },
    {
     "pasta": "covout/lcov-report/lib",
@@ -192,14 +192,14 @@
     "mudancas": 31
    },
    {
-    "pasta": "src/components/network",
+    "pasta": "src/components/dashboard",
     "mudancas": 30
    }
   ],
   "arquivos_mais_mudados_90d": [
    {
     "arquivo": "docs/qa/05-PROGRESSO.md",
-    "mudancas": 138
+    "mudancas": 139
    },
    {
     "arquivo": "docs/estado/funcionalidades-planejadas.md",
@@ -301,22 +301,18 @@
   "autores_30d": [
    {
     "autor": "adm01-debug",
-    "commits": 297
+    "commits": 298
    },
    {
     "autor": "Joaquim Ataides",
     "commits": 2
-   },
-   {
-    "autor": "github-actions[bot]",
-    "commits": 1
    }
   ]
  },
  "contagens": {
-  "arquivos_total": 1755,
-  "arquivos_codigo": 1350,
-  "linhas_codigo": 179702,
+  "arquivos_total": 1756,
+  "arquivos_codigo": 1351,
+  "linhas_codigo": 179775,
   "rotas": 106,
   "rotas_http_backend": 11,
   "vistas_por_id": 0,
@@ -328,7 +324,7 @@
   "tabelas": 170,
   "migrations": 244,
   "cron_jobs": 11,
-  "testes": 411,
+  "testes": 412,
   "workflows": 4,
   "scripts": 36,
   "docs_md": 121
@@ -483,8 +479,8 @@
    "linhas": 450
   },
   "src/components": {
-   "arquivos": 370,
-   "linhas": 43638
+   "arquivos": 371,
+   "linhas": 43688
   },
   "src/contexts": {
    "arquivos": 5,
@@ -496,7 +492,7 @@
   },
   "src/hooks": {
    "arquivos": 344,
-   "linhas": 43545
+   "linhas": 43568
   },
   "src/integrations": {
    "arquivos": 3,

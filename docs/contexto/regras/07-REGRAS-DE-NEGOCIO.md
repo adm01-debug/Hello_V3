@@ -1,6 +1,6 @@
 # 07 · REGRAS DE NEGÓCIO
 
-> Gerado automaticamente por AI Context Sync v1.3.2 · commit `7e936758a7` · branch `main` · 2026-11-25 21:13 UTC
+> Gerado automaticamente por AI Context Sync v1.3.2 · commit `4ec7dd5f76` · branch `main` · 2026-11-25 21:25 UTC
 > Não edite à mão — regras humanas vão em `manual/`.
 
 ## A. Regras escritas por humanos (`manual/` — prioridade máxima, nunca sobrescrito)
@@ -2382,6 +2382,7 @@ _nenhum item encontrado_
 | Bitrix24 não configurado | `src/components/contacts/useBitrixSync.ts` |
 | Erro ao sincronizar com Bitrix24 | `src/components/contacts/useBitrixSync.ts` |
 | Não foi possível registrar uso | `src/components/conversation-intelligence/BattleCardAlert.tsx` |
+|  className= | `src/components/dashboard/ActiveCallsRealtime.tsx` |
 |  className= | `src/components/dashboard/HoldTrendChart.tsx` |
 | Não foi possível copiar o número | `src/components/dashboard/RecentCalls.tsx` |
 | Erro ao priorizar contato | `src/components/dialer/PredictiveDialerPanel.tsx` |
@@ -2596,8 +2597,7 @@ _nenhum item encontrado_
 | Erro ao baixar gravação | `src/hooks/useRecordings.ts` |
 | Erro ao carregar gravações | `src/hooks/useRecordings.ts` |
 | Erro ao carregar áudio | `src/hooks/useRecordings.ts` |
-| Erro ao excluir gravação | `src/hooks/useRecordings.ts` |
-| … +285 linhas — lista completa em `context.json` | |
+| … +286 linhas — lista completa em `context.json` | |
 
 ## J. Controle de acesso no código (checagens de perfil/permissão)
 
@@ -2648,7 +2648,7 @@ _nenhum item encontrado_
 | `admin` | `supabase/functions/data-lake-flush/index.ts` |
 | `admin` | `supabase/migrations/20261123000200_fix_has_role_oracle_and_debug_tables.sql` |
 
-## K. Testes como especificação (3636 testes em 400 arquivos — nomes completos em `context.json`)
+## K. Testes como especificação (3640 testes em 401 arquivos — nomes completos em `context.json`)
 
 | Arquivo | Testes | Exemplos do que o sistema DEVE fazer |
 |---|---|---|
@@ -2816,6 +2816,7 @@ _nenhum item encontrado_
 | `src/components/calls/live-transcription/__tests__/useLiveTranscription.test.ts` | 7 | useLiveTranscription · estado inicial é seguro · define erro quando getUserMedia falha · startRecording ativa gravação e stopRecording faz cleanup … |
 | `src/components/contacts/__tests__/ContactCard.test.tsx` | 7 | ContactCard - menu  · expõe o acionador  · o botão de e-mail aponta para mailto e não seleciona o cartão · clicar no cartão continua selecionando o contato … |
 | `src/hooks/__tests__/use-toast.coverage.test.tsx` | 7 | use-toast (coverage) · adds a toast and exposes state via useToast · dismisses a toast and removes it after delay · updates a toast in place … |
+| `src/hooks/__tests__/useActiveCallsRealtime.coverage.test.tsx` | 7 | useActiveCallsRealtime (coverage) · loads active calls and holds, computes derived data · filters by selected agent and hold status · starts a tick interval when there are active calls … |
 | `src/hooks/__tests__/useAlertHistory.coverage.test.tsx` | 7 | useAlertHistory · loads with empty stats when there are no alerts · computes severity counts, read rate, types and daily stats · applies search, severity and type filters … |
 | `src/hooks/__tests__/useAuditLog.coverage.test.tsx` | 7 | useAuditLog · logEvent chama rpc com os parâmetros corretos · logEvent registra erro quando rpc retorna error · logEvent captura exceção lançada … |
 | `src/hooks/__tests__/useBestTimeToContact.coverage.test.tsx` | 7 | useBestTimeToContact (coverage) · loads pattern and top patterns when contactId provided · does not query single pattern when no contactId (disabled) · recompute success path … |
@@ -2849,7 +2850,6 @@ _nenhum item encontrado_
 | `src/__tests__/rls/learning-completions.test.ts` | 6 | RLS — learning_completions · agente só vê próprias conclusões · supervisor vê todas · agente NÃO pode inserir conclusão de outro agente … |
 | `src/__tests__/rls/storage-recordings.test.ts` | 6 | Storage — call-recordings (ownership por path) · bucket é privado: anônimo é bloqueado · agente lê apenas próprias gravações · agente faz upload apenas no próprio prefixo … |
 | `src/components/auth/__tests__/PermissionGate.test.tsx` | 6 | PermissionGate · nao renderiza nada enquanto as permissoes carregam · mostra o estado padrao de sem permissao quando nao ha fallback · respeita fallback explicito, inclusive null … |
-| `src/hooks/__tests__/useActiveCallsRealtime.coverage.test.tsx` | 6 | useActiveCallsRealtime (coverage) · loads active calls and holds, computes derived data · filters by selected agent and hold status · starts a tick interval when there are active calls … |
 | `src/hooks/__tests__/useAudioOutputDevices.test.tsx` | 6 | useAudioOutputDevices · reporta não suportado quando setSinkId ausente · enumera dispositivos de saída e ignora inputs · persiste a preferência ao chamar setSinkId com sucesso … |
 | `src/hooks/__tests__/useBattleCardDetection.test.ts` | 6 | useBattleCardDetection · does nothing when inactive · matches contains keyword · matches exact keyword as a whole word … |
 | `src/hooks/__tests__/useBitrixAndWebAuthn.test.ts` | 6 | useBitrix · gets contacts from Bitrix · handles unconfigured service · useWebAuthn … |
@@ -2952,7 +2952,7 @@ _nenhum item encontrado_
 | `src/hooks/__tests__/useIPValidation.coverage.test.tsx` | 4 | useIPValidation · returns data on success · handles supabase error branch · handles thrown exception branch |
 | `src/hooks/__tests__/useLockedWrite.test.ts` | 4 | useLockedWrite · ignora o segundo clique enquanto a gravacao da mesma linha esta em voo · libera a trava mesmo quando a gravacao falha · nao bloqueia linhas diferentes |
 | `src/hooks/__tests__/useNotificationPreferences.test.tsx` | 4 | useNotificationPreferences · retorna DEFAULT_PREFERENCES quando nao ha registro · carrega preferencias do banco · upsert no salvar usa onConflict user_id |
-| … +100 linhas — lista completa em `context.json` | | |
+| … +101 linhas — lista completa em `context.json` | | |
 
 ## L. Eventos de webhook tratados (contratos com sistemas externos)
 

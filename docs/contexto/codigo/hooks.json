@@ -701,7 +701,7 @@
    "hooks_exportados": [
     "useActiveCallsRealtime"
    ],
-   "linhas": 122,
+   "linhas": 129,
    "dominio": "hooks",
    "tabelas": [
     "call_sessions",

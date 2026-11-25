@@ -22,7 +22,7 @@
    "scripts/regras_negocio (2)"
   ],
   "testes": [
-   "co-localizado (__tests__) (383)",
+   "co-localizado (__tests__) (384)",
    "tests/ (9)",
    "e2e/ (7)"
   ],
@@ -59,11 +59,11 @@
  "commits": {
   "convencao": "conventional commits (observado)",
   "exemplos": [
+   "fix: painel de chamadas ativas avisa quando a leitura falha (A-218) (#332)",
    "fix: botao de excluir contato com icone proprio e acoes de UI que mentiam (#331)",
    "fix: ligar do cartao de contato e do retorno discam de verdade (#330)",
    "fix: proteger gravacao de preferencias e callbacks contra duplo clique (#329)",
-   "chore: remover componentes orfaos (etapa 296) e reaproveitar saida de audio e alertas de contato (#328)",
-   "feat: verifica voz ao vivo na chamada e remove resumo de reuniao duplicado (etapas 154,155) (#327)"
+   "chore: remover componentes orfaos (etapa 296) e reaproveitar saida de audio e alertas de contato (#328)"
   ]
  },
  "pr_template": null,

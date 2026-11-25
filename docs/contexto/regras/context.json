@@ -1,15 +1,15 @@
 {
  "meta": {
-  "sha": "7e936758a7b8780087d3ac845c0e34a4a0f8ab69",
+  "sha": "4ec7dd5f768548f13b4b6dde47bd0f6313442352",
   "branch": "main",
   "remote": "https://github.com/adm01-debug/Hello_V3",
-  "generated_at": "2026-11-25 21:13 UTC",
-  "files_total": 1802,
-  "code_files": 1599,
-  "code_lines": 195632
+  "generated_at": "2026-11-25 21:25 UTC",
+  "files_total": 1803,
+  "code_files": 1600,
+  "code_lines": 195705
  },
  "version": "1.3.2",
- "facts_hash": "28cd6216178ba20c",
+ "facts_hash": "289442ffabdb7b9b",
  "stack": {
   "frameworks": [
    "React + Vite",
@@ -162,7 +162,7 @@
   "package_manager": "bun",
   "languages": {
    ".ts": 661,
-   ".tsx": 654,
+   ".tsx": 655,
    ".sql": 248,
    ".mjs": 29,
    ".py": 5,
@@ -32538,7 +32538,7 @@
     "file": ".github/workflows/migrations.yml"
    }
   ],
-  "components_count": 370,
+  "components_count": 371,
   "hooks": [
    {
     "name": "useContacts",
@@ -33706,8 +33706,8 @@
   },
   {
    "module": "src/components",
-   "files": 370,
-   "lines": 43638,
+   "files": 371,
+   "lines": 43688,
    "tables": [
     "accounts",
     "agent_goals",
@@ -33968,7 +33968,7 @@
   {
    "module": "src/hooks",
    "files": 344,
-   "lines": 43545,
+   "lines": 43568,
    "tables": [
     "accounts",
     "active_sessions",
@@ -40958,6 +40958,10 @@
    {
     "file": "src/components/conversation-intelligence/BattleCardAlert.tsx",
     "msg": "Não foi possível registrar uso"
+   },
+   {
+    "file": "src/components/dashboard/ActiveCallsRealtime.tsx",
+    "msg": " className="
    },
    {
     "file": "src/components/dashboard/HoldTrendChart.tsx",
@@ -58633,6 +58637,18 @@
     "name": "inverte o rótulo e o aria-pressed quando já é favorito"
    },
    {
+    "file": "src/components/dashboard/__tests__/ActiveCallsRealtime.erroLeitura.test.tsx",
+    "name": "ActiveCallsRealtime: falha de leitura (A-218)"
+   },
+   {
+    "file": "src/components/dashboard/__tests__/ActiveCallsRealtime.erroLeitura.test.tsx",
+    "name": "avisa que a leitura falhou em vez de dizer que nao ha chamada ativa"
+   },
+   {
+    "file": "src/components/dashboard/__tests__/ActiveCallsRealtime.erroLeitura.test.tsx",
+    "name": "sem falha, segue mostrando o estado vazio normal"
+   },
+   {
     "file": "src/components/dashboard/__tests__/HoldTrendChart.test.tsx",
     "name": "HoldTrendChart"
    },
@@ -59059,6 +59075,10 @@
    {
     "file": "src/hooks/__tests__/useActiveCallsRealtime.coverage.test.tsx",
     "name": "aplica teto explicito de 200 linhas nas chamadas ativas e nas esperas"
+   },
+   {
+    "file": "src/hooks/__tests__/useActiveCallsRealtime.coverage.test.tsx",
+    "name": "expoe o erro de leitura em vez de fingir que nao ha chamadas (A-218)"
    },
    {
     "file": "src/hooks/__tests__/useAdherence.test.tsx",
@@ -93583,9 +93603,12 @@
   },
   "src/components/dashboard/ActiveCallsRealtime.tsx": {
    "path": "src/components/dashboard/ActiveCallsRealtime.tsx",
-   "lines": 117,
+   "lines": 122,
    "exports": [
     "const ActiveCallsRealtime"
+   ],
+   "errors": [
+    " className="
    ]
   },
   "src/components/dashboard/AgentsList.tsx": {
@@ -93794,6 +93817,20 @@
   "src/components/dashboard/WidgetLibrary.tsx": {
    "path": "src/components/dashboard/WidgetLibrary.tsx",
    "lines": 88
+  },
+  "src/components/dashboard/__tests__/ActiveCallsRealtime.erroLeitura.test.tsx": {
+   "path": "src/components/dashboard/__tests__/ActiveCallsRealtime.erroLeitura.test.tsx",
+   "lines": 45,
+   "is_test": true,
+   "errors": [
+    ")).toBeNull();\n    expect(screen.getByText(",
+    ")).toHaveTextContent("
+   ],
+   "tests": [
+    "ActiveCallsRealtime: falha de leitura (A-218)",
+    "avisa que a leitura falhou em vez de dizer que nao ha chamada ativa",
+    "sem falha, segue mostrando o estado vazio normal"
+   ]
   },
   "src/components/dashboard/__tests__/HoldTrendChart.test.tsx": {
    "path": "src/components/dashboard/__tests__/HoldTrendChart.test.tsx",
@@ -97092,7 +97129,7 @@
   },
   "src/hooks/useActiveCallsRealtime.ts": {
    "path": "src/hooks/useActiveCallsRealtime.ts",
-   "lines": 122,
+   "lines": 129,
    "exports": [
     "function useActiveCallsRealtime"
    ],
@@ -104530,7 +104567,7 @@
   },
   "src/hooks/__tests__/useActiveCallsRealtime.coverage.test.tsx": {
    "path": "src/hooks/__tests__/useActiveCallsRealtime.coverage.test.tsx",
-   "lines": 106,
+   "lines": 122,
    "is_test": true,
    "tests": [
     "useActiveCallsRealtime (coverage)",
@@ -104538,7 +104575,8 @@
     "filters by selected agent and hold status",
     "starts a tick interval when there are active calls",
     "monta e desmonta 50 vezes sem acumular canal de realtime",
-    "aplica teto explicito de 200 linhas nas chamadas ativas e nas esperas"
+    "aplica teto explicito de 200 linhas nas chamadas ativas e nas esperas",
+    "expoe o erro de leitura em vez de fingir que nao ha chamadas (A-218)"
    ]
   },
   "src/hooks/__tests__/useAdherence.test.tsx": {
@@ -124549,10 +124587,23 @@
   }
  },
  "git": {
-  "sha": "7e936758a7b8780087d3ac845c0e34a4a0f8ab69",
+  "sha": "4ec7dd5f768548f13b4b6dde47bd0f6313442352",
   "branch": "main",
   "remote": "https://github.com/adm01-debug/Hello_V3",
   "commits": [
+   {
+    "sha": "4ec7dd5",
+    "date": "2026-11-25",
+    "author": "adm01-debug",
+    "subject": "fix: painel de chamadas ativas avisa quando a leitura falha (A-218) (#332)",
+    "files": [
+     "docs/qa/05-PROGRESSO.md",
+     "src/components/dashboard/ActiveCallsRealtime.tsx",
+     "src/components/dashboard/__tests__/ActiveCallsRealtime.erroLeitura.test.tsx",
+     "src/hooks/__tests__/useActiveCallsRealtime.coverage.test.tsx",
+     "src/hooks/useActiveCallsRealtime.ts"
+    ]
+   },
    {
     "sha": "7e93675",
     "date": "2026-11-25",
@@ -124914,19 +124965,6 @@
      ".gitignore",
      "docs/qa/05-PROGRESSO.md",
      "tests/e2e/screenshots.spec.ts"
-    ]
-   },
-   {
-    "sha": "0413e5a",
-    "date": "2026-11-24",
-    "author": "adm01-debug",
-    "subject": "chore: remove i18n.json e public/locales sem consumidores (#303)",
-    "files": [
-     "docs/adr/016-multilingual-translation.md",
-     "docs/agentes/mapa-repo.md",
-     "docs/qa/05-PROGRESSO.md",
-     "i18n.json",
-     "public/locales/en/common.json"
     ]
    }
   ],
