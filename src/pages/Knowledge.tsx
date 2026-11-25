@@ -1,5 +1,5 @@
-import { useState } from 'react';
-import { BookOpen, Plus, Search, FileText, Eye, ThumbsUp } from 'lucide-react';
+import { useEffect, useState } from 'react';
+import { BookOpen, Plus, Search, FileText, Eye, ThumbsUp, ThumbsDown } from 'lucide-react';
 import { NeonPageLayout } from '@/components/layout/NeonPageLayout';
 import { NeonPageHeader } from '@/components/layout/NeonPageHeader';
 import { Card } from '@/components/ui/card';
@@ -13,7 +13,7 @@ import { ScrollArea } from '@/components/ui/scroll-area';
 import { EmptyState } from '@/components/ui/empty-state';
 import { Skeleton } from '@/components/ui/skeleton';
 import { usePageTitle } from '@/hooks/usePageTitle';
-import { useKbCategories, useKbArticles, useKbArticle, useUpsertArticle, type KbArticle } from '@/hooks/useKnowledgeBase';
+import { useKbCategories, useKbArticles, useKbArticle, useUpsertArticle, useRecordKbView, type KbArticle } from '@/hooks/useKnowledgeBase';
 import { useAuthContext } from '@/contexts/AuthContext';
 
 import { ptBR } from 'date-fns/locale';
@@ -39,6 +39,23 @@ export default function Knowledge() {
   const upsert = useUpsertArticle();
   // Detalhe do artigo: a lista só trazia o excerpt, então nem agente nem editor liam o conteúdo.
   const articleQuery = useKbArticle(viewingId);
+  const recordView = useRecordKbView();
+  const [viewLoggedFor, setViewLoggedFor] = useState<string | null>(null);
+  const [feedbackGiven, setFeedbackGiven] = useState(false);
+
+  // A leitura do artigo nunca era contada: o contador ficava zerado para sempre.
+  useEffect(() => {
+    if (!viewingId || viewLoggedFor === viewingId || !articleQuery.data) return;
+    setViewLoggedFor(viewingId);
+    setFeedbackGiven(false);
+    recordView.mutate({ articleId: viewingId });
+  }, [viewingId, viewLoggedFor, articleQuery.data, recordView]);
+
+  const handleFeedback = (wasHelpful: boolean) => {
+    if (!viewingId || feedbackGiven) return;
+    setFeedbackGiven(true);
+    recordView.mutate({ articleId: viewingId, wasHelpful });
+  };
 
   const handleSave = () => {
     if (!editing?.title || !editing?.content) return;
@@ -281,22 +298,47 @@ export default function Knowledge() {
                   <p className="text-sm whitespace-pre-wrap leading-relaxed">{articleQuery.data.content}</p>
                 </div>
               </ScrollArea>
-              <DialogFooter>
-                <Button variant="outline" onClick={() => setViewingId(null)}>
-                  Fechar
-                </Button>
-                {isEditor && (
+              <DialogFooter className="sm:justify-between">
+                <div className="flex items-center gap-2">
+                  <span className="text-xs text-muted-foreground">Foi útil?</span>
                   <Button
-                    onClick={() => {
-                      const article = articleQuery.data;
-                      if (!article) return;
-                      setViewingId(null);
-                      setEditing(article);
-                    }}
+                    variant="outline"
+                    size="sm"
+                    aria-label="Marcar artigo como útil"
+                    disabled={feedbackGiven}
+                    onClick={() => handleFeedback(true)}
+                    className="gap-1"
                   >
-                    Editar artigo
+                    <ThumbsUp className="h-3.5 w-3.5" /> Sim
                   </Button>
-                )}
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    aria-label="Marcar artigo como não útil"
+                    disabled={feedbackGiven}
+                    onClick={() => handleFeedback(false)}
+                    className="gap-1"
+                  >
+                    <ThumbsDown className="h-3.5 w-3.5" /> Não
+                  </Button>
+                </div>
+                <div className="flex items-center gap-2">
+                  <Button variant="outline" onClick={() => setViewingId(null)}>
+                    Fechar
+                  </Button>
+                  {isEditor && (
+                    <Button
+                      onClick={() => {
+                        const article = articleQuery.data;
+                        if (!article) return;
+                        setViewingId(null);
+                        setEditing(article);
+                      }}
+                    >
+                      Editar artigo
+                    </Button>
+                  )}
+                </div>
               </DialogFooter>
             </>
           )}
