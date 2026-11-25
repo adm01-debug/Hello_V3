@@ -5,7 +5,7 @@
   "vitest",
   "playwright"
  ],
- "total": 412,
+ "total": 413,
  "por_tipo": {
   "contrato": 1,
   "e2e": 16,
@@ -1056,11 +1056,11 @@
   {
    "arquivo": "src/hooks/__tests__/useDNCCompliance.coverage.test.tsx",
    "tipo": "unit",
-   "linhas": 187,
+   "linhas": 201,
    "testa": [
     "src/hooks/useDNCCompliance.ts"
    ],
-   "casos": 8
+   "casos": 9
   },
   {
    "arquivo": "src/hooks/__tests__/useExecutiveDashboard.coverage.test.tsx",
@@ -1325,7 +1325,7 @@
   {
    "arquivo": "src/hooks/__tests__/useMultiChannelCall.compliance.test.tsx",
    "tipo": "unit",
-   "linhas": 120,
+   "linhas": 125,
    "testa": [
     "src/hooks/useMultiChannelCall.ts"
    ],
@@ -1415,7 +1415,7 @@
   {
    "arquivo": "src/hooks/__tests__/usePredictiveDialer.coverage.test.tsx",
    "tipo": "unit",
-   "linhas": 622,
+   "linhas": 636,
    "testa": [
     "src/hooks/usePredictiveDialer.ts"
    ],
@@ -3752,6 +3752,7 @@
   }
  ],
  "sql": [
+  "supabase/tests/calling_hours_fail_closed_rls_test.sql",
   "supabase/tests/role_source_of_truth_test.sql",
   "supabase/tests/user_preferences_rls_test.sql"
  ],

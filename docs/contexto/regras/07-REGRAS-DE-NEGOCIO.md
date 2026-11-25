@@ -1,6 +1,6 @@
 # 07 · REGRAS DE NEGÓCIO
 
-> Gerado automaticamente por AI Context Sync v1.3.2 · commit `4ec7dd5f76` · branch `main` · 2026-11-25 21:25 UTC
+> Gerado automaticamente por AI Context Sync v1.3.2 · commit `1d3fbd7a15` · branch `main` · 2026-11-25 21:55 UTC
 > Não edite à mão — regras humanas vão em `manual/`.
 
 ## A. Regras escritas por humanos (`manual/` — prioridade máxima, nunca sobrescrito)
@@ -2648,7 +2648,7 @@ _nenhum item encontrado_
 | `admin` | `supabase/functions/data-lake-flush/index.ts` |
 | `admin` | `supabase/migrations/20261123000200_fix_has_role_oracle_and_debug_tables.sql` |
 
-## K. Testes como especificação (3640 testes em 401 arquivos — nomes completos em `context.json`)
+## K. Testes como especificação (3641 testes em 401 arquivos — nomes completos em `context.json`)
 
 | Arquivo | Testes | Exemplos do que o sistema DEVE fazer |
 |---|---|---|
@@ -2742,6 +2742,7 @@ _nenhum item encontrado_
 | `src/components/layout/__tests__/AppSidebar.test.tsx` | 10 | routeRoles (E088) · declara papéis para rota admin e undefined para rota aberta · AppSidebar — filtro por papel (E089) · agente não vê itens de rota com roles (Executivo, Logs de Auditoria) … |
 | `src/hooks/__tests__/useAlerts.coverage.test.tsx` | 10 | useAlerts · loads alerts and computes counts · applies filters · checks for new alerts (success and none) … |
 | `src/hooks/__tests__/useAnomalyRemediation.coverage.test.tsx` | 10 | useAnomalyRemediation · applied success · idempotent_skip → info · dryRun → info … |
+| `src/hooks/__tests__/useDNCCompliance.coverage.test.tsx` | 10 | useDNCCompliance · loads queries and getSettingValue parses values · checkDNC success and error branches · checkCallingHours success and error branches … |
 | `src/hooks/__tests__/useDashboardGoals.coverage.test.tsx` | 10 | useDashboardGoals · fetches goals on mount · handles fetch error · opens dialog for new and for editing … |
 | `src/hooks/__tests__/useGeoBlocking.coverage.test.tsx` | 10 | useGeoBlocking · carrega settings, restrictions e logs · inicializa settings quando ausentes · atualiza settings com sucesso … |
 | `src/hooks/__tests__/useIPWhitelist.coverage.test.tsx` | 10 | useIPWhitelist · does not fetch when not admin · fetches data when admin · publishes the read error instead of an empty list … |
@@ -2768,7 +2769,6 @@ _nenhum item encontrado_
 | `src/hooks/__tests__/useCoaching.coverage.test.tsx` | 9 | useCoaching · returns empty without agentId (no fetch) · fetches recommendations and subscribes · handles fetch error … |
 | `src/hooks/__tests__/useConferenceRecording.coverage.test.tsx` | 9 | useConferenceRecording (coverage) · auto-starts recording and fires onRecordingStarted · does not start when conference is null · saves recording when conference ends and fires onRecordingSaved … |
 | `src/hooks/__tests__/useCriticalAlertNotifications.coverage.test.tsx` | 9 | useCriticalAlertNotifications · initAudioContext returns and memoizes an AudioContext · requestNotificationPermission returns true when granted · playAlertSound exercises all patterns (warning + critical) … |
-| `src/hooks/__tests__/useDNCCompliance.coverage.test.tsx` | 9 | useDNCCompliance · loads queries and getSettingValue parses values · checkDNC success and error branches · checkCallingHours success and error branches … |
 | `src/hooks/__tests__/useDebouncedSearchParam.test.tsx` | 9 | useDebouncedSearchParam · hidrata a partir da URL · debounce: uma rajada de setValue commita apenas uma vez · string vazia aplica imediatamente (bypass debounce) … |
 | `src/hooks/__tests__/useExtensionsOverview.scenarios.test.ts` | 9 | useExtensionsOverview — 50+ cenários de agregação · lista vazia retorna array vazio · 1 agente sem chamadas: call_count_7d=0 · 1 agente com 3 chamadas: count=3, média correta … |
 | `src/hooks/__tests__/useMFA.coverage.test.tsx` | 9 | useMFA · loads factors and settings · enrollTOTP success and error · enrollPhone success and error … |
@@ -3142,6 +3142,8 @@ _nenhum item encontrado_
 | autenticada ate a proxima consulta falhar. Reagimos apenas a remocao do | `src/hooks/useAuth.ts` |
 | trocar o filtro durante um "carregar mais" nao pode anexar a pagina antiga na lista nova. | `src/hooks/useCallHistory.ts` |
 | ').order('recorded_at', { ascending: false }).limit(RECORDINGS_LIMIT); | `src/hooks/useCallRecording.ts` |
+| Etapa 035: falha de leitura nao pode virar "nao esta na DNC". Quem | `src/hooks/useDNCCompliance.ts` |
+| discagem quando o RPC estava fora do ar ou sem permissao. | `src/hooks/useDNCCompliance.ts` |
 | Paginas de 50 + desempate por id: o kanban nao pode receber o corte de 1000 | `src/hooks/useDeals.ts` |
 | * - Digitar rapidamente atualiza `inputValue` imediatamente e enfileira apenas | `src/hooks/useDebouncedSearchParam.ts` |
 | ').limit(1).maybeSingle(); | `src/hooks/useGeoBlocking.ts` |

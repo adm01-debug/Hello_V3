@@ -2186,7 +2186,7 @@
    "hooks_exportados": [
     "useDNCCompliance"
    ],
-   "linhas": 310,
+   "linhas": 327,
    "dominio": "hooks",
    "tabelas": [
     "calling_hours_config",
@@ -2940,7 +2940,7 @@
    "hooks_exportados": [
     "useMultiChannelCall"
    ],
-   "linhas": 347,
+   "linhas": 351,
    "dominio": "hooks",
    "tabelas": [
     "hold_events"
@@ -3257,7 +3257,7 @@
    "hooks_exportados": [
     "usePredictiveDialer"
    ],
-   "linhas": 387,
+   "linhas": 396,
    "dominio": "hooks",
    "tabelas": [],
    "rpcs": [],
