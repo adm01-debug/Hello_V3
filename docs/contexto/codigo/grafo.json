@@ -2,7 +2,7 @@
  "aviso": "GERADO AUTOMATICAMENTE por scripts/ai-context/gerar.mjs — não editar à mão; será sobrescrito.",
  "format_version": 2,
  "nos": 941,
- "arestas": 3726,
+ "arestas": 3730,
  "hubs": [
   {
    "arquivo": "src/integrations/supabase/client.ts",

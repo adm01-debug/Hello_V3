@@ -670,6 +670,7 @@
     "useLiveSentiment",
     "useLiveTranscription",
     "useLiveVoiceVerification",
+    "useLockedWrite",
     "useMeetingSummariesList",
     "useMeetingSummary",
     "useMultiChannelCall",
@@ -1020,8 +1021,8 @@
   {
    "modulo": "components/conversation-intelligence",
    "arquivos": 7,
-   "testes": 0,
-   "linhas": 706,
+   "testes": 1,
+   "linhas": 709,
    "itens_menu": [],
    "telas": [],
    "rotas_http": [],
@@ -1030,6 +1031,7 @@
     "useBattleCardDetection",
     "useKeyMoments",
     "useLiveSentiment",
+    "useLockedWrite",
     "useTalkRatio"
    ],
    "hooks_definidos": [],
@@ -5593,7 +5595,7 @@
    "modulo": "pages",
    "arquivos": 93,
    "testes": 0,
-   "linhas": 17548,
+   "linhas": 17558,
    "itens_menu": [
     "Acessos Bloqueados",
     "Agent Assist",
@@ -6391,7 +6393,7 @@
   {
    "modulo": "pages/__tests__",
    "arquivos": 0,
-   "testes": 22,
+   "testes": 23,
    "linhas": 0,
    "itens_menu": [],
    "telas": [],

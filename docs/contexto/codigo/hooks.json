@@ -1102,7 +1102,7 @@
     "src/components/calls/LiveTranscription.tsx",
     "src/components/conversation-intelligence/BattleCardAlert.tsx"
    ],
-   "coberto_por_testes": 1
+   "coberto_por_testes": 2
   },
   {
    "arquivo": "src/hooks/useBestTimeToContact.ts",
@@ -2843,9 +2843,13 @@
     "useCallback"
    ],
    "canais_realtime": [],
-   "usado_por": 1,
+   "usado_por": 5,
    "usado_por_arquivos": [
-    "src/components/callbacks/ScheduledCallbacksList.tsx"
+    "src/components/callbacks/ScheduledCallbacksList.tsx",
+    "src/components/conversation-intelligence/BattleCardAlert.tsx",
+    "src/pages/Deals.tsx",
+    "src/pages/Trackers.tsx",
+    "src/pages/VideoConference.tsx"
    ],
    "coberto_por_testes": 1
   },

@@ -5,17 +5,17 @@
   "vitest",
   "playwright"
  ],
- "total": 414,
+ "total": 416,
  "por_tipo": {
   "contrato": 1,
   "e2e": 16,
   "pytest": 2,
-  "unit": 391
+  "unit": 393
  },
  "onde_ficam": [
   {
    "padrao": "co-localizado (__tests__)",
-   "arquivos": 384
+   "arquivos": 386
   },
   {
    "padrao": "tests/",
@@ -349,6 +349,16 @@
     "src/hooks/useContacts.ts"
    ],
    "casos": 5
+  },
+  {
+   "arquivo": "src/components/conversation-intelligence/__tests__/BattleCardAlert.doubleClick.test.tsx",
+   "tipo": "unit",
+   "linhas": 65,
+   "testa": [
+    "src/components/conversation-intelligence/BattleCardAlert.tsx",
+    "src/hooks/useBattleCardDetection.ts"
+   ],
+   "casos": 2
   },
   {
    "arquivo": "src/components/dashboard/__tests__/ActiveCallsRealtime.erroLeitura.test.tsx",
@@ -3066,6 +3076,15 @@
    "casos": 2
   },
   {
+   "arquivo": "src/pages/__tests__/VideoConference.duploClique.test.tsx",
+   "tipo": "unit",
+   "linhas": 74,
+   "testa": [
+    "src/pages/VideoConference.tsx"
+   ],
+   "casos": 2
+  },
+  {
    "arquivo": "src/pages/admin/__tests__/SloDashboard.meta.test.tsx",
    "tipo": "unit",
    "linhas": 77,
@@ -3779,6 +3798,7 @@
   "src/components/compliance/dnc/ImportDNCDialog.tsx": 1,
   "src/components/compliance/dnc/ReconcileDNCDialog.tsx": 1,
   "src/components/contacts/ContactCard.tsx": 1,
+  "src/components/conversation-intelligence/BattleCardAlert.tsx": 1,
   "src/components/dashboard/ActiveCallsRealtime.tsx": 1,
   "src/components/dashboard/CallVolumeChart.tsx": 1,
   "src/components/dashboard/HoldTrendChart.tsx": 1,
@@ -3825,7 +3845,7 @@
   "src/hooks/useAuditLog.ts": 1,
   "src/hooks/useAuth.ts": 1,
   "src/hooks/useAvatar.ts": 1,
-  "src/hooks/useBattleCardDetection.ts": 1,
+  "src/hooks/useBattleCardDetection.ts": 2,
   "src/hooks/useBestTimeToContact.ts": 1,
   "src/hooks/useBitrix.ts": 2,
   "src/hooks/useBlockedAccessLogs.ts": 1,
@@ -4053,6 +4073,7 @@
   "src/pages/Status.tsx": 1,
   "src/pages/SuccessPlans.tsx": 1,
   "src/pages/Trackers.tsx": 1,
+  "src/pages/VideoConference.tsx": 1,
   "src/pages/admin/SloDashboard.tsx": 1,
   "src/pages/roles/useRoles.ts": 1,
   "src/routes/CallHistoryAlias.tsx": 1,
@@ -4171,7 +4192,6 @@
    "src/pages/TwoFactorAuth.tsx",
    "src/pages/Unauthorized.tsx",
    "src/pages/VerifyEmail.tsx",
-   "src/pages/VideoConference.tsx",
    "src/pages/VirtualFax.tsx",
    "src/pages/VoiceSecurity.tsx",
    "src/pages/Voicemail.tsx",

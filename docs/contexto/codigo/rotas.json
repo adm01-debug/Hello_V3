@@ -1777,6 +1777,7 @@
     "useCallback",
     "useDeals",
     "useEffect",
+    "useLockedWrite",
     "useMemo",
     "usePageTitle",
     "useRef",
@@ -1784,6 +1785,7 @@
    ],
    "hooks_locais": [
     "useDeals",
+    "useLockedWrite",
     "usePageTitle"
    ],
    "tabelas": [
@@ -1798,7 +1800,7 @@
    ],
    "flags": [],
    "papeis": [],
-   "arquivos_puxados": 16
+   "arquivos_puxados": 17
   },
   {
    "protegida": false,
@@ -4582,12 +4584,14 @@
    "hooks": [
     "useCallback",
     "useEffect",
+    "useLockedWrite",
     "usePageTitle",
     "useState",
     "useTrackerMatches",
     "useTrackers"
    ],
    "hooks_locais": [
+    "useLockedWrite",
     "usePageTitle",
     "useTrackerMatches",
     "useTrackers"
@@ -4601,7 +4605,7 @@
    "canais_realtime": [],
    "flags": [],
    "papeis": [],
-   "arquivos_puxados": 17
+   "arquivos_puxados": 18
   },
   {
    "protegida": false,
@@ -4755,7 +4759,9 @@
    "arquivo": "src/pages/VideoConference.tsx",
    "definida_em": "src/routes/protectedRoutes.tsx",
    "hooks": [
+    "useCallback",
     "useEffect",
+    "useLockedWrite",
     "useMutation",
     "usePageTitle",
     "useQuery",
@@ -4763,6 +4769,7 @@
     "useState"
    ],
    "hooks_locais": [
+    "useLockedWrite",
     "usePageTitle"
    ],
    "tabelas": [
@@ -4773,7 +4780,7 @@
    "canais_realtime": [],
    "flags": [],
    "papeis": [],
-   "arquivos_puxados": 12
+   "arquivos_puxados": 13
   },
   {
    "protegida": false,

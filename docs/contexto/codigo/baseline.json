@@ -2,11 +2,16 @@
  "aviso": "GERADO AUTOMATICAMENTE por scripts/ai-context/gerar.mjs — não editar à mão; será sobrescrito.",
  "format_version": 2,
  "git": {
-  "commit": "6943f538416dcf6ae2498e8b5dbb6cd70945163f",
+  "commit": "778149d880be770aa14ab459cf22bb3d39f4e75c",
   "branch": "main",
-  "data_commit": "2026-11-25T19:24:53-03:00",
+  "data_commit": "2026-11-25T20:07:52-03:00",
   "remote": "https://github.com/adm01-debug/Hello_V3",
   "ultimos_commits": [
+   {
+    "sha": "778149d",
+    "data": "2026-11-25",
+    "assunto": "fix: travar duplo clique nas 4 acoes de escrita que escaparam da etapa 218 (#336)"
+   },
    {
     "sha": "6943f53",
     "data": "2026-11-25",
@@ -126,14 +131,9 @@
     "sha": "4707eca",
     "data": "2026-11-25",
     "assunto": "infra: atualiza checkout e upload-artifact para as versoes atuais (v7) (#312)"
-   },
-   {
-    "sha": "960c999",
-    "data": "2026-11-25",
-    "assunto": "feat: preferencias de notificacao e audio persistem (E076) (#171)"
    }
   ],
-  "arquivos_mudados_7d": 1304,
+  "arquivos_mudados_7d": 1306,
   "pastas_mais_mudadas_30d": [
    {
     "pasta": "covout/lcov-report/hooks",
@@ -145,7 +145,7 @@
    },
    {
     "pasta": "docs/qa/05-PROGRESSO.md",
-    "mudancas": 140
+    "mudancas": 141
    },
    {
     "pasta": "covout/lcov-report/lib",
@@ -199,7 +199,7 @@
   "arquivos_mais_mudados_90d": [
    {
     "arquivo": "docs/qa/05-PROGRESSO.md",
-    "mudancas": 140
+    "mudancas": 141
    },
    {
     "arquivo": "docs/estado/funcionalidades-planejadas.md",
@@ -310,9 +310,9 @@
   ]
  },
  "contagens": {
-  "arquivos_total": 1759,
-  "arquivos_codigo": 1351,
-  "linhas_codigo": 179838,
+  "arquivos_total": 1761,
+  "arquivos_codigo": 1353,
+  "linhas_codigo": 179990,
   "rotas": 106,
   "rotas_http_backend": 11,
   "vistas_por_id": 0,
@@ -324,7 +324,7 @@
   "tabelas": 170,
   "migrations": 245,
   "cron_jobs": 11,
-  "testes": 414,
+  "testes": 416,
   "workflows": 4,
   "scripts": 36,
   "docs_md": 121
@@ -479,8 +479,8 @@
    "linhas": 450
   },
   "src/components": {
-   "arquivos": 371,
-   "linhas": 43688
+   "arquivos": 372,
+   "linhas": 43756
   },
   "src/contexts": {
    "arquivos": 5,
@@ -507,8 +507,8 @@
    "linhas": 44
   },
   "src/pages": {
-   "arquivos": 154,
-   "linhas": 23624
+   "arquivos": 155,
+   "linhas": 23708
   },
   "src/routes": {
    "arquivos": 4,

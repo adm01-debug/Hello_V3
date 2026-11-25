@@ -1581,9 +1581,11 @@
     "BattleCardAlert"
    ],
    "export_default": null,
-   "linhas": 141,
+   "linhas": 144,
    "dominio": "components/conversation-intelligence",
-   "hooks_locais": [],
+   "hooks_locais": [
+    "useLockedWrite"
+   ],
    "tabelas": [
     "coaching_timestamps"
    ],
@@ -5874,10 +5876,11 @@
     "Deals"
    ],
    "export_default": "Deals",
-   "linhas": 156,
+   "linhas": 159,
    "dominio": "pages",
    "hooks_locais": [
     "useDeals",
+    "useLockedWrite",
     "usePageTitle"
    ],
    "tabelas": [],
@@ -7071,9 +7074,10 @@
     "Trackers"
    ],
    "export_default": "Trackers",
-   "linhas": 160,
+   "linhas": 163,
    "dominio": "pages",
    "hooks_locais": [
+    "useLockedWrite",
     "usePageTitle",
     "useTrackerMatches",
     "useTrackers"
@@ -7214,9 +7218,10 @@
     "VideoConference"
    ],
    "export_default": "VideoConference",
-   "linhas": 189,
+   "linhas": 193,
    "dominio": "pages",
    "hooks_locais": [
+    "useLockedWrite",
     "usePageTitle"
    ],
    "tabelas": [
