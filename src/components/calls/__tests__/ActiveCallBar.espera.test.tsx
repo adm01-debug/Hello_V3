@@ -24,6 +24,7 @@ const callContext = {
   activeCallId: 'call-1' as string | null,
   endCall: vi.fn(),
   toggleHold: vi.fn(),
+  toggleMute: vi.fn(),
   currentSession: null,
   endDbSession: vi.fn(),
   addCallAnalysis: vi.fn(),
@@ -62,5 +63,38 @@ describe('ActiveCallBar: botao de espera', () => {
     render(<ActiveCallBar />);
 
     expect(screen.getByRole('button', { name: 'Retomar a chamada' })).toBeTruthy();
+  });
+});
+
+describe('ActiveCallBar: botao de microfone', () => {
+  beforeEach(() => {
+    vi.clearAllMocks();
+    callContext.activeCalls = [{ ...chamada }];
+    callContext.activeCallId = 'call-1';
+  });
+
+  it('pede o mute ao contexto da chamada, que e quem silencia o audio', () => {
+    render(<ActiveCallBar />);
+
+    fireEvent.click(screen.getByRole('button', { name: 'Silenciar o microfone' }));
+
+    expect(callContext.toggleMute).toHaveBeenCalledTimes(1);
+    expect(callContext.toggleMute).toHaveBeenCalledWith('call-1');
+  });
+
+  it('nao guarda estado local: o icone so muda quando o contexto muda', () => {
+    render(<ActiveCallBar />);
+
+    fireEvent.click(screen.getByRole('button', { name: 'Silenciar o microfone' }));
+
+    expect(screen.getByRole('button', { name: 'Silenciar o microfone' })).toBeTruthy();
+  });
+
+  it('mostra o estado de mute vindo do contexto', () => {
+    callContext.activeCalls = [{ ...chamada, isMuted: true }];
+
+    render(<ActiveCallBar />);
+
+    expect(screen.getByRole('button', { name: 'Ativar o microfone' })).toBeTruthy();
   });
 });

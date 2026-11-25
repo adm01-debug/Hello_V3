@@ -55,6 +55,7 @@ export function UnifiedSoftphone({ onCallStart, onCallEnd, onTranscript }: Unifi
   const wavoip = useWavoipCall();
   const sipCall = useSipCall();
   const sipConnect = sipCall.connect;
+  const sipToggleMute = sipCall.toggleMute;
   const recording = useCallRecording();
   const { currentAgent, agents, setAgent, clearAgent, setStatusBusy, setStatusAvailable, setStatusAway } = useAgentStatus();
 
@@ -84,6 +85,13 @@ export function UnifiedSoftphone({ onCallStart, onCallEnd, onTranscript }: Unifi
   // Motivo: `sipCall` e o objeto do useSipCall, com identidade nova a cada render; incluido, a sessao seria reassinada sem parar.
   // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => { sipCall.setDbSessionId(currentSession?.id ?? null); }, [currentSession?.id]);
+
+  // O mute real do SIP é imperativo nesta sessão; a barra de chamada ativa muda o
+  // estado pelo contexto, então sem este sync o áudio seguia aberto.
+  useEffect(() => {
+    if (currentCall?.channel !== 'sip') return;
+    sipToggleMute(!!currentCall.isMuted);
+  }, [sipToggleMute, currentCall?.channel, currentCall?.isMuted]);
 
   const conversation = useConversation({
     onConnect: () => { logger.create('Softphone').debug('WebRTC connected'); updateCallStatus('active'); toast.success('Conectado'); },
