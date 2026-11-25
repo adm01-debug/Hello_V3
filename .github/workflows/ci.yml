@@ -40,6 +40,9 @@ jobs:
       - name: Guard • Edge Functions com coerção numérica insegura
         run: node scripts/guard-edge-numeric.mjs --check
 
+      - name: Guard • Gravações cegas no cliente Supabase
+        run: node scripts/guard-supabase-error.mjs --check
+
       - name: Guard • Auditoria estática das Edge Functions
         run: bun scripts/audit-edge-functions.ts
 

@@ -123,7 +123,8 @@ Detalhe em `docs/agentes/<tema>.md`; divergiu da realidade → corrija no mesmo 
   `npx vitest run <caminho>`; `deno test -A supabase/functions/`; `bun run dev` → **8080**, apontando para
   **produção**. `bunx playwright test` hoje **não sobe** (porta 5173 ≠ 8080).
 - Guards antes da PR: `node scripts/ci/check-claude-md-integrity.mjs`,
-  `node scripts/codemod-safe-number.mjs --check`, `node scripts/guard-edge-numeric.mjs --check`.
+  `node scripts/codemod-safe-number.mjs --check`, `node scripts/guard-edge-numeric.mjs --check`,
+  `node scripts/guard-supabase-error.mjs --check`.
 - Orçamento de bundle: `node scripts/check-bundle-budget.mjs` (roda no job de CI) falha quando um
   chunk passa do limite de `scripts/bundle-budget.json`. Os limites são fixados **à mão** a partir da
   meta de produto (ver `_meta` no arquivo: <200 kB gzip por rota); `--update` regrava o baseline e
