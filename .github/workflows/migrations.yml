@@ -153,16 +153,17 @@ jobs:
           : > /tmp/aplicadas_slugs.txt
           : > /tmp/versoes_sem_nome.txt
           if [ "$nativa" = "t" ]; then
-            psql "$SUPABASE_DB_URL" -tA -v ON_ERROR_STOP=1 -c "select coalesce(name, '') from supabase_migrations.schema_migrations" | grep -v '^$' | sort -u > /tmp/aplicadas.txt
-            # O nome gravado nem sempre carrega o prefixo de versao; guarda o slug sem ele
-            # para nao tratar como pendente uma migration que ja rodou.
-            psql "$SUPABASE_DB_URL" -tA -v ON_ERROR_STOP=1 -c "select regexp_replace(coalesce(name, ''), '^[0-9]{14}_', '') from supabase_migrations.schema_migrations" | grep -v '^$' | sort -u > /tmp/aplicadas_slugs.txt
+            psql "$SUPABASE_DB_URL" -tA -v ON_ERROR_STOP=1 -c "select coalesce(name, '') from supabase_migrations.schema_migrations" | grep -v '^$' > /tmp/aplicadas.txt
             psql "$SUPABASE_DB_URL" -tA -v ON_ERROR_STOP=1 -c "select version from supabase_migrations.schema_migrations where name is null" | sort -u > /tmp/versoes_sem_nome.txt
           else
             echo "::warning::supabase_migrations.schema_migrations inacessivel; comparando apenas public.schema_migrations"
           fi
           psql "$SUPABASE_DB_URL" -tA -v ON_ERROR_STOP=1 -c "select name from public.schema_migrations" | grep -v '^$' >> /tmp/aplicadas.txt
-          sort -u /tmp/aplicadas.txt -o /tmp/aplicadas.txt
+          # Nome gravado varia: com prefixo de versao, sem prefixo, ou com .sql no fim.
+          # Normaliza para comparar com o nome do arquivo sem extensao.
+          sed -E 's/\.sql$//' /tmp/aplicadas.txt | sort -u > /tmp/aplicadas_norm.txt
+          mv /tmp/aplicadas_norm.txt /tmp/aplicadas.txt
+          sed -E 's/^[0-9]{14}_//' /tmp/aplicadas.txt | sort -u > /tmp/aplicadas_slugs.txt
           find supabase/migrations -maxdepth 1 -type f -name '*.sql' -printf '%f\n' | grep -E '^[0-9]{14}_[A-Za-z0-9_-]+\.sql$' | sort > /tmp/arquivos.txt
           sed -E 's/\.sql$//' /tmp/arquivos.txt > /tmp/nomes.txt
           sed -E 's/^([0-9]{14})_.*/\1/' /tmp/arquivos.txt | sort > /tmp/versoes_brutas.txt
