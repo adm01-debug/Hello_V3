@@ -8,6 +8,7 @@ export interface Cadence {
   name: string;
   description: string | null;
   is_active: boolean;
+  version?: number;
   created_at: string;
   updated_at: string;
 }
@@ -132,9 +133,89 @@ export function useCadences() {
     return true;
   }, []);
 
+  const updateCadence = useCallback(async (
+    id: string,
+    patch: { name?: string; description?: string | null; is_active?: boolean },
+  ) => {
+    const payload: Record<string, unknown> = { ...patch };
+    const current = cadences.find((c) => c.id === id);
+    if (typeof current?.version === "number") payload.version = current.version;
+    const { error } = await supabase.from("cadences").update(payload as never).eq("id", id);
+    if (error) {
+      if (error.message?.includes("OPTIMISTIC_LOCK_CONFLICT")) {
+        toast.error("Esta cadência foi alterada por outro usuário. Recarregando...");
+        await refresh();
+        return false;
+      }
+      toast.error("Erro ao atualizar cadência");
+      logger.error("updateCadence", error);
+      return false;
+    }
+    toast.success("Cadência atualizada");
+    await refresh();
+    return true;
+  }, [cadences, refresh]);
+
+  const deleteCadence = useCallback(async (id: string) => {
+    const { error } = await supabase.from("cadences").delete().eq("id", id);
+    if (error) {
+      toast.error("Erro ao excluir cadência");
+      logger.error("deleteCadence", error);
+      return false;
+    }
+    toast.success("Cadência excluída");
+    await refresh();
+    return true;
+  }, [refresh]);
+
+  const updateStep = useCallback(async (
+    id: string,
+    patch: Partial<Omit<CadenceStep, "id" | "cadence_id">>,
+  ) => {
+    const { error } = await supabase.from("cadence_steps").update(patch as never).eq("id", id);
+    if (error) {
+      toast.error("Erro ao atualizar etapa");
+      logger.error("updateStep", error);
+      return false;
+    }
+    toast.success("Etapa atualizada");
+    await refresh();
+    return true;
+  }, [refresh]);
+
+  // Excluir abre buraco na ordem dos passos (1,2,3 -> 1,3); renumera para o
+  // executor percorrer a sequencia sem saltos.
+  const deleteStep = useCallback(async (id: string) => {
+    const target = steps.find((s) => s.id === id);
+    const { error } = await supabase.from("cadence_steps").delete().eq("id", id);
+    if (error) {
+      toast.error("Erro ao excluir etapa");
+      logger.error("deleteStep", error);
+      return false;
+    }
+    if (target) {
+      const remaining = steps
+        .filter((s) => s.cadence_id === target.cadence_id && s.id !== id)
+        .sort((a, b) => a.step_order - b.step_order);
+      for (let i = 0; i < remaining.length; i += 1) {
+        if (remaining[i].step_order !== i + 1) {
+          const { error: renumberError } = await supabase
+            .from("cadence_steps")
+            .update({ step_order: i + 1 } as never)
+            .eq("id", remaining[i].id);
+          if (renumberError) logger.error("deleteStep renumber", renumberError);
+        }
+      }
+    }
+    toast.success("Etapa excluída");
+    await refresh();
+    return true;
+  }, [steps, refresh]);
+
   return {
     cadences, steps, loading, totalCount, hasMore, loadingMore, loadMore,
     refresh, createCadence, addStep, enrollContact,
+    updateCadence, deleteCadence, updateStep, deleteStep,
   };
 }
 
