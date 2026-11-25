@@ -65,7 +65,16 @@ begin
 end $$;
 
 -- 3. Efeito real: admin desbloqueia e apaga; nao-admin nao consegue nada.
-select user_id::text as admin_user_id from public.user_roles where role = 'admin' limit 1 \gset
+-- O filtro repete o que public.is_admin() exige (is_active e expires_at): um
+-- papel vencido nao passa na policy, e usar um vencido aqui faria o passo 3
+-- falhar com as policies corretas.
+select user_id::text as admin_user_id
+from public.user_roles
+where role = 'admin'
+  and coalesce(is_active, true)
+  and (expires_at is null or expires_at > now())
+order by user_id
+limit 1 \gset
 
 \if :{?admin_user_id}
 insert into public.rate_limit_logs (ip_address, endpoint, is_blocked, created_at)
