@@ -993,7 +993,7 @@
   {
    "nome": "cleanup-recordings-daily",
    "agenda": "45 3 * * *",
-   "migration": "20261122230000_recordings_retention_cron.sql",
+   "migration": "20261125220000_recordings_retention_cron.sql",
    "chama_edge": "cleanup-recordings"
   },
   {

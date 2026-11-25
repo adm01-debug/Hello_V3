@@ -1,15 +1,15 @@
 {
  "meta": {
-  "sha": "1d3fbd7a1586d04ea826d8d8b3db4656ba16eaf9",
+  "sha": "e34a05c14a9ed183990d839f184cd647d60b49b9",
   "branch": "main",
   "remote": "https://github.com/adm01-debug/Hello_V3",
-  "generated_at": "2026-11-25 21:55 UTC",
+  "generated_at": "2026-11-25 22:11 UTC",
   "files_total": 1805,
   "code_files": 1602,
   "code_lines": 195918
  },
  "version": "1.3.2",
- "facts_hash": "c333c10c6e98baf4",
+ "facts_hash": "c4c7a65903b469e7",
  "stack": {
   "frameworks": [
    "React + Vite",
@@ -25913,7 +25913,6 @@
    "supabase/migrations/20261122210000_optimistic_lock_audit_survives_rollback.sql",
    "supabase/migrations/20261122220000_lock_conflicts_retention_cron.sql",
    "supabase/migrations/20261122230000_reconcile_admin_role_sources.sql",
-   "supabase/migrations/20261122230000_recordings_retention_cron.sql",
    "supabase/migrations/20261122240000_policies_read_user_roles.sql",
    "supabase/migrations/20261122250000_role_checks_honor_active_and_expiry.sql",
    "supabase/migrations/20261122260000_is_admin_user_and_get_role_use_user_roles.sql",
@@ -25939,6 +25938,7 @@
    "supabase/migrations/20261123120000_user_preferences.sql",
    "supabase/migrations/20261125120000_indices_auditoria_e_busca_contatos.sql",
    "supabase/migrations/20261125190000_calling_hours_fail_closed.sql",
+   "supabase/migrations/20261125220000_recordings_retention_cron.sql",
    "supabase/tests/calling_hours_fail_closed_rls_test.sql",
    "supabase/tests/role_source_of_truth_test.sql",
    "supabase/tests/user_preferences_rls_test.sql",
@@ -124301,10 +124301,6 @@
    "path": "supabase/migrations/20261122230000_reconcile_admin_role_sources.sql",
    "lines": 48
   },
-  "supabase/migrations/20261122230000_recordings_retention_cron.sql": {
-   "path": "supabase/migrations/20261122230000_recordings_retention_cron.sql",
-   "lines": 50
-  },
   "supabase/migrations/20261122240000_policies_read_user_roles.sql": {
    "path": "supabase/migrations/20261122240000_policies_read_user_roles.sql",
    "lines": 121,
@@ -124426,6 +124422,10 @@
   "supabase/migrations/20261125190000_calling_hours_fail_closed.sql": {
    "path": "supabase/migrations/20261125190000_calling_hours_fail_closed.sql",
    "lines": 100
+  },
+  "supabase/migrations/20261125220000_recordings_retention_cron.sql": {
+   "path": "supabase/migrations/20261125220000_recordings_retention_cron.sql",
+   "lines": 50
   },
   "supabase/tests/calling_hours_fail_closed_rls_test.sql": {
    "path": "supabase/tests/calling_hours_fail_closed_rls_test.sql",
@@ -124616,10 +124616,19 @@
   }
  },
  "git": {
-  "sha": "1d3fbd7a1586d04ea826d8d8b3db4656ba16eaf9",
+  "sha": "e34a05c14a9ed183990d839f184cd647d60b49b9",
   "branch": "main",
   "remote": "https://github.com/adm01-debug/Hello_V3",
   "commits": [
+   {
+    "sha": "e34a05c",
+    "date": "2026-11-25",
+    "author": "adm01-debug",
+    "subject": "fix: renumerar migration duplicada que quebrava a Supabase Preview",
+    "files": [
+     "supabase/migrations/20261125220000_recordings_retention_cron.sql"
+    ]
+   },
    {
     "sha": "1d3fbd7",
     "date": "2026-11-25",
@@ -124986,28 +124995,12 @@
      "src/pages/PhoneDialer.tsx",
      "tests/e2e/toque.spec.ts"
     ]
-   },
-   {
-    "sha": "fc9a215",
-    "date": "2026-11-24",
-    "author": "adm01-debug",
-    "subject": "fix: telas internas cabem na largura do celular (etapa 271) (#306)",
-    "files": [
-     "docs/qa/05-PROGRESSO.md",
-     "src/components/layout/AppLayout.tsx",
-     "src/components/queue/QueueMetricsCards.tsx",
-     "src/pages/CallHistory.tsx",
-     "src/pages/Calls.tsx",
-     "src/pages/ExecutiveDashboard.tsx",
-     "src/pages/QueueMetricsDashboard.tsx",
-     "tests/e2e/screenshots.spec.ts"
-    ]
    }
   ],
   "hot_files": [
    [
     "docs/qa/05-PROGRESSO.md",
-    13
+    12
    ],
    [
     ".github/workflows/migrations.yml",
@@ -125050,10 +125043,6 @@
     2
    ],
    [
-    "src/components/layout/AppLayout.tsx",
-    2
-   ],
-   [
     "src/hooks/__tests__/useCadences.crud.test.tsx",
     2
    ],
@@ -125078,11 +125067,15 @@
     2
    ],
    [
-    "src/pages/Calls.tsx",
-    2
+    "supabase/migrations/20261125220000_recordings_retention_cron.sql",
+    1
    ],
    [
     "docs/agentes/telefonia-voip.md",
+    1
+   ],
+   [
+    "src/hooks/__tests__/useDNCCompliance.coverage.test.tsx",
     1
    ]
   ]

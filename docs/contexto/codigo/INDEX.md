@@ -1,7 +1,7 @@
 # Contexto do projeto para agentes de IA
 
 GERADO AUTOMATICAMENTE por scripts/ai-context/gerar.mjs — não editar à mão; será sobrescrito.
-Publicado em `docs/contexto/codigo/` na branch `contexto` (gerada, nunca abra PR dela) a cada push em `main` e a cada 10 minutos pelo workflow `contexto.yml`; índice único das três fontes em `docs/contexto/00-INDEX.md`. Gere local com `node scripts/ai-context/gerar.mjs`. Commit-base: `1d3fbd7a1586d04ea826d8d8b3db4656ba16eaf9` (2026-11-25T18:53:54-03:00).
+Publicado em `docs/contexto/codigo/` na branch `contexto` (gerada, nunca abra PR dela) a cada push em `main` e a cada 10 minutos pelo workflow `contexto.yml`; índice único das três fontes em `docs/contexto/00-INDEX.md`. Gere local com `node scripts/ai-context/gerar.mjs`. Commit-base: `e34a05c14a9ed183990d839f184cd647d60b49b9` (2026-11-25T19:08:30-03:00).
 
 ## Como usar (leia antes de planejar ou executar qualquer tarefa)
 1. **Tela/rota/menu** → `rotas.json` (url/vista/menu → arquivo → hooks → tabelas → edges; `rotas_http_backend` para APIs) e `modulos.json` (módulo inteiro + dependências entre módulos).
@@ -329,7 +329,7 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 
 ## Cron jobs (pg_cron / vercel)
 - `cleanup-lock-conflicts-weekly` 0 3 * * 0 → edge cleanup-lock-conflicts (20261122220000_lock_conflicts_retention_cron.sql)
-- `cleanup-recordings-daily` 45 3 * * * → edge cleanup-recordings (20261122230000_recordings_retention_cron.sql)
+- `cleanup-recordings-daily` 45 3 * * * → edge cleanup-recordings (20261125220000_recordings_retention_cron.sql)
 - `daily-cleanup-old-logs` 15 3 * * * (20260711185006_44492a26-e136-43de-93b9-066bed1b40a8.sql)
 - `data-lake-flush-daily` 0 3 * * * → edge data-lake-flush (20261122180000_data_lake_flush_cron_token.sql)
 - `dialer-pacing-tick` * * * * * → edge dialer-pacing-tick (20261122140000_dialer_pacing_cron.sql)
@@ -370,7 +370,7 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 - possiveis_segredos_no_codigo: 3 — ex.: src/lib/__tests__/security-advanced.test.ts:203, src/lib/__tests__/security-advanced.test.ts:208, src/lib/__tests__/security-advanced.test.ts:213
 
 ## Grafo de código (graphify)
-- 10352 nós · 27327 arestas · 773 comunidades · grafo do commit `1d3fbd7a`
+- 10352 nós · 27327 arestas · 773 comunidades · grafo do commit `e34a05c1`
 - comunidades maiores: card.tsx (274), react (192), vitest (186), client.ts (178), logger.ts (171), UnifiedSoftphone.tsx (166), utils.ts (152), lucide-react (137), protectedRoutes.tsx (121), safe-date.ts (118), cn (112), sonner (108)
 - símbolos mais chamados: cn() (src/lib/utils.ts), usePageTitle() (src/hooks/usePageTitle.ts), safeFormatDatePtBR() (src/lib/safe-date.ts), useAuthContext() (src/contexts/AuthContext.tsx), q() (scripts/supabase_snapshot/snapshot.py), safeFormatDistanceToNow() (src/lib/safe-date.ts), traceHeaders() (src/lib/tracing.ts), withTrace() (src/lib/tracing.ts), safeToLocaleString() (src/lib/safe-date.ts), buildCorsHeaders() (supabase/functions/_shared/cors.ts), .collect() (scripts/supabase_snapshot/test_snapshot.py), formatDuration() (src/lib/utils.ts)
 - consulta local: `graphify query "<pergunta>"`, `graphify path "<A>" "<B>"`, `graphify explain "<X>"`
@@ -430,6 +430,7 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 
 
 ## Últimos commits
+- 2026-11-25 `e34a05c` fix: renumerar migration duplicada que quebrava a Supabase Preview
 - 2026-11-25 `1d3fbd7` fix: bloquear discagem quando DNC/horario nao puder ser verificado (etapa 035)
 - 2026-11-25 `4ec7dd5` fix: painel de chamadas ativas avisa quando a leitura falha (A-218) (#332)
 - 2026-11-25 `7e93675` fix: botao de excluir contato com icone proprio e acoes de UI que mentiam (#331)
@@ -444,7 +445,6 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 - 2026-11-25 `31ec3c6` fix: microfone da barra de chamada nao silenciava o audio (#322)
 - 2026-11-25 `ba31d8b` fix: espera da chamada agora grava hold_events (#321)
 - 2026-11-25 `227252f` feat: alerta semanal da fila de migrations (#320)
-- 2026-11-25 `6be5522` fix: renumera e enxuga a migration de indices morta (#318)
 
 ## Arquivos deste diretório
 - `docs/contexto/codigo/rotas.json`

@@ -59,11 +59,11 @@
  "commits": {
   "convencao": "conventional commits (observado)",
   "exemplos": [
+   "fix: renumerar migration duplicada que quebrava a Supabase Preview",
    "fix: bloquear discagem quando DNC/horario nao puder ser verificado (etapa 035)",
    "fix: painel de chamadas ativas avisa quando a leitura falha (A-218) (#332)",
    "fix: botao de excluir contato com icone proprio e acoes de UI que mentiam (#331)",
-   "fix: ligar do cartao de contato e do retorno discam de verdade (#330)",
-   "fix: proteger gravacao de preferencias e callbacks contra duplo clique (#329)"
+   "fix: ligar do cartao de contato e do retorno discam de verdade (#330)"
   ]
  },
  "pr_template": null,

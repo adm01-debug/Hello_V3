@@ -2,11 +2,16 @@
  "aviso": "GERADO AUTOMATICAMENTE por scripts/ai-context/gerar.mjs — não editar à mão; será sobrescrito.",
  "format_version": 2,
  "git": {
-  "commit": "1d3fbd7a1586d04ea826d8d8b3db4656ba16eaf9",
+  "commit": "e34a05c14a9ed183990d839f184cd647d60b49b9",
   "branch": "main",
-  "data_commit": "2026-11-25T18:53:54-03:00",
+  "data_commit": "2026-11-25T19:08:30-03:00",
   "remote": "https://github.com/adm01-debug/Hello_V3",
   "ultimos_commits": [
+   {
+    "sha": "e34a05c",
+    "data": "2026-11-25",
+    "assunto": "fix: renumerar migration duplicada que quebrava a Supabase Preview"
+   },
    {
     "sha": "1d3fbd7",
     "data": "2026-11-25",
@@ -126,14 +131,9 @@
     "sha": "db63479",
     "data": "2026-11-25",
     "assunto": "infra: workflow manual para aplicar migration no banco oficial (#311)"
-   },
-   {
-    "sha": "c9c5a2d",
-    "data": "2026-11-25",
-    "assunto": "infra: publica as capturas da conferencia de celular como artefato do CI (#305)"
    }
   ],
-  "arquivos_mudados_7d": 1302,
+  "arquivos_mudados_7d": 1303,
   "pastas_mais_mudadas_30d": [
    {
     "pasta": "covout/lcov-report/hooks",
