@@ -10,7 +10,7 @@ import { useActiveCallsRealtime } from '@/hooks/useActiveCallsRealtime';
 
 export const ActiveCallsRealtime = () => {
   const {
-    loading, filteredCalls, agents, statusCounts,
+    loading, filteredCalls, agents, statusCounts, error,
     selectedAgent, setSelectedAgent, selectedHoldStatus, setSelectedHoldStatus,
     soundEnabled, toggleSound, isCallOnHold, getHoldDuration, getHoldSeverity,
   } = useActiveCallsRealtime();
@@ -70,8 +70,13 @@ export const ActiveCallsRealtime = () => {
         </div>
       </CardHeader>
       <CardContent>
+        {error && (
+          <p role="alert" className="mb-3 rounded-md border border-destructive/40 bg-destructive/5 px-3 py-2 text-sm text-destructive">
+            Não foi possível ler as chamadas ativas no banco: {error}
+          </p>
+        )}
         {filteredCalls.length === 0 ? (
-          <div className="text-center py-8 text-muted-foreground"><Phone className="h-12 w-12 mx-auto mb-3 opacity-20" /><p>{selectedAgent === 'all' ? 'Nenhuma chamada ativa' : `Nenhuma chamada para ${selectedAgent}`}</p></div>
+          <div className="text-center py-8 text-muted-foreground"><Phone className="h-12 w-12 mx-auto mb-3 opacity-20" /><p>{error ? 'Sem dados para mostrar enquanto a leitura falha' : selectedAgent === 'all' ? 'Nenhuma chamada ativa' : `Nenhuma chamada para ${selectedAgent}`}</p></div>
         ) : (
           <div className="space-y-3">
             {filteredCalls.map(call => {

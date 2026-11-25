@@ -30,15 +30,20 @@ export function useActiveCallsRealtime() {
   const [activeCalls, setActiveCalls] = useState<ActiveCall[]>([]);
   const [activeHolds, setActiveHolds] = useState<ActiveHoldEvent[]>([]);
   const [loading, setLoading] = useState(true);
+  const [erroChamadas, setErroChamadas] = useState<string | null>(null);
+  const [erroEsperas, setErroEsperas] = useState<string | null>(null);
   const [selectedAgent, setSelectedAgent] = useState('all');
   const [selectedHoldStatus, setSelectedHoldStatus] = useState('all');
   const [, setTick] = useState(0);
 
   const { soundEnabled, toggleSound, settings } = useHoldSoundAlert(activeHolds);
 
+  // A-218: engolir o erro fazia banco fora do ar virar "nenhuma chamada ativa"
+  // na tela. O painel precisa saber que a leitura falhou para nao mentir.
   const fetchActiveCalls = async () => {
     const { data, error } = await supabase.from('call_sessions').select('*').eq('status', 'active').order('started_at', { ascending: false }).limit(ACTIVE_ROWS_LIMIT);
-    if (error) { logger.warn('[useActiveCallsRealtime] falha ao listar chamadas ativas', error); return; }
+    if (error) { logger.warn('[useActiveCallsRealtime] falha ao listar chamadas ativas', error); setErroChamadas(error.message || 'falha ao ler call_sessions'); return; }
+    setErroChamadas(null);
     if (data) {
       if (data.length === ACTIVE_ROWS_LIMIT) logger.warn(`[useActiveCallsRealtime] call_sessions atingiu o teto de ${ACTIVE_ROWS_LIMIT} linhas; parte das chamadas ativas fica fora do painel`);
       setActiveCalls(data);
@@ -47,7 +52,8 @@ export function useActiveCallsRealtime() {
 
   const fetchActiveHolds = async () => {
     const { data, error } = await supabase.from('hold_events').select('*').is('ended_at', null).order('started_at', { ascending: false }).limit(ACTIVE_ROWS_LIMIT);
-    if (error) { logger.warn('[useActiveCallsRealtime] falha ao listar esperas ativas', error); return; }
+    if (error) { logger.warn('[useActiveCallsRealtime] falha ao listar esperas ativas', error); setErroEsperas(error.message || 'falha ao ler hold_events'); return; }
+    setErroEsperas(null);
     if (data) {
       if (data.length === ACTIVE_ROWS_LIMIT) logger.warn(`[useActiveCallsRealtime] hold_events atingiu o teto de ${ACTIVE_ROWS_LIMIT} linhas; parte das esperas fica fora do painel`);
       setActiveHolds(data);
@@ -114,6 +120,7 @@ export function useActiveCallsRealtime() {
 
   return {
     loading, filteredCalls, agents, statusCounts,
+    error: erroChamadas ?? erroEsperas,
     selectedAgent, setSelectedAgent, selectedHoldStatus, setSelectedHoldStatus,
     soundEnabled, toggleSound,
     isCallOnHold, getHoldDuration, getHoldSeverity,
