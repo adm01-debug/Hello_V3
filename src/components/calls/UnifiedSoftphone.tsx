@@ -334,7 +334,7 @@ export function UnifiedSoftphone({ onCallStart, onCallEnd, onTranscript }: Unifi
                onCompleteTransfer={completeTransfer}
                onCancelTransfer={cancelTransfer}
                pc={activeChannel === 'sip' ? sipCall.pc : null}
-              remoteAudioRef={activeChannel === 'sip' ? sipCall.remoteAudioRef : undefined}
+               remoteAudioRef={activeChannel === 'sip' ? sipCall.remoteAudioRef : undefined}
             />
           )}
 
