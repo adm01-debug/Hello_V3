@@ -113,8 +113,11 @@ export function useDNCCompliance() {
       if (error) throw error;
       return data as boolean;
     } catch (error) {
+      // Etapa 035: falha de leitura nao pode virar "nao esta na DNC". Quem
+      // chama (preDialCheck) decide o bloqueio; engolir aqui liberava a
+      // discagem quando o RPC estava fora do ar ou sem permissao.
       log.error('Error checking DNC:', error);
-      return false;
+      throw error;
     } finally {
       setIsChecking(false);
     }
@@ -127,8 +130,9 @@ export function useDNCCompliance() {
       if (error) throw error;
       return data as unknown as CallingHoursCheck;
     } catch (error) {
+      // Mesmo motivo do checkDNC: devolver can_call=true escondia a falha.
       log.error('Error checking calling hours:', error);
-      return { can_call: true, reason: 'Error checking hours' };
+      throw error;
     }
   }, []);
 
@@ -253,22 +257,35 @@ export function useDNCCompliance() {
     reasons: string[];
   }> => {
     const reasons: string[] = [];
-    
+
+    // Etapa 035: fail-closed. Se a verificacao nao puder ser feita, a
+    // discagem nao acontece -- o risco de ligar para numero da DNC ou fora do
+    // horario legal e maior que o de uma chamada nao sair.
+    const mensagem = (error: unknown) => (error instanceof Error ? error.message : String(error));
+
     // Check DNC
     const isDNC = getSettingValue('dnc_enabled', true);
     if (isDNC) {
-      const inDNC = await checkDNC(phone);
-      if (inDNC) {
-        reasons.push('Número está na lista DNC (Do Not Call)');
+      try {
+        const inDNC = await checkDNC(phone);
+        if (inDNC) {
+          reasons.push('Número está na lista DNC (Do Not Call)');
+        }
+      } catch (error) {
+        reasons.push(`Não foi possível verificar a lista DNC (${mensagem(error)}). Discagem bloqueada por segurança.`);
       }
     }
 
     // Check calling hours
     const hoursEnabled = getSettingValue('calling_hours_enabled', true);
     if (hoursEnabled) {
-      const hoursCheck = await checkCallingHours(regionCode);
-      if (!hoursCheck.can_call) {
-        reasons.push(hoursCheck.reason);
+      try {
+        const hoursCheck = await checkCallingHours(regionCode);
+        if (!hoursCheck.can_call) {
+          reasons.push(hoursCheck.reason);
+        }
+      } catch (error) {
+        reasons.push(`Não foi possível verificar o horário legal (${mensagem(error)}). Discagem bloqueada por segurança.`);
       }
     }
 

@@ -123,9 +123,13 @@ export function useMultiChannelCall(preDialCheck?: PreDialCheck) {
           return null;
         }
       } catch (error) {
-        // Fail-open por enquanto: tornar isto fail-closed e a etapa 035, que
-        // mexe na funcao do banco e depende de decisao do dono.
-        log.error('preDialCheck falhou; discagem liberada', error);
+        // Etapa 035: fail-closed. Antes este catch liberava a discagem --
+        // bastava a checagem falhar para ligar para qualquer numero.
+        log.error('preDialCheck falhou; discagem bloqueada', error);
+        toast.error('Chamada bloqueada por compliance', {
+          description: 'Não foi possível verificar a lista DNC e o horário legal. Tente novamente.',
+        });
+        return null;
       }
     }
 
