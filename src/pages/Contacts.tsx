@@ -14,6 +14,7 @@ import { Badge } from '@/components/ui/badge';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { cn } from '@/lib/utils';
 import { toast } from 'sonner';
+import { useNavigate } from 'react-router-dom';
 import { useContacts, type Contact } from '@/hooks/useContacts';
 import { ContactDetailSheet } from '@/components/contacts/ContactDetailSheet';
 import { CreateContactDialog } from '@/components/contacts/CreateContactDialog';
@@ -28,6 +29,7 @@ import { type PageSize } from '@/components/contacts/pagination';
 import { useBitrixSync } from '@/components/contacts/useBitrixSync';
 import { usePageTitle } from '@/hooks/usePageTitle';
 import { useDebouncedSearchParam } from '@/hooks/useDebouncedSearchParam';
+import { dialerUrl } from '@/lib/dialerLink';
 
 const DEFAULT_PAGE_SIZE: PageSize = 24;
 
@@ -49,6 +51,7 @@ const Contacts = () => {
   const [pageSize, setPageSize] = useState<PageSize>(DEFAULT_PAGE_SIZE);
 
   const { contacts, isLoading, totalCount, hasMore, loadingMore, loadMore, fetchContacts, deleteContact, createContact } = useContacts();
+  const navigate = useNavigate();
   const { syncWithBitrix, isSyncing, bitrixLoading } = useBitrixSync({
     contacts,
     createContact,
@@ -139,7 +142,15 @@ const Contacts = () => {
     );
 
   const handleCall = (contact: Contact) => {
-    toast.info(`Ligando para ${contact.name}...`);
+    // Sem telefone o card/detalhe ainda mostra "Ligar": avisa em vez de abrir o discador vazio.
+    if (!contact.phone) {
+      toast.info(`Sem telefone cadastrado para ${contact.name}`);
+      return;
+    }
+    // O audio sai do SIP do discador (unica instancia que registra o ramal),
+    // entao "Ligar" leva o numero para la em vez de criar um estado de chamada
+    // sem audio nenhum.
+    navigate(dialerUrl(contact.phone, contact.name, { autoDial: true }));
   };
 
   const handleContactClick = (contact: Contact) => {

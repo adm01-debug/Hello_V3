@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import { Sparkles, Radio, Headphones, MessageCircle } from 'lucide-react';
 import { toast } from 'sonner';
 import { Button } from '@/components/ui/button';
@@ -44,6 +44,7 @@ const STATUS_LABEL: Record<string, string> = {
 const PhoneDialer = () => {
   usePageTitle('Discador');
   const navigate = useNavigate();
+  const [searchParams, setSearchParams] = useSearchParams();
   const call = useCallContext();
   const { sessions, isLoading, error: historyError } = useCallHistory();
   const sip = useSipCall();
@@ -184,6 +185,20 @@ const PhoneDialer = () => {
     },
     [call, sip, preDialCheck],
   );
+
+  // Discagem pedida por outra tela (contato, retorno de ligacao): /?number=...&nome=...&auto=1
+  const prefillConsumidoRef = useRef(false);
+  useEffect(() => {
+    if (prefillConsumidoRef.current) return;
+    const number = searchParams.get('number');
+    if (!number) return;
+    prefillConsumidoRef.current = true;
+    const nome = searchParams.get('nome') ?? undefined;
+    setInput(sanitizeDialInput(number));
+    if (searchParams.get('auto') === '1') void startCall(number, nome);
+    // Tira os parametros da URL: F5 ou re-render nao rediscam.
+    setSearchParams({}, { replace: true });
+  }, [searchParams, setSearchParams, startCall]);
 
   const handleVoiceIntent = useCallback(
     (intent: VoiceIntent) => {
