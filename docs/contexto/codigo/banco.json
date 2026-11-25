@@ -8,7 +8,7 @@
   "supabase/migrations",
   "typeorm"
  ],
- "migrations": 243,
+ "migrations": 244,
  "seeds": [],
  "avisos": [
   "44 bloco(s) com DDL dinâmico (EXECUTE format/...) não modelado — policies/colunas criadas dinamicamente podem faltar; confira no banco vivo"
@@ -841,6 +841,13 @@
    "evento": "update",
    "tabela": "user_mfa_settings",
    "funcao": "update_security_updated_at"
+  },
+  {
+   "nome": "set_user_preferences_updated_at",
+   "quando": "before",
+   "evento": "update",
+   "tabela": "user_preferences",
+   "funcao": "update_updated_at_column"
   },
   {
    "nome": "audit_user_profiles_change",
@@ -19090,6 +19097,127 @@
     "webauthn-challenge"
    ],
    "triggers": [],
+   "sem_rls": false,
+   "nao_usada": false
+  },
+  "user_preferences": {
+   "colunas": {
+    "audio_auto_gain_control": {
+     "tipo": "boolean",
+     "nn": true,
+     "pk": false,
+     "default": "true",
+     "ref": null
+    },
+    "audio_echo_cancellation": {
+     "tipo": "boolean",
+     "nn": true,
+     "pk": false,
+     "default": "true",
+     "ref": null
+    },
+    "audio_noise_suppression": {
+     "tipo": "boolean",
+     "nn": true,
+     "pk": false,
+     "default": "true",
+     "ref": null
+    },
+    "beta_program": {
+     "tipo": "boolean",
+     "nn": true,
+     "pk": false,
+     "default": "false",
+     "ref": null
+    },
+    "created_at": {
+     "tipo": "timestamp with time zone",
+     "nn": false,
+     "pk": false,
+     "default": "now()",
+     "ref": null
+    },
+    "id": {
+     "tipo": "uuid",
+     "nn": false,
+     "pk": true,
+     "default": "gen_random_uuid()",
+     "ref": null
+    },
+    "notify_incoming_calls": {
+     "tipo": "boolean",
+     "nn": true,
+     "pk": false,
+     "default": "true",
+     "ref": null
+    },
+    "notify_missed_calls": {
+     "tipo": "boolean",
+     "nn": true,
+     "pk": false,
+     "default": "true",
+     "ref": null
+    },
+    "notify_sound": {
+     "tipo": "boolean",
+     "nn": true,
+     "pk": false,
+     "default": "true",
+     "ref": null
+    },
+    "notify_voicemail": {
+     "tipo": "boolean",
+     "nn": true,
+     "pk": false,
+     "default": "true",
+     "ref": null
+    },
+    "updated_at": {
+     "tipo": "timestamp with time zone",
+     "nn": false,
+     "pk": false,
+     "default": "now()",
+     "ref": null
+    },
+    "user_id": {
+     "tipo": "uuid",
+     "nn": true,
+     "pk": false,
+     "default": null,
+     "ref": "auth"
+    }
+   },
+   "rls": true,
+   "policies": [
+    {
+     "nome": "Users can insert own preferences",
+     "comando": "insert",
+     "para": "authenticated",
+     "tipo": "permissive"
+    },
+    {
+     "nome": "Users can update own preferences",
+     "comando": "update",
+     "para": "authenticated",
+     "tipo": "permissive"
+    },
+    {
+     "nome": "Users can view own preferences",
+     "comando": "select",
+     "para": "authenticated",
+     "tipo": "permissive"
+    }
+   ],
+   "indices": [],
+   "fks": [
+    "user_id->auth"
+   ],
+   "criada_em": "20261123120000_user_preferences.sql",
+   "usada_no_front": 1,
+   "usada_em_edges": [],
+   "triggers": [
+    "set_user_preferences_updated_at"
+   ],
    "sem_rls": false,
    "nao_usada": false
   },

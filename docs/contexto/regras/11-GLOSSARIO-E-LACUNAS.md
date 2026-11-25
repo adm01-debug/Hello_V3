@@ -1,6 +1,6 @@
 # 11 · GLOSSÁRIO, DADOS DE REFERÊNCIA E LACUNAS
 
-> Gerado automaticamente por AI Context Sync v1.3.2 · commit `db63479320` · branch `main` · 2026-11-25 11:16 UTC
+> Gerado automaticamente por AI Context Sync v1.3.2 · commit `960c999b2b` · branch `main` · 2026-11-25 11:22 UTC
 > Não edite à mão — regras humanas vão em `manual/`.
 
 ## Glossário do domínio (entidades do sistema)
@@ -160,6 +160,7 @@
 | `user_ip_restrictions` | _(sem COMMENT ON TABLE — significado não documentado)_ | 5 colunas | migration |
 | `user_mfa_settings` | _(sem COMMENT ON TABLE — significado não documentado)_ | 9 colunas | migration |
 | `user_passkeys` | _(sem COMMENT ON TABLE — significado não documentado)_ | 11 colunas | migration |
+| `user_preferences` | Preferências de notificação e áudio por usuário (E076/E077) | 12 colunas | migration |
 | `user_profiles` | _(sem COMMENT ON TABLE — significado não documentado)_ | 22 colunas | migration |
 | `user_roles` | _(sem COMMENT ON TABLE — significado não documentado)_ | 9 colunas | migration |
 | `video_conferences` | _(sem COMMENT ON TABLE — significado não documentado)_ | 14 colunas | migration |
@@ -436,7 +437,7 @@
 - `data_lake_exports.status` tem valores ['completed', 'failed', 'pending', 'processing'] mas nenhum mapa de transições foi encontrado no código — a ordem permitida (ex.: pago → cancelado?) não está declarada.
 - `parked_calls.status` tem valores ['abandoned', 'expired', 'parked', 'retrieved'] mas nenhum mapa de transições foi encontrado no código — a ordem permitida (ex.: pago → cancelado?) não está declarada.
 - `migration_status.status` é uma coluna de status sem enum/CHECK — os valores válidos e as transições permitidas não estão no banco.
-- 167/169 tabelas sem `COMMENT ON TABLE` — o significado de negócio não está no schema: `entity_versions`, `schema_migrations`, `migration_rollbacks`, `contacts`, `call_records`, `queue_items`, `agents`, `call_sessions`, `call_transcriptions`, `call_analyses`, `call_summaries`, `call_alerts` …
+- 167/170 tabelas sem `COMMENT ON TABLE` — o significado de negócio não está no schema: `entity_versions`, `schema_migrations`, `migration_rollbacks`, `contacts`, `call_records`, `queue_items`, `agents`, `call_sessions`, `call_transcriptions`, `call_analyses`, `call_summaries`, `call_alerts` …
 - Há tabelas usadas no código sem migration no repo — o schema real pode ter sido alterado pelo painel.
 
 ## Regras manuais presentes

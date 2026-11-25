@@ -1,15 +1,15 @@
 {
  "meta": {
-  "sha": "db63479320a2b246c9c3c4e55036b38232139799",
+  "sha": "960c999b2b8f9dcc07d6222640bef91bec214f8a",
   "branch": "main",
   "remote": "https://github.com/adm01-debug/Hello_V3",
-  "generated_at": "2026-11-25 11:16 UTC",
-  "files_total": 1794,
-  "code_files": 1591,
-  "code_lines": 195299
+  "generated_at": "2026-11-25 11:22 UTC",
+  "files_total": 1797,
+  "code_files": 1594,
+  "code_lines": 195601
  },
  "version": "1.3.2",
- "facts_hash": "cf95451745a023c6",
+ "facts_hash": "7d7b9101bd29526d",
  "stack": {
   "frameworks": [
    "React + Vite",
@@ -160,9 +160,9 @@
   ],
   "package_manager": "bun",
   "languages": {
-   ".ts": 657,
-   ".tsx": 652,
-   ".sql": 246,
+   ".ts": 658,
+   ".tsx": 653,
+   ".sql": 247,
    ".mjs": 29,
    ".py": 5,
    ".js": 2
@@ -13946,6 +13946,98 @@
     "comment": "",
     "origin": "migration"
    },
+   "user_preferences": {
+    "columns": [
+     {
+      "name": "id",
+      "type": "UUID PRIMARY KEY DEFAULT gen_random_uuid()",
+      "fk": "",
+      "generated": "",
+      "src": "supabase/migrations/20261123120000_user_preferences.sql"
+     },
+     {
+      "name": "user_id",
+      "type": "UUID NOT NULL REFERENCES auth.users(id) ON DELETE CASCADE UNIQUE",
+      "fk": "users.id ON DELETE CASCADE",
+      "generated": "",
+      "src": "supabase/migrations/20261123120000_user_preferences.sql"
+     },
+     {
+      "name": "notify_incoming_calls",
+      "type": "BOOLEAN NOT NULL DEFAULT true",
+      "fk": "",
+      "generated": "",
+      "src": "supabase/migrations/20261123120000_user_preferences.sql"
+     },
+     {
+      "name": "notify_missed_calls",
+      "type": "BOOLEAN NOT NULL DEFAULT true",
+      "fk": "",
+      "generated": "",
+      "src": "supabase/migrations/20261123120000_user_preferences.sql"
+     },
+     {
+      "name": "notify_voicemail",
+      "type": "BOOLEAN NOT NULL DEFAULT true",
+      "fk": "",
+      "generated": "",
+      "src": "supabase/migrations/20261123120000_user_preferences.sql"
+     },
+     {
+      "name": "notify_sound",
+      "type": "BOOLEAN NOT NULL DEFAULT true",
+      "fk": "",
+      "generated": "",
+      "src": "supabase/migrations/20261123120000_user_preferences.sql"
+     },
+     {
+      "name": "audio_echo_cancellation",
+      "type": "BOOLEAN NOT NULL DEFAULT true",
+      "fk": "",
+      "generated": "",
+      "src": "supabase/migrations/20261123120000_user_preferences.sql"
+     },
+     {
+      "name": "audio_noise_suppression",
+      "type": "BOOLEAN NOT NULL DEFAULT true",
+      "fk": "",
+      "generated": "",
+      "src": "supabase/migrations/20261123120000_user_preferences.sql"
+     },
+     {
+      "name": "audio_auto_gain_control",
+      "type": "BOOLEAN NOT NULL DEFAULT true",
+      "fk": "",
+      "generated": "",
+      "src": "supabase/migrations/20261123120000_user_preferences.sql"
+     },
+     {
+      "name": "beta_program",
+      "type": "BOOLEAN NOT NULL DEFAULT false",
+      "fk": "",
+      "generated": "",
+      "src": "supabase/migrations/20261123120000_user_preferences.sql"
+     },
+     {
+      "name": "created_at",
+      "type": "TIMESTAMP WITH TIME ZONE DEFAULT now()",
+      "fk": "",
+      "generated": "",
+      "src": "supabase/migrations/20261123120000_user_preferences.sql"
+     },
+     {
+      "name": "updated_at",
+      "type": "TIMESTAMP WITH TIME ZONE DEFAULT now()",
+      "fk": "",
+      "generated": "",
+      "src": "supabase/migrations/20261123120000_user_preferences.sql"
+     }
+    ],
+    "constraints": [],
+    "src": "supabase/migrations/20261123120000_user_preferences.sql",
+    "comment": "Preferências de notificação e áudio por usuário (E076/E077)",
+    "origin": "migration"
+   },
    "geo_access_logs": {
     "columns": [
      {
@@ -19664,6 +19756,36 @@
     "using": "bucket_id = 'avatars' AND (storage.foldername(name))[1] = (SELECT auth.uid())::text",
     "check": "",
     "src": "supabase/migrations/20261123020000_add_avatar_storage.sql"
+   },
+   {
+    "name": "Users can view own preferences",
+    "table": "user_preferences",
+    "cmd": "SELECT",
+    "roles": "authenticated",
+    "mode": "permissive",
+    "using": "auth.uid() = user_id",
+    "check": "",
+    "src": "supabase/migrations/20261123120000_user_preferences.sql"
+   },
+   {
+    "name": "Users can insert own preferences",
+    "table": "user_preferences",
+    "cmd": "INSERT",
+    "roles": "authenticated",
+    "mode": "permissive",
+    "using": "",
+    "check": "auth.uid() = user_id",
+    "src": "supabase/migrations/20261123120000_user_preferences.sql"
+   },
+   {
+    "name": "Users can update own preferences",
+    "table": "user_preferences",
+    "cmd": "UPDATE",
+    "roles": "authenticated",
+    "mode": "permissive",
+    "using": "auth.uid() = user_id",
+    "check": "auth.uid() = user_id",
+    "src": "supabase/migrations/20261123120000_user_preferences.sql"
    }
   ],
   "triggers": [
@@ -20728,6 +20850,15 @@
     "condition": "NEW.ended_at IS DISTINCT FROM OLD.ended_at",
     "each": "row",
     "src": "supabase/migrations/20261123030000_hold_time_from_events.sql"
+   },
+   {
+    "name": "set_user_preferences_updated_at",
+    "when": "BEFORE UPDATE",
+    "table": "user_preferences",
+    "function": "update_updated_at_column",
+    "condition": "",
+    "each": "row",
+    "src": "supabase/migrations/20261123120000_user_preferences.sql"
    }
   ],
   "functions": {
@@ -25805,6 +25936,7 @@
    "supabase/migrations/20261123010000_fix_user_delete_cascade.sql",
    "supabase/migrations/20261123020000_add_avatar_storage.sql",
    "supabase/migrations/20261123030000_hold_time_from_events.sql",
+   "supabase/migrations/20261123120000_user_preferences.sql",
    "supabase/tests/role_source_of_truth_test.sql",
    "src/integrations/supabase/types.ts"
   ],
@@ -25968,7 +26100,8 @@
    "ring_group_members": "enabled",
    "queue_audio_prompts": "enabled",
    "call_park_orbits": "enabled",
-   "parked_calls": "enabled"
+   "parked_calls": "enabled",
+   "user_preferences": "enabled"
   },
   "grants": [
    {
@@ -28026,6 +28159,14 @@
     "objkind": "function",
     "roles": "authenticated, service_role",
     "src": "supabase/migrations/20261123000200_fix_has_role_oracle_and_debug_tables.sql"
+   },
+   {
+    "kind": "grant",
+    "privs": "select, insert, update, delete",
+    "object": "user_preferences",
+    "objkind": "table",
+    "roles": "authenticated",
+    "src": "supabase/migrations/20261123120000_user_preferences.sql"
    }
   ],
   "raises": [
@@ -28212,7 +28353,8 @@
    "function:notify_bloat_hotspots": "Executa check_table_bloat, notifica admins com debounce de 7 dias por tabela. Chamada semanalmente via pg_cron.",
    "column:webhook_flush_metrics.endpoint_hash": "SHA-256 (12 primeiros hex) da URL do webhook, para drill-down sem expor a URL bruta.",
    "column:user_profiles.role": "Espelho de exibicao. NAO use para autorizacao: use public.user_roles.role via is_admin_or_supervisor().",
-   "column:user_profiles.avatar_url": "Caminho do objeto no bucket avatars (<user_id>/<timestamp>.<ext>), nao URL publica. Render usa createSignedUrl."
+   "column:user_profiles.avatar_url": "Caminho do objeto no bucket avatars (<user_id>/<timestamp>.<ext>), nao URL publica. Render usa createSignedUrl.",
+   "table:user_preferences": "Preferências de notificação e áudio por usuário (E076/E077)"
   },
   "types_file": "src/integrations/supabase/types.ts"
  },
@@ -29373,7 +29515,9 @@
      "bitrix_users",
      "crm_sync_queue",
      "system_settings",
-     "user_profiles"
+     "user_preferences",
+     "user_profiles",
+     "user_roles"
     ],
     "invokes_transitive": [
      "bitrix-api"
@@ -29381,7 +29525,7 @@
     "rpc_transitive": [
      "log_audit_event"
     ],
-    "deps_count": 31
+    "deps_count": 36
    },
    {
     "path": "",
@@ -32883,6 +33027,10 @@
     "file": "src/hooks/useNetworkMonitor.ts"
    },
    {
+    "name": "useNotificationPreferences",
+    "file": "src/hooks/useNotificationPreferences.ts"
+   },
+   {
     "name": "useNotifications",
     "file": "src/hooks/useNotifications.ts"
    },
@@ -33549,7 +33697,7 @@
   {
    "module": "src/components",
    "files": 376,
-   "lines": 44761,
+   "lines": 44793,
    "tables": [
     "accounts",
     "agent_goals",
@@ -33809,8 +33957,8 @@
   },
   {
    "module": "src/hooks",
-   "files": 339,
-   "lines": 43041,
+   "files": 341,
+   "lines": 43184,
    "tables": [
     "accounts",
     "active_sessions",
@@ -33924,6 +34072,7 @@
     "user_ip_restrictions",
     "user_mfa_settings",
     "user_passkeys",
+    "user_preferences",
     "user_profiles",
     "user_roles",
     "voice_prints",
@@ -34093,7 +34242,7 @@
   {
    "module": "src/integrations",
    "files": 3,
-   "lines": 8179,
+   "lines": 8224,
    "tables": [],
    "exports": [
     "index.ts: lovable",
@@ -34289,7 +34438,7 @@
   {
    "module": "src/pages",
    "files": 148,
-   "lines": 22648,
+   "lines": 22682,
    "tables": [
     "audit_logs",
     "battle_card_triggers",
@@ -34754,8 +34903,8 @@
   },
   {
    "module": "supabase/migrations",
-   "files": 243,
-   "lines": 15767,
+   "files": 244,
+   "lines": 15815,
    "tables": [],
    "exports": [],
    "docs": [],
@@ -36562,6 +36711,14 @@
      "src/hooks/useWebAuthn.ts"
     ]
    },
+   "user_preferences": {
+    "select": [
+     "src/hooks/useNotificationPreferences.ts"
+    ],
+    "upsert": [
+     "src/hooks/useNotificationPreferences.ts"
+    ]
+   },
    "user_profiles": {
     "update": [
      "src/hooks/useAvatar.ts",
@@ -37444,6 +37601,9 @@
     "id",
     "last_used_at",
     "public_key",
+    "user_id"
+   ],
+   "user_preferences": [
     "user_id"
    ],
    "user_profiles": [
@@ -38850,7 +39010,8 @@
     "email_verification_tokens",
     "user_passkeys",
     "webauthn_challenges",
-    "voice_prints"
+    "voice_prints",
+    "user_preferences"
    ],
    "call_sessions": [
     "call_transcriptions",
@@ -41512,6 +41673,14 @@
    {
     "file": "src/hooks/useMultiDeviceRing.ts",
     "msg": "Erro ao adicionar dispositivo"
+   },
+   {
+    "file": "src/hooks/useNotificationPreferences.ts",
+    "msg": "Erro ao salvar preferências"
+   },
+   {
+    "file": "src/hooks/useNotificationPreferences.ts",
+    "msg": "Not authenticated"
    },
    {
     "file": "src/hooks/usePredictiveDialer.ts",
@@ -50314,6 +50483,66 @@
     "table": "parked_calls",
     "column": "(tabela)",
     "rule": "CONSTRAINT parked_calls_retrieved_consistency CHECK ( (status = 'parked' AND retrieved_at IS NULL) OR (status <> 'parked') )"
+   },
+   {
+    "table": "user_preferences",
+    "column": "id",
+    "rule": "PK; default gen_random_uuid()"
+   },
+   {
+    "table": "user_preferences",
+    "column": "user_id",
+    "rule": "obrigatório; único; FK → users.id ON DELETE CASCADE"
+   },
+   {
+    "table": "user_preferences",
+    "column": "notify_incoming_calls",
+    "rule": "default true"
+   },
+   {
+    "table": "user_preferences",
+    "column": "notify_missed_calls",
+    "rule": "default true"
+   },
+   {
+    "table": "user_preferences",
+    "column": "notify_voicemail",
+    "rule": "default true"
+   },
+   {
+    "table": "user_preferences",
+    "column": "notify_sound",
+    "rule": "default true"
+   },
+   {
+    "table": "user_preferences",
+    "column": "audio_echo_cancellation",
+    "rule": "default true"
+   },
+   {
+    "table": "user_preferences",
+    "column": "audio_noise_suppression",
+    "rule": "default true"
+   },
+   {
+    "table": "user_preferences",
+    "column": "audio_auto_gain_control",
+    "rule": "default true"
+   },
+   {
+    "table": "user_preferences",
+    "column": "beta_program",
+    "rule": "default false"
+   },
+   {
+    "table": "user_preferences",
+    "column": "created_at",
+    "rule": "default now()"
+   },
+   {
+    "table": "user_preferences",
+    "column": "updated_at",
+    "rule": "default now()"
    },
    {
     "table": "geo_access_logs",
@@ -61609,6 +61838,22 @@
     "name": "reacts to online/offline window events"
    },
    {
+    "file": "src/hooks/__tests__/useNotificationPreferences.test.tsx",
+    "name": "useNotificationPreferences"
+   },
+   {
+    "file": "src/hooks/__tests__/useNotificationPreferences.test.tsx",
+    "name": "retorna DEFAULT_PREFERENCES quando nao ha registro"
+   },
+   {
+    "file": "src/hooks/__tests__/useNotificationPreferences.test.tsx",
+    "name": "carrega preferencias do banco"
+   },
+   {
+    "file": "src/hooks/__tests__/useNotificationPreferences.test.tsx",
+    "name": "upsert no salvar usa onConflict user_id"
+   },
+   {
     "file": "src/hooks/__tests__/useNotifications.coverage.test.tsx",
     "name": "useNotifications"
    },
@@ -72192,6 +72437,22 @@
     "call": "invoke("
    },
    {
+    "file": "src/hooks/useNotificationPreferences.ts",
+    "call": "notify_incoming_calls"
+   },
+   {
+    "file": "src/hooks/useNotificationPreferences.ts",
+    "call": "notify_missed_calls"
+   },
+   {
+    "file": "src/hooks/useNotificationPreferences.ts",
+    "call": "notify_sound"
+   },
+   {
+    "file": "src/hooks/useNotificationPreferences.ts",
+    "call": "notify_voicemail"
+   },
+   {
     "file": "src/hooks/usePredictivePacing.ts",
     "call": "invoke("
    },
@@ -72313,6 +72574,14 @@
    },
    {
     "file": "src/integrations/supabase/types.ts",
+    "call": "notify_incoming_calls"
+   },
+   {
+    "file": "src/integrations/supabase/types.ts",
+    "call": "notify_missed_calls"
+   },
+   {
+    "file": "src/integrations/supabase/types.ts",
     "call": "notify_on_block"
    },
    {
@@ -72322,6 +72591,14 @@
    {
     "file": "src/integrations/supabase/types.ts",
     "call": "notify_on_warning"
+   },
+   {
+    "file": "src/integrations/supabase/types.ts",
+    "call": "notify_sound"
+   },
+   {
+    "file": "src/integrations/supabase/types.ts",
+    "call": "notify_voicemail"
    },
    {
     "file": "src/lib/pendingCallWrites.ts",
@@ -72382,6 +72659,22 @@
    {
     "file": "src/pages/PasswordResetApproval.tsx",
     "call": "invoke("
+   },
+   {
+    "file": "src/pages/Settings.tsx",
+    "call": "notify_incoming_calls"
+   },
+   {
+    "file": "src/pages/Settings.tsx",
+    "call": "notify_missed_calls"
+   },
+   {
+    "file": "src/pages/Settings.tsx",
+    "call": "notify_sound"
+   },
+   {
+    "file": "src/pages/Settings.tsx",
+    "call": "notify_voicemail"
    },
    {
     "file": "src/pages/admin/SloDashboard.tsx",
@@ -72542,6 +72835,22 @@
    {
     "file": "supabase/migrations/20261122270000_notification_recipients_use_user_roles.sql",
     "call": "notify_webhook_failure_spike"
+   },
+   {
+    "file": "supabase/migrations/20261123120000_user_preferences.sql",
+    "call": "notify_incoming_calls"
+   },
+   {
+    "file": "supabase/migrations/20261123120000_user_preferences.sql",
+    "call": "notify_missed_calls"
+   },
+   {
+    "file": "supabase/migrations/20261123120000_user_preferences.sql",
+    "call": "notify_sound"
+   },
+   {
+    "file": "supabase/migrations/20261123120000_user_preferences.sql",
+    "call": "notify_voicemail"
    }
   ],
   "db_policies": [
@@ -77834,6 +78143,36 @@
     "using": "bucket_id = 'avatars' AND (storage.foldername(name))[1] = (SELECT auth.uid())::text",
     "check": "",
     "src": "supabase/migrations/20261123020000_add_avatar_storage.sql"
+   },
+   {
+    "name": "Users can view own preferences",
+    "table": "user_preferences",
+    "cmd": "SELECT",
+    "roles": "authenticated",
+    "mode": "permissive",
+    "using": "auth.uid() = user_id",
+    "check": "",
+    "src": "supabase/migrations/20261123120000_user_preferences.sql"
+   },
+   {
+    "name": "Users can insert own preferences",
+    "table": "user_preferences",
+    "cmd": "INSERT",
+    "roles": "authenticated",
+    "mode": "permissive",
+    "using": "",
+    "check": "auth.uid() = user_id",
+    "src": "supabase/migrations/20261123120000_user_preferences.sql"
+   },
+   {
+    "name": "Users can update own preferences",
+    "table": "user_preferences",
+    "cmd": "UPDATE",
+    "roles": "authenticated",
+    "mode": "permissive",
+    "using": "auth.uid() = user_id",
+    "check": "auth.uid() = user_id",
+    "src": "supabase/migrations/20261123120000_user_preferences.sql"
    }
   ],
   "db_triggers": [
@@ -78898,6 +79237,15 @@
     "condition": "NEW.ended_at IS DISTINCT FROM OLD.ended_at",
     "each": "row",
     "src": "supabase/migrations/20261123030000_hold_time_from_events.sql"
+   },
+   {
+    "name": "set_user_preferences_updated_at",
+    "when": "BEFORE UPDATE",
+    "table": "user_preferences",
+    "function": "update_updated_at_column",
+    "condition": "",
+    "each": "row",
+    "src": "supabase/migrations/20261123120000_user_preferences.sql"
    }
   ],
   "db_functions": {
@@ -84824,6 +85172,19 @@
      "public: auth.uid() = user_id"
     ]
    },
+   "user_preferences": {
+    "rls": "enabled",
+    "SELECT": [
+     "authenticated: auth.uid() = user_id"
+    ],
+    "INSERT": [
+     "authenticated: auth.uid() = user_id"
+    ],
+    "UPDATE": [
+     "authenticated: auth.uid() = user_id"
+    ],
+    "DELETE": []
+   },
    "user_profiles": {
     "rls": "enabled",
     "SELECT": [
@@ -87401,6 +87762,14 @@
     "objkind": "function",
     "roles": "authenticated, service_role",
     "src": "supabase/migrations/20261123000200_fix_has_role_oracle_and_debug_tables.sql"
+   },
+   {
+    "kind": "grant",
+    "privs": "select, insert, update, delete",
+    "object": "user_preferences",
+    "objkind": "table",
+    "roles": "authenticated",
+    "src": "supabase/migrations/20261123120000_user_preferences.sql"
    }
   ],
   "guards": [
@@ -88164,6 +88533,10 @@
     "updated_at"
    ],
    "parked_calls": [
+    "created_at",
+    "updated_at"
+   ],
+   "user_preferences": [
     "created_at",
     "updated_at"
    ],
@@ -89115,7 +89488,7 @@
    "`data_lake_exports.status` tem valores ['completed', 'failed', 'pending', 'processing'] mas nenhum mapa de transições foi encontrado no código — a ordem permitida (ex.: pago → cancelado?) não está declarada.",
    "`parked_calls.status` tem valores ['abandoned', 'expired', 'parked', 'retrieved'] mas nenhum mapa de transições foi encontrado no código — a ordem permitida (ex.: pago → cancelado?) não está declarada.",
    "`migration_status.status` é uma coluna de status sem enum/CHECK — os valores válidos e as transições permitidas não estão no banco.",
-   "167/169 tabelas sem `COMMENT ON TABLE` — o significado de negócio não está no schema: `entity_versions`, `schema_migrations`, `migration_rollbacks`, `contacts`, `call_records`, `queue_items`, `agents`, `call_sessions`, `call_transcriptions`, `call_analyses`, `call_summaries`, `call_alerts` …",
+   "167/170 tabelas sem `COMMENT ON TABLE` — o significado de negócio não está no schema: `entity_versions`, `schema_migrations`, `migration_rollbacks`, `contacts`, `call_records`, `queue_items`, `agents`, `call_sessions`, `call_transcriptions`, `call_analyses`, `call_summaries`, `call_alerts` …",
    "Há tabelas usadas no código sem migration no repo — o schema real pode ter sido alterado pelo painel."
   ]
  },
@@ -92152,7 +92525,7 @@
   },
   "src/components/calls/WebRTCCall.tsx": {
    "path": "src/components/calls/WebRTCCall.tsx",
-   "lines": 372,
+   "lines": 386,
    "exports": [
     "function WebRTCCall"
    ],
@@ -92337,7 +92710,7 @@
   },
   "src/components/calls/__tests__/WebRTCCall.test.tsx": {
    "path": "src/components/calls/__tests__/WebRTCCall.test.tsx",
-   "lines": 271,
+   "lines": 289,
    "is_test": true,
    "tests": [
     "WebRTCCall",
@@ -92347,6 +92720,12 @@
     "aguarda grace period no ",
     "faz restartIce com backoff exponencial em ICE ",
     "reseta indicador de reconexão quando ICE retorna a "
+   ],
+   "side_effects": [
+    "notify_incoming_calls",
+    "notify_missed_calls",
+    "notify_sound",
+    "notify_voicemail"
    ]
   },
   "src/components/calls/live-transcription/TranscriptList.tsx": {
@@ -100838,6 +101217,43 @@
     "useNetworkMonitor"
    ]
   },
+  "src/hooks/useNotificationPreferences.ts": {
+   "path": "src/hooks/useNotificationPreferences.ts",
+   "lines": 85,
+   "exports": [
+    "interface NotificationPreferences",
+    "const DEFAULT_PREFERENCES",
+    "function useNotificationPreferences"
+   ],
+   "tables": [
+    {
+     "table": "user_preferences",
+     "op": "select"
+    },
+    {
+     "table": "user_preferences",
+     "op": "upsert"
+    }
+   ],
+   "table_cols": {
+    "user_preferences": [
+     "user_id"
+    ]
+   },
+   "errors": [
+    "Erro ao salvar preferências",
+    "Not authenticated"
+   ],
+   "hooks": [
+    "useNotificationPreferences"
+   ],
+   "side_effects": [
+    "notify_incoming_calls",
+    "notify_missed_calls",
+    "notify_sound",
+    "notify_voicemail"
+   ]
+  },
   "src/hooks/useNotifications.ts": {
    "path": "src/hooks/useNotifications.ts",
    "lines": 220,
@@ -105487,6 +105903,23 @@
     "reacts to online/offline window events"
    ]
   },
+  "src/hooks/__tests__/useNotificationPreferences.test.tsx": {
+   "path": "src/hooks/__tests__/useNotificationPreferences.test.tsx",
+   "lines": 58,
+   "is_test": true,
+   "tests": [
+    "useNotificationPreferences",
+    "retorna DEFAULT_PREFERENCES quando nao ha registro",
+    "carrega preferencias do banco",
+    "upsert no salvar usa onConflict user_id"
+   ],
+   "side_effects": [
+    "notify_incoming_calls",
+    "notify_missed_calls",
+    "notify_sound",
+    "notify_voicemail"
+   ]
+  },
   "src/hooks/__tests__/useNotifications.coverage.test.tsx": {
    "path": "src/hooks/__tests__/useNotifications.coverage.test.tsx",
    "lines": 121,
@@ -107036,7 +107469,7 @@
   },
   "src/integrations/supabase/types.ts": {
    "path": "src/integrations/supabase/types.ts",
-   "lines": 8116,
+   "lines": 8161,
    "exports": [
     "type Json",
     "type Database",
@@ -107050,9 +107483,13 @@
    "side_effects": [
     "notify_bloat_hotspots",
     "notify_idle_indexes",
+    "notify_incoming_calls",
+    "notify_missed_calls",
     "notify_on_block",
     "notify_on_critical",
-    "notify_on_warning"
+    "notify_on_warning",
+    "notify_sound",
+    "notify_voicemail"
    ]
   },
   "src/lib/a11y-clickable.ts": {
@@ -113465,13 +113902,19 @@
   },
   "src/pages/Settings.tsx": {
    "path": "src/pages/Settings.tsx",
-   "lines": 381,
+   "lines": 415,
    "exports": [
     "default Settings"
    ],
    "errors": [
     "Teste de microfone",
     "Teste de áudio"
+   ],
+   "side_effects": [
+    "notify_incoming_calls",
+    "notify_missed_calls",
+    "notify_sound",
+    "notify_voicemail"
    ]
   },
   "src/pages/ShiftSwapSuggestions.tsx": {
@@ -123746,6 +124189,16 @@
    "path": "supabase/migrations/20261123030000_hold_time_from_events.sql",
    "lines": 38
   },
+  "supabase/migrations/20261123120000_user_preferences.sql": {
+   "path": "supabase/migrations/20261123120000_user_preferences.sql",
+   "lines": 48,
+   "side_effects": [
+    "notify_incoming_calls",
+    "notify_missed_calls",
+    "notify_sound",
+    "notify_voicemail"
+   ]
+  },
   "supabase/tests/role_source_of_truth_test.sql": {
    "path": "supabase/tests/role_source_of_truth_test.sql",
    "lines": 72,
@@ -123922,10 +124375,26 @@
   }
  },
  "git": {
-  "sha": "db63479320a2b246c9c3c4e55036b38232139799",
+  "sha": "960c999b2b8f9dcc07d6222640bef91bec214f8a",
   "branch": "main",
   "remote": "https://github.com/adm01-debug/Hello_V3",
   "commits": [
+   {
+    "sha": "960c999",
+    "date": "2026-11-25",
+    "author": "adm01-debug",
+    "subject": "feat: preferencias de notificacao e audio persistem (E076) (#171)",
+    "files": [
+     "docs/qa/05-PROGRESSO.md",
+     "src/components/calls/WebRTCCall.tsx",
+     "src/components/calls/__tests__/WebRTCCall.test.tsx",
+     "src/hooks/__tests__/useNotificationPreferences.test.tsx",
+     "src/hooks/useNotificationPreferences.ts",
+     "src/integrations/supabase/types.ts",
+     "src/pages/Settings.tsx",
+     "supabase/migrations/20261123120000_user_preferences.sql"
+    ]
+   },
    {
     "sha": "db63479",
     "date": "2026-11-25",
@@ -124367,17 +124836,6 @@
      "src/hooks/useContacts.ts",
      "src/index.css"
     ]
-   },
-   {
-    "sha": "43fa2c8",
-    "date": "2026-11-24",
-    "author": "adm01-debug",
-    "subject": "feat: guard de CI contra N+1 em edge function (etapa 250) (#282)",
-    "files": [
-     "docs/estado/funcionalidades-planejadas.md",
-     "docs/qa/05-PROGRESSO.md",
-     "scripts/audit-edge-functions.ts"
-    ]
    }
   ],
   "hot_files": [
@@ -124434,10 +124892,6 @@
     2
    ],
    [
-    "scripts/audit-edge-functions.ts",
-    2
-   ],
-   [
     "src/hooks/useAuth.ts",
     2
    ],
@@ -124446,19 +124900,23 @@
     2
    ],
    [
-    "docs/estado/funcionalidades-planejadas.md",
-    2
-   ],
-   [
-    ".github/workflows/migrations.yml",
+    "src/components/calls/WebRTCCall.tsx",
     1
    ],
    [
-    "scripts/guard-supabase-error.mjs",
+    "src/components/calls/__tests__/WebRTCCall.test.tsx",
     1
    ],
    [
-    "src/components/calls/softphone/DialpadTab.tsx",
+    "src/hooks/__tests__/useNotificationPreferences.test.tsx",
+    1
+   ],
+   [
+    "src/hooks/useNotificationPreferences.ts",
+    1
+   ],
+   [
+    "src/integrations/supabase/types.ts",
     1
    ]
   ]

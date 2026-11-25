@@ -4267,6 +4267,7 @@
     "useMemo",
     "useMutation",
     "useNavigate",
+    "useNotificationPreferences",
     "usePageTitle",
     "useProfile",
     "useQuery",
@@ -4283,6 +4284,7 @@
     "useAuthState",
     "useAvatar",
     "useBitrix",
+    "useNotificationPreferences",
     "usePageTitle",
     "useProfile"
    ],
@@ -4292,6 +4294,7 @@
     "bitrix_users",
     "crm_sync_queue",
     "system_settings",
+    "user_preferences",
     "user_profiles",
     "user_roles"
    ],
@@ -4306,7 +4309,7 @@
    ],
    "flags": [],
    "papeis": [],
-   "arquivos_puxados": 35
+   "arquivos_puxados": 36
   },
   {
    "protegida": false,

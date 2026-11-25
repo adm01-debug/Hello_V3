@@ -1,6 +1,6 @@
 # 07 · REGRAS DE NEGÓCIO
 
-> Gerado automaticamente por AI Context Sync v1.3.2 · commit `db63479320` · branch `main` · 2026-11-25 11:16 UTC
+> Gerado automaticamente por AI Context Sync v1.3.2 · commit `960c999b2b` · branch `main` · 2026-11-25 11:22 UTC
 > Não edite à mão — regras humanas vão em `manual/`.
 
 ## A. Regras escritas por humanos (`manual/` — prioridade máxima, nunca sobrescrito)
@@ -311,7 +311,7 @@ _Nenhum arquivo em `manual/`. Copie `manual/TEMPLATE-regras-de-negocio.md` para 
 | `playlist_items` | Manage items of own playlists | ALL | public | permissive | `EXISTS (SELECT 1 FROM public.call_playlists p WHERE p.id = playlist_id AND (p.owner_agent_name = get_user_agent_name() OR is_admin_or_supervisor()))` | `EXISTS (SELECT 1 FROM public.call_playlists p WHERE p.id = playlist_id AND (p.owner_agent_name = get_user_agent_name() OR is_admin_or_supervisor()))` |
 | `deals` | Authenticated create deals | INSERT | public | permissive |  | `auth.uid() IS NOT NULL AND ( is_admin_or_supervisor() OR owner_agent_name IS NULL OR owner_agent_name = get_user_agent_name() )` |
 | `cadence_enrollments` | Authenticated insert enrollments | INSERT | public | permissive |  | `auth.uid() IS NOT NULL AND (is_admin_or_supervisor() OR agent_name = get_user_agent_name())` |
-| … +229 linhas — lista completa em `context.json` | | | | | | |
+| … +232 linhas — lista completa em `context.json` | | | | | | |
 
 ## C. Restrições de dados (obrigatório / único / default / CHECK / FK / calculada)
 
@@ -617,7 +617,7 @@ _Nenhum arquivo em `manual/`. Copie `manual/TEMPLATE-regras-de-negocio.md` para 
 | `user_roles` | `is_active` | default true |
 | `user_roles` | `created_at` | default now() |
 | `permissions` | `id` | PK; default gen_random_uuid() |
-| … +1047 linhas — lista completa em `context.json` | | |
+| … +1059 linhas — lista completa em `context.json` | | |
 
 ## D. Automações no banco (triggers e funções — regras que rodam sozinhas)
 
@@ -741,6 +741,7 @@ _Nenhum arquivo em `manual/`. Copie `manual/TEMPLATE-regras-de-negocio.md` para 
 | trg_validate_parked_call | BEFORE INSERT OR UPDATE | `parked_calls` | `validate_parked_call` |  |
 | trg_sync_profile_role | AFTER INSERT OR UPDATE OR DELETE | `user_roles` | `sync_profile_role_from_user_roles` |  |
 | trg_hold_events_recalc_hold_time | AFTER UPDATE OF ENDED_AT | `hold_events` | `recalc_hold_time_from_events` | `NEW.ended_at IS DISTINCT FROM OLD.ended_at` |
+| set_user_preferences_updated_at | BEFORE UPDATE | `user_preferences` | `update_updated_at_column` |  |
 
 Erros lançados por funções SQL (`RAISE EXCEPTION` = regra de negócio no banco):
 
@@ -2576,6 +2577,8 @@ _nenhum item encontrado_
 | callSessionId ausente | `src/hooks/useMeetingSummary.ts` |
 | Chamada bloqueada por compliance | `src/hooks/useMultiChannelCall.ts` |
 | Erro ao adicionar dispositivo | `src/hooks/useMultiDeviceRing.ts` |
+| Erro ao salvar preferências | `src/hooks/useNotificationPreferences.ts` |
+| Not authenticated | `src/hooks/useNotificationPreferences.ts` |
 | Contato ${queueItem.name \|\| queueItem.phone} pulado | `src/hooks/usePredictiveDialer.ts` |
 | Erro ao adicionar à fila | `src/hooks/usePredictiveDialer.ts` |
 | Erro ao carregar campanhas | `src/hooks/usePredictiveDialer.ts` |
@@ -2604,9 +2607,7 @@ _nenhum item encontrado_
 | ⚠️ Alerta de Tempo em Espera | `src/hooks/useRealtimeHoldAlerts.ts` |
 | Erro ao analisar sentimento | `src/hooks/useRecordings.ts` |
 | Erro ao baixar gravação | `src/hooks/useRecordings.ts` |
-| Erro ao carregar gravações | `src/hooks/useRecordings.ts` |
-| Erro ao carregar áudio | `src/hooks/useRecordings.ts` |
-| … +286 linhas — lista completa em `context.json` | |
+| … +288 linhas — lista completa em `context.json` | |
 
 ## J. Controle de acesso no código (checagens de perfil/permissão)
 
@@ -2655,7 +2656,7 @@ _nenhum item encontrado_
 | `admin` | `supabase/functions/data-lake-flush/index.ts` |
 | `admin` | `supabase/migrations/20261123000200_fix_has_role_oracle_and_debug_tables.sql` |
 
-## K. Testes como especificação (3578 testes em 389 arquivos — nomes completos em `context.json`)
+## K. Testes como especificação (3582 testes em 390 arquivos — nomes completos em `context.json`)
 
 | Arquivo | Testes | Exemplos do que o sistema DEVE fazer |
 |---|---|---|
@@ -2952,14 +2953,14 @@ _nenhum item encontrado_
 | `src/hooks/__tests__/useDeals.test.ts` | 4 | useDeals · loads deals · createDeal returns true on success · computeHealth invokes edge function |
 | `src/hooks/__tests__/useHoldMetrics.coverage.test.tsx` | 4 | useHoldMetrics · aggregates 7d metrics · handles 30d and 90d ranges with empty data · handles 90d range |
 | `src/hooks/__tests__/useIPValidation.coverage.test.tsx` | 4 | useIPValidation · returns data on success · handles supabase error branch · handles thrown exception branch |
+| `src/hooks/__tests__/useNotificationPreferences.test.tsx` | 4 | useNotificationPreferences · retorna DEFAULT_PREFERENCES quando nao ha registro · carrega preferencias do banco · upsert no salvar usa onConflict user_id |
 | `src/hooks/__tests__/usePageTitle.coverage.test.tsx` | 4 | usePageTitle · sets document title with app name suffix · resets title on unmount · updates title when prop changes |
 | `src/hooks/__tests__/useQualityMetrics.coverage.test.tsx` | 4 | useQualityMetrics / useTrunkUsageMetrics · loads quality metrics · loads trunk usage metrics · propagates errors |
 | `src/hooks/__tests__/useTalkRatio.test.ts` | 4 | useTalkRatio · estado inicial é vazio · analisa com sucesso · captura erro do backend |
 | `src/hooks/__tests__/useTrunkMetrics.coverage.test.tsx` | 4 | useTrunkMetrics · aggregates usage by trunk and by day · returns empty for no data with default days · throws on usage error |
 | `src/hooks/__tests__/useVoipAnomalies.coverage.test.tsx` | 4 | useVoipAnomalies · classifies anomalies (outage/drift/spike) and builds ids · returns empty array when no anomalies present · throws on error |
 | `src/hooks/__tests__/useVoipDiagnosticVoiceQA.coverage.test.tsx` | 4 | useVoipDiagnosticVoiceQA · resolves answer on success (default period) · passes explicit period · throws on error branch |
-| `src/hooks/__tests__/useVoipExecutiveSummary.coverage.test.tsx` | 4 | useVoipExecutiveSummary (coverage) · fetches summary with default period · fetches summary with explicit day period · throws on invoke error |
-| … +89 linhas — lista completa em `context.json` | | |
+| … +90 linhas — lista completa em `context.json` | | |
 
 ## L. Eventos de webhook tratados (contratos com sistemas externos)
 
@@ -3020,6 +3021,10 @@ _nenhum item encontrado_
 | `invoke(` | `src/hooks/useLiveAssist.ts` |
 | `invoke(` | `src/hooks/useLiveTranslation.ts` |
 | `invoke(` | `src/hooks/useMeetingSummary.ts` |
+| `notify_incoming_calls` | `src/hooks/useNotificationPreferences.ts` |
+| `notify_missed_calls` | `src/hooks/useNotificationPreferences.ts` |
+| `notify_sound` | `src/hooks/useNotificationPreferences.ts` |
+| `notify_voicemail` | `src/hooks/useNotificationPreferences.ts` |
 | `invoke(` | `src/hooks/usePredictivePacing.ts` |
 | `invoke(` | `src/hooks/useQueueMetrics.ts` |
 | `notify_on_critical` | `src/hooks/useQueueMetrics.ts` |
@@ -3050,9 +3055,13 @@ _nenhum item encontrado_
 | `invoke(` | `src/hooks/useWebAuthn.ts` |
 | `notify_bloat_hotspots` | `src/integrations/supabase/types.ts` |
 | `notify_idle_indexes` | `src/integrations/supabase/types.ts` |
+| `notify_incoming_calls` | `src/integrations/supabase/types.ts` |
+| `notify_missed_calls` | `src/integrations/supabase/types.ts` |
 | `notify_on_block` | `src/integrations/supabase/types.ts` |
 | `notify_on_critical` | `src/integrations/supabase/types.ts` |
 | `notify_on_warning` | `src/integrations/supabase/types.ts` |
+| `notify_sound` | `src/integrations/supabase/types.ts` |
+| `notify_voicemail` | `src/integrations/supabase/types.ts` |
 | `enqueue(` | `src/lib/pendingCallWrites.ts` |
 | `notifySessionExpired` | `src/lib/session-expiry.ts` |
 | `invoke(` | `src/lib/tracing.ts` |
@@ -3068,6 +3077,10 @@ _nenhum item encontrado_
 | `notify` | `src/pages/Login.tsx` |
 | `invoke(` | `src/pages/ObservabilityDashboard.tsx` |
 | `invoke(` | `src/pages/PasswordResetApproval.tsx` |
+| `notify_incoming_calls` | `src/pages/Settings.tsx` |
+| `notify_missed_calls` | `src/pages/Settings.tsx` |
+| `notify_sound` | `src/pages/Settings.tsx` |
+| `notify_voicemail` | `src/pages/Settings.tsx` |
 | `invoke(` | `src/pages/admin/SloDashboard.tsx` |
 | `notify_on_critical` | `supabase/functions/check-goals/index.ts` |
 | `notify_on_warning` | `supabase/functions/check-goals/index.ts` |
@@ -3108,6 +3121,10 @@ _nenhum item encontrado_
 | `notify_suspicious_index_drop_activity` | `supabase/migrations/20261122270000_notification_recipients_use_user_roles.sql` |
 | `notify_trunk_offline` | `supabase/migrations/20261122270000_notification_recipients_use_user_roles.sql` |
 | `notify_webhook_failure_spike` | `supabase/migrations/20261122270000_notification_recipients_use_user_roles.sql` |
+| `notify_incoming_calls` | `supabase/migrations/20261123120000_user_preferences.sql` |
+| `notify_missed_calls` | `supabase/migrations/20261123120000_user_preferences.sql` |
+| `notify_sound` | `supabase/migrations/20261123120000_user_preferences.sql` |
+| `notify_voicemail` | `supabase/migrations/20261123120000_user_preferences.sql` |
 
 ## N. Regras citadas em comentários do código
 

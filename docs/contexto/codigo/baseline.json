@@ -2,11 +2,16 @@
  "aviso": "GERADO AUTOMATICAMENTE por scripts/ai-context/gerar.mjs — não editar à mão; será sobrescrito.",
  "format_version": 2,
  "git": {
-  "commit": "db63479320a2b246c9c3c4e55036b38232139799",
+  "commit": "960c999b2b8f9dcc07d6222640bef91bec214f8a",
   "branch": "main",
-  "data_commit": "2026-11-25T08:12:20-03:00",
+  "data_commit": "2026-11-25T08:21:20-03:00",
   "remote": "https://github.com/adm01-debug/Hello_V3",
   "ultimos_commits": [
+   {
+    "sha": "960c999",
+    "data": "2026-11-25",
+    "assunto": "feat: preferencias de notificacao e audio persistem (E076) (#171)"
+   },
    {
     "sha": "db63479",
     "data": "2026-11-25",
@@ -126,14 +131,9 @@
     "sha": "daac6b1",
     "data": "2026-11-24",
     "assunto": "infra: trigger de recalculo de hold_time a partir dos hold_events (etapa 069) — DDL em producao, aguarda decisao (#274)"
-   },
-   {
-    "sha": "559db78",
-    "data": "2026-11-24",
-    "assunto": "chore: gate de lint de acessibilidade e escopo do eslint (etapa 264) (#287)"
    }
   ],
-  "arquivos_mudados_7d": 1270,
+  "arquivos_mudados_7d": 1274,
   "pastas_mais_mudadas_30d": [
    {
     "pasta": "covout/lcov-report/hooks",
@@ -141,11 +141,11 @@
    },
    {
     "pasta": "docs/qa/05-PROGRESSO.md",
-    "mudancas": 131
+    "mudancas": 132
    },
    {
     "pasta": "src/hooks/__tests__",
-    "mudancas": 107
+    "mudancas": 108
    },
    {
     "pasta": "covout/lcov-report/lib",
@@ -153,7 +153,7 @@
    },
    {
     "pasta": "src/components/calls",
-    "mudancas": 45
+    "mudancas": 47
    },
    {
     "pasta": "supabase/functions/_shared",
@@ -199,7 +199,7 @@
   "arquivos_mais_mudados_90d": [
    {
     "arquivo": "docs/qa/05-PROGRESSO.md",
-    "mudancas": 131
+    "mudancas": 132
    },
    {
     "arquivo": "docs/estado/funcionalidades-planejadas.md",
@@ -301,7 +301,7 @@
   "autores_30d": [
    {
     "autor": "adm01-debug",
-    "commits": 289
+    "commits": 290
    },
    {
     "autor": "Joaquim Ataides",
@@ -314,21 +314,21 @@
   ]
  },
  "contagens": {
-  "arquivos_total": 1747,
-  "arquivos_codigo": 1344,
-  "linhas_codigo": 179249,
+  "arquivos_total": 1750,
+  "arquivos_codigo": 1346,
+  "linhas_codigo": 179503,
   "rotas": 106,
   "rotas_http_backend": 11,
   "vistas_por_id": 0,
   "itens_menu": 96,
   "modulos": 83,
   "componentes": 453,
-  "hooks": 194,
+  "hooks": 195,
   "edge_functions": 98,
-  "tabelas": 169,
-  "migrations": 243,
+  "tabelas": 170,
+  "migrations": 244,
   "cron_jobs": 11,
-  "testes": 399,
+  "testes": 400,
   "workflows": 4,
   "scripts": 36,
   "docs_md": 121
@@ -484,7 +484,7 @@
   },
   "src/components": {
    "arquivos": 376,
-   "linhas": 44761
+   "linhas": 44793
   },
   "src/contexts": {
    "arquivos": 5,
@@ -495,12 +495,12 @@
    "linhas": 312
   },
   "src/hooks": {
-   "arquivos": 339,
-   "linhas": 43041
+   "arquivos": 341,
+   "linhas": 43184
   },
   "src/integrations": {
    "arquivos": 3,
-   "linhas": 8179
+   "linhas": 8224
   },
   "src/lib": {
    "arquivos": 181,
@@ -512,7 +512,7 @@
   },
   "src/pages": {
    "arquivos": 148,
-   "linhas": 22648
+   "linhas": 22682
   },
   "src/routes": {
    "arquivos": 4,
@@ -546,7 +546,7 @@
  "maiores_arquivos": [
   {
    "arquivo": "src/integrations/supabase/types.ts",
-   "linhas": 8116
+   "linhas": 8161
   },
   {
    "arquivo": "scripts/regras_negocio/generate.py",
@@ -577,6 +577,10 @@
    "linhas": 417
   },
   {
+   "arquivo": "src/pages/Settings.tsx",
+   "linhas": 415
+  },
+  {
    "arquivo": "src/components/queues/QueueFormDialog.tsx",
    "linhas": 396
   },
@@ -589,16 +593,16 @@
    "linhas": 387
   },
   {
+   "arquivo": "src/components/calls/WebRTCCall.tsx",
+   "linhas": 386
+  },
+  {
    "arquivo": "src/pages/marketing/Landing.tsx",
    "linhas": 383
   },
   {
    "arquivo": "src/pages/Inbox.tsx",
    "linhas": 382
-  },
-  {
-   "arquivo": "src/pages/Settings.tsx",
-   "linhas": 381
   },
   {
    "arquivo": "src/components/coaching/CoachingPanel.tsx",
@@ -614,10 +618,6 @@
   },
   {
    "arquivo": "src/components/calls/UnifiedSoftphone.tsx",
-   "linhas": 372
-  },
-  {
-   "arquivo": "src/components/calls/WebRTCCall.tsx",
    "linhas": 372
   },
   {

@@ -1198,10 +1198,11 @@
     "WebRTCCall"
    ],
    "export_default": null,
-   "linhas": 372,
+   "linhas": 386,
    "dominio": "components/calls",
    "hooks_locais": [
     "useAudioOutputDevices",
+    "useNotificationPreferences",
     "useVoipQualityMonitor"
    ],
    "tabelas": [],
@@ -5136,7 +5137,7 @@
    ],
    "tabelas": [],
    "edges": [],
-   "usado_por": 31,
+   "usado_por": 32,
    "orfao": false
   },
   {
@@ -7025,9 +7026,10 @@
     "Settings"
    ],
    "export_default": "Settings",
-   "linhas": 381,
+   "linhas": 415,
    "dominio": "pages",
    "hooks_locais": [
+    "useNotificationPreferences",
     "usePageTitle"
    ],
    "tabelas": [],

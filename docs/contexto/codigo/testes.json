@@ -5,17 +5,17 @@
   "vitest",
   "playwright"
  ],
- "total": 399,
+ "total": 400,
  "por_tipo": {
   "contrato": 1,
   "e2e": 16,
   "pytest": 2,
-  "unit": 379
+  "unit": 380
  },
  "onde_ficam": [
   {
    "padrao": "co-localizado (__tests__)",
-   "arquivos": 372
+   "arquivos": 373
   },
   {
    "padrao": "tests/",
@@ -255,7 +255,7 @@
   {
    "arquivo": "src/components/calls/__tests__/WebRTCCall.test.tsx",
    "tipo": "unit",
-   "linhas": 271,
+   "linhas": 289,
    "testa": [
     "src/components/calls/WebRTCCall.tsx"
    ],
@@ -1311,6 +1311,15 @@
     "src/hooks/useNetworkMonitor.ts"
    ],
    "casos": 5
+  },
+  {
+   "arquivo": "src/hooks/__tests__/useNotificationPreferences.test.tsx",
+   "tipo": "unit",
+   "linhas": 58,
+   "testa": [
+    "src/hooks/useNotificationPreferences.ts"
+   ],
+   "casos": 3
   },
   {
    "arquivo": "src/hooks/__tests__/useNotifications.coverage.test.tsx",
@@ -3775,6 +3784,7 @@
   "src/hooks/useMultiChannelCall.ts": 9,
   "src/hooks/useMultiDeviceRing.ts": 1,
   "src/hooks/useNetworkMonitor.ts": 1,
+  "src/hooks/useNotificationPreferences.ts": 1,
   "src/hooks/useNotifications.ts": 1,
   "src/hooks/useObjectionLibrary.ts": 1,
   "src/hooks/useOptimisticLockConflicts.ts": 2,

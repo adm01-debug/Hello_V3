@@ -1,6 +1,6 @@
 # 10 · ACESSO E SEGURANÇA — quem pode o quê
 
-> Gerado automaticamente por AI Context Sync v1.3.2 · commit `db63479320` · branch `main` · 2026-11-25 11:16 UTC
+> Gerado automaticamente por AI Context Sync v1.3.2 · commit `960c999b2b` · branch `main` · 2026-11-25 11:22 UTC
 > Não edite à mão — regras humanas vão em `manual/`.
 
 ## Perfis / roles identificados
@@ -169,6 +169,7 @@
 | `user_ip_restrictions` | enabled | public: get_user_role() = 'admin'<br>public: auth.uid() = user_id | public: get_user_role() = 'admin' | public: get_user_role() = 'admin' | public: get_user_role() = 'admin' |
 | `user_mfa_settings` | enabled | public: auth.uid() = user_id<br>public: public.has_role(auth.uid(), 'admin') | public: auth.uid() = user_id | public: auth.uid() = user_id | authenticated: auth.uid() = user_id |
 | `user_passkeys` | enabled | public: auth.uid() = user_id | public: auth.uid() = user_id | public: auth.uid() = user_id | public: auth.uid() = user_id |
+| `user_preferences` | enabled | authenticated: auth.uid() = user_id | authenticated: auth.uid() = user_id | authenticated: auth.uid() = user_id | — |
 | `user_profiles` | enabled | authenticated: auth.uid() = id<br>authenticated: public.is_admin_or_supervisor()<br>authenticated: public.is_admin_user(auth.uid()) | authenticated: public.is_admin_user(auth.uid())<br>authenticated: is_admin_user(auth.uid()) | authenticated: public.is_admin_user(auth.uid())<br>authenticated: auth.uid() = id<br>authenticated: public.is_admin_user(auth.uid()) | authenticated: public.is_admin_user(auth.uid()) |
 | `user_roles` | enabled | public: auth.uid() = user_id<br>public: public.has_role(auth.uid(), 'admin') | public: public.has_role(auth.uid(), 'admin') | public: public.has_role(auth.uid(), 'admin') | public: public.has_role(auth.uid(), 'admin') |
 | `video_conferences` | enabled | public: is_admin_or_supervisor()<br>authenticated: is_admin_or_supervisor()<br>authenticated: host_name = get_user_agent_name() OR is_admin_or_supervisor() | public: is_admin_or_supervisor()<br>authenticated: is_admin_or_supervisor() | public: is_admin_or_supervisor() | public: is_admin_or_supervisor() |
@@ -422,7 +423,7 @@ Middleware matcher (Next.js): nenhum
 | grant | authenticated | execute | `log_audit_event`, `get_dashboard_stats`, `get_queue_stats`, `log_audit_event`, `get_agent_performance`, `get_call_history_with_summaries`, `get_call_volume_stats`, `get_agents_with_active_calls`, `check_all_tables_rls_status`, `has_role`, `has_permission`, `get_user_role`, `get_user_agent_name`, `get_auth_agent_id`, `get_user_agent_id` … +18 |
 | grant | authenticated | select | `financial_impact_daily`, `index_drop_audit` |
 | grant | authenticated | select, insert | `webhook_flush_metrics` |
-| grant | authenticated | select, insert, update, delete | `deal_revenue_snapshots`, `shift_swap_suggestions`, `data_lake_exports`, `dialer_favorites`, `call_queues`, `call_queue_members`, `ring_groups`, `ring_group_members`, `queue_audio_prompts`, `call_park_orbits`, `parked_calls` |
+| grant | authenticated | select, insert, update, delete | `deal_revenue_snapshots`, `shift_swap_suggestions`, `data_lake_exports`, `dialer_favorites`, `call_queues`, `call_queue_members`, `ring_groups`, `ring_group_members`, `queue_audio_prompts`, `call_park_orbits`, `parked_calls`, `user_preferences` |
 | grant | authenticated, service_role | execute | `get_agent_financial_leaderboard`, `calculate_predictive_pace`, `recalc_deal_health`, `expire_parked_calls`, `calculate_predictive_pace`, `check_all_tables_rls_status`, `check_idle_indexes`, `expire_parked_calls`, `get_agent_financial_leaderboard`, `get_agent_performance`, `get_agents_with_active_calls`, `get_call_history_with_summaries`, `get_call_volume_stats`, `get_dashboard_stats`, `get_database_health_snapshot` … +17 |
 | grant | optimistic_lock_writer | insert | `optimistic_lock_conflicts` |
 | grant | postgres | all privileges | `cron` |
@@ -652,6 +653,7 @@ Middleware matcher (Next.js): nenhum
 | `queue_audio_prompts` | `created_at`, `created_by`, `updated_at` |
 | `call_park_orbits` | `created_at`, `updated_at` |
 | `parked_calls` | `created_at`, `updated_at` |
+| `user_preferences` | `created_at`, `updated_at` |
 | `geo_access_logs` | `created_at` |
 | `geo_restrictions` | `created_at`, `created_by`, `updated_at` |
 | `geo_settings` | `created_at`, `updated_at` |

@@ -558,6 +558,7 @@
    "src/components/ui/button.tsx",
    "src/components/ui/card.tsx",
    "src/hooks/useAudioOutputDevices.ts",
+   "src/hooks/useNotificationPreferences.ts",
    "src/hooks/useVoipQualityMonitor.ts",
    "src/lib/logger.ts",
    "src/lib/utils.ts",
@@ -2669,6 +2670,10 @@
   "src/hooks/useNetworkMonitor.ts": [
    "src/lib/logger.ts"
   ],
+  "src/hooks/useNotificationPreferences.ts": [
+   "src/contexts/AuthContext.tsx",
+   "src/integrations/supabase/client.ts"
+  ],
   "src/hooks/useNotifications.ts": [
    "src/hooks/useAuth.ts",
    "src/integrations/supabase/client.ts"
@@ -4161,6 +4166,7 @@
    "src/components/ui/separator.tsx",
    "src/components/ui/switch.tsx",
    "src/components/ui/tabs.tsx",
+   "src/hooks/useNotificationPreferences.ts",
    "src/hooks/usePageTitle.ts",
    "src/lib/audio/deviceTest.ts"
   ],

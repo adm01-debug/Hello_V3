@@ -1,7 +1,7 @@
 {
  "aviso": "GERADO AUTOMATICAMENTE por scripts/ai-context/gerar.mjs — não editar à mão; será sobrescrito.",
  "format_version": 2,
- "total": 194,
+ "total": 195,
  "hooks": [
   {
    "arquivo": "scripts/ai-context/cenarios.mjs",
@@ -332,7 +332,7 @@
     "useContext"
    ],
    "canais_realtime": [],
-   "usado_por": 31,
+   "usado_por": 32,
    "usado_por_arquivos": [
     "src/App.tsx",
     "src/components/auth/ProtectedRoute.tsx",
@@ -346,6 +346,7 @@
     "src/hooks/useMFA.ts",
     "src/hooks/useMultiChannelCall.ts",
     "src/hooks/useMultiDeviceRing.ts",
+    "src/hooks/useNotificationPreferences.ts",
     "src/hooks/usePermissions.ts",
     "src/hooks/useProfile.ts",
     "src/hooks/useSecurityNotifications.ts",
@@ -362,8 +363,7 @@
     "src/pages/Passkeys.tsx",
     "src/pages/PasswordResetApproval.tsx",
     "src/pages/Register.tsx",
-    "src/pages/Roles.tsx",
-    "src/pages/SecurityDashboard.tsx"
+    "src/pages/Roles.tsx"
    ],
    "coberto_por_testes": 1
   },
@@ -3005,6 +3005,32 @@
     "src/components/calls/NetworkStatusBadge.tsx",
     "src/components/network/NetworkStatusIndicator.tsx",
     "src/pages/NetworkDiagnostics.tsx"
+   ],
+   "coberto_por_testes": 1
+  },
+  {
+   "arquivo": "src/hooks/useNotificationPreferences.ts",
+   "hooks_exportados": [
+    "useNotificationPreferences"
+   ],
+   "linhas": 85,
+   "dominio": "hooks",
+   "tabelas": [
+    "user_preferences"
+   ],
+   "rpcs": [],
+   "edges": [],
+   "hooks_internos": [
+    "useAuthContext",
+    "useMutation",
+    "useQuery",
+    "useQueryClient"
+   ],
+   "canais_realtime": [],
+   "usado_por": 2,
+   "usado_por_arquivos": [
+    "src/components/calls/WebRTCCall.tsx",
+    "src/pages/Settings.tsx"
    ],
    "coberto_por_testes": 1
   },
