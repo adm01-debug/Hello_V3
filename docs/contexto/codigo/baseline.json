@@ -2,11 +2,16 @@
  "aviso": "GERADO AUTOMATICAMENTE por scripts/ai-context/gerar.mjs — não editar à mão; será sobrescrito.",
  "format_version": 2,
  "git": {
-  "commit": "6be55225455263204f00b5dc208d638eb5bf0a43",
+  "commit": "227252ff07f93192f1c17173a0c6acac0ea19be3",
   "branch": "main",
-  "data_commit": "2026-11-25T10:22:40-03:00",
+  "data_commit": "2026-11-25T10:43:11-03:00",
   "remote": "https://github.com/adm01-debug/Hello_V3",
   "ultimos_commits": [
+   {
+    "sha": "227252f",
+    "data": "2026-11-25",
+    "assunto": "feat: alerta semanal da fila de migrations (#320)"
+   },
    {
     "sha": "6be5522",
     "data": "2026-11-25",
@@ -126,11 +131,6 @@
     "sha": "8aeb115",
     "data": "2026-11-24",
     "assunto": "fix: sincroniza o fim de sessao entre abas pelo evento storage (#296)"
-   },
-   {
-    "sha": "4a65b1f",
-    "data": "2026-11-24",
-    "assunto": "feat: preserva o formulario e reautentica quando a sessao expira (#295)"
    }
   ],
   "arquivos_mudados_7d": 1277,
@@ -141,7 +141,7 @@
    },
    {
     "pasta": "src/hooks/__tests__",
-    "mudancas": 275
+    "mudancas": 274
    },
    {
     "pasta": "docs/qa/05-PROGRESSO.md",
@@ -153,7 +153,7 @@
    },
    {
     "pasta": "src/lib/__tests__",
-    "mudancas": 100
+    "mudancas": 99
    },
    {
     "pasta": "src/components/calls",
@@ -230,12 +230,12 @@
     "mudancas": 10
    },
    {
-    "arquivo": "src/components/layout/CommandPalette.tsx",
+    "arquivo": ".github/workflows/migrations.yml",
     "mudancas": 9
    },
    {
-    "arquivo": ".github/workflows/migrations.yml",
-    "mudancas": 8
+    "arquivo": "src/components/layout/CommandPalette.tsx",
+    "mudancas": 9
    },
    {
     "arquivo": "docs/agentes/mapa-repo.md",

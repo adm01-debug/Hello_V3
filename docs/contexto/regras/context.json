@@ -1,15 +1,15 @@
 {
  "meta": {
-  "sha": "6be55225455263204f00b5dc208d638eb5bf0a43",
+  "sha": "227252ff07f93192f1c17173a0c6acac0ea19be3",
   "branch": "main",
   "remote": "https://github.com/adm01-debug/Hello_V3",
-  "generated_at": "2026-11-25 13:24 UTC",
+  "generated_at": "2026-11-25 13:43 UTC",
   "files_total": 1798,
   "code_files": 1595,
   "code_lines": 195433
  },
  "version": "1.3.2",
- "facts_hash": "38f512e927d07f17",
+ "facts_hash": "4e1209cbf41e7af1",
  "stack": {
   "frameworks": [
    "React + Vite",
@@ -154,6 +154,7 @@
     "file": ".github/workflows/migrations.yml",
     "name": "Aplicar migration (manual)",
     "triggers": [
+     "schedule",
      "workflow_dispatch"
     ]
    }
@@ -32527,6 +32528,11 @@
     "kind": "GitHub Actions cron",
     "detail": "23 10 * * 1",
     "file": ".github/workflows/inventario-estado-semanal.yml"
+   },
+   {
+    "kind": "GitHub Actions cron",
+    "detail": "0 12 * * 1",
+    "file": ".github/workflows/migrations.yml"
    }
   ],
   "components_count": 376,
@@ -124385,10 +124391,19 @@
   }
  },
  "git": {
-  "sha": "6be55225455263204f00b5dc208d638eb5bf0a43",
+  "sha": "227252ff07f93192f1c17173a0c6acac0ea19be3",
   "branch": "main",
   "remote": "https://github.com/adm01-debug/Hello_V3",
   "commits": [
+   {
+    "sha": "227252f",
+    "date": "2026-11-25",
+    "author": "adm01-debug",
+    "subject": "feat: alerta semanal da fila de migrations (#320)",
+    "files": [
+     ".github/workflows/migrations.yml"
+    ]
+   },
    {
     "sha": "6be5522",
     "date": "2026-11-25",
@@ -124752,38 +124767,16 @@
      "src/pages/__tests__/IPWhitelist.test.tsx",
      "src/pages/__tests__/PhoneDialer.compliance.test.tsx"
     ]
-   },
-   {
-    "sha": "8cf611e",
-    "date": "2026-11-24",
-    "author": "adm01-debug",
-    "subject": "fix: remove 13 testes-espelho de hooks e de cache (etapa 284 parte 2) (#290)",
-    "files": [
-     "docs/qa/05-PROGRESSO.md",
-     "src/hooks/__tests__/useAlertSoundAndNotifications.test.ts",
-     "src/hooks/__tests__/useAuthAndDataIntegrity.test.ts",
-     "src/hooks/__tests__/useCoachingAndRecording.test.ts",
-     "src/hooks/__tests__/useComprehensive.test.ts",
-     "src/hooks/__tests__/useContactsAndCompliance.test.ts",
-     "src/hooks/__tests__/useDeviceAndSecurity.test.ts",
-     "src/hooks/__tests__/useEdgeFunctionIntegrity.test.ts",
-     "src/hooks/__tests__/useEdgeFunctions.test.ts",
-     "src/hooks/__tests__/useGamificationAndCallbacks.test.ts",
-     "src/hooks/__tests__/useSessionAndAgent.test.ts",
-     "src/hooks/__tests__/useUncoveredHooks.test.ts",
-     "src/hooks/__tests__/useWavoipAndReauth.test.ts",
-     "src/lib/__tests__/cache.stress.test.ts"
-    ]
    }
   ],
   "hot_files": [
    [
     "docs/qa/05-PROGRESSO.md",
-    19
+    18
    ],
    [
     ".github/workflows/migrations.yml",
-    8
+    9
    ],
    [
     ".github/workflows/ci.yml",

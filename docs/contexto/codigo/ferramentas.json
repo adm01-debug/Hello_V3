@@ -241,19 +241,24 @@
    "arquivo": ".github/workflows/migrations.yml",
    "nome": "Aplicar migration (manual)",
    "gatilhos": [
+    "schedule",
     "workflow_dispatch"
    ],
-   "crons": [],
+   "crons": [
+    "0 12 * * 1"
+   ],
    "branches": [],
    "jobs": [
     "aplicar"
    ],
    "permissoes": [
-    "contents: read"
+    "contents: read",
+    "issues: write"
    ],
    "scripts_usados": [],
    "npm_scripts": [],
    "secrets": [
+    "GITHUB_TOKEN",
     "SUPABASE_DB_URL"
    ],
    "actions": [
@@ -485,6 +490,7 @@
    "E2E_ADMIN_EMAIL",
    "E2E_ADMIN_PASSWORD",
    "E2E_SUPABASE_SESSION_JSON",
+   "GITHUB_TOKEN",
    "SUPABASE_ACCESS_TOKEN",
    "SUPABASE_DB_URL",
    "VITE_SUPABASE_PUBLISHABLE_KEY",

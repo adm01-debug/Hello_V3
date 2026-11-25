@@ -59,11 +59,11 @@
  "commits": {
   "convencao": "conventional commits (observado)",
   "exemplos": [
+   "feat: alerta semanal da fila de migrations (#320)",
    "fix: renumera e enxuga a migration de indices morta (#318)",
    "fix: dry-run do migrations.yml nao pode gravar de verdade (#319)",
    "fix: normalizar nome registrado antes de comparar com o arquivo (#317)",
-   "fix: colisao de versao nao impede o diagnostico da fila (#316)",
-   "fix: comparar migration pelo slug do nome e permitir registrar sem executar (#315)"
+   "fix: colisao de versao nao impede o diagnostico da fila (#316)"
   ]
  },
  "pr_template": null,

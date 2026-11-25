@@ -1,7 +1,7 @@
 # Contexto do projeto para agentes de IA
 
 GERADO AUTOMATICAMENTE por scripts/ai-context/gerar.mjs — não editar à mão; será sobrescrito.
-Publicado em `docs/contexto/codigo/` na branch `contexto` (gerada, nunca abra PR dela) a cada push em `main` e a cada 10 minutos pelo workflow `contexto.yml`; índice único das três fontes em `docs/contexto/00-INDEX.md`. Gere local com `node scripts/ai-context/gerar.mjs`. Commit-base: `6be55225455263204f00b5dc208d638eb5bf0a43` (2026-11-25T10:22:40-03:00).
+Publicado em `docs/contexto/codigo/` na branch `contexto` (gerada, nunca abra PR dela) a cada push em `main` e a cada 10 minutos pelo workflow `contexto.yml`; índice único das três fontes em `docs/contexto/00-INDEX.md`. Gere local com `node scripts/ai-context/gerar.mjs`. Commit-base: `227252ff07f93192f1c17173a0c6acac0ea19be3` (2026-11-25T10:43:11-03:00).
 
 ## Como usar (leia antes de planejar ou executar qualquer tarefa)
 1. **Tela/rota/menu** → `rotas.json` (url/vista/menu → arquivo → hooks → tabelas → edges; `rotas_http_backend` para APIs) e `modulos.json` (módulo inteiro + dependências entre módulos).
@@ -371,7 +371,7 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 - possiveis_segredos_no_codigo: 3 — ex.: src/lib/__tests__/security-advanced.test.ts:203, src/lib/__tests__/security-advanced.test.ts:208, src/lib/__tests__/security-advanced.test.ts:213
 
 ## Grafo de código (graphify)
-- 10335 nós · 27339 arestas · 775 comunidades · grafo do commit `6be55225`
+- 10335 nós · 27339 arestas · 775 comunidades · grafo do commit `227252ff`
 - comunidades maiores: lucide-react (317), client.ts (223), vitest (200), badge.tsx (199), usePageTitle (187), react (180), traceHeaders (163), @tanstack/react-query (139), 5. Em uso por rota (135), buildCorsHeaders (119), cn (117), validate.ts (104)
 - símbolos mais chamados: cn() (src/lib/utils.ts), usePageTitle() (src/hooks/usePageTitle.ts), safeFormatDatePtBR() (src/lib/safe-date.ts), useAuthContext() (src/contexts/AuthContext.tsx), q() (scripts/supabase_snapshot/snapshot.py), safeFormatDistanceToNow() (src/lib/safe-date.ts), traceHeaders() (src/lib/tracing.ts), withTrace() (src/lib/tracing.ts), formatDuration() (src/lib/utils.ts), safeToLocaleString() (src/lib/safe-date.ts), buildCorsHeaders() (supabase/functions/_shared/cors.ts), .collect() (scripts/supabase_snapshot/test_snapshot.py)
 - consulta local: `graphify query "<pergunta>"`, `graphify path "<A>" "<B>"`, `graphify explain "<X>"`
@@ -385,8 +385,8 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 - .github/workflows/ci.yml (10)
 - docs/audits/pendencias-2026-07.md (10)
 - supabase/functions/data-lake-flush/index.ts (10)
+- .github/workflows/migrations.yml (9)
 - src/components/layout/CommandPalette.tsx (9)
-- .github/workflows/migrations.yml (8)
 - docs/agentes/mapa-repo.md (8)
 - supabase/functions/validate-geo/index.ts (8)
 - docs/edge-functions/README.md (7)
@@ -397,7 +397,7 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 - `ci.yml` — CI (pull_request, push)
 - `contexto.yml` — Contexto para agentes de IA (10 min) (push, schedule, workflow_dispatch; cron 3 * * * *)
 - `inventario-estado-semanal.yml` — Inventário do estado real (semanal) (schedule, workflow_dispatch; cron 23 10 * * 1)
-- `migrations.yml` — Aplicar migration (manual) (workflow_dispatch)
+- `migrations.yml` — Aplicar migration (manual) (schedule, workflow_dispatch; cron 0 12 * * 1)
 
 ## Scripts npm
 - `dev`: `vite`
@@ -431,6 +431,7 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 
 
 ## Últimos commits
+- 2026-11-25 `227252f` feat: alerta semanal da fila de migrations (#320)
 - 2026-11-25 `6be5522` fix: renumera e enxuga a migration de indices morta (#318)
 - 2026-11-25 `c9aede0` fix: dry-run do migrations.yml nao pode gravar de verdade (#319)
 - 2026-11-25 `fffd1cc` fix: normalizar nome registrado antes de comparar com o arquivo (#317)
@@ -445,7 +446,6 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 - 2026-11-25 `fdbcd32` chore: guard de CI contra gravacoes cegas no cliente Supabase (#299)
 - 2026-11-24 `ddf4d95` fix: foco sempre volta ao gatilho ao fechar o assistente de voz (e2e do teclado deterministico) (#310)
 - 2026-11-24 `a67d708` fix: teclado no fluxo de chamada - foco preso no dialogo e devolvido ao gatilho (etapa 273) (#308)
-- 2026-11-24 `61fd9f9` fix: alvo de toque de 44 px no celular (etapa 272) (#307)
 
 ## Arquivos deste diretório
 - `docs/contexto/codigo/rotas.json`
