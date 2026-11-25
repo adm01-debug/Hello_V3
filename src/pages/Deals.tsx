@@ -13,6 +13,7 @@ import {
   Select, SelectContent, SelectItem, SelectTrigger, SelectValue,
 } from "@/components/ui/select";
 import { usePageTitle } from "@/hooks/usePageTitle";
+import { useLockedWrite } from "@/hooks/useLockedWrite";
 import { NeonPageLayout } from "@/components/layout/NeonPageLayout";
 import { safeParseFloat } from "@/lib/safe-number";
 
@@ -33,6 +34,7 @@ export default function Deals() {
   const { deals, loading, totalCount, hasMore, loadingMore, loadMore, createDeal, updateStage, computeHealth } = useDeals();
   const [open, setOpen] = useState(false);
   const [form, setForm] = useState({ name: "", value: "", stage: "prospecting", probability: "10" });
+  const { runLocked, isLocked } = useLockedWrite();
 
   const grouped = useMemo(() => {
     const m: Record<string, Deal[]> = {};
@@ -50,15 +52,16 @@ export default function Deals() {
     };
   }, [deals]);
 
-  const handleCreate = async () => {
-    const value_cents = Math.round(safeParseFloat(form.value, { min: 0, fallback: 0 }) * 100);
-    const probability = safeParseFloat(form.probability, { min: 0, max: 100, fallback: 10 });
-    const ok = await createDeal({
-      name: form.name, value_cents, stage: form.stage,
-      probability, status: "open", currency: "BRL",
+  const handleCreate = () =>
+    runLocked("nova-oportunidade", async () => {
+      const value_cents = Math.round(safeParseFloat(form.value, { min: 0, fallback: 0 }) * 100);
+      const probability = safeParseFloat(form.probability, { min: 0, max: 100, fallback: 10 });
+      const ok = await createDeal({
+        name: form.name, value_cents, stage: form.stage,
+        probability, status: "open", currency: "BRL",
+      });
+      if (ok) { setOpen(false); setForm({ name: "", value: "", stage: "prospecting", probability: "10" }); }
     });
-    if (ok) { setOpen(false); setForm({ name: "", value: "", stage: "prospecting", probability: "10" }); }
-  };
 
   return (
     <NeonPageLayout>
@@ -86,7 +89,7 @@ export default function Deals() {
                 </Select>
               </div>
               <div><Label>Probabilidade (%)</Label><Input type="number" min={0} max={100} value={form.probability} onChange={(e) => setForm({ ...form, probability: e.target.value })} /></div>
-              <Button onClick={handleCreate} disabled={!form.name}>Criar</Button>
+              <Button onClick={handleCreate} disabled={isLocked("nova-oportunidade") || !form.name}>Criar</Button>
             </div>
           </DialogContent>
         </Dialog>
