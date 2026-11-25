@@ -37,7 +37,8 @@ export function ContactAlertsDropdown() {
     markAllAsRead, 
     markAsActioned,
     deleteAlert,
-    checkForNewAlerts 
+    checkForNewAlerts,
+    fetchAlerts
   } = useContactAlerts();
   const [isChecking, setIsChecking] = useState(false);
   const [open, setOpen] = useState(false);
@@ -81,7 +82,14 @@ export function ContactAlertsDropdown() {
   };
 
   return (
-    <Popover open={open} onOpenChange={setOpen}>
+    <Popover
+      open={open}
+      onOpenChange={(next) => {
+        setOpen(next);
+        // Sem Realtime na tabela, abrir o sino revalida a lista.
+        if (next) void fetchAlerts();
+      }}
+    >
       <PopoverTrigger asChild>
         <Button aria-label="Alertas de contatos" variant="ghost" size="icon" className="relative">
           <Bell className="h-5 w-5" />
@@ -152,6 +160,7 @@ export function ContactAlertsDropdown() {
 <div
       role="button"
       tabIndex={0}
+      aria-label={`Abrir o contato do alerta ${alert.title}`}
       onKeyDown={activateOnKey}
                   key={alert.id}
                   className={cn(

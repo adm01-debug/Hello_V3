@@ -147,8 +147,11 @@ export const useContactAlerts = () => {
       
       if (data?.alerts_created > 0) {
         toast.info(`${data.alerts_created} novos alertas gerados`);
-        await fetchAlerts();
       }
+
+      // contact_alerts saiu da publicacao Realtime (20260403174223): sem evento,
+      // a lista so muda no refetch, inclusive quando a edge nao criou nada.
+      await fetchAlerts();
       
       return data;
     } catch (err) {

@@ -26,8 +26,8 @@ const SHELL = ['src/App.tsx', 'src/main.tsx'];
 
 /** Valor de produto de cada hook, curado a mao. Hook sem entrada aparece como "—". */
 const VALOR = {
-  useAudioOutputDevices: 'Escolher a saída de áudio (alto-falante/fone) durante a chamada — hoje só o componente `WebRTCCall.tsx`, que nenhuma tela monta.',
-  useContactAlerts: 'Avisar o agente sobre alerta de relacionamento do contato — hoje só o dropdown `ContactAlertsDropdown.tsx`, que nenhuma tela monta.',
+  useAudioOutputDevices: 'Escolher a saída de áudio (alto-falante/fone) durante a chamada SIP — montado em `src/components/calls/softphone/ActiveCallDisplay.tsx`.',
+  useContactAlerts: 'Avisar o agente sobre alerta de relacionamento do contato — sino próprio no cabeçalho (`AppLayout.tsx`, `ContactAlertsDropdown.tsx`); cria os alertas pela edge `check-contact-alerts`.',
   useNotifications: 'Sino de notificações do topo (lido/não lido) para o agente logado.',
   useRealtimeHoldAlerts: 'Badge em tempo real quando outra sessão deixa um cliente em espera.',
   useQualityAlerts: 'Alertas de qualidade da chamada (métricas de tronco e de áudio) para o supervisor.',

@@ -19,8 +19,13 @@ export function clickableRowProps(onActivate: () => void) {
   };
 }
 
-/** Handler pronto para onKeyDown de linhas clicaveis (ativa o onClick existente). */
+/**
+ * Handler pronto para onKeyDown de linhas clicaveis (ativa o onClick existente).
+ * O alvo precisa ser a propria linha: Enter/Espaco em um controle interno
+ * (botao, link) nao pode ativar a linha por borbulhamento.
+ */
 export function activateOnKey(event: KeyboardEvent<HTMLElement>) {
+  if (event.target !== event.currentTarget) return;
   if (event.key === "Enter" || event.key === " ") {
     event.preventDefault();
     event.currentTarget.click();

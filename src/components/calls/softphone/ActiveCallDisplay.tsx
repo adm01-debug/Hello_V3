@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useRef, useState, type RefObject } from 'react';
 import { PhoneIncoming, PhoneOutgoing, Mic, MicOff, Pause, Play, Volume2, VolumeX, PhoneForwarded, PhoneOff, Circle, AudioLines, Zap, Activity, Smile, Meh, Frown, Check, X } from 'lucide-react';
 
 import { useVoiceCommand } from '@/hooks/useVoiceCommand';
@@ -9,6 +9,8 @@ import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip
 import { cn } from '@/lib/utils';
  import type { CallSession, CallChannel, TransferTarget, TransferType } from '@/hooks/useMultiChannelCall';
  import { VoipQualityIndicator } from '../VoipQualityIndicator';
+import { AudioOutputSelector } from '../AudioOutputSelector';
+import { useAudioOutputDevices } from '@/hooks/useAudioOutputDevices';
 import { TransferCallDialog } from '../TransferCallDialog';
 import { channelIcons, formatCallDuration } from './constants';
 
@@ -38,14 +40,18 @@ interface ActiveCallDisplayProps {
    onCompleteTransfer: (callId: string) => void;
    onCancelTransfer: (callId: string) => void;
    pc?: RTCPeerConnection | null;
+   remoteAudioRef?: RefObject<HTMLAudioElement | null>;
 }
 
 export function ActiveCallDisplay({
   currentCall, activeChannel, channelName, isSpeaking, volume,
    onMuteToggle, onHoldToggle, onVolumeToggle, onRecordToggle, onEndCall,
-   onTransferCall, onCompleteTransfer, onCancelTransfer, pc,
+   onTransferCall, onCompleteTransfer, onCancelTransfer, pc, remoteAudioRef,
 }: ActiveCallDisplayProps) {
   const [transferDialogOpen, setTransferDialogOpen] = useState(false);
+  const fallbackAudioRef = useRef<HTMLAudioElement | null>(null);
+  // Saída de áudio da chamada (fone/alto-falante) — só onde o navegador suporta setSinkId.
+  const audioOutput = useAudioOutputDevices(remoteAudioRef ?? fallbackAudioRef);
   const ChannelIcon = channelIcons[activeChannel];
   const { isListening, isProcessing, lastCommand, startListening, stopListening } = useVoiceCommand();
 
@@ -87,8 +93,16 @@ export function ActiveCallDisplay({
            
            {/* VoIP Quality Indicator */}
            {activeChannel === 'sip' && (
-             <div className="mt-1">
+             <div className="mt-1 space-y-1">
                <VoipQualityIndicator pc={pc || null} callSessionId={currentCall.dbSessionId} />
+               {audioOutput.supported && (
+                 <AudioOutputSelector
+                   supported={audioOutput.supported}
+                   devices={audioOutput.devices}
+                   selectedSinkId={audioOutput.selectedSinkId}
+                   onChange={audioOutput.setSinkId}
+                 />
+               )}
              </div>
            )}
         </div>
