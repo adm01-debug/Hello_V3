@@ -18,6 +18,7 @@ import { NavigationProgress } from '@/components/navigation/NavigationProgress';
 import { CommandPalette } from './CommandPalette';
  import { MobileBottomNav } from './MobileBottomNav';
  import { OnboardingWizard } from './OnboardingWizard';
+import { useAuthContext } from '@/contexts/AuthContext';
 
 interface AppLayoutProps {
   children: ReactNode;
@@ -25,6 +26,10 @@ interface AppLayoutProps {
 
  export function AppLayout({ children }: AppLayoutProps) {
    useTelemetry();
+   const { profile } = useAuthContext();
+   // A leitura de contact_alerts e restrita a admin/supervisor (RLS 20251225183119);
+   // mostrar o sino a quem nao le a tabela so gera "Nenhum alerta" falso.
+   const canSeeContactAlerts = profile?.role === 'admin' || profile?.role === 'supervisor';
   return (
      <SidebarProvider defaultOpen={true}>
        {/* Global Utilities */}
@@ -78,9 +83,9 @@ interface AppLayoutProps {
                   <NetworkStatusIndicator />
                 </TooltipProvider>
                 <ThemeToggle />
-               <UnifiedNotificationDropdown />
-               <ContactAlertsDropdown />
-            </div>
+                <UnifiedNotificationDropdown />
+                {canSeeContactAlerts && <ContactAlertsDropdown />}
+              </div>
           </header>
 
           {/* Active Call Bar */}

@@ -293,6 +293,26 @@ describe('useContactAlerts', () => {
     expect(toast.info).not.toHaveBeenCalled();
   });
 
+  it('recarrega a lista mesmo quando a edge nao criou alertas', async () => {
+    const { result } = renderHook(() => useContactAlerts());
+    await waitFor(() => expect(result.current.alerts.length).toBe(2));
+
+    // contact_alerts saiu da publicacao Realtime: alerta gravado por outra via
+    // (a tela de Alertas) so chega ao sino se a verificacao recarregar a lista.
+    state.selectResult = {
+      data: [makeAlert('77', false), makeAlert('1', false), makeAlert('2', true)],
+      error: null,
+    };
+    state.invokeResult = { data: { alerts_created: 0 }, error: null };
+
+    await act(async () => {
+      await result.current.checkForNewAlerts();
+    });
+
+    expect(result.current.alerts.map((a) => a.id)).toContain('77');
+    expect(result.current.unreadCount).toBe(2);
+  });
+
   it('checkForNewAlerts handles error and returns null', async () => {
     const { result } = renderHook(() => useContactAlerts());
     await waitFor(() => expect(result.current.alerts.length).toBe(2));
