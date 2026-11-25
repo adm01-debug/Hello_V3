@@ -2,6 +2,10 @@
 
 Diff semântico gerado a cada coleta em que algo mudou.
 
+## 2026-11-25 12:22 UTC
+
+- **functions** alterado (1): `public.update_updated_at_column()`
+
 ## 2026-11-25 11:17 UTC
 
 - **colunas** adicionado (12): `public.user_preferences.audio_auto_gain_control`, `public.user_preferences.audio_echo_cancellation`, `public.user_preferences.audio_noise_suppression`, `public.user_preferences.beta_program`, `public.user_preferences.created_at`, `public.user_preferences.id`, `public.user_preferences.notify_incoming_calls`, `public.user_preferences.notify_missed_calls`, `public.user_preferences.notify_sound`, `public.user_preferences.notify_voicemail`, `public.user_preferences.updated_at`, `public.user_preferences.user_id`
