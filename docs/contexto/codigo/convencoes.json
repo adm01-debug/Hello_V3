@@ -59,11 +59,11 @@
  "commits": {
   "convencao": "conventional commits (observado)",
   "exemplos": [
+   "fix: fila de migrations compara com o historico real do projeto (#314)",
    "infra: fila de migrations em um clique e teste de RLS (#313)",
    "infra: atualiza checkout e upload-artifact para as versoes atuais (v7) (#312)",
    "feat: preferencias de notificacao e audio persistem (E076) (#171)",
-   "infra: workflow manual para aplicar migration no banco oficial (#311)",
-   "infra: publica as capturas da conferencia de celular como artefato do CI (#305)"
+   "infra: workflow manual para aplicar migration no banco oficial (#311)"
   ]
  },
  "pr_template": null,

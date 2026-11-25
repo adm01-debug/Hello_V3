@@ -2,11 +2,16 @@
  "aviso": "GERADO AUTOMATICAMENTE por scripts/ai-context/gerar.mjs — não editar à mão; será sobrescrito.",
  "format_version": 2,
  "git": {
-  "commit": "6873e8260a193212df95f4eff8df32ddea163e60",
+  "commit": "c450a16ec4c3bb0d8e57c0fb1a22ba702a9e4903",
   "branch": "main",
-  "data_commit": "2026-11-25T08:56:13-03:00",
+  "data_commit": "2026-11-25T09:09:18-03:00",
   "remote": "https://github.com/adm01-debug/Hello_V3",
   "ultimos_commits": [
+   {
+    "sha": "c450a16",
+    "data": "2026-11-25",
+    "assunto": "fix: fila de migrations compara com o historico real do projeto (#314)"
+   },
    {
     "sha": "6873e82",
     "data": "2026-11-25",
@@ -126,11 +131,6 @@
     "sha": "8cf611e",
     "data": "2026-11-24",
     "assunto": "fix: remove 13 testes-espelho de hooks e de cache (etapa 284 parte 2) (#290)"
-   },
-   {
-    "sha": "9660f91",
-    "data": "2026-11-24",
-    "assunto": "fix: remove 5 testes-espelho e cobre crypto.getRandomValues no useMFA (etapa 284 parcial) (#289)"
    }
   ],
   "arquivos_mudados_7d": 1275,
@@ -301,7 +301,7 @@
   "autores_30d": [
    {
     "autor": "adm01-debug",
-    "commits": 292
+    "commits": 293
    },
    {
     "autor": "Joaquim Ataides",

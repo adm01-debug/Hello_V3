@@ -1,9 +1,9 @@
 {
  "meta": {
-  "sha": "6873e8260a193212df95f4eff8df32ddea163e60",
+  "sha": "c450a16ec4c3bb0d8e57c0fb1a22ba702a9e4903",
   "branch": "main",
   "remote": "https://github.com/adm01-debug/Hello_V3",
-  "generated_at": "2026-11-25 11:57 UTC",
+  "generated_at": "2026-11-25 12:10 UTC",
   "files_total": 1798,
   "code_files": 1595,
   "code_lines": 195681
@@ -124385,10 +124385,19 @@
   }
  },
  "git": {
-  "sha": "6873e8260a193212df95f4eff8df32ddea163e60",
+  "sha": "c450a16ec4c3bb0d8e57c0fb1a22ba702a9e4903",
   "branch": "main",
   "remote": "https://github.com/adm01-debug/Hello_V3",
   "commits": [
+   {
+    "sha": "c450a16",
+    "date": "2026-11-25",
+    "author": "adm01-debug",
+    "subject": "fix: fila de migrations compara com o historico real do projeto (#314)",
+    "files": [
+     ".github/workflows/migrations.yml"
+    ]
+   },
    {
     "sha": "6873e82",
     "date": "2026-11-25",
@@ -124816,39 +124825,16 @@
      "src/components/layout/AppSidebar.tsx",
      "src/components/layout/__tests__/AppSidebar.test.tsx"
     ]
-   },
-   {
-    "sha": "711098f",
-    "date": "2026-11-24",
-    "author": "adm01-debug",
-    "subject": "feat: pagina contatos, negocios e contas de 50 em 50 (etapa 237) (#285)",
-    "files": [
-     "docs/qa/05-PROGRESSO.md",
-     "src/hooks/__tests__/useAccounts.coverage.test.tsx",
-     "src/hooks/__tests__/useAccounts.test.ts",
-     "src/hooks/__tests__/useCadences.coverage.test.tsx",
-     "src/hooks/__tests__/useContacts.coverage.test.tsx",
-     "src/hooks/__tests__/useDeals.conflict.test.ts",
-     "src/hooks/__tests__/useDeals.test.ts",
-     "src/hooks/useAccounts.ts",
-     "src/hooks/useCadences.ts",
-     "src/hooks/useContacts.ts",
-     "src/hooks/useDeals.ts",
-     "src/pages/Accounts.tsx",
-     "src/pages/Cadences.tsx",
-     "src/pages/Contacts.tsx",
-     "src/pages/Deals.tsx"
-    ]
    }
   ],
   "hot_files": [
    [
     "docs/qa/05-PROGRESSO.md",
-    24
+    23
    ],
    [
     ".github/workflows/migrations.yml",
-    3
+    4
    ],
    [
     ".github/workflows/ci.yml",
@@ -124860,10 +124846,6 @@
    ],
    [
     "docs/agentes/mapa-repo.md",
-    3
-   ],
-   [
-    "src/hooks/useContacts.ts",
     3
    ],
    [
@@ -124887,19 +124869,15 @@
     2
    ],
    [
-    "src/pages/Contacts.tsx",
-    2
-   ],
-   [
     "src/hooks/useAgentRanking.ts",
     2
    ],
    [
-    "src/hooks/useAuth.ts",
+    "src/hooks/useContacts.ts",
     2
    ],
    [
-    "src/pages/Cadences.tsx",
+    "src/hooks/useAuth.ts",
     2
    ],
    [
@@ -124920,6 +124898,14 @@
    ],
    [
     "src/hooks/useNotificationPreferences.ts",
+    1
+   ],
+   [
+    "src/integrations/supabase/types.ts",
+    1
+   ],
+   [
+    "src/pages/Settings.tsx",
     1
    ]
   ]
