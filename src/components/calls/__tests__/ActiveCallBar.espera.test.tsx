@@ -40,6 +40,11 @@ vi.mock('@/integrations/supabase/client', () => ({
   supabase: { functions: { invoke: vi.fn() }, from: vi.fn() },
 }));
 vi.mock('@/components/calls/CrmSuggestionsCard', () => ({ CrmSuggestionsCard: () => null }));
+// E155: a verificacao de voz vive no proprio componente; aqui ela e mockada para o
+// teste continuar medindo so o estado de espera/mute (sem mic e sem react-query).
+vi.mock('@/hooks/useVoiceBiometrics', () => ({
+  useLiveVoiceVerification: () => ({ run: vi.fn(), isVerifying: false, lastVerdict: null }),
+}));
 
 describe('ActiveCallBar: botao de espera', () => {
   beforeEach(() => {
