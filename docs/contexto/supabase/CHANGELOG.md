@@ -2,6 +2,13 @@
 
 Diff semântico gerado a cada coleta em que algo mudou.
 
+## 2026-11-25 22:16 UTC
+
+- **cron jobs** adicionado (1): `33:cleanup-recordings-daily`
+- **cron jobs** removido (1): `15:cleanup-recordings-daily`
+- **functions** alterado (1): `public.check_calling_hours(p_region_code text)`
+- **migrations** adicionado (5): `20261123030000_hold_time_from_events`, `20261123120000_user_preferences`, `20261125120000_indices_auditoria_e_busca_contatos`, `20261125190000_calling_hours_fail_closed`, `20261125220000_recordings_retention_cron`
+
 ## 2026-11-25 14:15 UTC
 
 - **functions** adicionado (1): `public.recalc_hold_time_from_events()`

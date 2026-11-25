@@ -24,7 +24,11 @@ BEGIN
   END IF;
 
   IF NOT FOUND THEN
-    RETURN jsonb_build_object('can_call', true, 'reason', 'Sem configuração de horário, liberando');
+    -- Fail-closed: sem janela configurada nao existe horario legal conhecido.
+    RETURN jsonb_build_object(
+      'can_call', false,
+      'reason', 'Sem configuração de horário para a região — discagem bloqueada por segurança'
+    );
   END IF;
 
   v_current_time := (now() AT TIME ZONE v_config.timezone)::TIME;
@@ -33,7 +37,7 @@ BEGIN
 
   SELECT EXISTS (
     SELECT 1 FROM public.holidays h
-    WHERE h.region_code = v_config.region_code
+    WHERE (h.is_national = true OR h.region_code = p_region_code)
       AND (
         h.date = v_current_date
         OR (h.recurring AND EXTRACT(MONTH FROM h.date) = EXTRACT(MONTH FROM v_current_date)

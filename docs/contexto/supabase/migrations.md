@@ -244,3 +244,8 @@ SQL em `migrations/<versao>_<nome>.sql`. Mudanças feitas pelo Dashboard/SQL Edi
 | 20261123002000 | [b6_text_domain_checks](migrations/20261123002000_b6_text_domain_checks.sql) | 1 |
 | 20261123010000 | [20261123010000_fix_user_delete_cascade](migrations/20261123010000_20261123010000_fix_user_delete_cascade.sql) | 0 |
 | 20261123020000 | [add_avatar_storage](migrations/20261123020000_add_avatar_storage.sql) | 1 |
+| 20261123030000 | [hold_time_from_events](migrations/20261123030000_hold_time_from_events.sql) | 3 |
+| 20261123120000 | [user_preferences](migrations/20261123120000_user_preferences.sql) | 12 |
+| 20261125120000 | [indices_auditoria_e_busca_contatos](migrations/20261125120000_indices_auditoria_e_busca_contatos.sql) | 6 |
+| 20261125190000 | [calling_hours_fail_closed](migrations/20261125190000_calling_hours_fail_closed.sql) | 2 |
+| 20261125220000 | [recordings_retention_cron](migrations/20261125220000_recordings_retention_cron.sql) | 3 |

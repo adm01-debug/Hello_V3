@@ -31647,20 +31647,20 @@
         },
         {
           "active": true,
-          "command": "\n  SELECT net.http_post(\n    url := 'https://cfmlmcdyjuotqobjapng.supabase.co/functions/v1/cleanup-recordings',\n    headers := jsonb_build_object(\n      'Content-Type', 'application/json',\n      'Authorization', 'Bearer ' || (\n        SELECT decrypted_secret FROM vault.decrypted_secrets WHERE name = 'cleanup_recordings_cron_token'\n      )\n    ),\n    body := jsonb_build_object('trigger', 'cron')\n  );\n  ",
-          "database": "postgres",
-          "jobid": 15,
-          "jobname": "cleanup-recordings-daily",
-          "schedule": "45 3 * * *",
-          "username": "postgres"
-        },
-        {
-          "active": true,
           "command": "\n  SELECT net.http_post(\n    url := 'https://cfmlmcdyjuotqobjapng.supabase.co/functions/v1/data-lake-flush',\n    headers := jsonb_build_object(\n      'Content-Type', 'application/json',\n      'Authorization', 'Bearer ' || (\n        SELECT decrypted_secret FROM vault.decrypted_secrets\n        WHERE name = 'data_lake_cron_token'\n      )\n    ),\n    body := jsonb_build_object('trigger', 'cron'),\n    timeout_milliseconds := 120000\n  );\n  ",
           "database": "postgres",
           "jobid": 16,
           "jobname": "data-lake-flush-daily",
           "schedule": "0 3 * * *",
+          "username": "postgres"
+        },
+        {
+          "active": true,
+          "command": "\n  SELECT net.http_post(\n    url := 'https://cfmlmcdyjuotqobjapng.supabase.co/functions/v1/cleanup-recordings',\n    headers := jsonb_build_object(\n      'Content-Type', 'application/json',\n      'Authorization', 'Bearer ' || (\n        SELECT decrypted_secret FROM vault.decrypted_secrets WHERE name = 'cleanup_recordings_cron_token'\n      )\n    ),\n    body := jsonb_build_object('trigger', 'cron')\n  );\n  ",
+          "database": "postgres",
+          "jobid": 33,
+          "jobname": "cleanup-recordings-daily",
+          "schedule": "45 3 * * *",
           "username": "postgres"
         }
       ]
@@ -32134,7 +32134,7 @@
           "search_path=public"
         ],
         "definition": null,
-        "definition_sha": "a384da2734467823",
+        "definition_sha": "b7b939f530d79261",
         "execute_api_roles": "authenticated, service_role",
         "execute_public": false,
         "is_trigger_fn": false,
@@ -48319,6 +48319,36 @@
         "statements": 1,
         "statements_sha": "408104a499329c20",
         "version": "20261123020000"
+      },
+      {
+        "name": "hold_time_from_events",
+        "statements": 3,
+        "statements_sha": "c27f078cafbd296c",
+        "version": "20261123030000"
+      },
+      {
+        "name": "user_preferences",
+        "statements": 12,
+        "statements_sha": "45441001bc25c3c7",
+        "version": "20261123120000"
+      },
+      {
+        "name": "indices_auditoria_e_busca_contatos",
+        "statements": 6,
+        "statements_sha": "8a7ef6a36762dfac",
+        "version": "20261125120000"
+      },
+      {
+        "name": "calling_hours_fail_closed",
+        "statements": 2,
+        "statements_sha": "bf72e619b234c057",
+        "version": "20261125190000"
+      },
+      {
+        "name": "recordings_retention_cron",
+        "statements": 3,
+        "statements_sha": "4dd664fac652d89f",
+        "version": "20261125220000"
       }
     ],
     "policies": [
