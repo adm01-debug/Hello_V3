@@ -2,11 +2,16 @@
  "aviso": "GERADO AUTOMATICAMENTE por scripts/ai-context/gerar.mjs — não editar à mão; será sobrescrito.",
  "format_version": 2,
  "git": {
-  "commit": "960c999b2b8f9dcc07d6222640bef91bec214f8a",
+  "commit": "4707eca460e82edd45e3b741ae3aa251dffed756",
   "branch": "main",
-  "data_commit": "2026-11-25T08:21:20-03:00",
+  "data_commit": "2026-11-25T08:31:24-03:00",
   "remote": "https://github.com/adm01-debug/Hello_V3",
   "ultimos_commits": [
+   {
+    "sha": "4707eca",
+    "data": "2026-11-25",
+    "assunto": "infra: atualiza checkout e upload-artifact para as versoes atuais (v7) (#312)"
+   },
    {
     "sha": "960c999",
     "data": "2026-11-25",
@@ -126,11 +131,6 @@
     "sha": "a96e7c3",
     "data": "2026-11-24",
     "assunto": "fix: revisa os 41 disables de dependencia de efeito e zera o exhaustive-deps (etapa 217) (#288)"
-   },
-   {
-    "sha": "daac6b1",
-    "data": "2026-11-24",
-    "assunto": "infra: trigger de recalculo de hold_time a partir dos hold_events (etapa 069) — DDL em producao, aguarda decisao (#274)"
    }
   ],
   "arquivos_mudados_7d": 1274,
@@ -206,6 +206,10 @@
     "mudancas": 30
    },
    {
+    "arquivo": ".github/workflows/ci.yml",
+    "mudancas": 10
+   },
+   {
     "arquivo": "src/components/calls/UnifiedSoftphone.tsx",
     "mudancas": 10
    },
@@ -216,10 +220,6 @@
    {
     "arquivo": "src/hooks/useMultiChannelCall.ts",
     "mudancas": 10
-   },
-   {
-    "arquivo": ".github/workflows/ci.yml",
-    "mudancas": 9
    },
    {
     "arquivo": "docs/audits/pendencias-2026-07.md",
@@ -301,7 +301,7 @@
   "autores_30d": [
    {
     "autor": "adm01-debug",
-    "commits": 290
+    "commits": 291
    },
    {
     "autor": "Joaquim Ataides",

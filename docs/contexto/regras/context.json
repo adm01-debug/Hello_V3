@@ -1,9 +1,9 @@
 {
  "meta": {
-  "sha": "960c999b2b8f9dcc07d6222640bef91bec214f8a",
+  "sha": "4707eca460e82edd45e3b741ae3aa251dffed756",
   "branch": "main",
   "remote": "https://github.com/adm01-debug/Hello_V3",
-  "generated_at": "2026-11-25 11:22 UTC",
+  "generated_at": "2026-11-25 11:32 UTC",
   "files_total": 1797,
   "code_files": 1594,
   "code_lines": 195601
@@ -124375,10 +124375,20 @@
   }
  },
  "git": {
-  "sha": "960c999b2b8f9dcc07d6222640bef91bec214f8a",
+  "sha": "4707eca460e82edd45e3b741ae3aa251dffed756",
   "branch": "main",
   "remote": "https://github.com/adm01-debug/Hello_V3",
   "commits": [
+   {
+    "sha": "4707eca",
+    "date": "2026-11-25",
+    "author": "adm01-debug",
+    "subject": "infra: atualiza checkout e upload-artifact para as versoes atuais (v7) (#312)",
+    "files": [
+     ".github/workflows/ci.yml",
+     ".github/workflows/migrations.yml"
+    ]
+   },
    {
     "sha": "960c999",
     "date": "2026-11-25",
@@ -124822,30 +124832,16 @@
      "docs/qa/05-PROGRESSO.md",
      "scripts/bundle-budget.json"
     ]
-   },
-   {
-    "sha": "cf8c57b",
-    "date": "2026-11-24",
-    "author": "adm01-debug",
-    "subject": "feat: reduz o chunk de entrada do front em ~15% (etapa 251) (#283)",
-    "files": [
-     "docs/qa/05-PROGRESSO.md",
-     "src/components/layout/OnboardingWizard.tsx",
-     "src/components/navigation/NavigationProgress.tsx",
-     "src/components/navigation/PageTransition.tsx",
-     "src/hooks/useContacts.ts",
-     "src/index.css"
-    ]
    }
   ],
   "hot_files": [
    [
     "docs/qa/05-PROGRESSO.md",
-    26
+    25
    ],
    [
-    "src/hooks/useContacts.ts",
-    4
+    ".github/workflows/ci.yml",
+    3
    ],
    [
     "src/components/calls/UnifiedSoftphone.tsx",
@@ -124856,7 +124852,11 @@
     3
    ],
    [
-    ".github/workflows/ci.yml",
+    "src/hooks/useContacts.ts",
+    3
+   ],
+   [
+    ".github/workflows/migrations.yml",
     2
    ],
    [
@@ -124913,10 +124913,6 @@
    ],
    [
     "src/hooks/useNotificationPreferences.ts",
-    1
-   ],
-   [
-    "src/integrations/supabase/types.ts",
     1
    ]
   ]

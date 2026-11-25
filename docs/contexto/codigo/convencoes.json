@@ -59,11 +59,11 @@
  "commits": {
   "convencao": "conventional commits (observado)",
   "exemplos": [
+   "infra: atualiza checkout e upload-artifact para as versoes atuais (v7) (#312)",
    "feat: preferencias de notificacao e audio persistem (E076) (#171)",
    "infra: workflow manual para aplicar migration no banco oficial (#311)",
    "infra: publica as capturas da conferencia de celular como artefato do CI (#305)",
-   "chore: guard de CI contra gravacoes cegas no cliente Supabase (#299)",
-   "fix: foco sempre volta ao gatilho ao fechar o assistente de voz (e2e do teclado deterministico) (#310)"
+   "chore: guard de CI contra gravacoes cegas no cliente Supabase (#299)"
   ]
  },
  "pr_template": null,
