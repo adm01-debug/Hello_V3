@@ -413,6 +413,8 @@ export interface SipCallState {
      hasIncomingCall: state.incomingCall !== null,
       quality,
       pc: activePc,
+      // elemento <audio> do áudio remoto, exposto para o seletor de saída (setSinkId)
+      remoteAudioRef,
       connect, disconnect, startCall, endCall, answerCall, rejectCall, toggleMute, toggleHold, sendDTMF,
       setDbSessionId,
    };

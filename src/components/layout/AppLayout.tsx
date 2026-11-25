@@ -7,6 +7,7 @@ import { ActiveCallBar } from '@/components/calls/ActiveCallBar';
   import { TooltipProvider } from '@/components/ui/tooltip';
   import { NetworkStatusIndicator } from '@/components/network/NetworkStatusIndicator';
  import { UnifiedNotificationDropdown } from '@/components/notifications/UnifiedNotificationDropdown';
+import { ContactAlertsDropdown } from '@/components/contacts/ContactAlertsDropdown';
 import { BreadcrumbNav } from '@/components/ui/breadcrumb-nav';
 import { BreadcrumbCompact } from '@/components/ui/breadcrumb-nav';
 import { SkipLink } from '@/components/ui/keyboard-navigation';
@@ -78,6 +79,7 @@ interface AppLayoutProps {
                 </TooltipProvider>
                 <ThemeToggle />
                <UnifiedNotificationDropdown />
+               <ContactAlertsDropdown />
             </div>
           </header>
 
