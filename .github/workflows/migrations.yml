@@ -10,6 +10,8 @@
 #     pendentes  -> lista o que existe no repositorio e nao esta em public.schema_migrations e aplica em ordem
 #     verificar  -> roda supabase/tests/*_rls_test.sql (transacoes revertidas no fim, nada fica gravado)
 #   falha: nome fora do padrao, arquivo inexistente, versao ja aplicada, erro de SQL, secret ausente
+#   alerta: toda segunda 12:00 UTC o levantamento da fila roda sozinho e abre uma issue quando ha
+#     pendencia (fecha sozinho quando a fila zera). O agendamento NUNCA aplica nada: so lista.
 name: Aplicar migration (manual)
 
 on:
@@ -40,9 +42,12 @@ on:
         required: false
         default: ''
         type: string
+  schedule:
+    - cron: '0 12 * * 1'
 
 permissions:
   contents: read
+  issues: write
 
 concurrency:
   group: migrations-producao
@@ -156,7 +161,7 @@ jobs:
           echo "aplicada: ${ARQUIVO}"
 
       - name: Levantar a fila (arquivos sem registro no banco)
-        if: inputs.modo == 'pendentes'
+        if: inputs.modo == 'pendentes' || github.event_name == 'schedule'
         env:
           SUPABASE_DB_URL: ${{ secrets.SUPABASE_DB_URL }}
         run: |
@@ -264,3 +269,29 @@ jobs:
             echo "::endgroup::"
           done
           echo "todos os testes de RLS passaram"
+
+      - name: Avisar a fila pendente (semanal)
+        if: github.event_name == 'schedule'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          set -euo pipefail
+          titulo="Migrations pendentes no banco de producao"
+          existente=$(gh issue list --state open --limit 200 --json number,title \
+            --jq "[.[] | select(.title == \"${titulo}\")][0].number // empty")
+          if [ -z "${PENDENTES:-}" ]; then
+            if [ -n "$existente" ]; then
+              gh issue close "$existente" --comment "Fila zerada em $(date -u +%Y-%m-%d): todas as migrations do repositorio estao registradas em public.schema_migrations."
+            else
+              echo "nada pendente; nenhuma issue aberta"
+            fi
+            exit 0
+          fi
+          quantidade=$(wc -w <<< "$PENDENTES")
+          lista=$(for nome in $PENDENTES; do echo "- ${nome}.sql"; done)
+          corpo=$(printf 'A fila tem %s arquivo(s) em supabase/migrations/ sem registro em public.schema_migrations:\n\n%s\n\nPara aplicar: Actions > "Aplicar migration (manual)" > modo pendentes, confirmar APLICAR.\n\nEsta issue fecha sozinha na proxima execucao semanal, quando a fila zerar.' "$quantidade" "$lista")
+          if [ -n "$existente" ]; then
+            gh issue comment "$existente" --body "$corpo"
+          else
+            gh issue create --title "$titulo" --body "$corpo"
+          fi
