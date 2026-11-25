@@ -128,30 +128,51 @@ jobs:
           SUPABASE_DB_URL: ${{ secrets.SUPABASE_DB_URL }}
         run: |
           set -euo pipefail
-          psql "$SUPABASE_DB_URL" -tA -v ON_ERROR_STOP=1 \
-            -c "select version from public.schema_migrations" | sort > /tmp/aplicadas.txt
-          find supabase/migrations -maxdepth 1 -type f -name '*.sql' -printf '%f\n' \
-            | grep -E '^[0-9]{14}_[A-Za-z0-9_-]+\.sql$' | sort > /tmp/arquivos.txt
+          # Duas fontes, porque o projeto grava em duas tabelas:
+          #   supabase_migrations.schema_migrations -> historico nativo (tem coluna name)
+          #   public.schema_migrations             -> registro do public.apply_migration
+          # Ler so uma delas faz migration aplicada parecer pendente (ou o contrario).
+          nativa=$(psql "$SUPABASE_DB_URL" -tA -v ON_ERROR_STOP=1 -c "select to_regclass('supabase_migrations.schema_migrations') is not null")
+          : > /tmp/aplicadas.txt
+          : > /tmp/versoes_sem_nome.txt
+          if [ "$nativa" = "t" ]; then
+            psql "$SUPABASE_DB_URL" -tA -v ON_ERROR_STOP=1 -c "select coalesce(name, '') from supabase_migrations.schema_migrations" | grep -v '^$' | sort -u > /tmp/aplicadas.txt
+            psql "$SUPABASE_DB_URL" -tA -v ON_ERROR_STOP=1 -c "select version from supabase_migrations.schema_migrations where name is null" | sort -u > /tmp/versoes_sem_nome.txt
+          else
+            echo "::warning::supabase_migrations.schema_migrations inacessivel; comparando apenas public.schema_migrations"
+          fi
+          psql "$SUPABASE_DB_URL" -tA -v ON_ERROR_STOP=1 -c "select name from public.schema_migrations" | grep -v '^$' >> /tmp/aplicadas.txt
+          sort -u /tmp/aplicadas.txt -o /tmp/aplicadas.txt
+          find supabase/migrations -maxdepth 1 -type f -name '*.sql' -printf '%f\n' | grep -E '^[0-9]{14}_[A-Za-z0-9_-]+\.sql$' | sort > /tmp/arquivos.txt
+          sed -E 's/\.sql$//' /tmp/arquivos.txt > /tmp/nomes.txt
           sed -E 's/^([0-9]{14})_.*/\1/' /tmp/arquivos.txt | sort > /tmp/versoes_brutas.txt
-          cp /tmp/versoes_brutas.txt /tmp/versoes.txt
           echo "arquivos no repositorio: $(wc -l < /tmp/arquivos.txt)"
-          colisoes=$(uniq -d /tmp/versoes_brutas.txt || true)
+          echo "nomes registrados no historico: $(wc -l < /tmp/aplicadas.txt)"
           erro_colisao=0
-          for v in $colisoes; do
+          for v in $(uniq -d /tmp/versoes_brutas.txt || true); do
             arquivos_dup=$(grep "^${v}_" /tmp/arquivos.txt | tr '\n' ' ')
-            if grep -qx "$v" /tmp/aplicadas.txt; then
-              echo "::warning::version ${v} tem mais de um arquivo (${arquivos_dup}) e ja esta registrada no banco: uma das partes pode nunca ter sido aplicada e o historico nao distingue qual. Confira manualmente."
-            else
-              echo "::error::version ${v} tem mais de um arquivo (${arquivos_dup}) e nao esta registrada: aplicar seria ambiguo."
+            faltando=""
+            for a in $arquivos_dup; do
+              grep -qx "${a%%.sql}" /tmp/aplicadas.txt || faltando="$faltando $a"
+            done
+            if [ -n "$faltando" ]; then
+              echo "::error::version ${v} esta ocupada no historico e estes arquivos nao tem registro de aplicacao:$faltando"
+              echo "::error::renumere o arquivo para uma versao nova; com a versao repetida o registro nao acontece"
               erro_colisao=1
+            else
+              echo "::warning::version ${v} tem dois arquivos, mas ambos constam no historico: ${arquivos_dup}"
             fi
           done
           if [ "$erro_colisao" = "1" ]; then exit 1; fi
-          echo "versoes registradas no banco: $(wc -l < /tmp/aplicadas.txt)"
-          comm -23 /tmp/versoes.txt /tmp/aplicadas.txt > /tmp/pendentes.txt
+          : > /tmp/pendentes.txt
+          while read -r nome; do
+            grep -qx "$nome" /tmp/aplicadas.txt && continue
+            grep -qx "${nome%%_*}" /tmp/versoes_sem_nome.txt && continue
+            echo "$nome" >> /tmp/pendentes.txt
+          done < /tmp/nomes.txt
           echo "pendentes: $(wc -l < /tmp/pendentes.txt)"
-          while read -r v; do
-            echo "::warning::pendente ${v}: $(grep "^${v}_" /tmp/arquivos.txt)"
+          while read -r nome; do
+            echo "::warning::pendente ${nome}.sql"
           done < /tmp/pendentes.txt
           echo "PENDENTES=$(tr '\n' ' ' < /tmp/pendentes.txt)" >> "$GITHUB_ENV"
 
@@ -162,8 +183,9 @@ jobs:
         run: |
           set -euo pipefail
           if [ -z "${PENDENTES:-}" ]; then echo "nada pendente"; exit 0; fi
-          for v in $PENDENTES; do
-            arquivo=$(grep "^${v}_" /tmp/arquivos.txt)
+          for nome in $PENDENTES; do
+            arquivo="${nome}.sql"
+            v="${nome%%_*}"
             echo "::group::Aplicando ${arquivo}"
             psql "$SUPABASE_DB_URL" -v ON_ERROR_STOP=1 --single-transaction -q \
               -f "supabase/migrations/${arquivo}"
