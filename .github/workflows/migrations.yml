@@ -186,7 +186,10 @@ jobs:
               echo "::warning::version ${v} tem dois arquivos, mas ambos constam no historico: ${arquivos_dup}"
             fi
           done
-          if [ "$erro_colisao" = "1" ]; then exit 1; fi
+          if [ "$erro_colisao" = "1" ]; then
+            echo "COLISAO=1" >> "$GITHUB_ENV"
+            echo "::warning::ha versao ocupada sem registro; o diagnostico segue, mas a aplicacao da fila sera bloqueada"
+          fi
           : > /tmp/pendentes.txt
           while read -r nome; do
             grep -qx "$nome" /tmp/aplicadas.txt && continue
@@ -206,6 +209,10 @@ jobs:
           SUPABASE_DB_URL: ${{ secrets.SUPABASE_DB_URL }}
         run: |
           set -euo pipefail
+          if [ "${COLISAO:-0}" = "1" ]; then
+            echo "::error::fila bloqueada: existe arquivo com versao ja ocupada no historico (ver avisos do levantamento). Renumere e rode de novo."
+            exit 1
+          fi
           if [ -z "${PENDENTES:-}" ]; then echo "nada pendente"; exit 0; fi
           for nome in $PENDENTES; do
             arquivo="${nome}.sql"
