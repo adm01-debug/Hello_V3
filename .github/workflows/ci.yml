@@ -73,6 +73,15 @@ jobs:
           E2E_ADMIN_PASSWORD: ${{ secrets.E2E_ADMIN_PASSWORD }}
           E2E_SUPABASE_SESSION_JSON: ${{ secrets.E2E_SUPABASE_SESSION_JSON }}
 
+      - name: Upload capturas da conferencia de celular (etapa 270)
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: capturas-270
+          path: capturas/270/
+          retention-days: 7
+          if-no-files-found: ignore
+
       - name: Edge Function Tests (Deno)
         run: |
           curl -fsSL https://deno.land/install.sh | sh
