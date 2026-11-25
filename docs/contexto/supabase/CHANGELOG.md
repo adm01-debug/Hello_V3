@@ -2,6 +2,12 @@
 
 Diff semântico gerado a cada coleta em que algo mudou.
 
+## 2026-11-25 14:15 UTC
+
+- **functions** adicionado (1): `public.recalc_hold_time_from_events()`
+- **indexes** adicionado (1): `public.idx_contacts_name_trgm`
+- **triggers** adicionado (1): `public.hold_events.trg_hold_events_recalc_hold_time`
+
 ## 2026-11-25 12:22 UTC
 
 - **functions** alterado (1): `public.update_updated_at_column()`

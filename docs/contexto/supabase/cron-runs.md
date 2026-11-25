@@ -16,9 +16,9 @@
 
 | início (UTC) | status | duração (s) | mensagem |
 |---|---|---|---|
-| 2026-11-25 12:22:00 | succeeded | 0.15 | 1 row |
-| 2026-11-25 12:21:00 | succeeded | 0.03 | 1 row |
-| 2026-11-25 12:20:00 | succeeded | 0.03 | 1 row |
+| 2026-11-25 14:14:00 | succeeded | 0.00 | 1 row |
+| 2026-11-25 14:13:00 | succeeded | 0.04 | 1 row |
+| 2026-11-25 14:12:00 | succeeded | 0.01 | 1 row |
 
 
 ## 14 · cleanup-lock-conflicts-weekly

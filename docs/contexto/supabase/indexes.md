@@ -206,6 +206,7 @@ Uso e tamanho em `stats.md`.
 | public.contacts | idx_contacts_external_id | btree | external_id | não | sim |  |
 | public.contacts | idx_contacts_favorite | btree | favorite | não | sim | `(favorite = true)` |
 | public.contacts | idx_contacts_name_search | gin |  | não | sim |  |
+| public.contacts | idx_contacts_name_trgm | gin | name | não | sim |  |
 | public.contacts | idx_contacts_phone | btree | phone | não | sim |  |
 | public.conversation_messages | conversation_messages_pkey | btree | id | sim | sim |  |
 | public.conversation_messages | idx_conversation_messages_conversation_id | btree | conversation_id | não | sim |  |

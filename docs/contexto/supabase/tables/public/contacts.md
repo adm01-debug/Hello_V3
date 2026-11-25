@@ -73,6 +73,7 @@
 | idx_contacts_external_id | btree | external_id | não | sim |  | `CREATE INDEX idx_contacts_external_id ON public.contacts USING btree (external_id)` |
 | idx_contacts_favorite | btree | favorite | não | sim | `(favorite = true)` | `CREATE INDEX idx_contacts_favorite ON public.contacts USING btree (favorite) WHERE (favorite = true)` |
 | idx_contacts_name_search | gin |  | não | sim |  | `CREATE INDEX idx_contacts_name_search ON public.contacts USING gin (to_tsvector('english'::regconfig, name))` |
+| idx_contacts_name_trgm | gin | name | não | sim |  | `CREATE INDEX idx_contacts_name_trgm ON public.contacts USING gin (name gin_trgm_ops)` |
 | idx_contacts_phone | btree | phone | não | sim |  | `CREATE INDEX idx_contacts_phone ON public.contacts USING btree (phone)` |
 
 

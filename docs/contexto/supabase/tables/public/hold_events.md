@@ -98,7 +98,9 @@
 
 ## Triggers
 
-_nenhum_
+| nome | timing | eventos | nível | status | função |
+|---|---|---|---|---|---|
+| trg_hold_events_recalc_hold_time | AFTER | UPDATE | ROW | enabled | public.recalc_hold_time_from_events |
 
 
 ## Grants
