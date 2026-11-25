@@ -12,6 +12,7 @@ import { toast } from 'sonner';
   import { Video, Plus, Users, Clock, Calendar, Play, Copy, Check, Loader2 } from 'lucide-react';
   import { logger } from '@/lib/logger';
 import { usePageTitle } from '@/hooks/usePageTitle';
+import { useLockedWrite } from '@/hooks/useLockedWrite';
 
 import { safeToLocaleString } from "@/lib/safe-date";
 type VideoConferenceRow = Database['public']['Tables']['video_conferences']['Row'];
@@ -20,10 +21,11 @@ export default function VideoConference() {
   usePageTitle('Videoconferência');
 
   const queryClient = useQueryClient();
+  const { runLocked, isLocked } = useLockedWrite();
    const [title, setTitle] = useState('');
    const [dialogOpen, setDialogOpen] = useState(false);
    const [isStarting, setIsStarting] = useState<string | null>(null);
-   const handleStartMeeting = async (conf: VideoConferenceRow) => {
+   const handleStartMeeting = (conf: VideoConferenceRow) => {
      if (conf.status === 'ended') return;
      
      if (conf.status === 'active' && conf.meeting_url) {
@@ -31,6 +33,7 @@ export default function VideoConference() {
        return;
      }
  
+        return runLocked(`start-${conf.id}`, async () => {
      setIsStarting(conf.id);
      try {
        // Simulação de ativação de reunião (em um sistema real, isso chamaria uma Edge Function de integração)
@@ -56,6 +59,7 @@ export default function VideoConference() {
      } finally {
        setIsStarting(null);
      }
+     });
    };
  
    const [copiedId, setCopiedId] = useState<string | null>(null);
@@ -114,7 +118,7 @@ export default function VideoConference() {
             <DialogHeader><DialogTitle>Criar Reunião</DialogTitle></DialogHeader>
             <div className="space-y-4">
               <div><Label>Título</Label><Input value={title} onChange={e => setTitle(e.target.value)} placeholder="Reunião de equipe" /></div>
-              <Button onClick={() => createConference.mutate()} disabled={!title.trim() || createConference.isPending}>Criar</Button>
+              <Button onClick={() => runLocked("nova-reuniao", () => createConference.mutateAsync().catch(() => {}))} disabled={!title.trim() || isLocked("nova-reuniao") || createConference.isPending}>Criar</Button>
             </div>
           </DialogContent>
         </Dialog>
@@ -172,7 +176,7 @@ export default function VideoConference() {
                     variant={conf.status === 'active' ? 'default' : 'outline'} 
                     size="sm"
                     className={conf.status === 'active' ? 'animate-pulse' : ''}
-                    disabled={conf.status === 'ended' || isStarting === conf.id}
+                    disabled={conf.status === 'ended' || isStarting === conf.id || isLocked(`start-${conf.id}`)}
                     onClick={() => handleStartMeeting(conf)}
                   >
                     {isStarting === conf.id ? <Loader2 className="h-4 w-4 animate-spin mr-2" /> : null}
