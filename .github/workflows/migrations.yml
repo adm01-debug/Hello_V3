@@ -20,6 +20,11 @@ on:
         required: true
         default: dry-run
         type: string
+      ref:
+        description: 'Branch de onde ler o arquivo (vazio = branch padrao). Permite aplicar a migration de uma PR antes do merge'
+        required: false
+        default: ''
+        type: string
 
 permissions:
   contents: read
@@ -34,6 +39,8 @@ jobs:
     timeout-minutes: 10
     steps:
       - uses: actions/checkout@v4
+        with:
+          ref: ${{ inputs.ref || github.ref }}
 
       - name: Validar o arquivo de entrada
         env:
