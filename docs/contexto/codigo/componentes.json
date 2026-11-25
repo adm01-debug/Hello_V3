@@ -4084,7 +4084,7 @@
    "hooks_locais": [],
    "tabelas": [],
    "edges": [],
-   "usado_por": 7,
+   "usado_por": 8,
    "orfao": false
   },
   {
@@ -5649,7 +5649,7 @@
     "Cadences"
    ],
    "export_default": "Cadences",
-   "linhas": 160,
+   "linhas": 326,
    "dominio": "pages",
    "hooks_locais": [
     "useCadences",

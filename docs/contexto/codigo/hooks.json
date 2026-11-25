@@ -1218,7 +1218,7 @@
     "useCadenceEnrollments",
     "useCadences"
    ],
-   "linhas": 157,
+   "linhas": 238,
    "dominio": "hooks",
    "tabelas": [
     "cadence_enrollments",
@@ -1238,7 +1238,7 @@
    "usado_por_arquivos": [
     "src/pages/Cadences.tsx"
    ],
-   "coberto_por_testes": 1
+   "coberto_por_testes": 2
   },
   {
    "arquivo": "src/hooks/useCallAnalytics.ts",

@@ -3506,7 +3506,7 @@
    "modulo": "hooks",
    "arquivos": 169,
    "testes": 0,
-   "linhas": 21748,
+   "linhas": 21829,
    "itens_menu": [],
    "telas": [],
    "rotas_http": [],
@@ -4469,7 +4469,7 @@
   {
    "modulo": "hooks/__tests__",
    "arquivos": 0,
-   "testes": 160,
+   "testes": 161,
    "linhas": 0,
    "itens_menu": [],
    "telas": [],
@@ -5654,7 +5654,7 @@
    "modulo": "pages",
    "arquivos": 93,
    "testes": 0,
-   "linhas": 17146,
+   "linhas": 17312,
    "itens_menu": [
     "Acessos Bloqueados",
     "Agent Assist",
@@ -6451,7 +6451,7 @@
   {
    "modulo": "pages/__tests__",
    "arquivos": 0,
-   "testes": 16,
+   "testes": 17,
    "linhas": 0,
    "itens_menu": [],
    "telas": [],

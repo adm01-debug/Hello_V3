@@ -3320,6 +3320,7 @@
   ],
   "src/pages/Cadences.tsx": [
    "src/components/layout/NeonPageLayout.tsx",
+   "src/components/ui/alert-dialog.tsx",
    "src/components/ui/badge.tsx",
    "src/components/ui/button.tsx",
    "src/components/ui/card.tsx",

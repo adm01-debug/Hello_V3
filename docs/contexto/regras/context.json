@@ -1,15 +1,15 @@
 {
  "meta": {
-  "sha": "31ec3c629089e0e8d1b00e92846e4352800faf9e",
+  "sha": "19d29d8684bc6173278d4d57ccb38d283e4dc789",
   "branch": "main",
   "remote": "https://github.com/adm01-debug/Hello_V3",
-  "generated_at": "2026-11-25 16:21 UTC",
-  "files_total": 1799,
-  "code_files": 1596,
-  "code_lines": 195564
+  "generated_at": "2026-11-25 17:41 UTC",
+  "files_total": 1801,
+  "code_files": 1598,
+  "code_lines": 196046
  },
  "version": "1.3.2",
- "facts_hash": "15874c88a80ca46e",
+ "facts_hash": "ef234b89464633a1",
  "stack": {
   "frameworks": [
    "React + Vite",
@@ -162,7 +162,7 @@
   "package_manager": "bun",
   "languages": {
    ".ts": 658,
-   ".tsx": 654,
+   ".tsx": 656,
    ".sql": 248,
    ".mjs": 29,
    ".py": 5,
@@ -28503,7 +28503,7 @@
     ],
     "invokes_transitive": [],
     "rpc_transitive": [],
-    "deps_count": 15
+    "deps_count": 16
    },
    {
     "path": "",
@@ -33964,8 +33964,8 @@
   },
   {
    "module": "src/hooks",
-   "files": 341,
-   "lines": 43184,
+   "files": 342,
+   "lines": 43411,
    "tables": [
     "accounts",
     "active_sessions",
@@ -34444,8 +34444,8 @@
   },
   {
    "module": "src/pages",
-   "files": 148,
-   "lines": 22682,
+   "files": 149,
+   "lines": 22937,
    "tables": [
     "audit_logs",
     "battle_card_triggers",
@@ -35313,6 +35313,12 @@
     ],
     "insert": [
      "src/hooks/useCadences.ts"
+    ],
+    "update": [
+     "src/hooks/useCadences.ts"
+    ],
+    "delete": [
+     "src/hooks/useCadences.ts"
     ]
    },
    "cadences": {
@@ -35320,6 +35326,12 @@
      "src/hooks/useCadences.ts"
     ],
     "insert": [
+     "src/hooks/useCadences.ts"
+    ],
+    "update": [
+     "src/hooks/useCadences.ts"
+    ],
+    "delete": [
      "src/hooks/useCadences.ts"
     ]
    },
@@ -37045,7 +37057,11 @@
     "user_id"
    ],
    "cadence_steps": [
-    "cadence_id"
+    "cadence_id",
+    "id"
+   ],
+   "cadences": [
+    "id"
    ],
    "call_alerts": [
     "alert_type",
@@ -41304,11 +41320,31 @@
    },
    {
     "file": "src/hooks/useCadences.ts",
+    "msg": "Erro ao atualizar cadência"
+   },
+   {
+    "file": "src/hooks/useCadences.ts",
+    "msg": "Erro ao atualizar etapa"
+   },
+   {
+    "file": "src/hooks/useCadences.ts",
     "msg": "Erro ao criar cadência"
    },
    {
     "file": "src/hooks/useCadences.ts",
+    "msg": "Erro ao excluir cadência"
+   },
+   {
+    "file": "src/hooks/useCadences.ts",
+    "msg": "Erro ao excluir etapa"
+   },
+   {
+    "file": "src/hooks/useCadences.ts",
     "msg": "Erro ao inscrever contato"
+   },
+   {
+    "file": "src/hooks/useCadences.ts",
+    "msg": "Esta cadência foi alterada por outro usuário. Recarregando..."
    },
    {
     "file": "src/hooks/useCallPark.ts",
@@ -59826,6 +59862,42 @@
     "name": "loads enrollments with agent filter"
    },
    {
+    "file": "src/hooks/__tests__/useCadences.crud.test.tsx",
+    "name": "useCadences: edicao e exclusao"
+   },
+   {
+    "file": "src/hooks/__tests__/useCadences.crud.test.tsx",
+    "name": "updateCadence envia o patch junto com a version atual e recarrega"
+   },
+   {
+    "file": "src/hooks/__tests__/useCadences.crud.test.tsx",
+    "name": "updateCadence alterna is_active mantendo a version do registro"
+   },
+   {
+    "file": "src/hooks/__tests__/useCadences.crud.test.tsx",
+    "name": "updateCadence trata conflito de version recarregando a lista"
+   },
+   {
+    "file": "src/hooks/__tests__/useCadences.crud.test.tsx",
+    "name": "updateCadence devolve false em erro generico"
+   },
+   {
+    "file": "src/hooks/__tests__/useCadences.crud.test.tsx",
+    "name": "deleteCadence remove a cadencia pelo id"
+   },
+   {
+    "file": "src/hooks/__tests__/useCadences.crud.test.tsx",
+    "name": "deleteCadence devolve false quando o banco recusa"
+   },
+   {
+    "file": "src/hooks/__tests__/useCadences.crud.test.tsx",
+    "name": "updateStep aplica o patch no passo pelo id"
+   },
+   {
+    "file": "src/hooks/__tests__/useCadences.crud.test.tsx",
+    "name": "deleteStep renumera os passos restantes sem buraco na ordem"
+   },
+   {
     "file": "src/hooks/__tests__/useCallAnalytics.coverage.test.tsx",
     "name": "useCallAnalytics"
    },
@@ -70528,6 +70600,30 @@
    {
     "file": "src/lib/webauthn/__tests__/webauthn-utils.coverage.test.ts",
     "name": "throws when get returns null"
+   },
+   {
+    "file": "src/pages/__tests__/Cadences.crud.test.tsx",
+    "name": "Cadences: acoes de edicao e exclusao na tela"
+   },
+   {
+    "file": "src/pages/__tests__/Cadences.crud.test.tsx",
+    "name": "mostra os controles de editar, ativar/desativar e excluir na cadencia"
+   },
+   {
+    "file": "src/pages/__tests__/Cadences.crud.test.tsx",
+    "name": "desativar a cadencia grava is_active=false pelo id"
+   },
+   {
+    "file": "src/pages/__tests__/Cadences.crud.test.tsx",
+    "name": "salvar o dialogo de edicao envia nome e descricao"
+   },
+   {
+    "file": "src/pages/__tests__/Cadences.crud.test.tsx",
+    "name": "confirmar a exclusao da cadencia chama deleteCadence"
+   },
+   {
+    "file": "src/pages/__tests__/Cadences.crud.test.tsx",
+    "name": "excluir um passo pede confirmacao e chama deleteStep"
    },
    {
     "file": "src/pages/__tests__/CallHistory.deeplink.test.tsx",
@@ -97993,7 +98089,7 @@
   },
   "src/hooks/useCadences.ts": {
    "path": "src/hooks/useCadences.ts",
-   "lines": 157,
+   "lines": 238,
    "exports": [
     "interface Cadence",
     "interface CadenceStep",
@@ -98023,19 +98119,48 @@
      "op": "insert"
     },
     {
+     "table": "cadences",
+     "op": "update"
+    },
+    {
+     "table": "cadences",
+     "op": "delete"
+    },
+    {
+     "table": "cadence_steps",
+     "op": "update"
+    },
+    {
+     "table": "cadence_steps",
+     "op": "delete"
+    },
+    {
+     "table": "cadence_steps",
+     "op": "update"
+    },
+    {
      "table": "cadence_enrollments",
      "op": "select"
     }
    ],
    "table_cols": {
     "cadence_steps": [
-     "cadence_id"
+     "cadence_id",
+     "id"
+    ],
+    "cadences": [
+     "id"
     ]
    },
    "errors": [
     "Erro ao adicionar etapa",
+    "Erro ao atualizar cadência",
+    "Erro ao atualizar etapa",
     "Erro ao criar cadência",
-    "Erro ao inscrever contato"
+    "Erro ao excluir cadência",
+    "Erro ao excluir etapa",
+    "Erro ao inscrever contato",
+    "Esta cadência foi alterada por outro usuário. Recarregando..."
    ],
    "params": [
     {
@@ -104930,6 +105055,22 @@
     "useCadenceEnrollments",
     "loads enrollments without agent filter",
     "loads enrollments with agent filter"
+   ]
+  },
+  "src/hooks/__tests__/useCadences.crud.test.tsx": {
+   "path": "src/hooks/__tests__/useCadences.crud.test.tsx",
+   "lines": 146,
+   "is_test": true,
+   "tests": [
+    "useCadences: edicao e exclusao",
+    "updateCadence envia o patch junto com a version atual e recarrega",
+    "updateCadence alterna is_active mantendo a version do registro",
+    "updateCadence trata conflito de version recarregando a lista",
+    "updateCadence devolve false em erro generico",
+    "deleteCadence remove a cadencia pelo id",
+    "deleteCadence devolve false quando o banco recusa",
+    "updateStep aplica o patch no passo pelo id",
+    "deleteStep renumera os passos restantes sem buraco na ordem"
    ]
   },
   "src/hooks/__tests__/useCallAnalytics.coverage.test.tsx": {
@@ -112608,7 +112749,7 @@
   },
   "src/pages/Cadences.tsx": {
    "path": "src/pages/Cadences.tsx",
-   "lines": 160,
+   "lines": 326,
    "exports": [
     "function Cadences"
    ]
@@ -114494,6 +114635,19 @@
      "id"
     ]
    }
+  },
+  "src/pages/__tests__/Cadences.crud.test.tsx": {
+   "path": "src/pages/__tests__/Cadences.crud.test.tsx",
+   "lines": 89,
+   "is_test": true,
+   "tests": [
+    "Cadences: acoes de edicao e exclusao na tela",
+    "mostra os controles de editar, ativar/desativar e excluir na cadencia",
+    "desativar a cadencia grava is_active=false pelo id",
+    "salvar o dialogo de edicao envia nome e descricao",
+    "confirmar a exclusao da cadencia chama deleteCadence",
+    "excluir um passo pede confirmacao e chama deleteStep"
+   ]
   },
   "src/pages/__tests__/CallHistory.deeplink.test.tsx": {
    "path": "src/pages/__tests__/CallHistory.deeplink.test.tsx",
@@ -124443,10 +124597,22 @@
   }
  },
  "git": {
-  "sha": "31ec3c629089e0e8d1b00e92846e4352800faf9e",
+  "sha": "19d29d8684bc6173278d4d57ccb38d283e4dc789",
   "branch": "main",
   "remote": "https://github.com/adm01-debug/Hello_V3",
   "commits": [
+   {
+    "sha": "19d29d8",
+    "date": "2026-11-25",
+    "author": "adm01-debug",
+    "subject": "feat: permite editar e excluir cadencia e passo (etapa 086) (#323)",
+    "files": [
+     "src/hooks/__tests__/useCadences.crud.test.tsx",
+     "src/hooks/useCadences.ts",
+     "src/pages/Cadences.tsx",
+     "src/pages/__tests__/Cadences.crud.test.tsx"
+    ]
+   },
    {
     "sha": "31ec3c6",
     "date": "2026-11-25",
@@ -124799,23 +124965,12 @@
      "src/hooks/__tests__/useDialerFavorites.rollback.test.tsx",
      "src/hooks/useDialerFavorites.ts"
     ]
-   },
-   {
-    "sha": "48f3644",
-    "date": "2026-11-24",
-    "author": "adm01-debug",
-    "subject": "fix: separa o cache de notificacoes por usuario (etapa 221) (#293)",
-    "files": [
-     "docs/qa/05-PROGRESSO.md",
-     "src/components/notification-center/__tests__/useNotificationCenter.cache.test.tsx",
-     "src/components/notification-center/useNotificationCenter.ts"
-    ]
    }
   ],
   "hot_files": [
    [
     "docs/qa/05-PROGRESSO.md",
-    16
+    15
    ],
    [
     ".github/workflows/migrations.yml",
@@ -124858,6 +125013,22 @@
     2
    ],
    [
+    "src/hooks/__tests__/useCadences.crud.test.tsx",
+    1
+   ],
+   [
+    "src/hooks/useCadences.ts",
+    1
+   ],
+   [
+    "src/pages/Cadences.tsx",
+    1
+   ],
+   [
+    "src/pages/__tests__/Cadences.crud.test.tsx",
+    1
+   ],
+   [
     "src/components/calls/__tests__/UnifiedSoftphone.falhas.test.tsx",
     1
    ],
@@ -124875,22 +125046,6 @@
    ],
    [
     "supabase/tests/user_preferences_rls_test.sql",
-    1
-   ],
-   [
-    "src/components/calls/WebRTCCall.tsx",
-    1
-   ],
-   [
-    "src/components/calls/__tests__/WebRTCCall.test.tsx",
-    1
-   ],
-   [
-    "src/hooks/__tests__/useNotificationPreferences.test.tsx",
-    1
-   ],
-   [
-    "src/hooks/useNotificationPreferences.ts",
     1
    ]
   ]

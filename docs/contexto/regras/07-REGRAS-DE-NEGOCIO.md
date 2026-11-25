@@ -1,6 +1,6 @@
 # 07 · REGRAS DE NEGÓCIO
 
-> Gerado automaticamente por AI Context Sync v1.3.2 · commit `31ec3c6290` · branch `main` · 2026-11-25 16:21 UTC
+> Gerado automaticamente por AI Context Sync v1.3.2 · commit `19d29d8684` · branch `main` · 2026-11-25 17:41 UTC
 > Não edite à mão — regras humanas vão em `manual/`.
 
 ## A. Regras escritas por humanos (`manual/` — prioridade máxima, nunca sobrescrito)
@@ -2482,8 +2482,13 @@ _nenhum item encontrado_
 | Erro ao sincronizar departamentos | `src/hooks/useBitrix.ts` |
 | Erro ao carregar histórico de bloqueios | `src/hooks/useBlockedAccessLogs.ts` |
 | Erro ao adicionar etapa | `src/hooks/useCadences.ts` |
+| Erro ao atualizar cadência | `src/hooks/useCadences.ts` |
+| Erro ao atualizar etapa | `src/hooks/useCadences.ts` |
 | Erro ao criar cadência | `src/hooks/useCadences.ts` |
+| Erro ao excluir cadência | `src/hooks/useCadences.ts` |
+| Erro ao excluir etapa | `src/hooks/useCadences.ts` |
 | Erro ao inscrever contato | `src/hooks/useCadences.ts` |
+| Esta cadência foi alterada por outro usuário. Recarregando... | `src/hooks/useCadences.ts` |
 | Esta chamada já foi retirada ou expirou. | `src/hooks/useCallPark.ts` |
 | Esta órbita está desativada. | `src/hooks/useCallPark.ts` |
 | Sessão expirada. Entre novamente. | `src/hooks/useCallPark.ts` |
@@ -2602,12 +2607,7 @@ _nenhum item encontrado_
 | Erro ao limpar logs | `src/hooks/useRateLimitData.ts` |
 | Erro ao resolver alerta | `src/hooks/useRateLimitData.ts` |
 | Novo alerta de rate limit! | `src/hooks/useRateLimitData.ts` |
-| Notificações não suportadas | `src/hooks/useRealtimeHoldAlerts.ts` |
-| Permissão negada | `src/hooks/useRealtimeHoldAlerts.ts` |
-| ⚠️ Alerta de Tempo em Espera | `src/hooks/useRealtimeHoldAlerts.ts` |
-| Erro ao analisar sentimento | `src/hooks/useRecordings.ts` |
-| Erro ao baixar gravação | `src/hooks/useRecordings.ts` |
-| … +288 linhas — lista completa em `context.json` | |
+| … +293 linhas — lista completa em `context.json` | |
 
 ## J. Controle de acesso no código (checagens de perfil/permissão)
 
@@ -2656,7 +2656,7 @@ _nenhum item encontrado_
 | `admin` | `supabase/functions/data-lake-flush/index.ts` |
 | `admin` | `supabase/migrations/20261123000200_fix_has_role_oracle_and_debug_tables.sql` |
 
-## K. Testes como especificação (3591 testes em 391 arquivos — nomes completos em `context.json`)
+## K. Testes como especificação (3606 testes em 393 arquivos — nomes completos em `context.json`)
 
 | Arquivo | Testes | Exemplos do que o sistema DEVE fazer |
 |---|---|---|
@@ -2769,6 +2769,7 @@ _nenhum item encontrado_
 | `src/components/ui/__tests__/search-input.test.tsx` | 9 | SearchInput · renderiza com placeholder e valor · chama onValueChange ao digitar · mostra botão limpar somente quando há valor … |
 | `src/hooks/__tests__/useAccounts.coverage.test.tsx` | 9 | useAccounts coverage · handles load error · create success · create error returns null … |
 | `src/hooks/__tests__/useAlertsExport.test.ts` | 9 | useAlertsExport · exporta CSV com escopo  · filtra por scope= · filtra por scope= … |
+| `src/hooks/__tests__/useCadences.crud.test.tsx` | 9 | useCadences: edicao e exclusao · updateCadence envia o patch junto com a version atual e recarrega · updateCadence alterna is_active mantendo a version do registro · updateCadence trata conflito de version recarregando a lista … |
 | `src/hooks/__tests__/useCallPlaylists.coverage.test.tsx` | 9 | useCallPlaylists (coverage) · loads playlists on mount · handles list error · createPlaylist success and error … |
 | `src/hooks/__tests__/useCallTimers.coverage.test.tsx` | 9 | useCallTimers · startDurationTimer increments duration each second · startDurationTimer clears existing timer when restarted · stopDurationTimer stops increments … |
 | `src/hooks/__tests__/useCoaching.coverage.test.tsx` | 9 | useCoaching · returns empty without agentId (no fetch) · fetches recommendations and subscribes · handles fetch error … |
@@ -2882,6 +2883,7 @@ _nenhum item encontrado_
 | `src/lib/__tests__/webrtc-config.test.ts` | 6 | getIceServers · retorna STUN servers padrão sem TURN quando envs ausentes · inclui TURN quando todas as envs estão presentes · não inclui TURN quando falta uma das credenciais … |
 | `src/lib/audio/__tests__/deviceTest.test.ts` | 6 | deviceTest · explica a recusa de permissão e não vaza stream · mede o nível e libera o microfone ao parar · avisa quando não há microfone disponível … |
 | `src/lib/audit/__tests__/index.coverage.test.ts` | 6 | audit/index (coverage) · logAuditEvent returns id on success · logAuditEvent defaults details to empty object and resourceId undefined · logAuditEvent returns null on supabase error … |
+| `src/pages/__tests__/Cadences.crud.test.tsx` | 6 | Cadences: acoes de edicao e exclusao na tela · mostra os controles de editar, ativar/desativar e excluir na cadencia · desativar a cadencia grava is_active=false pelo id · salvar o dialogo de edicao envia nome e descricao … |
 | `src/routes/__tests__/callHistoryAlias.test.tsx` | 6 | alias /call-history -> /history (etapa 266) · /call-history nao renderiza mais CallHistory, e sim o alias · /history continua entregando a pagina real · redireciona /call-history para /history … |
 | `supabase/functions/__tests__/optimistic-lock.test.ts` | 6 | optimistic-lock: migration canonica do trigger existe · optimistic-lock: detecta divergencia de versao e lanca OPTIMISTIC_LOCK_CONFLICT · optimistic-lock: incrementa a versao quando nao ha divergencia · optimistic-lock: conflito e auditado em optimistic_lock_conflicts … |
 | `supabase/functions/_shared/__tests__/allowed-hosts.test.ts` | 6 | aceita hosts públicos https · bloqueia loopback, metadata e esquemas perigosos · faixas privadas são liberáveis apenas com allowPrivate · metadata continua bloqueada mesmo com allowPrivate … |
@@ -2958,9 +2960,7 @@ _nenhum item encontrado_
 | `src/hooks/__tests__/usePageTitle.coverage.test.tsx` | 4 | usePageTitle · sets document title with app name suffix · resets title on unmount · updates title when prop changes |
 | `src/hooks/__tests__/useQualityMetrics.coverage.test.tsx` | 4 | useQualityMetrics / useTrunkUsageMetrics · loads quality metrics · loads trunk usage metrics · propagates errors |
 | `src/hooks/__tests__/useTalkRatio.test.ts` | 4 | useTalkRatio · estado inicial é vazio · analisa com sucesso · captura erro do backend |
-| `src/hooks/__tests__/useTrunkMetrics.coverage.test.tsx` | 4 | useTrunkMetrics · aggregates usage by trunk and by day · returns empty for no data with default days · throws on usage error |
-| `src/hooks/__tests__/useVoipAnomalies.coverage.test.tsx` | 4 | useVoipAnomalies · classifies anomalies (outage/drift/spike) and builds ids · returns empty array when no anomalies present · throws on error |
-| … +91 linhas — lista completa em `context.json` | | |
+| … +93 linhas — lista completa em `context.json` | | |
 
 ## L. Eventos de webhook tratados (contratos com sistemas externos)
 
