@@ -1,7 +1,7 @@
 # Contexto do projeto para agentes de IA
 
 GERADO AUTOMATICAMENTE por scripts/ai-context/gerar.mjs — não editar à mão; será sobrescrito.
-Publicado em `docs/contexto/codigo/` na branch `contexto` (gerada, nunca abra PR dela) a cada push em `main` e a cada 10 minutos pelo workflow `contexto.yml`; índice único das três fontes em `docs/contexto/00-INDEX.md`. Gere local com `node scripts/ai-context/gerar.mjs`. Commit-base: `c9aede082a4910f02c4fba6a429f581f366d47d7` (2026-11-25T10:21:51-03:00).
+Publicado em `docs/contexto/codigo/` na branch `contexto` (gerada, nunca abra PR dela) a cada push em `main` e a cada 10 minutos pelo workflow `contexto.yml`; índice único das três fontes em `docs/contexto/00-INDEX.md`. Gere local com `node scripts/ai-context/gerar.mjs`. Commit-base: `6be55225455263204f00b5dc208d638eb5bf0a43` (2026-11-25T10:22:40-03:00).
 
 ## Como usar (leia antes de planejar ou executar qualquer tarefa)
 1. **Tela/rota/menu** → `rotas.json` (url/vista/menu → arquivo → hooks → tabelas → edges; `rotas_http_backend` para APIs) e `modulos.json` (módulo inteiro + dependências entre módulos).
@@ -371,8 +371,8 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 - possiveis_segredos_no_codigo: 3 — ex.: src/lib/__tests__/security-advanced.test.ts:203, src/lib/__tests__/security-advanced.test.ts:208, src/lib/__tests__/security-advanced.test.ts:213
 
 ## Grafo de código (graphify)
-- 10335 nós · 27339 arestas · 778 comunidades · grafo do commit `c9aede08`
-- comunidades maiores: card.tsx (243), client.ts (197), react (178), vitest (172), 5. Em uso por rota (152), lucide-react (144), Tabela de funcionalidades (136), utils.ts (134), cn (131), usePageTitle.ts (127), buildCorsHeaders (119), @tanstack/react-query (115)
+- 10335 nós · 27339 arestas · 775 comunidades · grafo do commit `6be55225`
+- comunidades maiores: lucide-react (317), client.ts (223), vitest (200), badge.tsx (199), usePageTitle (187), react (180), traceHeaders (163), @tanstack/react-query (139), 5. Em uso por rota (135), buildCorsHeaders (119), cn (117), validate.ts (104)
 - símbolos mais chamados: cn() (src/lib/utils.ts), usePageTitle() (src/hooks/usePageTitle.ts), safeFormatDatePtBR() (src/lib/safe-date.ts), useAuthContext() (src/contexts/AuthContext.tsx), q() (scripts/supabase_snapshot/snapshot.py), safeFormatDistanceToNow() (src/lib/safe-date.ts), traceHeaders() (src/lib/tracing.ts), withTrace() (src/lib/tracing.ts), formatDuration() (src/lib/utils.ts), safeToLocaleString() (src/lib/safe-date.ts), buildCorsHeaders() (supabase/functions/_shared/cors.ts), .collect() (scripts/supabase_snapshot/test_snapshot.py)
 - consulta local: `graphify query "<pergunta>"`, `graphify path "<A>" "<B>"`, `graphify explain "<X>"`
 
@@ -431,6 +431,7 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 
 
 ## Últimos commits
+- 2026-11-25 `6be5522` fix: renumera e enxuga a migration de indices morta (#318)
 - 2026-11-25 `c9aede0` fix: dry-run do migrations.yml nao pode gravar de verdade (#319)
 - 2026-11-25 `fffd1cc` fix: normalizar nome registrado antes de comparar com o arquivo (#317)
 - 2026-11-25 `f95122a` fix: colisao de versao nao impede o diagnostico da fila (#316)
@@ -445,7 +446,6 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 - 2026-11-24 `ddf4d95` fix: foco sempre volta ao gatilho ao fechar o assistente de voz (e2e do teclado deterministico) (#310)
 - 2026-11-24 `a67d708` fix: teclado no fluxo de chamada - foco preso no dialogo e devolvido ao gatilho (etapa 273) (#308)
 - 2026-11-24 `61fd9f9` fix: alvo de toque de 44 px no celular (etapa 272) (#307)
-- 2026-11-24 `fc9a215` fix: telas internas cabem na largura do celular (etapa 271) (#306)
 
 ## Arquivos deste diretório
 - `docs/contexto/codigo/rotas.json`

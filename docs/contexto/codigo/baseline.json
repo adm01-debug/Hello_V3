@@ -2,11 +2,16 @@
  "aviso": "GERADO AUTOMATICAMENTE por scripts/ai-context/gerar.mjs — não editar à mão; será sobrescrito.",
  "format_version": 2,
  "git": {
-  "commit": "c9aede082a4910f02c4fba6a429f581f366d47d7",
+  "commit": "6be55225455263204f00b5dc208d638eb5bf0a43",
   "branch": "main",
-  "data_commit": "2026-11-25T10:21:51-03:00",
+  "data_commit": "2026-11-25T10:22:40-03:00",
   "remote": "https://github.com/adm01-debug/Hello_V3",
   "ultimos_commits": [
+   {
+    "sha": "6be5522",
+    "data": "2026-11-25",
+    "assunto": "fix: renumera e enxuga a migration de indices morta (#318)"
+   },
    {
     "sha": "c9aede0",
     "data": "2026-11-25",
@@ -126,14 +131,9 @@
     "sha": "4a65b1f",
     "data": "2026-11-24",
     "assunto": "feat: preserva o formulario e reautentica quando a sessao expira (#295)"
-   },
-   {
-    "sha": "ca6e6dc",
-    "data": "2026-11-24",
-    "assunto": "fix: restaura estado anterior no rollback das mutacoes otimistas de favoritos (#294)"
    }
   ],
-  "arquivos_mudados_7d": 1275,
+  "arquivos_mudados_7d": 1277,
   "pastas_mais_mudadas_30d": [
    {
     "pasta": "covout/lcov-report/hooks",

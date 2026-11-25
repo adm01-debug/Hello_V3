@@ -1,6 +1,6 @@
 # 07 · REGRAS DE NEGÓCIO
 
-> Gerado automaticamente por AI Context Sync v1.3.2 · commit `c9aede082a` · branch `main` · 2026-11-25 13:22 UTC
+> Gerado automaticamente por AI Context Sync v1.3.2 · commit `6be5522545` · branch `main` · 2026-11-25 13:24 UTC
 > Não edite à mão — regras humanas vão em `manual/`.
 
 ## A. Regras escritas por humanos (`manual/` — prioridade máxima, nunca sobrescrito)
@@ -1532,10 +1532,10 @@ _nenhum item encontrado_
 | View | SELECT |
 |---|---|
 | `migration_status` | `SELECT sm.version, sm.name, sm.applied_at, sm.applied_by, sm.execution_time_ms, sm.success, CASE WHEN mr.id IS NOT NULL THEN 'Rolled Back' ELSE 'Applied' END AS status FROM schema_migrations sm LEFT JOIN migration_rollbacks mr ON sm.version = mr.version ORDER BY sm.version DESC` |
-| `index_usage` | `SELECT schemaname, relname AS tablename, indexrelname AS indexname, idx_scan AS index_scans, idx_tup_read AS tuples_read, idx_tup_fetch AS tuples_fetched, pg_size_pretty(pg_relation_size(indexrelid)) AS index_size FROM pg_stat_user_indexes ORDER BY idx_scan DESC` |
-| `unused_indexes` | `SELECT schemaname, relname AS tablename, indexrelname AS indexname, idx_scan, pg_size_pretty(pg_relation_size(indexrelid)) AS index_size FROM pg_stat_user_indexes WHERE idx_scan = 0 AND indexrelname NOT LIKE 'pk_%' AND indexrelname NOT LIKE '%_pkey' ORDER BY pg_relation_size(indexrelid) DESC` |
 | `slow_queries` | `SELECT query, calls, total_time / 1000 AS total_seconds, mean_time / 1000 AS avg_seconds, max_time / 1000 AS max_seconds FROM pg_stat_statements WHERE mean_time > 100 ORDER BY mean_time DESC LIMIT 50` |
 | `financial_impact_daily` | `WITH calls_daily AS ( SELECT date_trunc('day', started_at)::date AS day, COUNT(*) AS total_calls, COALESCE(SUM(duration_seconds), 0) AS total_seconds, COALESCE(SUM(duration_seconds * 15 / 60), 0) AS estimated_cost_cents FROM public.call_sessions WHERE started_at > now() - interval '90 days' GROUP BY …` |
+| `index_usage` | `SELECT schemaname, relname AS tablename, indexrelname AS indexname, idx_scan AS index_scans, idx_tup_read AS tuples_read, idx_tup_fetch AS tuples_fetched, pg_size_pretty(pg_relation_size(indexrelid)) AS index_size FROM pg_stat_user_indexes ORDER BY idx_scan DESC` |
+| `unused_indexes` | `SELECT schemaname, relname AS tablename, indexrelname AS indexname, idx_scan, pg_size_pretty(pg_relation_size(indexrelid)) AS index_size FROM pg_stat_user_indexes WHERE idx_scan = 0 AND indexrelname NOT LIKE 'pk_%' AND indexrelname NOT LIKE '%_pkey' ORDER BY pg_relation_size(indexrelid) DESC` |
 
 ### G.3 Funções de cálculo/decisão no código
 
