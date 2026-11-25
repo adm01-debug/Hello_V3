@@ -4,10 +4,10 @@
  "presente": true,
  "como_gerar": "uvx --from \"graphifyy[sql]\" graphify update .  (ou: bun run graph:update); saída em graphify-out/ — graph.json e graph.html NÃO são versionados (dezenas de MB); use `graphify query/path/explain` localmente",
  "relatorio": null,
- "commit_do_grafo": "bb76af52aa4f827b23f945e6360a5794d6eaa6d5",
+ "commit_do_grafo": "7e936758a7b8780087d3ac845c0e34a4a0f8ab69",
  "grafo_atual": true,
  "nos": 10344,
- "arestas": 27316,
+ "arestas": 27317,
  "comunidades_total": 793,
  "relacoes": {
   "calls": 2578,
@@ -25,12 +25,12 @@
   "rationale_for": 26,
   "re_exports": 72,
   "reads_from": 115,
-  "references": 2142,
+  "references": 2143,
   "triggers": 115
  },
  "origem": {
   "EXTRACTED": 25473,
-  "INFERRED": 1843
+  "INFERRED": 1844
  },
  "comunidades": [
   {
@@ -222,6 +222,23 @@
   },
   {
    "id": 11,
+   "nome": "ONDA 2 — Fluxos principais quebrados (056–100)",
+   "nos": 96,
+   "callables": 18,
+   "arquivos": 26,
+   "exemplos_arquivos": [
+    "ESTADO_ATUAL.md",
+    "docs/adr/013-real-time-agent-assist.md",
+    "docs/adr/038-onda-23-rls-hardening-hibp.md",
+    "docs/agentes/telefonia-voip.md",
+    "docs/estado/componentes-parte1.md",
+    "docs/estado/hooks-parte1.md",
+    "docs/qa/01-INVENTARIO.md",
+    "docs/qa/03-ACHADOS.md"
+   ]
+  },
+  {
+   "id": 12,
    "nome": "5. Em uso por rota",
    "nos": 96,
    "callables": 64,
@@ -238,7 +255,7 @@
    ]
   },
   {
-   "id": 12,
+   "id": 13,
    "nome": "generate.py",
    "nos": 93,
    "callables": 64,
@@ -250,7 +267,7 @@
    ]
   },
   {
-   "id": 13,
+   "id": 14,
    "nome": "traceHeaders",
    "nos": 90,
    "callables": 55,
@@ -267,7 +284,7 @@
    ]
   },
   {
-   "id": 14,
+   "id": 15,
    "nome": "validate.ts",
    "nos": 89,
    "callables": 47,
@@ -284,41 +301,7 @@
    ]
   },
   {
-   "id": 15,
-   "nome": "ONDA 2 — Fluxos principais quebrados (056–100)",
-   "nos": 87,
-   "callables": 18,
-   "arquivos": 25,
-   "exemplos_arquivos": [
-    "ESTADO_ATUAL.md",
-    "docs/adr/013-real-time-agent-assist.md",
-    "docs/adr/038-onda-23-rls-hardening-hibp.md",
-    "docs/agentes/telefonia-voip.md",
-    "docs/estado/componentes-parte1.md",
-    "docs/estado/hooks-parte1.md",
-    "docs/qa/01-INVENTARIO.md",
-    "docs/qa/03-ACHADOS.md"
-   ]
-  },
-  {
    "id": 16,
-   "nome": "Rotas protegidas sem `roles:` (etapa 090)",
-   "nos": 85,
-   "callables": 57,
-   "arquivos": 58,
-   "exemplos_arquivos": [
-    "ESTADO_ATUAL.md",
-    "docs/agentes/mapa-repo.md",
-    "docs/estado/componentes-parte4.md",
-    "docs/estado/hooks-parte1.md",
-    "docs/estado/infra-ci-rotas-integracoes.md",
-    "docs/pendencias/WIRING-05-securityauditdashboard.md",
-    "docs/qa/04-PLANO.md",
-    "docs/qa/05-PROGRESSO.md"
-   ]
-  },
-  {
-   "id": 17,
    "nome": "safeFormatDistanceToNow",
    "nos": 85,
    "callables": 46,
@@ -335,7 +318,7 @@
    ]
   },
   {
-   "id": 18,
+   "id": 17,
    "nome": "dependencies",
    "nos": 82,
    "callables": 0,
@@ -345,7 +328,7 @@
    ]
   },
   {
-   "id": 19,
+   "id": 18,
    "nome": "ONDA 1 — Segurança e risco de perda de dado (001–055)",
    "nos": 81,
    "callables": 19,
@@ -362,7 +345,7 @@
    ]
   },
   {
-   "id": 20,
+   "id": 19,
    "nome": "UnifiedSoftphone.tsx",
    "nos": 81,
    "callables": 44,
@@ -379,7 +362,7 @@
    ]
   },
   {
-   "id": 21,
+   "id": 20,
    "nome": "gerar.mjs",
    "nos": 80,
    "callables": 14,
@@ -389,7 +372,7 @@
    ]
   },
   {
-   "id": 22,
+   "id": 21,
    "nome": "Onda 6 — Performance (236–258, 23 etapas)",
    "nos": 79,
    "callables": 42,
@@ -403,6 +386,23 @@
     "docs/qa/05-PROGRESSO.md",
     "mem/features/voip-anomaly-detection.md",
     "scripts/audit-edge-functions.ts"
+   ]
+  },
+  {
+   "id": 22,
+   "nome": "Rotas protegidas sem `roles:` (etapa 090)",
+   "nos": 76,
+   "callables": 57,
+   "arquivos": 58,
+   "exemplos_arquivos": [
+    "ESTADO_ATUAL.md",
+    "docs/agentes/mapa-repo.md",
+    "docs/estado/componentes-parte4.md",
+    "docs/estado/hooks-parte1.md",
+    "docs/estado/infra-ci-rotas-integracoes.md",
+    "docs/pendencias/WIRING-05-securityauditdashboard.md",
+    "docs/qa/04-PLANO.md",
+    "docs/qa/05-PROGRESSO.md"
    ]
   },
   {
@@ -2189,8 +2189,8 @@
   "docs/estado/edge-functions-parte1.md": "analyze-call/index.ts",
   "docs/estado/edge-functions-parte2.md": "voip-recommendation-insights/index.ts",
   "docs/estado/funcionalidades-planejadas.md": "5. Em uso por rota",
-  "docs/estado/hooks-dormentes.md": "5. Em uso por rota",
-  "docs/estado/hooks-parte1.md": "5. Em uso por rota",
+  "docs/estado/hooks-dormentes.md": "Memories",
+  "docs/estado/hooks-parte1.md": "ONDA 2 — Fluxos principais quebrados (056–100)",
   "docs/estado/hooks-parte2.md": "useHoldSoundAlert.ts",
   "docs/estado/hooks-parte3.md": "5. Em uso por rota",
   "docs/estado/hooks-parte4.md": "Tabela de funcionalidades",
@@ -2219,7 +2219,7 @@
   "docs/qa/02-CENARIOS.md": "02 — Matriz de cenários por jornada",
   "docs/qa/03-ACHADOS.md": "03-ACHADOS.md",
   "docs/qa/04-PLANO.md": "ONDA 4 — Funcionalidades incompletas (151–195)",
-  "docs/qa/05-PROGRESSO.md": "5. Em uso por rota",
+  "docs/qa/05-PROGRESSO.md": "ONDA 2 — Fluxos principais quebrados (056–100)",
   "docs/qa/onda-37-relatorio-massivo.md": "Contacts.tsx",
   "docs/qa/onda-38-auditoria-producao.md": "AgentAssistDashboardCard.tsx",
   "docs/runbooks/incident-response.md": "Runbook — Resposta a Incidentes",

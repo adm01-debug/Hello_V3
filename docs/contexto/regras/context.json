@@ -1,15 +1,15 @@
 {
  "meta": {
-  "sha": "bb76af52aa4f827b23f945e6360a5794d6eaa6d5",
+  "sha": "7e936758a7b8780087d3ac845c0e34a4a0f8ab69",
   "branch": "main",
   "remote": "https://github.com/adm01-debug/Hello_V3",
-  "generated_at": "2026-11-25 20:50 UTC",
+  "generated_at": "2026-11-25 21:13 UTC",
   "files_total": 1802,
   "code_files": 1599,
-  "code_lines": 195619
+  "code_lines": 195632
  },
  "version": "1.3.2",
- "facts_hash": "74db317ac4394999",
+ "facts_hash": "28cd6216178ba20c",
  "stack": {
   "frameworks": [
    "React + Vite",
@@ -33707,7 +33707,7 @@
   {
    "module": "src/components",
    "files": 370,
-   "lines": 43625,
+   "lines": 43638,
    "tables": [
     "accounts",
     "agent_goals",
@@ -43146,6 +43146,10 @@
    {
     "file": "src/components/auth/PasswordStrength.tsx",
     "text": "Requer mínimo de 8 caracteres e caractere especial como obrigatórios"
+   },
+   {
+    "file": "src/components/calls/NextBestActionPanel.tsx",
+    "text": "A-212: \"Ignorar\" nao pode chamar markUsed — o botao registrava a sugestao como"
    },
    {
     "file": "src/components/calls/UnifiedSoftphone.tsx",
@@ -58451,6 +58455,10 @@
    {
     "file": "src/components/calls/__tests__/NextBestActionPanel.test.tsx",
     "name": "lista o sinal e marca como usado"
+   },
+   {
+    "file": "src/components/calls/__tests__/NextBestActionPanel.test.tsx",
+    "name": "ignorar nao registra a sugestao como usada (A-212)"
    },
    {
     "file": "src/components/calls/__tests__/UnifiedSoftphone.falhas.test.tsx",
@@ -92275,7 +92283,7 @@
   },
   "src/components/calls/ActiveCallBar.tsx": {
    "path": "src/components/calls/ActiveCallBar.tsx",
-   "lines": 413,
+   "lines": 398,
    "exports": [
     "function ActiveCallBar"
    ],
@@ -92436,12 +92444,15 @@
   },
   "src/components/calls/NextBestActionPanel.tsx": {
    "path": "src/components/calls/NextBestActionPanel.tsx",
-   "lines": 132,
+   "lines": 138,
    "exports": [
     "function NextBestActionPanel"
    ],
    "errors": [
     " className="
+   ],
+   "rule_comments": [
+    "A-212: \"Ignorar\" nao pode chamar markUsed — o botao registrava a sugestao como"
    ]
   },
   "src/components/calls/SipConnectionStatus.tsx": {
@@ -92653,7 +92664,7 @@
   },
   "src/components/calls/__tests__/NextBestActionPanel.test.tsx": {
    "path": "src/components/calls/__tests__/NextBestActionPanel.test.tsx",
-   "lines": 71,
+   "lines": 93,
    "is_test": true,
    "errors": [
     ")).toHaveTextContent("
@@ -92662,7 +92673,8 @@
     "NextBestActionPanel",
     "mostra o erro da consulta em vez de um painel vazio",
     "distingue carregando de sem sugestao",
-    "lista o sinal e marca como usado"
+    "lista o sinal e marca como usado",
+    "ignorar nao registra a sugestao como usada (A-212)"
    ]
   },
   "src/components/calls/__tests__/UnifiedSoftphone.falhas.test.tsx": {
@@ -124537,10 +124549,23 @@
   }
  },
  "git": {
-  "sha": "bb76af52aa4f827b23f945e6360a5794d6eaa6d5",
+  "sha": "7e936758a7b8780087d3ac845c0e34a4a0f8ab69",
   "branch": "main",
   "remote": "https://github.com/adm01-debug/Hello_V3",
   "commits": [
+   {
+    "sha": "7e93675",
+    "date": "2026-11-25",
+    "author": "adm01-debug",
+    "subject": "fix: botao de excluir contato com icone proprio e acoes de UI que mentiam (#331)",
+    "files": [
+     "docs/qa/05-PROGRESSO.md",
+     "src/components/calls/ActiveCallBar.tsx",
+     "src/components/calls/NextBestActionPanel.tsx",
+     "src/components/calls/__tests__/NextBestActionPanel.test.tsx",
+     "src/components/contacts/ContactDetailSheet.tsx"
+    ]
+   },
    {
     "sha": "bb76af5",
     "date": "2026-11-25",
@@ -124903,18 +124928,6 @@
      "i18n.json",
      "public/locales/en/common.json"
     ]
-   },
-   {
-    "sha": "0455270",
-    "date": "2026-11-24",
-    "author": "adm01-debug",
-    "subject": "chore: estados vazios que explicam o que falta (#302)",
-    "files": [
-     "docs/qa/05-PROGRESSO.md",
-     "src/components/call-history/CallSessionsList.tsx",
-     "src/components/call-history/__tests__/CallSessionsList.test.tsx",
-     "src/pages/Contacts.tsx"
-    ]
    }
   ],
   "hot_files": [
@@ -124927,11 +124940,11 @@
     9
    ],
    [
-    "src/components/calls/UnifiedSoftphone.tsx",
-    3
+    "src/components/calls/ActiveCallBar.tsx",
+    4
    ],
    [
-    "src/components/calls/ActiveCallBar.tsx",
+    "src/components/calls/UnifiedSoftphone.tsx",
     3
    ],
    [
@@ -124944,10 +124957,6 @@
    ],
    [
     "src/components/callbacks/ScheduledCallbacksList.tsx",
-    2
-   ],
-   [
-    "src/pages/Contacts.tsx",
     2
    ],
    [
@@ -124996,6 +125005,10 @@
    ],
    [
     "src/pages/Calls.tsx",
+    2
+   ],
+   [
+    "tests/e2e/screenshots.spec.ts",
     2
    ]
   ]

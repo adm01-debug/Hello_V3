@@ -254,11 +254,11 @@
   {
    "arquivo": "src/components/calls/__tests__/NextBestActionPanel.test.tsx",
    "tipo": "unit",
-   "linhas": 71,
+   "linhas": 93,
    "testa": [
     "src/components/calls/NextBestActionPanel.tsx"
    ],
-   "casos": 3
+   "casos": 4
   },
   {
    "arquivo": "src/components/calls/__tests__/UnifiedSoftphone.falhas.test.tsx",

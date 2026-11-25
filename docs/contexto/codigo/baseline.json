@@ -2,11 +2,16 @@
  "aviso": "GERADO AUTOMATICAMENTE por scripts/ai-context/gerar.mjs — não editar à mão; será sobrescrito.",
  "format_version": 2,
  "git": {
-  "commit": "bb76af52aa4f827b23f945e6360a5794d6eaa6d5",
+  "commit": "7e936758a7b8780087d3ac845c0e34a4a0f8ab69",
   "branch": "main",
-  "data_commit": "2026-11-25T17:50:15-03:00",
+  "data_commit": "2026-11-25T18:12:40-03:00",
   "remote": "https://github.com/adm01-debug/Hello_V3",
   "ultimos_commits": [
+   {
+    "sha": "7e93675",
+    "data": "2026-11-25",
+    "assunto": "fix: botao de excluir contato com icone proprio e acoes de UI que mentiam (#331)"
+   },
    {
     "sha": "bb76af5",
     "data": "2026-11-25",
@@ -126,11 +131,6 @@
     "sha": "ddf4d95",
     "data": "2026-11-24",
     "assunto": "fix: foco sempre volta ao gatilho ao fechar o assistente de voz (e2e do teclado deterministico) (#310)"
-   },
-   {
-    "sha": "a67d708",
-    "data": "2026-11-24",
-    "assunto": "fix: teclado no fluxo de chamada - foco preso no dialogo e devolvido ao gatilho (etapa 273) (#308)"
    }
   ],
   "arquivos_mudados_7d": 1299,
@@ -145,7 +145,7 @@
    },
    {
     "pasta": "docs/qa/05-PROGRESSO.md",
-    "mudancas": 137
+    "mudancas": 138
    },
    {
     "pasta": "covout/lcov-report/lib",
@@ -153,7 +153,7 @@
    },
    {
     "pasta": "src/components/calls",
-    "mudancas": 96
+    "mudancas": 99
    },
    {
     "pasta": "src/lib/__tests__",
@@ -199,7 +199,7 @@
   "arquivos_mais_mudados_90d": [
    {
     "arquivo": "docs/qa/05-PROGRESSO.md",
-    "mudancas": 137
+    "mudancas": 138
    },
    {
     "arquivo": "docs/estado/funcionalidades-planejadas.md",
@@ -222,6 +222,10 @@
     "mudancas": 10
    },
    {
+    "arquivo": "src/components/calls/ActiveCallBar.tsx",
+    "mudancas": 10
+   },
+   {
     "arquivo": "supabase/functions/data-lake-flush/index.ts",
     "mudancas": 10
    },
@@ -231,10 +235,6 @@
    },
    {
     "arquivo": ".github/workflows/migrations.yml",
-    "mudancas": 9
-   },
-   {
-    "arquivo": "src/components/calls/ActiveCallBar.tsx",
     "mudancas": 9
    },
    {
@@ -316,7 +316,7 @@
  "contagens": {
   "arquivos_total": 1755,
   "arquivos_codigo": 1350,
-  "linhas_codigo": 179689,
+  "linhas_codigo": 179702,
   "rotas": 106,
   "rotas_http_backend": 11,
   "vistas_por_id": 0,
@@ -484,7 +484,7 @@
   },
   "src/components": {
    "arquivos": 370,
-   "linhas": 43625
+   "linhas": 43638
   },
   "src/contexts": {
    "arquivos": 5,
@@ -586,7 +586,7 @@
   },
   {
    "arquivo": "src/components/calls/ActiveCallBar.tsx",
-   "linhas": 413
+   "linhas": 398
   },
   {
    "arquivo": "src/components/queues/QueueFormDialog.tsx",

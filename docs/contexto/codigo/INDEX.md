@@ -1,7 +1,7 @@
 # Contexto do projeto para agentes de IA
 
 GERADO AUTOMATICAMENTE por scripts/ai-context/gerar.mjs — não editar à mão; será sobrescrito.
-Publicado em `docs/contexto/codigo/` na branch `contexto` (gerada, nunca abra PR dela) a cada push em `main` e a cada 10 minutos pelo workflow `contexto.yml`; índice único das três fontes em `docs/contexto/00-INDEX.md`. Gere local com `node scripts/ai-context/gerar.mjs`. Commit-base: `bb76af52aa4f827b23f945e6360a5794d6eaa6d5` (2026-11-25T17:50:15-03:00).
+Publicado em `docs/contexto/codigo/` na branch `contexto` (gerada, nunca abra PR dela) a cada push em `main` e a cada 10 minutos pelo workflow `contexto.yml`; índice único das três fontes em `docs/contexto/00-INDEX.md`. Gere local com `node scripts/ai-context/gerar.mjs`. Commit-base: `7e936758a7b8780087d3ac845c0e34a4a0f8ab69` (2026-11-25T18:12:40-03:00).
 
 ## Como usar (leia antes de planejar ou executar qualquer tarefa)
 1. **Tela/rota/menu** → `rotas.json` (url/vista/menu → arquivo → hooks → tabelas → edges; `rotas_http_backend` para APIs) e `modulos.json` (módulo inteiro + dependências entre módulos).
@@ -36,7 +36,7 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 |---|---|
 | arquivos_total | 1755 |
 | arquivos_codigo | 1350 |
-| linhas_codigo | 179689 |
+| linhas_codigo | 179702 |
 | rotas | 106 |
 | rotas_http_backend | 11 |
 | vistas_por_id | 0 |
@@ -370,22 +370,22 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 - possiveis_segredos_no_codigo: 3 — ex.: src/lib/__tests__/security-advanced.test.ts:203, src/lib/__tests__/security-advanced.test.ts:208, src/lib/__tests__/security-advanced.test.ts:213
 
 ## Grafo de código (graphify)
-- 10344 nós · 27316 arestas · 793 comunidades · grafo do commit `bb76af52`
-- comunidades maiores: lucide-react (301), cn (227), client.ts (188), badge.tsx (181), react (179), vitest (157), buildCorsHeaders (152), protectedRoutes.tsx (120), sonner (116), @tanstack/react-query (107), Contacts.tsx (100), 5. Em uso por rota (96)
+- 10344 nós · 27317 arestas · 793 comunidades · grafo do commit `7e936758`
+- comunidades maiores: lucide-react (301), cn (227), client.ts (188), badge.tsx (181), react (179), vitest (157), buildCorsHeaders (152), protectedRoutes.tsx (120), sonner (116), @tanstack/react-query (107), Contacts.tsx (100), ONDA 2 — Fluxos principais quebrados (056–100) (96)
 - símbolos mais chamados: cn() (src/lib/utils.ts), usePageTitle() (src/hooks/usePageTitle.ts), safeFormatDatePtBR() (src/lib/safe-date.ts), useAuthContext() (src/contexts/AuthContext.tsx), q() (scripts/supabase_snapshot/snapshot.py), safeFormatDistanceToNow() (src/lib/safe-date.ts), traceHeaders() (src/lib/tracing.ts), withTrace() (src/lib/tracing.ts), safeToLocaleString() (src/lib/safe-date.ts), buildCorsHeaders() (supabase/functions/_shared/cors.ts), .collect() (scripts/supabase_snapshot/test_snapshot.py), formatDuration() (src/lib/utils.ts)
 - consulta local: `graphify query "<pergunta>"`, `graphify path "<A>" "<B>"`, `graphify explain "<X>"`
 
 ## Hotspots (arquivos mais alterados, 90 dias)
-- docs/qa/05-PROGRESSO.md (137)
+- docs/qa/05-PROGRESSO.md (138)
 - docs/estado/funcionalidades-planejadas.md (31)
 - src/components/calls/UnifiedSoftphone.tsx (13)
 - src/components/layout/AppSidebar.tsx (11)
 - src/hooks/useMultiChannelCall.ts (11)
 - docs/audits/pendencias-2026-07.md (10)
+- src/components/calls/ActiveCallBar.tsx (10)
 - supabase/functions/data-lake-flush/index.ts (10)
 - .github/workflows/ci.yml (9)
 - .github/workflows/migrations.yml (9)
-- src/components/calls/ActiveCallBar.tsx (9)
 - src/components/layout/CommandPalette.tsx (9)
 - docs/agentes/mapa-repo.md (8)
 - src/pages/PhoneDialer.tsx (8)
@@ -430,6 +430,7 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 
 
 ## Últimos commits
+- 2026-11-25 `7e93675` fix: botao de excluir contato com icone proprio e acoes de UI que mentiam (#331)
 - 2026-11-25 `bb76af5` fix: ligar do cartao de contato e do retorno discam de verdade (#330)
 - 2026-11-25 `89fede1` fix: proteger gravacao de preferencias e callbacks contra duplo clique (#329)
 - 2026-11-25 `7245964` chore: remover componentes orfaos (etapa 296) e reaproveitar saida de audio e alertas de contato (#328)
@@ -444,7 +445,6 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 - 2026-11-25 `6be5522` fix: renumera e enxuga a migration de indices morta (#318)
 - 2026-11-25 `c9aede0` fix: dry-run do migrations.yml nao pode gravar de verdade (#319)
 - 2026-11-25 `fffd1cc` fix: normalizar nome registrado antes de comparar com o arquivo (#317)
-- 2026-11-25 `f95122a` fix: colisao de versao nao impede o diagnostico da fila (#316)
 
 ## Arquivos deste diretório
 - `docs/contexto/codigo/rotas.json`

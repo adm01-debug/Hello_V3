@@ -836,7 +836,7 @@
     "ActiveCallBar"
    ],
    "export_default": null,
-   "linhas": 413,
+   "linhas": 398,
    "dominio": "components/calls",
    "hooks_locais": [
     "useCallContext",
@@ -1009,7 +1009,7 @@
     "NextBestActionPanel"
    ],
    "export_default": null,
-   "linhas": 132,
+   "linhas": 138,
    "dominio": "components/calls",
    "hooks_locais": [
     "useLiveAssist"

@@ -1,6 +1,6 @@
 # 07 · REGRAS DE NEGÓCIO
 
-> Gerado automaticamente por AI Context Sync v1.3.2 · commit `bb76af52aa` · branch `main` · 2026-11-25 20:50 UTC
+> Gerado automaticamente por AI Context Sync v1.3.2 · commit `7e936758a7` · branch `main` · 2026-11-25 21:13 UTC
 > Não edite à mão — regras humanas vão em `manual/`.
 
 ## A. Regras escritas por humanos (`manual/` — prioridade máxima, nunca sobrescrito)
@@ -2648,7 +2648,7 @@ _nenhum item encontrado_
 | `admin` | `supabase/functions/data-lake-flush/index.ts` |
 | `admin` | `supabase/migrations/20261123000200_fix_has_role_oracle_and_debug_tables.sql` |
 
-## K. Testes como especificação (3635 testes em 400 arquivos — nomes completos em `context.json`)
+## K. Testes como especificação (3636 testes em 400 arquivos — nomes completos em `context.json`)
 
 | Arquivo | Testes | Exemplos do que o sistema DEVE fazer |
 |---|---|---|
@@ -2889,6 +2889,7 @@ _nenhum item encontrado_
 | `src/__tests__/rls/contacts.test.ts` | 5 | RLS — contacts (matriz por role) · %s pode SELECT contacts · %s pode INSERT contacts · %s pode UPDATE contacts … |
 | `src/components/calls/__tests__/AudioOutputSelector.test.tsx` | 5 | AudioOutputSelector · mostra mensagem quando não suportado · renderiza o combobox quando suportado · desabilita quando não há dispositivos disponíveis (usa fallback padrão) … |
 | `src/components/calls/__tests__/CrmSuggestionsCard.test.tsx` | 5 | CrmSuggestionsCard · explica o vazio em vez de sumir da tela · mostra carregando enquanto a consulta roda · mostra o erro da consulta … |
+| `src/components/calls/__tests__/NextBestActionPanel.test.tsx` | 5 | NextBestActionPanel · mostra o erro da consulta em vez de um painel vazio · distingue carregando de sem sugestao · lista o sinal e marca como usado … |
 | `src/components/supervisor/panel/__tests__/TrendChartToggle.test.tsx` | 5 | TrendChartToggle · não monta o gráfico antes do primeiro clique · conserva o gráfico montado ao fechar, para o histórico não zerar · não reinicia o gráfico quando o pai reflete o fechamento … |
 | `src/hooks/__tests__/useAnimatedCounter.coverage.test.tsx` | 5 | useAnimatedCounter · returns 0 initially and animates toward the end value · respects decimals option · early-returns when diff is zero … |
 | `src/hooks/__tests__/useBlockedAccessLogs.coverage.test.tsx` | 5 | useBlockedAccessLogs · fetches logs and processes stats · handles fetch error · filters logs by search, country, reason; clears filters … |
@@ -2934,7 +2935,6 @@ _nenhum item encontrado_
 | `src/components/auth/__tests__/SessionExpiredDialog.test.tsx` | 4 | sessão expirada · mantém o formulário preenchido e reautentica sem sair da tela · mostra o erro de credencial e mantém o diálogo aberto · renova sozinho quando o refresh token ainda vale |
 | `src/components/call-history/__tests__/CallSessionsList.test.tsx` | 4 | CallSessionsList · avisa que a leitura falhou em vez de dizer que nao ha chamada · explica o vazio quando a leitura funcionou · com filtros aplicados, diz que o filtro esconde resultados e oferece limpar |
 | `src/components/calls/__tests__/ActiveCallBar.verificacaoVoz.test.tsx` | 4 | ActiveCallBar: verificacao de voz ao vivo (etapa 155) · verifica a voz da sessao ativa e mostra o veredito na barra · avisa na barra quando a voz nao confere com o padrao cadastrado · nao deixa verificar sem sessao de banco gravada |
-| `src/components/calls/__tests__/NextBestActionPanel.test.tsx` | 4 | NextBestActionPanel · mostra o erro da consulta em vez de um painel vazio · distingue carregando de sem sugestao · lista o sinal e marca como usado |
 | `src/components/calls/softphone/__tests__/ActiveCallDisplay.saidaAudio.test.tsx` | 4 | ActiveCallDisplay — saída de áudio da chamada · oferece a escolha de saída na chamada SIP e aplica o sink no áudio remoto · não mostra o seletor fora da chamada SIP · não mostra o seletor quando o navegador não suporta trocar a saída |
 | `src/components/calls/softphone/__tests__/DialpadTab.a11y.test.tsx` | 4 | DialpadTab - rótulo acessível no apagar (A-123) · expõe  · ConferenceSection - rótulo acessível ao remover participante (A-123) · identifica o participante que será removido |
 | `src/components/coaching/__tests__/CoachingAssignmentsPanel.rules.test.tsx` | 4 | CoachingAssignmentsPanel - regra do coaching automático (A-131) · explica a regra com os números que vieram da edge · mostra a contagem atual de cada agente que ficou de fora · sem regra conhecida, orienta a rodar a geração |
@@ -3123,6 +3123,7 @@ _nenhum item encontrado_
 |---|---|
 | Envia apenas os primeiros 5 caracteres (k-anonymity) | `src/components/auth/PasswordStrength.tsx` |
 | Requer mínimo de 8 caracteres e caractere especial como obrigatórios | `src/components/auth/PasswordStrength.tsx` |
+| A-212: "Ignorar" nao pode chamar markUsed — o botao registrava a sugestao como | `src/components/calls/NextBestActionPanel.tsx` |
 | sipCall é estável (criado uma vez); setDbSessionId usa apenas um ref interno | `src/components/calls/UnifiedSoftphone.tsx` |
 | Sem call aqui o motivo ja foi dito ao operador: limite de linhas no | `src/components/calls/UnifiedSoftphone.tsx` |
 | Motivo: selecao inicial do agente: incluir `selectedAgentId` reexecutaria o efeito apenas para reafirmar o mesmo valor. | `src/components/coaching/CoachingPanel.tsx` |

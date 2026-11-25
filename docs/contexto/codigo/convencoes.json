@@ -59,11 +59,11 @@
  "commits": {
   "convencao": "conventional commits (observado)",
   "exemplos": [
+   "fix: botao de excluir contato com icone proprio e acoes de UI que mentiam (#331)",
    "fix: ligar do cartao de contato e do retorno discam de verdade (#330)",
    "fix: proteger gravacao de preferencias e callbacks contra duplo clique (#329)",
    "chore: remover componentes orfaos (etapa 296) e reaproveitar saida de audio e alertas de contato (#328)",
-   "feat: verifica voz ao vivo na chamada e remove resumo de reuniao duplicado (etapas 154,155) (#327)",
-   "feat: liga enforcement de SLA, violacoes e registro de leitura da base (#326)"
+   "feat: verifica voz ao vivo na chamada e remove resumo de reuniao duplicado (etapas 154,155) (#327)"
   ]
  },
  "pr_template": null,
