@@ -1,9 +1,9 @@
 {
  "meta": {
-  "sha": "19d29d8684bc6173278d4d57ccb38d283e4dc789",
+  "sha": "2e71e7b36a8761213169169b0495204896676cdd",
   "branch": "main",
   "remote": "https://github.com/adm01-debug/Hello_V3",
-  "generated_at": "2026-11-25 17:41 UTC",
+  "generated_at": "2026-11-25 18:15 UTC",
   "files_total": 1801,
   "code_files": 1598,
   "code_lines": 196046
@@ -124597,10 +124597,19 @@
   }
  },
  "git": {
-  "sha": "19d29d8684bc6173278d4d57ccb38d283e4dc789",
+  "sha": "2e71e7b36a8761213169169b0495204896676cdd",
   "branch": "main",
   "remote": "https://github.com/adm01-debug/Hello_V3",
   "commits": [
+   {
+    "sha": "2e71e7b",
+    "date": "2026-11-25",
+    "author": "adm01-debug",
+    "subject": "chore: marca a etapa 086 como concluida no backlog (#324)",
+    "files": [
+     "docs/qa/05-PROGRESSO.md"
+    ]
+   },
    {
     "sha": "19d29d8",
     "date": "2026-11-25",
@@ -124953,17 +124962,6 @@
      "src/contexts/SessionExpiryContext.tsx",
      "src/lib/__tests__/session-expiry.test.ts",
      "src/lib/session-expiry.ts"
-    ]
-   },
-   {
-    "sha": "ca6e6dc",
-    "date": "2026-11-24",
-    "author": "adm01-debug",
-    "subject": "fix: restaura estado anterior no rollback das mutacoes otimistas de favoritos (#294)",
-    "files": [
-     "docs/qa/05-PROGRESSO.md",
-     "src/hooks/__tests__/useDialerFavorites.rollback.test.tsx",
-     "src/hooks/useDialerFavorites.ts"
     ]
    }
   ],
