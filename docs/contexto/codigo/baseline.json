@@ -2,11 +2,16 @@
  "aviso": "GERADO AUTOMATICAMENTE por scripts/ai-context/gerar.mjs — não editar à mão; será sobrescrito.",
  "format_version": 2,
  "git": {
-  "commit": "fdbcd32d157e91af13890b2a5f47fd8ab23c90d9",
+  "commit": "c9c5a2d07fb31e03218f57d0f5f8bae1520289df",
   "branch": "main",
-  "data_commit": "2026-11-25T07:22:37-03:00",
+  "data_commit": "2026-11-25T07:23:42-03:00",
   "remote": "https://github.com/adm01-debug/Hello_V3",
   "ultimos_commits": [
+   {
+    "sha": "c9c5a2d",
+    "data": "2026-11-25",
+    "assunto": "infra: publica as capturas da conferencia de celular como artefato do CI (#305)"
+   },
    {
     "sha": "fdbcd32",
     "data": "2026-11-25",
@@ -126,11 +131,6 @@
     "sha": "fa17b61",
     "data": "2026-11-24",
     "assunto": "chore: registra cobertura de menu das rotas protegidas (etapa 265) (#286)"
-   },
-   {
-    "sha": "711098f",
-    "data": "2026-11-24",
-    "assunto": "feat: pagina contatos, negocios e contas de 50 em 50 (etapa 237) (#285)"
    }
   ],
   "arquivos_mudados_7d": 1269,
@@ -218,16 +218,16 @@
     "mudancas": 10
    },
    {
+    "arquivo": ".github/workflows/ci.yml",
+    "mudancas": 9
+   },
+   {
     "arquivo": "docs/audits/pendencias-2026-07.md",
     "mudancas": 9
    },
    {
     "arquivo": "supabase/functions/data-lake-flush/index.ts",
     "mudancas": 9
-   },
-   {
-    "arquivo": ".github/workflows/ci.yml",
-    "mudancas": 8
    },
    {
     "arquivo": "docs/agentes/mapa-repo.md",
@@ -301,7 +301,7 @@
   "autores_30d": [
    {
     "autor": "adm01-debug",
-    "commits": 287
+    "commits": 288
    },
    {
     "autor": "Joaquim Ataides",
