@@ -102,4 +102,20 @@ describe('useActiveCallsRealtime (coverage)', () => {
     expect(limites).toEqual([200, 200]);
     expect(result.current.statusCounts.total).toBe(2);
   });
+
+  it('expoe o erro de leitura em vez de fingir que nao ha chamadas (A-218)', async () => {
+    fromMock.mockImplementation((table: string) => {
+      const erro = { message: table === 'call_sessions' ? 'permission denied for table call_sessions' : 'timeout' };
+      const limit = vi.fn(() => Promise.resolve({ data: null, error: erro }));
+      const order = vi.fn(() => ({ limit }));
+      if (table === 'call_sessions') return { select: vi.fn(() => ({ eq: vi.fn(() => ({ order })) })) };
+      return { select: vi.fn(() => ({ is: vi.fn(() => ({ order })) })) };
+    });
+
+    const { result } = renderHook(() => useActiveCallsRealtime());
+    await waitFor(() => expect(result.current.loading).toBe(false));
+
+    expect(result.current.error).toBe('permission denied for table call_sessions');
+    expect(result.current.filteredCalls).toHaveLength(0);
+  });
 });
