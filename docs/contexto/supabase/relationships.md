@@ -123,6 +123,7 @@
 | public.user_ip_restrictions | user_id | auth.users | id | CASCADE | NO ACTION |
 | public.user_mfa_settings | user_id | auth.users | id | CASCADE | NO ACTION |
 | public.user_passkeys | user_id | auth.users | id | CASCADE | NO ACTION |
+| public.user_preferences | user_id | auth.users | id | CASCADE | NO ACTION |
 | public.user_profiles | agent_id | public.agents | id | NO ACTION | NO ACTION |
 | public.user_profiles | id | auth.users | id | CASCADE | NO ACTION |
 | public.user_roles | granted_by | auth.users | id | SET NULL | NO ACTION |

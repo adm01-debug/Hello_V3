@@ -490,6 +490,8 @@ Uso e tamanho em `stats.md`.
 | public.user_passkeys | idx_user_passkeys_user_id | btree | user_id | não | sim |  |
 | public.user_passkeys | user_passkeys_credential_id_key | btree | credential_id | sim | sim |  |
 | public.user_passkeys | user_passkeys_pkey | btree | id | sim | sim |  |
+| public.user_preferences | user_preferences_pkey | btree | id | sim | sim |  |
+| public.user_preferences | user_preferences_user_id_key | btree | user_id | sim | sim |  |
 | public.user_profiles | idx_user_profiles_agent_id | btree | agent_id | não | sim |  |
 | public.user_profiles | user_profiles_pkey | btree | id | sim | sim |  |
 | public.user_roles | idx_user_roles_granted_by | btree | granted_by | não | sim |  |

@@ -404,6 +404,9 @@ Visão consolidada (inclui `storage.objects` e `realtime.messages`); detalhes po
 | public.user_passkeys | Users can insert their own passkeys | INSERT | PERMISSIVE | authenticated |  | `(( SELECT auth.uid() AS uid) = user_id)` |
 | public.user_passkeys | Users can update their own passkeys | UPDATE | PERMISSIVE | authenticated | `(( SELECT auth.uid() AS uid) = user_id)` |  |
 | public.user_passkeys | Users can view their own passkeys | SELECT | PERMISSIVE | authenticated | `(( SELECT auth.uid() AS uid) = user_id)` |  |
+| public.user_preferences | Users can insert own preferences | INSERT | PERMISSIVE | authenticated |  | `(auth.uid() = user_id)` |
+| public.user_preferences | Users can update own preferences | UPDATE | PERMISSIVE | authenticated | `(auth.uid() = user_id)` | `(auth.uid() = user_id)` |
+| public.user_preferences | Users can view own preferences | SELECT | PERMISSIVE | authenticated | `(auth.uid() = user_id)` |  |
 | public.user_profiles | Admins can insert profiles with any role | INSERT | PERMISSIVE | authenticated |  | `is_admin_user(( SELECT auth.uid() AS uid))` |
 | public.user_profiles | Admins manage all profiles | ALL | PERMISSIVE | authenticated | `is_admin_user(( SELECT auth.uid() AS uid))` |  |
 | public.user_profiles | Admins supervisors view all profiles | SELECT | PERMISSIVE | authenticated | `is_admin_or_supervisor()` |  |

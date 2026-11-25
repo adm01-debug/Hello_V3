@@ -2,6 +2,18 @@
 
 Diff semântico gerado a cada coleta em que algo mudou.
 
+## 2026-11-25 11:17 UTC
+
+- **colunas** adicionado (12): `public.user_preferences.audio_auto_gain_control`, `public.user_preferences.audio_echo_cancellation`, `public.user_preferences.audio_noise_suppression`, `public.user_preferences.beta_program`, `public.user_preferences.created_at`, `public.user_preferences.id`, `public.user_preferences.notify_incoming_calls`, `public.user_preferences.notify_missed_calls`, `public.user_preferences.notify_sound`, `public.user_preferences.notify_voicemail`, `public.user_preferences.updated_at`, `public.user_preferences.user_id`
+- **constraints** adicionado (3): `public.user_preferences.user_preferences_pkey`, `public.user_preferences.user_preferences_user_id_fkey`, `public.user_preferences.user_preferences_user_id_key`
+- **functions** alterado (1): `public.update_updated_at_column()`
+- **grants** adicionado (3): `public.user_preferences:anon`, `public.user_preferences:authenticated`, `public.user_preferences:service_role`
+- **indexes** adicionado (2): `public.user_preferences_pkey`, `public.user_preferences_user_id_key`
+- **lints** adicionado (3): `policy_auth_fn_not_wrapped:public.user_preferences.Users can insert own preferences`, `policy_auth_fn_not_wrapped:public.user_preferences.Users can update own preferences`, `policy_auth_fn_not_wrapped:public.user_preferences.Users can view own preferences`
+- **policies (RLS)** adicionado (3): `public.user_preferences.Users can insert own preferences`, `public.user_preferences.Users can update own preferences`, `public.user_preferences.Users can view own preferences`
+- **tabelas** adicionado (1): `public.user_preferences`
+- **triggers** adicionado (1): `public.user_preferences.set_user_preferences_updated_at`
+
 ## 2026-11-25 00:34 UTC
 
 - **realtime** adicionado (1): `supabase_realtime_messages_publication:realtime.messages_2026_11_28`
