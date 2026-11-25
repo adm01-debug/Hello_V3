@@ -89,19 +89,24 @@ describe('useMultiChannelCall — barreira de compliance (etapa 034)', () => {
     expect(result.current.activeCalls).toHaveLength(1);
   });
 
-  it('falha do check nao impede a chamada (fail-open ate a etapa 035)', async () => {
+  it('falha do check bloqueia a chamada (fail-closed, etapa 035)', async () => {
     const preDialCheck = vi.fn().mockRejectedValue(new Error('rpc indisponivel'));
     const { result } = renderHook(() => useMultiChannelCall(preDialCheck));
 
-    let ok = false;
+    let ok = true;
     await act(async () => {
       const call = await result.current.initiateCall('sip', '+5511999990004');
       ok = Boolean(call);
     });
 
     expect(preDialCheck).toHaveBeenCalledTimes(1);
-    expect(ok).toBe(true);
-    expect(result.current.activeCalls).toHaveLength(1);
+    expect(ok).toBe(false);
+    expect(result.current.activeCalls).toHaveLength(0);
+    expect(result.current.activeCallId).toBeNull();
+    expect(toast.error).toHaveBeenCalledWith(
+      'Chamada bloqueada por compliance',
+      expect.objectContaining({ description: expect.stringContaining('Não foi possível verificar') }),
+    );
   });
 
   it('sem preDialCheck injetado mantem o comportamento antigo', async () => {

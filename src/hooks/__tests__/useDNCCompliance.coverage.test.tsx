@@ -68,11 +68,11 @@ describe('useDNCCompliance', () => {
     });
     expect(res).toBe(true);
 
+    // Etapa 035: erro de leitura precisa subir, nao virar "nao esta na DNC".
     rpcMock.mockResolvedValueOnce({ data: null, error: new Error('boom') });
     await act(async () => {
-      res = await result.current.checkDNC('5511999');
+      await expect(result.current.checkDNC('5511999')).rejects.toThrow('boom');
     });
-    expect(res).toBe(false);
   });
 
   it('checkCallingHours success and error branches', async () => {
@@ -87,10 +87,24 @@ describe('useDNCCompliance', () => {
 
     rpcMock.mockResolvedValueOnce({ data: null, error: new Error('boom') });
     await act(async () => {
-      const r = await result.current.checkCallingHours();
-      expect(r.can_call).toBe(true);
-      expect(r.reason).toContain('Error');
+      await expect(result.current.checkCallingHours()).rejects.toThrow('boom');
     });
+  });
+
+  it('preDialCheck falha fechado quando o RPC nao responde (etapa 035)', async () => {
+    const { result } = renderHook(() => useDNCCompliance(), { wrapper });
+    await waitFor(() => expect(result.current.isLoadingSettings).toBe(false));
+
+    rpcMock.mockImplementation(() => Promise.resolve({ data: null, error: new Error('permission denied') }));
+
+    let out: { canDial: boolean; reasons: string[] } | undefined;
+    await act(async () => {
+      out = await result.current.preDialCheck('5511999', 'BR');
+    });
+
+    expect(out!.canDial).toBe(false);
+    expect(out!.reasons.join(' ')).toContain('Discagem bloqueada por segurança');
+    expect(out!.reasons.join(' ')).toContain('permission denied');
   });
 
   it('preDialCheck combines DNC + hours', async () => {

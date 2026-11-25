@@ -184,8 +184,17 @@ export const usePredictiveDialer = (preDialCheck?: PreDialCheck) => {
           return;
         }
       } catch (err) {
-        // Fail-open ate a etapa 035, que torna a checagem fail-closed no banco.
-        log.error('preDialCheck falhou; seguindo com a discagem', err);
+        // Etapa 035: fail-closed. Antes a campanha seguia marcando `dialing`
+        // quando a checagem falhava -- numero da DNC entrava na fila discado
+        // sem qualquer rastro. Agora sai como `skipped` com o motivo.
+        const motivo = `verificação de conformidade indisponível: ${err instanceof Error ? err.message : String(err)}`;
+        await apiMarkSkipped(queueItem, motivo);
+        log.error('preDialCheck falhou; contato pulado', err);
+        toast.warning(`Contato ${queueItem.name || queueItem.phone} pulado`, {
+          description: motivo,
+        });
+        setLoopTick((tick) => tick + 1);
+        return;
       }
     }
 

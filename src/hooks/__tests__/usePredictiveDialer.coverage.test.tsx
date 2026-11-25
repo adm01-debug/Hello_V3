@@ -571,7 +571,16 @@ describe('usePredictiveDialer', () => {
     expect(mockToast.warning).not.toHaveBeenCalled();
   });
 
-  it('falha do preDialCheck nao bloqueia a campanha (fail-open ate a etapa 035)', async () => {
+  it('falha do preDialCheck pula o contato (fail-closed, etapa 035)', async () => {
+    const updates: Array<Record<string, unknown>> = [];
+    mockSupabase.from.mockImplementation(() => {
+      const b = makeFrom();
+      b.update = vi.fn((patch: Record<string, unknown>) => {
+        updates.push(patch);
+        return { eq: vi.fn(() => Promise.resolve({ error: null })) };
+      });
+      return b;
+    });
     const preDialCheck = vi.fn().mockRejectedValue(new Error('rpc indisponivel'));
 
     const { result } = renderHook(() => usePredictiveDialer(preDialCheck));
@@ -582,7 +591,12 @@ describe('usePredictiveDialer', () => {
     });
 
     expect(preDialCheck).toHaveBeenCalledTimes(1);
-    expect(result.current.currentCall).toBeTruthy();
+    // Nada de `dialing`: sem checagem nao ha discagem, e a fila guarda o motivo.
+    expect(updates).toEqual([
+      { status: 'skipped', result: 'compliance: verificação de conformidade indisponível: rpc indisponivel' },
+    ]);
+    expect(result.current.currentCall).toBeNull();
+    expect(mockToast.warning).toHaveBeenCalled();
   });
 
   it('para a campanha quando o claim da fila falha (A-057)', async () => {
