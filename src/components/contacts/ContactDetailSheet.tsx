@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback } from 'react';
-import { Phone, Mail, Building2, MessageSquare, Calendar, Edit, Brain, Route } from 'lucide-react';
+import { Phone, Mail, Building2, MessageSquare, Calendar, Edit, Trash2, Brain, Route } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Separator } from '@/components/ui/separator';
@@ -93,7 +93,7 @@ export function ContactDetailSheet({ contact, open, onOpenChange, onEdit, onDele
           <div className="flex gap-2">
             <Button onClick={() => onCall?.(contact)} className="flex-1 gap-2"><Phone className="h-4 w-4" />Ligar</Button>
             <Button variant="outline" size="icon" aria-label="Editar contato" onClick={() => onEdit?.(contact)}><Edit className="h-4 w-4" aria-hidden="true" /></Button>
-            <Button variant="outline" size="icon" aria-label="Excluir contato" onClick={() => onDelete?.(contact)}><Edit className="h-4 w-4" aria-hidden="true" /></Button>
+            <Button variant="outline" size="icon" aria-label="Excluir contato" onClick={() => onDelete?.(contact)}><Trash2 className="h-4 w-4" aria-hidden="true" /></Button>
           </div>
         </SheetHeader>
         <Separator className="my-4" />

@@ -67,4 +67,26 @@ describe("NextBestActionPanel", () => {
     fireEvent.click(screen.getByTitle("Usei essa sugestão"));
     expect(estado.markUsed).toHaveBeenCalledWith("sig-1");
   });
+
+  it("ignorar nao registra a sugestao como usada (A-212)", () => {
+    estado.signals = [
+      {
+        id: "sig-2",
+        call_session_id: "s1",
+        intent: "objection",
+        confidence: 0.5,
+        suggestion: "Contornar a objeção de preço",
+        trigger_text: "está caro",
+        was_used: false,
+        metadata: { severity: "warning" },
+      },
+    ];
+    render(<NextBestActionPanel callSessionId="s1" />);
+
+    fireEvent.click(screen.getByTitle("Ignorar"));
+
+    expect(estado.markUsed).not.toHaveBeenCalled();
+    expect(screen.queryByText("Contornar a objeção de preço")).toBeNull();
+    expect(screen.getByText("Nenhuma sugestão para esta conversa até agora.")).toBeInTheDocument();
+  });
 });
