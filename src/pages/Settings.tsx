@@ -35,7 +35,7 @@
  const Settings = () => {
    usePageTitle('Configurações');
  
-   const { preferences, savePreferences } = useNotificationPreferences();
+   const { preferences, savePreferences, isSaving } = useNotificationPreferences();
 
    const [notifications, setNotifications] = useState({
      incomingCalls: true,
@@ -273,9 +273,9 @@
                 </div>
               </div>
 
-              <Button className="gap-2" onClick={handleSave}>
+              <Button className="gap-2" onClick={handleSave} disabled={isSaving}>
                 <Save className="h-4 w-4" />
-                Salvar preferências
+                {isSaving ? 'Salvando...' : 'Salvar preferências'}
               </Button>
             </CardContent>
           </Card>
@@ -391,9 +391,9 @@
                 </div>
               )}
 
-              <Button className="gap-2" onClick={handleSave}>
+              <Button className="gap-2" onClick={handleSave} disabled={isSaving}>
                 <Save className="h-4 w-4" />
-                Salvar configurações
+                {isSaving ? 'Salvando...' : 'Salvar configurações'}
               </Button>
             </CardContent>
           </Card>
