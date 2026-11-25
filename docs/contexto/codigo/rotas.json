@@ -1264,6 +1264,7 @@
    "definida_em": "src/routes/protectedRoutes.tsx",
    "hooks": [
     "useAgentStatus",
+    "useAudioOutputDevices",
     "useAuth",
     "useAuthActions",
     "useAuthContext",
@@ -1305,6 +1306,7 @@
    ],
    "hooks_locais": [
     "useAgentStatus",
+    "useAudioOutputDevices",
     "useAuth",
     "useAuthActions",
     "useAuthContext",
@@ -1380,7 +1382,7 @@
     "button",
     "user"
    ],
-   "arquivos_puxados": 71
+   "arquivos_puxados": 73
   },
   {
    "protegida": false,

@@ -1,8 +1,8 @@
 {
  "aviso": "GERADO AUTOMATICAMENTE por scripts/ai-context/gerar.mjs — não editar à mão; será sobrescrito.",
  "format_version": 2,
- "total": 453,
- "orfaos": 17,
+ "total": 446,
+ "orfaos": 13,
  "nomes_duplicados": {
   "KpiCards": [
    "src/components/admin/webhook-health/KpiCards.tsx",
@@ -511,23 +511,6 @@
    "orfao": false
   },
   {
-   "arquivo": "src/components/alerts/AlertsDropdown.tsx",
-   "exports": [
-    "AlertsDropdown"
-   ],
-   "export_default": null,
-   "linhas": 288,
-   "dominio": "components/alerts",
-   "hooks_locais": [],
-   "tabelas": [
-    "call_alerts",
-    "call_sessions"
-   ],
-   "edges": [],
-   "usado_por": 0,
-   "orfao": true
-  },
-  {
    "arquivo": "src/components/alerts/AlertStatsCards.tsx",
    "exports": [
     "AlertStatsCards"
@@ -899,20 +882,6 @@
    "orfao": false
   },
   {
-   "arquivo": "src/components/calls/CallQualityIndicator.tsx",
-   "exports": [
-    "CallQualityIndicator"
-   ],
-   "export_default": null,
-   "linhas": 70,
-   "dominio": "components/calls",
-   "hooks_locais": [],
-   "tabelas": [],
-   "edges": [],
-   "usado_por": 1,
-   "orfao": false
-  },
-  {
    "arquivo": "src/components/calls/ConferenceSection.tsx",
    "exports": [
     "ConferenceSection"
@@ -1050,21 +1019,6 @@
    "orfao": false
   },
   {
-   "arquivo": "src/components/calls/PostCallSummary.tsx",
-   "exports": [
-    "PostCallSummary",
-    "PostCallSummaryData"
-   ],
-   "export_default": null,
-   "linhas": 242,
-   "dominio": "components/calls",
-   "hooks_locais": [],
-   "tabelas": [],
-   "edges": [],
-   "usado_por": 1,
-   "orfao": false
-  },
-  {
    "arquivo": "src/components/calls/SipConnectionStatus.tsx",
    "exports": [
     "SipConnectionStatus"
@@ -1084,9 +1038,10 @@
     "ActiveCallDisplay"
    ],
    "export_default": null,
-   "linhas": 296,
+   "linhas": 310,
    "dominio": "components/calls",
    "hooks_locais": [
+    "useAudioOutputDevices",
     "useLiveSentiment",
     "useVoiceCommand"
    ],
@@ -1159,7 +1114,7 @@
     "UnifiedSoftphone"
    ],
    "export_default": null,
-   "linhas": 380,
+   "linhas": 381,
    "dominio": "components/calls",
    "hooks_locais": [
     "useAgentStatus",
@@ -1188,38 +1143,6 @@
    "hooks_locais": [
     "useVoipQualityMonitor"
    ],
-   "tabelas": [],
-   "edges": [],
-   "usado_por": 1,
-   "orfao": false
-  },
-  {
-   "arquivo": "src/components/calls/WebRTCCall.tsx",
-   "exports": [
-    "WebRTCCall"
-   ],
-   "export_default": null,
-   "linhas": 386,
-   "dominio": "components/calls",
-   "hooks_locais": [
-    "useAudioOutputDevices",
-    "useNotificationPreferences",
-    "useVoipQualityMonitor"
-   ],
-   "tabelas": [],
-   "edges": [],
-   "usado_por": 0,
-   "orfao": true
-  },
-  {
-   "arquivo": "src/components/calls/WebRTCMetricsPanel.tsx",
-   "exports": [
-    "WebRTCMetricsPanel"
-   ],
-   "export_default": null,
-   "linhas": 116,
-   "dominio": "components/calls",
-   "hooks_locais": [],
    "tabelas": [],
    "edges": [],
    "usado_por": 1,
@@ -1508,15 +1431,15 @@
     "ContactAlertsDropdown"
    ],
    "export_default": null,
-   "linhas": 251,
+   "linhas": 260,
    "dominio": "components/contacts",
    "hooks_locais": [
     "useContactAlerts"
    ],
    "tabelas": [],
    "edges": [],
-   "usado_por": 0,
-   "orfao": true
+   "usado_por": 1,
+   "orfao": false
   },
   {
    "arquivo": "src/components/contacts/ContactCard.tsx",
@@ -2644,9 +2567,10 @@
     "AppLayout"
    ],
    "export_default": null,
-   "linhas": 103,
+   "linhas": 110,
    "dominio": "components/layout",
    "hooks_locais": [
+    "useAuthContext",
     "useTelemetry"
    ],
    "tabelas": [],
@@ -2755,20 +2679,6 @@
    "hooks_locais": [
     "useTheme"
    ],
-   "tabelas": [],
-   "edges": [],
-   "usado_por": 1,
-   "orfao": false
-  },
-  {
-   "arquivo": "src/components/loading/GlobalLoading.tsx",
-   "exports": [
-    "GlobalLoading"
-   ],
-   "export_default": null,
-   "linhas": 22,
-   "dominio": "components/loading",
-   "hooks_locais": [],
    "tabelas": [],
    "edges": [],
    "usado_por": 1,
@@ -3120,22 +3030,6 @@
    "edges": [],
    "usado_por": 1,
    "orfao": false
-  },
-  {
-   "arquivo": "src/components/notifications/NotificationBell.tsx",
-   "exports": [
-    "NotificationBell"
-   ],
-   "export_default": null,
-   "linhas": 171,
-   "dominio": "components/notifications",
-   "hooks_locais": [
-    "useRealtimeHoldAlerts"
-   ],
-   "tabelas": [],
-   "edges": [],
-   "usado_por": 0,
-   "orfao": true
   },
   {
    "arquivo": "src/components/notifications/UnifiedNotificationDropdown.tsx",
@@ -4146,7 +4040,7 @@
    "hooks_locais": [],
    "tabelas": [],
    "edges": [],
-   "usado_por": 202,
+   "usado_por": 198,
    "orfao": false
   },
   {
@@ -4196,7 +4090,7 @@
    "hooks_locais": [],
    "tabelas": [],
    "edges": [],
-   "usado_por": 247,
+   "usado_por": 243,
    "orfao": false
   },
   {
@@ -4231,7 +4125,7 @@
    "hooks_locais": [],
    "tabelas": [],
    "edges": [],
-   "usado_por": 233,
+   "usado_por": 232,
    "orfao": false
   },
   {
@@ -4356,7 +4250,7 @@
    "hooks_locais": [],
    "tabelas": [],
    "edges": [],
-   "usado_por": 49,
+   "usado_por": 48,
    "orfao": false
   },
   {
@@ -4407,7 +4301,7 @@
    "hooks_locais": [],
    "tabelas": [],
    "edges": [],
-   "usado_por": 12,
+   "usado_por": 11,
    "orfao": false
   },
   {
@@ -4429,7 +4323,7 @@
    "hooks_locais": [],
    "tabelas": [],
    "edges": [],
-   "usado_por": 24,
+   "usado_por": 23,
    "orfao": false
   },
   {
@@ -4618,7 +4512,7 @@
    "hooks_locais": [],
    "tabelas": [],
    "edges": [],
-   "usado_por": 10,
+   "usado_por": 9,
    "orfao": false
   },
   {
@@ -4678,7 +4572,7 @@
    "hooks_locais": [],
    "tabelas": [],
    "edges": [],
-   "usado_por": 48,
+   "usado_por": 46,
    "orfao": false
   },
   {
@@ -4874,7 +4768,7 @@
    "hooks_locais": [],
    "tabelas": [],
    "edges": [],
-   "usado_por": 30,
+   "usado_por": 29,
    "orfao": false
   },
   {
@@ -5009,7 +4903,7 @@
    "hooks_locais": [],
    "tabelas": [],
    "edges": [],
-   "usado_por": 23,
+   "usado_por": 22,
    "orfao": false
   },
   {
@@ -5138,7 +5032,7 @@
    ],
    "tabelas": [],
    "edges": [],
-   "usado_por": 32,
+   "usado_por": 33,
    "orfao": false
   },
   {

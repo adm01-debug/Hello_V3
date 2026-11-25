@@ -3916,7 +3916,7 @@
     "call_session_id->call_sessions"
    ],
    "criada_em": "20251222165402_c515f03e-0bf3-4c17-a56b-b209d783515a.sql",
-   "usada_no_front": 8,
+   "usada_no_front": 7,
    "usada_em_edges": [
     "check-alerts",
     "check-goals",
@@ -5821,7 +5821,7 @@
     "trunk_id->voip_trunks"
    ],
    "criada_em": "20251222153717_0868819c-c2a1-4f51-abcd-34ae49b599ed.sql",
-   "usada_no_front": 17,
+   "usada_no_front": 16,
    "usada_em_edges": [
     "auto-scorecard",
     "check-goals",

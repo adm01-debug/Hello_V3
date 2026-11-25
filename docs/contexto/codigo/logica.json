@@ -317,7 +317,7 @@
    "zod_schemas": 0,
    "flags": [],
    "papeis": [],
-   "usado_por": 237,
+   "usado_por": 236,
    "usado_por_modulos": [
     "components/admin",
     "components/agent",
@@ -400,7 +400,7 @@
     "clickableRowProps"
    ],
    "export_default": null,
-   "linhas": 29,
+   "linhas": 34,
    "tabelas": [],
    "rpcs": [],
    "edges": [],
@@ -1234,12 +1234,11 @@
    "zod_schemas": 0,
    "flags": [],
    "papeis": [],
-   "usado_por": 195,
+   "usado_por": 193,
    "usado_por_modulos": [
     "components/admin",
     "components/agent",
     "components/ai",
-    "components/alerts",
     "components/auth",
     "components/call-history",
     "components/calls",
@@ -1704,7 +1703,7 @@
    "zod_schemas": 0,
    "flags": [],
    "papeis": [],
-   "usado_por": 105,
+   "usado_por": 103,
    "usado_por_modulos": [
     "components/accounts",
     "components/admin",
@@ -2675,7 +2674,7 @@
    "zod_schemas": 0,
    "flags": [],
    "papeis": [],
-   "usado_por": 149,
+   "usado_por": 145,
    "usado_por_modulos": [
     "components",
     "components/admin",
@@ -3172,12 +3171,10 @@
    "zod_schemas": 0,
    "flags": [],
    "papeis": [],
-   "usado_por": 1,
-   "usado_por_modulos": [
-    "components/calls"
-   ],
+   "usado_por": 0,
+   "usado_por_modulos": [],
    "coberto_por_testes": 1,
-   "orfao": false
+   "orfao": true
   }
  ]
 }

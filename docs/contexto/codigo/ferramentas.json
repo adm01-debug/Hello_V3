@@ -3,7 +3,7 @@
  "format_version": 2,
  "stack": {
   "linguagens": [
-   "TypeScript (1317)",
+   "TypeScript (1308)",
    "SQL (248)",
    "Markdown (121)",
    "JavaScript (31)",
@@ -745,7 +745,6 @@
    "badge-achievements",
    "blf-board",
    "blocked-access-notifications",
-   "call_alerts",
    "coaching-updates",
    "contact-alerts-changes",
    "conversations-realtime",
@@ -785,7 +784,7 @@
   "papeis_no_codigo": [
    {
     "papel": "admin",
-    "ocorrencias": 36
+    "ocorrencias": 37
    },
    {
     "papel": "user",
@@ -809,11 +808,11 @@
    },
    {
     "papel": "supervisor",
-    "ocorrencias": 8
+    "ocorrencias": 9
    },
    {
     "papel": "status",
-    "ocorrencias": 7
+    "ocorrencias": 6
    },
    {
     "papel": "group",

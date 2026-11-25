@@ -1,15 +1,15 @@
 {
  "meta": {
-  "sha": "f214b17034cada820c3b8365c856f72a1b93599e",
+  "sha": "72459646315375e50d37d6b86d1a6cd54d7d904f",
   "branch": "main",
   "remote": "https://github.com/adm01-debug/Hello_V3",
-  "generated_at": "2026-11-25 19:41 UTC",
-  "files_total": 1804,
-  "code_files": 1601,
-  "code_lines": 196620
+  "generated_at": "2026-11-25 20:16 UTC",
+  "files_total": 1795,
+  "code_files": 1592,
+  "code_lines": 195140
  },
  "version": "1.3.2",
- "facts_hash": "7d735f7514ce036b",
+ "facts_hash": "b2fa40148a1b58a1",
  "stack": {
   "frameworks": [
    "React + Vite",
@@ -161,8 +161,8 @@
   ],
   "package_manager": "bun",
   "languages": {
-   ".tsx": 659,
    ".ts": 658,
+   ".tsx": 650,
    ".sql": 248,
    ".mjs": 29,
    ".py": 5,
@@ -28649,7 +28649,7 @@
      "check_dnc",
      "record_trunk_usage"
     ],
-    "deps_count": 60
+    "deps_count": 62
    },
    {
     "path": "",
@@ -32538,7 +32538,7 @@
     "file": ".github/workflows/migrations.yml"
    }
   ],
-  "components_count": 378,
+  "components_count": 369,
   "hooks": [
    {
     "name": "useContacts",
@@ -33702,8 +33702,8 @@
   },
   {
    "module": "src/components",
-   "files": 378,
-   "lines": 45088,
+   "files": 369,
+   "lines": 43549,
    "tables": [
     "accounts",
     "agent_goals",
@@ -33779,11 +33779,11 @@
     "types.tsx: RealtimeInsight, TranscriptEntry, emotionIcons, getSentimentColor, getUrgencyColor",
     "useLiveInsights.ts: useLiveInsights",
     "AlertStatsCards.tsx: AlertStatsCards",
-    "AlertsDropdown.tsx: AlertsDropdown",
     "AlertsTrendChart.tsx: AlertsTrendChart",
     "CallAlertsList.tsx: CallAlertsList",
     "ContactAlertsList.tsx: ContactAlertsList",
-    "LoginBranding.tsx: LoginBranding"
+    "LoginBranding.tsx: LoginBranding",
+    "PasskeyLogin.tsx: PasskeyLogin"
    ],
    "docs": [
     "SearchInput.tsx: Componente de Input de Busca @module components/SearchInput",
@@ -33864,7 +33864,6 @@
     "src/components/ai/live-call/types.tsx",
     "src/components/ai/live-call/useLiveInsights.ts",
     "src/components/alerts/AlertStatsCards.tsx",
-    "src/components/alerts/AlertsDropdown.tsx",
     "src/components/alerts/AlertsTrendChart.tsx",
     "src/components/alerts/CallAlertsList.tsx",
     "src/components/alerts/ContactAlertsList.tsx",
@@ -33891,7 +33890,6 @@
     "src/components/calls/ActiveCallBar.tsx",
     "src/components/calls/ActiveCallsIndicator.tsx",
     "src/components/calls/AudioOutputSelector.tsx",
-    "src/components/calls/CallQualityIndicator.tsx",
     "src/components/calls/ConferenceSection.tsx",
     "src/components/calls/CrmSuggestionsCard.tsx",
     "src/components/calls/HoldReminderSettings.tsx",
@@ -33899,15 +33897,17 @@
     "src/components/calls/MeetingSummaryCard.tsx",
     "src/components/calls/NetworkStatusBadge.tsx",
     "src/components/calls/NextBestActionPanel.tsx",
-    "src/components/calls/PostCallSummary.tsx",
     "src/components/calls/SipConnectionStatus.tsx",
     "src/components/calls/TransferCallDialog.tsx",
     "src/components/calls/UnifiedSoftphone.tsx",
     "src/components/calls/VoipQualityIndicator.tsx",
-    "src/components/calls/WebRTCCall.tsx",
-    "src/components/calls/WebRTCMetricsPanel.tsx",
     "src/components/calls/__tests__/ActiveCallBar.espera.test.tsx",
-    "src/components/calls/__tests__/ActiveCallBar.verificacaoVoz.test.tsx"
+    "src/components/calls/__tests__/ActiveCallBar.verificacaoVoz.test.tsx",
+    "src/components/calls/__tests__/AudioOutputSelector.test.tsx",
+    "src/components/calls/__tests__/CrmSuggestionsCard.test.tsx",
+    "src/components/calls/__tests__/NextBestActionPanel.test.tsx",
+    "src/components/calls/__tests__/UnifiedSoftphone.falhas.test.tsx",
+    "src/components/calls/live-transcription/TranscriptList.tsx"
    ]
   },
   {
@@ -33964,7 +33964,7 @@
   {
    "module": "src/hooks",
    "files": 342,
-   "lines": 43422,
+   "lines": 43447,
    "tables": [
     "accounts",
     "active_sessions",
@@ -34273,7 +34273,7 @@
   {
    "module": "src/lib",
    "files": 181,
-   "lines": 21879,
+   "lines": 21913,
    "tables": [
     "active_sessions",
     "call_quality_metrics",
@@ -35339,7 +35339,6 @@
    },
    "call_alerts": {
     "select": [
-     "src/components/alerts/AlertsDropdown.tsx",
      "src/components/alerts/AlertsTrendChart.tsx",
      "src/hooks/useAlertHistory.ts",
      "src/hooks/useAlerts.ts",
@@ -35350,20 +35349,18 @@
      "supabase/functions/check-hold-alerts/index.ts",
      "supabase/functions/check-queue-metrics/index.ts"
     ],
-    "update": [
-     "src/components/alerts/AlertsDropdown.tsx",
-     "src/hooks/useAlerts.ts",
-     "src/hooks/useRealtimeHoldAlerts.ts",
-     "src/pages/HoldAlerts.tsx"
-    ],
     "insert": [
-     "src/components/alerts/AlertsDropdown.tsx",
      "src/hooks/useAgentRanking.ts",
      "src/hooks/useAlerts.ts",
      "supabase/functions/check-alerts/index.ts",
      "supabase/functions/check-goals/index.ts",
      "supabase/functions/check-hold-alerts/index.ts",
      "supabase/functions/check-queue-metrics/index.ts"
+    ],
+    "update": [
+     "src/hooks/useAlerts.ts",
+     "src/hooks/useRealtimeHoldAlerts.ts",
+     "src/pages/HoldAlerts.tsx"
     ]
    },
    "call_analyses": {
@@ -35520,7 +35517,6 @@
    },
    "call_sessions": {
     "select": [
-     "src/components/alerts/AlertsDropdown.tsx",
      "src/components/dashboard/HoldTrendChart.tsx",
      "src/components/executive/ConversationIntelligenceCard.tsx",
      "src/hooks/useActiveCallsRealtime.ts",
@@ -35555,14 +35551,13 @@
      "supabase/functions/voip-executive-summary/index.ts",
      "supabase/functions/voip-recommendations/index.ts"
     ],
+    "ref": [
+     "src/hooks/useAgentRanking.ts"
+    ],
     "insert": [
-     "src/components/alerts/AlertsDropdown.tsx",
      "src/hooks/useAlerts.ts",
      "src/hooks/useCallSession.ts",
      "supabase/functions/check-goals/index.ts"
-    ],
-    "ref": [
-     "src/hooks/useAgentRanking.ts"
     ],
     "update": [
      "src/hooks/useCallSession.ts"
@@ -38863,9 +38858,6 @@
    "blocked-access-notifications": [
     "src/hooks/useSecurityNotifications.ts"
    ],
-   "call_alerts": [
-    "src/components/alerts/AlertsDropdown.tsx"
-   ],
    "coaching-updates": [
     "src/hooks/useCoaching.ts"
    ],
@@ -40840,14 +40832,6 @@
     "msg": "Transcrição vazia"
    },
    {
-    "file": "src/components/alerts/AlertsDropdown.tsx",
-    "msg": "Erro ao criar alertas de teste"
-   },
-   {
-    "file": "src/components/alerts/AlertsDropdown.tsx",
-    "msg": "Erro ao criar sessão de teste"
-   },
-   {
     "file": "src/components/auth/PasskeyManager.tsx",
     "msg": ";\nimport {\n  Dialog,\n  DialogContent,\n  DialogDescription,\n  DialogFooter,\n  DialogHeader,\n  DialogTitle,\n  DialogTrigger,\n} from "
    },
@@ -40872,20 +40856,12 @@
     "msg": "Não foi possível alterar a saída de áudio"
    },
    {
-    "file": "src/components/calls/CallQualityIndicator.tsx",
-    "msg": "⚠️ Qualidade da chamada degradada"
-   },
-   {
     "file": "src/components/calls/CrmSuggestionsCard.tsx",
     "msg": " className="
    },
    {
     "file": "src/components/calls/NextBestActionPanel.tsx",
     "msg": " className="
-   },
-   {
-    "file": "src/components/calls/PostCallSummary.tsx",
-    "msg": "Falha ao exportar CSV"
    },
    {
     "file": "src/components/calls/UnifiedSoftphone.tsx",
@@ -40922,26 +40898,6 @@
    {
     "file": "src/components/calls/UnifiedSoftphone.tsx",
     "msg": "Não foi possível iniciar a gravação"
-   },
-   {
-    "file": "src/components/calls/WebRTCCall.tsx",
-    "msg": "Falha ao iniciar chamada"
-   },
-   {
-    "file": "src/components/calls/WebRTCCall.tsx",
-    "msg": "Nenhum microfone encontrado"
-   },
-   {
-    "file": "src/components/calls/WebRTCCall.tsx",
-    "msg": "Não foi possível restabelecer a chamada"
-   },
-   {
-    "file": "src/components/calls/WebRTCCall.tsx",
-    "msg": "Permissão de microfone negada"
-   },
-   {
-    "file": "src/components/calls/WebRTCCall.tsx",
-    "msg": "Reconectando (${attempt}/${MAX_RECONNECT_ATTEMPTS})…"
    },
    {
     "file": "src/components/coaching/CoachingCopilotCard.tsx",
@@ -43006,6 +42962,14 @@
     "value": "user"
    },
    {
+    "file": "src/components/layout/AppLayout.tsx",
+    "value": "admin"
+   },
+   {
+    "file": "src/components/layout/AppLayout.tsx",
+    "value": "supervisor"
+   },
+   {
     "file": "src/components/layout/AppSidebar.tsx",
     "value": "admin"
    },
@@ -43378,6 +43342,10 @@
    {
     "file": "src/hooks/telemetry/useTelemetry.ts",
     "text": "Telemetria e acessoria: nao pode quebrar a pagina do usuario."
+   },
+   {
+    "file": "src/lib/a11y-clickable.ts",
+    "text": "(botao, link) nao pode ativar a linha por borbulhamento."
    },
    {
     "file": "src/lib/agent-assist-utils.ts",
@@ -50715,16 +50683,6 @@
   ],
   "params": [
    {
-    "file": "src/components/calls/WebRTCCall.tsx",
-    "name": "MAX_RECONNECT_ATTEMPTS",
-    "value": "5"
-   },
-   {
-    "file": "src/components/calls/WebRTCCall.tsx",
-    "name": "DISCONNECT_GRACE_MS",
-    "value": "3000"
-   },
-   {
     "file": "src/components/dialer/phone/VoicePreferencesPanel.tsx",
     "name": "PREVIEW_TEXT",
     "value": "'Assistente de voz pronto para discar.'"
@@ -51545,12 +51503,6 @@
     "kind": "escreve"
    },
    {
-    "file": "src/components/alerts/AlertsDropdown.tsx",
-    "field": "status",
-    "value": "completed",
-    "kind": "escreve"
-   },
-   {
     "file": "src/components/auth/ReauthDialog.tsx",
     "field": "status",
     "value": "verified",
@@ -51890,102 +51842,6 @@
     "file": "src/components/calls/UnifiedSoftphone.tsx",
     "field": "status",
     "value": "away",
-    "kind": "compara"
-   },
-   {
-    "file": "src/components/calls/WebRTCCall.tsx",
-    "field": "state",
-    "value": "connected",
-    "kind": "compara"
-   },
-   {
-    "file": "src/components/calls/WebRTCCall.tsx",
-    "field": "state",
-    "value": "completed",
-    "kind": "compara"
-   },
-   {
-    "file": "src/components/calls/WebRTCCall.tsx",
-    "field": "state",
-    "value": "disconnected",
-    "kind": "compara"
-   },
-   {
-    "file": "src/components/calls/WebRTCCall.tsx",
-    "field": "state",
-    "value": "failed",
-    "kind": "compara"
-   },
-   {
-    "file": "src/components/calls/WebRTCCall.tsx",
-    "field": "status",
-    "value": "idle",
-    "kind": "compara"
-   },
-   {
-    "file": "src/components/calls/WebRTCCall.tsx",
-    "field": "status",
-    "value": "connecting",
-    "kind": "compara"
-   },
-   {
-    "file": "src/components/calls/WebRTCCall.tsx",
-    "field": "status",
-    "value": "ringing",
-    "kind": "compara"
-   },
-   {
-    "file": "src/components/calls/WebRTCCall.tsx",
-    "field": "status",
-    "value": "active",
-    "kind": "compara"
-   },
-   {
-    "file": "src/components/calls/WebRTCCall.tsx",
-    "field": "status",
-    "value": "ended",
-    "kind": "compara"
-   },
-   {
-    "file": "src/components/calls/WebRTCCall.tsx",
-    "field": "status",
-    "value": "active",
-    "kind": "compara"
-   },
-   {
-    "file": "src/components/calls/WebRTCCall.tsx",
-    "field": "status",
-    "value": "active",
-    "kind": "compara"
-   },
-   {
-    "file": "src/components/calls/WebRTCCall.tsx",
-    "field": "status",
-    "value": "idle",
-    "kind": "compara"
-   },
-   {
-    "file": "src/components/calls/WebRTCCall.tsx",
-    "field": "status",
-    "value": "active",
-    "kind": "compara"
-   },
-   {
-    "file": "src/components/calls/WebRTCCall.tsx",
-    "field": "status",
-    "value": "ringing",
-    "kind": "compara"
-   },
-   {
-    "file": "src/components/calls/WebRTCCall.tsx",
-    "field": "status",
-    "value": "connecting",
-    "kind": "compara"
-   },
-   {
-    "file": "src/components/calls/WebRTCCall.tsx",
-    "field": "status",
-    "value": "ended",
     "kind": "compara"
    },
    {
@@ -52448,6 +52304,18 @@
     "file": "src/components/executive/VoipInfrastructureTab.tsx",
     "field": "status",
     "value": "offline",
+    "kind": "compara"
+   },
+   {
+    "file": "src/components/layout/AppLayout.tsx",
+    "field": "role",
+    "value": "admin",
+    "kind": "compara"
+   },
+   {
+    "file": "src/components/layout/AppLayout.tsx",
+    "field": "role",
+    "value": "supervisor",
     "kind": "compara"
    },
    {
@@ -57265,10 +57133,6 @@
     "line": "setTimeout(() => clearInterval(check), 30000);"
    },
    {
-    "file": "src/components/calls/WebRTCCall.tsx",
-    "line": "setTimeout(() => setStatus(\"idle\"), 2000);"
-   },
-   {
     "file": "src/components/executive/AgentAssistDashboardCard.tsx",
     "line": "const SEVEN_DAYS_MS = 7 * 24 * 60 * 60 * 1000;"
    },
@@ -58577,30 +58441,6 @@
     "name": "lista o sinal e marca como usado"
    },
    {
-    "file": "src/components/calls/__tests__/PostCallSummary.test.tsx",
-    "name": "PostCallSummary"
-   },
-   {
-    "file": "src/components/calls/__tests__/PostCallSummary.test.tsx",
-    "name": "mostra mensagem quando não há amostras"
-   },
-   {
-    "file": "src/components/calls/__tests__/PostCallSummary.test.tsx",
-    "name": "agrega MOS, jitter, perda e classifica qualidade"
-   },
-   {
-    "file": "src/components/calls/__tests__/PostCallSummary.test.tsx",
-    "name": "classifica como Ruim quando MOS médio < 3.6"
-   },
-   {
-    "file": "src/components/calls/__tests__/PostCallSummary.test.tsx",
-    "name": "dispara download de CSV ao clicar em Baixar CSV"
-   },
-   {
-    "file": "src/components/calls/__tests__/PostCallSummary.test.tsx",
-    "name": "botão Baixar CSV fica desabilitado quando não há dados"
-   },
-   {
     "file": "src/components/calls/__tests__/UnifiedSoftphone.falhas.test.tsx",
     "name": "UnifiedSoftphone — estados de falha (etapa 233)"
    },
@@ -58629,34 +58469,6 @@
     "name": "nao mexe no audio do SIP quando a chamada e de outro canal"
    },
    {
-    "file": "src/components/calls/__tests__/WebRTCCall.test.tsx",
-    "name": "WebRTCCall"
-   },
-   {
-    "file": "src/components/calls/__tests__/WebRTCCall.test.tsx",
-    "name": "anexa o stream remoto ao elemento <audio> quando ontrack dispara"
-   },
-   {
-    "file": "src/components/calls/__tests__/WebRTCCall.test.tsx",
-    "name": "configura transceiver bidirecional e injeta a track local no sender"
-   },
-   {
-    "file": "src/components/calls/__tests__/WebRTCCall.test.tsx",
-    "name": "alterna a track do sender ao clicar em silenciar/ativar microfone"
-   },
-   {
-    "file": "src/components/calls/__tests__/WebRTCCall.test.tsx",
-    "name": "aguarda grace period no "
-   },
-   {
-    "file": "src/components/calls/__tests__/WebRTCCall.test.tsx",
-    "name": "faz restartIce com backoff exponencial em ICE "
-   },
-   {
-    "file": "src/components/calls/__tests__/WebRTCCall.test.tsx",
-    "name": "reseta indicador de reconexão quando ICE retorna a "
-   },
-   {
     "file": "src/components/calls/live-transcription/__tests__/useLiveTranscription.test.ts",
     "name": "useLiveTranscription"
    },
@@ -58683,6 +58495,22 @@
    {
     "file": "src/components/calls/live-transcription/__tests__/useLiveTranscription.test.ts",
     "name": "stopRecording é idempotente quando nada foi iniciado"
+   },
+   {
+    "file": "src/components/calls/softphone/__tests__/ActiveCallDisplay.saidaAudio.test.tsx",
+    "name": "ActiveCallDisplay — saída de áudio da chamada"
+   },
+   {
+    "file": "src/components/calls/softphone/__tests__/ActiveCallDisplay.saidaAudio.test.tsx",
+    "name": "oferece a escolha de saída na chamada SIP e aplica o sink no áudio remoto"
+   },
+   {
+    "file": "src/components/calls/softphone/__tests__/ActiveCallDisplay.saidaAudio.test.tsx",
+    "name": "não mostra o seletor fora da chamada SIP"
+   },
+   {
+    "file": "src/components/calls/softphone/__tests__/ActiveCallDisplay.saidaAudio.test.tsx",
+    "name": "não mostra o seletor quando o navegador não suporta trocar a saída"
    },
    {
     "file": "src/components/calls/softphone/__tests__/DialpadTab.a11y.test.tsx",
@@ -60483,6 +60311,10 @@
    {
     "file": "src/hooks/__tests__/useContactAlerts.coverage.test.tsx",
     "name": "checkForNewAlerts with zero created does not toast"
+   },
+   {
+    "file": "src/hooks/__tests__/useContactAlerts.coverage.test.tsx",
+    "name": "recarrega a lista mesmo quando a edge nao criou alertas"
    },
    {
     "file": "src/hooks/__tests__/useContactAlerts.coverage.test.tsx",
@@ -64559,6 +64391,18 @@
    {
     "file": "src/lib/__tests__/a11y-clickable.test.ts",
     "name": "ignora teclas que nao ativam"
+   },
+   {
+    "file": "src/lib/__tests__/a11y-clickable.test.ts",
+    "name": "activateOnKey"
+   },
+   {
+    "file": "src/lib/__tests__/a11y-clickable.test.ts",
+    "name": "ativa a linha quando o foco esta na propria linha"
+   },
+   {
+    "file": "src/lib/__tests__/a11y-clickable.test.ts",
+    "name": "nao ativa a linha quando o Enter vem de um controle interno"
    },
    {
     "file": "src/lib/__tests__/accessibility-improvements.test.ts",
@@ -72506,10 +72350,6 @@
    {
     "file": "src/components/calls/ActiveCallBar.tsx",
     "call": "invoke("
-   },
-   {
-    "file": "src/components/calls/CallQualityIndicator.tsx",
-    "call": "notifyOnDegrade"
    },
    {
     "file": "src/components/calls/UnifiedSoftphone.tsx",
@@ -81087,14 +80927,6 @@
   },
   "pagination": [
    {
-    "file": "src/components/alerts/AlertsDropdown.tsx",
-    "limit": "1"
-   },
-   {
-    "file": "src/components/alerts/AlertsDropdown.tsx",
-    "limit": "50"
-   },
-   {
     "file": "src/components/call-history/CallDetailDialog.tsx",
     "limit": "1"
    },
@@ -82090,7 +81922,6 @@
       "compara:src/components/calls/ActiveCallBar.tsx",
       "compara:src/components/calls/SipConnectionStatus.tsx",
       "compara:src/components/calls/UnifiedSoftphone.tsx",
-      "compara:src/components/calls/WebRTCCall.tsx",
       "compara:src/components/calls/softphone/ActiveCallDisplay.tsx",
       "compara:src/components/dashboard/RecentCalls.tsx",
       "compara:src/components/dialer/PredictiveDialerPanel.tsx",
@@ -82118,6 +81949,13 @@
       "filtra:src/hooks/useSupervisorPanel.ts",
       "filtra:src/hooks/useTrunkRealtimeMetrics.ts"
      ],
+     "verified": [
+      "compara:src/components/auth/ReauthDialog.tsx",
+      "compara:src/hooks/useMFA.ts",
+      "compara:src/pages/TwoFactorAuth.tsx",
+      "compara:src/pages/two-factor/DevicesCard.tsx",
+      "escreve:src/hooks/useMFA.ts"
+     ],
      "completed": [
       "compara:src/components/call-history/CallSessionsList.tsx",
       "compara:src/components/callbacks/ScheduledCallbacksList.tsx",
@@ -82137,7 +81975,6 @@
       "compara:src/pages/admin/DataExport.tsx",
       "compara:supabase/functions/generate-coaching/index.ts",
       "compara:supabase/functions/generate-meeting-summary/index.ts",
-      "escreve:src/components/alerts/AlertsDropdown.tsx",
       "escreve:src/data/mockData.ts",
       "escreve:src/hooks/useAlerts.ts",
       "escreve:src/hooks/useCoachingAssignments.ts",
@@ -82157,13 +81994,6 @@
       "filtra:supabase/functions/data-lake-flush/index.ts",
       "filtra:supabase/functions/generate-coaching-plan/index.ts",
       "filtra:supabase/functions/generate-coaching-track/index.ts"
-     ],
-     "verified": [
-      "compara:src/components/auth/ReauthDialog.tsx",
-      "compara:src/hooks/useMFA.ts",
-      "compara:src/pages/TwoFactorAuth.tsx",
-      "compara:src/pages/two-factor/DevicesCard.tsx",
-      "escreve:src/hooks/useMFA.ts"
      ],
      "overdue": [
       "compara:src/components/callbacks/ScheduledCallbacksList.tsx",
@@ -82219,7 +82049,6 @@
      "ringing": [
       "compara:src/components/calls/ActiveCallBar.tsx",
       "compara:src/components/calls/SipConnectionStatus.tsx",
-      "compara:src/components/calls/WebRTCCall.tsx",
       "compara:src/components/calls/softphone/ActiveCallDisplay.tsx",
       "compara:src/components/dashboard/RecentCalls.tsx",
       "compara:src/hooks/useMultiChannelCall.ts",
@@ -82254,7 +82083,6 @@
      ],
      "connecting": [
       "compara:src/components/calls/SipConnectionStatus.tsx",
-      "compara:src/components/calls/WebRTCCall.tsx",
       "compara:src/components/calls/softphone/ActiveCallDisplay.tsx",
       "compara:src/pages/Calls.tsx",
       "escreve:src/hooks/useMultiChannelCall.ts",
@@ -82267,17 +82095,6 @@
       "escreve:src/hooks/useSipCall.ts",
       "escreve:src/hooks/useWavoipCall.ts",
       "escreve:src/lib/elevenlabs-stub.ts"
-     ],
-     "idle": [
-      "compara:src/components/calls/WebRTCCall.tsx"
-     ],
-     "ended": [
-      "compara:src/components/calls/WebRTCCall.tsx",
-      "compara:src/pages/VideoConference.tsx",
-      "escreve:src/hooks/useCallTransfer.ts",
-      "escreve:src/hooks/useMultiChannelCall.ts",
-      "escreve:src/hooks/useSupervisorPanel.ts",
-      "escreve:supabase/functions/wavoip-call/index.ts"
      ],
      "on-hold": [
       "compara:src/components/calls/softphone/ActiveCallDisplay.tsx",
@@ -82421,6 +82238,13 @@
      ],
      "retrieved": [
       "escreve:src/hooks/useCallPark.ts"
+     ],
+     "ended": [
+      "compara:src/pages/VideoConference.tsx",
+      "escreve:src/hooks/useCallTransfer.ts",
+      "escreve:src/hooks/useMultiChannelCall.ts",
+      "escreve:src/hooks/useSupervisorPanel.ts",
+      "escreve:supabase/functions/wavoip-call/index.ts"
      ],
      "transferring": [
       "compara:src/hooks/useMultiChannelCall.ts",
@@ -82842,18 +82666,6 @@
      ]
     },
     "state": {
-     "connected": [
-      "compara:src/components/calls/WebRTCCall.tsx"
-     ],
-     "completed": [
-      "compara:src/components/calls/WebRTCCall.tsx"
-     ],
-     "disconnected": [
-      "compara:src/components/calls/WebRTCCall.tsx"
-     ],
-     "failed": [
-      "compara:src/components/calls/WebRTCCall.tsx"
-     ],
      "recording": [
       "compara:src/components/calls/live-transcription/useLiveTranscription.ts",
       "compara:src/hooks/useVoiceCommand.ts"
@@ -82924,6 +82736,7 @@
       "escreve:supabase/functions/whatsapp-rewrite/index.ts"
      ],
      "admin": [
+      "compara:src/components/layout/AppLayout.tsx",
       "compara:src/components/layout/AppSidebar.tsx",
       "compara:src/hooks/useUnreadConflicts.ts",
       "compara:src/pages/Knowledge.tsx",
@@ -82944,6 +82757,7 @@
       "filtra:supabase/functions/voip-trunks-manage/index.ts"
      ],
      "supervisor": [
+      "compara:src/components/layout/AppLayout.tsx",
       "compara:src/hooks/useUnreadConflicts.ts",
       "compara:src/pages/Knowledge.tsx",
       "compara:src/pages/roles/RoleStatsCards.tsx"
@@ -91930,66 +91744,6 @@
     "function AlertStatsCards"
    ]
   },
-  "src/components/alerts/AlertsDropdown.tsx": {
-   "path": "src/components/alerts/AlertsDropdown.tsx",
-   "lines": 288,
-   "exports": [
-    "function AlertsDropdown"
-   ],
-   "tables": [
-    {
-     "table": "call_alerts",
-     "op": "select"
-    },
-    {
-     "table": "call_alerts",
-     "op": "update"
-    },
-    {
-     "table": "call_alerts",
-     "op": "update"
-    },
-    {
-     "table": "call_sessions",
-     "op": "select"
-    },
-    {
-     "table": "call_sessions",
-     "op": "insert,select"
-    },
-    {
-     "table": "call_alerts",
-     "op": "insert"
-    }
-   ],
-   "table_cols": {
-    "call_alerts": [
-     "id",
-     "is_read"
-    ],
-    "call_sessions": [
-     "id"
-    ]
-   },
-   "channels": [
-    "call_alerts"
-   ],
-   "errors": [
-    "Erro ao criar alertas de teste",
-    "Erro ao criar sessão de teste"
-   ],
-   "status_values": [
-    {
-     "field": "status",
-     "value": "completed",
-     "kind": "escreve"
-    }
-   ],
-   "pagination": [
-    "1",
-    "50"
-   ]
-  },
   "src/components/alerts/AlertsTrendChart.tsx": {
    "path": "src/components/alerts/AlertsTrendChart.tsx",
    "lines": 337,
@@ -92534,19 +92288,6 @@
     "Não foi possível alterar a saída de áudio"
    ]
   },
-  "src/components/calls/CallQualityIndicator.tsx": {
-   "path": "src/components/calls/CallQualityIndicator.tsx",
-   "lines": 70,
-   "exports": [
-    "function CallQualityIndicator"
-   ],
-   "errors": [
-    "⚠️ Qualidade da chamada degradada"
-   ],
-   "side_effects": [
-    "notifyOnDegrade"
-   ]
-  },
   "src/components/calls/ConferenceSection.tsx": {
    "path": "src/components/calls/ConferenceSection.tsx",
    "lines": 83,
@@ -92626,17 +92367,6 @@
     " className="
    ]
   },
-  "src/components/calls/PostCallSummary.tsx": {
-   "path": "src/components/calls/PostCallSummary.tsx",
-   "lines": 242,
-   "exports": [
-    "interface PostCallSummaryData",
-    "function PostCallSummary"
-   ],
-   "errors": [
-    "Falha ao exportar CSV"
-   ]
-  },
   "src/components/calls/SipConnectionStatus.tsx": {
    "path": "src/components/calls/SipConnectionStatus.tsx",
    "lines": 56,
@@ -92680,7 +92410,7 @@
   },
   "src/components/calls/UnifiedSoftphone.tsx": {
    "path": "src/components/calls/UnifiedSoftphone.tsx",
-   "lines": 380,
+   "lines": 381,
    "exports": [
     "function UnifiedSoftphone"
    ],
@@ -92789,122 +92519,6 @@
     "function VoipQualityIndicator"
    ]
   },
-  "src/components/calls/WebRTCCall.tsx": {
-   "path": "src/components/calls/WebRTCCall.tsx",
-   "lines": 386,
-   "exports": [
-    "function WebRTCCall"
-   ],
-   "errors": [
-    "Falha ao iniciar chamada",
-    "Nenhum microfone encontrado",
-    "Não foi possível restabelecer a chamada",
-    "Permissão de microfone negada",
-    "Reconectando (${attempt}/${MAX_RECONNECT_ATTEMPTS})…"
-   ],
-   "params": [
-    {
-     "name": "MAX_RECONNECT_ATTEMPTS",
-     "value": "5"
-    },
-    {
-     "name": "DISCONNECT_GRACE_MS",
-     "value": "3000"
-    }
-   ],
-   "status_values": [
-    {
-     "field": "state",
-     "value": "connected",
-     "kind": "compara"
-    },
-    {
-     "field": "state",
-     "value": "completed",
-     "kind": "compara"
-    },
-    {
-     "field": "state",
-     "value": "disconnected",
-     "kind": "compara"
-    },
-    {
-     "field": "state",
-     "value": "failed",
-     "kind": "compara"
-    },
-    {
-     "field": "status",
-     "value": "idle",
-     "kind": "compara"
-    },
-    {
-     "field": "status",
-     "value": "connecting",
-     "kind": "compara"
-    },
-    {
-     "field": "status",
-     "value": "ringing",
-     "kind": "compara"
-    },
-    {
-     "field": "status",
-     "value": "active",
-     "kind": "compara"
-    },
-    {
-     "field": "status",
-     "value": "ended",
-     "kind": "compara"
-    },
-    {
-     "field": "status",
-     "value": "active",
-     "kind": "compara"
-    },
-    {
-     "field": "status",
-     "value": "active",
-     "kind": "compara"
-    },
-    {
-     "field": "status",
-     "value": "idle",
-     "kind": "compara"
-    },
-    {
-     "field": "status",
-     "value": "active",
-     "kind": "compara"
-    },
-    {
-     "field": "status",
-     "value": "ringing",
-     "kind": "compara"
-    },
-    {
-     "field": "status",
-     "value": "connecting",
-     "kind": "compara"
-    },
-    {
-     "field": "status",
-     "value": "ended",
-     "kind": "compara"
-    }
-   ],
-   "temporal": [
-    "setTimeout(() => setStatus(\"idle\"), 2000);"
-   ]
-  },
-  "src/components/calls/WebRTCMetricsPanel.tsx": {
-   "path": "src/components/calls/WebRTCMetricsPanel.tsx",
-   "lines": 116,
-   "exports": [
-    "function WebRTCMetricsPanel"
-   ]
-  },
   "src/components/calls/__tests__/ActiveCallBar.espera.test.tsx": {
    "path": "src/components/calls/__tests__/ActiveCallBar.espera.test.tsx",
    "lines": 106,
@@ -92974,19 +92588,6 @@
     "lista o sinal e marca como usado"
    ]
   },
-  "src/components/calls/__tests__/PostCallSummary.test.tsx": {
-   "path": "src/components/calls/__tests__/PostCallSummary.test.tsx",
-   "lines": 93,
-   "is_test": true,
-   "tests": [
-    "PostCallSummary",
-    "mostra mensagem quando não há amostras",
-    "agrega MOS, jitter, perda e classifica qualidade",
-    "classifica como Ruim quando MOS médio < 3.6",
-    "dispara download de CSV ao clicar em Baixar CSV",
-    "botão Baixar CSV fica desabilitado quando não há dados"
-   ]
-  },
   "src/components/calls/__tests__/UnifiedSoftphone.falhas.test.tsx": {
    "path": "src/components/calls/__tests__/UnifiedSoftphone.falhas.test.tsx",
    "lines": 162,
@@ -92999,26 +92600,6 @@
     "instrui o agente quando o microfone e negado",
     "aplica no audio do SIP o mute pedido pelo estado da chamada",
     "nao mexe no audio do SIP quando a chamada e de outro canal"
-   ]
-  },
-  "src/components/calls/__tests__/WebRTCCall.test.tsx": {
-   "path": "src/components/calls/__tests__/WebRTCCall.test.tsx",
-   "lines": 289,
-   "is_test": true,
-   "tests": [
-    "WebRTCCall",
-    "anexa o stream remoto ao elemento <audio> quando ontrack dispara",
-    "configura transceiver bidirecional e injeta a track local no sender",
-    "alterna a track do sender ao clicar em silenciar/ativar microfone",
-    "aguarda grace period no ",
-    "faz restartIce com backoff exponencial em ICE ",
-    "reseta indicador de reconexão quando ICE retorna a "
-   ],
-   "side_effects": [
-    "notify_incoming_calls",
-    "notify_missed_calls",
-    "notify_sound",
-    "notify_voicemail"
    ]
   },
   "src/components/calls/live-transcription/TranscriptList.tsx": {
@@ -93086,7 +92667,7 @@
   },
   "src/components/calls/softphone/ActiveCallDisplay.tsx": {
    "path": "src/components/calls/softphone/ActiveCallDisplay.tsx",
-   "lines": 296,
+   "lines": 310,
    "exports": [
     "function ActiveCallDisplay"
    ],
@@ -93205,6 +92786,17 @@
     "const channelColors",
     "function formatCallDuration",
     "function getInitials"
+   ]
+  },
+  "src/components/calls/softphone/__tests__/ActiveCallDisplay.saidaAudio.test.tsx": {
+   "path": "src/components/calls/softphone/__tests__/ActiveCallDisplay.saidaAudio.test.tsx",
+   "lines": 126,
+   "is_test": true,
+   "tests": [
+    "ActiveCallDisplay — saída de áudio da chamada",
+    "oferece a escolha de saída na chamada SIP e aplica o sink no áudio remoto",
+    "não mostra o seletor fora da chamada SIP",
+    "não mostra o seletor quando o navegador não suporta trocar a saída"
    ]
   },
   "src/components/calls/softphone/__tests__/DialpadTab.a11y.test.tsx": {
@@ -93617,7 +93209,7 @@
   },
   "src/components/contacts/ContactAlertsDropdown.tsx": {
    "path": "src/components/contacts/ContactAlertsDropdown.tsx",
-   "lines": 251,
+   "lines": 260,
    "exports": [
     "function ContactAlertsDropdown"
    ],
@@ -94891,7 +94483,23 @@
   },
   "src/components/layout/AppLayout.tsx": {
    "path": "src/components/layout/AppLayout.tsx",
-   "lines": 103
+   "lines": 110,
+   "status_values": [
+    {
+     "field": "role",
+     "value": "admin",
+     "kind": "compara"
+    },
+    {
+     "field": "role",
+     "value": "supervisor",
+     "kind": "compara"
+    }
+   ],
+   "role_checks": [
+    "admin",
+    "supervisor"
+   ]
   },
   "src/components/layout/AppSidebar.tsx": {
    "path": "src/components/layout/AppSidebar.tsx",
@@ -94997,20 +94605,6 @@
     "toda rota protegida tem item de menu, ou esta registrada como link direto",
     "os links diretos registrados continuam existindo como rota",
     "nenhum item de menu aponta para rota inexistente nem se repete"
-   ]
-  },
-  "src/components/lazy/LazyComponent.tsx": {
-   "path": "src/components/lazy/LazyComponent.tsx",
-   "lines": 19,
-   "exports": [
-    "function createLazyComponent"
-   ]
-  },
-  "src/components/loading/GlobalLoading.tsx": {
-   "path": "src/components/loading/GlobalLoading.tsx",
-   "lines": 22,
-   "exports": [
-    "function GlobalLoading"
    ]
   },
   "src/components/navigation/BackButton.tsx": {
@@ -95483,16 +95077,6 @@
     "useNotificationCenter — chave de cache por usuario",
     "nao mostra as notificacoes que ficaram no cache do usuario anterior",
     "nao mostra as preferencias que ficaram no cache do usuario anterior"
-   ]
-  },
-  "src/components/notifications/NotificationBell.tsx": {
-   "path": "src/components/notifications/NotificationBell.tsx",
-   "lines": 171,
-   "exports": [
-    "function NotificationBell"
-   ],
-   "navigates": [
-    "/notifications"
    ]
   },
   "src/components/notifications/UnifiedNotificationDropdown.tsx": {
@@ -99112,7 +98696,7 @@
   },
   "src/hooks/useContactAlerts.ts": {
    "path": "src/hooks/useContactAlerts.ts",
-   "lines": 205,
+   "lines": 208,
    "exports": [
     "interface ContactAlert",
     "const useContactAlerts"
@@ -103140,7 +102724,7 @@
   },
   "src/hooks/useSipCall.ts": {
    "path": "src/hooks/useSipCall.ts",
-   "lines": 420,
+   "lines": 422,
    "exports": [
     "type SipStatus",
     "interface IncomingCallInfo",
@@ -105457,7 +105041,7 @@
   },
   "src/hooks/__tests__/useContactAlerts.coverage.test.tsx": {
    "path": "src/hooks/__tests__/useContactAlerts.coverage.test.tsx",
-   "lines": 333,
+   "lines": 353,
    "is_test": true,
    "rule_comments": [
     "On error the alert should NOT be flipped, and the caller must see the failure"
@@ -105477,6 +105061,7 @@
     "deleteAlert handles error branch",
     "checkForNewAlerts triggers info toast and refetch when alerts created",
     "checkForNewAlerts with zero created does not toast",
+    "recarrega a lista mesmo quando a edge nao criou alertas",
     "checkForNewAlerts handles error and returns null",
     "realtime INSERT prepends alert, increments unread, and shows toast",
     "cleans up channel on unmount"
@@ -107840,7 +107425,7 @@
   },
   "src/lib/a11y-clickable.ts": {
    "path": "src/lib/a11y-clickable.ts",
-   "lines": 29,
+   "lines": 34,
    "exports": [
     "function clickableRowProps",
     "function activateOnKey"
@@ -107851,6 +107436,9 @@
      "value": "button",
      "kind": "escreve"
     }
+   ],
+   "rule_comments": [
+    "(botao, link) nao pode ativar a linha por borbulhamento."
    ]
   },
   "src/lib/agent-assist-utils.ts": {
@@ -109355,13 +108943,16 @@
   },
   "src/lib/__tests__/a11y-clickable.test.ts": {
    "path": "src/lib/__tests__/a11y-clickable.test.ts",
-   "lines": 43,
+   "lines": 72,
    "is_test": true,
    "tests": [
     "clickableRowProps",
     "entrega semantica de controle focavel",
     "ativa com Enter e com Espaco, consumindo o evento",
-    "ignora teclas que nao ativam"
+    "ignora teclas que nao ativam",
+    "activateOnKey",
+    "ativa a linha quando o foco esta na propria linha",
+    "nao ativa a linha quando o Enter vem de um controle interno"
    ]
   },
   "src/lib/__tests__/accessibility-improvements.test.ts": {
@@ -124806,10 +124397,41 @@
   }
  },
  "git": {
-  "sha": "f214b17034cada820c3b8365c856f72a1b93599e",
+  "sha": "72459646315375e50d37d6b86d1a6cd54d7d904f",
   "branch": "main",
   "remote": "https://github.com/adm01-debug/Hello_V3",
   "commits": [
+   {
+    "sha": "7245964",
+    "date": "2026-11-25",
+    "author": "adm01-debug",
+    "subject": "chore: remover componentes orfaos (etapa 296) e reaproveitar saida de audio e alertas de contato (#328)",
+    "files": [
+     "docs/estado/hooks-dormentes.md",
+     "docs/qa/05-PROGRESSO.md",
+     "scripts/inventario/gerar-hooks-dormentes.mjs",
+     "src/components/alerts/AlertsDropdown.tsx",
+     "src/components/calls/CallQualityIndicator.tsx",
+     "src/components/calls/PostCallSummary.tsx",
+     "src/components/calls/UnifiedSoftphone.tsx",
+     "src/components/calls/WebRTCCall.tsx",
+     "src/components/calls/WebRTCMetricsPanel.tsx",
+     "src/components/calls/__tests__/PostCallSummary.test.tsx",
+     "src/components/calls/__tests__/WebRTCCall.test.tsx",
+     "src/components/calls/softphone/ActiveCallDisplay.tsx",
+     "src/components/calls/softphone/__tests__/ActiveCallDisplay.saidaAudio.test.tsx",
+     "src/components/contacts/ContactAlertsDropdown.tsx",
+     "src/components/layout/AppLayout.tsx",
+     "src/components/lazy/LazyComponent.tsx",
+     "src/components/loading/GlobalLoading.tsx",
+     "src/components/notifications/NotificationBell.tsx",
+     "src/hooks/__tests__/useContactAlerts.coverage.test.tsx",
+     "src/hooks/useContactAlerts.ts",
+     "src/hooks/useSipCall.ts",
+     "src/lib/__tests__/a11y-clickable.test.ts",
+     "src/lib/a11y-clickable.ts"
+    ]
+   },
    {
     "sha": "f214b17",
     "date": "2026-11-25",
@@ -125153,23 +124775,6 @@
      "supabase/functions/health-check/__tests__/slo-targets_test.ts",
      "supabase/functions/health-check/index.ts"
     ]
-   },
-   {
-    "sha": "6272242",
-    "date": "2026-11-24",
-    "author": "adm01-debug",
-    "subject": "test: prova a resiliencia das edges com upstream fora do ar (#298)",
-    "files": [
-     "docs/qa/05-PROGRESSO.md",
-     "supabase/functions/_shared/testing/backend-falso.ts",
-     "supabase/functions/analyze-call/__tests__/upstream-falha.test.ts",
-     "supabase/functions/analyze-call/index.ts",
-     "supabase/functions/auto-scorecard/__tests__/upstream-falha.test.ts",
-     "supabase/functions/auto-scorecard/index.ts",
-     "supabase/functions/bitrix-api/__tests__/upstream-falha.test.ts",
-     "supabase/functions/chatbot-respond/__tests__/upstream-falha.test.ts",
-     "supabase/functions/notify-new-device/__tests__/upstream-falha.test.ts"
-    ]
    }
   ],
   "hot_files": [
@@ -125182,6 +124787,10 @@
     9
    ],
    [
+    "src/components/calls/UnifiedSoftphone.tsx",
+    4
+   ],
+   [
     "src/components/calls/ActiveCallBar.tsx",
     3
    ],
@@ -125190,12 +124799,20 @@
     3
    ],
    [
-    "src/components/calls/UnifiedSoftphone.tsx",
+    ".github/workflows/ci.yml",
     3
    ],
    [
-    ".github/workflows/ci.yml",
-    3
+    "src/components/calls/WebRTCCall.tsx",
+    2
+   ],
+   [
+    "src/components/calls/__tests__/WebRTCCall.test.tsx",
+    2
+   ],
+   [
+    "src/components/layout/AppLayout.tsx",
+    2
    ],
    [
     "src/hooks/__tests__/useCadences.crud.test.tsx",
@@ -125234,23 +124851,11 @@
     2
    ],
    [
-    "src/components/calls/__tests__/ActiveCallBar.verificacaoVoz.test.tsx",
+    "docs/estado/hooks-dormentes.md",
     1
    ],
    [
-    "src/hooks/__tests__/useMeetingSummary.coverage.test.tsx",
-    1
-   ],
-   [
-    "src/hooks/useMeetingSummary.ts",
-    1
-   ],
-   [
-    "src/hooks/__tests__/useSLA.coverage.test.tsx",
-    1
-   ],
-   [
-    "src/hooks/useSLA.ts",
+    "scripts/inventario/gerar-hooks-dormentes.mjs",
     1
    ]
   ]

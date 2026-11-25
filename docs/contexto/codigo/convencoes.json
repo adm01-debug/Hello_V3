@@ -7,7 +7,7 @@
    "src/routes (1)"
   ],
   "componentes": [
-   "src/components (320)",
+   "src/components (313)",
    "src/pages (126)",
    "src/contexts (5)"
   ],
@@ -22,7 +22,7 @@
    "scripts/regras_negocio (2)"
   ],
   "testes": [
-   "co-localizado (__tests__) (379)",
+   "co-localizado (__tests__) (378)",
    "tests/ (9)",
    "e2e/ (7)"
   ],
@@ -48,7 +48,7 @@
  },
  "barrels_index": 17,
  "extensao_componentes": [
-  ".tsx (453)"
+  ".tsx (446)"
  ],
  "alias_imports": {
   "(raiz)": {
@@ -59,11 +59,11 @@
  "commits": {
   "convencao": "conventional commits (observado)",
   "exemplos": [
+   "chore: remover componentes orfaos (etapa 296) e reaproveitar saida de audio e alertas de contato (#328)",
    "feat: verifica voz ao vivo na chamada e remove resumo de reuniao duplicado (etapas 154,155) (#327)",
    "feat: liga enforcement de SLA, violacoes e registro de leitura da base (#326)",
    "feat: inscricao e acompanhamento de contatos na cadencia (#325)",
-   "chore: marca a etapa 086 como concluida no backlog (#324)",
-   "feat: permite editar e excluir cadencia e passo (etapa 086) (#323)"
+   "chore: marca a etapa 086 como concluida no backlog (#324)"
   ]
  },
  "pr_template": null,

@@ -237,15 +237,6 @@
   "src/components/alerts/AlertStatsCards.tsx": [
    "src/components/ui/card.tsx"
   ],
-  "src/components/alerts/AlertsDropdown.tsx": [
-   "src/components/ui/badge.tsx",
-   "src/components/ui/button.tsx",
-   "src/components/ui/dropdown-menu.tsx",
-   "src/components/ui/scroll-area.tsx",
-   "src/integrations/supabase/client.ts",
-   "src/lib/logger.ts",
-   "src/lib/safe-date.ts"
-  ],
   "src/components/alerts/AlertsTrendChart.tsx": [
    "src/components/ui/card.tsx",
    "src/components/ui/select.tsx",
@@ -435,11 +426,6 @@
    "src/components/ui/select.tsx",
    "src/hooks/useAudioOutputDevices.ts"
   ],
-  "src/components/calls/CallQualityIndicator.tsx": [
-   "src/components/ui/tooltip.tsx",
-   "src/hooks/useVoipQualityMonitor.ts",
-   "src/lib/utils.ts"
-  ],
   "src/components/calls/ConferenceSection.tsx": [
    "src/components/ui/button.tsx",
    "src/components/ui/tooltip.tsx",
@@ -498,13 +484,6 @@
    "src/lib/agent-assist-utils.ts",
    "src/lib/utils.ts"
   ],
-  "src/components/calls/PostCallSummary.tsx": [
-   "src/components/ui/badge.tsx",
-   "src/components/ui/button.tsx",
-   "src/components/ui/dialog.tsx",
-   "src/hooks/useVoipQualityMonitor.ts",
-   "src/lib/utils.ts"
-  ],
   "src/components/calls/SipConnectionStatus.tsx": [
    "src/components/ui/badge.tsx",
    "src/components/ui/tooltip.tsx",
@@ -550,25 +529,6 @@
    "src/hooks/useVoipQualityMonitor.ts",
    "src/lib/utils.ts"
   ],
-  "src/components/calls/WebRTCCall.tsx": [
-   "src/components/calls/AudioOutputSelector.tsx",
-   "src/components/calls/CallQualityIndicator.tsx",
-   "src/components/calls/PostCallSummary.tsx",
-   "src/components/calls/WebRTCMetricsPanel.tsx",
-   "src/components/ui/badge.tsx",
-   "src/components/ui/button.tsx",
-   "src/components/ui/card.tsx",
-   "src/hooks/useAudioOutputDevices.ts",
-   "src/hooks/useNotificationPreferences.ts",
-   "src/hooks/useVoipQualityMonitor.ts",
-   "src/lib/logger.ts",
-   "src/lib/utils.ts",
-   "src/lib/webrtc-config.ts"
-  ],
-  "src/components/calls/WebRTCMetricsPanel.tsx": [
-   "src/hooks/useVoipQualityMonitor.ts",
-   "src/lib/utils.ts"
-  ],
   "src/components/calls/live-transcription/TranscriptList.tsx": [
    "src/components/calls/live-transcription/types.ts",
    "src/components/ui/badge.tsx",
@@ -588,6 +548,7 @@
    "src/lib/logger.ts"
   ],
   "src/components/calls/softphone/ActiveCallDisplay.tsx": [
+   "src/components/calls/AudioOutputSelector.tsx",
    "src/components/calls/TransferCallDialog.tsx",
    "src/components/calls/VoipQualityIndicator.tsx",
    "src/components/calls/softphone/constants.tsx",
@@ -595,6 +556,7 @@
    "src/components/ui/button.tsx",
    "src/components/ui/scroll-area.tsx",
    "src/components/ui/tooltip.tsx",
+   "src/hooks/useAudioOutputDevices.ts",
    "src/hooks/useLiveSentiment.ts",
    "src/hooks/useMultiChannelCall.ts",
    "src/hooks/useVoiceCommand.ts",
@@ -1304,6 +1266,7 @@
   ],
   "src/components/layout/AppLayout.tsx": [
    "src/components/calls/ActiveCallBar.tsx",
+   "src/components/contacts/ContactAlertsDropdown.tsx",
    "src/components/layout/AppSidebar.tsx",
    "src/components/layout/CommandPalette.tsx",
    "src/components/layout/MobileBottomNav.tsx",
@@ -1318,6 +1281,7 @@
    "src/components/ui/keyboard-navigation.tsx",
    "src/components/ui/sidebar.tsx",
    "src/components/ui/tooltip.tsx",
+   "src/contexts/AuthContext.tsx",
    "src/hooks/telemetry/useTelemetry.ts"
   ],
   "src/components/layout/AppSidebar.tsx": [
@@ -1359,9 +1323,6 @@
    "src/components/ui/tooltip.tsx",
    "src/contexts/ThemeContext.tsx",
    "src/lib/utils.ts"
-  ],
-  "src/components/lazy/LazyComponent.tsx": [
-   "src/components/loading/GlobalLoading.tsx"
   ],
   "src/components/navigation/BackButton.tsx": [
    "src/components/ui/button.tsx",
@@ -1555,16 +1516,6 @@
   "src/components/notification-center/useNotificationCenter.ts": [
    "src/components/notification-center/constants.ts",
    "src/integrations/supabase/client.ts"
-  ],
-  "src/components/notifications/NotificationBell.tsx": [
-   "src/components/ui/badge.tsx",
-   "src/components/ui/button.tsx",
-   "src/components/ui/empty-state.tsx",
-   "src/components/ui/popover.tsx",
-   "src/components/ui/scroll-area.tsx",
-   "src/components/ui/switch.tsx",
-   "src/hooks/useRealtimeHoldAlerts.ts",
-   "src/lib/safe-date.ts"
   ],
   "src/components/notifications/UnifiedNotificationDropdown.tsx": [
    "src/components/ui/badge.tsx",

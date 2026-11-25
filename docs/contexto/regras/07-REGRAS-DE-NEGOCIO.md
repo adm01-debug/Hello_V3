@@ -1,6 +1,6 @@
 # 07 · REGRAS DE NEGÓCIO
 
-> Gerado automaticamente por AI Context Sync v1.3.2 · commit `f214b17034` · branch `main` · 2026-11-25 19:41 UTC
+> Gerado automaticamente por AI Context Sync v1.3.2 · commit `7245964631` · branch `main` · 2026-11-25 20:16 UTC
 > Não edite à mão — regras humanas vão em `manual/`.
 
 ## A. Regras escritas por humanos (`manual/` — prioridade máxima, nunca sobrescrito)
@@ -847,7 +847,7 @@ _nenhum mapa explícito encontrado — transições só existem implicitamente n
 | `status` | `TIMED_OUT` | compara | `src/hooks/useHealthCheck.ts` |
 | `status` | `abandoned` | compara, filtra | `src/components/dashboard/RecentCalls.tsx`<br>`src/hooks/useQueueMetrics.ts`<br>`src/hooks/useSupervisorPanel.ts`<br>`src/pages/CallHistory.tsx`<br>`supabase/functions/check-goals/index.ts`<br>… +1 |
 | `status` | `accepted` | escreve | `src/hooks/useCrmFieldSuggestions.ts` |
-| `status` | `active` | compara, escreve, filtra | `src/components/agent/BargeInNotification.tsx`<br>`src/components/calls/ActiveCallBar.tsx`<br>`src/components/calls/SipConnectionStatus.tsx`<br>`src/components/calls/UnifiedSoftphone.tsx`<br>`src/components/calls/WebRTCCall.tsx`<br>… +21 |
+| `status` | `active` | compara, escreve, filtra | `src/components/agent/BargeInNotification.tsx`<br>`src/components/calls/ActiveCallBar.tsx`<br>`src/components/calls/SipConnectionStatus.tsx`<br>`src/components/calls/UnifiedSoftphone.tsx`<br>`src/components/calls/softphone/ActiveCallDisplay.tsx`<br>… +20 |
 | `status` | `agent_high` | compara | `src/components/conversation-intelligence/TalkRatioChart.tsx` |
 | `status` | `agent_low` | escreve | `src/hooks/useTalkRatio.ts`<br>`src/lib/talkRatio.ts` |
 | `status` | `approved` | compara, escreve | `src/hooks/useScorecards.ts`<br>`src/hooks/useShiftSwapSuggestions.ts`<br>`src/hooks/useTimeOff.ts`<br>`src/pages/PasswordResetApproval.tsx`<br>`src/pages/Scheduling.tsx`<br>… +2 |
@@ -859,10 +859,10 @@ _nenhum mapa explícito encontrado — transições só existem implicitamente n
 | `status` | `calling` | compara, escreve | `src/components/calls/SipConnectionStatus.tsx`<br>`src/hooks/useSipCall.ts`<br>`src/hooks/useWavoipCall.ts` |
 | `status` | `cancelled` | escreve | `src/hooks/useScheduledCallbacks.ts` |
 | `status` | `checking` | compara, escreve | `src/components/network/NetworkStatusIndicator.tsx`<br>`src/components/observability/HealthTab.tsx`<br>`src/hooks/useHealthCheck.ts`<br>`src/hooks/useNetworkMonitor.ts` |
-| `status` | `completed` | compara, escreve, filtra | `src/components/alerts/AlertsDropdown.tsx`<br>`src/components/call-history/CallSessionsList.tsx`<br>`src/components/callbacks/ScheduledCallbacksList.tsx`<br>`src/components/coaching/CoachingAssignmentsPanel.tsx`<br>`src/components/coaching/CoachingPanel.tsx`<br>… +31 |
+| `status` | `completed` | compara, escreve, filtra | `src/components/call-history/CallSessionsList.tsx`<br>`src/components/callbacks/ScheduledCallbacksList.tsx`<br>`src/components/coaching/CoachingAssignmentsPanel.tsx`<br>`src/components/coaching/CoachingPanel.tsx`<br>`src/components/dashboard/RecentCalls.tsx`<br>… +30 |
 | `status` | `conference` | compara, escreve | `src/hooks/useMultiChannelCall.ts` |
 | `status` | `connected` | escreve | `src/data/mockData.ts`<br>`src/hooks/useWavoipCall.ts` |
-| `status` | `connecting` | compara, escreve | `src/components/calls/SipConnectionStatus.tsx`<br>`src/components/calls/WebRTCCall.tsx`<br>`src/components/calls/softphone/ActiveCallDisplay.tsx`<br>`src/hooks/useMultiChannelCall.ts`<br>`src/hooks/useSipCall.ts`<br>… +3 |
+| `status` | `connecting` | compara, escreve | `src/components/calls/SipConnectionStatus.tsx`<br>`src/components/calls/softphone/ActiveCallDisplay.tsx`<br>`src/hooks/useMultiChannelCall.ts`<br>`src/hooks/useSipCall.ts`<br>`src/hooks/useWavoipCall.ts`<br>… +2 |
 | `status` | `created` | escreve | `supabase/functions/auto-scorecard/index.ts` |
 | `status` | `critical` | compara | `src/hooks/useQueueMetrics.ts`<br>`src/pages/QueueMetricsDashboard.tsx`<br>`supabase/functions/check-goals/index.ts` |
 | `status` | `degraded` | compara | `src/components/dashboard/SystemIntegrityDashboard.tsx`<br>`src/components/executive/VoipInfrastructureTab.tsx`<br>`src/components/observability/HealthTab.tsx`<br>`src/pages/admin/SloDashboard.tsx`<br>`supabase/functions/health-check/index.ts` |
@@ -871,7 +871,7 @@ _nenhum mapa explícito encontrado — transições só existem implicitamente n
 | `status` | `disponivel` | escreve | `src/pages/Marketplace.tsx` |
 | `status` | `down` | compara, escreve | `src/components/observability/HealthTab.tsx`<br>`src/hooks/useHealthCheck.ts` |
 | `status` | `draft` | compara, escreve | `src/hooks/useKnowledgeBase.ts`<br>`src/hooks/useScorecards.ts`<br>`src/pages/Knowledge.tsx`<br>`src/pages/Scorecards.tsx`<br>`supabase/functions/score-call/index.ts` |
-| `status` | `ended` | compara, escreve | `src/components/calls/WebRTCCall.tsx`<br>`src/hooks/useCallTransfer.ts`<br>`src/hooks/useMultiChannelCall.ts`<br>`src/hooks/useSupervisorPanel.ts`<br>`src/pages/VideoConference.tsx`<br>… +1 |
+| `status` | `ended` | compara, escreve | `src/hooks/useCallTransfer.ts`<br>`src/hooks/useMultiChannelCall.ts`<br>`src/hooks/useSupervisorPanel.ts`<br>`src/pages/VideoConference.tsx`<br>`supabase/functions/wavoip-call/index.ts` |
 | `status` | `error` | compara, escreve | `src/components/admin/ldap/LDAPLogsTab.tsx`<br>`src/components/calls/SipConnectionStatus.tsx`<br>`src/components/calls/UnifiedSoftphone.tsx`<br>`src/hooks/useSipCall.ts`<br>`src/hooks/useWavoipCall.ts`<br>… +1 |
 | `status` | `exhausted` | compara | `src/pages/admin/SloDashboard.tsx`<br>`supabase/functions/health-check/index.ts` |
 | `status` | `expired` | compara, escreve | `src/pages/PasswordResetApproval.tsx`<br>`src/pages/VerifyEmail.tsx`<br>`supabase/functions/approve-password-reset/index.ts` |
@@ -880,7 +880,6 @@ _nenhum mapa explícito encontrado — transições só existem implicitamente n
 | `status` | `future` | escreve | `src/components/callbacks/ScheduledCallbacksList.tsx` |
 | `status` | `generating` | compara, escreve | `src/components/calls/MeetingSummaryCard.tsx`<br>`src/hooks/useMeetingSummary.ts`<br>`supabase/functions/generate-meeting-summary/index.ts` |
 | `status` | `healthy` | compara, escreve | `src/components/executive/VoipInfrastructureTab.tsx`<br>`src/components/observability/HealthTab.tsx`<br>`src/hooks/useHealthCheck.ts`<br>`src/pages/admin/SloDashboard.tsx` |
-| `status` | `idle` | compara | `src/components/calls/WebRTCCall.tsx` |
 | `status` | `implemented` | compara, escreve | `src/lib/security-report-data.ts`<br>`src/pages/SecurityReport.tsx` |
 | `status` | `in_negotiation` | compara | `src/hooks/useRenewals.ts` |
 | `status` | `in_progress` | compara, escreve | `src/components/coaching/CoachingPanel.tsx`<br>`src/components/settings/BitrixSyncStatus.tsx`<br>`src/hooks/useCoaching.ts`<br>`src/lib/bitrix/sync-log.ts` |
@@ -912,7 +911,7 @@ _nenhum mapa explícito encontrado — transições só existem implicitamente n
 | `status` | `rejected` | compara, escreve | `src/hooks/useCrmFieldSuggestions.ts`<br>`src/pages/NumberPorting.tsx`<br>`src/pages/PasswordResetApproval.tsx`<br>`src/pages/Scheduling.tsx`<br>`src/pages/ShiftSwapSuggestions.tsx` |
 | `status` | `resolved` | compara, escreve | `src/pages/Inbox.tsx`<br>`supabase/functions/enforce-sla/index.ts` |
 | `status` | `retrieved` | escreve | `src/hooks/useCallPark.ts` |
-| `status` | `ringing` | compara, escreve | `src/components/calls/ActiveCallBar.tsx`<br>`src/components/calls/SipConnectionStatus.tsx`<br>`src/components/calls/WebRTCCall.tsx`<br>`src/components/calls/softphone/ActiveCallDisplay.tsx`<br>`src/components/dashboard/RecentCalls.tsx`<br>… +5 |
+| `status` | `ringing` | compara, escreve | `src/components/calls/ActiveCallBar.tsx`<br>`src/components/calls/SipConnectionStatus.tsx`<br>`src/components/calls/softphone/ActiveCallDisplay.tsx`<br>`src/components/dashboard/RecentCalls.tsx`<br>`src/data/mockData.ts`<br>… +4 |
 | `status` | `scheduled` | compara, escreve | `src/pages/Scheduling.tsx`<br>`src/pages/VideoConference.tsx` |
 | `status` | `sent` | compara | `src/pages/VirtualFax.tsx` |
 | `status` | `skipped` | escreve | `src/hooks/predictive-dialer/api.ts`<br>`supabase/functions/auto-scorecard/index.ts` |
@@ -1007,22 +1006,18 @@ _nenhum mapa explícito encontrado — transições só existem implicitamente n
 | `state` | `all` | compara | `src/lib/blf.ts`<br>`src/pages/BlfBoard.tsx` |
 | `state` | `closed` | compara, escreve | `src/lib/bitrix/circuit-breaker.ts`<br>`src/lib/incoming-call-alert.ts` |
 | `state` | `collapsed` | compara | `src/components/layout/AppSidebar.tsx`<br>`src/components/ui/sidebar.tsx` |
-| `state` | `completed` | compara | `src/components/calls/WebRTCCall.tsx` |
-| `state` | `connected` | compara | `src/components/calls/WebRTCCall.tsx` |
-| `state` | `disconnected` | compara | `src/components/calls/WebRTCCall.tsx` |
 | `state` | `expanded` | escreve | `src/components/ui/sidebar.tsx` |
-| `state` | `failed` | compara | `src/components/calls/WebRTCCall.tsx` |
 | `state` | `inactive` | compara | `src/hooks/useCallRecording.ts` |
 | `state` | `open` | compara | `src/lib/bitrix/circuit-breaker.ts` |
 | `state` | `parked` | escreve | `src/lib/blf.ts` |
 | `state` | `recording` | compara | `src/components/calls/live-transcription/useLiveTranscription.ts`<br>`src/hooks/useVoiceCommand.ts` |
 | `state` | `suspended` | compara | `src/hooks/useCriticalAlertNotifications.ts`<br>`src/hooks/useHoldSoundAlert.ts`<br>`src/lib/incoming-call-alert.ts` |
-| `role` | `admin` | compara, filtra | `src/components/layout/AppSidebar.tsx`<br>`src/hooks/useUnreadConflicts.ts`<br>`src/pages/Knowledge.tsx`<br>`src/pages/Permissions.tsx`<br>`src/pages/SecurityMonitoring.tsx`<br>… +13 |
+| `role` | `admin` | compara, filtra | `src/components/layout/AppLayout.tsx`<br>`src/components/layout/AppSidebar.tsx`<br>`src/hooks/useUnreadConflicts.ts`<br>`src/pages/Knowledge.tsx`<br>`src/pages/Permissions.tsx`<br>… +14 |
 | `role` | `agent` | compara, escreve | `src/lib/talkRatio.ts`<br>`src/pages/roles/RoleStatsCards.tsx`<br>`supabase/functions/analyze-talk-ratio/index.ts` |
 | `role` | `button` | escreve | `src/lib/a11y-clickable.ts` |
 | `role` | `customer` | compara | `src/lib/talkRatio.ts`<br>`supabase/functions/analyze-talk-ratio/index.ts` |
 | `role` | `string` | compara | `src/pages/roles/RoleAuditTrail.tsx`<br>`supabase/functions/_shared/auth.ts` |
-| `role` | `supervisor` | compara | `src/hooks/useUnreadConflicts.ts`<br>`src/pages/Knowledge.tsx`<br>`src/pages/roles/RoleStatsCards.tsx` |
+| `role` | `supervisor` | compara | `src/components/layout/AppLayout.tsx`<br>`src/hooks/useUnreadConflicts.ts`<br>`src/pages/Knowledge.tsx`<br>`src/pages/roles/RoleStatsCards.tsx` |
 | `role` | `system` | escreve | `supabase/functions/analyze-call/index.ts`<br>`supabase/functions/analyze-live-utterance/index.ts`<br>`supabase/functions/auto-scorecard/index.ts`<br>`supabase/functions/chatbot-respond/index.ts`<br>`supabase/functions/detect-key-moments/index.ts`<br>… +12 |
 | `role` | `user` | compara, escreve | `src/components/calls/softphone/ActiveCallDisplay.tsx`<br>`src/hooks/useMultiChannelCall.ts`<br>`supabase/functions/analyze-call/index.ts`<br>`supabase/functions/analyze-contact-profile/index.ts`<br>`supabase/functions/analyze-live-utterance/index.ts`<br>… +18 |
 | `role` | `viewer` | compara | `src/pages/roles/RoleStatsCards.tsx` |
@@ -1873,8 +1868,6 @@ _nenhum item encontrado_
 
 | Constante | Valor | Arquivo |
 |---|---|---|
-| `MAX_RECONNECT_ATTEMPTS` | `5` | `src/components/calls/WebRTCCall.tsx` |
-| `DISCONNECT_GRACE_MS` | `3000` | `src/components/calls/WebRTCCall.tsx` |
 | `PREVIEW_TEXT` | `'Assistente de voz pronto para discar.'` | `src/components/dialer/phone/VoicePreferencesPanel.tsx` |
 | `SEVEN_DAYS_MS` | `7` | `src/components/executive/AgentAssistDashboardCard.tsx` |
 | `SNOOZE_HOURS` | `24` | `src/components/network/VoipRecommendationsPanel.tsx` |
@@ -2039,7 +2032,6 @@ _nenhum item encontrado_
 | `scheduled_time: format(addHours(new Date(), 1), 'HH:mm'),` | `src/components/callbacks/ScheduleCallbackDialog.tsx` |
 | `await new Promise(r => setTimeout(r, 3000));` | `src/components/calls/UnifiedSoftphone.tsx` |
 | `setTimeout(() => clearInterval(check), 30000);` | `src/components/calls/UnifiedSoftphone.tsx` |
-| `setTimeout(() => setStatus("idle"), 2000);` | `src/components/calls/WebRTCCall.tsx` |
 | `const SEVEN_DAYS_MS = 7 * 24 * 60 * 60 * 1000;` | `src/components/executive/AgentAssistDashboardCard.tsx` |
 | `const since = subDays(new Date(), 7).toISOString();` | `src/components/executive/ConversationIntelligenceCard.tsx` |
 | `const since = new Date(Date.now() - 7 * 24 * 60 * 60 * 1000).toISOString();` | `src/components/executive/MultilingualDashboardCard.tsx` |
@@ -2180,8 +2172,6 @@ _nenhum item encontrado_
 
 | Limite | Arquivo |
 |---|---|
-| 1 | `src/components/alerts/AlertsDropdown.tsx` |
-| 50 | `src/components/alerts/AlertsDropdown.tsx` |
 | 1 | `src/components/call-history/CallDetailDialog.tsx` |
 | 200 | `src/components/compliance/ConsentHistoryViewer.tsx` |
 | 50 | `src/components/compliance/DNCImportLogs.tsx` |
@@ -2361,18 +2351,14 @@ _nenhum item encontrado_
 | Falha ao atribuir trunk | `src/components/admin/extensions/BulkAssignTrunkDialog.tsx` |
 | Erro na análise | `src/components/ai/AICallAnalysis.tsx` |
 | Transcrição vazia | `src/components/ai/AICallAnalysis.tsx` |
-| Erro ao criar alertas de teste | `src/components/alerts/AlertsDropdown.tsx` |
-| Erro ao criar sessão de teste | `src/components/alerts/AlertsDropdown.tsx` |
 | ; import {   Dialog,   DialogContent,   DialogDescription,   DialogFooter,   DialogHeader,   DialogTitle,   DialogTrigger, } from  | `src/components/auth/PasskeyManager.tsx` |
 | Senha comprometida detectada | `src/components/auth/PasswordStrength.tsx` |
 | Callback em ${minutesUntil} minutos! | `src/components/callbacks/ScheduledCallbacksList.tsx` |
 | A chamada foi encerrada, mas não foi possível salvar o histórico | `src/components/calls/ActiveCallBar.tsx` |
 | Erro ao gerar resumo, salvando sem resumo | `src/components/calls/ActiveCallBar.tsx` |
 | Não foi possível alterar a saída de áudio | `src/components/calls/AudioOutputSelector.tsx` |
-| ⚠️ Qualidade da chamada degradada | `src/components/calls/CallQualityIndicator.tsx` |
 |  className= | `src/components/calls/CrmSuggestionsCard.tsx` |
 |  className= | `src/components/calls/NextBestActionPanel.tsx` |
-| Falha ao exportar CSV | `src/components/calls/PostCallSummary.tsx` |
 | ; import { Button } from  | `src/components/calls/UnifiedSoftphone.tsx` |
 | Digite um número WhatsApp para ligar | `src/components/calls/UnifiedSoftphone.tsx` |
 | Digite um número para ligar | `src/components/calls/UnifiedSoftphone.tsx` |
@@ -2382,11 +2368,6 @@ _nenhum item encontrado_
 | Máximo de 3 chamadas simultâneas atingido | `src/components/calls/UnifiedSoftphone.tsx` |
 | Não foi possível iniciar a chamada | `src/components/calls/UnifiedSoftphone.tsx` |
 | Não foi possível iniciar a gravação | `src/components/calls/UnifiedSoftphone.tsx` |
-| Falha ao iniciar chamada | `src/components/calls/WebRTCCall.tsx` |
-| Nenhum microfone encontrado | `src/components/calls/WebRTCCall.tsx` |
-| Não foi possível restabelecer a chamada | `src/components/calls/WebRTCCall.tsx` |
-| Permissão de microfone negada | `src/components/calls/WebRTCCall.tsx` |
-| Reconectando (${attempt}/${MAX_RECONNECT_ATTEMPTS})… | `src/components/calls/WebRTCCall.tsx` |
 | Falha ao gerar plano | `src/components/coaching/CoachingCopilotCard.tsx` |
 | Erro ao adicionar feriado | `src/components/compliance/HolidaysManager.tsx` |
 | Código de região já existe | `src/components/compliance/calling-hours/useCallingHoursManager.ts` |
@@ -2607,13 +2588,24 @@ _nenhum item encontrado_
 | Erro ao desbloquear IP | `src/hooks/useRateLimitData.ts` |
 | Erro ao limpar logs | `src/hooks/useRateLimitData.ts` |
 | Erro ao resolver alerta | `src/hooks/useRateLimitData.ts` |
-| … +294 linhas — lista completa em `context.json` | |
+| Novo alerta de rate limit! | `src/hooks/useRateLimitData.ts` |
+| Notificações não suportadas | `src/hooks/useRealtimeHoldAlerts.ts` |
+| Permissão negada | `src/hooks/useRealtimeHoldAlerts.ts` |
+| ⚠️ Alerta de Tempo em Espera | `src/hooks/useRealtimeHoldAlerts.ts` |
+| Erro ao analisar sentimento | `src/hooks/useRecordings.ts` |
+| Erro ao baixar gravação | `src/hooks/useRecordings.ts` |
+| Erro ao carregar gravações | `src/hooks/useRecordings.ts` |
+| Erro ao carregar áudio | `src/hooks/useRecordings.ts` |
+| Erro ao excluir gravação | `src/hooks/useRecordings.ts` |
+| … +285 linhas — lista completa em `context.json` | |
 
 ## J. Controle de acesso no código (checagens de perfil/permissão)
 
 | Valor comparado | Arquivo |
 |---|---|
 | `user` | `src/components/calls/softphone/ActiveCallDisplay.tsx` |
+| `admin` | `src/components/layout/AppLayout.tsx` |
+| `supervisor` | `src/components/layout/AppLayout.tsx` |
 | `admin` | `src/components/layout/AppSidebar.tsx` |
 | `profile` | `src/components/layout/AppSidebar.tsx` |
 | `denied` | `src/components/security/NotificationPermissionBanner.tsx` |
@@ -2656,7 +2648,7 @@ _nenhum item encontrado_
 | `admin` | `supabase/functions/data-lake-flush/index.ts` |
 | `admin` | `supabase/migrations/20261123000200_fix_has_role_oracle_and_debug_tables.sql` |
 
-## K. Testes como especificação (3624 testes em 396 arquivos — nomes completos em `context.json`)
+## K. Testes como especificação (3619 testes em 395 arquivos — nomes completos em `context.json`)
 
 | Arquivo | Testes | Exemplos do que o sistema DEVE fazer |
 |---|---|---|
@@ -2694,11 +2686,11 @@ _nenhum item encontrado_
 | `src/lib/__tests__/dialer-favorites-and-alert.test.ts` | 19 | dialer-favorites-order — simulação de centenas de cenários · preserva o conjunto de itens em qualquer movimento (PBT) · sempre gera posições densas 0..n-1 (PBT) · é imutável: nunca altera o array original … |
 | `src/lib/webauthn/__tests__/webauthn-utils.coverage.test.ts` | 19 | webauthn-utils (coverage) · base64 helpers · round-trips a buffer through base64url · accepts a plain ArrayBuffer input … |
 | `src/hooks/__tests__/useBitrix.coverage.test.tsx` | 18 | useBitrix · checkConfiguration returns true when configured · callBitrixApi returns null when configured === false · getContacts / getLeads / getDeals populate state … |
+| `src/hooks/__tests__/useContactAlerts.coverage.test.tsx` | 18 | useContactAlerts · fetches alerts on mount and computes unread count · fetchAlerts with unreadOnly applies eq filter · fetchAlerts handles error and returns empty … |
 | `src/hooks/__tests__/useQueueMetrics.coverage.test.tsx` | 18 | useQueueMetrics · fetches metrics and computes values · conta em espera apenas chamadas on_hold, nunca um status inventado · checkGoalStatus handles gte and lte operators … |
 | `src/hooks/__tests__/useSecurityHooks.test.ts` | 18 | usePermissions · Permission checking logic · hasPermission returns true for existing permission · hasPermission returns false for missing permission … |
 | `src/hooks/__tests__/useVoiceBiometrics.coverage.test.tsx` | 18 | useVoicePrints · loads voice prints list · enrolls successfully · enroll error path triggers toast.error … |
 | `src/lib/__tests__/security-alerts-presets.test.ts` | 18 | security-alerts-presets · loadPresets · retorna [] quando storage vazio · retorna [] quando JSON inválido … |
-| `src/hooks/__tests__/useContactAlerts.coverage.test.tsx` | 17 | useContactAlerts · fetches alerts on mount and computes unread count · fetchAlerts with unreadOnly applies eq filter · fetchAlerts handles error and returns empty … |
 | `src/hooks/__tests__/useConversations.coverage.test.tsx` | 17 | useConversations · fetches with filters applied · handles fetch error · useConversationMessages … |
 | `src/hooks/__tests__/useSupervisorPanel.coverage.test.tsx` | 17 | useSupervisorPanel (coverage) · loads active calls and queue metrics on mount · selecting a call fetches whisper history · sendWhisper errors when no call/message selected … |
 | `src/lib/__tests__/softphone-utils.test.ts` | 17 | formatCallDuration · formats 0 seconds · formats under a minute · formats exact minutes … |
@@ -2821,7 +2813,6 @@ _nenhum item encontrado_
 | `src/components/admin/extensions/__tests__/HealthScoreBadge.test.tsx` | 7 | HealthScoreBadge — 100+ cenários · exibe ícone good (ShieldCheck) quando score >= 80 · exibe ícone warn (AlertTriangle) quando 50-79 · exibe ícone bad (Heart) quando < 50 … |
 | `src/components/calls/__tests__/ActiveCallBar.espera.test.tsx` | 7 | ActiveCallBar: botao de espera · pede a espera ao contexto da chamada, que e quem grava o hold_event · mostra o estado de espera vindo do contexto, nao de um estado local · ActiveCallBar: botao de microfone … |
 | `src/components/calls/__tests__/UnifiedSoftphone.falhas.test.tsx` | 7 | UnifiedSoftphone — estados de falha (etapa 233) · mostra o estado do registro SIP da propria linha no cabecalho · mostra o motivo da falha e tenta de novo quando o operador clica em Tentar agora · repete o registro automaticamente com espera crescente … |
-| `src/components/calls/__tests__/WebRTCCall.test.tsx` | 7 | WebRTCCall · anexa o stream remoto ao elemento <audio> quando ontrack dispara · configura transceiver bidirecional e injeta a track local no sender · alterna a track do sender ao clicar em silenciar/ativar microfone … |
 | `src/components/calls/live-transcription/__tests__/useLiveTranscription.test.ts` | 7 | useLiveTranscription · estado inicial é seguro · define erro quando getUserMedia falha · startRecording ativa gravação e stopRecording faz cleanup … |
 | `src/components/contacts/__tests__/ContactCard.test.tsx` | 7 | ContactCard - menu  · expõe o acionador  · o botão de e-mail aponta para mailto e não seleciona o cartão · clicar no cartão continua selecionando o contato … |
 | `src/hooks/__tests__/use-toast.coverage.test.tsx` | 7 | use-toast (coverage) · adds a toast and exposes state via useToast · dismisses a toast and removes it after delay · updates a toast in place … |
@@ -2841,6 +2832,7 @@ _nenhum item encontrado_
 | `src/hooks/__tests__/useRoutingRules.coverage.test.tsx` | 7 | useRoutingRules (coverage) · loads rules · rules fetch error · upsert success … |
 | `src/hooks/__tests__/useTimeOff.coverage.test.tsx` | 7 | useTimeOff · lists requests on success · list error leaves requests empty · create success shows toast … |
 | `src/hooks/__tests__/useVoipQualityForecast.coverage.test.tsx` | 7 | useVoipQualityForecast · returns forecast payload via functions.invoke · throws on invoke error · useVoipQualityForecastFetch … |
+| `src/lib/__tests__/a11y-clickable.test.ts` | 7 | clickableRowProps · entrega semantica de controle focavel · ativa com Enter e com Espaco, consumindo o evento · ignora teclas que nao ativam … |
 | `src/lib/__tests__/csv-export.property.test.ts` | 7 | exportToCSV — property-based (500 runs) · escapa aspas duplas conforme RFC 4180 · preserva conteúdo (round-trip de aspas) · aceita quebras de linha nos dados sem corromper estrutura … |
 | `src/lib/__tests__/health-score.property.test.ts` | 7 | computeHealth — property-based (1000 runs) · score sempre entre 0 e 100 · máximo absoluto = 100 quando tudo true · mínimo absoluto = 0 quando tudo false … |
 | `src/lib/__tests__/safe-number.instrumentation.test.ts` | 7 | safe-number instrumentation · emite evento com motivo e helper para input inválido · reporta clamp de min/max sem descartar o valor · propaga requestId ativo para os eventos … |
@@ -2857,7 +2849,6 @@ _nenhum item encontrado_
 | `src/__tests__/rls/learning-completions.test.ts` | 6 | RLS — learning_completions · agente só vê próprias conclusões · supervisor vê todas · agente NÃO pode inserir conclusão de outro agente … |
 | `src/__tests__/rls/storage-recordings.test.ts` | 6 | Storage — call-recordings (ownership por path) · bucket é privado: anônimo é bloqueado · agente lê apenas próprias gravações · agente faz upload apenas no próprio prefixo … |
 | `src/components/auth/__tests__/PermissionGate.test.tsx` | 6 | PermissionGate · nao renderiza nada enquanto as permissoes carregam · mostra o estado padrao de sem permissao quando nao ha fallback · respeita fallback explicito, inclusive null … |
-| `src/components/calls/__tests__/PostCallSummary.test.tsx` | 6 | PostCallSummary · mostra mensagem quando não há amostras · agrega MOS, jitter, perda e classifica qualidade · classifica como Ruim quando MOS médio < 3.6 … |
 | `src/hooks/__tests__/useActiveCallsRealtime.coverage.test.tsx` | 6 | useActiveCallsRealtime (coverage) · loads active calls and holds, computes derived data · filters by selected agent and hold status · starts a tick interval when there are active calls … |
 | `src/hooks/__tests__/useAudioOutputDevices.test.tsx` | 6 | useAudioOutputDevices · reporta não suportado quando setSinkId ausente · enumera dispositivos de saída e ignora inputs · persiste a preferência ao chamar setSinkId com sucesso … |
 | `src/hooks/__tests__/useBattleCardDetection.test.ts` | 6 | useBattleCardDetection · does nothing when inactive · matches contains keyword · matches exact keyword as a whole word … |
@@ -2944,6 +2935,7 @@ _nenhum item encontrado_
 | `src/components/call-history/__tests__/CallSessionsList.test.tsx` | 4 | CallSessionsList · avisa que a leitura falhou em vez de dizer que nao ha chamada · explica o vazio quando a leitura funcionou · com filtros aplicados, diz que o filtro esconde resultados e oferece limpar |
 | `src/components/calls/__tests__/ActiveCallBar.verificacaoVoz.test.tsx` | 4 | ActiveCallBar: verificacao de voz ao vivo (etapa 155) · verifica a voz da sessao ativa e mostra o veredito na barra · avisa na barra quando a voz nao confere com o padrao cadastrado · nao deixa verificar sem sessao de banco gravada |
 | `src/components/calls/__tests__/NextBestActionPanel.test.tsx` | 4 | NextBestActionPanel · mostra o erro da consulta em vez de um painel vazio · distingue carregando de sem sugestao · lista o sinal e marca como usado |
+| `src/components/calls/softphone/__tests__/ActiveCallDisplay.saidaAudio.test.tsx` | 4 | ActiveCallDisplay — saída de áudio da chamada · oferece a escolha de saída na chamada SIP e aplica o sink no áudio remoto · não mostra o seletor fora da chamada SIP · não mostra o seletor quando o navegador não suporta trocar a saída |
 | `src/components/calls/softphone/__tests__/DialpadTab.a11y.test.tsx` | 4 | DialpadTab - rótulo acessível no apagar (A-123) · expõe  · ConferenceSection - rótulo acessível ao remover participante (A-123) · identifica o participante que será removido |
 | `src/components/coaching/__tests__/CoachingAssignmentsPanel.rules.test.tsx` | 4 | CoachingAssignmentsPanel - regra do coaching automático (A-131) · explica a regra com os números que vieram da edge · mostra a contagem atual de cada agente que ficou de fora · sem regra conhecida, orienta a rodar a geração |
 | `src/components/compliance/dnc/__tests__/ReconcileDNCDialog.test.tsx` | 4 | ReconcileDNCDialog · aponta exatamente o numero ausente da lista · reenvia apenas os ausentes e recontabiliza · mostra o erro da consulta em vez de dizer que esta tudo certo |
@@ -2960,7 +2952,7 @@ _nenhum item encontrado_
 | `src/hooks/__tests__/useIPValidation.coverage.test.tsx` | 4 | useIPValidation · returns data on success · handles supabase error branch · handles thrown exception branch |
 | `src/hooks/__tests__/useNotificationPreferences.test.tsx` | 4 | useNotificationPreferences · retorna DEFAULT_PREFERENCES quando nao ha registro · carrega preferencias do banco · upsert no salvar usa onConflict user_id |
 | `src/hooks/__tests__/usePageTitle.coverage.test.tsx` | 4 | usePageTitle · sets document title with app name suffix · resets title on unmount · updates title when prop changes |
-| … +96 linhas — lista completa em `context.json` | | |
+| … +95 linhas — lista completa em `context.json` | | |
 
 ## L. Eventos de webhook tratados (contratos com sistemas externos)
 
@@ -2973,7 +2965,6 @@ _nenhum item encontrado_
 | `notifySessionExpired` | `src/App.tsx` |
 | `notify` | `src/components/callbacks/ScheduledCallbacksList.tsx` |
 | `invoke(` | `src/components/calls/ActiveCallBar.tsx` |
-| `notifyOnDegrade` | `src/components/calls/CallQualityIndicator.tsx` |
 | `invoke(` | `src/components/calls/UnifiedSoftphone.tsx` |
 | `invoke(` | `src/components/coaching/CoachingCopilotCard.tsx` |
 | `invoke(` | `src/components/contacts/ContactDetailSheet.tsx` |
@@ -3182,6 +3173,7 @@ _nenhum item encontrado_
 | Le apenas papeis ativos e nao expirados, aplicando precedencia | `src/hooks/auth/useAuthProfile.ts` |
 | somente se o usuario nao tiver nenhum papel em user_roles. | `src/hooks/auth/useAuthProfile.ts` |
 | Telemetria e acessoria: nao pode quebrar a pagina do usuario. | `src/hooks/telemetry/useTelemetry.ts` |
+| (botao, link) nao pode ativar a linha por borbulhamento. | `src/lib/a11y-clickable.ts` |
 | — apenas duplicatas próximas no tempo (ruído da IA) são colapsadas. | `src/lib/agent-assist-utils.ts` |
 | * Mascara telefone preservando apenas os 4 últimos dígitos. */ | `src/lib/blf.ts` |
 | * slot_end - slot_start <= 99 → no máximo 100 vagas por órbita. */ | `src/lib/call-park.ts` |

@@ -302,26 +302,23 @@
   },
   {
    "modulo": "components/alerts",
-   "arquivos": 5,
+   "arquivos": 4,
    "testes": 0,
-   "linhas": 990,
+   "linhas": 702,
    "itens_menu": [],
    "telas": [],
    "rotas_http": [],
-   "componentes": 5,
+   "componentes": 4,
    "hooks_locais": [],
    "hooks_definidos": [],
    "edges": [],
    "tabelas": [
     "call_alerts",
-    "call_sessions",
     "contact_alerts"
    ],
    "rpcs": [],
    "buckets": [],
-   "canais_realtime": [
-    "call_alerts"
-   ],
+   "canais_realtime": [],
    "env": [
     "VITE_SUPABASE_PUBLISHABLE_KEY",
     "VITE_SUPABASE_URL"
@@ -332,7 +329,6 @@
     "edges": [],
     "tabelas": [
      "call_alerts",
-     "call_sessions",
      "contact_alerts"
     ],
     "rpcs": []
@@ -348,8 +344,7 @@
    "pacotes_externos": [
     "date-fns",
     "lucide-react",
-    "recharts",
-    "sonner"
+    "recharts"
    ]
   },
   {
@@ -638,13 +633,13 @@
   },
   {
    "modulo": "components/calls",
-   "arquivos": 27,
-   "testes": 11,
-   "linhas": 4066,
+   "arquivos": 23,
+   "testes": 10,
+   "linhas": 3267,
    "itens_menu": [],
    "telas": [],
    "rotas_http": [],
-   "componentes": 24,
+   "componentes": 20,
    "hooks_locais": [
     "useAgentAssistHistory",
     "useAgentStatus",
@@ -677,7 +672,6 @@
     "useMeetingSummary",
     "useMultiChannelCall",
     "useNetworkMonitor",
-    "useNotificationPreferences",
     "usePendingActionItems",
     "useQualityTrendAnalyzer",
     "useRedactCall",
@@ -732,7 +726,6 @@
     "live_assist_signals",
     "live_sentiment_snapshots",
     "meeting_summaries",
-    "user_preferences",
     "user_profiles",
     "user_roles",
     "voice_prints",
@@ -756,17 +749,13 @@
    ],
    "env": [
     "VITE_SUPABASE_PUBLISHABLE_KEY",
-    "VITE_SUPABASE_URL",
-    "VITE_TURN_CRED",
-    "VITE_TURN_URL",
-    "VITE_TURN_USER"
+    "VITE_SUPABASE_URL"
    ],
    "flags": [],
    "papeis": [
     "alert",
     "button",
     "dialog",
-    "status",
     "user"
    ],
    "diretos": {
@@ -953,7 +942,7 @@
    "modulo": "components/contacts",
    "arquivos": 13,
    "testes": 1,
-   "linhas": 1531,
+   "linhas": 1540,
    "itens_menu": [],
    "telas": [],
    "rotas_http": [],
@@ -1005,6 +994,7 @@
     "rpcs": []
    },
    "importado_por_outros_modulos": [
+    "components/layout",
     "pages"
    ],
    "depende_de_modulos": [
@@ -1568,7 +1558,7 @@
    "modulo": "components/layout",
    "arquivos": 9,
    "testes": 1,
-   "linhas": 1034,
+   "linhas": 1041,
    "itens_menu": [],
    "telas": [],
    "rotas_http": [],
@@ -1589,6 +1579,7 @@
     "useAnimatedCounter",
     "useAnomalyRemediation",
     "useApplyPacingNow",
+    "useAudioOutputDevices",
     "useAuditLog",
     "useAuth",
     "useAuthActions",
@@ -1628,6 +1619,7 @@
     "useComplianceRules",
     "useConferenceRecording",
     "useConsent",
+    "useContactAlerts",
     "useContactInsights",
     "useContacts",
     "useConversation",
@@ -2057,6 +2049,7 @@
     "blf-board",
     "blocked-access-notifications",
     "coaching-updates",
+    "contact-alerts-changes",
     "conversations-realtime",
     "critical-alerts-notifications",
     "crm-suggestions-${callSessionId}",
@@ -2126,6 +2119,7 @@
    ],
    "depende_de_modulos": [
     "components/calls",
+    "components/contacts",
     "components/navigation",
     "components/network",
     "components/notifications",
@@ -2142,68 +2136,6 @@
     "lucide-react",
     "react-router-dom",
     "sonner"
-   ]
-  },
-  {
-   "modulo": "components/lazy",
-   "arquivos": 1,
-   "testes": 0,
-   "linhas": 19,
-   "itens_menu": [],
-   "telas": [],
-   "rotas_http": [],
-   "componentes": 0,
-   "hooks_locais": [],
-   "hooks_definidos": [],
-   "edges": [],
-   "tabelas": [],
-   "rpcs": [],
-   "buckets": [],
-   "canais_realtime": [],
-   "env": [],
-   "flags": [],
-   "papeis": [],
-   "diretos": {
-    "edges": [],
-    "tabelas": [],
-    "rpcs": []
-   },
-   "importado_por_outros_modulos": [],
-   "depende_de_modulos": [
-    "components/loading"
-   ],
-   "pacotes_externos": []
-  },
-  {
-   "modulo": "components/loading",
-   "arquivos": 1,
-   "testes": 0,
-   "linhas": 22,
-   "itens_menu": [],
-   "telas": [],
-   "rotas_http": [],
-   "componentes": 1,
-   "hooks_locais": [],
-   "hooks_definidos": [],
-   "edges": [],
-   "tabelas": [],
-   "rpcs": [],
-   "buckets": [],
-   "canais_realtime": [],
-   "env": [],
-   "flags": [],
-   "papeis": [],
-   "diretos": {
-    "edges": [],
-    "tabelas": [],
-    "rpcs": []
-   },
-   "importado_por_outros_modulos": [
-    "components/lazy"
-   ],
-   "depende_de_modulos": [],
-   "pacotes_externos": [
-    "lucide-react"
    ]
   },
   {
@@ -2389,13 +2321,13 @@
   },
   {
    "modulo": "components/notifications",
-   "arquivos": 2,
+   "arquivos": 1,
    "testes": 0,
-   "linhas": 477,
+   "linhas": 306,
    "itens_menu": [],
    "telas": [],
    "rotas_http": [],
-   "componentes": 2,
+   "componentes": 1,
    "hooks_locais": [
     "useAlerts",
     "useAuth",
@@ -2433,8 +2365,7 @@
    ],
    "flags": [],
    "papeis": [
-    "button",
-    "status"
+    "button"
    ],
    "diretos": {
     "edges": [],
@@ -3511,7 +3442,7 @@
    "modulo": "hooks",
    "arquivos": 169,
    "testes": 0,
-   "linhas": 21818,
+   "linhas": 21823,
    "itens_menu": [],
    "telas": [],
    "rotas_http": [],
@@ -4760,7 +4691,7 @@
    "modulo": "lib",
    "arquivos": 52,
    "testes": 0,
-   "linhas": 6497,
+   "linhas": 6502,
    "itens_menu": [],
    "telas": [],
    "rotas_http": [],
@@ -4775,6 +4706,7 @@
     "useAgentsListData",
     "useAlerts",
     "useAnimatedCounter",
+    "useAudioOutputDevices",
     "useAuditLog",
     "useAuth",
     "useAuthActions",
@@ -5857,6 +5789,7 @@
     "useAnimatedCounter",
     "useAnomalyRemediation",
     "useApplyPacingNow",
+    "useAudioOutputDevices",
     "useAuditLog",
     "useAuth",
     "useAuthActions",
@@ -6847,6 +6780,7 @@
     "useAnimatedCounter",
     "useAnomalyRemediation",
     "useApplyPacingNow",
+    "useAudioOutputDevices",
     "useAuditLog",
     "useAuth",
     "useAuthActions",

@@ -332,12 +332,13 @@
     "useContext"
    ],
    "canais_realtime": [],
-   "usado_por": 32,
+   "usado_por": 33,
    "usado_por_arquivos": [
     "src/App.tsx",
     "src/components/auth/ProtectedRoute.tsx",
     "src/components/auth/ReauthDialog.tsx",
     "src/components/auth/SessionExpiredDialog.tsx",
+    "src/components/layout/AppLayout.tsx",
     "src/components/layout/AppSidebar.tsx",
     "src/contexts/ReauthContext.tsx",
     "src/contexts/SessionExpiryContext.tsx",
@@ -362,8 +363,7 @@
     "src/pages/Login.tsx",
     "src/pages/Passkeys.tsx",
     "src/pages/PasswordResetApproval.tsx",
-    "src/pages/Register.tsx",
-    "src/pages/Roles.tsx"
+    "src/pages/Register.tsx"
    ],
    "coberto_por_testes": 1
   },
@@ -989,7 +989,7 @@
    "usado_por": 2,
    "usado_por_arquivos": [
     "src/components/calls/AudioOutputSelector.tsx",
-    "src/components/calls/WebRTCCall.tsx"
+    "src/components/calls/softphone/ActiveCallDisplay.tsx"
    ],
    "coberto_por_testes": 1
   },
@@ -1723,7 +1723,7 @@
    "hooks_exportados": [
     "useContactAlerts"
    ],
-   "linhas": 205,
+   "linhas": 208,
    "dominio": "hooks",
    "tabelas": [
     "contact_alerts"
@@ -2955,7 +2955,7 @@
     "src/hooks/useHoldReminder.ts",
     "src/pages/PhoneDialer.tsx"
    ],
-   "coberto_por_testes": 9
+   "coberto_por_testes": 10
   },
   {
    "arquivo": "src/hooks/useMultiDeviceRing.ts",
@@ -3027,9 +3027,8 @@
     "useQueryClient"
    ],
    "canais_realtime": [],
-   "usado_por": 2,
+   "usado_por": 1,
    "usado_por_arquivos": [
-    "src/components/calls/WebRTCCall.tsx",
     "src/pages/Settings.tsx"
    ],
    "coberto_por_testes": 1
@@ -3492,9 +3491,8 @@
    "canais_realtime": [
     "hold-alerts-realtime"
    ],
-   "usado_por": 2,
+   "usado_por": 1,
    "usado_por_arquivos": [
-    "src/components/notifications/NotificationBell.tsx",
     "src/components/notifications/UnifiedNotificationDropdown.tsx"
    ],
    "coberto_por_testes": 2
@@ -3910,7 +3908,7 @@
    "hooks_exportados": [
     "useSipCall"
    ],
-   "linhas": 420,
+   "linhas": 422,
    "dominio": "hooks",
    "tabelas": [],
    "rpcs": [],
@@ -4658,16 +4656,12 @@
     "useRef"
    ],
    "canais_realtime": [],
-   "usado_por": 6,
+   "usado_por": 2,
    "usado_por_arquivos": [
-    "src/components/calls/CallQualityIndicator.tsx",
-    "src/components/calls/PostCallSummary.tsx",
     "src/components/calls/VoipQualityIndicator.tsx",
-    "src/components/calls/WebRTCCall.tsx",
-    "src/components/calls/WebRTCMetricsPanel.tsx",
     "src/hooks/useSipCall.ts"
    ],
-   "coberto_por_testes": 2
+   "coberto_por_testes": 1
   },
   {
    "arquivo": "src/hooks/useVoipRecommendationActions.ts",

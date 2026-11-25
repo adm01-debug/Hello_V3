@@ -1,36 +1,36 @@
 {
  "aviso": "GERADO AUTOMATICAMENTE por scripts/ai-context/gerar.mjs — não editar à mão; será sobrescrito.",
  "format_version": 2,
- "nos": 947,
- "arestas": 3758,
+ "nos": 939,
+ "arestas": 3723,
  "hubs": [
   {
    "arquivo": "src/integrations/supabase/client.ts",
-   "importado_por": 269
+   "importado_por": 268
   },
   {
    "arquivo": "src/components/ui/button.tsx",
-   "importado_por": 247
+   "importado_por": 243
   },
   {
    "arquivo": "src/components/ui/card.tsx",
-   "importado_por": 233
+   "importado_por": 232
   },
   {
    "arquivo": "src/lib/logger.ts",
-   "importado_por": 203
+   "importado_por": 201
   },
   {
    "arquivo": "src/components/ui/badge.tsx",
-   "importado_por": 202
+   "importado_por": 198
   },
   {
    "arquivo": "src/lib/utils.ts",
-   "importado_por": 152
+   "importado_por": 148
   },
   {
    "arquivo": "src/lib/safe-date.ts",
-   "importado_por": 108
+   "importado_por": 106
   },
   {
    "arquivo": "supabase/functions/_shared/cors.ts",
@@ -62,11 +62,11 @@
   },
   {
    "arquivo": "src/components/ui/dialog.tsx",
-   "importado_por": 49
+   "importado_por": 48
   },
   {
    "arquivo": "src/components/ui/scroll-area.tsx",
-   "importado_por": 48
+   "importado_por": 46
   },
   {
    "arquivo": "src/components/ui/tabs.tsx",
@@ -81,19 +81,19 @@
    "importado_por": 35
   },
   {
+   "arquivo": "src/contexts/AuthContext.tsx",
+   "importado_por": 34
+  },
+  {
    "arquivo": "supabase/functions/_shared/validate.ts",
    "importado_por": 34
   },
   {
-   "arquivo": "src/contexts/AuthContext.tsx",
-   "importado_por": 33
+   "arquivo": "src/components/ui/progress.tsx",
+   "importado_por": 29
   },
   {
    "arquivo": "src/components/ui/switch.tsx",
-   "importado_por": 30
-  },
-  {
-   "arquivo": "src/components/ui/progress.tsx",
    "importado_por": 29
   },
   {
@@ -102,11 +102,7 @@
   },
   {
    "arquivo": "src/hooks/useMultiChannelCall.ts",
-   "importado_por": 25
-  },
-  {
-   "arquivo": "src/components/ui/empty-state.tsx",
-   "importado_por": 24
+   "importado_por": 26
   },
   {
    "arquivo": "src/components/ui/textarea.tsx",
@@ -118,6 +114,10 @@
   },
   {
    "arquivo": "src/components/layout/NeonPageLayout.tsx",
+   "importado_por": 23
+  },
+  {
+   "arquivo": "src/components/ui/empty-state.tsx",
    "importado_por": 23
   },
   {
@@ -157,12 +157,12 @@
    "importado_por": 13
   },
   {
-   "arquivo": "src/components/ui/dropdown-menu.tsx",
+   "arquivo": "src/hooks/useAuth.ts",
    "importado_por": 12
   },
   {
-   "arquivo": "src/hooks/useAuth.ts",
-   "importado_por": 12
+   "arquivo": "src/components/ui/dropdown-menu.tsx",
+   "importado_por": 11
   }
  ],
  "ciclos": {
@@ -180,11 +180,6 @@
  },
  "orfaos": [
   "src/components/SearchInput.tsx",
-  "src/components/alerts/AlertsDropdown.tsx",
-  "src/components/calls/WebRTCCall.tsx",
-  "src/components/contacts/ContactAlertsDropdown.tsx",
-  "src/components/lazy/LazyComponent.tsx",
-  "src/components/notifications/NotificationBell.tsx",
   "src/components/ui/animations.tsx",
   "src/components/ui/aspect-ratio.tsx",
   "src/components/ui/breadcrumb.tsx",
@@ -211,6 +206,7 @@
   "src/lib/security/index.ts",
   "src/lib/session/index.ts",
   "src/lib/validation/index.ts",
+  "src/lib/webrtc-config.ts",
   "supabase/functions/analyze-call/analyze-call_test.ts",
   "supabase/functions/chat-widget-session/schema_test.ts",
   "supabase/functions/chatbot-respond/schema_test.ts",
@@ -247,7 +243,7 @@
   },
   {
    "modulo": "components/layout",
-   "depende_de": 11,
+   "depende_de": 12,
    "importado_por": 2
   },
   {
@@ -286,6 +282,11 @@
    "importado_por": 1
   },
   {
+   "modulo": "components/contacts",
+   "depende_de": 5,
+   "importado_por": 2
+  },
+  {
    "modulo": "components/conversation-intelligence",
    "depende_de": 4,
    "importado_por": 3
@@ -297,11 +298,6 @@
   },
   {
    "modulo": "components/compliance",
-   "depende_de": 5,
-   "importado_por": 1
-  },
-  {
-   "modulo": "components/contacts",
    "depende_de": 5,
    "importado_por": 1
   },
