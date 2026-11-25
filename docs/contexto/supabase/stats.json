@@ -60,30 +60,30 @@
         "status": "succeeded"
       },
       {
-        "end_time": "2026-11-25T04:16:00.222601+00:00",
+        "end_time": "2026-11-25T06:23:00.129634+00:00",
         "jobid": 12,
         "return_message": "1 row",
-        "runid": 4691,
-        "seconds": 0.03,
-        "start_time": "2026-11-25T04:16:00.191255+00:00",
+        "runid": 4818,
+        "seconds": 0.02,
+        "start_time": "2026-11-25T06:23:00.111997+00:00",
         "status": "succeeded"
       },
       {
-        "end_time": "2026-11-25T04:15:00.027334+00:00",
+        "end_time": "2026-11-25T06:22:00.021235+00:00",
         "jobid": 12,
         "return_message": "1 row",
-        "runid": 4690,
+        "runid": 4817,
         "seconds": 0.01,
-        "start_time": "2026-11-25T04:15:00.016645+00:00",
+        "start_time": "2026-11-25T06:22:00.014174+00:00",
         "status": "succeeded"
       },
       {
-        "end_time": "2026-11-25T04:14:00.179599+00:00",
+        "end_time": "2026-11-25T06:21:00.107977+00:00",
         "jobid": 12,
         "return_message": "1 row",
-        "runid": 4689,
-        "seconds": 0.03,
-        "start_time": "2026-11-25T04:14:00.145320+00:00",
+        "runid": 4816,
+        "seconds": 0.02,
+        "start_time": "2026-11-25T06:21:00.092217+00:00",
         "status": "succeeded"
       },
       {
@@ -199,7 +199,7 @@
           "usename": "supabase_admin"
         }
       ],
-      "database_bytes": 41110675,
+      "database_bytes": 41184403,
       "queues": [],
       "schema_bytes": [
         {
@@ -216,12 +216,12 @@
       ],
       "top_queries": [
         {
-          "calls": 203,
-          "mean_ms": 5568.17,
+          "calls": 205,
+          "mean_ms": 5568.93,
           "query": "SELECT schema, \"table\", column_name, grantee, string_agg(privilege_type, $1 ORDER BY privilege_type) AS privileges FROM ( SELECT n.nspname AS schema, c.relname AS \"table\", a.attname AS column_name, COALESCE(g.rolname, $2",
           "role": "postgres",
           "rows": 0,
-          "total_ms": 1130338
+          "total_ms": 1141631
         },
         {
           "calls": 544,
@@ -272,20 +272,20 @@
           "total_ms": 113857
         },
         {
-          "calls": 4524,
-          "mean_ms": 15.36,
+          "calls": 4651,
+          "mean_ms": 15.22,
           "query": "SELECT net.http_post( url := $1, headers := jsonb_build_object( $2, $3, $4, $5 || ( SELECT decrypted_secret FROM vault.decrypted_secrets WHERE name = $6 ) ), body := jsonb_build_object($7, $8) )",
           "role": "postgres",
-          "rows": 4524,
-          "total_ms": 69486
+          "rows": 4651,
+          "total_ms": 70775
         },
         {
-          "calls": 207,
-          "mean_ms": 232.92,
+          "calls": 209,
+          "mean_ms": 233.61,
           "query": "SELECT e.extname AS name, e.extversion AS version, n.nspname AS schema, (SELECT default_version FROM pg_available_extensions a WHERE a.name = e.extname) AS available_version FROM pg_extension e JOIN pg_namespace n ON n.o",
           "role": "postgres",
-          "rows": 1836,
-          "total_ms": 48215
+          "rows": 1856,
+          "total_ms": 48824
         },
         {
           "calls": 11512,
@@ -304,12 +304,12 @@
           "total_ms": 39994
         },
         {
-          "calls": 207,
-          "mean_ms": 165.31,
+          "calls": 209,
+          "mean_ms": 167.11,
           "query": "SELECT n.nspname AS schema, c.relname AS \"table\", a.attnum AS position, a.attname AS name, format_type(a.atttypid, a.atttypmod) AS type, NOT a.attnotnull AS nullable, pg_get_expr(d.adbin, d.adrelid) AS \"default\", NULLIF(",
           "role": "postgres",
-          "rows": 365814,
-          "total_ms": 34218
+          "rows": 369418,
+          "total_ms": 34926
         },
         {
           "calls": 1086,
@@ -328,12 +328,12 @@
           "total_ms": 18251
         },
         {
-          "calls": 4511,
-          "mean_ms": 3.69,
+          "calls": 4638,
+          "mean_ms": 3.65,
           "query": "WITH pgrst_source AS (SELECT pgrst_call.pgrst_scalar FROM (SELECT \"public\".\"apply_predictive_pacing\"() pgrst_scalar) pgrst_call) SELECT $3::bigint AS total_result_set, $4 AS page_total, coalesce(json_agg(_postgrest_t.pgr",
           "role": "service_role",
-          "rows": 4511,
-          "total_ms": 16641
+          "rows": 4638,
+          "total_ms": 16922
         }
       ]
     },
@@ -2467,7 +2467,7 @@
         "is_primary": false,
         "is_unique": false,
         "name": "idx_dialer_campaigns_status",
-        "scans": 4514,
+        "scans": 4641,
         "schema": "public",
         "table": "dialer_campaigns"
       },
@@ -6008,7 +6008,7 @@
         "dead_rows": 4,
         "est_rows": 0,
         "heap_bytes": 8192,
-        "idx_scan": 4521,
+        "idx_scan": 4648,
         "index_bytes": 32768,
         "last_autoanalyze": null,
         "last_autovacuum": null,
