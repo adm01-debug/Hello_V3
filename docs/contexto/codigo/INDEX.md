@@ -1,7 +1,7 @@
 # Contexto do projeto para agentes de IA
 
 GERADO AUTOMATICAMENTE por scripts/ai-context/gerar.mjs — não editar à mão; será sobrescrito.
-Publicado em `docs/contexto/codigo/` na branch `contexto` (gerada, nunca abra PR dela) a cada push em `main` e a cada 10 minutos pelo workflow `contexto.yml`; índice único das três fontes em `docs/contexto/00-INDEX.md`. Gere local com `node scripts/ai-context/gerar.mjs`. Commit-base: `fffd1ccd4aa95bd09900ba49def44321b76f088a` (2026-11-25T09:46:06-03:00).
+Publicado em `docs/contexto/codigo/` na branch `contexto` (gerada, nunca abra PR dela) a cada push em `main` e a cada 10 minutos pelo workflow `contexto.yml`; índice único das três fontes em `docs/contexto/00-INDEX.md`. Gere local com `node scripts/ai-context/gerar.mjs`. Commit-base: `c9aede082a4910f02c4fba6a429f581f366d47d7` (2026-11-25T10:21:51-03:00).
 
 ## Como usar (leia antes de planejar ou executar qualquer tarefa)
 1. **Tela/rota/menu** → `rotas.json` (url/vista/menu → arquivo → hooks → tabelas → edges; `rotas_http_backend` para APIs) e `modulos.json` (módulo inteiro + dependências entre módulos).
@@ -371,7 +371,7 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 - possiveis_segredos_no_codigo: 3 — ex.: src/lib/__tests__/security-advanced.test.ts:203, src/lib/__tests__/security-advanced.test.ts:208, src/lib/__tests__/security-advanced.test.ts:213
 
 ## Grafo de código (graphify)
-- 10335 nós · 27339 arestas · 778 comunidades · grafo do commit `fffd1ccd`
+- 10335 nós · 27339 arestas · 778 comunidades · grafo do commit `c9aede08`
 - comunidades maiores: card.tsx (243), client.ts (197), react (178), vitest (172), 5. Em uso por rota (152), lucide-react (144), Tabela de funcionalidades (136), utils.ts (134), cn (131), usePageTitle.ts (127), buildCorsHeaders (119), @tanstack/react-query (115)
 - símbolos mais chamados: cn() (src/lib/utils.ts), usePageTitle() (src/hooks/usePageTitle.ts), safeFormatDatePtBR() (src/lib/safe-date.ts), useAuthContext() (src/contexts/AuthContext.tsx), q() (scripts/supabase_snapshot/snapshot.py), safeFormatDistanceToNow() (src/lib/safe-date.ts), traceHeaders() (src/lib/tracing.ts), withTrace() (src/lib/tracing.ts), formatDuration() (src/lib/utils.ts), safeToLocaleString() (src/lib/safe-date.ts), buildCorsHeaders() (supabase/functions/_shared/cors.ts), .collect() (scripts/supabase_snapshot/test_snapshot.py)
 - consulta local: `graphify query "<pergunta>"`, `graphify path "<A>" "<B>"`, `graphify explain "<X>"`
@@ -386,9 +386,9 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 - docs/audits/pendencias-2026-07.md (10)
 - supabase/functions/data-lake-flush/index.ts (10)
 - src/components/layout/CommandPalette.tsx (9)
+- .github/workflows/migrations.yml (8)
 - docs/agentes/mapa-repo.md (8)
 - supabase/functions/validate-geo/index.ts (8)
-- .github/workflows/migrations.yml (7)
 - docs/edge-functions/README.md (7)
 - src/hooks/__tests__/useQueueMetrics.coverage.test.tsx (7)
 - src/hooks/useAgentRanking.ts (7)
@@ -431,6 +431,7 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 
 
 ## Últimos commits
+- 2026-11-25 `c9aede0` fix: dry-run do migrations.yml nao pode gravar de verdade (#319)
 - 2026-11-25 `fffd1cc` fix: normalizar nome registrado antes de comparar com o arquivo (#317)
 - 2026-11-25 `f95122a` fix: colisao de versao nao impede o diagnostico da fila (#316)
 - 2026-11-25 `5df6b47` fix: comparar migration pelo slug do nome e permitir registrar sem executar (#315)
@@ -445,7 +446,6 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 - 2026-11-24 `a67d708` fix: teclado no fluxo de chamada - foco preso no dialogo e devolvido ao gatilho (etapa 273) (#308)
 - 2026-11-24 `61fd9f9` fix: alvo de toque de 44 px no celular (etapa 272) (#307)
 - 2026-11-24 `fc9a215` fix: telas internas cabem na largura do celular (etapa 271) (#306)
-- 2026-11-24 `a0781e2` test: captura as telas internas em 3 larguras e mede transbordo (etapa 270) (#304)
 
 ## Arquivos deste diretório
 - `docs/contexto/codigo/rotas.json`

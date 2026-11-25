@@ -2,11 +2,16 @@
  "aviso": "GERADO AUTOMATICAMENTE por scripts/ai-context/gerar.mjs — não editar à mão; será sobrescrito.",
  "format_version": 2,
  "git": {
-  "commit": "fffd1ccd4aa95bd09900ba49def44321b76f088a",
+  "commit": "c9aede082a4910f02c4fba6a429f581f366d47d7",
   "branch": "main",
-  "data_commit": "2026-11-25T09:46:06-03:00",
+  "data_commit": "2026-11-25T10:21:51-03:00",
   "remote": "https://github.com/adm01-debug/Hello_V3",
   "ultimos_commits": [
+   {
+    "sha": "c9aede0",
+    "data": "2026-11-25",
+    "assunto": "fix: dry-run do migrations.yml nao pode gravar de verdade (#319)"
+   },
    {
     "sha": "fffd1cc",
     "data": "2026-11-25",
@@ -126,11 +131,6 @@
     "sha": "ca6e6dc",
     "data": "2026-11-24",
     "assunto": "fix: restaura estado anterior no rollback das mutacoes otimistas de favoritos (#294)"
-   },
-   {
-    "sha": "48f3644",
-    "data": "2026-11-24",
-    "assunto": "fix: separa o cache de notificacoes por usuario (etapa 221) (#293)"
    }
   ],
   "arquivos_mudados_7d": 1275,
@@ -234,16 +234,16 @@
     "mudancas": 9
    },
    {
+    "arquivo": ".github/workflows/migrations.yml",
+    "mudancas": 8
+   },
+   {
     "arquivo": "docs/agentes/mapa-repo.md",
     "mudancas": 8
    },
    {
     "arquivo": "supabase/functions/validate-geo/index.ts",
     "mudancas": 8
-   },
-   {
-    "arquivo": ".github/workflows/migrations.yml",
-    "mudancas": 7
    },
    {
     "arquivo": "docs/edge-functions/README.md",

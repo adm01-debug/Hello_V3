@@ -1,9 +1,9 @@
 {
  "meta": {
-  "sha": "fffd1ccd4aa95bd09900ba49def44321b76f088a",
+  "sha": "c9aede082a4910f02c4fba6a429f581f366d47d7",
   "branch": "main",
   "remote": "https://github.com/adm01-debug/Hello_V3",
-  "generated_at": "2026-11-25 12:47 UTC",
+  "generated_at": "2026-11-25 13:22 UTC",
   "files_total": 1798,
   "code_files": 1595,
   "code_lines": 195681
@@ -124385,10 +124385,19 @@
   }
  },
  "git": {
-  "sha": "fffd1ccd4aa95bd09900ba49def44321b76f088a",
+  "sha": "c9aede082a4910f02c4fba6a429f581f366d47d7",
   "branch": "main",
   "remote": "https://github.com/adm01-debug/Hello_V3",
   "commits": [
+   {
+    "sha": "c9aede0",
+    "date": "2026-11-25",
+    "author": "adm01-debug",
+    "subject": "fix: dry-run do migrations.yml nao pode gravar de verdade (#319)",
+    "files": [
+     ".github/workflows/migrations.yml"
+    ]
+   },
    {
     "sha": "fffd1cc",
     "date": "2026-11-25",
@@ -124769,62 +124778,19 @@
      "src/hooks/__tests__/useMultiChannelCall.test.ts",
      "src/hooks/__tests__/usePredictiveDialer.test.ts"
     ]
-   },
-   {
-    "sha": "a96e7c3",
-    "date": "2026-11-24",
-    "author": "adm01-debug",
-    "subject": "fix: revisa os 41 disables de dependencia de efeito e zera o exhaustive-deps (etapa 217) (#288)",
-    "files": [
-     "docs/qa/05-PROGRESSO.md",
-     "src/components/admin/voip/TrunkMetricsTab.tsx",
-     "src/components/agent/BargeInNotification.tsx",
-     "src/components/agent/WhisperNotification.tsx",
-     "src/components/alerts/AlertsTrendChart.tsx",
-     "src/components/calls/UnifiedSoftphone.tsx",
-     "src/components/coaching/CoachingPanel.tsx",
-     "src/components/gamification/AchievementCelebration.tsx",
-     "src/components/network/AnomalyDetectionCard.tsx",
-     "src/components/network/QualityAlertsCard.tsx",
-     "src/components/recordings/TranscriptionDialog.tsx",
-     "src/hooks/useActiveCallsRealtime.ts",
-     "src/hooks/useAgentRanking.ts",
-     "src/hooks/useAlerts.ts",
-     "src/hooks/useAuth.ts",
-     "src/hooks/useCallAnalytics.ts",
-     "src/hooks/useCallHistory.ts",
-     "src/hooks/useContacts.ts",
-     "src/hooks/useDebouncedSearchParam.ts",
-     "src/hooks/useDeviceLabel.ts",
-     "src/hooks/useGamification.ts",
-     "src/hooks/useGeoBlocking.ts",
-     "src/hooks/useGoalViolations.ts",
-     "src/hooks/useSecurityAlertNotifications.ts",
-     "src/hooks/useSecurityDashboard.ts",
-     "src/hooks/useSipCall.ts",
-     "src/hooks/useTrunkUsageReporter.ts",
-     "src/pages/AgentRanking.tsx",
-     "src/pages/NetworkDiagnostics.tsx",
-     "src/pages/admin/ExtensionsAdmin.tsx",
-     "src/pages/admin/SecurityAuditDashboard.tsx"
-    ]
    }
   ],
   "hot_files": [
    [
     "docs/qa/05-PROGRESSO.md",
-    21
+    20
    ],
    [
     ".github/workflows/migrations.yml",
-    7
+    8
    ],
    [
     ".github/workflows/ci.yml",
-    3
-   ],
-   [
-    "src/components/calls/UnifiedSoftphone.tsx",
     3
    ],
    [
@@ -124833,6 +124799,10 @@
    ],
    [
     "tests/e2e/teclado.spec.ts",
+    2
+   ],
+   [
+    "src/components/calls/UnifiedSoftphone.tsx",
     2
    ],
    [
@@ -124849,18 +124819,6 @@
    ],
    [
     "docs/agentes/mapa-repo.md",
-    2
-   ],
-   [
-    "src/hooks/useAgentRanking.ts",
-    2
-   ],
-   [
-    "src/hooks/useContacts.ts",
-    2
-   ],
-   [
-    "src/hooks/useAuth.ts",
     2
    ],
    [
@@ -124889,6 +124847,18 @@
    ],
    [
     "src/pages/Settings.tsx",
+    1
+   ],
+   [
+    "supabase/migrations/20261123120000_user_preferences.sql",
+    1
+   ],
+   [
+    "AGENTS.md",
+    1
+   ],
+   [
+    "scripts/guard-supabase-error.mjs",
     1
    ]
   ]
