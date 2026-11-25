@@ -1,9 +1,9 @@
 {
  "meta": {
-  "sha": "f95122a33d4b029990a9865d045a3745054ebbf3",
+  "sha": "fffd1ccd4aa95bd09900ba49def44321b76f088a",
   "branch": "main",
   "remote": "https://github.com/adm01-debug/Hello_V3",
-  "generated_at": "2026-11-25 12:35 UTC",
+  "generated_at": "2026-11-25 12:47 UTC",
   "files_total": 1798,
   "code_files": 1595,
   "code_lines": 195681
@@ -124385,10 +124385,19 @@
   }
  },
  "git": {
-  "sha": "f95122a33d4b029990a9865d045a3745054ebbf3",
+  "sha": "fffd1ccd4aa95bd09900ba49def44321b76f088a",
   "branch": "main",
   "remote": "https://github.com/adm01-debug/Hello_V3",
   "commits": [
+   {
+    "sha": "fffd1cc",
+    "date": "2026-11-25",
+    "author": "adm01-debug",
+    "subject": "fix: normalizar nome registrado antes de comparar com o arquivo (#317)",
+    "files": [
+     ".github/workflows/migrations.yml"
+    ]
+   },
    {
     "sha": "f95122a",
     "date": "2026-11-25",
@@ -124799,15 +124808,6 @@
      "src/pages/admin/ExtensionsAdmin.tsx",
      "src/pages/admin/SecurityAuditDashboard.tsx"
     ]
-   },
-   {
-    "sha": "daac6b1",
-    "date": "2026-11-24",
-    "author": "adm01-debug",
-    "subject": "infra: trigger de recalculo de hold_time a partir dos hold_events (etapa 069) — DDL em producao, aguarda decisao (#274)",
-    "files": [
-     "supabase/migrations/20261123030000_hold_time_from_events.sql"
-    ]
    }
   ],
   "hot_files": [
@@ -124817,7 +124817,7 @@
    ],
    [
     ".github/workflows/migrations.yml",
-    6
+    7
    ],
    [
     ".github/workflows/ci.yml",

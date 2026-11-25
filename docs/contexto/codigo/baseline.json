@@ -2,11 +2,16 @@
  "aviso": "GERADO AUTOMATICAMENTE por scripts/ai-context/gerar.mjs — não editar à mão; será sobrescrito.",
  "format_version": 2,
  "git": {
-  "commit": "f95122a33d4b029990a9865d045a3745054ebbf3",
+  "commit": "fffd1ccd4aa95bd09900ba49def44321b76f088a",
   "branch": "main",
-  "data_commit": "2026-11-25T09:33:21-03:00",
+  "data_commit": "2026-11-25T09:46:06-03:00",
   "remote": "https://github.com/adm01-debug/Hello_V3",
   "ultimos_commits": [
+   {
+    "sha": "fffd1cc",
+    "data": "2026-11-25",
+    "assunto": "fix: normalizar nome registrado antes de comparar com o arquivo (#317)"
+   },
    {
     "sha": "f95122a",
     "data": "2026-11-25",
@@ -126,74 +131,69 @@
     "sha": "48f3644",
     "data": "2026-11-24",
     "assunto": "fix: separa o cache de notificacoes por usuario (etapa 221) (#293)"
-   },
-   {
-    "sha": "07dfba7",
-    "data": "2026-11-24",
-    "assunto": "fix: invalida cache depois de salvar artigo e verificar voz (etapa 219) (#292)"
    }
   ],
   "arquivos_mudados_7d": 1275,
   "pastas_mais_mudadas_30d": [
    {
     "pasta": "covout/lcov-report/hooks",
-    "mudancas": 143
+    "mudancas": 286
+   },
+   {
+    "pasta": "src/hooks/__tests__",
+    "mudancas": 275
    },
    {
     "pasta": "docs/qa/05-PROGRESSO.md",
     "mudancas": 132
    },
    {
-    "pasta": "src/hooks/__tests__",
-    "mudancas": 108
-   },
-   {
     "pasta": "covout/lcov-report/lib",
-    "mudancas": 55
-   },
-   {
-    "pasta": "src/components/calls",
-    "mudancas": 47
-   },
-   {
-    "pasta": "supabase/functions/_shared",
-    "mudancas": 40
+    "mudancas": 110
    },
    {
     "pasta": "src/lib/__tests__",
-    "mudancas": 31
+    "mudancas": 100
    },
    {
-    "pasta": "docs/estado/funcionalidades-planejadas.md",
-    "mudancas": 30
+    "pasta": "src/components/calls",
+    "mudancas": 78
    },
    {
-    "pasta": "src/components/layout",
-    "mudancas": 23
+    "pasta": "src/components/ui",
+    "mudancas": 61
    },
    {
-    "pasta": "src/pages/__tests__",
-    "mudancas": 19
+    "pasta": "supabase/functions/_shared",
+    "mudancas": 56
    },
    {
     "pasta": "covout/lib/security",
-    "mudancas": 18
+    "mudancas": 36
    },
    {
     "pasta": "src/components/compliance",
-    "mudancas": 16
+    "mudancas": 32
    },
    {
-    "pasta": "src/components/contacts",
-    "mudancas": 15
+    "pasta": "src/components/layout",
+    "mudancas": 32
    },
    {
-    "pasta": "src/components/dashboard",
-    "mudancas": 15
+    "pasta": "docs/estado/funcionalidades-planejadas.md",
+    "mudancas": 31
+   },
+   {
+    "pasta": "src/components/admin",
+    "mudancas": 31
+   },
+   {
+    "pasta": "src/pages/admin",
+    "mudancas": 31
    },
    {
     "pasta": "src/components/network",
-    "mudancas": 14
+    "mudancas": 30
    }
   ],
   "arquivos_mais_mudados_90d": [
@@ -206,10 +206,6 @@
     "mudancas": 31
    },
    {
-    "arquivo": ".github/workflows/ci.yml",
-    "mudancas": 11
-   },
-   {
     "arquivo": "src/components/calls/UnifiedSoftphone.tsx",
     "mudancas": 11
    },
@@ -220,6 +216,10 @@
    {
     "arquivo": "src/hooks/useMultiChannelCall.ts",
     "mudancas": 11
+   },
+   {
+    "arquivo": ".github/workflows/ci.yml",
+    "mudancas": 10
    },
    {
     "arquivo": "docs/audits/pendencias-2026-07.md",
@@ -242,7 +242,7 @@
     "mudancas": 8
    },
    {
-    "arquivo": "AGENTS.md",
+    "arquivo": ".github/workflows/migrations.yml",
     "mudancas": 7
    },
    {
@@ -301,7 +301,7 @@
   "autores_30d": [
    {
     "autor": "adm01-debug",
-    "commits": 295
+    "commits": 296
    },
    {
     "autor": "Joaquim Ataides",
