@@ -6,9 +6,9 @@
 
 | Marca | Significado |
 |---|---|
-| `[ ]` | **146** |
+| `[ ]` | **144** |
 | `[>]` | em andamento (branch criada) |
-| `[P]` | 0 |
+| `[P]` | 1 |
 | `[~]` | 1 |
 | `[x]` | 153 |
 | `[-]` | 0 |
@@ -24,11 +24,11 @@
 | | Quantidade |
 |---|---:|
 | Total de etapas | 300 |
-| `[x]` concluídas | 153 |
-| `[P]` aguardando o dono | 0 |
+| `[x]` concluídas | 154 |
+| `[P]` aguardando o dono | 1 |
 | `[~]` parciais | 1 |
 | `[-]` descartadas | 0 |
-| `[ ]` não iniciadas | **146** |
+| `[ ]` não iniciadas | **144** |
 
 *Atualize esta tabela ao fim de cada onda.*
 
@@ -71,9 +71,9 @@
 - [x] **032** — Verificar e atualizar o contador do autenticador no login por passkey — onda 1 — Baixa — Edge Function
 - [x] **033** — Rate limit no login por passkey — onda 1 — Baixa — Edge Function
 - [x] **034** — Mover a checagem de DNC e horário para dentro de `initiateCall` — onda 1 — Crítica — Hooks
-- [ ] **035** — Fazer a checagem de DNC e horário falhar fechado nos três níveis — onda 1 — Crítica — Hooks + Banco 🔒
+- [x] **035** — Fazer a checagem de DNC e horário falhar fechado nos três níveis — onda 1 — Crítica — Hooks + Banco 🔒 (`checkDNC`/`checkCallingHours` propagam o erro; `preDialCheck` e `initiateCall` recusam; dialer preditivo marca `skipped`; migration `20261125190000` aplicada em 25/11 — `supabase/tests/calling_hours_fail_closed_rls_test.sql` falhava antes (FALHA 2) e passa agora)
 - [x] **036** — Barreira de compliance no discador preditivo — onda 1 — Crítica — Hooks
-- [ ] **037** — Barreira de compliance no servidor, não só no cliente — onda 1 — Crítica — Edge Function + Banco 🔒
+- [P] **037** — Barreira de compliance no servidor, não só no cliente — onda 1 — Crítica — Edge Function + Banco 🔒 (opções (a) autorização por edge e (b) política no tronco registradas em `docs/agentes/telefonia-voip.md` §6; implementação aguarda escolha do dono)
 - [x] **038** — Fazer a importação em lote de DNC verificar o resultado de verdade — onda 1 — Crítica — Hooks
 - [x] **039** — Reconciliar a lista DNC depois da importação — onda 1 — Alta — Hooks
 - [ ] **040** — Tirar a chave `anon` e o host fixo de dentro das migrations — onda 1 — Média — Banco 🔒

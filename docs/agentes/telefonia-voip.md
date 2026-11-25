@@ -188,3 +188,29 @@ barra de pós-chamada (`CrmSuggestionsCard`), mas **não** chama mais `startSess
 | 059 | Chama `endSession` em `endCall` com duração e status correto | `useMultiChannelCall.ts` |
 | 060 | Faz `ActiveCallBar` consumir a chamada de `useMultiChannelCall` | `ActiveCallBar.tsx` |
 | 061 | Religar transcrição ao vivo | `ActiveCallBar.tsx` / `useLiveTranscription` |
+
+---
+
+## 6. Barreira de compliance na discagem (etapas 034–037)
+
+A regra de DNC e horário legal vale para **discar**, não para atender. Estado atual:
+
+| Nível | Onde | Estado |
+|---|---|---|
+| Barreira única no cliente | `useMultiChannelCall.initiateCall` (etapa 034) | ativo — `skipComplianceCheck` só é usado no fluxo de chamada recebida (`PhoneDialer.tsx`) |
+| Discador preditivo | `usePredictiveDialer.dialContact` (etapa 036) | ativo — contato recusado sai da fila como `skipped` com `result = 'compliance: …'` |
+| Fail-closed nos três níveis | `useDNCCompliance` + `check_calling_hours` (etapa 035) | ativo desde 25/11/2026 — erro de leitura reprova a discagem; sem `calling_hours_config` ativa a função SQL também recusa (prova: `supabase/tests/calling_hours_fail_closed_rls_test.sql`) |
+
+**O que ainda não existe (etapa 037, decisão pendente do dono):** a regra vive inteiramente no
+navegador. O `jssip` fala direto com o tronco SIP, então um cliente modificado, uma aba antiga em
+cache ou um erro de deploy contornam a barreira. As duas opções, com custo:
+
+- **(a) Autorização de discagem por edge** — uma edge function emite um token de curta duração por
+  número discado, depois de checar DNC/horário no servidor; o softphone precisa do token para
+  iniciar. Fecha o furo para o cliente, **não** para quem tiver a credencial SIP, e adiciona
+  latência a cada discagem (caminho mais sensível do produto).
+- **(b) Política no tronco SIP** — bloqueio de prefixo/horário no provedor. Fecha de verdade, mas
+  é configuração do provedor, não código, e depende do contrato atual.
+
+Recomendação registrada: **(a) + (b)**. Nada foi implementado; até a decisão, 034–036 são a
+mitigação e é isso que está em produção.
