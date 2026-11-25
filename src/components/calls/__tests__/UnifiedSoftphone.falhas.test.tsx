@@ -9,11 +9,12 @@ const sipState = {
   error: null as string | null,
   connect: vi.fn(),
   setDbSessionId: vi.fn(),
+  toggleMute: vi.fn(),
 };
 
 const callContext = {
   activeChannel: 'sip' as 'sip' | 'webrtc' | 'wavoip',
-  currentCall: null as null | { channel: string },
+  currentCall: null as null | { channel: string; isMuted?: boolean },
   activeCalls: [] as unknown[],
   activeCallId: null,
   callHistory: [],
@@ -81,6 +82,7 @@ describe('UnifiedSoftphone — estados de falha (etapa 233)', () => {
     sipState.isConfigured = true;
     sipState.error = null;
     sipState.connect.mockReset();
+    sipState.toggleMute.mockReset();
     callContext.activeChannel = 'sip';
     callContext.isInCall = false;
     callContext.currentCall = null;
@@ -139,5 +141,22 @@ describe('UnifiedSoftphone — estados de falha (etapa 233)', () => {
     expect(screen.getByText(/Permissão de microfone negada/)).toBeInTheDocument();
     expect(screen.getByText(/cadeado/)).toBeInTheDocument();
     expect(getUserMedia).toHaveBeenCalled();
+  });
+
+  it('aplica no audio do SIP o mute pedido pelo estado da chamada', () => {
+    callContext.currentCall = { channel: 'sip', isMuted: true };
+
+    render(<UnifiedSoftphone />);
+
+    expect(sipState.toggleMute).toHaveBeenCalledWith(true);
+  });
+
+  it('nao mexe no audio do SIP quando a chamada e de outro canal', () => {
+    callContext.activeChannel = 'webrtc';
+    callContext.currentCall = { channel: 'webrtc', isMuted: true };
+
+    render(<UnifiedSoftphone />);
+
+    expect(sipState.toggleMute).not.toHaveBeenCalled();
   });
 });
