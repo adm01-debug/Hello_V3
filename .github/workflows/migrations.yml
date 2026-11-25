@@ -1,0 +1,96 @@
+# Aplica UMA migration de supabase/migrations/ no banco oficial, sob demanda.
+#
+#   gatilho: workflow_dispatch (nunca push/pull_request -- DDL em producao nao roda sozinho)
+#   prova:   o mesmo arquivo executa dentro de BEGIN/ROLLBACK antes (dry-run) e so depois grava,
+#            com --single-transaction + ON_ERROR_STOP=1, e registra a versao em public.schema_migrations
+#   motivo:  o repo tem 243 migrations e nenhum workflow as aplica; `supabase db push` tentaria
+#            reaplicar o historico inteiro de uma vez. Por isso a aplicacao e por arquivo, explicita.
+#   segredo: SUPABASE_DB_URL (pooler session). A URL nunca e impressa nos logs.
+name: Aplicar migration (manual)
+
+on:
+  workflow_dispatch:
+    inputs:
+      arquivo:
+        description: 'Arquivo em supabase/migrations (ex.: 20261123120000_user_preferences.sql)'
+        required: true
+        type: string
+      confirmar:
+        description: 'Digite APLICAR para gravar de verdade; qualquer outro valor faz apenas dry-run'
+        required: true
+        default: dry-run
+        type: string
+      ref:
+        description: 'Branch de onde ler o arquivo (vazio = branch padrao). Permite aplicar a migration de uma PR antes do merge'
+        required: false
+        default: ''
+        type: string
+
+permissions:
+  contents: read
+
+concurrency:
+  group: migrations-producao
+  cancel-in-progress: false
+
+jobs:
+  aplicar:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ inputs.ref || github.ref }}
+
+      - name: Validar o arquivo de entrada
+        env:
+          ARQUIVO: ${{ inputs.arquivo }}
+        run: |
+          set -euo pipefail
+          if ! printf '%s' "$ARQUIVO" | grep -Eq '^[0-9]{14}_[A-Za-z0-9_]+\.sql$'; then
+            echo "::error::Nome invalido: $ARQUIVO (esperado AAAAMMDDHHMMSS_nome.sql)"; exit 1
+          fi
+          if [ ! -f "supabase/migrations/$ARQUIVO" ]; then
+            echo "::error::Arquivo nao encontrado em supabase/migrations: $ARQUIVO"; exit 1
+          fi
+          versao="${ARQUIVO%%_*}"
+          {
+            echo "ARQUIVO=$ARQUIVO"
+            echo "VERSAO=$versao"
+            echo "CHECKSUM=$(sha256sum "supabase/migrations/$ARQUIVO" | cut -d' ' -f1)"
+          } >> "$GITHUB_ENV"
+          echo "arquivo validado: $ARQUIVO (versao $versao)"
+
+      - name: Conferir se a versao ja foi aplicada
+        env:
+          SUPABASE_DB_URL: ${{ secrets.SUPABASE_DB_URL }}
+        run: |
+          set -euo pipefail
+          if [ -z "${SUPABASE_DB_URL:-}" ]; then
+            echo "::error::Secret SUPABASE_DB_URL ausente no repositorio"; exit 1
+          fi
+          registros=$(psql "$SUPABASE_DB_URL" -tA -v ON_ERROR_STOP=1 \
+            -c "select count(*) from public.schema_migrations where version = '${VERSAO}'")
+          echo "registros em public.schema_migrations para ${VERSAO}: ${registros}"
+
+      - name: Dry-run (executa e reverte dentro da mesma sessao)
+        if: ${{ inputs.confirmar != 'APLICAR' }}
+        env:
+          SUPABASE_DB_URL: ${{ secrets.SUPABASE_DB_URL }}
+        run: |
+          set -euo pipefail
+          psql "$SUPABASE_DB_URL" -v ON_ERROR_STOP=1 -q \
+            -c 'begin;' -f "supabase/migrations/${ARQUIVO}" -c 'rollback;'
+          echo "dry-run ok: ${ARQUIVO} executou sem erro e foi revertido. Nada foi gravado."
+
+      - name: Aplicar em producao
+        if: ${{ inputs.confirmar == 'APLICAR' }}
+        env:
+          SUPABASE_DB_URL: ${{ secrets.SUPABASE_DB_URL }}
+        run: |
+          set -euo pipefail
+          psql "$SUPABASE_DB_URL" -v ON_ERROR_STOP=1 --single-transaction -q \
+            -f "supabase/migrations/${ARQUIVO}"
+          psql "$SUPABASE_DB_URL" -v ON_ERROR_STOP=1 -tA \
+            -c "select public.apply_migration('${VERSAO}', '${ARQUIVO}', '${CHECKSUM}')"
+          echo "aplicada: ${ARQUIVO}"
