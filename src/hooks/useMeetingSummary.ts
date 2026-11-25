@@ -1,4 +1,4 @@
-import { useEffect, useState, useCallback } from 'react';
+import { useEffect } from 'react';
 import { supabase } from '@/integrations/supabase/client';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { toast } from 'sonner';
@@ -223,37 +223,4 @@ export function usePendingActionItems() {
     },
     staleTime: 60_000,
   });
-}
-
-export function useAutoMeetingSummary() {
-  const [pending, setPending] = useState<Set<string>>(new Set());
-  const queryClient = useQueryClient();
-
-  const trigger = useCallback(
-    async (callSessionId: string, durationSeconds: number) => {
-      if (durationSeconds < 60) return;
-      if (pending.has(callSessionId)) return;
-      setPending((p) => new Set(p).add(callSessionId));
-      try {
-        await withTrace('meeting-summary.auto', () =>
-          supabase.functions.invoke('generate-meeting-summary', {
-            body: { callSessionId },
-            headers: traceHeaders(),
-          }),
-        );
-        queryClient.invalidateQueries({ queryKey: ['meeting-summary', callSessionId] });
-      } catch (e) {
-        log.error('auto summary failed', e);
-      } finally {
-        setPending((p) => {
-          const next = new Set(p);
-          next.delete(callSessionId);
-          return next;
-        });
-      }
-    },
-    [pending, queryClient]
-  );
-
-  return { triggerSummary: trigger };
 }

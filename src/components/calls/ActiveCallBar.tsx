@@ -11,6 +11,7 @@ import {
   MoreHorizontal,
   Bot,
   FileText,
+  Fingerprint,
   Loader2
 } from 'lucide-react';
  import { Button } from '@/components/ui/button';
@@ -21,6 +22,7 @@ import { NextBestActionPanel } from '@/components/calls/NextBestActionPanel';
 import { CrmSuggestionsCard } from '@/components/calls/CrmSuggestionsCard';
 import { useCallContext } from '@/contexts/CallContext';
 import { useLiveAssist } from '@/hooks/useLiveAssist';
+import { useLiveVoiceVerification } from '@/hooks/useVoiceBiometrics';
 import { useContacts } from '@/hooks/useContacts';
 import { buildRecentContext } from '@/lib/agent-assist-utils';
 import { supabase } from '@/integrations/supabase/client';
@@ -62,6 +64,8 @@ export function ActiveCallBar() {
   const duration = rawCall?.duration ?? 0;
   const { findOrCreateContact, addContactInteraction } = useContacts();
   const { analyze: analyzeLive } = useLiveAssist(currentSession?.id);
+  // E155: verificação de voz ao vivo — o veredito vale só para a sessão atual
+  const { run: verifyVoice, isVerifying, lastVerdict } = useLiveVoiceVerification(currentSession?.id);
 
   // startSession é chamado por useMultiChannelCall.updateCallStatus (E058) — não duplicar aqui
 
@@ -264,6 +268,24 @@ export function ActiveCallBar() {
                     <span className="text-warning">Em espera</span>
                   </>
                 )}
+                {lastVerdict && (
+                  <>
+                    <span>•</span>
+                    <span
+                      className={cn(
+                        lastVerdict.match === false && 'text-destructive',
+                        lastVerdict.match === true && 'text-success',
+                        lastVerdict.match === undefined && 'text-muted-foreground',
+                      )}
+                    >
+                      {lastVerdict.match === true
+                        ? `Voz confere${typeof lastVerdict.confidence === 'number' ? ` (${lastVerdict.confidence}%)` : ''}`
+                        : lastVerdict.match === false
+                          ? 'Voz não confere'
+                          : 'Voz não cadastrada'}
+                    </span>
+                  </>
+                )}
               </div>
             </div>
           </div>
@@ -324,6 +346,17 @@ export function ActiveCallBar() {
 
             <Button aria-label="Transferir a chamada" variant="ghost" size="icon">
               <PhoneForwarded className="h-4 w-4" />
+            </Button>
+
+            <Button
+              aria-label="Verificar a voz do cliente nesta chamada"
+              variant="ghost"
+              size="icon"
+              onClick={() => void verifyVoice()}
+              disabled={!currentSession?.id || isVerifying}
+              className={cn(lastVerdict?.match === false && 'bg-destructive/10 text-destructive hover:bg-destructive/20 hover:text-destructive')}
+            >
+              {isVerifying ? <Loader2 className="h-4 w-4 animate-spin" /> : <Fingerprint className="h-4 w-4" />}
             </Button>
 
             <Button aria-label="Mais opções da chamada" variant="ghost" size="icon">

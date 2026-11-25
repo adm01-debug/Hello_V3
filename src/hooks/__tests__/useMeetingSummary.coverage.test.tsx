@@ -1,7 +1,7 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { renderHook, waitFor, act } from '@testing-library/react';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import { useMeetingSummary, useMeetingSummariesList, usePendingActionItems, useAutoMeetingSummary } from '../useMeetingSummary';
+import { useMeetingSummary, useMeetingSummariesList, usePendingActionItems } from '../useMeetingSummary';
 
 interface QueryResult { data: unknown; error: unknown }
 let summaryRow: QueryResult = { data: { id: 'm1', call_session_id: 'cs1', status: 'completed', key_points: ['a'], action_items: [{ description: 'x', priority: 'high' }] }, error: null };
@@ -113,21 +113,5 @@ describe('usePendingActionItems', () => {
     await waitFor(() => expect(result.current.isSuccess).toBe(true));
     expect(result.current.data?.total).toBe(1);
     expect(result.current.data?.followUps).toBe(1);
-  });
-});
-
-describe('useAutoMeetingSummary', () => {
-  beforeEach(() => { vi.clearAllMocks(); invoke.mockResolvedValue({ data: {}, error: null }); });
-
-  it('triggers summary for long calls', async () => {
-    const { result } = renderHook(() => useAutoMeetingSummary(), { wrapper });
-    await act(async () => { await result.current.triggerSummary('cs1', 120); });
-    expect(invoke).toHaveBeenCalled();
-  });
-
-  it('skips short calls', async () => {
-    const { result } = renderHook(() => useAutoMeetingSummary(), { wrapper });
-    await act(async () => { await result.current.triggerSummary('cs1', 30); });
-    expect(invoke).not.toHaveBeenCalled();
   });
 });
