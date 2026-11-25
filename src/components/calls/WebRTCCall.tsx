@@ -7,6 +7,7 @@ import { formatDuration } from "@/lib/utils";
 import { logger } from "@/lib/logger";
 import { toast } from "sonner";
 import { getIceServers, RECOMMENDED_AUDIO_CONSTRAINTS } from "@/lib/webrtc-config";
+import { useNotificationPreferences } from "@/hooks/useNotificationPreferences";
 import { useVoipQualityMonitor } from "@/hooks/useVoipQualityMonitor";
 import { useAudioOutputDevices } from "@/hooks/useAudioOutputDevices";
 import { CallQualityIndicator } from "@/components/calls/CallQualityIndicator";
@@ -52,6 +53,18 @@ export function WebRTCCall({
 
   const MAX_RECONNECT_ATTEMPTS = 5;
   const DISCONNECT_GRACE_MS = 3000;
+
+  const { preferences } = useNotificationPreferences();
+
+  const audioConstraints: MediaTrackConstraints = {
+    ...RECOMMENDED_AUDIO_CONSTRAINTS,
+    echoCancellation:
+      preferences?.audio_echo_cancellation ?? RECOMMENDED_AUDIO_CONSTRAINTS.echoCancellation,
+    noiseSuppression:
+      preferences?.audio_noise_suppression ?? RECOMMENDED_AUDIO_CONSTRAINTS.noiseSuppression,
+    autoGainControl:
+      preferences?.audio_auto_gain_control ?? RECOMMENDED_AUDIO_CONSTRAINTS.autoGainControl,
+  };
 
   const quality = useVoipQualityMonitor(pc, {
     callSessionId: callSessionId ?? null,
@@ -156,7 +169,7 @@ export function WebRTCCall({
       setStatus("connecting");
 
       const stream = await navigator.mediaDevices.getUserMedia({
-        audio: RECOMMENDED_AUDIO_CONSTRAINTS,
+        audio: audioConstraints,
       });
       localStreamRef.current = stream;
 
@@ -234,7 +247,8 @@ export function WebRTCCall({
       }
       setStatus("idle");
     }
-  }, [onCallStarted, endCall, clearReconnectTimers, scheduleReconnect]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [onCallStarted, endCall, clearReconnectTimers, scheduleReconnect, audioConstraints.echoCancellation, audioConstraints.noiseSuppression, audioConstraints.autoGainControl]);
 
   const toggleMute = useCallback(() => {
     const stream = localStreamRef.current;

@@ -22,6 +22,24 @@ vi.mock("@/hooks/useAudioOutputDevices", () => ({
   }),
 }));
 
+vi.mock("@/hooks/useNotificationPreferences", () => ({
+  useNotificationPreferences: () => ({
+    preferences: {
+      notify_incoming_calls: true,
+      notify_missed_calls: true,
+      notify_voicemail: true,
+      notify_sound: true,
+      audio_echo_cancellation: true,
+      audio_noise_suppression: true,
+      audio_auto_gain_control: true,
+      beta_program: false,
+    },
+    isLoading: false,
+    savePreferences: vi.fn(),
+    isSaving: false,
+  }),
+}));
+
 // --- Helpers para construir mocks WebRTC ---
 interface FakeTrack {
   kind: "audio";
@@ -152,7 +170,7 @@ describe("WebRTCCall", () => {
     await startCall();
 
     expect(navigator.mediaDevices.getUserMedia).toHaveBeenCalledWith({
-      audio: { echoCancellation: true },
+      audio: { echoCancellation: true, noiseSuppression: true, autoGainControl: true },
     });
     expect(lastPc!.addTransceiver).toHaveBeenCalledWith("audio", { direction: "sendrecv" });
     expect(lastPc!._sender.replaceTrack).toHaveBeenCalledWith(localTrack);

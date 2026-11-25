@@ -6,11 +6,11 @@
 
 | Marca | Significado |
 |---|---|
-| `[ ]` | **148** |
+| `[ ]` | **146** |
 | `[>]` | em andamento (branch criada) |
 | `[P]` | 0 |
 | `[~]` | 1 |
-| `[x]` | 151 |
+| `[x]` | 153 |
 | `[-]` | 0 |
 
 **`[x]` exige evidência.** Escreva ao lado, entre parênteses, o comando ou a consulta que você rodou e o resultado. Sem isso, a marca é `[~]`.
@@ -24,11 +24,11 @@
 | | Quantidade |
 |---|---:|
 | Total de etapas | 300 |
-| `[x]` concluídas | 151 |
+| `[x]` concluídas | 153 |
 | `[P]` aguardando o dono | 0 |
 | `[~]` parciais | 1 |
 | `[-]` descartadas | 0 |
-| `[ ]` não iniciadas | **148** |
+| `[ ]` não iniciadas | **146** |
 
 *Atualize esta tabela ao fim de cada onda.*
 
@@ -116,8 +116,8 @@
 - [x] **073** — Ligar o botão "Transferir" do softphone — onda 2 — Alta — Frontend · (PR #170; TransferCallDialog conectado; tsc=0)
 - [x] **074** — Ligar o "Exportar" do histórico de chamadas — onda 2 — Alta — Frontend · (PR #170; downloadCallHistoryCsv ligado; tsc=0, 3/3)
 - [x] **075** — Ligar o "Exportar" dos relatórios — onda 2 — Alta — Frontend · (PR #170; downloadReportCsv ligado; tsc=0, 6/6, build OK sem violar orçamento)
-- [ ] **076** — Fazer o "Salvar" das Configurações salvar de verdade — onda 2 — Alta — Frontend + Hooks 🔒
-- [ ] **077** — Resolver os quatro switches decorativos das Configurações — onda 2 — Média — Frontend
+- [x] **076** — Fazer o "Salvar" das Configurações salvar de verdade — onda 2 — Alta — Frontend + Hooks · (PR #171 rebasada; migration `20261123120000_user_preferences` + `useNotificationPreferences` persistindo no banco, sem localStorage; tsc=0, testes do hook 3/3)
+- [x] **077** — Resolver os quatro switches decorativos das Configurações — onda 2 — Média — Frontend · (PR #171 rebasada; eco/ruído/ganho têm `onCheckedChange`, persistem em `user_preferences` e chegam ao `getUserMedia` via `RECOMMENDED_AUDIO_CONSTRAINTS` — provado por `WebRTCCall.test`; o quarto switch, "Programa Beta", **saiu da tela** porque nenhuma feature lê `beta_program`; a coluna e o hook seguem prontos para quando o dono definir o programa)
 - [ ] **078** — Fazer o discador preditivo efetivamente discar — onda 2 — Alta — Hooks 🔒
 - [ ] **079** — Reivindicação atômica do contato no discador — onda 2 — Crítica — Hooks 🔒
 - [x] **080** — Verificar o erro nas escritas do discador — onda 2 — Alta — Hooks · (5 escritas em `api.ts` agora fazem `if (error) throw error`; falha do claim para a campanha com toast — teste novo falha sem o fix; vitest 20/20, tsc=0, eslint=0)

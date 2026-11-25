@@ -21,7 +21,6 @@
     Wrench,
     LifeBuoy,
     MessageSquare,
-    Sparkles,
   } from 'lucide-react';
  import { toast } from 'sonner';
  import { usePageTitle } from '@/hooks/usePageTitle';
@@ -31,10 +30,13 @@
    startMicLevel,
    type MicTestHandle,
  } from '@/lib/audio/deviceTest';
+ import { useNotificationPreferences } from '@/hooks/useNotificationPreferences';
  
  const Settings = () => {
    usePageTitle('Configurações');
  
+   const { preferences, savePreferences } = useNotificationPreferences();
+
    const [notifications, setNotifications] = useState({
      incomingCalls: true,
      missedCalls: true,
@@ -42,8 +44,41 @@
      sound: true,
    });
  
+   const [audio, setAudio] = useState({
+     echoCancellation: true,
+     noiseSuppression: true,
+     autoGainControl: true,
+     betaProgram: false,
+   });
+
+   useEffect(() => {
+     if (preferences) {
+       setNotifications({
+         incomingCalls: preferences.notify_incoming_calls,
+         missedCalls: preferences.notify_missed_calls,
+         voicemail: preferences.notify_voicemail,
+         sound: preferences.notify_sound,
+       });
+       setAudio({
+         echoCancellation: preferences.audio_echo_cancellation,
+         noiseSuppression: preferences.audio_noise_suppression,
+         autoGainControl: preferences.audio_auto_gain_control,
+         betaProgram: preferences.beta_program,
+       });
+     }
+   }, [preferences]);
+
    const handleSave = () => {
-     toast.success('✓ Configurações salvas', { description: 'Suas preferências foram atualizadas' });
+     savePreferences({
+       notify_incoming_calls: notifications.incomingCalls,
+       notify_missed_calls: notifications.missedCalls,
+       notify_voicemail: notifications.voicemail,
+       notify_sound: notifications.sound,
+       audio_echo_cancellation: audio.echoCancellation,
+       audio_noise_suppression: audio.noiseSuppression,
+       audio_auto_gain_control: audio.autoGainControl,
+       beta_program: audio.betaProgram,
+     });
    };
 
    const [micTesting, setMicTesting] = useState(false);
@@ -135,16 +170,6 @@
                  </div>
                </div>
                
-               <div className="rounded-lg border border-primary/20 bg-primary/5 p-4 flex items-center justify-between gap-4">
-                 <div>
-                   <h4 className="font-medium text-primary flex items-center gap-2">
-                     <Sparkles className="h-4 w-4" />
-                     Programa Beta
-                   </h4>
-                   <p className="text-xs text-muted-foreground mt-1">Ative o acesso antecipado a novas funcionalidades de IA e automação.</p>
-                 </div>
-                 <Switch />
-               </div>
              </CardContent>
            </Card>
          </TabsContent>
@@ -304,7 +329,10 @@
                     <Label className="text-base">Cancelamento de eco</Label>
                     <p className="text-sm text-muted-foreground">Reduz eco durante chamadas</p>
                   </div>
-                  <Switch defaultChecked />
+                  <Switch
+                    checked={audio.echoCancellation}
+                    onCheckedChange={(checked) => setAudio((prev) => ({ ...prev, echoCancellation: checked }))}
+                  />
                 </div>
 
                 <div className="flex items-center justify-between">
@@ -312,7 +340,10 @@
                     <Label className="text-base">Supressão de ruído</Label>
                     <p className="text-sm text-muted-foreground">Remove ruídos de fundo</p>
                   </div>
-                  <Switch defaultChecked />
+                  <Switch
+                    checked={audio.noiseSuppression}
+                    onCheckedChange={(checked) => setAudio((prev) => ({ ...prev, noiseSuppression: checked }))}
+                  />
                 </div>
 
                 <div className="flex items-center justify-between">
@@ -320,7 +351,10 @@
                     <Label className="text-base">Ganho automático</Label>
                     <p className="text-sm text-muted-foreground">Ajusta volume automaticamente</p>
                   </div>
-                  <Switch defaultChecked />
+                  <Switch
+                    checked={audio.autoGainControl}
+                    onCheckedChange={(checked) => setAudio((prev) => ({ ...prev, autoGainControl: checked }))}
+                  />
                 </div>
               </div>
 
