@@ -12,6 +12,7 @@ import { Switch } from "@/components/ui/switch";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { usePageTitle } from "@/hooks/usePageTitle";
+import { useLockedWrite } from "@/hooks/useLockedWrite";
 import { NeonPageLayout } from "@/components/layout/NeonPageLayout";
 import { safeFormatDatePtBR } from "@/lib/safe-date";
 
@@ -70,19 +71,21 @@ export default function Trackers() {
   const [form, setForm] = useState({
     name: "", category: "general", description: "", keywords: "", match_type: "any" as "any" | "all",
   });
+  const { runLocked, isLocked } = useLockedWrite();
 
-  const handleCreate = async () => {
-    const ok = await createTracker({
-      name: form.name,
-      category: form.category,
-      description: form.description || null,
-      keywords: form.keywords.split(",").map((k) => k.trim()).filter(Boolean),
-      match_type: form.match_type,
-      is_active: true,
-      color: "primary",
+  const handleCreate = () =>
+    runLocked("novo-tracker", async () => {
+      const ok = await createTracker({
+        name: form.name,
+        category: form.category,
+        description: form.description || null,
+        keywords: form.keywords.split(",").map((k) => k.trim()).filter(Boolean),
+        match_type: form.match_type,
+        is_active: true,
+        color: "primary",
+      });
+      if (ok) { setOpen(false); setForm({ name: "", category: "general", description: "", keywords: "", match_type: "any" }); }
     });
-    if (ok) { setOpen(false); setForm({ name: "", category: "general", description: "", keywords: "", match_type: "any" }); }
-  };
 
   return (
     <NeonPageLayout>
@@ -120,7 +123,7 @@ export default function Trackers() {
                   <SelectContent><SelectItem value="any">Qualquer palavra</SelectItem><SelectItem value="all">Todas as palavras</SelectItem></SelectContent>
                 </Select>
               </div>
-              <Button onClick={handleCreate} disabled={!form.name || !form.keywords}>Criar</Button>
+              <Button onClick={handleCreate} disabled={isLocked("novo-tracker") || !form.name || !form.keywords}>Criar</Button>
             </div>
           </DialogContent>
         </Dialog>

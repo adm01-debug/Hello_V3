@@ -114,7 +114,7 @@ export default function VideoConference() {
             <DialogHeader><DialogTitle>Criar Reunião</DialogTitle></DialogHeader>
             <div className="space-y-4">
               <div><Label>Título</Label><Input value={title} onChange={e => setTitle(e.target.value)} placeholder="Reunião de equipe" /></div>
-              <Button onClick={() => createConference.mutate()} disabled={!title.trim()}>Criar</Button>
+              <Button onClick={() => createConference.mutate()} disabled={!title.trim() || createConference.isPending}>Criar</Button>
             </div>
           </DialogContent>
         </Dialog>

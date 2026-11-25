@@ -6,6 +6,7 @@ import { cn } from '@/lib/utils';
 import { supabase } from '@/integrations/supabase/client';
 import { toast } from 'sonner';
 import { logger } from '@/lib/logger';
+import { useLockedWrite } from '@/hooks/useLockedWrite';
 import type { BattleCard } from '@/hooks/useBattleCardDetection';
 
 const log = logger.create('BattleCardAlert');
@@ -20,6 +21,7 @@ interface Props {
 
 export function BattleCardAlert({ card, onDismiss, callSessionId, agentName, autoDismissMs = 30000 }: Props) {
   const [marked, setMarked] = useState(false);
+  const { runLocked, isLocked } = useLockedWrite();
 
   useEffect(() => {
     setMarked(false);
@@ -28,9 +30,10 @@ export function BattleCardAlert({ card, onDismiss, callSessionId, agentName, aut
     return () => clearTimeout(t);
   }, [card, onDismiss, autoDismissMs]);
 
-  const markAsUsed = async () => {
+  const markAsUsed = () => {
     if (!card || !callSessionId) { setMarked(true); return; }
-    try {
+    return runLocked('battle-card-used', async () => {
+      if (marked) return;
       const { error } = await supabase.from('coaching_timestamps').insert({
         call_session_id: callSessionId,
         agent_name: agentName || null,
@@ -47,10 +50,10 @@ export function BattleCardAlert({ card, onDismiss, callSessionId, agentName, aut
       }
       setMarked(true);
       toast.success('Battle card marcado como usado');
-    } catch (e) {
+    }).catch((e) => {
       log.error('Falha ao registrar uso', e);
       toast.error('Não foi possível registrar uso');
-    }
+    });
   };
 
   if (!card) return null;
@@ -126,7 +129,7 @@ export function BattleCardAlert({ card, onDismiss, callSessionId, agentName, aut
             size="sm"
             variant={marked ? 'outline' : 'default'}
             onClick={markAsUsed}
-            disabled={marked}
+            disabled={marked || isLocked('battle-card-used')}
             className="flex-1"
           >
             <ThumbsUp className="h-3.5 w-3.5 mr-1.5" />
