@@ -1,8 +1,9 @@
 # docs:
 #   gatilho: dispatch manual (nenhum push aplica DDL em producao)
 #   prova: dry-run executa o arquivo e reverte; APLICAR grava e registra em public.schema_migrations
-#   modos: arquivo | pendentes | verificar
+#   modos: arquivo | pendentes | registrar | verificar
 #     arquivo    -> aplica (ou simula) UM arquivo de supabase/migrations/
+#     registrar  -> anota no historico um arquivo que ja esta no banco, SEM executar o SQL
 #     pendentes  -> lista o que existe no repositorio e nao esta em public.schema_migrations e aplica em ordem
 #     verificar  -> roda supabase/tests/*_rls_test.sql (transacoes revertidas no fim, nada fica gravado)
 #   falha: nome fora do padrao, arquivo inexistente, versao ja aplicada, erro de SQL, secret ausente
@@ -12,13 +13,14 @@ on:
   workflow_dispatch:
     inputs:
       modo:
-        description: 'arquivo = um arquivo | pendentes = fila do que falta no banco | verificar = testes de RLS'
+        description: 'arquivo = aplica um | pendentes = fila do que falta | registrar = anota sem executar | verificar = testes de RLS'
         required: true
         default: arquivo
         type: choice
         options:
           - arquivo
           - pendentes
+          - registrar
           - verificar
       arquivo:
         description: 'Nome do arquivo em supabase/migrations (obrigatorio no modo arquivo)'
@@ -64,7 +66,7 @@ jobs:
           echo "credencial ok"
 
       - name: Validar arquivo de entrada
-        if: inputs.modo == 'arquivo'
+        if: inputs.modo == 'arquivo' || inputs.modo == 'registrar'
         id: alvo
         env:
           ENTRADA: ${{ inputs.arquivo }}
@@ -88,7 +90,7 @@ jobs:
           } >> "$GITHUB_ENV"
 
       - name: Conferir se a versao ja foi aplicada
-        if: inputs.modo == 'arquivo'
+        if: inputs.modo == 'arquivo' || inputs.modo == 'registrar'
         env:
           SUPABASE_DB_URL: ${{ secrets.SUPABASE_DB_URL }}
         run: |
@@ -99,6 +101,20 @@ jobs:
           if [ "$registros" != "0" ]; then
             echo "::error::Versao ${VERSAO} ja aplicada (${ARQUIVO}). Nada a fazer."; exit 1
           fi
+
+      - name: Registrar sem executar
+        if: inputs.modo == 'registrar' && inputs.confirmar == 'APLICAR'
+        env:
+          SUPABASE_DB_URL: ${{ secrets.SUPABASE_DB_URL }}
+        run: |
+          set -euo pipefail
+          resultado=$(psql "$SUPABASE_DB_URL" -tA -v ON_ERROR_STOP=1 \
+            -c "select public.apply_migration('${VERSAO}', '${ARQUIVO}', '${CHECKSUM}')")
+          echo "apply_migration(${VERSAO}) -> ${resultado}"
+          if [ "$resultado" != "t" ]; then
+            echo "::error::A versao ${VERSAO} ja consta no historico; nada a registrar"; exit 1
+          fi
+          echo "registrada sem execucao: ${ARQUIVO} (SQL nao rodou; use somente quando o banco ja tem o objeto)"
 
       - name: Dry-run (executa e reverte dentro da mesma sessao)
         if: inputs.modo == 'arquivo' && inputs.confirmar != 'APLICAR'
@@ -134,9 +150,13 @@ jobs:
           # Ler so uma delas faz migration aplicada parecer pendente (ou o contrario).
           nativa=$(psql "$SUPABASE_DB_URL" -tA -v ON_ERROR_STOP=1 -c "select to_regclass('supabase_migrations.schema_migrations') is not null")
           : > /tmp/aplicadas.txt
+          : > /tmp/aplicadas_slugs.txt
           : > /tmp/versoes_sem_nome.txt
           if [ "$nativa" = "t" ]; then
             psql "$SUPABASE_DB_URL" -tA -v ON_ERROR_STOP=1 -c "select coalesce(name, '') from supabase_migrations.schema_migrations" | grep -v '^$' | sort -u > /tmp/aplicadas.txt
+            # O nome gravado nem sempre carrega o prefixo de versao; guarda o slug sem ele
+            # para nao tratar como pendente uma migration que ja rodou.
+            psql "$SUPABASE_DB_URL" -tA -v ON_ERROR_STOP=1 -c "select regexp_replace(coalesce(name, ''), '^[0-9]{14}_', '') from supabase_migrations.schema_migrations" | grep -v '^$' | sort -u > /tmp/aplicadas_slugs.txt
             psql "$SUPABASE_DB_URL" -tA -v ON_ERROR_STOP=1 -c "select version from supabase_migrations.schema_migrations where name is null" | sort -u > /tmp/versoes_sem_nome.txt
           else
             echo "::warning::supabase_migrations.schema_migrations inacessivel; comparando apenas public.schema_migrations"
@@ -153,7 +173,10 @@ jobs:
             arquivos_dup=$(grep "^${v}_" /tmp/arquivos.txt | tr '\n' ' ')
             faltando=""
             for a in $arquivos_dup; do
-              grep -qx "${a%%.sql}" /tmp/aplicadas.txt || faltando="$faltando $a"
+              aplicar_nome="${a%%.sql}"
+              if ! grep -qx "$aplicar_nome" /tmp/aplicadas.txt && ! grep -qx "${aplicar_nome#*_}" /tmp/aplicadas_slugs.txt; then
+                faltando="$faltando $a"
+              fi
             done
             if [ -n "$faltando" ]; then
               echo "::error::version ${v} esta ocupada no historico e estes arquivos nao tem registro de aplicacao:$faltando"
@@ -167,6 +190,7 @@ jobs:
           : > /tmp/pendentes.txt
           while read -r nome; do
             grep -qx "$nome" /tmp/aplicadas.txt && continue
+            grep -qx "${nome#*_}" /tmp/aplicadas_slugs.txt && continue
             grep -qx "${nome%%_*}" /tmp/versoes_sem_nome.txt && continue
             echo "$nome" >> /tmp/pendentes.txt
           done < /tmp/nomes.txt
