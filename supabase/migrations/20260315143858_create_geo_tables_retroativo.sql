@@ -19,6 +19,16 @@
 -- authenticated e service_role com os mesmos grants de postgres) sao aplicados a toda
 -- tabela criada em public -- e exatamente o ACL que as tres tabelas tem em producao.
 --
+-- ORDEM NA SEQUENCIA: este arquivo nasceu com o carimbo 20261127140000, DEPOIS das
+-- migrations que consomem as tabelas -- a primeira delas e 20260315143859, que faz
+-- `DROP POLICY IF EXISTS ... ON public.geo_access_logs` sem guarda, e as que seguem
+-- fazem `ALTER POLICY` (que nem aceita IF EXISTS). Num banco vazio a sequencia abortava
+-- antes de chegar aqui, logo a reconstrucao nao existia. O carimbo foi corrigido para
+-- 20260315143858 -- um segundo antes da primeira migration que toca as tabelas -- e o
+-- SQL e exatamente o mesmo. A versao 20261127140000 continua no ledger porque foi
+-- executada em producao; como o conteudo e identico, nao ha divergencia entre o que
+-- rodou e o que esta versionado.
+--
 -- Reversao: so faz sentido em ambiente novo; em producao esta migration nao alterou nada.
 --   drop table if exists public.geo_access_logs;
 --   drop table if exists public.geo_restrictions;
