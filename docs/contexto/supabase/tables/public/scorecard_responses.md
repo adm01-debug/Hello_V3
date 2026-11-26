@@ -50,7 +50,7 @@
 |---|---|
 | comando | ALL |
 | tipo | PERMISSIVE |
-| roles | public |
+| roles | authenticated |
 | USING | `is_admin_or_supervisor()` |
 | WITH CHECK | `is_admin_or_supervisor()` |
 
@@ -60,7 +60,7 @@
 |---|---|
 | comando | SELECT |
 | tipo | PERMISSIVE |
-| roles | public |
+| roles | authenticated |
 | USING | `(EXISTS ( SELECT 1    FROM call_scorecards cs   WHERE ((cs.id = scorecard_responses.scorecard_id) AND ((cs.agent_name = get_user_agent_name()) OR is_admin_or_supervisor()))))` |
 | WITH CHECK |  |
 

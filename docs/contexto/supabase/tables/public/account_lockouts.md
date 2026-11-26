@@ -61,7 +61,7 @@
 |---|---|
 | comando | DELETE |
 | tipo | PERMISSIVE |
-| roles | public |
+| roles | authenticated |
 | USING | `false` |
 | WITH CHECK |  |
 
@@ -71,7 +71,7 @@
 |---|---|
 | comando | INSERT |
 | tipo | PERMISSIVE |
-| roles | public |
+| roles | authenticated |
 | USING |  |
 | WITH CHECK | `false` |
 
@@ -81,7 +81,7 @@
 |---|---|
 | comando | UPDATE |
 | tipo | PERMISSIVE |
-| roles | public |
+| roles | authenticated |
 | USING | `false` |
 | WITH CHECK |  |
 

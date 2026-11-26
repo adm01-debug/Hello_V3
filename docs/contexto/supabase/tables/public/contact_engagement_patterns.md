@@ -62,7 +62,7 @@
 |---|---|
 | comando | ALL |
 | tipo | PERMISSIVE |
-| roles | public |
+| roles | authenticated |
 | USING | `is_admin_user(( SELECT auth.uid() AS uid))` |
 | WITH CHECK | `is_admin_user(( SELECT auth.uid() AS uid))` |
 
@@ -72,7 +72,7 @@
 |---|---|
 | comando | SELECT |
 | tipo | PERMISSIVE |
-| roles | public |
+| roles | authenticated |
 | USING | `(( SELECT auth.uid() AS uid) IS NOT NULL)` |
 | WITH CHECK |  |
 

@@ -53,7 +53,7 @@
 |---|---|
 | comando | SELECT |
 | tipo | PERMISSIVE |
-| roles | public |
+| roles | authenticated |
 | USING | `((agent_name = get_user_agent_name()) OR is_admin_or_supervisor())` |
 | WITH CHECK |  |
 
@@ -63,7 +63,7 @@
 |---|---|
 | comando | INSERT |
 | tipo | PERMISSIVE |
-| roles | public |
+| roles | authenticated |
 | USING |  |
 | WITH CHECK | `is_admin_or_supervisor()` |
 
@@ -73,7 +73,7 @@
 |---|---|
 | comando | ALL |
 | tipo | PERMISSIVE |
-| roles | public |
+| roles | authenticated |
 | USING | `is_admin_or_supervisor()` |
 | WITH CHECK | `is_admin_or_supervisor()` |
 

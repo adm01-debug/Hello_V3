@@ -79,7 +79,7 @@
 |---|---|
 | comando | UPDATE |
 | tipo | PERMISSIVE |
-| roles | public |
+| roles | authenticated |
 | USING | `(is_admin_or_supervisor() OR (agent_name = get_user_agent_name()))` |
 | WITH CHECK |  |
 
@@ -89,7 +89,7 @@
 |---|---|
 | comando | SELECT |
 | tipo | PERMISSIVE |
-| roles | public |
+| roles | authenticated |
 | USING | `(is_admin_or_supervisor() OR (agent_name = get_user_agent_name()))` |
 | WITH CHECK |  |
 

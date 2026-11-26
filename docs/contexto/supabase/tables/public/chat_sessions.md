@@ -59,7 +59,7 @@
 |---|---|
 | comando | ALL |
 | tipo | PERMISSIVE |
-| roles | public |
+| roles | authenticated |
 | USING | `is_admin_or_supervisor()` |
 | WITH CHECK | `is_admin_or_supervisor()` |
 
@@ -69,7 +69,7 @@
 |---|---|
 | comando | SELECT |
 | tipo | PERMISSIVE |
-| roles | public |
+| roles | authenticated |
 | USING | `is_admin_or_supervisor()` |
 | WITH CHECK |  |
 
@@ -79,7 +79,7 @@
 |---|---|
 | comando | SELECT |
 | tipo | PERMISSIVE |
-| roles | public |
+| roles | authenticated |
 | USING | `((conversation_id IS NOT NULL) AND (EXISTS ( SELECT 1    FROM conversations c   WHERE ((c.id = chat_sessions.conversation_id) AND (c.assigned_agent_name = get_user_agent_name())))))` |
 | WITH CHECK |  |
 

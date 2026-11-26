@@ -70,7 +70,7 @@
 |---|---|
 | comando | DELETE |
 | tipo | PERMISSIVE |
-| roles | public |
+| roles | authenticated |
 | USING | `((owner_agent_name = get_user_agent_name()) OR is_admin_or_supervisor())` |
 | WITH CHECK |  |
 
@@ -80,7 +80,7 @@
 |---|---|
 | comando | UPDATE |
 | tipo | PERMISSIVE |
-| roles | public |
+| roles | authenticated |
 | USING | `((owner_agent_name = get_user_agent_name()) OR is_admin_or_supervisor())` |
 | WITH CHECK | `((owner_agent_name = get_user_agent_name()) OR is_admin_or_supervisor())` |
 

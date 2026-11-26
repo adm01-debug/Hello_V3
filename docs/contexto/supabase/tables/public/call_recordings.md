@@ -63,7 +63,7 @@
 |---|---|
 | comando | SELECT |
 | tipo | PERMISSIVE |
-| roles | public |
+| roles | authenticated |
 | USING | `(is_admin_or_supervisor() OR (EXISTS ( SELECT 1    FROM call_sessions cs   WHERE ((cs.id = call_recordings.call_session_id) AND (cs.agent_name = get_user_agent_name())))))` |
 | WITH CHECK |  |
 

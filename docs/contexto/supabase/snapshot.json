@@ -49272,7 +49272,7 @@
         "name": "Deny direct delete account_lockouts",
         "permissive": "PERMISSIVE",
         "roles": [
-          "public"
+          "authenticated"
         ],
         "schema": "public",
         "table": "account_lockouts",
@@ -49284,7 +49284,7 @@
         "name": "Deny direct insert account_lockouts",
         "permissive": "PERMISSIVE",
         "roles": [
-          "public"
+          "authenticated"
         ],
         "schema": "public",
         "table": "account_lockouts",
@@ -49296,7 +49296,7 @@
         "name": "Deny direct update account_lockouts",
         "permissive": "PERMISSIVE",
         "roles": [
-          "public"
+          "authenticated"
         ],
         "schema": "public",
         "table": "account_lockouts",
@@ -49644,7 +49644,7 @@
         "name": "Users can view agents",
         "permissive": "PERMISSIVE",
         "roles": [
-          "public"
+          "authenticated"
         ],
         "schema": "public",
         "table": "agents",
@@ -49692,7 +49692,7 @@
         "name": "Deny direct insert audit_logs",
         "permissive": "PERMISSIVE",
         "roles": [
-          "public"
+          "authenticated"
         ],
         "schema": "public",
         "table": "audit_logs",
@@ -49764,7 +49764,7 @@
         "name": "All authenticated view triggers",
         "permissive": "PERMISSIVE",
         "roles": [
-          "public"
+          "authenticated"
         ],
         "schema": "public",
         "table": "battle_card_triggers",
@@ -49788,7 +49788,7 @@
         "name": "All authenticated view battle cards",
         "permissive": "PERMISSIVE",
         "roles": [
-          "public"
+          "authenticated"
         ],
         "schema": "public",
         "table": "battle_cards",
@@ -49800,7 +49800,7 @@
         "name": "Admins can manage bitrix departments",
         "permissive": "PERMISSIVE",
         "roles": [
-          "public"
+          "authenticated"
         ],
         "schema": "public",
         "table": "bitrix_departments",
@@ -49812,7 +49812,7 @@
         "name": "Admins can manage bitrix users",
         "permissive": "PERMISSIVE",
         "roles": [
-          "public"
+          "authenticated"
         ],
         "schema": "public",
         "table": "bitrix_users",
@@ -49848,7 +49848,7 @@
         "name": "Admin/Supervisor insert bot conversations",
         "permissive": "PERMISSIVE",
         "roles": [
-          "public"
+          "authenticated"
         ],
         "schema": "public",
         "table": "bot_conversations",
@@ -49860,7 +49860,7 @@
         "name": "Admin/Supervisor view bot conversations",
         "permissive": "PERMISSIVE",
         "roles": [
-          "public"
+          "authenticated"
         ],
         "schema": "public",
         "table": "bot_conversations",
@@ -49872,7 +49872,7 @@
         "name": "Agents view bot convs from assigned",
         "permissive": "PERMISSIVE",
         "roles": [
-          "public"
+          "authenticated"
         ],
         "schema": "public",
         "table": "bot_conversations",
@@ -49884,7 +49884,7 @@
         "name": "Agents update own enrollments",
         "permissive": "PERMISSIVE",
         "roles": [
-          "public"
+          "authenticated"
         ],
         "schema": "public",
         "table": "cadence_enrollments",
@@ -49896,7 +49896,7 @@
         "name": "Agents view own enrollments",
         "permissive": "PERMISSIVE",
         "roles": [
-          "public"
+          "authenticated"
         ],
         "schema": "public",
         "table": "cadence_enrollments",
@@ -49908,7 +49908,7 @@
         "name": "Authenticated insert enrollments",
         "permissive": "PERMISSIVE",
         "roles": [
-          "public"
+          "authenticated"
         ],
         "schema": "public",
         "table": "cadence_enrollments",
@@ -49920,7 +49920,7 @@
         "name": "Supervisors manage enrollments",
         "permissive": "PERMISSIVE",
         "roles": [
-          "public"
+          "authenticated"
         ],
         "schema": "public",
         "table": "cadence_enrollments",
@@ -49932,7 +49932,7 @@
         "name": "All authenticated read cadence steps",
         "permissive": "PERMISSIVE",
         "roles": [
-          "public"
+          "authenticated"
         ],
         "schema": "public",
         "table": "cadence_steps",
@@ -49944,7 +49944,7 @@
         "name": "Supervisors manage cadence steps",
         "permissive": "PERMISSIVE",
         "roles": [
-          "public"
+          "authenticated"
         ],
         "schema": "public",
         "table": "cadence_steps",
@@ -49956,7 +49956,7 @@
         "name": "All authenticated read cadences",
         "permissive": "PERMISSIVE",
         "roles": [
-          "public"
+          "authenticated"
         ],
         "schema": "public",
         "table": "cadences",
@@ -49968,7 +49968,7 @@
         "name": "Supervisors manage cadences",
         "permissive": "PERMISSIVE",
         "roles": [
-          "public"
+          "authenticated"
         ],
         "schema": "public",
         "table": "cadences",
@@ -50076,7 +50076,7 @@
         "name": "Admins can view call control audit",
         "permissive": "PERMISSIVE",
         "roles": [
-          "public"
+          "authenticated"
         ],
         "schema": "public",
         "table": "call_control_audit_logs",
@@ -50100,7 +50100,7 @@
         "name": "Agents can view own audit logs",
         "permissive": "PERMISSIVE",
         "roles": [
-          "public"
+          "authenticated"
         ],
         "schema": "public",
         "table": "call_control_audit_logs",
@@ -50172,7 +50172,7 @@
         "name": "View own or as supervisor key moments",
         "permissive": "PERMISSIVE",
         "roles": [
-          "public"
+          "authenticated"
         ],
         "schema": "public",
         "table": "call_key_moments",
@@ -50244,7 +50244,7 @@
         "name": "Owners delete playlists",
         "permissive": "PERMISSIVE",
         "roles": [
-          "public"
+          "authenticated"
         ],
         "schema": "public",
         "table": "call_playlists",
@@ -50256,7 +50256,7 @@
         "name": "Owners update playlists",
         "permissive": "PERMISSIVE",
         "roles": [
-          "public"
+          "authenticated"
         ],
         "schema": "public",
         "table": "call_playlists",
@@ -50412,7 +50412,7 @@
         "name": "Strict isolation: Agents view own recordings",
         "permissive": "PERMISSIVE",
         "roles": [
-          "public"
+          "authenticated"
         ],
         "schema": "public",
         "table": "call_recordings",
@@ -50460,7 +50460,7 @@
         "name": "Agents view own scorecards",
         "permissive": "PERMISSIVE",
         "roles": [
-          "public"
+          "authenticated"
         ],
         "schema": "public",
         "table": "call_scorecards",
@@ -50472,7 +50472,7 @@
         "name": "Supervisors manage scorecards",
         "permissive": "PERMISSIVE",
         "roles": [
-          "public"
+          "authenticated"
         ],
         "schema": "public",
         "table": "call_scorecards",
@@ -50532,7 +50532,7 @@
         "name": "Strict isolation: Agents view own sessions",
         "permissive": "PERMISSIVE",
         "roles": [
-          "public"
+          "authenticated"
         ],
         "schema": "public",
         "table": "call_sessions",
@@ -50640,7 +50640,7 @@
         "name": "View transcripts own or supervisor",
         "permissive": "PERMISSIVE",
         "roles": [
-          "public"
+          "authenticated"
         ],
         "schema": "public",
         "table": "call_transcripts_searchable",
@@ -50664,7 +50664,7 @@
         "name": "Agent/supervisor/admin can view translations",
         "permissive": "PERMISSIVE",
         "roles": [
-          "public"
+          "authenticated"
         ],
         "schema": "public",
         "table": "call_translations",
@@ -50712,7 +50712,7 @@
         "name": "Admin/Supervisor manage chat sessions",
         "permissive": "PERMISSIVE",
         "roles": [
-          "public"
+          "authenticated"
         ],
         "schema": "public",
         "table": "chat_sessions",
@@ -50724,7 +50724,7 @@
         "name": "Admin/Supervisor view all chat sessions",
         "permissive": "PERMISSIVE",
         "roles": [
-          "public"
+          "authenticated"
         ],
         "schema": "public",
         "table": "chat_sessions",
@@ -50736,7 +50736,7 @@
         "name": "Agents view sessions from assigned convs",
         "permissive": "PERMISSIVE",
         "roles": [
-          "public"
+          "authenticated"
         ],
         "schema": "public",
         "table": "chat_sessions",
@@ -50928,7 +50928,7 @@
         "name": "Admin/supervisor delete coaching ts",
         "permissive": "PERMISSIVE",
         "roles": [
-          "public"
+          "authenticated"
         ],
         "schema": "public",
         "table": "coaching_timestamps",
@@ -50940,7 +50940,7 @@
         "name": "View coaching ts own or supervisor",
         "permissive": "PERMISSIVE",
         "roles": [
-          "public"
+          "authenticated"
         ],
         "schema": "public",
         "table": "coaching_timestamps",
@@ -50952,7 +50952,7 @@
         "name": "Admin/supervisor gerenciam regras de compliance",
         "permissive": "PERMISSIVE",
         "roles": [
-          "public"
+          "authenticated"
         ],
         "schema": "public",
         "table": "compliance_rules",
@@ -50964,7 +50964,7 @@
         "name": "Todos autenticados leem regras de compliance",
         "permissive": "PERMISSIVE",
         "roles": [
-          "public"
+          "authenticated"
         ],
         "schema": "public",
         "table": "compliance_rules",
@@ -51024,7 +51024,7 @@
         "name": "Admins delete consent",
         "permissive": "PERMISSIVE",
         "roles": [
-          "public"
+          "authenticated"
         ],
         "schema": "public",
         "table": "consent_records",
@@ -51036,7 +51036,7 @@
         "name": "Admins/supervisors insert consent",
         "permissive": "PERMISSIVE",
         "roles": [
-          "public"
+          "authenticated"
         ],
         "schema": "public",
         "table": "consent_records",
@@ -51048,7 +51048,7 @@
         "name": "Admins/supervisors update consent",
         "permissive": "PERMISSIVE",
         "roles": [
-          "public"
+          "authenticated"
         ],
         "schema": "public",
         "table": "consent_records",
@@ -51060,7 +51060,7 @@
         "name": "Admins/supervisors view consent",
         "permissive": "PERMISSIVE",
         "roles": [
-          "public"
+          "authenticated"
         ],
         "schema": "public",
         "table": "consent_records",
@@ -51120,7 +51120,7 @@
         "name": "Admins manage engagement patterns",
         "permissive": "PERMISSIVE",
         "roles": [
-          "public"
+          "authenticated"
         ],
         "schema": "public",
         "table": "contact_engagement_patterns",
@@ -51132,7 +51132,7 @@
         "name": "Authenticated read engagement patterns",
         "permissive": "PERMISSIVE",
         "roles": [
-          "public"
+          "authenticated"
         ],
         "schema": "public",
         "table": "contact_engagement_patterns",
@@ -51420,7 +51420,7 @@
         "name": "Admins e supervisores podem ler fila CRM",
         "permissive": "PERMISSIVE",
         "roles": [
-          "public"
+          "authenticated"
         ],
         "schema": "public",
         "table": "crm_sync_queue",
@@ -51432,7 +51432,7 @@
         "name": "Admin can manage cultural hints",
         "permissive": "PERMISSIVE",
         "roles": [
-          "public"
+          "authenticated"
         ],
         "schema": "public",
         "table": "cultural_hints",
@@ -51444,7 +51444,7 @@
         "name": "Authenticated can view cultural hints",
         "permissive": "PERMISSIVE",
         "roles": [
-          "public"
+          "authenticated"
         ],
         "schema": "public",
         "table": "cultural_hints",
@@ -51540,7 +51540,7 @@
         "name": "Admins/supervisors manage all deals",
         "permissive": "PERMISSIVE",
         "roles": [
-          "public"
+          "authenticated"
         ],
         "schema": "public",
         "table": "deals",
@@ -51552,7 +51552,7 @@
         "name": "Agents update own deals",
         "permissive": "PERMISSIVE",
         "roles": [
-          "public"
+          "authenticated"
         ],
         "schema": "public",
         "table": "deals",
@@ -51564,7 +51564,7 @@
         "name": "Agents view own deals",
         "permissive": "PERMISSIVE",
         "roles": [
-          "public"
+          "authenticated"
         ],
         "schema": "public",
         "table": "deals",
@@ -51576,7 +51576,7 @@
         "name": "Authenticated create deals",
         "permissive": "PERMISSIVE",
         "roles": [
-          "public"
+          "authenticated"
         ],
         "schema": "public",
         "table": "deals",
@@ -51708,7 +51708,7 @@
         "name": "Admin/Supervisor manage email tickets",
         "permissive": "PERMISSIVE",
         "roles": [
-          "public"
+          "authenticated"
         ],
         "schema": "public",
         "table": "email_tickets",
@@ -51720,7 +51720,7 @@
         "name": "Admin/Supervisor view all email tickets",
         "permissive": "PERMISSIVE",
         "roles": [
-          "public"
+          "authenticated"
         ],
         "schema": "public",
         "table": "email_tickets",
@@ -51732,7 +51732,7 @@
         "name": "Agents view tickets from assigned convs",
         "permissive": "PERMISSIVE",
         "roles": [
-          "public"
+          "authenticated"
         ],
         "schema": "public",
         "table": "email_tickets",
@@ -51816,7 +51816,7 @@
         "name": "Admins and supervisors view all fraud signals",
         "permissive": "PERMISSIVE",
         "roles": [
-          "public"
+          "authenticated"
         ],
         "schema": "public",
         "table": "fraud_signals",
@@ -51828,7 +51828,7 @@
         "name": "Admins manage fraud signals",
         "permissive": "PERMISSIVE",
         "roles": [
-          "public"
+          "authenticated"
         ],
         "schema": "public",
         "table": "fraud_signals",
@@ -51840,7 +51840,7 @@
         "name": "Agents view fraud signals on own calls",
         "permissive": "PERMISSIVE",
         "roles": [
-          "public"
+          "authenticated"
         ],
         "schema": "public",
         "table": "fraud_signals",
@@ -52152,7 +52152,7 @@
         "name": "Apenas admin e supervisor veem historico",
         "permissive": "PERMISSIVE",
         "roles": [
-          "public"
+          "authenticated"
         ],
         "schema": "public",
         "table": "kb_article_history",
@@ -52164,7 +52164,7 @@
         "name": "Admin/Supervisor view all kb views",
         "permissive": "PERMISSIVE",
         "roles": [
-          "public"
+          "authenticated"
         ],
         "schema": "public",
         "table": "kb_article_views",
@@ -52200,7 +52200,7 @@
         "name": "Admin/Supervisor manage articles",
         "permissive": "PERMISSIVE",
         "roles": [
-          "public"
+          "authenticated"
         ],
         "schema": "public",
         "table": "kb_articles",
@@ -52212,7 +52212,7 @@
         "name": "Admin/Supervisor view all articles",
         "permissive": "PERMISSIVE",
         "roles": [
-          "public"
+          "authenticated"
         ],
         "schema": "public",
         "table": "kb_articles",
@@ -52224,7 +52224,7 @@
         "name": "Authenticated read published articles",
         "permissive": "PERMISSIVE",
         "roles": [
-          "public"
+          "authenticated"
         ],
         "schema": "public",
         "table": "kb_articles",
@@ -52236,7 +52236,7 @@
         "name": "Admin/Supervisor manage kb_categories",
         "permissive": "PERMISSIVE",
         "roles": [
-          "public"
+          "authenticated"
         ],
         "schema": "public",
         "table": "kb_categories",
@@ -52248,7 +52248,7 @@
         "name": "Authenticated read kb_categories",
         "permissive": "PERMISSIVE",
         "roles": [
-          "public"
+          "authenticated"
         ],
         "schema": "public",
         "table": "kb_categories",
@@ -52356,7 +52356,7 @@
         "name": "Agente pode marcar sinal como usado",
         "permissive": "PERMISSIVE",
         "roles": [
-          "public"
+          "authenticated"
         ],
         "schema": "public",
         "table": "live_assist_signals",
@@ -52368,7 +52368,7 @@
         "name": "Agentes veem seus próprios sinais",
         "permissive": "PERMISSIVE",
         "roles": [
-          "public"
+          "authenticated"
         ],
         "schema": "public",
         "table": "live_assist_signals",
@@ -52392,7 +52392,7 @@
         "name": "View sentiment snapshots",
         "permissive": "PERMISSIVE",
         "roles": [
-          "public"
+          "authenticated"
         ],
         "schema": "public",
         "table": "live_sentiment_snapshots",
@@ -52452,7 +52452,7 @@
         "name": "Deny direct insert login_attempts public",
         "permissive": "PERMISSIVE",
         "roles": [
-          "public"
+          "authenticated"
         ],
         "schema": "public",
         "table": "login_attempts",
@@ -52680,7 +52680,7 @@
         "name": "Admin/supervisor gerenciam biblioteca de objeções",
         "permissive": "PERMISSIVE",
         "roles": [
-          "public"
+          "authenticated"
         ],
         "schema": "public",
         "table": "objection_library",
@@ -52692,7 +52692,7 @@
         "name": "Todos autenticados leem biblioteca de objeções",
         "permissive": "PERMISSIVE",
         "roles": [
-          "public"
+          "authenticated"
         ],
         "schema": "public",
         "table": "objection_library",
@@ -52860,7 +52860,7 @@
         "name": "Apenas admin pode ver métricas",
         "permissive": "PERMISSIVE",
         "roles": [
-          "public"
+          "authenticated"
         ],
         "schema": "public",
         "table": "performance_metrics",
@@ -52872,7 +52872,7 @@
         "name": "Qualquer autenticado pode inserir métricas",
         "permissive": "PERMISSIVE",
         "roles": [
-          "public"
+          "authenticated"
         ],
         "schema": "public",
         "table": "performance_metrics",
@@ -52908,7 +52908,7 @@
         "name": "Manage items of own playlists",
         "permissive": "PERMISSIVE",
         "roles": [
-          "public"
+          "authenticated"
         ],
         "schema": "public",
         "table": "playlist_items",
@@ -52920,7 +52920,7 @@
         "name": "View items of accessible playlists",
         "permissive": "PERMISSIVE",
         "roles": [
-          "public"
+          "authenticated"
         ],
         "schema": "public",
         "table": "playlist_items",
@@ -53136,7 +53136,7 @@
         "name": "Admins view redaction log",
         "permissive": "PERMISSIVE",
         "roles": [
-          "public"
+          "authenticated"
         ],
         "schema": "public",
         "table": "redaction_log",
@@ -53268,7 +53268,7 @@
         "name": "Admin manage routing rules",
         "permissive": "PERMISSIVE",
         "roles": [
-          "public"
+          "authenticated"
         ],
         "schema": "public",
         "table": "routing_rules",
@@ -53280,7 +53280,7 @@
         "name": "Admin/Supervisor view routing rules",
         "permissive": "PERMISSIVE",
         "roles": [
-          "public"
+          "authenticated"
         ],
         "schema": "public",
         "table": "routing_rules",
@@ -53292,7 +53292,7 @@
         "name": "Users can delete own filters",
         "permissive": "PERMISSIVE",
         "roles": [
-          "public"
+          "authenticated"
         ],
         "schema": "public",
         "table": "saved_filters",
@@ -53304,7 +53304,7 @@
         "name": "Users can insert own filters",
         "permissive": "PERMISSIVE",
         "roles": [
-          "public"
+          "authenticated"
         ],
         "schema": "public",
         "table": "saved_filters",
@@ -53316,7 +53316,7 @@
         "name": "Users can update own filters",
         "permissive": "PERMISSIVE",
         "roles": [
-          "public"
+          "authenticated"
         ],
         "schema": "public",
         "table": "saved_filters",
@@ -53328,7 +53328,7 @@
         "name": "Users can view own filters",
         "permissive": "PERMISSIVE",
         "roles": [
-          "public"
+          "authenticated"
         ],
         "schema": "public",
         "table": "saved_filters",
@@ -53388,7 +53388,7 @@
         "name": "Admins manage criteria",
         "permissive": "PERMISSIVE",
         "roles": [
-          "public"
+          "authenticated"
         ],
         "schema": "public",
         "table": "scorecard_criteria",
@@ -53400,7 +53400,7 @@
         "name": "All authenticated read criteria",
         "permissive": "PERMISSIVE",
         "roles": [
-          "public"
+          "authenticated"
         ],
         "schema": "public",
         "table": "scorecard_criteria",
@@ -53412,7 +53412,7 @@
         "name": "Supervisors manage responses",
         "permissive": "PERMISSIVE",
         "roles": [
-          "public"
+          "authenticated"
         ],
         "schema": "public",
         "table": "scorecard_responses",
@@ -53424,7 +53424,7 @@
         "name": "View responses for accessible scorecards",
         "permissive": "PERMISSIVE",
         "roles": [
-          "public"
+          "authenticated"
         ],
         "schema": "public",
         "table": "scorecard_responses",
@@ -53436,7 +53436,7 @@
         "name": "Admins manage templates",
         "permissive": "PERMISSIVE",
         "roles": [
-          "public"
+          "authenticated"
         ],
         "schema": "public",
         "table": "scorecard_templates",
@@ -53448,7 +53448,7 @@
         "name": "All authenticated read templates",
         "permissive": "PERMISSIVE",
         "roles": [
-          "public"
+          "authenticated"
         ],
         "schema": "public",
         "table": "scorecard_templates",
@@ -53568,7 +53568,7 @@
         "name": "Admin manage sla policies",
         "permissive": "PERMISSIVE",
         "roles": [
-          "public"
+          "authenticated"
         ],
         "schema": "public",
         "table": "sla_policies",
@@ -53580,7 +53580,7 @@
         "name": "Authenticated view sla policies",
         "permissive": "PERMISSIVE",
         "roles": [
-          "public"
+          "authenticated"
         ],
         "schema": "public",
         "table": "sla_policies",
@@ -53736,7 +53736,7 @@
         "name": "Admins can manage system settings",
         "permissive": "PERMISSIVE",
         "roles": [
-          "public"
+          "authenticated"
         ],
         "schema": "public",
         "table": "system_settings",
@@ -53748,7 +53748,7 @@
         "name": "Leitura de configurações para autenticados",
         "permissive": "PERMISSIVE",
         "roles": [
-          "public"
+          "authenticated"
         ],
         "schema": "public",
         "table": "system_settings",
@@ -53892,7 +53892,7 @@
         "name": "Agents view own matches",
         "permissive": "PERMISSIVE",
         "roles": [
-          "public"
+          "authenticated"
         ],
         "schema": "public",
         "table": "tracker_matches",
@@ -53904,7 +53904,7 @@
         "name": "Supervisors insert matches",
         "permissive": "PERMISSIVE",
         "roles": [
-          "public"
+          "authenticated"
         ],
         "schema": "public",
         "table": "tracker_matches",
@@ -53916,7 +53916,7 @@
         "name": "Supervisors manage matches",
         "permissive": "PERMISSIVE",
         "roles": [
-          "public"
+          "authenticated"
         ],
         "schema": "public",
         "table": "tracker_matches",
@@ -53928,7 +53928,7 @@
         "name": "All authenticated read trackers",
         "permissive": "PERMISSIVE",
         "roles": [
-          "public"
+          "authenticated"
         ],
         "schema": "public",
         "table": "trackers",
@@ -53940,7 +53940,7 @@
         "name": "Supervisors manage trackers",
         "permissive": "PERMISSIVE",
         "roles": [
-          "public"
+          "authenticated"
         ],
         "schema": "public",
         "table": "trackers",
@@ -54336,7 +54336,7 @@
         "name": "Admins view all voice prints",
         "permissive": "PERMISSIVE",
         "roles": [
-          "public"
+          "authenticated"
         ],
         "schema": "public",
         "table": "voice_prints",
@@ -54348,7 +54348,7 @@
         "name": "Users manage their own voice prints",
         "permissive": "PERMISSIVE",
         "roles": [
-          "public"
+          "authenticated"
         ],
         "schema": "public",
         "table": "voice_prints",
@@ -54396,7 +54396,7 @@
         "name": "Admins can manage voip settings",
         "permissive": "PERMISSIVE",
         "roles": [
-          "public"
+          "authenticated"
         ],
         "schema": "public",
         "table": "voip_monitoring_settings",
@@ -54408,7 +54408,7 @@
         "name": "All authenticated can view voip settings",
         "permissive": "PERMISSIVE",
         "roles": [
-          "public"
+          "authenticated"
         ],
         "schema": "public",
         "table": "voip_monitoring_settings",
@@ -54420,7 +54420,7 @@
         "name": "Admins delete voip alerts",
         "permissive": "PERMISSIVE",
         "roles": [
-          "public"
+          "authenticated"
         ],
         "schema": "public",
         "table": "voip_quality_alerts",
@@ -54432,7 +54432,7 @@
         "name": "Users insert own voip alerts",
         "permissive": "PERMISSIVE",
         "roles": [
-          "public"
+          "authenticated"
         ],
         "schema": "public",
         "table": "voip_quality_alerts",
@@ -54444,7 +54444,7 @@
         "name": "Users update own voip alerts",
         "permissive": "PERMISSIVE",
         "roles": [
-          "public"
+          "authenticated"
         ],
         "schema": "public",
         "table": "voip_quality_alerts",
@@ -54456,7 +54456,7 @@
         "name": "Users view own voip alerts",
         "permissive": "PERMISSIVE",
         "roles": [
-          "public"
+          "authenticated"
         ],
         "schema": "public",
         "table": "voip_quality_alerts",
@@ -54504,7 +54504,7 @@
         "name": "Admins read trunk health checks",
         "permissive": "PERMISSIVE",
         "roles": [
-          "public"
+          "authenticated"
         ],
         "schema": "public",
         "table": "voip_trunk_health_checks",
@@ -54516,7 +54516,7 @@
         "name": "Service role inserts health checks",
         "permissive": "PERMISSIVE",
         "roles": [
-          "public"
+          "authenticated"
         ],
         "schema": "public",
         "table": "voip_trunk_health_checks",

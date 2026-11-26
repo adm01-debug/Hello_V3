@@ -68,7 +68,7 @@
 |---|---|
 | comando | SELECT |
 | tipo | PERMISSIVE |
-| roles | public |
+| roles | authenticated |
 | USING | `(((( SELECT auth.uid() AS uid) IS NOT NULL) AND (is_active = true)) OR is_admin_or_supervisor())` |
 | WITH CHECK |  |
 

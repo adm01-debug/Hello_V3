@@ -76,7 +76,7 @@
 |---|---|
 | comando | ALL |
 | tipo | PERMISSIVE |
-| roles | public |
+| roles | authenticated |
 | USING | `is_admin_or_supervisor()` |
 | WITH CHECK | `is_admin_or_supervisor()` |
 
@@ -86,7 +86,7 @@
 |---|---|
 | comando | UPDATE |
 | tipo | PERMISSIVE |
-| roles | public |
+| roles | authenticated |
 | USING | `(owner_agent_name = get_user_agent_name())` |
 | WITH CHECK | `(owner_agent_name = get_user_agent_name())` |
 
@@ -96,7 +96,7 @@
 |---|---|
 | comando | SELECT |
 | tipo | PERMISSIVE |
-| roles | public |
+| roles | authenticated |
 | USING | `((owner_agent_name = get_user_agent_name()) OR is_admin_or_supervisor())` |
 | WITH CHECK |  |
 
@@ -106,7 +106,7 @@
 |---|---|
 | comando | INSERT |
 | tipo | PERMISSIVE |
-| roles | public |
+| roles | authenticated |
 | USING |  |
 | WITH CHECK | `((( SELECT auth.uid() AS uid) IS NOT NULL) AND (is_admin_or_supervisor() OR (owner_agent_name IS NULL) OR (owner_agent_name = get_user_agent_name())))` |
 

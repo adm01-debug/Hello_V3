@@ -55,7 +55,7 @@
 |---|---|
 | comando | SELECT |
 | tipo | PERMISSIVE |
-| roles | public |
+| roles | authenticated |
 | USING | `is_admin_user(( SELECT auth.uid() AS uid))` |
 | WITH CHECK |  |
 
@@ -65,7 +65,7 @@
 |---|---|
 | comando | ALL |
 | tipo | PERMISSIVE |
-| roles | public |
+| roles | authenticated |
 | USING | `(( SELECT auth.uid() AS uid) = user_id)` |
 | WITH CHECK | `(( SELECT auth.uid() AS uid) = user_id)` |
 

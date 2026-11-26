@@ -54,7 +54,7 @@
 |---|---|
 | comando | ALL |
 | tipo | PERMISSIVE |
-| roles | public |
+| roles | authenticated |
 | USING | `(EXISTS ( SELECT 1    FROM call_playlists p   WHERE ((p.id = playlist_items.playlist_id) AND ((p.owner_agent_name = get_user_agent_name()) OR is_admin_or_supervisor()))))` |
 | WITH CHECK | `(EXISTS ( SELECT 1    FROM call_playlists p   WHERE ((p.id = playlist_items.playlist_id) AND ((p.owner_agent_name = get_user_agent_name()) OR is_admin_or_supervisor()))))` |
 
@@ -64,7 +64,7 @@
 |---|---|
 | comando | SELECT |
 | tipo | PERMISSIVE |
-| roles | public |
+| roles | authenticated |
 | USING | `(EXISTS ( SELECT 1    FROM call_playlists p   WHERE ((p.id = playlist_items.playlist_id) AND (is_admin_or_supervisor() OR (p.owner_agent_name = get_user_agent_name()) OR (p.is_shared = true)))))` |
 | WITH CHECK |  |
 
