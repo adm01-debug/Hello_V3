@@ -1129,18 +1129,27 @@ A conta Vercel conectada a esta sessão **não é a conta que hospeda o produto*
 
 **Correção.** `useSurveyDefinitions` (lista as ativas de `surveys`, cria e desativa, respeitando a RLS "Admin/supervisor manage surveys") e o painel passa a enviar o **id selecionado**, com estado vazio explícito e o botão de envio bloqueado sem pesquisa. Prova negativa: restaurado o `survey_id: 'nps'`, `SurveysPanel.test.tsx` falha 1/5; com o fix, 5/5 verdes.
 
+### A-140 — O segredo HMAC do webhook de entrada só existia no banco: nenhuma tela cadastrava, e a edge recusa tudo com 401 sem ele
+**Severidade: Alta · Confiança: CONFIRMADO · Marca: LIDO (código) + EXECUTADO (teste)**
+
+`supabase/functions/_shared/hmac.ts:24-34` lê `public.webhook_secrets` por `provider` e devolve `false` quando não há linha; `webhook-handler/index.ts:15` (provider `generic-provider`, header `x-webhook-signature`) e `analyze-call/index.ts:33` (provider `analyze-call-webhook`, header `x-signature`) usam esse retorno como porta de entrada. A tabela tem RLS com policy de admin (`supabase/migrations/20261122240000_policies_read_user_roles.sql:20-22`), mas **nenhum arquivo de `src/` citava `webhook_secrets`** (`grep -rn webhook_secrets src` → só `src/integrations/supabase/types.ts`): não havia como cadastrar, rotacionar ou remover o segredo pela interface. Sem linha, toda chamada assinada é recusada com 401 — o webhook de entrada era inoperável fora do SQL manual.
+
+**Impacto.** Nenhuma integração de entrada (webhook genérico, gatilho de análise de chamada) podia ser ligada sem acesso direto ao banco de produção, e o painel `/admin/webhook-health` mostrava as tentativas falhando sem oferecer a correção da causa.
+
+**Correção.** `useWebhookSecrets` (lista, upsert por `provider` e exclusão, com invalidação de cache) + `WebhookSecretsCard` na página `/admin/webhook-health` (rota com `roles: ["admin"]`, RLS já existente): mascara por padrão, revela e copia sob demanda, gera 32 bytes hex por `crypto.getRandomValues`, mostra qual edge e qual header consomem o provedor e exige confirmação para excluir. Gate de produção `supabase/tests/webhook_secrets_rls_test.sql` (RLS habilitada, todas as policies condicionadas a `is_admin_or_supervisor()`, `anon`/`authenticated` sem leitura nem escrita, `service_role` lendo). Prova negativa: removendo a invalidação de cache o teste de upsert falha; devolvendo o segredo completo em `maskSecret`, o teste de mascaramento falha.
+
 ## Contagem
 
 | Severidade | Quantidade |
 |---|---:|
 | **Crítica** | **9** (A-001, A-002, A-012, A-019, A-023, A-024, A-025, A-042, A-057) |
-| **Alta** | **55** |
-| **Média** | **55** |
-| **Baixa** | **18** |
-| **Total** | **137** + 1 resultado positivo registrado (A-137) |
+| **Alta** | **56** |
+| **Média** | **55** (54 + A-115, "Média (Alta se executado)") |
+| **Baixa** | **18** (17 + A-069, "Baixa (exposição) / Média (fragilidade)") |
+| **Total** | **139 IDs** = 138 defeitos + 1 resultado positivo (A-137) |
 
-A-134 a A-137 vieram da verificação em navegador feita depois do fechamento da primeira versão (**CR-20**); A-138 veio da tentativa de ler os cabeçalhos reais pela Vercel, no mesmo dia; A-139 veio da recuperação do trabalho de outro agente na aba **Pesquisas** de `/call-library`.
+A-134 a A-137 vieram da verificação em navegador feita depois do fechamento da primeira versão (**CR-20**); A-138 veio da tentativa de ler os cabeçalhos reais pela Vercel, no mesmo dia; A-139 veio da recuperação do trabalho de outro agente na aba **Pesquisas** de `/call-library`; A-140 veio da varredura de tabelas sem nenhuma tela (`webhook_secrets`).
 
-Contagem conferida mecanicamente: `grep -c "^### A-" 03-ACHADOS.md` → 133; `grep -oE "\*\*Severidade: [A-Za-zéí]+" | sort | uniq -c` → 9 / 55 / 51 / 18. IDs de A-001 a A-133 sem lacuna.
+Contagem conferida mecanicamente em 2026-11-26: `grep -c "^### A-" 03-ACHADOS.md` → **139**; `grep -oE "\*\*Severidade: [^·*]+" | sort | uniq -c` → **9 Crítica / 56 Alta / 54 Média / 17 Baixa**, mais 1 linha "— (não é defeito)" (A-137) e 2 linhas com severidade dupla. IDs de A-001 a A-140 sem lacuna.
 
 Por confiança: **115 CONFIRMADOS**, **18 com HIPÓTESE** declarada (em 11 deles a hipótese é só sobre o runtime do banco ou sobre a configuração de plataforma, não sobre o código).
