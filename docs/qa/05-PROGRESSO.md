@@ -6,11 +6,11 @@
 
 | Marca | Significado |
 |---|---|
-| `[ ]` | **144** |
+| `[ ]` | **132** |
 | `[>]` | em andamento (branch criada) |
 | `[P]` | 1 |
 | `[~]` | 1 |
-| `[x]` | 153 |
+| `[x]` | 166 |
 | `[-]` | 0 |
 
 **`[x]` exige evidência.** Escreva ao lado, entre parênteses, o comando ou a consulta que você rodou e o resultado. Sem isso, a marca é `[~]`.
@@ -24,11 +24,11 @@
 | | Quantidade |
 |---|---:|
 | Total de etapas | 300 |
-| `[x]` concluídas | 154 |
+| `[x]` concluídas | 166 |
 | `[P]` aguardando o dono | 1 |
 | `[~]` parciais | 1 |
 | `[-]` descartadas | 0 |
-| `[ ]` não iniciadas | **144** |
+| `[ ]` não iniciadas | **132** |
 
 *Atualize esta tabela ao fim de cada onda.*
 
@@ -171,7 +171,7 @@
 - [ ] **124** — Validar a transição de status de conversa — onda 3 — Média — Hooks
 - [ ] **125** — Validar a transição de status de scorecard — onda 3 — Média — Hooks + Banco 🔒
 - [ ] **126** — Somar os pontos da gamificação no banco, não no cliente — onda 3 — Média — Hooks + Banco 🔒
-- [ ] **127** — Parar de pendurar o alerta de meta numa chamada aleatória — onda 3 — Média — Hooks + Banco 🔒
+- [x] **127** — Parar de pendurar o alerta de meta numa chamada aleatória — onda 3 — Média — Hooks + Banco 🔒 (achado A-056, opção **(b)** do plano — `notifications`, **sem DDL** e portanto sem merge bloqueado: `checkGoalAchievements` em `src/hooks/useAgentRanking.ts` fazia `select id from call_sessions … limit(1).maybeSingle()` **sem `order`** só para satisfazer a FK `call_alerts.call_session_id` e inseria lá o alerta "atingiu todas as metas"; sem nenhuma chamada do agente o alerta era descartado em silêncio. Agora resolve `supabase.auth.getUser()` e grava em `public.notifications` com `user_id` do próprio usuário logado, `title`/`message` com os números, `type 'success'`, `category 'gamification'`, `severity 'info'`, `source_type 'agent_ranking'`, `source_id` = nome do agente, `metadata` (chamadas/satisfação/performance) e `action_url '/ranking'`, **verificando o `error`**: falha → `logger.error('Error creating goals notification:', …)` + `toast.error('Meta atingida, mas a notificação não foi registrada')`; sem usuário resolvido → `logger.error('Error resolving user for goals notification:', …)` em vez de descarte silencioso. Nenhuma tela nova é necessária: o sino já lê `notifications` por `user_id` + `is_archived` (`src/components/notification-center/useNotificationCenter.ts:15-31` e `src/hooks/useNotifications.ts:63-70`). Gate novo `supabase/tests/goals_achieved_notification_rls_test.sql`, rodado contra produção pelo `migrations.yml modo=verificar` (run `45874597794`, **success 5/5**): (1) `notifications` com RLS ligada, `user_id` NOT NULL e policy `Users can insert own notifications` com `(( SELECT auth.uid()) = user_id)`; (2) o próprio usuário grava a notificação no formato do hook (id `8f9f5e41-…` devolvido); (3) insert em nome de outro usuário **recusado pelo banco** (`WITH CHECK`); (4) o dono lê a meta no sino e o outro usuário vê 0; (5) `0` alertas `goals_achieved` em `call_alerts` na última hora — deixou de poluir alerta de chamada. Cliente: `src/hooks/__tests__/useAgentRanking.coverage.test.tsx` **15 passed** (3 novos: grava `notifications` para o usuário logado e **não** toca `call_alerts`/`call_sessions`; falha da gravação avisa em vez de silenciar; sem usuário logado não grava e registra o motivo); `tsc --noEmit` rc=0; `eslint` rc=0 nos 2 arquivos)
 - [ ] **128** — Chaves estrangeiras nas quatro colunas que apontam para uma tabela só — onda 3 — Baixa — Banco 🔒
 - [ ] **129** — Documentar o contrato dos ponteiros polimórficos — onda 3 — Baixa — Banco
 - [ ] **130** — Escrever o `CREATE TABLE` das três tabelas `geo_*` — onda 3 — Alta — Banco 🔒
