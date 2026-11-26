@@ -8,6 +8,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Input } from '@/components/ui/input';
 
 import { useVoicePrints, useFraudSignals, useRedactCall, type VerifyResult } from '@/hooks/useVoiceBiometrics';
+import { RedactionLogCard } from '@/components/voice-security/RedactionLogCard';
 import { usePageTitle } from '@/hooks/usePageTitle';
 import { safeFormatDatePtBR } from "@/lib/safe-date";
 
@@ -212,6 +213,7 @@ export default function VoiceSecurity() {
               </div>
             )}
           </Card>
+          <RedactionLogCard />
         </TabsContent>
       </Tabs>
     </div>

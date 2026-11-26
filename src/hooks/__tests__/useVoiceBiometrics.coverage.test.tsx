@@ -180,6 +180,18 @@ describe('useRedactCall', () => {
     await waitFor(() => expect(toast.success).toHaveBeenCalled());
   });
 
+  it('invalida o historico de redacoes depois de redatar', async () => {
+    invokeMock.mockResolvedValue({ data: { matches: 1, patterns: {}, segments_count: 1 }, error: null });
+    const qc = new QueryClient({ defaultOptions: { queries: { retry: false } } });
+    const spy = vi.spyOn(qc, 'invalidateQueries');
+    const localWrapper = ({ children }: { children: React.ReactNode }) => (
+      <QueryClientProvider client={qc}>{children}</QueryClientProvider>
+    );
+    const { result } = renderHook(() => useRedactCall(), { wrapper: localWrapper });
+    await act(async () => { await result.current.mutateAsync('cs1'); });
+    expect(spy).toHaveBeenCalledWith({ queryKey: ['redaction-log'] });
+  });
+
   it('redact error path triggers toast.error', async () => {
     invokeMock.mockResolvedValue({ data: null, error: { message: 'fail' } });
     const { result } = renderHook(() => useRedactCall(), { wrapper });

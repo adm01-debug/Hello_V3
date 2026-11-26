@@ -1136,20 +1136,29 @@ A conta Vercel conectada a esta sessão **não é a conta que hospeda o produto*
 
 **Impacto.** Nenhuma integração de entrada (webhook genérico, gatilho de análise de chamada) podia ser ligada sem acesso direto ao banco de produção, e o painel `/admin/webhook-health` mostrava as tentativas falhando sem oferecer a correção da causa.
 
-**Correção.** `useWebhookSecrets` (lista, upsert por `provider` e exclusão, com invalidação de cache) + `WebhookSecretsCard` na página `/admin/webhook-health` (rota com `roles: ["admin"]`, RLS já existente): mascara por padrão, revela e copia sob demanda, gera 32 bytes hex por `crypto.getRandomValues`, mostra qual edge e qual header consomem o provedor e exige confirmação para excluir. Gate de produção `supabase/tests/webhook_secrets_rls_test.sql` (RLS habilitada, todas as policies condicionadas a `is_admin_or_supervisor()`, `anon`/`authenticated` sem leitura nem escrita, `service_role` lendo). Prova negativa: removendo a invalidação de cache o teste de upsert falha; devolvendo o segredo completo em `maskSecret`, o teste de mascaramento falha.
+**Correção.** `useWebhookSecrets` (lista, upsert por `provider` e exclusão, com invalidação de cache) + `WebhookSecretsCard` na página `/admin/webhook-health` (rota com `roles: ["admin"]`, RLS já existente): mascara por padrão, revela e copia sob demanda, gera 32 bytes hex por `crypto.getRandomValues`, mostra qual edge e qual header consomem o provedor e exige confirmação para excluir. Gate de produção `supabase/tests/webhook_secrets_rls_test.sql` (RLS habilitada, todas as policies condicionadas a `is_admin_or_supervisor()`, `anon`/`authenticated` sem leitura nem escrita, `service_role` lendo). Prova negativa: removendo a invalidação de cache o teste de upsert falha; devolvendo o segredo completo em `maskSecret`, o teste de mascaramento falha. **Executado em produção** por `migrations.yml` (`modo=verificar`, run 45803806223, sucesso) — a primeira tentativa (run 45803251673) ficou vermelha e revelou erro de sintaxe no próprio gate (`foreach_role:` em vez de `<<foreach_role>>`), corrigido em `98a582c3`.
+
+### A-141 — O log de auditoria da redação de dados sensíveis era escrito pela edge e não tinha nenhum leitor
+**Severidade: Alta · Confiança: CONFIRMADO · Marca: LIDO (código) + EXECUTADO (teste)**
+
+A aba **Redação PCI** de `/voice-security` dispara `redact-sensitive-audio` e a própria tela anuncia que gera "um log de auditoria com os timestamps dos segmentos sensíveis" (`src/pages/VoiceSecurity.tsx:184-186`). A edge grava esse log em `supabase/functions/redact-sensitive-audio/index.ts:104-110` (`call_session_id`, `pattern_type`, `match_count`, `segments`, `status`) e `public.redaction_log` tem RLS com policy de leitura só para admin (`supabase/migrations/20260417113024_b37afec8-ce2c-47c3-9009-50ef0e86b65c.sql:92-96`, via `is_admin_user()`). Mas **nenhum arquivo de `src/` citava `redaction_log`** (`grep -rn redaction_log src` → só `src/integrations/supabase/types.ts`): não havia histórico em lugar nenhum.
+
+**Impacto.** Auditoria de LGPD/PCI impossível pela interface: não dava para responder quais gravações tiveram CPF/cartão mascarados, quantas ocorrências cada uma teve, quando isso aconteceu, nem quais execuções terminaram sem correspondência (`status='no_matches'`). Os `segments`, com os timestamps dos trechos sensíveis, eram gravados e nunca lidos.
+
+**Correção.** `useRedactionLog` (últimas 50 execuções de `redaction_log`, `created_at desc`) + o card "Histórico de redações" dentro da própria aba **Redação PCI**: quando, sessão, padrões detectados (`cpf,card` vira badges, `none` vira "nenhum padrão"), número de ocorrências, status colorido (`completed` verde, `no_matches` neutro, desconhecido em vermelho sem esconder a linha), total de ocorrências no cabeçalho, detalhe dos segmentos sob demanda e nova tentativa em erro de leitura. Integração fechada nos dois sentidos: `useRedactCall` invalida `REDACTION_LOG_QUERY_KEY` no `onSuccess` (`src/hooks/useVoiceBiometrics.ts`), então a execução recém-disparada aparece no histórico sem recarregar a página. Gate de produção `supabase/tests/redaction_log_rls_test.sql` (RLS habilitada, toda policy de leitura passando por `is_admin_user()`, **nenhuma** policy de escrita — um log de auditoria não pode ser editável pelo cliente —, `anon`/`authenticated` sem leitura, `service_role` lendo porque é quem grava, admin real lendo). Prova negativa: removendo a invalidação de cache em `useRedactCall`, o teste que exige o histórico atualizado após a redação falha.
 
 ## Contagem
 
 | Severidade | Quantidade |
 |---|---:|
 | **Crítica** | **9** (A-001, A-002, A-012, A-019, A-023, A-024, A-025, A-042, A-057) |
-| **Alta** | **56** |
+| **Alta** | **57** |
 | **Média** | **55** (54 + A-115, "Média (Alta se executado)") |
 | **Baixa** | **18** (17 + A-069, "Baixa (exposição) / Média (fragilidade)") |
-| **Total** | **139 IDs** = 138 defeitos + 1 resultado positivo (A-137) |
+| **Total** | **140 IDs** = 139 defeitos + 1 resultado positivo (A-137) |
 
-A-134 a A-137 vieram da verificação em navegador feita depois do fechamento da primeira versão (**CR-20**); A-138 veio da tentativa de ler os cabeçalhos reais pela Vercel, no mesmo dia; A-139 veio da recuperação do trabalho de outro agente na aba **Pesquisas** de `/call-library`; A-140 veio da varredura de tabelas sem nenhuma tela (`webhook_secrets`).
+A-134 a A-137 vieram da verificação em navegador feita depois do fechamento da primeira versão (**CR-20**); A-138 veio da tentativa de ler os cabeçalhos reais pela Vercel, no mesmo dia; A-139 veio da recuperação do trabalho de outro agente na aba **Pesquisas** de `/call-library`; A-140 e A-141 vieram da varredura de tabelas sem nenhuma tela — respectivamente `webhook_secrets` (segredos HMAC de entrada) e `redaction_log` (auditoria de redação).
 
-Contagem conferida mecanicamente em 2026-11-26: `grep -c "^### A-" 03-ACHADOS.md` → **139**; `grep -oE "\*\*Severidade: [^·*]+" | sort | uniq -c` → **9 Crítica / 56 Alta / 54 Média / 17 Baixa**, mais 1 linha "— (não é defeito)" (A-137) e 2 linhas com severidade dupla. IDs de A-001 a A-140 sem lacuna.
+Contagem conferida mecanicamente em 2026-11-26: `grep -c "^### A-" 03-ACHADOS.md` → **140**; `grep -oE "\*\*Severidade: [^·*]+" | sort | uniq -c` → **9 Crítica / 57 Alta / 54 Média / 17 Baixa**, mais 1 linha "— (não é defeito)" (A-137) e 2 linhas com severidade dupla (A-069 e A-115, nomeadas na tabela). IDs de A-001 a A-141 sem lacuna.
 
 Por confiança: **115 CONFIRMADOS**, **18 com HIPÓTESE** declarada (em 11 deles a hipótese é só sobre o runtime do banco ou sobre a configuração de plataforma, não sobre o código).
