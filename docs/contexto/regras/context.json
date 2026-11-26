@@ -1,15 +1,15 @@
 {
  "meta": {
-  "sha": "ab5b8102226e9abe130cf05c1904fa8dd50af7ec",
+  "sha": "ff0f86e739d104603f77c6dc30ab630bac17e214",
   "branch": "main",
   "remote": "https://github.com/adm01-debug/Hello_V3",
-  "generated_at": "2026-11-26 00:03 UTC",
-  "files_total": 1812,
-  "code_files": 1609,
-  "code_lines": 196403
+  "generated_at": "2026-11-26 00:13 UTC",
+  "files_total": 1815,
+  "code_files": 1611,
+  "code_lines": 196513
  },
  "version": "1.3.2",
- "facts_hash": "ce2deb98a55c8923",
+ "facts_hash": "93202371a96eb9ac",
  "stack": {
   "frameworks": [
    "React + Vite",
@@ -143,6 +143,13 @@
     ]
    },
    {
+    "file": ".github/workflows/deploy-edge-functions.yml",
+    "name": "Deploy edge function",
+    "triggers": [
+     "workflow_dispatch"
+    ]
+   },
+   {
     "file": ".github/workflows/inventario-estado-semanal.yml",
     "name": "Inventário do estado real (semanal)",
     "triggers": [
@@ -161,9 +168,9 @@
   ],
   "package_manager": "bun",
   "languages": {
-   ".ts": 661,
+   ".ts": 662,
    ".tsx": 658,
-   ".sql": 254,
+   ".sql": 255,
    ".mjs": 29,
    ".py": 5,
    ".js": 2
@@ -175,7 +182,8 @@
     "cleanup-recordings",
     "dialer-pacing-tick",
     "generate-coaching-track",
-    "data-lake-flush"
+    "data-lake-flush",
+    "login-attempt"
    ],
    "auth": {}
   },
@@ -25963,6 +25971,7 @@
    "supabase/migrations/20261126090001_rate_limit_logs_revoke_anon_write.sql",
    "supabase/tests/calling_hours_fail_closed_rls_test.sql",
    "supabase/tests/internal_tables_rls_test.sql",
+   "supabase/tests/login_lockout_acl_rls_test.sql",
    "supabase/tests/rate_limit_logs_write_policies_rls_test.sql",
    "supabase/tests/role_source_of_truth_test.sql",
    "supabase/tests/user_preferences_rls_test.sql",
@@ -30972,6 +30981,28 @@
     "idempotency": false
    },
    {
+    "name": "login-attempt",
+    "file": "supabase/functions/login-attempt/index.ts",
+    "methods": [
+     "OPTIONS"
+    ],
+    "auth": "PÚBLICA (verify_jwt=false em config.toml)",
+    "tables": [
+     "rate_limit_logs"
+    ],
+    "env": [
+     "SUPABASE_SERVICE_ROLE_KEY",
+     "SUPABASE_URL"
+    ],
+    "external": [],
+    "invokes": [],
+    "doc": "",
+    "errors": [],
+    "side_effects": [],
+    "webhook_events": [],
+    "idempotency": false
+   },
+   {
     "name": "notify-blocked-ip",
     "file": "supabase/functions/notify-blocked-ip/index.ts",
     "methods": [
@@ -34724,8 +34755,8 @@
   },
   {
    "module": "supabase/functions",
-   "files": 219,
-   "lines": 24507,
+   "files": 220,
+   "lines": 24576,
    "tables": [
     "account_lockouts",
     "accounts",
@@ -35047,8 +35078,8 @@
   },
   {
    "module": "supabase/tests",
-   "files": 5,
-   "lines": 374,
+   "files": 6,
+   "lines": 415,
    "tables": [],
    "exports": [],
    "docs": [],
@@ -35057,6 +35088,7 @@
    "file_list": [
     "supabase/tests/calling_hours_fail_closed_rls_test.sql",
     "supabase/tests/internal_tables_rls_test.sql",
+    "supabase/tests/login_lockout_acl_rls_test.sql",
     "supabase/tests/rate_limit_logs_write_policies_rls_test.sql",
     "supabase/tests/role_source_of_truth_test.sql",
     "supabase/tests/user_preferences_rls_test.sql"
@@ -38210,6 +38242,7 @@
     "supabase/functions/global-load-test/index.ts",
     "supabase/functions/health-check/index.ts",
     "supabase/functions/ldap-sync/index.ts",
+    "supabase/functions/login-attempt/index.ts",
     "supabase/functions/ocr-virtual-fax/index.ts",
     "supabase/functions/process-digest/index.ts",
     "supabase/functions/record-consent/index.ts",
@@ -38305,6 +38338,7 @@
     "supabase/functions/global-load-test/index.ts",
     "supabase/functions/health-check/index.ts",
     "supabase/functions/ldap-sync/index.ts",
+    "supabase/functions/login-attempt/index.ts",
     "supabase/functions/ocr-virtual-fax/index.ts",
     "supabase/functions/process-digest/index.ts",
     "supabase/functions/realtime-analysis/index.ts",
@@ -85855,6 +85889,7 @@
    "supabase/functions/health-check/__tests__/slo-targets_test.ts",
    "supabase/functions/health-check/index.ts",
    "supabase/functions/ldap-sync/index.ts",
+   "supabase/functions/login-attempt/index.ts",
    "supabase/functions/notify-new-device/__tests__/upstream-falha.test.ts",
    "supabase/functions/ocr-virtual-fax/index.ts",
    "supabase/functions/process-digest/index.ts",
@@ -85915,7 +85950,8 @@
    "supabase/migrations/20261123000000_fix_anon_rpc_exposure.sql",
    "supabase/migrations/20261123000100_fix_anon_rls_helper_exposure.sql",
    "supabase/migrations/20261123000200_fix_has_role_oracle_and_debug_tables.sql",
-   "supabase/migrations/20261126090001_rate_limit_logs_revoke_anon_write.sql"
+   "supabase/migrations/20261126090001_rate_limit_logs_revoke_anon_write.sql",
+   "supabase/tests/login_lockout_acl_rls_test.sql"
   ],
   "security_definer_fns": [
    "add_to_dnc",
@@ -85998,7 +86034,8 @@
    "cleanup-recordings",
    "dialer-pacing-tick",
    "generate-coaching-track",
-   "data-lake-flush"
+   "data-lake-flush",
+   "login-attempt"
   ],
   "auth_config": {},
   "grants": [
@@ -120358,6 +120395,15 @@
    ],
    "uses_service_role": true
   },
+  "supabase/functions/login-attempt/index.ts": {
+   "path": "supabase/functions/login-attempt/index.ts",
+   "lines": 69,
+   "env": [
+    "SUPABASE_SERVICE_ROLE_KEY",
+    "SUPABASE_URL"
+   ],
+   "uses_service_role": true
+  },
   "supabase/functions/notify-blocked-ip/index.ts": {
    "path": "supabase/functions/notify-blocked-ip/index.ts",
    "lines": 152,
@@ -124587,6 +124633,12 @@
    "lines": 60,
    "is_test": true
   },
+  "supabase/tests/login_lockout_acl_rls_test.sql": {
+   "path": "supabase/tests/login_lockout_acl_rls_test.sql",
+   "lines": 41,
+   "is_test": true,
+   "uses_service_role": true
+  },
   "supabase/tests/rate_limit_logs_write_policies_rls_test.sql": {
    "path": "supabase/tests/rate_limit_logs_write_policies_rls_test.sql",
    "lines": 112,
@@ -124780,10 +124832,22 @@
   }
  },
  "git": {
-  "sha": "ab5b8102226e9abe130cf05c1904fa8dd50af7ec",
+  "sha": "ff0f86e739d104603f77c6dc30ab630bac17e214",
   "branch": "main",
   "remote": "https://github.com/adm01-debug/Hello_V3",
   "commits": [
+   {
+    "sha": "ff0f86e",
+    "date": "2026-11-25",
+    "author": "adm01-debug",
+    "subject": "feat: edge login-attempt + gate de ACL e workflow de deploy de edges (etapa 002, parte 1/2) (#337)",
+    "files": [
+     ".github/workflows/deploy-edge-functions.yml",
+     "supabase/config.toml",
+     "supabase/functions/login-attempt/index.ts",
+     "supabase/tests/login_lockout_acl_rls_test.sql"
+    ]
+   },
    {
     "sha": "ab5b810",
     "date": "2026-11-25",
@@ -125139,24 +125203,12 @@
     "files": [
      ".github/workflows/ci.yml"
     ]
-   },
-   {
-    "sha": "fdbcd32",
-    "date": "2026-11-25",
-    "author": "adm01-debug",
-    "subject": "chore: guard de CI contra gravacoes cegas no cliente Supabase (#299)",
-    "files": [
-     ".github/workflows/ci.yml",
-     "AGENTS.md",
-     "docs/qa/05-PROGRESSO.md",
-     "scripts/guard-supabase-error.mjs"
-    ]
    }
   ],
   "hot_files": [
    [
     "docs/qa/05-PROGRESSO.md",
-    12
+    11
    ],
    [
     ".github/workflows/migrations.yml",
@@ -125168,10 +125220,6 @@
    ],
    [
     "src/components/calls/__tests__/ActiveCallBar.espera.test.tsx",
-    3
-   ],
-   [
-    ".github/workflows/ci.yml",
     3
    ],
    [
@@ -125211,27 +125259,31 @@
     2
    ],
    [
+    ".github/workflows/ci.yml",
+    2
+   ],
+   [
+    ".github/workflows/deploy-edge-functions.yml",
+    1
+   ],
+   [
+    "supabase/config.toml",
+    1
+   ],
+   [
+    "supabase/functions/login-attempt/index.ts",
+    1
+   ],
+   [
+    "supabase/tests/login_lockout_acl_rls_test.sql",
+    1
+   ],
+   [
     "src/hooks/__tests__/useRateLimitData.writeResult.test.tsx",
     1
    ],
    [
     "src/hooks/useRateLimitData.ts",
-    1
-   ],
-   [
-    "supabase/migrations/20261126090000_rate_limit_logs_write_policies.sql",
-    1
-   ],
-   [
-    "supabase/migrations/20261126090001_rate_limit_logs_revoke_anon_write.sql",
-    1
-   ],
-   [
-    "supabase/tests/rate_limit_logs_write_policies_rls_test.sql",
-    1
-   ],
-   [
-    "src/components/conversation-intelligence/BattleCardAlert.tsx",
     1
    ]
   ]

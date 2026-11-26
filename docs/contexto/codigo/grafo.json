@@ -1,8 +1,8 @@
 {
  "aviso": "GERADO AUTOMATICAMENTE por scripts/ai-context/gerar.mjs — não editar à mão; será sobrescrito.",
  "format_version": 2,
- "nos": 941,
- "arestas": 3730,
+ "nos": 942,
+ "arestas": 3734,
  "hubs": [
   {
    "arquivo": "src/integrations/supabase/client.ts",
@@ -34,7 +34,7 @@
   },
   {
    "arquivo": "supabase/functions/_shared/cors.ts",
-   "importado_por": 102
+   "importado_por": 103
   },
   {
    "arquivo": "src/hooks/usePageTitle.ts",
@@ -58,7 +58,7 @@
   },
   {
    "arquivo": "supabase/functions/_shared/errors.ts",
-   "importado_por": 56
+   "importado_por": 57
   },
   {
    "arquivo": "src/components/ui/dialog.tsx",
@@ -113,6 +113,10 @@
    "importado_por": 24
   },
   {
+   "arquivo": "supabase/functions/_shared/rate-limit.ts",
+   "importado_por": 24
+  },
+  {
    "arquivo": "src/components/layout/NeonPageLayout.tsx",
    "importado_por": 23
   },
@@ -122,10 +126,6 @@
   },
   {
    "arquivo": "src/lib/tracing.ts",
-   "importado_por": 23
-  },
-  {
-   "arquivo": "supabase/functions/_shared/rate-limit.ts",
    "importado_por": 23
   },
   {

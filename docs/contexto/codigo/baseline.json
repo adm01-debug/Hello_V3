@@ -2,11 +2,16 @@
  "aviso": "GERADO AUTOMATICAMENTE por scripts/ai-context/gerar.mjs — não editar à mão; será sobrescrito.",
  "format_version": 2,
  "git": {
-  "commit": "ab5b8102226e9abe130cf05c1904fa8dd50af7ec",
+  "commit": "ff0f86e739d104603f77c6dc30ab630bac17e214",
   "branch": "main",
-  "data_commit": "2026-11-25T21:00:31-03:00",
+  "data_commit": "2026-11-25T21:12:35-03:00",
   "remote": "https://github.com/adm01-debug/Hello_V3",
   "ultimos_commits": [
+   {
+    "sha": "ff0f86e",
+    "data": "2026-11-25",
+    "assunto": "feat: edge login-attempt + gate de ACL e workflow de deploy de edges (etapa 002, parte 1/2) (#337)"
+   },
    {
     "sha": "ab5b810",
     "data": "2026-11-25",
@@ -126,14 +131,9 @@
     "sha": "c450a16",
     "data": "2026-11-25",
     "assunto": "fix: fila de migrations compara com o historico real do projeto (#314)"
-   },
-   {
-    "sha": "6873e82",
-    "data": "2026-11-25",
-    "assunto": "infra: fila de migrations em um clique e teste de RLS (#313)"
    }
   ],
-  "arquivos_mudados_7d": 1311,
+  "arquivos_mudados_7d": 1314,
   "pastas_mais_mudadas_30d": [
    {
     "pasta": "covout/lcov-report/hooks",
@@ -310,9 +310,9 @@
   ]
  },
  "contagens": {
-  "arquivos_total": 1765,
-  "arquivos_codigo": 1354,
-  "linhas_codigo": 180114,
+  "arquivos_total": 1768,
+  "arquivos_codigo": 1355,
+  "linhas_codigo": 180183,
   "rotas": 106,
   "rotas_http_backend": 11,
   "vistas_por_id": 0,
@@ -320,12 +320,12 @@
   "modulos": 81,
   "componentes": 446,
   "hooks": 196,
-  "edge_functions": 98,
+  "edge_functions": 99,
   "tabelas": 170,
   "migrations": 247,
   "cron_jobs": 11,
-  "testes": 418,
-  "workflows": 4,
+  "testes": 419,
+  "workflows": 5,
   "scripts": 36,
   "docs_md": 121
  },
@@ -519,8 +519,8 @@
    "linhas": 170
   },
   "supabase/functions": {
-   "arquivos": 219,
-   "linhas": 24507
+   "arquivos": 220,
+   "linhas": 24576
   },
   "tailwind.config.ts": {
    "arquivos": 1,

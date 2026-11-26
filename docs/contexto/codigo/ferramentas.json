@@ -3,13 +3,13 @@
  "format_version": 2,
  "stack": {
   "linguagens": [
-   "TypeScript (1319)",
-   "SQL (254)",
+   "TypeScript (1320)",
+   "SQL (255)",
    "Markdown (121)",
    "JavaScript (31)",
    "JSON (16)",
    "Python (5)",
-   "YAML (4)",
+   "YAML (5)",
    "Shell (2)"
   ],
   "linguagem_principal": "TypeScript",
@@ -200,6 +200,30 @@
     "actions/download-artifact",
     "actions/setup-node",
     "actions/upload-artifact"
+   ]
+  },
+  {
+   "arquivo": ".github/workflows/deploy-edge-functions.yml",
+   "nome": "Deploy edge function",
+   "gatilhos": [
+    "workflow_dispatch"
+   ],
+   "crons": [],
+   "branches": [],
+   "jobs": [
+    "deploy"
+   ],
+   "permissoes": [
+    "contents: read"
+   ],
+   "scripts_usados": [],
+   "npm_scripts": [],
+   "secrets": [
+    "SUPABASE_ACCESS_TOKEN"
+   ],
+   "actions": [
+    "actions/checkout",
+    "supabase/setup-cli"
    ]
   },
   {
@@ -731,7 +755,8 @@
    "cleanup-recordings",
    "data-lake-flush",
    "dialer-pacing-tick",
-   "generate-coaching-track"
+   "generate-coaching-track",
+   "login-attempt"
   ],
   "realtime": [
    "active-calls-realtime",

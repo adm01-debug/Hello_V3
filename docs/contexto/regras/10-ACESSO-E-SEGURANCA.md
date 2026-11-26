@@ -1,6 +1,6 @@
 # 10 · ACESSO E SEGURANÇA — quem pode o quê
 
-> Gerado automaticamente por AI Context Sync v1.3.2 · commit `ab5b810222` · branch `main` · 2026-11-26 00:03 UTC
+> Gerado automaticamente por AI Context Sync v1.3.2 · commit `ff0f86e739` · branch `main` · 2026-11-26 00:13 UTC
 > Não edite à mão — regras humanas vão em `manual/`.
 
 ## Perfis / roles identificados
@@ -189,7 +189,7 @@
 
 > `—` com RLS ligado = ninguém além de service_role. `sem RLS` = qualquer chave anon lê/escreve tudo.
 
-## Onde o RLS é IGNORADO (service_role) — 127 arquivo(s)
+## Onde o RLS é IGNORADO (service_role) — 129 arquivo(s)
 
 - `scripts/ai-context/cenarios.mjs`
 - `scripts/ai-context/gerar.unit.mjs`
@@ -257,6 +257,7 @@
 - `supabase/functions/health-check/__tests__/slo-targets_test.ts`
 - `supabase/functions/health-check/index.ts`
 - `supabase/functions/ldap-sync/index.ts`
+- `supabase/functions/login-attempt/index.ts`
 - `supabase/functions/notify-new-device/__tests__/upstream-falha.test.ts`
 - `supabase/functions/ocr-virtual-fax/index.ts`
 - `supabase/functions/process-digest/index.ts`
@@ -318,6 +319,7 @@
 - `supabase/migrations/20261123000100_fix_anon_rls_helper_exposure.sql`
 - `supabase/migrations/20261123000200_fix_has_role_oracle_and_debug_tables.sql`
 - `supabase/migrations/20261126090001_rate_limit_logs_revoke_anon_write.sql`
+- `supabase/tests/login_lockout_acl_rls_test.sql`
 
 ## Funções SQL `SECURITY DEFINER` (rodam com privilégio do dono, ignoram RLS)
 
@@ -403,6 +405,7 @@
 - `dialer-pacing-tick`
 - `generate-coaching-track`
 - `data-lake-flush`
+- `login-attempt`
 
 ## Rotas protegidas no front
 
