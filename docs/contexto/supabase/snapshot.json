@@ -5366,6 +5366,19 @@
         "type": "text"
       },
       {
+        "comment": "CALL_ID devolvido por telephony.externalcall.register no Bitrix24; usado no telephony.externalcall.finish. NULL = chamada nao registrada no CRM (Bitrix fora do ar ou canal sem numero) - etapa 081.",
+        "default": null,
+        "generated": null,
+        "identity": null,
+        "is_enum": false,
+        "name": "bitrix_call_id",
+        "nullable": true,
+        "position": 15,
+        "schema": "public",
+        "table": "call_sessions",
+        "type": "text"
+      },
+      {
         "comment": null,
         "default": "gen_random_uuid()",
         "generated": null,
@@ -9147,6 +9160,19 @@
         "schema": "public",
         "table": "crm_sync_queue",
         "type": "timestamp with time zone"
+      },
+      {
+        "comment": "Autor do item da fila. DEFAULT auth.uid(): quem insere pela sessao fica amarrado automaticamente (etapa 084). NULL quando a origem e service_role/cron.",
+        "default": "auth.uid()",
+        "generated": null,
+        "identity": null,
+        "is_enum": false,
+        "name": "requested_by",
+        "nullable": true,
+        "position": 11,
+        "schema": "public",
+        "table": "crm_sync_queue",
+        "type": "uuid"
       },
       {
         "comment": null,
@@ -33336,6 +33362,36 @@
         "volatility": "stable"
       },
       {
+        "args": "p_campaign_id uuid",
+        "callers": {
+          "code": [],
+          "code_total_files": 0,
+          "cron": [],
+          "db": [],
+          "triggers": [],
+          "views": []
+        },
+        "comment": "Reivindica o proximo contato pendente da campanha em uma unica operacao (etapa 079). Devolve a linha ja em status dialing, com attempts incrementado. Concorrentes recebem contatos diferentes (FOR UPDATE SKIP LOCKED). Exige usuario autenticado.",
+        "config": [
+          "search_path=public"
+        ],
+        "definition": null,
+        "definition_sha": "3af0e02a8ca3efd9",
+        "execute_api_roles": "authenticated, service_role",
+        "execute_public": false,
+        "is_trigger_fn": false,
+        "kind": "function",
+        "language": "sql",
+        "leakproof": false,
+        "name": "claim_next_dialer_contact",
+        "owner": "postgres",
+        "returns": "SETOF dialer_queue",
+        "schema": "public",
+        "security_definer": true,
+        "strict": false,
+        "volatility": "volatile"
+      },
+      {
         "args": "",
         "callers": {
           "code": [
@@ -43710,6 +43766,20 @@
       },
       {
         "columns": [
+          "requested_by"
+        ],
+        "definition": "CREATE INDEX idx_crm_sync_queue_requested_by ON public.crm_sync_queue USING btree (requested_by)",
+        "is_primary": false,
+        "is_unique": false,
+        "is_valid": true,
+        "method": "btree",
+        "name": "idx_crm_sync_queue_requested_by",
+        "predicate": null,
+        "schema": "public",
+        "table": "crm_sync_queue"
+      },
+      {
+        "columns": [
           "status",
           "next_retry_at"
         ],
@@ -48322,6 +48392,18 @@
       {
         "code": "policy_auth_fn_not_wrapped",
         "detail": "Policy chama auth.uid()/jwt() sem `(select ...)`: é reavaliada por linha; envolva em subselect.",
+        "object": "public.crm_sync_queue.Agente enfileira a propria acao",
+        "severity": "BAIXA"
+      },
+      {
+        "code": "policy_auth_fn_not_wrapped",
+        "detail": "Policy chama auth.uid()/jwt() sem `(select ...)`: é reavaliada por linha; envolva em subselect.",
+        "object": "public.crm_sync_queue.Agente le a propria acao",
+        "severity": "BAIXA"
+      },
+      {
+        "code": "policy_auth_fn_not_wrapped",
+        "detail": "Policy chama auth.uid()/jwt() sem `(select ...)`: é reavaliada por linha; envolva em subselect.",
         "object": "public.user_preferences.Users can insert own preferences",
         "severity": "BAIXA"
       },
@@ -51951,6 +52033,30 @@
         "schema": "public",
         "table": "crm_sync_queue",
         "using": "is_admin_or_supervisor()",
+        "with_check": null
+      },
+      {
+        "cmd": "INSERT",
+        "name": "Agente enfileira a propria acao",
+        "permissive": "PERMISSIVE",
+        "roles": [
+          "authenticated"
+        ],
+        "schema": "public",
+        "table": "crm_sync_queue",
+        "using": null,
+        "with_check": "(requested_by = auth.uid())"
+      },
+      {
+        "cmd": "SELECT",
+        "name": "Agente le a propria acao",
+        "permissive": "PERMISSIVE",
+        "roles": [
+          "authenticated"
+        ],
+        "schema": "public",
+        "table": "crm_sync_queue",
+        "using": "(requested_by = auth.uid())",
         "with_check": null
       },
       {

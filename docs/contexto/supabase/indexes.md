@@ -231,6 +231,7 @@ Uso e tamanho em `stats.md`.
 | public.crm_field_suggestions | idx_crm_field_suggestions_contact_id | btree | contact_id | não | sim |  |
 | public.crm_field_suggestions | idx_crm_suggestions_status | btree | status | não | sim |  |
 | public.crm_sync_queue | crm_sync_queue_pkey | btree | id | sim | sim |  |
+| public.crm_sync_queue | idx_crm_sync_queue_requested_by | btree | requested_by | não | sim |  |
 | public.crm_sync_queue | idx_crm_sync_queue_status_retry | btree | status, next_retry_at | não | sim | `(status = ANY (ARRAY['pending'::text, 'failed'::text]))` |
 | public.cultural_hints | cultural_hints_pkey | btree | id | sim | sim |  |
 | public.cultural_hints | idx_cultural_hints_locale | btree | locale, is_active | não | sim |  |

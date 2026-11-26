@@ -43,7 +43,7 @@ Um arquivo por tabela em `tables/<schema>/<tabela>.md` (colunas, constraints, í
 | [public.call_recordings](tables/public/call_recordings.md) | table | sim | 3 | 10 | não |  |
 | [public.call_records](tables/public/call_records.md) | table | sim | 2 | 13 | não |  |
 | [public.call_scorecards](tables/public/call_scorecards.md) | table | sim | 2 | 13 | não |  |
-| [public.call_sessions](tables/public/call_sessions.md) | table | sim | 5 | 14 | não |  |
+| [public.call_sessions](tables/public/call_sessions.md) | table | sim | 5 | 15 | não |  |
 | [public.call_summaries](tables/public/call_summaries.md) | table | sim | 3 | 10 | não |  |
 | [public.call_transcriptions](tables/public/call_transcriptions.md) | table | sim | 3 | 7 | não |  |
 | [public.call_transcripts_searchable](tables/public/call_transcripts_searchable.md) | table | sim | 3 | 8 | não |  |
@@ -66,7 +66,7 @@ Um arquivo por tabela em `tables/<schema>/<tabela>.md` (colunas, constraints, í
 | [public.conversation_messages](tables/public/conversation_messages.md) | table | sim | 5 | 13 | não |  |
 | [public.conversations](tables/public/conversations.md) | table | sim | 5 | 21 | não |  |
 | [public.crm_field_suggestions](tables/public/crm_field_suggestions.md) | table | sim | 4 | 14 | não |  |
-| [public.crm_sync_queue](tables/public/crm_sync_queue.md) | table | sim | 3 | 10 | não |  |
+| [public.crm_sync_queue](tables/public/crm_sync_queue.md) | table | sim | 5 | 11 | não |  |
 | [public.cultural_hints](tables/public/cultural_hints.md) | table | sim | 2 | 8 | não |  |
 | [public.customer_journey_stages](tables/public/customer_journey_stages.md) | table | sim | 2 | 11 | não |  |
 | [public.dashboard_goals](tables/public/dashboard_goals.md) | table | sim | 2 | 12 | não |  |

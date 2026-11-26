@@ -31,6 +31,7 @@
 | 12 | `hold_count` | `integer` | sim | `0` |  |  |
 | 13 | `deal_id` | `uuid` | sim |  |  |  |
 | 14 | `direction` | `text` | sim | `'inbound'::text` |  |  |
+| 15 | `bitrix_call_id` | `text` | sim |  |  | CALL_ID devolvido por telephony.externalcall.register no Bitrix24; usado no telephony.externalcall.finish. NULL = chamada nao registrada no CRM (Bitrix fora do ar ou canal sem numero) - etapa 081. |
 
 
 ## Constraints

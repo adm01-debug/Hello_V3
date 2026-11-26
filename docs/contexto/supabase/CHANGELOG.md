@@ -2,6 +2,14 @@
 
 Diff semântico gerado a cada coleta em que algo mudou.
 
+## 2026-11-26 23:15 UTC
+
+- **colunas** adicionado (2): `public.call_sessions.bitrix_call_id`, `public.crm_sync_queue.requested_by`
+- **functions** adicionado (1): `public.claim_next_dialer_contact(p_campaign_id uuid)`
+- **indexes** adicionado (1): `public.idx_crm_sync_queue_requested_by`
+- **lints** adicionado (2): `policy_auth_fn_not_wrapped:public.crm_sync_queue.Agente enfileira a propria acao`, `policy_auth_fn_not_wrapped:public.crm_sync_queue.Agente le a propria acao`
+- **policies (RLS)** adicionado (2): `public.crm_sync_queue.Agente enfileira a propria acao`, `public.crm_sync_queue.Agente le a propria acao`
+
 ## 2026-11-26 22:16 UTC
 
 - **cron jobs** adicionado (1): `65:crm-sync-queue`

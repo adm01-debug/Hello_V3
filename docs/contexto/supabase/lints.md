@@ -21,6 +21,8 @@ Verificações objetivas feitas no catálogo. Um agente deve ler isto antes de p
 | BAIXA | fk_without_index | public.coaching_assignments.coaching_assignments_scorecard_id_fkey | FK sem índice nas colunas ['scorecard_id']: joins e DELETE/UPDATE na tabela pai ficam lentos. |
 | BAIXA | fk_without_index | public.entity_versions.entity_versions_changed_by_fkey | FK sem índice nas colunas ['changed_by']: joins e DELETE/UPDATE na tabela pai ficam lentos. |
 | BAIXA | fk_without_index | public.parked_calls.parked_calls_retrieved_by_fkey | FK sem índice nas colunas ['retrieved_by']: joins e DELETE/UPDATE na tabela pai ficam lentos. |
+| BAIXA | policy_auth_fn_not_wrapped | public.crm_sync_queue.Agente enfileira a propria acao | Policy chama auth.uid()/jwt() sem `(select ...)`: é reavaliada por linha; envolva em subselect. |
+| BAIXA | policy_auth_fn_not_wrapped | public.crm_sync_queue.Agente le a propria acao | Policy chama auth.uid()/jwt() sem `(select ...)`: é reavaliada por linha; envolva em subselect. |
 | BAIXA | policy_auth_fn_not_wrapped | public.user_preferences.Users can insert own preferences | Policy chama auth.uid()/jwt() sem `(select ...)`: é reavaliada por linha; envolva em subselect. |
 | BAIXA | policy_auth_fn_not_wrapped | public.user_preferences.Users can update own preferences | Policy chama auth.uid()/jwt() sem `(select ...)`: é reavaliada por linha; envolva em subselect. |
 | BAIXA | policy_auth_fn_not_wrapped | public.user_preferences.Users can view own preferences | Policy chama auth.uid()/jwt() sem `(select ...)`: é reavaliada por linha; envolva em subselect. |

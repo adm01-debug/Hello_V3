@@ -190,6 +190,8 @@ Visão consolidada (inclui `storage.objects` e `realtime.messages`); detalhes po
 | public.crm_sync_queue | Admin supervisor insert crm sync queue | INSERT | PERMISSIVE | authenticated |  | `is_admin_or_supervisor()` |
 | public.crm_sync_queue | Admin supervisor update crm sync queue | UPDATE | PERMISSIVE | authenticated | `is_admin_or_supervisor()` | `is_admin_or_supervisor()` |
 | public.crm_sync_queue | Admins e supervisores podem ler fila CRM | SELECT | PERMISSIVE | authenticated | `is_admin_or_supervisor()` |  |
+| public.crm_sync_queue | Agente enfileira a propria acao | INSERT | PERMISSIVE | authenticated |  | `(requested_by = auth.uid())` |
+| public.crm_sync_queue | Agente le a propria acao | SELECT | PERMISSIVE | authenticated | `(requested_by = auth.uid())` |  |
 | public.cultural_hints | Admin can manage cultural hints | ALL | PERMISSIVE | authenticated | `is_admin_user(( SELECT auth.uid() AS uid))` | `is_admin_user(( SELECT auth.uid() AS uid))` |
 | public.cultural_hints | Authenticated can view cultural hints | SELECT | PERMISSIVE | authenticated | `(( SELECT auth.uid() AS uid) IS NOT NULL)` |  |
 | public.customer_journey_stages | Admin/supervisor manage journey stages | ALL | PERMISSIVE | authenticated | `is_admin_or_supervisor()` | `is_admin_or_supervisor()` |
