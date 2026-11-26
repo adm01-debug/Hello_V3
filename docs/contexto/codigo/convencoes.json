@@ -59,11 +59,11 @@
  "commits": {
   "convencao": "conventional commits (observado)",
   "exemplos": [
+   "fix: chaves estrangeiras nas colunas com destino unico (etapa 128) (#358)",
    "fix: policies de 5 tabelas sensiveis restritas a authenticated (etapa 052) (#357)",
    "fix: policy de UPDATE em learning_completions (upsert do modulo nao atualizava a nota) (#356)",
    "feat: CREATE TABLE retroativo das tabelas geo_* (etapa 130) (#355)",
-   "fix: policy de UPDATE na fila de sincronizacao do CRM (etapa 082) (#354)",
-   "feat: vigia horario de cron com alerta no sino e card de saude (etapa 231) (#353)"
+   "fix: policy de UPDATE na fila de sincronizacao do CRM (etapa 082) (#354)"
   ]
  },
  "pr_template": null,

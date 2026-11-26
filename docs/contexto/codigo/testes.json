@@ -5,7 +5,7 @@
   "vitest",
   "playwright"
  ],
- "total": 450,
+ "total": 451,
  "por_tipo": {
   "contrato": 1,
   "e2e": 16,
@@ -3937,6 +3937,7 @@
   }
  ],
  "sql": [
+  "supabase/tests/add_missing_fks_rls_test.sql",
   "supabase/tests/calling_hours_fail_closed_rls_test.sql",
   "supabase/tests/client_errors_rls_test.sql",
   "supabase/tests/crm_sync_queue_update_rls_test.sql",

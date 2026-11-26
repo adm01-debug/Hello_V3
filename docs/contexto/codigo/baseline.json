@@ -2,11 +2,16 @@
  "aviso": "GERADO AUTOMATICAMENTE por scripts/ai-context/gerar.mjs — não editar à mão; será sobrescrito.",
  "format_version": 2,
  "git": {
-  "commit": "91a1fdc725b3782fe0a6182742cc8fb30f0c26c2",
+  "commit": "8f07a3548f96cd50b03f14aec4649857d7e42107",
   "branch": "main",
-  "data_commit": "2026-11-26T16:40:55-03:00",
+  "data_commit": "2026-11-26T16:54:48-03:00",
   "remote": "https://github.com/adm01-debug/Hello_V3",
   "ultimos_commits": [
+   {
+    "sha": "8f07a35",
+    "data": "2026-11-26",
+    "assunto": "fix: chaves estrangeiras nas colunas com destino unico (etapa 128) (#358)"
+   },
    {
     "sha": "91a1fdc",
     "data": "2026-11-26",
@@ -126,11 +131,6 @@
     "sha": "6943f53",
     "data": "2026-11-25",
     "assunto": "chore: corrigir achados A-216/A-217 e criar gate contra regressao de RLS no historico de migrations"
-   },
-   {
-    "sha": "e34a05c",
-    "data": "2026-11-25",
-    "assunto": "fix: renumerar migration duplicada que quebrava a Supabase Preview"
    }
   ],
   "arquivos_mudados_7d": 1919,
@@ -141,7 +141,7 @@
    },
    {
     "pasta": "docs/qa/05-PROGRESSO.md",
-    "mudancas": 155
+    "mudancas": 156
    },
    {
     "pasta": "src/components/calls",
@@ -199,7 +199,7 @@
   "arquivos_mais_mudados_90d": [
    {
     "arquivo": "docs/qa/05-PROGRESSO.md",
-    "mudancas": 155
+    "mudancas": 156
    },
    {
     "arquivo": "docs/estado/funcionalidades-planejadas.md",
@@ -310,7 +310,7 @@
   ]
  },
  "contagens": {
-  "arquivos_total": 1825,
+  "arquivos_total": 1827,
   "arquivos_codigo": 1385,
   "linhas_codigo": 184899,
   "rotas": 108,
@@ -322,9 +322,9 @@
   "hooks": 201,
   "edge_functions": 99,
   "tabelas": 172,
-  "migrations": 259,
+  "migrations": 260,
   "cron_jobs": 13,
-  "testes": 450,
+  "testes": 451,
   "workflows": 5,
   "scripts": 36,
   "docs_md": 121

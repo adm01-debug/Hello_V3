@@ -8,7 +8,7 @@
   "supabase/migrations",
   "typeorm"
  ],
- "migrations": 259,
+ "migrations": 260,
  "seeds": [],
  "avisos": [
   "25 bloco(s) com DDL dinâmico (EXECUTE format/...) não modelado — policies/colunas criadas dinamicamente podem faltar; confira no banco vivo"
@@ -3185,7 +3185,9 @@
     }
    ],
    "indices": [],
-   "fks": [],
+   "fks": [
+    "parent_id->bitrix_departments"
+   ],
    "criada_em": "20260515171135_134e605d-28e8-4d47-9aa1-1e7c4247c819.sql",
    "usada_no_front": 1,
    "usada_em_edges": [],
@@ -5615,6 +5617,7 @@
    ],
    "fks": [
     "call_session_id->call_sessions",
+    "reviewer_id->auth",
     "template_id->scorecard_templates"
    ],
    "criada_em": "20260416234921_cc18cae3-c0a2-4ffd-a96e-7bc43be82ec5.sql",
@@ -7072,7 +7075,8 @@
     }
    ],
    "fks": [
-    "call_session_id->call_sessions"
+    "call_session_id->call_sessions",
+    "scorecard_id->call_scorecards"
    ],
    "criada_em": "20260417000338_f03874c1-f8d9-4f2d-bf5c-20ad794cce6f.sql",
    "usada_no_front": 1,
