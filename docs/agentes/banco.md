@@ -252,3 +252,24 @@ Aqui o tipo **não é nome de tabela**: é o marcador do produtor da notificaç�
 O gate `supabase/tests/polymorphic_pointer_comments_rls_test.sql` falha se algum desses comentários sumir e
 também se alguém criar `CHECK` nessas colunas antes da etapa 139.
 
+
+
+
+## Feriado e horário de discagem — contrato medido em 2026-11-27
+
+`public.check_calling_hours(p_region_code text default 'BR')` decide se a discagem é permitida agora
+(`SECURITY DEFINER`, `search_path = public`). O comentário da própria função carrega o contrato; o
+resumo:
+
+| Situação | Resultado |
+|---|---|
+| Sem `calling_hours_config` ativa para a região nem `BR` | `can_call: false` — **fail-closed** (etapa 035) |
+| `holidays.date` = hoje, com `is_national` ou `region_code` da região | bloqueia se `holidays_allowed = false` |
+| `holidays.recurring = true` com **mesmo mês e dia** de qualquer ano | bloqueia igual (etapa 122) |
+| `holidays.recurring = false` de outro ano | **não** bloqueia — a data exata manda |
+| Feriado móvel (Carnaval, Páscoa, Corpus Christi) | **não é calculado** — precisa ser cadastrado por ano com `recurring = false` |
+
+Gate: `supabase/tests/recurring_holidays_rls_test.sql` (prova os 4 primeiros casos e que o contrato está
+escrito na função e na coluna). Não confunda com `calling_hours_fail_closed_rls_test.sql`, que prova o
+fail-closed da 035.
+
