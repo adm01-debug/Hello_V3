@@ -2,11 +2,16 @@
  "aviso": "GERADO AUTOMATICAMENTE por scripts/ai-context/gerar.mjs — não editar à mão; será sobrescrito.",
  "format_version": 2,
  "git": {
-  "commit": "957a28355826923316b6ed8bbdeeac7accc73c67",
+  "commit": "8bed0e51c9373083803b105e98f679bafb87044a",
   "branch": "main",
-  "data_commit": "2026-11-26T17:21:52-03:00",
+  "data_commit": "2026-11-26T17:47:03-03:00",
   "remote": "https://github.com/adm01-debug/Hello_V3",
   "ultimos_commits": [
+   {
+    "sha": "8bed0e5",
+    "data": "2026-11-26",
+    "assunto": "fix: restringir a authenticated o restante de public e provar storage bucket por bucket (etapa 145) (#360)"
+   },
    {
     "sha": "957a283",
     "data": "2026-11-26",
@@ -126,14 +131,9 @@
     "sha": "305ee9e",
     "data": "2026-11-25",
     "assunto": "fix: gate do cron lia coluna que nao existe e derrubava o CI de main (#343)"
-   },
-   {
-    "sha": "0744961",
-    "data": "2026-11-25",
-    "assunto": "fix: tirar as RPCs de lockout do alcance do navegador (etapa 002) (#342)"
    }
   ],
-  "arquivos_mudados_7d": 1935,
+  "arquivos_mudados_7d": 1937,
   "pastas_mais_mudadas_30d": [
    {
     "pasta": "src/hooks/__tests__",
@@ -141,7 +141,7 @@
    },
    {
     "pasta": "docs/qa/05-PROGRESSO.md",
-    "mudancas": 163
+    "mudancas": 164
    },
    {
     "pasta": "src/components/calls",
@@ -199,7 +199,7 @@
   "arquivos_mais_mudados_90d": [
    {
     "arquivo": "docs/qa/05-PROGRESSO.md",
-    "mudancas": 163
+    "mudancas": 164
    },
    {
     "arquivo": "docs/estado/funcionalidades-planejadas.md",
@@ -282,35 +282,31 @@
     "mudancas": 7
    },
    {
-    "arquivo": "supabase/functions/auto-scorecard/index.ts",
-    "mudancas": 7
-   },
-   {
-    "arquivo": "supabase/functions/chatbot-respond/index.ts",
-    "mudancas": 7
-   },
-   {
     "arquivo": "supabase/functions/generate-coaching-track/index.ts",
     "mudancas": 7
    },
    {
-    "arquivo": "supabase/functions/score-call/index.ts",
+    "arquivo": "supabase/functions/teams-fetch-recordings/index.ts",
     "mudancas": 7
+   },
+   {
+    "arquivo": "supabase/functions/voip-load-test/index.ts",
+    "mudancas": 7
+   },
+   {
+    "arquivo": ".github/workflows/ci.yml",
+    "mudancas": 6
    }
   ],
   "autores_30d": [
    {
     "autor": "adm01-debug",
-    "commits": 299
-   },
-   {
-    "autor": "Joaquim Ataides",
-    "commits": 1
+    "commits": 300
    }
   ]
  },
  "contagens": {
-  "arquivos_total": 1844,
+  "arquivos_total": 1846,
   "arquivos_codigo": 1385,
   "linhas_codigo": 184953,
   "rotas": 108,
@@ -322,9 +318,9 @@
   "hooks": 201,
   "edge_functions": 99,
   "tabelas": 172,
-  "migrations": 268,
+  "migrations": 269,
   "cron_jobs": 13,
-  "testes": 459,
+  "testes": 460,
   "workflows": 5,
   "scripts": 36,
   "docs_md": 121

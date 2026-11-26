@@ -1,15 +1,15 @@
 {
  "meta": {
-  "sha": "957a28355826923316b6ed8bbdeeac7accc73c67",
+  "sha": "8bed0e51c9373083803b105e98f679bafb87044a",
   "branch": "main",
   "remote": "https://github.com/adm01-debug/Hello_V3",
-  "generated_at": "2026-11-26 20:28 UTC",
-  "files_total": 1890,
-  "code_files": 1686,
-  "code_lines": 206956
+  "generated_at": "2026-11-26 20:54 UTC",
+  "files_total": 1892,
+  "code_files": 1688,
+  "code_lines": 207217
  },
  "version": "1.3.2",
- "facts_hash": "76f345c2d15bf49c",
+ "facts_hash": "54dfbbcc49692b4e",
  "stack": {
   "frameworks": [
    "React + Vite",
@@ -170,7 +170,7 @@
   "languages": {
    ".tsx": 680,
    ".ts": 670,
-   ".sql": 300,
+   ".sql": 302,
    ".mjs": 29,
    ".py": 5,
    ".js": 2
@@ -26547,6 +26547,7 @@
    "supabase/migrations/20261127160000_policies_to_authenticated_lote1.sql",
    "supabase/migrations/20261127170000_add_missing_fks.sql",
    "supabase/migrations/20261127180000_policies_to_authenticated_restante.sql",
+   "supabase/migrations/20261127190000_policies_to_authenticated_lote4.sql",
    "supabase/migrations/20261127200000_revoke_anon_role_helpers.sql",
    "supabase/migrations/20261127210000_role_helpers_stable.sql",
    "supabase/migrations/20261127220000_polymorphic_pointer_comments.sql",
@@ -26581,6 +26582,7 @@
    "supabase/tests/revoke_anon_role_helpers_rls_test.sql",
    "supabase/tests/role_helpers_stable_rls_test.sql",
    "supabase/tests/role_source_of_truth_test.sql",
+   "supabase/tests/storage_objects_policies_rls_test.sql",
    "supabase/tests/unique_conversation_message_id_rls_test.sql",
    "supabase/tests/user_preferences_rls_test.sql",
    "supabase/tests/webhook_secrets_rls_test.sql",
@@ -35894,8 +35896,8 @@
   },
   {
    "module": "supabase/migrations",
-   "files": 268,
-   "lines": 17206,
+   "files": 269,
+   "lines": 17250,
    "tables": [],
    "exports": [],
    "docs": [],
@@ -35986,8 +35988,8 @@
   },
   {
    "module": "supabase/tests",
-   "files": 30,
-   "lines": 4586,
+   "files": 31,
+   "lines": 4803,
    "tables": [],
    "exports": [],
    "docs": [],
@@ -36021,6 +36023,7 @@
     "supabase/tests/revoke_anon_role_helpers_rls_test.sql",
     "supabase/tests/role_helpers_stable_rls_test.sql",
     "supabase/tests/role_source_of_truth_test.sql",
+    "supabase/tests/storage_objects_policies_rls_test.sql",
     "supabase/tests/unique_conversation_message_id_rls_test.sql",
     "supabase/tests/user_preferences_rls_test.sql",
     "supabase/tests/webhook_secrets_rls_test.sql"
@@ -127911,6 +127914,10 @@
    "path": "supabase/migrations/20261127180000_policies_to_authenticated_restante.sql",
    "lines": 54
   },
+  "supabase/migrations/20261127190000_policies_to_authenticated_lote4.sql": {
+   "path": "supabase/migrations/20261127190000_policies_to_authenticated_lote4.sql",
+   "lines": 44
+  },
   "supabase/migrations/20261127200000_revoke_anon_role_helpers.sql": {
    "path": "supabase/migrations/20261127200000_revoke_anon_role_helpers.sql",
    "lines": 59,
@@ -128109,6 +128116,11 @@
    "lines": 72,
    "is_test": true
   },
+  "supabase/tests/storage_objects_policies_rls_test.sql": {
+   "path": "supabase/tests/storage_objects_policies_rls_test.sql",
+   "lines": 217,
+   "is_test": true
+  },
   "supabase/tests/unique_conversation_message_id_rls_test.sql": {
    "path": "supabase/tests/unique_conversation_message_id_rls_test.sql",
    "lines": 114,
@@ -128299,10 +128311,21 @@
   }
  },
  "git": {
-  "sha": "957a28355826923316b6ed8bbdeeac7accc73c67",
+  "sha": "8bed0e51c9373083803b105e98f679bafb87044a",
   "branch": "main",
   "remote": "https://github.com/adm01-debug/Hello_V3",
   "commits": [
+   {
+    "sha": "8bed0e5",
+    "date": "2026-11-26",
+    "author": "adm01-debug",
+    "subject": "fix: restringir a authenticated o restante de public e provar storage bucket por bucket (etapa 145) (#360)",
+    "files": [
+     "docs/qa/05-PROGRESSO.md",
+     "supabase/migrations/20261127190000_policies_to_authenticated_lote4.sql",
+     "supabase/tests/storage_objects_policies_rls_test.sql"
+    ]
+   },
    {
     "sha": "957a283",
     "date": "2026-11-26",
@@ -128694,20 +128717,6 @@
      "supabase/functions/login-attempt/index.ts",
      "supabase/tests/login_lockout_acl_rls_test.sql"
     ]
-   },
-   {
-    "sha": "ab5b810",
-    "date": "2026-11-25",
-    "author": "adm01-debug",
-    "subject": "fix: policies de escrita em rate_limit_logs e conferencia do resultado real (etapa 029) (#338)",
-    "files": [
-     "docs/qa/05-PROGRESSO.md",
-     "src/hooks/__tests__/useRateLimitData.writeResult.test.tsx",
-     "src/hooks/useRateLimitData.ts",
-     "supabase/migrations/20261126090000_rate_limit_logs_write_policies.sql",
-     "supabase/migrations/20261126090001_rate_limit_logs_revoke_anon_write.sql",
-     "supabase/tests/rate_limit_logs_write_policies_rls_test.sql"
-    ]
    }
   ],
   "hot_files": [
@@ -128752,6 +128761,14 @@
     2
    ],
    [
+    "supabase/migrations/20261127190000_policies_to_authenticated_lote4.sql",
+    1
+   ],
+   [
+    "supabase/tests/storage_objects_policies_rls_test.sql",
+    1
+   ],
+   [
     "supabase/migrations/20261127270000_geo_policies_idempotente.sql",
     1
    ],
@@ -128781,14 +128798,6 @@
    ],
    [
     "supabase/migrations/20261127260000_increment_weekly_stats_rpc_null_media_fix.sql",
-    1
-   ],
-   [
-    "supabase/tests/increment_weekly_stats_rpc_rls_test.sql",
-    1
-   ],
-   [
-    "deno.lock",
     1
    ]
   ]

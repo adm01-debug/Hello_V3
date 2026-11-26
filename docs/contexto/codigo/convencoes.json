@@ -59,11 +59,11 @@
  "commits": {
   "convencao": "conventional commits (observado)",
   "exemplos": [
+   "fix: restringir a authenticated o restante de public e provar storage bucket por bucket (etapa 145) (#360)",
    "fix: guarda idempotente nos ALTER POLICY das geo_ (etapa 131) (#368)",
    "docs(db): contrato dos ponteiros polimorficos (etapa 129) (#363)",
    "feat: somar o placar semanal da gamificacao no banco (etapa 126) (#366)",
-   "fix: índice único parcial do message_id de WhatsApp e reentrega como 200 (etapa 017) (#364)",
-   "fix(db): helpers de papel como STABLE (etapa 101) para as 274 policies (#362)"
+   "fix: índice único parcial do message_id de WhatsApp e reentrega como 200 (etapa 017) (#364)"
   ]
  },
  "pr_template": null,
