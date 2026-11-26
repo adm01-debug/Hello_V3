@@ -2,11 +2,16 @@
  "aviso": "GERADO AUTOMATICAMENTE por scripts/ai-context/gerar.mjs — não editar à mão; será sobrescrito.",
  "format_version": 2,
  "git": {
-  "commit": "6b5425c47ba25282f73ac29f3cdbaa7d1a1d173f",
+  "commit": "4e389575f3b1c5e2dfa6444dc9097744573f3737",
   "branch": "main",
-  "data_commit": "2026-11-26T16:32:38-03:00",
+  "data_commit": "2026-11-26T16:39:47-03:00",
   "remote": "https://github.com/adm01-debug/Hello_V3",
   "ultimos_commits": [
+   {
+    "sha": "4e38957",
+    "data": "2026-11-26",
+    "assunto": "feat: vigia horario de cron com alerta no sino e card de saude (etapa 231) (#353)"
+   },
    {
     "sha": "6b5425c",
     "data": "2026-11-26",
@@ -126,14 +131,9 @@
     "sha": "bb76af5",
     "data": "2026-11-25",
     "assunto": "fix: ligar do cartao de contato e do retorno discam de verdade (#330)"
-   },
-   {
-    "sha": "89fede1",
-    "data": "2026-11-25",
-    "assunto": "fix: proteger gravacao de preferencias e callbacks contra duplo clique (#329)"
    }
   ],
-  "arquivos_mudados_7d": 1906,
+  "arquivos_mudados_7d": 1911,
   "pastas_mais_mudadas_30d": [
    {
     "pasta": "src/hooks/__tests__",
@@ -141,7 +141,7 @@
    },
    {
     "pasta": "docs/qa/05-PROGRESSO.md",
-    "mudancas": 150
+    "mudancas": 151
    },
    {
     "pasta": "src/components/calls",
@@ -160,16 +160,16 @@
     "mudancas": 53
    },
    {
+    "pasta": "src/pages/admin",
+    "mudancas": 38
+   },
+   {
     "pasta": "src/components/compliance",
     "mudancas": 37
    },
    {
     "pasta": "src/components/layout",
     "mudancas": 37
-   },
-   {
-    "pasta": "src/pages/admin",
-    "mudancas": 34
    },
    {
     "pasta": "src/pages/__tests__",
@@ -199,7 +199,7 @@
   "arquivos_mais_mudados_90d": [
    {
     "arquivo": "docs/qa/05-PROGRESSO.md",
-    "mudancas": 150
+    "mudancas": 151
    },
    {
     "arquivo": "docs/estado/funcionalidades-planejadas.md",
@@ -262,10 +262,6 @@
     "mudancas": 8
    },
    {
-    "arquivo": ".github/workflows/ci.yml",
-    "mudancas": 7
-   },
-   {
     "arquivo": "docs/edge-functions/README.md",
     "mudancas": 7
    },
@@ -275,6 +271,10 @@
    },
    {
     "arquivo": "src/hooks/useQueueMetrics.ts",
+    "mudancas": 7
+   },
+   {
+    "arquivo": "src/integrations/supabase/types.ts",
     "mudancas": 7
    },
    {
@@ -310,21 +310,21 @@
   ]
  },
  "contagens": {
-  "arquivos_total": 1812,
-  "arquivos_codigo": 1383,
-  "linhas_codigo": 184681,
+  "arquivos_total": 1817,
+  "arquivos_codigo": 1385,
+  "linhas_codigo": 184899,
   "rotas": 108,
   "rotas_http_backend": 11,
   "vistas_por_id": 0,
   "itens_menu": 98,
   "modulos": 83,
-  "componentes": 453,
+  "componentes": 454,
   "hooks": 201,
   "edge_functions": 99,
   "tabelas": 172,
-  "migrations": 253,
-  "cron_jobs": 12,
-  "testes": 444,
+  "migrations": 255,
+  "cron_jobs": 13,
+  "testes": 446,
   "workflows": 5,
   "scripts": 36,
   "docs_md": 121
@@ -496,7 +496,7 @@
   },
   "src/integrations": {
    "arquivos": 3,
-   "linhas": 8302
+   "linhas": 8319
   },
   "src/lib": {
    "arquivos": 184,
@@ -507,8 +507,8 @@
    "linhas": 47
   },
   "src/pages": {
-   "arquivos": 159,
-   "linhas": 24478
+   "arquivos": 161,
+   "linhas": 24679
   },
   "src/routes": {
    "arquivos": 4,
@@ -542,7 +542,7 @@
  "maiores_arquivos": [
   {
    "arquivo": "src/integrations/supabase/types.ts",
-   "linhas": 8239
+   "linhas": 8256
   },
   {
    "arquivo": "scripts/regras_negocio/generate.py",

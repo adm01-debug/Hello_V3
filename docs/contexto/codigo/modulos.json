@@ -2101,6 +2101,7 @@
     "get_agents_with_active_calls",
     "get_call_history_with_summaries",
     "get_call_volume_stats",
+    "get_cron_health",
     "get_dashboard_stats",
     "get_database_health_snapshot",
     "get_queue_stats",
@@ -4777,7 +4778,7 @@
    "modulo": "integrations/supabase",
    "arquivos": 2,
    "testes": 0,
-   "linhas": 8259,
+   "linhas": 8276,
    "itens_menu": [],
    "telas": [],
    "rotas_http": [],
@@ -6590,9 +6591,9 @@
   },
   {
    "modulo": "pages/admin",
-   "arquivos": 17,
-   "testes": 2,
-   "linhas": 2402,
+   "arquivos": 18,
+   "testes": 3,
+   "linhas": 2520,
    "itens_menu": [
     "Alertas de Segurança",
     "Auditoria de Segurança",
@@ -6618,7 +6619,7 @@
     "/admin/webhook-health"
    ],
    "rotas_http": [],
-   "componentes": 16,
+   "componentes": 17,
    "hooks_locais": [
     "useAlertPresets",
     "useAlertsExport",
@@ -6692,6 +6693,7 @@
    ],
    "rpcs": [
     "check_idle_indexes",
+    "get_cron_health",
     "get_database_health_snapshot",
     "get_top_slow_queries",
     "log_audit_event",
@@ -6731,6 +6733,7 @@
     ],
     "rpcs": [
      "check_idle_indexes",
+     "get_cron_health",
      "get_database_health_snapshot",
      "get_top_slow_queries",
      "log_index_drop_copy"
@@ -7415,6 +7418,7 @@
     "get_agents_with_active_calls",
     "get_call_history_with_summaries",
     "get_call_volume_stats",
+    "get_cron_health",
     "get_dashboard_stats",
     "get_database_health_snapshot",
     "get_queue_stats",

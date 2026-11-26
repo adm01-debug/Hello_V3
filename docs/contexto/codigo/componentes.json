@@ -1,7 +1,7 @@
 {
  "aviso": "GERADO AUTOMATICAMENTE por scripts/ai-context/gerar.mjs — não editar à mão; será sobrescrito.",
  "format_version": 2,
- "total": 453,
+ "total": 454,
  "orfaos": 13,
  "nomes_duplicados": {
   "KpiCards": [
@@ -4107,7 +4107,7 @@
    "hooks_locais": [],
    "tabelas": [],
    "edges": [],
-   "usado_por": 204,
+   "usado_por": 205,
    "orfao": false
   },
   {
@@ -4192,7 +4192,7 @@
    "hooks_locais": [],
    "tabelas": [],
    "edges": [],
-   "usado_por": 238,
+   "usado_por": 239,
    "orfao": false
   },
   {
@@ -4793,7 +4793,7 @@
    "hooks_locais": [],
    "tabelas": [],
    "edges": [],
-   "usado_por": 62,
+   "usado_por": 63,
    "orfao": false
   },
   {
@@ -5257,6 +5257,20 @@
    "orfao": false
   },
   {
+   "arquivo": "src/pages/admin/database-health/CronHealthCard.tsx",
+   "exports": [
+    "CronHealthCard"
+   ],
+   "export_default": null,
+   "linhas": 88,
+   "dominio": "pages/admin",
+   "hooks_locais": [],
+   "tabelas": [],
+   "edges": [],
+   "usado_por": 1,
+   "orfao": false
+  },
+  {
    "arquivo": "src/pages/admin/database-health/DropAuditCard.tsx",
    "exports": [
     "DropAuditCard"
@@ -5318,7 +5332,7 @@
     "DatabaseHealth"
    ],
    "export_default": "DatabaseHealth",
-   "linhas": 120,
+   "linhas": 135,
    "dominio": "pages/admin",
    "hooks_locais": [
     "usePageTitle"

@@ -1,8 +1,8 @@
 {
  "aviso": "GERADO AUTOMATICAMENTE por scripts/ai-context/gerar.mjs — não editar à mão; será sobrescrito.",
  "format_version": 2,
- "nos": 955,
- "arestas": 3811,
+ "nos": 956,
+ "arestas": 3816,
  "hubs": [
   {
    "arquivo": "src/integrations/supabase/client.ts",
@@ -14,11 +14,11 @@
   },
   {
    "arquivo": "src/components/ui/card.tsx",
-   "importado_por": 238
+   "importado_por": 239
   },
   {
    "arquivo": "src/components/ui/badge.tsx",
-   "importado_por": 204
+   "importado_por": 205
   },
   {
    "arquivo": "src/lib/logger.ts",
@@ -54,7 +54,7 @@
   },
   {
    "arquivo": "src/components/ui/skeleton.tsx",
-   "importado_por": 62
+   "importado_por": 63
   },
   {
    "arquivo": "supabase/functions/_shared/errors.ts",

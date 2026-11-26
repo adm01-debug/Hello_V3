@@ -1,6 +1,6 @@
 # 07 · REGRAS DE NEGÓCIO
 
-> Gerado automaticamente por AI Context Sync v1.3.2 · commit `6b5425c47b` · branch `main` · 2026-11-26 19:34 UTC
+> Gerado automaticamente por AI Context Sync v1.3.2 · commit `4e389575f3` · branch `main` · 2026-11-26 19:40 UTC
 > Não edite à mão — regras humanas vão em `manual/`.
 
 ## A. Regras escritas por humanos (`manual/` — prioridade máxima, nunca sobrescrito)
@@ -779,6 +779,7 @@ Erros lançados por funções SQL (`RAISE EXCEPTION` = regra de negócio no banc
 | `validate_parked_call` | Vaga % fora da faixa da órbita (%-%) | `supabase/migrations/20260726202218_619850bb-a4f2-4112-96d7-872649f70b37.sql` |
 | `enforce_optimistic_lock` | OPTIMISTIC_LOCK_CONFLICT | `supabase/migrations/20261122210000_optimistic_lock_audit_survives_rollback.sql` |
 | `edge_function_url` | segredo edge_functions_base_url ausente no Vault | `supabase/migrations/20261126100000_edge_function_urls_from_vault.sql` |
+| `get_cron_health` | apenas administradores podem consultar a saude do cron | `supabase/migrations/20261126170000_cron_watchdog.sql` |
 
 ## E. Estados, máquinas de estado e transições
 
@@ -1012,6 +1013,7 @@ _nenhum mapa explícito encontrado — transições só existem implicitamente n
 | `state` | `collapsed` | compara | `src/components/layout/AppSidebar.tsx`<br>`src/components/ui/sidebar.tsx` |
 | `state` | `expanded` | escreve | `src/components/ui/sidebar.tsx` |
 | `state` | `inactive` | compara | `src/hooks/useCallRecording.ts` |
+| `state` | `ok` | escreve | `src/pages/admin/database-health/types.ts` |
 | `state` | `open` | compara | `src/lib/bitrix/circuit-breaker.ts` |
 | `state` | `parked` | escreve | `src/lib/blf.ts` |
 | `state` | `recording` | compara | `src/components/calls/live-transcription/useLiveTranscription.ts`<br>`src/hooks/useVoiceCommand.ts` |
@@ -2209,6 +2211,12 @@ _nenhum item encontrado_
 | `WHERE started_at > now() - interval '15 minutes';` | `supabase/migrations/20260722213602_011fe9c6-e570-4180-be7a-d9a276c66f2e.sql` |
 | `AND created_at > now() - interval '14 days';` | `supabase/migrations/20260722213827_7ee185db-587f-4046-8507-474be04327a8.sql` |
 | `'host=%s port=5432 dbname=postgres user=optimistic_lock_writer password=%s sslmode=require connect_timeout=5',` | `supabase/migrations/20261122210000_optimistic_lock_audit_survives_rollback.sql` |
+| `AND now() - lr.start_time > GREATEST(interval '2 hours', make_interval(mins => (c.every_minutes * 3)::int))` | `supabase/migrations/20261126170000_cron_watchdog.sql` |
+| `DELETE FROM cron.job_run_details WHERE start_time < now() - interval '30 days';` | `supabase/migrations/20261126170000_cron_watchdog.sql` |
+| `ELSE interval '6 hours'` | `supabase/migrations/20261126170000_cron_watchdog.sql` |
+| `WHEN v_row.state = 'nunca_executou' THEN interval '24 hours'` | `supabase/migrations/20261126170000_cron_watchdog.sql` |
+| `WHERE d.start_time > now() - interval '14 days'` | `supabase/migrations/20261126170000_cron_watchdog.sql` |
+| `WHERE d.start_time > now() - interval '24 hours'` | `supabase/migrations/20261126170000_cron_watchdog.sql` |
 
 ### H.3 Limites de paginação
 
@@ -2689,7 +2697,7 @@ _nenhum item encontrado_
 | `admin` | `supabase/functions/data-lake-flush/index.ts` |
 | `admin` | `supabase/migrations/20261123000200_fix_has_role_oracle_and_debug_tables.sql` |
 
-## K. Testes como especificação (3786 testes em 419 arquivos — nomes completos em `context.json`)
+## K. Testes como especificação (3794 testes em 420 arquivos — nomes completos em `context.json`)
 
 | Arquivo | Testes | Exemplos do que o sistema DEVE fazer |
 |---|---|---|
@@ -2855,6 +2863,7 @@ _nenhum item encontrado_
 | `src/lib/__tests__/security-alerts-webhook-queue.test.ts` | 8 | security-alerts-webhook-queue · enqueues and loads items · caps queue at 50 entries · notifies subscribers on change … |
 | `src/lib/__tests__/security-alerts-webhook.property.test.ts` | 8 | sendExportWebhook — property-based (fast-check) · URL inválida sempre curto-circuita sem tentativas · 4xx não-retriável (exceto 408/429) ⇒ attempts === 1 · status retriável persistente ⇒ attempts === maxAttempts … |
 | `src/lib/__tests__/voice-command-history.test.ts` | 8 | voice-command-history · sanitiza qualquer entrada sem lançar e respeita o limite de tamanho · nunca excede o número máximo de entradas · faz dedupe case-insensitive mantendo o comando no topo … |
+| `src/pages/admin/__tests__/CronHealthCard.test.tsx` | 8 | CronHealthCard · mostra esqueleto enquanto carrega · avisa quando nao ha cron agendado · exibe job saudavel com cadencia e execucoes … |
 | `src/pages/roles/__tests__/useRoles.test.ts` | 8 | useRoles · carrega roles e enriquece com email/nome · mostra erro ao carregar falhar · addRole retorna false quando usuário não existe … |
 | `supabase/functions/_shared/__tests__/cors.test.ts` | 8 | cors: origem de producao (Vercel) e ecoada · cors: origem desconhecida nao recebe Access-Control-Allow-Origin · cors: subdominio arbitrario de lovable.app nao e aceito por padrao · cors: preview da Lovable em uso continua liberado pela lista … |
 | `supabase/functions/cleanup-lock-conflicts/__tests__/cron_auth_test.ts` | 8 | cron: aceita o bearer exato do Vault · cron: rejeita quando o secret nao esta configurado · cron: rejeita token errado de mesmo tamanho · cron: rejeita token com tamanho diferente … |
@@ -2992,8 +3001,7 @@ _nenhum item encontrado_
 | `src/components/call-history/__tests__/CallSessionsList.test.tsx` | 4 | CallSessionsList · avisa que a leitura falhou em vez de dizer que nao ha chamada · explica o vazio quando a leitura funcionou · com filtros aplicados, diz que o filtro esconde resultados e oferece limpar |
 | `src/components/calls/__tests__/ActiveCallBar.verificacaoVoz.test.tsx` | 4 | ActiveCallBar: verificacao de voz ao vivo (etapa 155) · verifica a voz da sessao ativa e mostra o veredito na barra · avisa na barra quando a voz nao confere com o padrao cadastrado · nao deixa verificar sem sessao de banco gravada |
 | `src/components/calls/softphone/__tests__/ActiveCallDisplay.saidaAudio.test.tsx` | 4 | ActiveCallDisplay — saída de áudio da chamada · oferece a escolha de saída na chamada SIP e aplica o sink no áudio remoto · não mostra o seletor fora da chamada SIP · não mostra o seletor quando o navegador não suporta trocar a saída |
-| `src/components/calls/softphone/__tests__/DialpadTab.a11y.test.tsx` | 4 | DialpadTab - rótulo acessível no apagar (A-123) · expõe  · ConferenceSection - rótulo acessível ao remover participante (A-123) · identifica o participante que será removido |
-| … +119 linhas — lista completa em `context.json` | | |
+| … +120 linhas — lista completa em `context.json` | | |
 
 ## L. Eventos de webhook tratados (contratos com sistemas externos)
 

@@ -8,7 +8,7 @@
   ],
   "componentes": [
    "src/components (318)",
-   "src/pages (128)",
+   "src/pages (129)",
    "src/contexts (5)"
   ],
   "hooks": [
@@ -22,7 +22,7 @@
    "scripts/regras_negocio (2)"
   ],
   "testes": [
-   "co-localizado (__tests__) (402)",
+   "co-localizado (__tests__) (403)",
    "tests/ (9)",
    "e2e/ (7)"
   ],
@@ -48,7 +48,7 @@
  },
  "barrels_index": 17,
  "extensao_componentes": [
-  ".tsx (453)"
+  ".tsx (454)"
  ],
  "alias_imports": {
   "(raiz)": {
@@ -59,11 +59,11 @@
  "commits": {
   "convencao": "conventional commits (observado)",
   "exemplos": [
+   "feat: vigia horario de cron com alerta no sino e card de saude (etapa 231) (#353)",
    "test: sonda permanente da apuracao da LGPD e do ledger (etapa 132) (#369)",
    "fix: meta atingida vira notificacao do usuario, nao alerta de chamada (etapa 127) (#367)",
    "feat: tela de violacoes de SLA com atraso e filtros (etapa 179) (#352)",
-   "feat: registra os erros do navegador em client_errors com tela admin (etapa 230) (#351)",
-   "feat: edicao e trilha de auditoria na lista DNC (etapa 175) (#350)"
+   "feat: registra os erros do navegador em client_errors com tela admin (etapa 230) (#351)"
   ]
  },
  "pr_template": null,

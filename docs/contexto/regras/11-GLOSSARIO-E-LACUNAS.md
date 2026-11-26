@@ -1,6 +1,6 @@
 # 11 · GLOSSÁRIO, DADOS DE REFERÊNCIA E LACUNAS
 
-> Gerado automaticamente por AI Context Sync v1.3.2 · commit `6b5425c47b` · branch `main` · 2026-11-26 19:34 UTC
+> Gerado automaticamente por AI Context Sync v1.3.2 · commit `4e389575f3` · branch `main` · 2026-11-26 19:40 UTC
 > Não edite à mão — regras humanas vão em `manual/`.
 
 ## Glossário do domínio (entidades do sistema)
@@ -336,6 +336,7 @@
 | status | valor `collapsed` para `state` usado no código não existe em nenhum enum do banco/TS | `compara:src/components/layout/AppSidebar.tsx`<br>`compara:src/components/ui/sidebar.tsx` |
 | status | valor `expanded` para `state` usado no código não existe em nenhum enum do banco/TS | `escreve:src/components/ui/sidebar.tsx` |
 | status | valor `suspended` para `state` usado no código não existe em nenhum enum do banco/TS | `compara:src/hooks/useCriticalAlertNotifications.ts`<br>`compara:src/hooks/useHoldSoundAlert.ts`<br>`compara:src/lib/incoming-call-alert.ts` |
+| status | valor `ok` para `state` usado no código não existe em nenhum enum do banco/TS | `escreve:src/pages/admin/database-health/types.ts` |
 | status | valor `vip` para `relationship_status` usado no código não existe em nenhum enum do banco/TS | `compara:src/hooks/useContactInsights.ts` |
 | coluna | coluna `adherence_percent` usada no código não existe no schema de `agent_weekly_stats` |  |
 | coluna | coluna `avg_call_score` usada no código não existe no schema de `agent_weekly_stats` |  |

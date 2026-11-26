@@ -1,6 +1,6 @@
 # 10 · ACESSO E SEGURANÇA — quem pode o quê
 
-> Gerado automaticamente por AI Context Sync v1.3.2 · commit `6b5425c47b` · branch `main` · 2026-11-26 19:34 UTC
+> Gerado automaticamente por AI Context Sync v1.3.2 · commit `4e389575f3` · branch `main` · 2026-11-26 19:40 UTC
 > Não edite à mão — regras humanas vão em `manual/`.
 
 ## Perfis / roles identificados
@@ -191,7 +191,7 @@
 
 > `—` com RLS ligado = ninguém além de service_role. `sem RLS` = qualquer chave anon lê/escreve tudo.
 
-## Onde o RLS é IGNORADO (service_role) — 135 arquivo(s)
+## Onde o RLS é IGNORADO (service_role) — 137 arquivo(s)
 
 - `scripts/ai-context/cenarios.mjs`
 - `scripts/ai-context/gerar.unit.mjs`
@@ -325,6 +325,8 @@
 - `supabase/migrations/20261126101000_revoke_anon_login_rpcs.sql`
 - `supabase/migrations/20261126120000_deal_pipeline_snapshots.sql`
 - `supabase/migrations/20261126140000_client_errors.sql`
+- `supabase/migrations/20261126170000_cron_watchdog.sql`
+- `supabase/migrations/20261126190000_cron_watchdog_privilegios.sql`
 - `supabase/tests/login_lockout_acl_rls_test.sql`
 - `supabase/tests/redaction_log_rls_test.sql`
 - `supabase/tests/webhook_secrets_rls_test.sql`
@@ -340,6 +342,7 @@
 - `can_access_agent_data`
 - `check_all_tables_rls_status`
 - `check_calling_hours`
+- `check_cron_health`
 - `check_dnc`
 - `check_idle_indexes`
 - `check_ip_allowed`
@@ -352,6 +355,7 @@
 - `cleanup_expired_challenges`
 - `cleanup_old_data`
 - `cleanup_old_logs`
+- `cron_health_rows`
 - `dnc_track_removal`
 - `edge_function_url`
 - `enforce_optimistic_lock`
@@ -363,6 +367,7 @@
 - `get_call_history_with_summaries`
 - `get_call_queues_overview`
 - `get_call_volume_stats`
+- `get_cron_health`
 - `get_dashboard_stats`
 - `get_database_health_snapshot`
 - `get_profile_role`
@@ -434,7 +439,7 @@ Middleware matcher (Next.js): nenhum
 | Ação | Para/De | Privilégios | Objetos |
 |---|---|---|---|
 | grant | anon, authenticated | execute | `check_login_lockout`, `record_failed_login`, `record_successful_login`, `check_ip_allowed` |
-| grant | authenticated | execute | `log_audit_event`, `get_dashboard_stats`, `get_queue_stats`, `log_audit_event`, `get_agent_performance`, `get_call_history_with_summaries`, `get_call_volume_stats`, `get_agents_with_active_calls`, `check_all_tables_rls_status`, `has_role`, `has_permission`, `get_user_role`, `get_user_agent_name`, `get_auth_agent_id`, `get_user_agent_id` … +18 |
+| grant | authenticated | execute | `log_audit_event`, `get_dashboard_stats`, `get_queue_stats`, `log_audit_event`, `get_agent_performance`, `get_call_history_with_summaries`, `get_call_volume_stats`, `get_agents_with_active_calls`, `check_all_tables_rls_status`, `has_role`, `has_permission`, `get_user_role`, `get_user_agent_name`, `get_auth_agent_id`, `get_user_agent_id` … +20 |
 | grant | authenticated | insert | `client_errors` |
 | grant | authenticated | select | `financial_impact_daily`, `index_drop_audit`, `deal_pipeline_snapshots` |
 | grant | authenticated | select, insert | `webhook_flush_metrics` |
@@ -446,20 +451,22 @@ Middleware matcher (Next.js): nenhum
 | grant | postgres | all privileges | `cron` |
 | grant | postgres, service_role | execute | `edge_function_url` |
 | grant | service_role | all | `deal_revenue_snapshots`, `shift_swap_suggestions`, `data_lake_exports`, `index_drop_audit`, `webhook_flush_metrics`, `dialer_favorites`, `call_queues`, `call_queue_members`, `ring_groups`, `ring_group_members`, `queue_audio_prompts`, `call_park_orbits`, `parked_calls`, `deal_pipeline_snapshots`, `client_errors` |
-| grant | service_role | execute | `check_all_tables_rls_status`, `log_rls_event`, `apply_predictive_pacing`, `snapshot_deals_daily`, `trigger_auto_scorecard`, `apply_predictive_pacing`, `check_ip_in_cidr`, `check_rate_limit`, `check_rls_enabled`, `cleanup_expired_challenges`, `snapshot_deals_daily` |
+| grant | service_role | execute | `check_all_tables_rls_status`, `log_rls_event`, `apply_predictive_pacing`, `snapshot_deals_daily`, `trigger_auto_scorecard`, `apply_predictive_pacing`, `check_ip_in_cidr`, `check_rate_limit`, `check_rls_enabled`, `cleanup_expired_challenges`, `snapshot_deals_daily`, `check_cron_health`, `check_cron_health` |
 | grant | service_role | select | `index_usage`, `unused_indexes`, `migration_status`, `schema_migrations`, `migration_rollbacks` |
-| revoke | PUBLIC | all | `log_index_drop_copy`, `expire_parked_calls` |
+| revoke | PUBLIC | all | `log_index_drop_copy`, `expire_parked_calls`, `cron_health_rows` |
 | revoke | PUBLIC | execute | `get_dashboard_stats`, `get_queue_stats`, `get_call_history_with_summaries`, `get_call_volume_stats`, `get_agents_with_active_calls`, `cleanup_old_logs`, `log_rls_event` |
-| revoke | PUBLIC, anon | all | `calculate_predictive_pace`, `recalc_deal_health` |
+| revoke | PUBLIC, anon | all | `calculate_predictive_pace`, `recalc_deal_health`, `get_cron_health`, `get_cron_health` |
 | revoke | PUBLIC, anon | execute | `apply_migration`, `audit_role_change`, `audit_table_change`, `bridge_voip_alert_to_notification`, `check_suspicious_activity`, `check_table_bloat`, `cleanup_old_data`, `cleanup_old_logs`, `enforce_optimistic_lock`, `ensure_single_default_filter`, `get_call_queues_overview`, `handle_kb_article_change`, `handle_kb_article_history`, `handle_new_user`, `log_critical_rls_event` … +59 |
-| revoke | PUBLIC, anon, authenticated | all | `apply_predictive_pacing`, `snapshot_deals_daily`, `edge_function_url`, `snapshot_deals_daily` |
+| revoke | PUBLIC, anon, authenticated | all | `apply_predictive_pacing`, `snapshot_deals_daily`, `edge_function_url`, `snapshot_deals_daily`, `check_cron_health`, `check_cron_health` |
 | revoke | PUBLIC, anon, authenticated | execute | `trigger_auto_scorecard` |
+| revoke | PUBLIC, anon, authenticated, service_role | all | `cron_health_rows` |
 | revoke | anon | all | `financial_impact_daily` |
 | revoke | anon | execute | `cleanup_old_logs` |
 | revoke | anon | update, delete | `rate_limit_logs` |
 | revoke | anon, PUBLIC | execute | `get_agent_financial_leaderboard`, `get_agent_financial_leaderboard` |
 | revoke | anon, authenticated | all | `index_usage`, `unused_indexes`, `migration_status`, `schema_migrations`, `migration_rollbacks` |
 | revoke | anon, authenticated | execute | `cleanup_old_data`, `check_all_tables_rls_status`, `cleanup_expired_challenges`, `check_all_tables_rls_status`, `cleanup_old_data`, `cleanup_expired_challenges`, `check_rls_enabled` |
+| revoke | anon, authenticated, service_role | all | `cron_health_rows` |
 | revoke | authenticated | execute | `apply_migration`, `audit_role_change`, `audit_table_change`, `bridge_voip_alert_to_notification`, `check_suspicious_activity`, `check_table_bloat`, `cleanup_old_data`, `cleanup_old_logs`, `enforce_optimistic_lock`, `ensure_single_default_filter`, `handle_kb_article_change`, `handle_kb_article_history`, `handle_new_user`, `log_critical_rls_event`, `notify_bloat_hotspots` … +24 |
 | revoke | public | all | `get_agent_financial_leaderboard` |
 | revoke | public, anon, authenticated | execute | `dnc_track_removal` |

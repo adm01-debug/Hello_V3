@@ -307,6 +307,7 @@
    ],
    "rpcs": [
     "check_idle_indexes",
+    "get_cron_health",
     "get_database_health_snapshot",
     "get_top_slow_queries",
     "log_index_drop_copy"
@@ -315,7 +316,7 @@
    "canais_realtime": [],
    "flags": [],
    "papeis": [],
-   "arquivos_puxados": 16
+   "arquivos_puxados": 17
   },
   {
    "protegida": false,

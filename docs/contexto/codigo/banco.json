@@ -8,7 +8,7 @@
   "supabase/migrations",
   "typeorm"
  ],
- "migrations": 253,
+ "migrations": 255,
  "seeds": [],
  "avisos": [
   "22 bloco(s) com DDL dinâmico (EXECUTE format/...) não modelado — policies/colunas criadas dinamicamente podem faltar; confira no banco vivo"
@@ -58,6 +58,7 @@
   "cascade_user_deletion",
   "check_all_tables_rls_status",
   "check_calling_hours",
+  "check_cron_health",
   "check_dnc",
   "check_idle_indexes",
   "check_ip_allowed",
@@ -70,6 +71,7 @@
   "cleanup_expired_challenges",
   "cleanup_old_data",
   "cleanup_old_logs",
+  "cron_health_rows",
   "dnc_track_removal",
   "edge_function_url",
   "enforce_optimistic_lock",
@@ -82,6 +84,7 @@
   "get_call_history_with_summaries",
   "get_call_queues_overview",
   "get_call_volume_stats",
+  "get_cron_health",
   "get_dashboard_stats",
   "get_database_health_snapshot",
   "get_profile_role",
@@ -1004,6 +1007,11 @@
    "agenda": "45 3 * * *",
    "migration": "20261125220000_recordings_retention_cron.sql",
    "chama_edge": "cleanup-recordings"
+  },
+  {
+   "nome": "cron-watchdog-hourly",
+   "agenda": "5 * * * *",
+   "migration": "20261126170000_cron_watchdog.sql"
   },
   {
    "nome": "daily-cleanup-old-logs",
@@ -21685,6 +21693,11 @@
   },
   {
    "nome": "get_call_volume_stats",
+   "definida": true,
+   "usada_em": 1
+  },
+  {
+   "nome": "get_cron_health",
    "definida": true,
    "usada_em": 1
   },

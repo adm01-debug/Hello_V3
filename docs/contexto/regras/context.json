@@ -1,15 +1,15 @@
 {
  "meta": {
-  "sha": "6b5425c47ba25282f73ac29f3cdbaa7d1a1d173f",
+  "sha": "4e389575f3b1c5e2dfa6444dc9097744573f3737",
   "branch": "main",
   "remote": "https://github.com/adm01-debug/Hello_V3",
-  "generated_at": "2026-11-26 19:34 UTC",
-  "files_total": 1859,
-  "code_files": 1655,
-  "code_lines": 203284
+  "generated_at": "2026-11-26 19:40 UTC",
+  "files_total": 1864,
+  "code_files": 1660,
+  "code_lines": 203936
  },
  "version": "1.3.2",
- "facts_hash": "22a6e4673cef854b",
+ "facts_hash": "6cf5ea995ff93d96",
  "stack": {
   "frameworks": [
    "React + Vite",
@@ -168,9 +168,9 @@
   ],
   "package_manager": "bun",
   "languages": {
-   ".tsx": 678,
+   ".tsx": 680,
    ".ts": 670,
-   ".sql": 271,
+   ".sql": 274,
    ".mjs": 29,
    ".py": 5,
    ".js": 2
@@ -22510,6 +22510,55 @@
      "v_email"
     ]
    },
+   "cron_health_rows": {
+    "args": "",
+    "returns": "TABLE (\n  jobname text,\n  schedule text,\n  active boolean,\n  last_status text,\n  last_start timestamptz,\n  last_end timestamptz,\n  last_duration_seconds numeric,\n  runs_24h bigint,\n  failures_24h bigint,\n  hours_since_last numeric,\n  expected_every_minutes numeric,\n  state text\n)",
+    "lang": "sql",
+    "src": "supabase/migrations/20261126170000_cron_watchdog.sql",
+    "security_definer": true,
+    "search_path": true,
+    "body": "WITH gaps AS ( SELECT d.jobid, EXTRACT(EPOCH FROM (d.start_time - lag(d.start_time) OVER (PARTITION BY d.jobid ORDER BY d.start_time))) / 60 AS gap_minutes FROM cron.job_run_details d WHERE d.start_time > now() - interval '14 days' ), cadence AS ( SELECT g.jobid, percentile_cont(0.5) WITHIN GROUP (ORDER BY g.gap_minutes::double precision) AS every_minutes FROM gaps g WHERE g.gap_minutes IS NOT NULL AND g.gap_minutes > 0 GROUP BY g.jobid ), last_run AS ( SELECT DISTINCT ON (d.jobid) d.jobid, d.status, d.start_time, d.end_time FROM cron.job_run_details d ORDER BY d.jobid, d.start_time DESC ), agg AS ( SELECT d.jobid, count(*) AS runs_24h, count(*) FILTER (WHERE d.status <> 'succeeded') AS fail …",
+    "raises": [],
+    "tables": [
+     "agg",
+     "cadence",
+     "cron",
+     "gaps",
+     "last_run"
+    ]
+   },
+   "get_cron_health": {
+    "args": "",
+    "returns": "TABLE (\n  jobname text,\n  schedule text,\n  active boolean,\n  last_status text,\n  last_start timestamptz,\n  last_end timestamptz,\n  last_duration_seconds numeric,\n  runs_24h bigint,\n  failures_24h bigint,\n  hours_since_last numeric,\n  expected_every_minutes numeric,\n  state text\n)",
+    "lang": "plpgsql",
+    "src": "supabase/migrations/20261126170000_cron_watchdog.sql",
+    "security_definer": true,
+    "search_path": true,
+    "body": "BEGIN IF NOT public.is_admin() THEN RAISE EXCEPTION 'apenas administradores podem consultar a saude do cron' USING ERRCODE = '42501'; END IF; RETURN QUERY SELECT * FROM public.cron_health_rows(); END;",
+    "raises": [
+     "apenas administradores podem consultar a saude do cron"
+    ],
+    "tables": [
+     "cron_health_rows"
+    ]
+   },
+   "check_cron_health": {
+    "args": "",
+    "returns": "jsonb",
+    "lang": "plpgsql",
+    "src": "supabase/migrations/20261126170000_cron_watchdog.sql",
+    "security_definer": true,
+    "search_path": true,
+    "body": "DECLARE v_row record; v_admin record; v_jobs integer := 0; v_notified integer := 0; v_deleted bigint := 0; v_detalhe text; BEGIN FOR v_row IN SELECT * FROM public.cron_health_rows() WHERE state IN ('falhando', 'parado', 'nunca_executou') LOOP v_jobs := v_jobs + 1; CONTINUE WHEN EXISTS ( SELECT 1 FROM public.notifications WHERE source_type = 'cron_health' AND source_id = v_row.jobname AND created_at > now() - CASE WHEN v_row.state = 'nunca_executou' THEN interval '24 hours' ELSE interval '6 hours' END ); v_detalhe := CASE v_row.state WHEN 'falhando' THEN 'A última execução falhou (' || COALESCE(v_row.last_status, 'sem status') || ')' || CASE WHEN v_row.failures_24h > 0 THEN ' — ' || v_row.fai …",
+    "raises": [],
+    "tables": [
+     "cron",
+     "cron_health_rows",
+     "notifications",
+     "user_profiles",
+     "user_roles"
+    ]
+   },
    "graphql": {
     "args": "",
     "returns": "?",
@@ -25966,6 +26015,12 @@
     "schedule": "0 3 * * *",
     "body": "SELECT net.http_post( url := 'https://cfmlmcdyjuotqobjapng.supabase.co/functions/v1/data-lake-flush', headers := jsonb_build_object( 'Content-Type', 'application/json', 'Authorization', 'Bearer ' || ( SELECT decrypted_secret FROM vault.decrypted_secrets WHERE name = 'data_lake_cron_token' ) ), body …",
     "src": "supabase/migrations/20261122180000_data_lake_flush_cron_token.sql"
+   },
+   {
+    "job": "cron-watchdog-hourly",
+    "schedule": "5 * * * *",
+    "body": "SELECT public.check_cron_health();",
+    "src": "supabase/migrations/20261126170000_cron_watchdog.sql"
    }
   ],
   "views": {
@@ -26244,9 +26299,12 @@
    "supabase/migrations/20261126120000_deal_pipeline_snapshots.sql",
    "supabase/migrations/20261126130000_dnc_removal_audit.sql",
    "supabase/migrations/20261126140000_client_errors.sql",
+   "supabase/migrations/20261126170000_cron_watchdog.sql",
+   "supabase/migrations/20261126190000_cron_watchdog_privilegios.sql",
    "supabase/tests/calling_hours_fail_closed_rls_test.sql",
    "supabase/tests/client_errors_rls_test.sql",
    "supabase/tests/cron_credentials_rls_test.sql",
+   "supabase/tests/cron_watchdog_rls_test.sql",
    "supabase/tests/deal_pipeline_snapshots_rls_test.sql",
    "supabase/tests/dnc_removal_audit_rls_test.sql",
    "supabase/tests/geo_write_policies_rls_test.sql",
@@ -28587,6 +28645,94 @@
     "objkind": "table",
     "roles": "service_role",
     "src": "supabase/migrations/20261126140000_client_errors.sql"
+   },
+   {
+    "kind": "revoke",
+    "privs": "all",
+    "object": "cron_health_rows",
+    "objkind": "function",
+    "roles": "PUBLIC",
+    "src": "supabase/migrations/20261126170000_cron_watchdog.sql"
+   },
+   {
+    "kind": "revoke",
+    "privs": "all",
+    "object": "cron_health_rows",
+    "objkind": "function",
+    "roles": "anon, authenticated, service_role",
+    "src": "supabase/migrations/20261126170000_cron_watchdog.sql"
+   },
+   {
+    "kind": "revoke",
+    "privs": "all",
+    "object": "get_cron_health",
+    "objkind": "function",
+    "roles": "PUBLIC, anon",
+    "src": "supabase/migrations/20261126170000_cron_watchdog.sql"
+   },
+   {
+    "kind": "grant",
+    "privs": "execute",
+    "object": "get_cron_health",
+    "objkind": "function",
+    "roles": "authenticated",
+    "src": "supabase/migrations/20261126170000_cron_watchdog.sql"
+   },
+   {
+    "kind": "revoke",
+    "privs": "all",
+    "object": "check_cron_health",
+    "objkind": "function",
+    "roles": "PUBLIC, anon, authenticated",
+    "src": "supabase/migrations/20261126170000_cron_watchdog.sql"
+   },
+   {
+    "kind": "grant",
+    "privs": "execute",
+    "object": "check_cron_health",
+    "objkind": "function",
+    "roles": "service_role",
+    "src": "supabase/migrations/20261126170000_cron_watchdog.sql"
+   },
+   {
+    "kind": "revoke",
+    "privs": "all",
+    "object": "cron_health_rows",
+    "objkind": "function",
+    "roles": "PUBLIC, anon, authenticated, service_role",
+    "src": "supabase/migrations/20261126190000_cron_watchdog_privilegios.sql"
+   },
+   {
+    "kind": "revoke",
+    "privs": "all",
+    "object": "get_cron_health",
+    "objkind": "function",
+    "roles": "PUBLIC, anon",
+    "src": "supabase/migrations/20261126190000_cron_watchdog_privilegios.sql"
+   },
+   {
+    "kind": "grant",
+    "privs": "execute",
+    "object": "get_cron_health",
+    "objkind": "function",
+    "roles": "authenticated",
+    "src": "supabase/migrations/20261126190000_cron_watchdog_privilegios.sql"
+   },
+   {
+    "kind": "revoke",
+    "privs": "all",
+    "object": "check_cron_health",
+    "objkind": "function",
+    "roles": "PUBLIC, anon, authenticated",
+    "src": "supabase/migrations/20261126190000_cron_watchdog_privilegios.sql"
+   },
+   {
+    "kind": "grant",
+    "privs": "execute",
+    "object": "check_cron_health",
+    "objkind": "function",
+    "roles": "service_role",
+    "src": "supabase/migrations/20261126190000_cron_watchdog_privilegios.sql"
    }
   ],
   "raises": [
@@ -28744,6 +28890,11 @@
     "function": "edge_function_url",
     "msg": "segredo edge_functions_base_url ausente no Vault",
     "src": "supabase/migrations/20261126100000_edge_function_urls_from_vault.sql"
+   },
+   {
+    "function": "get_cron_health",
+    "msg": "apenas administradores podem consultar a saude do cron",
+    "src": "supabase/migrations/20261126170000_cron_watchdog.sql"
    }
   ],
   "seed": [
@@ -32989,6 +33140,11 @@
     "file": "scripts/regras_negocio/test_generate.py"
    },
    {
+    "kind": "cron (código)",
+    "detail": "0 * * * *",
+    "file": "src/pages/admin/__tests__/CronHealthCard.test.tsx"
+   },
+   {
     "kind": "GitHub Actions cron",
     "detail": "3 * * * *",
     "file": ".github/workflows/contexto.yml"
@@ -34764,7 +34920,7 @@
   {
    "module": "src/integrations",
    "files": 3,
-   "lines": 8302,
+   "lines": 8319,
    "tables": [],
    "exports": [
     "index.ts: lovable",
@@ -34960,8 +35116,8 @@
   },
   {
    "module": "src/pages",
-   "files": 159,
-   "lines": 24478,
+   "files": 161,
+   "lines": 24679,
    "tables": [
     "audit_logs",
     "battle_card_triggers",
@@ -35040,6 +35196,7 @@
    ],
    "docs": [
     "ClientErrors.test.tsx: Etapa 230 (A-097): a tela de erros do cliente lista, filtra e resolve.",
+    "CronHealthCard.test.tsx: Etapa 231 - card de saude dos crons agendados na pagina de saude do banco.",
     "SloDashboard.meta.test.tsx: Etapa 170 - o painel admin nao declara meta propria: exibe a que a edge devolve."
    ],
    "deps": [
@@ -35427,8 +35584,8 @@
   },
   {
    "module": "supabase/migrations",
-   "files": 253,
-   "lines": 16183,
+   "files": 255,
+   "lines": 16452,
    "tables": [],
    "exports": [],
    "docs": [],
@@ -35519,8 +35676,8 @@
   },
   {
    "module": "supabase/tests",
-   "files": 16,
-   "lines": 2209,
+   "files": 17,
+   "lines": 2374,
    "tables": [],
    "exports": [],
    "docs": [],
@@ -35530,6 +35687,7 @@
     "supabase/tests/calling_hours_fail_closed_rls_test.sql",
     "supabase/tests/client_errors_rls_test.sql",
     "supabase/tests/cron_credentials_rls_test.sql",
+    "supabase/tests/cron_watchdog_rls_test.sql",
     "supabase/tests/deal_pipeline_snapshots_rls_test.sql",
     "supabase/tests/dnc_removal_audit_rls_test.sql",
     "supabase/tests/geo_write_policies_rls_test.sql",
@@ -39064,6 +39222,9 @@
    ],
    "get_call_volume_stats": [
     "src/hooks/useDashboardData.ts"
+   ],
+   "get_cron_health": [
+    "src/pages/admin/DatabaseHealth.tsx"
    ],
    "get_dashboard_stats": [
     "src/hooks/useDashboardData.ts"
@@ -56110,6 +56271,12 @@
     "kind": "compara"
    },
    {
+    "file": "src/pages/admin/database-health/types.ts",
+    "field": "state",
+    "value": "ok",
+    "kind": "escreve"
+   },
+   {
     "file": "src/pages/roles/RoleAuditTrail.tsx",
     "field": "role",
     "value": "string",
@@ -58604,6 +58771,30 @@
    {
     "file": "supabase/migrations/20261122210000_optimistic_lock_audit_survives_rollback.sql",
     "line": "'host=%s port=5432 dbname=postgres user=optimistic_lock_writer password=%s sslmode=require connect_timeout=5',"
+   },
+   {
+    "file": "supabase/migrations/20261126170000_cron_watchdog.sql",
+    "line": "AND now() - lr.start_time > GREATEST(interval '2 hours', make_interval(mins => (c.every_minutes * 3)::int))"
+   },
+   {
+    "file": "supabase/migrations/20261126170000_cron_watchdog.sql",
+    "line": "DELETE FROM cron.job_run_details WHERE start_time < now() - interval '30 days';"
+   },
+   {
+    "file": "supabase/migrations/20261126170000_cron_watchdog.sql",
+    "line": "ELSE interval '6 hours'"
+   },
+   {
+    "file": "supabase/migrations/20261126170000_cron_watchdog.sql",
+    "line": "WHEN v_row.state = 'nunca_executou' THEN interval '24 hours'"
+   },
+   {
+    "file": "supabase/migrations/20261126170000_cron_watchdog.sql",
+    "line": "WHERE d.start_time > now() - interval '14 days'"
+   },
+   {
+    "file": "supabase/migrations/20261126170000_cron_watchdog.sql",
+    "line": "WHERE d.start_time > now() - interval '24 hours'"
    }
   ],
   "percents": [
@@ -72418,6 +72609,38 @@
     "name": "filtro por rota e recarregar chamam o hook"
    },
    {
+    "file": "src/pages/admin/__tests__/CronHealthCard.test.tsx",
+    "name": "CronHealthCard"
+   },
+   {
+    "file": "src/pages/admin/__tests__/CronHealthCard.test.tsx",
+    "name": "mostra esqueleto enquanto carrega"
+   },
+   {
+    "file": "src/pages/admin/__tests__/CronHealthCard.test.tsx",
+    "name": "avisa quando nao ha cron agendado"
+   },
+   {
+    "file": "src/pages/admin/__tests__/CronHealthCard.test.tsx",
+    "name": "exibe job saudavel com cadencia e execucoes"
+   },
+   {
+    "file": "src/pages/admin/__tests__/CronHealthCard.test.tsx",
+    "name": "marca job falhando e conta as falhas de 24h"
+   },
+   {
+    "file": "src/pages/admin/__tests__/CronHealthCard.test.tsx",
+    "name": "marca job parado pelo tempo desde a ultima execucao"
+   },
+   {
+    "file": "src/pages/admin/__tests__/CronHealthCard.test.tsx",
+    "name": "trata job inativo e job que nunca executou"
+   },
+   {
+    "file": "src/pages/admin/__tests__/CronHealthCard.test.tsx",
+    "name": "explica o criterio de falhando e parado"
+   },
+   {
     "file": "src/pages/admin/__tests__/SloDashboard.meta.test.tsx",
     "name": "SloDashboard - meta de SLO"
    },
@@ -82437,6 +82660,55 @@
      "v_email"
     ]
    },
+   "cron_health_rows": {
+    "args": "",
+    "returns": "TABLE (\n  jobname text,\n  schedule text,\n  active boolean,\n  last_status text,\n  last_start timestamptz,\n  last_end timestamptz,\n  last_duration_seconds numeric,\n  runs_24h bigint,\n  failures_24h bigint,\n  hours_since_last numeric,\n  expected_every_minutes numeric,\n  state text\n)",
+    "lang": "sql",
+    "src": "supabase/migrations/20261126170000_cron_watchdog.sql",
+    "security_definer": true,
+    "search_path": true,
+    "body": "WITH gaps AS ( SELECT d.jobid, EXTRACT(EPOCH FROM (d.start_time - lag(d.start_time) OVER (PARTITION BY d.jobid ORDER BY d.start_time))) / 60 AS gap_minutes FROM cron.job_run_details d WHERE d.start_time > now() - interval '14 days' ), cadence AS ( SELECT g.jobid, percentile_cont(0.5) WITHIN GROUP (ORDER BY g.gap_minutes::double precision) AS every_minutes FROM gaps g WHERE g.gap_minutes IS NOT NULL AND g.gap_minutes > 0 GROUP BY g.jobid ), last_run AS ( SELECT DISTINCT ON (d.jobid) d.jobid, d.status, d.start_time, d.end_time FROM cron.job_run_details d ORDER BY d.jobid, d.start_time DESC ), agg AS ( SELECT d.jobid, count(*) AS runs_24h, count(*) FILTER (WHERE d.status <> 'succeeded') AS fail …",
+    "raises": [],
+    "tables": [
+     "agg",
+     "cadence",
+     "cron",
+     "gaps",
+     "last_run"
+    ]
+   },
+   "get_cron_health": {
+    "args": "",
+    "returns": "TABLE (\n  jobname text,\n  schedule text,\n  active boolean,\n  last_status text,\n  last_start timestamptz,\n  last_end timestamptz,\n  last_duration_seconds numeric,\n  runs_24h bigint,\n  failures_24h bigint,\n  hours_since_last numeric,\n  expected_every_minutes numeric,\n  state text\n)",
+    "lang": "plpgsql",
+    "src": "supabase/migrations/20261126170000_cron_watchdog.sql",
+    "security_definer": true,
+    "search_path": true,
+    "body": "BEGIN IF NOT public.is_admin() THEN RAISE EXCEPTION 'apenas administradores podem consultar a saude do cron' USING ERRCODE = '42501'; END IF; RETURN QUERY SELECT * FROM public.cron_health_rows(); END;",
+    "raises": [
+     "apenas administradores podem consultar a saude do cron"
+    ],
+    "tables": [
+     "cron_health_rows"
+    ]
+   },
+   "check_cron_health": {
+    "args": "",
+    "returns": "jsonb",
+    "lang": "plpgsql",
+    "src": "supabase/migrations/20261126170000_cron_watchdog.sql",
+    "security_definer": true,
+    "search_path": true,
+    "body": "DECLARE v_row record; v_admin record; v_jobs integer := 0; v_notified integer := 0; v_deleted bigint := 0; v_detalhe text; BEGIN FOR v_row IN SELECT * FROM public.cron_health_rows() WHERE state IN ('falhando', 'parado', 'nunca_executou') LOOP v_jobs := v_jobs + 1; CONTINUE WHEN EXISTS ( SELECT 1 FROM public.notifications WHERE source_type = 'cron_health' AND source_id = v_row.jobname AND created_at > now() - CASE WHEN v_row.state = 'nunca_executou' THEN interval '24 hours' ELSE interval '6 hours' END ); v_detalhe := CASE v_row.state WHEN 'falhando' THEN 'A última execução falhou (' || COALESCE(v_row.last_status, 'sem status') || ')' || CASE WHEN v_row.failures_24h > 0 THEN ' — ' || v_row.fai …",
+    "raises": [],
+    "tables": [
+     "cron",
+     "cron_health_rows",
+     "notifications",
+     "user_profiles",
+     "user_roles"
+    ]
+   },
    "graphql": {
     "args": "",
     "returns": "?",
@@ -82616,6 +82888,11 @@
     "function": "edge_function_url",
     "msg": "segredo edge_functions_base_url ausente no Vault",
     "src": "supabase/migrations/20261126100000_edge_function_urls_from_vault.sql"
+   },
+   {
+    "function": "get_cron_health",
+    "msg": "apenas administradores podem consultar a saude do cron",
+    "src": "supabase/migrations/20261126170000_cron_watchdog.sql"
    }
   ],
   "db_generated": [],
@@ -84417,6 +84694,9 @@
      ],
      "open": [
       "compara:src/lib/bitrix/circuit-breaker.ts"
+     ],
+     "ok": [
+      "escreve:src/pages/admin/database-health/types.ts"
      ],
      "CLOSED": [
       "escreve:supabase/functions/_shared/resilience.ts"
@@ -87437,6 +87717,8 @@
    "supabase/migrations/20261126101000_revoke_anon_login_rpcs.sql",
    "supabase/migrations/20261126120000_deal_pipeline_snapshots.sql",
    "supabase/migrations/20261126140000_client_errors.sql",
+   "supabase/migrations/20261126170000_cron_watchdog.sql",
+   "supabase/migrations/20261126190000_cron_watchdog_privilegios.sql",
    "supabase/tests/login_lockout_acl_rls_test.sql",
    "supabase/tests/redaction_log_rls_test.sql",
    "supabase/tests/webhook_secrets_rls_test.sql"
@@ -87451,6 +87733,7 @@
    "can_access_agent_data",
    "check_all_tables_rls_status",
    "check_calling_hours",
+   "check_cron_health",
    "check_dnc",
    "check_idle_indexes",
    "check_ip_allowed",
@@ -87463,6 +87746,7 @@
    "cleanup_expired_challenges",
    "cleanup_old_data",
    "cleanup_old_logs",
+   "cron_health_rows",
    "dnc_track_removal",
    "edge_function_url",
    "enforce_optimistic_lock",
@@ -87474,6 +87758,7 @@
    "get_call_history_with_summaries",
    "get_call_queues_overview",
    "get_call_volume_stats",
+   "get_cron_health",
    "get_dashboard_stats",
    "get_database_health_snapshot",
    "get_profile_role",
@@ -89688,6 +89973,94 @@
     "objkind": "table",
     "roles": "service_role",
     "src": "supabase/migrations/20261126140000_client_errors.sql"
+   },
+   {
+    "kind": "revoke",
+    "privs": "all",
+    "object": "cron_health_rows",
+    "objkind": "function",
+    "roles": "PUBLIC",
+    "src": "supabase/migrations/20261126170000_cron_watchdog.sql"
+   },
+   {
+    "kind": "revoke",
+    "privs": "all",
+    "object": "cron_health_rows",
+    "objkind": "function",
+    "roles": "anon, authenticated, service_role",
+    "src": "supabase/migrations/20261126170000_cron_watchdog.sql"
+   },
+   {
+    "kind": "revoke",
+    "privs": "all",
+    "object": "get_cron_health",
+    "objkind": "function",
+    "roles": "PUBLIC, anon",
+    "src": "supabase/migrations/20261126170000_cron_watchdog.sql"
+   },
+   {
+    "kind": "grant",
+    "privs": "execute",
+    "object": "get_cron_health",
+    "objkind": "function",
+    "roles": "authenticated",
+    "src": "supabase/migrations/20261126170000_cron_watchdog.sql"
+   },
+   {
+    "kind": "revoke",
+    "privs": "all",
+    "object": "check_cron_health",
+    "objkind": "function",
+    "roles": "PUBLIC, anon, authenticated",
+    "src": "supabase/migrations/20261126170000_cron_watchdog.sql"
+   },
+   {
+    "kind": "grant",
+    "privs": "execute",
+    "object": "check_cron_health",
+    "objkind": "function",
+    "roles": "service_role",
+    "src": "supabase/migrations/20261126170000_cron_watchdog.sql"
+   },
+   {
+    "kind": "revoke",
+    "privs": "all",
+    "object": "cron_health_rows",
+    "objkind": "function",
+    "roles": "PUBLIC, anon, authenticated, service_role",
+    "src": "supabase/migrations/20261126190000_cron_watchdog_privilegios.sql"
+   },
+   {
+    "kind": "revoke",
+    "privs": "all",
+    "object": "get_cron_health",
+    "objkind": "function",
+    "roles": "PUBLIC, anon",
+    "src": "supabase/migrations/20261126190000_cron_watchdog_privilegios.sql"
+   },
+   {
+    "kind": "grant",
+    "privs": "execute",
+    "object": "get_cron_health",
+    "objkind": "function",
+    "roles": "authenticated",
+    "src": "supabase/migrations/20261126190000_cron_watchdog_privilegios.sql"
+   },
+   {
+    "kind": "revoke",
+    "privs": "all",
+    "object": "check_cron_health",
+    "objkind": "function",
+    "roles": "PUBLIC, anon, authenticated",
+    "src": "supabase/migrations/20261126190000_cron_watchdog_privilegios.sql"
+   },
+   {
+    "kind": "grant",
+    "privs": "execute",
+    "object": "check_cron_health",
+    "objkind": "function",
+    "roles": "service_role",
+    "src": "supabase/migrations/20261126190000_cron_watchdog_privilegios.sql"
    }
   ],
   "guards": [
@@ -90952,6 +91325,13 @@
      "compara:src/hooks/useCriticalAlertNotifications.ts",
      "compara:src/hooks/useHoldSoundAlert.ts",
      "compara:src/lib/incoming-call-alert.ts"
+    ]
+   },
+   {
+    "kind": "status",
+    "msg": "valor `ok` para `state` usado no código não existe em nenhum enum do banco/TS",
+    "where": [
+     "escreve:src/pages/admin/database-health/types.ts"
     ]
    },
    {
@@ -109933,7 +110313,7 @@
   },
   "src/integrations/supabase/types.ts": {
    "path": "src/integrations/supabase/types.ts",
-   "lines": 8239,
+   "lines": 8256,
    "exports": [
     "type Json",
     "type Database",
@@ -117335,7 +117715,7 @@
   },
   "src/pages/admin/DatabaseHealth.tsx": {
    "path": "src/pages/admin/DatabaseHealth.tsx",
-   "lines": 120,
+   "lines": 135,
    "exports": [
     "function DatabaseHealth"
    ],
@@ -117357,6 +117737,7 @@
    },
    "rpc": [
     "check_idle_indexes",
+    "get_cron_health",
     "get_database_health_snapshot",
     "get_top_slow_queries"
    ],
@@ -117571,6 +117952,28 @@
     "filtro por rota e recarregar chamam o hook"
    ]
   },
+  "src/pages/admin/__tests__/CronHealthCard.test.tsx": {
+   "path": "src/pages/admin/__tests__/CronHealthCard.test.tsx",
+   "lines": 83,
+   "is_test": true,
+   "doc": "Etapa 231 - card de saude dos crons agendados na pagina de saude do banco.",
+   "cron": [
+    "0 * * * *"
+   ],
+   "tests": [
+    "CronHealthCard",
+    "mostra esqueleto enquanto carrega",
+    "avisa quando nao ha cron agendado",
+    "exibe job saudavel com cadencia e execucoes",
+    "marca job falhando e conta as falhas de 24h",
+    "marca job parado pelo tempo desde a ultima execucao",
+    "trata job inativo e job que nunca executou",
+    "explica o criterio de falhando e parado"
+   ],
+   "side_effects": [
+    "notify"
+   ]
+  },
   "src/pages/admin/__tests__/SloDashboard.meta.test.tsx": {
    "path": "src/pages/admin/__tests__/SloDashboard.meta.test.tsx",
    "lines": 77,
@@ -117594,6 +117997,13 @@
    "lines": 50,
    "exports": [
     "function BloatCard"
+   ]
+  },
+  "src/pages/admin/database-health/CronHealthCard.tsx": {
+   "path": "src/pages/admin/database-health/CronHealthCard.tsx",
+   "lines": 88,
+   "exports": [
+    "function CronHealthCard"
    ]
   },
   "src/pages/admin/database-health/DropAuditCard.tsx": {
@@ -117632,7 +118042,7 @@
   },
   "src/pages/admin/database-health/types.ts": {
    "path": "src/pages/admin/database-health/types.ts",
-   "lines": 66,
+   "lines": 81,
    "exports": [
     "type BloatRow",
     "type TopTable",
@@ -117640,7 +118050,15 @@
     "type IdleIndex",
     "type IndexDropAuditRow",
     "interface Snapshot",
-    "function formatBytes"
+    "function formatBytes",
+    "type CronHealthRow"
+   ],
+   "status_values": [
+    {
+     "field": "state",
+     "value": "ok",
+     "kind": "escreve"
+    }
    ]
   },
   "src/pages/call-analytics/AnalyticsHeader.tsx": {
@@ -126973,6 +127391,24 @@
    "lines": 79,
    "uses_service_role": true
   },
+  "supabase/migrations/20261126170000_cron_watchdog.sql": {
+   "path": "supabase/migrations/20261126170000_cron_watchdog.sql",
+   "lines": 248,
+   "temporal": [
+    "AND now() - lr.start_time > GREATEST(interval '2 hours', make_interval(mins => (c.every_minutes * 3)::int))",
+    "DELETE FROM cron.job_run_details WHERE start_time < now() - interval '30 days';",
+    "ELSE interval '6 hours'",
+    "WHEN v_row.state = 'nunca_executou' THEN interval '24 hours'",
+    "WHERE d.start_time > now() - interval '14 days'",
+    "WHERE d.start_time > now() - interval '24 hours'"
+   ],
+   "uses_service_role": true
+  },
+  "supabase/migrations/20261126190000_cron_watchdog_privilegios.sql": {
+   "path": "supabase/migrations/20261126190000_cron_watchdog_privilegios.sql",
+   "lines": 21,
+   "uses_service_role": true
+  },
   "supabase/tests/calling_hours_fail_closed_rls_test.sql": {
    "path": "supabase/tests/calling_hours_fail_closed_rls_test.sql",
    "lines": 50,
@@ -126987,6 +127423,15 @@
    "path": "supabase/tests/cron_credentials_rls_test.sql",
    "lines": 166,
    "is_test": true
+  },
+  "supabase/tests/cron_watchdog_rls_test.sql": {
+   "path": "supabase/tests/cron_watchdog_rls_test.sql",
+   "lines": 165,
+   "is_test": true,
+   "temporal": [
+    "delete from cron.job_run_details where start_time < now() - interval '30 days';",
+    "where start_time < now() - interval '30 days';"
+   ]
   },
   "supabase/tests/deal_pipeline_snapshots_rls_test.sql": {
    "path": "supabase/tests/deal_pipeline_snapshots_rls_test.sql",
@@ -127243,10 +127688,27 @@
   }
  },
  "git": {
-  "sha": "6b5425c47ba25282f73ac29f3cdbaa7d1a1d173f",
+  "sha": "4e389575f3b1c5e2dfa6444dc9097744573f3737",
   "branch": "main",
   "remote": "https://github.com/adm01-debug/Hello_V3",
   "commits": [
+   {
+    "sha": "4e38957",
+    "date": "2026-11-26",
+    "author": "adm01-debug",
+    "subject": "feat: vigia horario de cron com alerta no sino e card de saude (etapa 231) (#353)",
+    "files": [
+     "docs/qa/05-PROGRESSO.md",
+     "src/integrations/supabase/types.ts",
+     "src/pages/admin/DatabaseHealth.tsx",
+     "src/pages/admin/__tests__/CronHealthCard.test.tsx",
+     "src/pages/admin/database-health/CronHealthCard.tsx",
+     "src/pages/admin/database-health/types.ts",
+     "supabase/migrations/20261126170000_cron_watchdog.sql",
+     "supabase/migrations/20261126190000_cron_watchdog_privilegios.sql",
+     "supabase/tests/cron_watchdog_rls_test.sql"
+    ]
+   },
    {
     "sha": "6b5425c",
     "date": "2026-11-26",
@@ -127670,15 +128132,6 @@
      "src/pages/Cadences.tsx",
      "src/pages/__tests__/Cadences.crud.test.tsx"
     ]
-   },
-   {
-    "sha": "2e71e7b",
-    "date": "2026-11-25",
-    "author": "adm01-debug",
-    "subject": "chore: marca a etapa 086 como concluida no backlog (#324)",
-    "files": [
-     "docs/qa/05-PROGRESSO.md"
-    ]
    }
   ],
   "hot_files": [
@@ -127692,7 +128145,7 @@
    ],
    [
     "src/integrations/supabase/types.ts",
-    3
+    4
    ],
    [
     "src/components/layout/AppSidebar.tsx",
@@ -127751,15 +128204,15 @@
     2
    ],
    [
-    "docs/agentes/banco.md",
+    "src/pages/admin/DatabaseHealth.tsx",
     1
    ],
    [
-    "supabase/tests/probe_132_lgpd_entity_versions_rls_test.sql",
+    "src/pages/admin/__tests__/CronHealthCard.test.tsx",
     1
    ],
    [
-    "src/hooks/__tests__/useAgentRanking.coverage.test.tsx",
+    "src/pages/admin/database-health/CronHealthCard.tsx",
     1
    ]
   ]

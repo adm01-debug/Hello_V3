@@ -5,17 +5,17 @@
   "vitest",
   "playwright"
  ],
- "total": 444,
+ "total": 446,
  "por_tipo": {
   "contrato": 1,
   "e2e": 16,
   "pytest": 2,
-  "unit": 409
+  "unit": 410
  },
  "onde_ficam": [
   {
    "padrao": "co-localizado (__tests__)",
-   "arquivos": 402
+   "arquivos": 403
   },
   {
    "padrao": "tests/",
@@ -3241,6 +3241,16 @@
    "casos": 5
   },
   {
+   "arquivo": "src/pages/admin/__tests__/CronHealthCard.test.tsx",
+   "tipo": "unit",
+   "linhas": 83,
+   "testa": [
+    "src/pages/admin/database-health/CronHealthCard.tsx",
+    "src/pages/admin/database-health/types.ts"
+   ],
+   "casos": 7
+  },
+  {
    "arquivo": "src/pages/admin/__tests__/SloDashboard.meta.test.tsx",
    "tipo": "unit",
    "linhas": 77,
@@ -3930,6 +3940,7 @@
   "supabase/tests/calling_hours_fail_closed_rls_test.sql",
   "supabase/tests/client_errors_rls_test.sql",
   "supabase/tests/cron_credentials_rls_test.sql",
+  "supabase/tests/cron_watchdog_rls_test.sql",
   "supabase/tests/deal_pipeline_snapshots_rls_test.sql",
   "supabase/tests/dnc_removal_audit_rls_test.sql",
   "supabase/tests/geo_write_policies_rls_test.sql",
@@ -4258,6 +4269,8 @@
   "src/pages/VideoConference.tsx": 1,
   "src/pages/admin/ClientErrors.tsx": 1,
   "src/pages/admin/SloDashboard.tsx": 1,
+  "src/pages/admin/database-health/CronHealthCard.tsx": 1,
+  "src/pages/admin/database-health/types.ts": 1,
   "src/pages/roles/useRoles.ts": 1,
   "src/routes/CallHistoryAlias.tsx": 1,
   "src/routes/protectedRoutes.tsx": 2,

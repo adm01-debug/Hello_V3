@@ -4409,6 +4409,7 @@
    "src/lib/safe-date.ts",
    "src/pages/admin/database-health/ActivityCards.tsx",
    "src/pages/admin/database-health/BloatCard.tsx",
+   "src/pages/admin/database-health/CronHealthCard.tsx",
    "src/pages/admin/database-health/DropAuditCard.tsx",
    "src/pages/admin/database-health/IdleIndexesCard.tsx",
    "src/pages/admin/database-health/SlowQueriesCard.tsx",
@@ -4512,6 +4513,12 @@
    "src/pages/admin/database-health/types.ts"
   ],
   "src/pages/admin/database-health/BloatCard.tsx": [
+   "src/components/ui/badge.tsx",
+   "src/components/ui/card.tsx",
+   "src/components/ui/skeleton.tsx",
+   "src/pages/admin/database-health/types.ts"
+  ],
+  "src/pages/admin/database-health/CronHealthCard.tsx": [
    "src/components/ui/badge.tsx",
    "src/components/ui/card.tsx",
    "src/components/ui/skeleton.tsx",
