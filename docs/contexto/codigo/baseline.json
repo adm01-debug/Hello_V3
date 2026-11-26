@@ -2,11 +2,16 @@
  "aviso": "GERADO AUTOMATICAMENTE por scripts/ai-context/gerar.mjs — não editar à mão; será sobrescrito.",
  "format_version": 2,
  "git": {
-  "commit": "ff0f86e739d104603f77c6dc30ab630bac17e214",
+  "commit": "f5d665dccf6f076280cea618abc4f891fa981e19",
   "branch": "main",
-  "data_commit": "2026-11-25T21:12:35-03:00",
+  "data_commit": "2026-11-25T21:20:35-03:00",
   "remote": "https://github.com/adm01-debug/Hello_V3",
   "ultimos_commits": [
+   {
+    "sha": "f5d665d",
+    "data": "2026-11-25",
+    "assunto": "test: provar em producao que o bloqueio geografico grava (etapa 043) (#339)"
+   },
    {
     "sha": "ff0f86e",
     "data": "2026-11-25",
@@ -126,14 +131,9 @@
     "sha": "5df6b47",
     "data": "2026-11-25",
     "assunto": "fix: comparar migration pelo slug do nome e permitir registrar sem executar (#315)"
-   },
-   {
-    "sha": "c450a16",
-    "data": "2026-11-25",
-    "assunto": "fix: fila de migrations compara com o historico real do projeto (#314)"
    }
   ],
-  "arquivos_mudados_7d": 1314,
+  "arquivos_mudados_7d": 1315,
   "pastas_mais_mudadas_30d": [
    {
     "pasta": "covout/lcov-report/hooks",
@@ -145,7 +145,7 @@
    },
    {
     "pasta": "docs/qa/05-PROGRESSO.md",
-    "mudancas": 142
+    "mudancas": 143
    },
    {
     "pasta": "covout/lcov-report/lib",
@@ -199,7 +199,7 @@
   "arquivos_mais_mudados_90d": [
    {
     "arquivo": "docs/qa/05-PROGRESSO.md",
-    "mudancas": 142
+    "mudancas": 143
    },
    {
     "arquivo": "docs/estado/funcionalidades-planejadas.md",
@@ -310,7 +310,7 @@
   ]
  },
  "contagens": {
-  "arquivos_total": 1768,
+  "arquivos_total": 1769,
   "arquivos_codigo": 1355,
   "linhas_codigo": 180183,
   "rotas": 106,
@@ -324,7 +324,7 @@
   "tabelas": 170,
   "migrations": 247,
   "cron_jobs": 11,
-  "testes": 419,
+  "testes": 420,
   "workflows": 5,
   "scripts": 36,
   "docs_md": 121
