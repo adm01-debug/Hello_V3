@@ -7,7 +7,7 @@
 
 begin;
 
-create temp table gate_052 (tabela text primary key, linhas_auth bigint) on commit drop;
+
 
 -- 1. Nenhuma das cinco tabelas tem mais policy com roles = {public} (o default do Postgres,
 --    que inclui anon).
@@ -85,6 +85,8 @@ declare
   v_user uuid;
   v_agente_id uuid;
   v_claims text;
+  v_lidas int := 0;
+  v_log text := '';
 begin
   -- A producao nao tem user_profiles.agent_id preenchido: monta o vinculo dentro da transacao
   -- (revertida no rollback) para que os predicados get_user_agent_name()/is_admin_or_supervisor()
@@ -127,18 +129,16 @@ begin
   foreach t in array array['conversations', 'conversation_messages',
                            'call_quality_metrics', 'meeting_summaries', 'agent_devices'] loop
     execute format('select count(*) from public.%I', t) into v_n;
-    insert into gate_052 values (t, v_n);
+    v_lidas := v_lidas + 1;
+    v_log := v_log || format('%s=%s ', t, v_n);
   end loop;
 
   execute 'reset role';
 
-  if (select count(*) from gate_052) <> 5 then
-    raise exception 'FALHA 4: so % das 5 tabelas foram lidas', (select count(*) from gate_052);
+  if v_lidas <> 5 then
+    raise exception 'FALHA 4: so % das 5 tabelas foram lidas', v_lidas;
   end if;
-  raise notice '4/6 ok: authenticated le as 5 tabelas sem erro (anon %, conversas %, mensagens %)',
-    (select linhas_auth from gate_052 where tabela = 'agent_devices'),
-    (select linhas_auth from gate_052 where tabela = 'conversations'),
-    (select linhas_auth from gate_052 where tabela = 'conversation_messages');
+  raise notice '4/6 ok: authenticated le as 5 tabelas sem erro (%)', v_log;
 end $$;
 
 -- 5. anon nao obtem uma unica linha nas cinco tabelas (0 linhas ou permission denied).
