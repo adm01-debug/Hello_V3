@@ -103,7 +103,7 @@ begin
              values ('create_lead', jsonb_build_object('gate', '084', 'title', 'lead do agente'), 'pending') $q$;
   execute 'reset role';
 
-  select count(*), min(requested_by) into v_total, v_autor
+  select count(*), (array_agg(requested_by))[1] into v_total, v_autor
     from public.crm_sync_queue
    where payload->>'gate' = '084';
 
