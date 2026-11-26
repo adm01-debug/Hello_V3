@@ -88,9 +88,16 @@ begin
       execute 'insert into public.agents (name, extension) values ($1, $2) returning id'
         into v_agente using 'gate-101 agente', 'gate101';
     end if;
-    execute 'insert into public.user_profiles (id, agent_id) values ($1, $2)
-             on conflict (id) do update set agent_id = excluded.agent_id'
-      using v_user, v_agente;
+    if exists (select 1 from information_schema.columns
+               where table_schema = 'public' and table_name = 'user_profiles' and column_name = 'email') then
+      execute 'insert into public.user_profiles (id, email, agent_id) values ($1, $2, $3)
+               on conflict (id) do update set agent_id = excluded.agent_id'
+        using v_user, 'gate-101@local.invalid', v_agente;
+    else
+      execute 'insert into public.user_profiles (id, agent_id) values ($1, $2)
+               on conflict (id) do update set agent_id = excluded.agent_id'
+        using v_user, v_agente;
+    end if;
   end if;
 
   execute 'delete from public.user_roles where user_id = $1' using v_user;
