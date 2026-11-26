@@ -307,6 +307,16 @@ export default function Cadences() {
                         <div key={e.id} className="flex items-center justify-between gap-2 text-sm">
                           <span className="truncate">
                             {e.contact_id ? contactNameById.get(e.contact_id) ?? "Contato" : "Sem contato"}
+                            {e.status === "paused" && e.paused_reason && (
+                              <span className="block truncate text-xs text-muted-foreground" title={e.paused_reason}>
+                                Pausada: {e.paused_reason}
+                              </span>
+                            )}
+                            {e.status === "active" && e.next_action_at && (
+                              <span className="block text-xs text-muted-foreground">
+                                Proximo passo: {new Date(e.next_action_at).toLocaleString("pt-BR", { dateStyle: "short", timeStyle: "short" })}
+                              </span>
+                            )}
                           </span>
                           <div className="flex items-center gap-1 shrink-0">
                             <Badge variant={e.status === "active" ? "default" : "secondary"}>
