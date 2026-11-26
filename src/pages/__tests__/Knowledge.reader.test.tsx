@@ -28,6 +28,9 @@ vi.mock('@/hooks/useKnowledgeBase', () => ({
   useUpsertArticle: () => ({ mutate: vi.fn(), isPending: false }),
   useRecordKbView: () => ({ mutate: vi.fn() }),
 }));
+vi.mock('@/hooks/useKbArticleHistory', () => ({
+  useKbArticleHistory: () => ({ data: [], isLoading: false, isError: false, refetch: vi.fn() }),
+}));
 
 describe('Knowledge — leitura do artigo (etapa 153)', () => {
   beforeEach(() => {

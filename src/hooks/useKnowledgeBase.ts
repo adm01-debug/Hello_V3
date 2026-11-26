@@ -1,5 +1,6 @@
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { supabase } from '@/integrations/supabase/client';
+import { KB_ARTICLE_HISTORY_QUERY_KEY } from '@/hooks/useKbArticleHistory';
 import { logger } from '@/lib/logger';
 import { toast } from 'sonner';
 
@@ -157,6 +158,8 @@ export function useUpsertArticle() {
       queryClient.invalidateQueries({ queryKey: ['kb-articles'] });
       // O artigo aberto vem de useKbArticle -> ['kb-article', id]; sem isso a tela segue com o texto antigo.
       queryClient.invalidateQueries({ queryKey: ['kb-article'] });
+      // O trigger kb_article_history_trigger grava a versao; sem isso o historico so apareceria no reload.
+      queryClient.invalidateQueries({ queryKey: KB_ARTICLE_HISTORY_QUERY_KEY });
       toast.success('Artigo salvo');
     },
     onError: (err) => {
