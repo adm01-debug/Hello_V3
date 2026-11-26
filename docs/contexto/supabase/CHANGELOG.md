@@ -2,6 +2,13 @@
 
 Diff semântico gerado a cada coleta em que algo mudou.
 
+## 2026-11-26 22:16 UTC
+
+- **cron jobs** adicionado (1): `65:crm-sync-queue`
+- **functions** adicionado (1): `public.token_cron_valido(p_nome text, p_token text)`
+- **functions** alterado (1): `public.edge_function_url(p_slug text)`
+- **vault secrets (nomes)** adicionado (1): `crm_sync_cron_token`
+
 ## 2026-11-26 21:18 UTC
 
 - **colunas** adicionado (9): `public.cadence_step_runs.cadence_id`, `public.cadence_step_runs.created_at`, `public.cadence_step_runs.detail`, `public.cadence_step_runs.enrollment_id`, `public.cadence_step_runs.id`, `public.cadence_step_runs.status`, `public.cadence_step_runs.step_id`, `public.cadence_step_runs.step_order`, `public.cadence_step_runs.step_type`
