@@ -154,8 +154,9 @@ begin
 end $$;
 
 -- 5. Indices, incluindo o BRIN de created_at com pages_per_range=32.
+-- pg_get_indexdef escreve USING/WITH em maiuscula: as comparacoes sao case-sensitive.
 do $$
-declare r record; falta text[] := '{}';
+declare r record; falta text[] := '{}'; vivo text;
 begin
   for r in select * from esperado_idx loop
     if not exists (
@@ -167,15 +168,18 @@ begin
       join pg_am am on am.oid = ic.relam
       where n.nspname = 'public' and c.relname = r.tab and ic.relname = r.idx
         and am.amname = r.metodo
-        and pg_get_indexdef(i.indexrelid) like '%using ' || r.metodo || ' (' || r.colunas || ')'
-        and case when r.relopts = '' then coalesce(array_to_string(ic.reloptions, ','), '') = ''
-                 else coalesce(array_to_string(ic.reloptions, ','), '') like '%pages_per_range%32%' end
+        and pg_get_indexdef(i.indexrelid) like '%USING ' || r.metodo || ' (' || r.colunas || ')%'
+        and (r.relopts = '' or pg_get_indexdef(i.indexrelid) like '%WITH (pages_per_range=''32'')%')
     ) then
-      falta := falta || (r.tab || '.' || r.idx);
+      select pg_get_indexdef(i.indexrelid) into vivo
+      from pg_class ic join pg_index i on i.indexrelid = ic.oid
+      where ic.relname = r.idx;
+
+      falta := falta || (r.tab || '.' || r.idx || ' [' || coalesce(vivo, 'nao existe') || ']');
     end if;
   end loop;
   if array_length(falta, 1) > 0 then
-    raise exception 'FALHA 5: indice ausente ou divergente: %', array_to_string(falta, ', ');
+    raise exception 'FALHA 5: indice ausente ou divergente: %', array_to_string(falta, ' | ');
   end if;
   raise notice '5/7 ok: os 4 indices existem com metodo, colunas e opcoes de producao';
 end $$;
