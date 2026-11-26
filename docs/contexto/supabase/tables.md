@@ -69,13 +69,14 @@ Um arquivo por tabela em `tables/<schema>/<tabela>.md` (colunas, constraints, í
 | [public.customer_journey_stages](tables/public/customer_journey_stages.md) | table | sim | 2 | 11 | não |  |
 | [public.dashboard_goals](tables/public/dashboard_goals.md) | table | sim | 2 | 12 | não |  |
 | [public.data_lake_exports](tables/public/data_lake_exports.md) | table | sim | 1 | 13 | não |  |
+| [public.deal_pipeline_snapshots](tables/public/deal_pipeline_snapshots.md) | table | sim | 1 | 6 | não |  |
 | [public.deal_revenue_snapshots](tables/public/deal_revenue_snapshots.md) | table | sim | 1 | 6 | não |  |
 | [public.deals](tables/public/deals.md) | table | sim | 4 | 20 | não |  |
 | [public.dialer_campaigns](tables/public/dialer_campaigns.md) | table | sim | 2 | 22 | não |  |
 | [public.dialer_favorites](tables/public/dialer_favorites.md) | table | sim | 1 | 8 | não |  |
 | [public.dialer_queue](tables/public/dialer_queue.md) | table | sim | 3 | 16 | não |  |
 | [public.dnc_import_logs](tables/public/dnc_import_logs.md) | table | sim | 2 | 12 | não |  |
-| [public.dnc_list](tables/public/dnc_list.md) | table | sim | 2 | 11 | não |  |
+| [public.dnc_list](tables/public/dnc_list.md) | table | sim | 2 | 14 | não |  |
 | [public.email_tickets](tables/public/email_tickets.md) | table | sim | 3 | 14 | não |  |
 | [public.email_verification_tokens](tables/public/email_verification_tokens.md) | table | sim | 4 | 7 | não |  |
 | [public.entity_versions](tables/public/entity_versions.md) | table | sim | 2 | 8 | não |  |

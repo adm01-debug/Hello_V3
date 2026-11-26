@@ -2,6 +2,20 @@
 
 Diff semântico gerado a cada coleta em que algo mudou.
 
+## 2026-11-26 12:19 UTC
+
+- **colunas** adicionado (9): `public.deal_pipeline_snapshots.created_at`, `public.deal_pipeline_snapshots.open_count`, `public.deal_pipeline_snapshots.snapshot_date`, `public.deal_pipeline_snapshots.total_value_cents`, `public.deal_pipeline_snapshots.updated_at`, `public.deal_pipeline_snapshots.weighted_value_cents`, `public.dnc_list.removal_reason`, `public.dnc_list.removed_at`, `public.dnc_list.removed_by`
+- **constraints** adicionado (1): `public.deal_pipeline_snapshots.deal_pipeline_snapshots_pkey`
+- **cron jobs** adicionado (1): `56:deal-pipeline-snapshot-daily`
+- **functions** adicionado (1): `public.dnc_track_removal()`
+- **functions** alterado (2): `public.is_admin_or_supervisor()`, `public.snapshot_deals_daily()`
+- **grants** adicionado (3): `public.deal_pipeline_snapshots:anon`, `public.deal_pipeline_snapshots:authenticated`, `public.deal_pipeline_snapshots:service_role`
+- **indexes** adicionado (1): `public.deal_pipeline_snapshots_pkey`
+- **migrations** adicionado (1): `20261126120000_deal_pipeline_snapshots`
+- **policies (RLS)** adicionado (1): `public.deal_pipeline_snapshots.Admin/Supervisor veem retratos do pipeline`
+- **tabelas** adicionado (1): `public.deal_pipeline_snapshots`
+- **triggers** adicionado (1): `public.dnc_list.trg_dnc_track_removal`
+
 ## 2026-11-26 01:17 UTC
 
 - **cron jobs** alterado (5): `11:generate-coaching-tracks-daily`, `12:dialer-pacing-tick`, `14:cleanup-lock-conflicts-weekly`, `16:data-lake-flush-daily`, `33:cleanup-recordings-daily`

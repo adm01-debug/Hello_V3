@@ -254,3 +254,4 @@ SQL em `migrations/<versao>_<nome>.sql`. Mudanças feitas pelo Dashboard/SQL Edi
 | 20261126100000 | [edge_function_urls_from_vault](migrations/20261126100000_edge_function_urls_from_vault.sql) | 7 |
 | 20261126100100 | [fix_cron_urls_quoting](migrations/20261126100100_fix_cron_urls_quoting.sql) | 1 |
 | 20261126101000 | [revoke_anon_login_rpcs](migrations/20261126101000_revoke_anon_login_rpcs.sql) | 1 |
+| 20261126120000 | [deal_pipeline_snapshots](migrations/20261126120000_deal_pipeline_snapshots.sql) | 12 |

@@ -27,6 +27,9 @@
 | 9 | `is_active` | `boolean` | não | `true` |  |  |
 | 10 | `created_at` | `timestamp with time zone` | não | `now()` |  |  |
 | 11 | `updated_at` | `timestamp with time zone` | não | `now()` |  |  |
+| 12 | `removed_by` | `text` | sim |  |  | E-mail de quem desativou a entrada. Gravado pelo gatilho trg_dnc_track_removal, nunca pelo cliente. |
+| 13 | `removed_at` | `timestamp with time zone` | sim |  |  | Momento da desativacao (soft delete). Gravado pelo gatilho; volta a NULL se a entrada for reativada. |
+| 14 | `removal_reason` | `text` | sim |  |  | Motivo textual da desativacao, quando informado na tela. Gatilho preenche um padrao se vier vazio. |
 
 
 ## Constraints
@@ -75,6 +78,7 @@
 
 | nome | timing | eventos | nível | status | função |
 |---|---|---|---|---|---|
+| trg_dnc_track_removal | BEFORE | UPDATE | ROW | enabled | public.dnc_track_removal |
 | update_dnc_list_updated_at | BEFORE | UPDATE | ROW | enabled | public.update_updated_at_column |
 
 

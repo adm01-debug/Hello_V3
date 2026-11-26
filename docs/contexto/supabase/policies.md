@@ -192,6 +192,7 @@ Visão consolidada (inclui `storage.objects` e `realtime.messages`); detalhes po
 | public.dashboard_goals | Authenticated users can view dashboard_goals | SELECT | PERMISSIVE | authenticated | `(( SELECT auth.uid() AS uid) IS NOT NULL)` |  |
 | public.dashboard_goals | Supervisors can manage dashboard_goals | ALL | PERMISSIVE | authenticated | `is_admin_or_supervisor()` |  |
 | public.data_lake_exports | Admins manage data exports | ALL | PERMISSIVE | authenticated | `is_admin()` | `is_admin()` |
+| public.deal_pipeline_snapshots | Admin/Supervisor veem retratos do pipeline | SELECT | PERMISSIVE | authenticated | `is_admin_or_supervisor()` |  |
 | public.deal_revenue_snapshots | Admin/Supervisor manage revenue snapshots | ALL | PERMISSIVE | authenticated | `is_admin_or_supervisor()` | `is_admin_or_supervisor()` |
 | public.deals | Admins/supervisors manage all deals | ALL | PERMISSIVE | public | `is_admin_or_supervisor()` | `is_admin_or_supervisor()` |
 | public.deals | Agents update own deals | UPDATE | PERMISSIVE | public | `(owner_agent_name = get_user_agent_name())` | `(owner_agent_name = get_user_agent_name())` |

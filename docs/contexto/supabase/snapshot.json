@@ -9462,6 +9462,84 @@
       },
       {
         "comment": null,
+        "default": null,
+        "generated": null,
+        "identity": null,
+        "is_enum": false,
+        "name": "snapshot_date",
+        "nullable": false,
+        "position": 1,
+        "schema": "public",
+        "table": "deal_pipeline_snapshots",
+        "type": "date"
+      },
+      {
+        "comment": null,
+        "default": null,
+        "generated": null,
+        "identity": null,
+        "is_enum": false,
+        "name": "open_count",
+        "nullable": false,
+        "position": 2,
+        "schema": "public",
+        "table": "deal_pipeline_snapshots",
+        "type": "integer"
+      },
+      {
+        "comment": null,
+        "default": null,
+        "generated": null,
+        "identity": null,
+        "is_enum": false,
+        "name": "total_value_cents",
+        "nullable": false,
+        "position": 3,
+        "schema": "public",
+        "table": "deal_pipeline_snapshots",
+        "type": "bigint"
+      },
+      {
+        "comment": null,
+        "default": null,
+        "generated": null,
+        "identity": null,
+        "is_enum": false,
+        "name": "weighted_value_cents",
+        "nullable": false,
+        "position": 4,
+        "schema": "public",
+        "table": "deal_pipeline_snapshots",
+        "type": "bigint"
+      },
+      {
+        "comment": null,
+        "default": "now()",
+        "generated": null,
+        "identity": null,
+        "is_enum": false,
+        "name": "created_at",
+        "nullable": false,
+        "position": 5,
+        "schema": "public",
+        "table": "deal_pipeline_snapshots",
+        "type": "timestamp with time zone"
+      },
+      {
+        "comment": null,
+        "default": "now()",
+        "generated": null,
+        "identity": null,
+        "is_enum": false,
+        "name": "updated_at",
+        "nullable": false,
+        "position": 6,
+        "schema": "public",
+        "table": "deal_pipeline_snapshots",
+        "type": "timestamp with time zone"
+      },
+      {
+        "comment": null,
         "default": "gen_random_uuid()",
         "generated": null,
         "identity": null,
@@ -10694,6 +10772,45 @@
         "schema": "public",
         "table": "dnc_list",
         "type": "timestamp with time zone"
+      },
+      {
+        "comment": "E-mail de quem desativou a entrada. Gravado pelo gatilho trg_dnc_track_removal, nunca pelo cliente.",
+        "default": null,
+        "generated": null,
+        "identity": null,
+        "is_enum": false,
+        "name": "removed_by",
+        "nullable": true,
+        "position": 12,
+        "schema": "public",
+        "table": "dnc_list",
+        "type": "text"
+      },
+      {
+        "comment": "Momento da desativacao (soft delete). Gravado pelo gatilho; volta a NULL se a entrada for reativada.",
+        "default": null,
+        "generated": null,
+        "identity": null,
+        "is_enum": false,
+        "name": "removed_at",
+        "nullable": true,
+        "position": 13,
+        "schema": "public",
+        "table": "dnc_list",
+        "type": "timestamp with time zone"
+      },
+      {
+        "comment": "Motivo textual da desativacao, quando informado na tela. Gatilho preenche um padrao se vier vazio.",
+        "default": null,
+        "generated": null,
+        "identity": null,
+        "is_enum": false,
+        "name": "removal_reason",
+        "nullable": true,
+        "position": 14,
+        "schema": "public",
+        "table": "dnc_list",
+        "type": "text"
       },
       {
         "comment": null,
@@ -26959,6 +27076,23 @@
       },
       {
         "columns": [
+          "snapshot_date"
+        ],
+        "deferrable": false,
+        "definition": "PRIMARY KEY (snapshot_date)",
+        "name": "deal_pipeline_snapshots_pkey",
+        "on_delete": null,
+        "on_update": null,
+        "ref_columns": [],
+        "ref_schema": null,
+        "ref_table": null,
+        "schema": "public",
+        "table": "deal_pipeline_snapshots",
+        "type": "PRIMARY KEY",
+        "validated": true
+      },
+      {
+        "columns": [
           "deal_id"
         ],
         "deferrable": false,
@@ -31662,6 +31796,15 @@
           "jobname": "cleanup-recordings-daily",
           "schedule": "45 3 * * *",
           "username": "postgres"
+        },
+        {
+          "active": true,
+          "command": " SELECT public.snapshot_deals_daily(); ",
+          "database": "postgres",
+          "jobid": 56,
+          "jobname": "deal-pipeline-snapshot-daily",
+          "schedule": "5 3 * * *",
+          "username": "postgres"
         }
       ]
     },
@@ -32631,6 +32774,38 @@
         "name": "cleanup_old_logs",
         "owner": "postgres",
         "returns": "void",
+        "schema": "public",
+        "security_definer": true,
+        "strict": false,
+        "volatility": "volatile"
+      },
+      {
+        "args": "",
+        "callers": {
+          "code": [],
+          "code_total_files": 0,
+          "cron": [],
+          "db": [],
+          "triggers": [
+            "public.dnc_list.trg_dnc_track_removal"
+          ],
+          "views": []
+        },
+        "comment": null,
+        "config": [
+          "search_path=public, pg_temp"
+        ],
+        "definition": null,
+        "definition_sha": "aed5febb2a20f308",
+        "execute_api_roles": "service_role",
+        "execute_public": false,
+        "is_trigger_fn": true,
+        "kind": "function",
+        "language": "plpgsql",
+        "leakproof": false,
+        "name": "dnc_track_removal",
+        "owner": "postgres",
+        "returns": "trigger",
         "schema": "public",
         "security_definer": true,
         "strict": false,
@@ -34127,7 +34302,7 @@
               "hits": 1
             }
           ],
-          "code_total_files": 79,
+          "code_total_files": 80,
           "cron": [],
           "db": [
             "public.can_access_agent_data",
@@ -35204,9 +35379,16 @@
       {
         "args": "",
         "callers": {
-          "code": [],
-          "code_total_files": 0,
-          "cron": [],
+          "code": [
+            {
+              "file": "supabase/migrations/20261126120000_deal_pipeline_snapshots.sql",
+              "hits": 3
+            }
+          ],
+          "code_total_files": 1,
+          "cron": [
+            "56:deal-pipeline-snapshot-daily"
+          ],
           "db": [],
           "triggers": [],
           "views": []
@@ -35216,7 +35398,7 @@
           "search_path=public"
         ],
         "definition": null,
-        "definition_sha": "bf01ce2f139ad1c8",
+        "definition_sha": "dd2ab03de1407578",
         "execute_api_roles": "service_role",
         "execute_public": false,
         "is_trigger_fn": false,
@@ -37445,6 +37627,24 @@
           "privileges": "DELETE, INSERT, REFERENCES, SELECT, TRIGGER, TRUNCATE, UPDATE",
           "schema": "public",
           "table": "data_lake_exports"
+        },
+        {
+          "grantee": "anon",
+          "privileges": "DELETE, INSERT, REFERENCES, SELECT, TRIGGER, TRUNCATE, UPDATE",
+          "schema": "public",
+          "table": "deal_pipeline_snapshots"
+        },
+        {
+          "grantee": "authenticated",
+          "privileges": "DELETE, INSERT, REFERENCES, SELECT, TRIGGER, TRUNCATE, UPDATE",
+          "schema": "public",
+          "table": "deal_pipeline_snapshots"
+        },
+        {
+          "grantee": "service_role",
+          "privileges": "DELETE, INSERT, REFERENCES, SELECT, TRIGGER, TRUNCATE, UPDATE",
+          "schema": "public",
+          "table": "deal_pipeline_snapshots"
         },
         {
           "grantee": "anon",
@@ -42632,6 +42832,20 @@
         "predicate": null,
         "schema": "public",
         "table": "data_lake_exports"
+      },
+      {
+        "columns": [
+          "snapshot_date"
+        ],
+        "definition": "CREATE UNIQUE INDEX deal_pipeline_snapshots_pkey ON public.deal_pipeline_snapshots USING btree (snapshot_date)",
+        "is_primary": true,
+        "is_unique": true,
+        "is_valid": true,
+        "method": "btree",
+        "name": "deal_pipeline_snapshots_pkey",
+        "predicate": null,
+        "schema": "public",
+        "table": "deal_pipeline_snapshots"
       },
       {
         "columns": [
@@ -48412,6 +48626,12 @@
         "statements": 1,
         "statements_sha": "a2c7b77e7cee2330",
         "version": "20261126101000"
+      },
+      {
+        "name": "deal_pipeline_snapshots",
+        "statements": 12,
+        "statements_sha": "fbb217eab26fbc61",
+        "version": "20261126120000"
       }
     ],
     "policies": [
@@ -50658,6 +50878,18 @@
         "table": "data_lake_exports",
         "using": "is_admin()",
         "with_check": "is_admin()"
+      },
+      {
+        "cmd": "SELECT",
+        "name": "Admin/Supervisor veem retratos do pipeline",
+        "permissive": "PERMISSIVE",
+        "roles": [
+          "authenticated"
+        ],
+        "schema": "public",
+        "table": "deal_pipeline_snapshots",
+        "using": "is_admin_or_supervisor()",
+        "with_check": null
       },
       {
         "cmd": "ALL",
@@ -55368,6 +55600,21 @@
         "from_extension": false,
         "is_partition": false,
         "kind": "table",
+        "name": "deal_pipeline_snapshots",
+        "owner": "postgres",
+        "parent": null,
+        "partition_bound": null,
+        "partition_key": null,
+        "replica_identity": "default",
+        "rls_enabled": true,
+        "rls_forced": false,
+        "schema": "public"
+      },
+      {
+        "comment": null,
+        "from_extension": false,
+        "is_partition": false,
+        "kind": "table",
         "name": "deal_revenue_snapshots",
         "owner": "postgres",
         "parent": null,
@@ -57417,6 +57664,17 @@
         "schema": "public",
         "status": "enabled",
         "table": "dialer_queue",
+        "timing": "BEFORE"
+      },
+      {
+        "definition": "CREATE TRIGGER trg_dnc_track_removal BEFORE UPDATE ON dnc_list FOR EACH ROW EXECUTE FUNCTION dnc_track_removal()",
+        "events": "UPDATE",
+        "function": "public.dnc_track_removal",
+        "level": "ROW",
+        "name": "trg_dnc_track_removal",
+        "schema": "public",
+        "status": "enabled",
+        "table": "dnc_list",
         "timing": "BEFORE"
       },
       {

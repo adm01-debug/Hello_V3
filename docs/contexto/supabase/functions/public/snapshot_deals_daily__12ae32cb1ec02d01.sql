@@ -14,15 +14,21 @@ BEGIN
     INTO v_count, v_total_value, v_weighted
   FROM public.deals WHERE status = 'open';
 
-  INSERT INTO public.deal_revenue_snapshots (snapshot_date, open_count, total_value_cents, weighted_value_cents)
+  INSERT INTO public.deal_pipeline_snapshots AS s
+    (snapshot_date, open_count, total_value_cents, weighted_value_cents)
   VALUES (CURRENT_DATE, v_count, v_total_value, v_weighted)
   ON CONFLICT (snapshot_date) DO UPDATE
     SET open_count = EXCLUDED.open_count,
         total_value_cents = EXCLUDED.total_value_cents,
-        weighted_value_cents = EXCLUDED.weighted_value_cents;
+        weighted_value_cents = EXCLUDED.weighted_value_cents,
+        updated_at = now();
 
-  RETURN jsonb_build_object('open_count', v_count, 'total_value_cents', v_total_value, 'weighted_value_cents', v_weighted, 'ran_at', now());
-EXCEPTION WHEN undefined_column OR undefined_table THEN
-  RETURN jsonb_build_object('skipped', true, 'reason', 'snapshot table missing expected columns');
+  RETURN jsonb_build_object(
+    'snapshot_date', CURRENT_DATE,
+    'open_count', v_count,
+    'total_value_cents', v_total_value,
+    'weighted_value_cents', v_weighted,
+    'ran_at', now()
+  );
 END;
 $function$

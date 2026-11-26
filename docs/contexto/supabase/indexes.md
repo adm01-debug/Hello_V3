@@ -232,6 +232,7 @@ Uso e tamanho em `stats.md`.
 | public.dashboard_goals | dashboard_goals_pkey | btree | id | sim | sim |  |
 | public.data_lake_exports | data_lake_exports_pkey | btree | id | sim | sim |  |
 | public.data_lake_exports | idx_data_exports_status | btree | status, created_at | não | sim |  |
+| public.deal_pipeline_snapshots | deal_pipeline_snapshots_pkey | btree | snapshot_date | sim | sim |  |
 | public.deal_revenue_snapshots | deal_revenue_snapshots_pkey | btree | id | sim | sim |  |
 | public.deal_revenue_snapshots | idx_deal_revenue_occurred | btree | occurred_at | não | sim |  |
 | public.deal_revenue_snapshots | idx_deal_revenue_snapshots_deal_id | btree | deal_id | não | sim |  |
