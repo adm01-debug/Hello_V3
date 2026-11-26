@@ -40,6 +40,13 @@
 | cadence_enrollments_pkey | PRIMARY KEY | `PRIMARY KEY (id)` |  |  | sim |
 
 
+## Referenciada por (FKs de outras tabelas)
+
+| tabela | constraint | colunas | on delete |
+|---|---|---|---|
+| public.cadence_step_runs | cadence_step_runs_enrollment_id_fkey | enrollment_id | CASCADE |
+
+
 ## Índices
 
 | nome | método | colunas | único | válido | predicado | definição |

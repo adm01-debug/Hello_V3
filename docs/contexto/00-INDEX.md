@@ -1,6 +1,6 @@
 # CONTEXTO PARA AGENTES DE IA — ÍNDICE ÚNICO
 
-> Gerado automaticamente por indice.py · 2026-11-26 21:08 UTC · HEAD `a745026335` · Não edite à mão.
+> Gerado automaticamente por indice.py · 2026-11-26 21:20 UTC · HEAD `a745026335` · Não edite à mão.
 
 Um sistema, três fontes de verdade, três produtores independentes. **Leia este arquivo e vá direto à fonte certa.** Cada fato tem um dono: se duas fontes discordarem, vale o dono.
 
@@ -8,9 +8,9 @@ Um sistema, três fontes de verdade, três produtores independentes. **Leia este
 
 | Preciso de… | Fonte (dona do fato) | Onde ler | Estado |
 |---|---|---|---|
-| Regras que não podem ser quebradas: RLS por operação, estados e transições, validações, fórmulas, prazos, erros de negócio, testes como especificação, inconsistências código×schema (NÃO VERIFICADO) e regras humanas (`manual/`) | **regras de negócio** | `docs/contexto/regras/07-REGRAS-DE-NEGOCIO.md` | ok · 1 min atrás |
-| Tabelas, colunas, RLS/políticas, funções, triggers, cron, storage, lints — **como está em produção agora** | **banco real** | `docs/contexto/supabase/README.md` | parcial · 44 min atrás · ⚠️ 14 erro(s) de coleta no manifest (erros); seções reaproveitadas da coleta anterior; 14 seção(ões) com erro em errors.md |
-| Rotas, telas, módulos, hooks, edge functions, grafo de dependências, testes, scripts, convenções | **código** | `docs/contexto/codigo/INDEX.md` | ok · 0 min atrás |
+| Regras que não podem ser quebradas: RLS por operação, estados e transições, validações, fórmulas, prazos, erros de negócio, testes como especificação, inconsistências código×schema (NÃO VERIFICADO) e regras humanas (`manual/`) | **regras de negócio** | `docs/contexto/regras/07-REGRAS-DE-NEGOCIO.md` | ok · 13 min atrás |
+| Tabelas, colunas, RLS/políticas, funções, triggers, cron, storage, lints — **como está em produção agora** | **banco real** | `docs/contexto/supabase/README.md` | parcial · 2 min atrás · ⚠️ 14 erro(s) de coleta no manifest (erros); seções reaproveitadas da coleta anterior; 14 seção(ões) com erro em errors.md |
+| Rotas, telas, módulos, hooks, edge functions, grafo de dependências, testes, scripts, convenções | **código** | `docs/contexto/codigo/INDEX.md` | ok · 12 min atrás |
 
 ## Ordem de leitura antes de qualquer tarefa ou planejamento
 
@@ -80,6 +80,7 @@ Um sistema, três fontes de verdade, três produtores independentes. **Leia este
 - `docs/contexto/supabase/tables/public/blocked_access_logs.md`
 - `docs/contexto/supabase/tables/public/bot_conversations.md`
 - `docs/contexto/supabase/tables/public/cadence_enrollments.md`
+- `docs/contexto/supabase/tables/public/cadence_step_runs.md`
 - `docs/contexto/supabase/tables/public/cadence_steps.md`
 - `docs/contexto/supabase/tables/public/cadences.md`
 - `docs/contexto/supabase/tables/public/call_alerts.md`
@@ -107,8 +108,7 @@ Um sistema, três fontes de verdade, três produtores independentes. **Leia este
 - `docs/contexto/supabase/tables/public/coaching_assignments.md`
 - `docs/contexto/supabase/tables/public/coaching_recommendations.md`
 - `docs/contexto/supabase/tables/public/coaching_timestamps.md`
-- `docs/contexto/supabase/tables/public/compliance_rules.md`
-- … +122
+- … +123
 
 </details>
 

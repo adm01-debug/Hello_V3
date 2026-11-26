@@ -27,6 +27,7 @@ Um arquivo por tabela em `tables/<schema>/<tabela>.md` (colunas, constraints, í
 | [public.blocked_access_logs](tables/public/blocked_access_logs.md) | table | sim | 2 | 10 | não |  |
 | [public.bot_conversations](tables/public/bot_conversations.md) | table | sim | 3 | 12 | não |  |
 | [public.cadence_enrollments](tables/public/cadence_enrollments.md) | table | sim | 4 | 12 | não |  |
+| [public.cadence_step_runs](tables/public/cadence_step_runs.md) | table | sim | 1 | 9 | não |  |
 | [public.cadence_steps](tables/public/cadence_steps.md) | table | sim | 2 | 10 | não |  |
 | [public.cadences](tables/public/cadences.md) | table | sim | 2 | 8 | não |  |
 | [public.call_alerts](tables/public/call_alerts.md) | table | sim | 5 | 8 | não |  |

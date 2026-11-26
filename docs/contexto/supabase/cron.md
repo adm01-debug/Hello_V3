@@ -11,3 +11,4 @@ Horários em UTC. Execuções recentes em `cron-runs.md`.
 | 33 | cleanup-recordings-daily | `45 3 * * *` | sim | postgres | postgres | `   SELECT net.http_post(     url := public.edge_function_url('cleanup-recordings'),     headers := jsonb_build_object(       'Content-Type', 'application/json',       'Authorization', 'Bearer ' \|\| (         SELECT decrypted_secret FROM vault.decrypted_secrets WHERE name = 'cleanup_recordings_cron_token'       )     ),     body := jsonb_build_object('trigger', 'cron')   );   ` |
 | 56 | deal-pipeline-snapshot-daily | `5 3 * * *` | sim | postgres | postgres | ` SELECT public.snapshot_deals_daily(); ` |
 | 59 | cron-watchdog-hourly | `5 * * * *` | sim | postgres | postgres | ` SELECT public.check_cron_health(); ` |
+| 61 | cadence-tick | `*/15 * * * *` | sim | postgres | postgres | ` select public.cadence_tick(200); ` |

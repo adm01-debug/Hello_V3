@@ -21,6 +21,9 @@
 | public.cadence_enrollments | cadence_id | public.cadences | id | CASCADE | NO ACTION |
 | public.cadence_enrollments | contact_id | public.contacts | id | CASCADE | NO ACTION |
 | public.cadence_enrollments | deal_id | public.deals | id | SET NULL | NO ACTION |
+| public.cadence_step_runs | cadence_id | public.cadences | id | CASCADE | NO ACTION |
+| public.cadence_step_runs | enrollment_id | public.cadence_enrollments | id | CASCADE | NO ACTION |
+| public.cadence_step_runs | step_id | public.cadence_steps | id | SET NULL | NO ACTION |
 | public.cadence_steps | cadence_id | public.cadences | id | CASCADE | NO ACTION |
 | public.call_alerts | call_session_id | public.call_sessions | id | CASCADE | NO ACTION |
 | public.call_analyses | call_session_id | public.call_sessions | id | CASCADE | NO ACTION |

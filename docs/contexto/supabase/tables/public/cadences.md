@@ -38,6 +38,7 @@
 | tabela | constraint | colunas | on delete |
 |---|---|---|---|
 | public.cadence_enrollments | cadence_enrollments_cadence_id_fkey | cadence_id | CASCADE |
+| public.cadence_step_runs | cadence_step_runs_cadence_id_fkey | cadence_id | CASCADE |
 | public.cadence_steps | cadence_steps_cadence_id_fkey | cadence_id | CASCADE |
 
 

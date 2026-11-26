@@ -78,6 +78,8 @@ Uso e tamanho em `stats.md`.
 | public.cadence_enrollments | idx_cadence_enrollments_deal_id | btree | deal_id | não | sim |  |
 | public.cadence_enrollments | idx_enrollments_agent | btree | agent_name | não | sim |  |
 | public.cadence_enrollments | idx_enrollments_next_action | btree | next_action_at | não | sim | `(status = 'active'::text)` |
+| public.cadence_step_runs | cadence_step_runs_pkey | btree | id | sim | sim |  |
+| public.cadence_step_runs | idx_cadence_step_runs_enrollment | btree | enrollment_id, created_at | não | sim |  |
 | public.cadence_steps | cadence_steps_pkey | btree | id | sim | sim |  |
 | public.cadence_steps | idx_cadence_steps_cadence | btree | cadence_id, step_order | não | sim |  |
 | public.cadence_steps | idx_cadence_steps_cadence_id | btree | cadence_id | não | sim |  |

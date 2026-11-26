@@ -2892,6 +2892,123 @@
         "nullable": false,
         "position": 1,
         "schema": "public",
+        "table": "cadence_step_runs",
+        "type": "uuid"
+      },
+      {
+        "comment": null,
+        "default": null,
+        "generated": null,
+        "identity": null,
+        "is_enum": false,
+        "name": "enrollment_id",
+        "nullable": false,
+        "position": 2,
+        "schema": "public",
+        "table": "cadence_step_runs",
+        "type": "uuid"
+      },
+      {
+        "comment": null,
+        "default": null,
+        "generated": null,
+        "identity": null,
+        "is_enum": false,
+        "name": "cadence_id",
+        "nullable": false,
+        "position": 3,
+        "schema": "public",
+        "table": "cadence_step_runs",
+        "type": "uuid"
+      },
+      {
+        "comment": null,
+        "default": null,
+        "generated": null,
+        "identity": null,
+        "is_enum": false,
+        "name": "step_id",
+        "nullable": true,
+        "position": 4,
+        "schema": "public",
+        "table": "cadence_step_runs",
+        "type": "uuid"
+      },
+      {
+        "comment": null,
+        "default": null,
+        "generated": null,
+        "identity": null,
+        "is_enum": false,
+        "name": "step_order",
+        "nullable": false,
+        "position": 5,
+        "schema": "public",
+        "table": "cadence_step_runs",
+        "type": "integer"
+      },
+      {
+        "comment": null,
+        "default": null,
+        "generated": null,
+        "identity": null,
+        "is_enum": false,
+        "name": "step_type",
+        "nullable": false,
+        "position": 6,
+        "schema": "public",
+        "table": "cadence_step_runs",
+        "type": "text"
+      },
+      {
+        "comment": null,
+        "default": null,
+        "generated": null,
+        "identity": null,
+        "is_enum": false,
+        "name": "status",
+        "nullable": false,
+        "position": 7,
+        "schema": "public",
+        "table": "cadence_step_runs",
+        "type": "text"
+      },
+      {
+        "comment": null,
+        "default": null,
+        "generated": null,
+        "identity": null,
+        "is_enum": false,
+        "name": "detail",
+        "nullable": true,
+        "position": 8,
+        "schema": "public",
+        "table": "cadence_step_runs",
+        "type": "text"
+      },
+      {
+        "comment": null,
+        "default": "now()",
+        "generated": null,
+        "identity": null,
+        "is_enum": false,
+        "name": "created_at",
+        "nullable": false,
+        "position": 9,
+        "schema": "public",
+        "table": "cadence_step_runs",
+        "type": "timestamp with time zone"
+      },
+      {
+        "comment": null,
+        "default": "gen_random_uuid()",
+        "generated": null,
+        "identity": null,
+        "is_enum": false,
+        "name": "id",
+        "nullable": false,
+        "position": 1,
+        "schema": "public",
         "table": "cadence_steps",
         "type": "uuid"
       },
@@ -24949,6 +25066,97 @@
         ],
         "deferrable": false,
         "definition": "FOREIGN KEY (cadence_id) REFERENCES cadences(id) ON DELETE CASCADE",
+        "name": "cadence_step_runs_cadence_id_fkey",
+        "on_delete": "CASCADE",
+        "on_update": "NO ACTION",
+        "ref_columns": [
+          "id"
+        ],
+        "ref_schema": "public",
+        "ref_table": "cadences",
+        "schema": "public",
+        "table": "cadence_step_runs",
+        "type": "FOREIGN KEY",
+        "validated": true
+      },
+      {
+        "columns": [
+          "enrollment_id"
+        ],
+        "deferrable": false,
+        "definition": "FOREIGN KEY (enrollment_id) REFERENCES cadence_enrollments(id) ON DELETE CASCADE",
+        "name": "cadence_step_runs_enrollment_id_fkey",
+        "on_delete": "CASCADE",
+        "on_update": "NO ACTION",
+        "ref_columns": [
+          "id"
+        ],
+        "ref_schema": "public",
+        "ref_table": "cadence_enrollments",
+        "schema": "public",
+        "table": "cadence_step_runs",
+        "type": "FOREIGN KEY",
+        "validated": true
+      },
+      {
+        "columns": [
+          "id"
+        ],
+        "deferrable": false,
+        "definition": "PRIMARY KEY (id)",
+        "name": "cadence_step_runs_pkey",
+        "on_delete": null,
+        "on_update": null,
+        "ref_columns": [],
+        "ref_schema": null,
+        "ref_table": null,
+        "schema": "public",
+        "table": "cadence_step_runs",
+        "type": "PRIMARY KEY",
+        "validated": true
+      },
+      {
+        "columns": [
+          "status"
+        ],
+        "deferrable": false,
+        "definition": "CHECK (status = ANY (ARRAY['done'::text, 'skipped'::text, 'failed'::text]))",
+        "name": "cadence_step_runs_status_check",
+        "on_delete": null,
+        "on_update": null,
+        "ref_columns": [],
+        "ref_schema": null,
+        "ref_table": null,
+        "schema": "public",
+        "table": "cadence_step_runs",
+        "type": "CHECK",
+        "validated": true
+      },
+      {
+        "columns": [
+          "step_id"
+        ],
+        "deferrable": false,
+        "definition": "FOREIGN KEY (step_id) REFERENCES cadence_steps(id) ON DELETE SET NULL",
+        "name": "cadence_step_runs_step_id_fkey",
+        "on_delete": "SET NULL",
+        "on_update": "NO ACTION",
+        "ref_columns": [
+          "id"
+        ],
+        "ref_schema": "public",
+        "ref_table": "cadence_steps",
+        "schema": "public",
+        "table": "cadence_step_runs",
+        "type": "FOREIGN KEY",
+        "validated": true
+      },
+      {
+        "columns": [
+          "cadence_id"
+        ],
+        "deferrable": false,
+        "definition": "FOREIGN KEY (cadence_id) REFERENCES cadences(id) ON DELETE CASCADE",
         "name": "cadence_steps_cadence_id_fkey",
         "on_delete": "CASCADE",
         "on_update": "NO ACTION",
@@ -32171,6 +32379,15 @@
           "jobname": "cron-watchdog-hourly",
           "schedule": "5 * * * *",
           "username": "postgres"
+        },
+        {
+          "active": true,
+          "command": " select public.cadence_tick(200); ",
+          "database": "postgres",
+          "jobid": 61,
+          "jobname": "cadence-tick",
+          "schedule": "*/15 * * * *",
+          "username": "postgres"
         }
       ]
     },
@@ -32459,6 +32676,38 @@
         "name": "bridge_voip_alert_to_notification",
         "owner": "postgres",
         "returns": "trigger",
+        "schema": "public",
+        "security_definer": true,
+        "strict": false,
+        "volatility": "volatile"
+      },
+      {
+        "args": "p_limit integer",
+        "callers": {
+          "code": [],
+          "code_total_files": 0,
+          "cron": [
+            "61:cadence-tick"
+          ],
+          "db": [],
+          "triggers": [],
+          "views": []
+        },
+        "comment": "Etapa 085: executa as etapas vencidas de cadence_enrollments e avanca a inscricao. Chamada so pelo cron (postgres/service_role).",
+        "config": [
+          "search_path=public"
+        ],
+        "definition": null,
+        "definition_sha": "069d14fe24f7a146",
+        "execute_api_roles": "service_role",
+        "execute_public": false,
+        "is_trigger_fn": false,
+        "kind": "function",
+        "language": "plpgsql",
+        "leakproof": false,
+        "name": "cadence_tick",
+        "owner": "postgres",
+        "returns": "jsonb",
         "schema": "public",
         "security_definer": true,
         "strict": false,
@@ -35139,9 +35388,13 @@
             {
               "file": "supabase/migrations/20260712220202_52e516fc-3b1c-45ce-9c00-3dd4f6acb406.sql",
               "hits": 1
+            },
+            {
+              "file": "supabase/migrations/20261127220000_polymorphic_pointer_comments.sql",
+              "hits": 1
             }
           ],
-          "code_total_files": 7,
+          "code_total_files": 8,
           "cron": [],
           "db": [
             "public.validate_audit_insert"
@@ -37440,6 +37693,18 @@
           "privileges": "DELETE, INSERT, REFERENCES, SELECT, TRIGGER, TRUNCATE, UPDATE",
           "schema": "public",
           "table": "cadence_enrollments"
+        },
+        {
+          "grantee": "authenticated",
+          "privileges": "SELECT",
+          "schema": "public",
+          "table": "cadence_step_runs"
+        },
+        {
+          "grantee": "service_role",
+          "privileges": "DELETE, INSERT, REFERENCES, SELECT, TRIGGER, TRUNCATE, UPDATE",
+          "schema": "public",
+          "table": "cadence_step_runs"
         },
         {
           "grantee": "anon",
@@ -41249,6 +41514,35 @@
         "predicate": "(status = 'active'::text)",
         "schema": "public",
         "table": "cadence_enrollments"
+      },
+      {
+        "columns": [
+          "id"
+        ],
+        "definition": "CREATE UNIQUE INDEX cadence_step_runs_pkey ON public.cadence_step_runs USING btree (id)",
+        "is_primary": true,
+        "is_unique": true,
+        "is_valid": true,
+        "method": "btree",
+        "name": "cadence_step_runs_pkey",
+        "predicate": null,
+        "schema": "public",
+        "table": "cadence_step_runs"
+      },
+      {
+        "columns": [
+          "enrollment_id",
+          "created_at"
+        ],
+        "definition": "CREATE INDEX idx_cadence_step_runs_enrollment ON public.cadence_step_runs USING btree (enrollment_id, created_at DESC)",
+        "is_primary": false,
+        "is_unique": false,
+        "is_valid": true,
+        "method": "btree",
+        "name": "idx_cadence_step_runs_enrollment",
+        "predicate": null,
+        "schema": "public",
+        "table": "cadence_step_runs"
       },
       {
         "columns": [
@@ -47933,6 +48227,18 @@
       },
       {
         "code": "fk_without_index",
+        "detail": "FK sem índice nas colunas ['cadence_id']: joins e DELETE/UPDATE na tabela pai ficam lentos.",
+        "object": "public.cadence_step_runs.cadence_step_runs_cadence_id_fkey",
+        "severity": "BAIXA"
+      },
+      {
+        "code": "fk_without_index",
+        "detail": "FK sem índice nas colunas ['step_id']: joins e DELETE/UPDATE na tabela pai ficam lentos.",
+        "object": "public.cadence_step_runs.cadence_step_runs_step_id_fkey",
+        "severity": "BAIXA"
+      },
+      {
+        "code": "fk_without_index",
         "detail": "FK sem índice nas colunas ['moh_prompt_id']: joins e DELETE/UPDATE na tabela pai ficam lentos.",
         "object": "public.call_park_orbits.call_park_orbits_moh_prompt_id_fkey",
         "severity": "BAIXA"
@@ -49332,6 +49638,12 @@
         "version": "20261127180000"
       },
       {
+        "name": "policies_to_authenticated_lote4",
+        "statements": 1,
+        "statements_sha": "194e041ac4f233f1",
+        "version": "20261127190000"
+      },
+      {
         "name": "revoke_anon_role_helpers",
         "statements": 1,
         "statements_sha": "63b4326e7d951046",
@@ -49354,6 +49666,12 @@
         "statements": 3,
         "statements_sha": "606c11bb8131ff3e",
         "version": "20261127230000"
+      },
+      {
+        "name": "calling_hours_recurring_comment",
+        "statements": 2,
+        "statements_sha": "82521beb03b18ee1",
+        "version": "20261127240000"
       },
       {
         "name": "increment_weekly_stats_rpc",
@@ -50082,6 +50400,18 @@
         "table": "cadence_enrollments",
         "using": "is_admin_or_supervisor()",
         "with_check": "is_admin_or_supervisor()"
+      },
+      {
+        "cmd": "SELECT",
+        "name": "Agents view own cadence runs",
+        "permissive": "PERMISSIVE",
+        "roles": [
+          "authenticated"
+        ],
+        "schema": "public",
+        "table": "cadence_step_runs",
+        "using": "(is_admin_or_supervisor() OR (EXISTS ( SELECT 1\n   FROM cadence_enrollments e\n  WHERE ((e.id = cadence_step_runs.enrollment_id) AND (e.agent_name = get_user_agent_name())))))",
+        "with_check": null
       },
       {
         "cmd": "SELECT",
@@ -55756,6 +56086,21 @@
         "is_partition": false,
         "kind": "table",
         "name": "cadence_enrollments",
+        "owner": "postgres",
+        "parent": null,
+        "partition_bound": null,
+        "partition_key": null,
+        "replica_identity": "default",
+        "rls_enabled": true,
+        "rls_forced": false,
+        "schema": "public"
+      },
+      {
+        "comment": null,
+        "from_extension": false,
+        "is_partition": false,
+        "kind": "table",
+        "name": "cadence_step_runs",
         "owner": "postgres",
         "parent": null,
         "partition_bound": null,

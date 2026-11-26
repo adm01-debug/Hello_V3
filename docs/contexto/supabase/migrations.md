@@ -265,10 +265,12 @@ SQL em `migrations/<versao>_<nome>.sql`. Mudanças feitas pelo Dashboard/SQL Edi
 | 20261127160000 | [policies_to_authenticated_lote1](migrations/20261127160000_policies_to_authenticated_lote1.sql) | 1 |
 | 20261127170000 | [add_missing_fks](migrations/20261127170000_add_missing_fks.sql) | 4 |
 | 20261127180000 | [policies_to_authenticated_restante](migrations/20261127180000_policies_to_authenticated_restante.sql) | 1 |
+| 20261127190000 | [policies_to_authenticated_lote4](migrations/20261127190000_policies_to_authenticated_lote4.sql) | 1 |
 | 20261127200000 | [revoke_anon_role_helpers](migrations/20261127200000_revoke_anon_role_helpers.sql) | 1 |
 | 20261127210000 | [role_helpers_stable](migrations/20261127210000_role_helpers_stable.sql) | 3 |
 | 20261127220000 | [polymorphic_pointer_comments](migrations/20261127220000_polymorphic_pointer_comments.sql) | 6 |
 | 20261127230000 | [unique_conversation_message_id](migrations/20261127230000_unique_conversation_message_id.sql) | 3 |
+| 20261127240000 | [calling_hours_recurring_comment](migrations/20261127240000_calling_hours_recurring_comment.sql) | 2 |
 | 20261127250000 | [increment_weekly_stats_rpc](migrations/20261127250000_increment_weekly_stats_rpc.sql) | 4 |
 | 20261127260000 | [increment_weekly_stats_rpc_null_media_fix](migrations/20261127260000_increment_weekly_stats_rpc_null_media_fix.sql) | 2 |
 | 20261127270000 | [geo_policies_idempotente](migrations/20261127270000_geo_policies_idempotente.sql) | 1 |

@@ -64,6 +64,7 @@ Visão consolidada (inclui `storage.objects` e `realtime.messages`); detalhes po
 | public.cadence_enrollments | Agents view own enrollments | SELECT | PERMISSIVE | authenticated | `((agent_name = get_user_agent_name()) OR is_admin_or_supervisor())` |  |
 | public.cadence_enrollments | Authenticated insert enrollments | INSERT | PERMISSIVE | authenticated |  | `((( SELECT auth.uid() AS uid) IS NOT NULL) AND (is_admin_or_supervisor() OR (agent_name = get_user_agent_name())))` |
 | public.cadence_enrollments | Supervisors manage enrollments | ALL | PERMISSIVE | authenticated | `is_admin_or_supervisor()` | `is_admin_or_supervisor()` |
+| public.cadence_step_runs | Agents view own cadence runs | SELECT | PERMISSIVE | authenticated | `(is_admin_or_supervisor() OR (EXISTS ( SELECT 1    FROM cadence_enrollments e   WHERE ((e.id = cadence_step_runs.enrollment_id) AND (e.agent_name = get_user_agent_name())))))` |  |
 | public.cadence_steps | All authenticated read cadence steps | SELECT | PERMISSIVE | authenticated | `(( SELECT auth.uid() AS uid) IS NOT NULL)` |  |
 | public.cadence_steps | Supervisors manage cadence steps | ALL | PERMISSIVE | authenticated | `is_admin_or_supervisor()` | `is_admin_or_supervisor()` |
 | public.cadences | All authenticated read cadences | SELECT | PERMISSIVE | authenticated | `(( SELECT auth.uid() AS uid) IS NOT NULL)` |  |

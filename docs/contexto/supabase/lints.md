@@ -12,6 +12,8 @@ Verificações objetivas feitas no catálogo. Um agente deve ler isto antes de p
 | BAIXA | extension_in_public | pg_trgm | Extensão instalada no schema public (recomendado: schema extensions). |
 | BAIXA | extension_in_public | vector | Extensão instalada no schema public (recomendado: schema extensions). |
 | BAIXA | fk_without_index | public.bitrix_departments.bitrix_departments_parent_id_fkey | FK sem índice nas colunas ['parent_id']: joins e DELETE/UPDATE na tabela pai ficam lentos. |
+| BAIXA | fk_without_index | public.cadence_step_runs.cadence_step_runs_cadence_id_fkey | FK sem índice nas colunas ['cadence_id']: joins e DELETE/UPDATE na tabela pai ficam lentos. |
+| BAIXA | fk_without_index | public.cadence_step_runs.cadence_step_runs_step_id_fkey | FK sem índice nas colunas ['step_id']: joins e DELETE/UPDATE na tabela pai ficam lentos. |
 | BAIXA | fk_without_index | public.call_park_orbits.call_park_orbits_moh_prompt_id_fkey | FK sem índice nas colunas ['moh_prompt_id']: joins e DELETE/UPDATE na tabela pai ficam lentos. |
 | BAIXA | fk_without_index | public.call_scorecards.call_scorecards_reviewer_id_fkey | FK sem índice nas colunas ['reviewer_id']: joins e DELETE/UPDATE na tabela pai ficam lentos. |
 | BAIXA | fk_without_index | public.client_errors.client_errors_resolved_by_fkey | FK sem índice nas colunas ['resolved_by']: joins e DELETE/UPDATE na tabela pai ficam lentos. |

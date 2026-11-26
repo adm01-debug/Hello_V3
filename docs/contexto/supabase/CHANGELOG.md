@@ -2,6 +2,20 @@
 
 Diff semântico gerado a cada coleta em que algo mudou.
 
+## 2026-11-26 21:18 UTC
+
+- **colunas** adicionado (9): `public.cadence_step_runs.cadence_id`, `public.cadence_step_runs.created_at`, `public.cadence_step_runs.detail`, `public.cadence_step_runs.enrollment_id`, `public.cadence_step_runs.id`, `public.cadence_step_runs.status`, `public.cadence_step_runs.step_id`, `public.cadence_step_runs.step_order`, `public.cadence_step_runs.step_type`
+- **constraints** adicionado (5): `public.cadence_step_runs.cadence_step_runs_cadence_id_fkey`, `public.cadence_step_runs.cadence_step_runs_enrollment_id_fkey`, `public.cadence_step_runs.cadence_step_runs_pkey`, `public.cadence_step_runs.cadence_step_runs_status_check`, `public.cadence_step_runs.cadence_step_runs_step_id_fkey`
+- **cron jobs** adicionado (1): `61:cadence-tick`
+- **functions** adicionado (1): `public.cadence_tick(p_limit integer)`
+- **functions** alterado (1): `public.log_audit_event(p_action text, p_resource_type text, p_resource_id text, p_details jsonb)`
+- **grants** adicionado (2): `public.cadence_step_runs:authenticated`, `public.cadence_step_runs:service_role`
+- **indexes** adicionado (2): `public.cadence_step_runs_pkey`, `public.idx_cadence_step_runs_enrollment`
+- **lints** adicionado (2): `fk_without_index:public.cadence_step_runs.cadence_step_runs_cadence_id_fkey`, `fk_without_index:public.cadence_step_runs.cadence_step_runs_step_id_fkey`
+- **migrations** adicionado (2): `20261127190000_policies_to_authenticated_lote4`, `20261127240000_calling_hours_recurring_comment`
+- **policies (RLS)** adicionado (1): `public.cadence_step_runs.Agents view own cadence runs`
+- **tabelas** adicionado (1): `public.cadence_step_runs`
+
 ## 2026-11-26 20:23 UTC
 
 - **cron jobs** adicionado (1): `59:cron-watchdog-hourly`

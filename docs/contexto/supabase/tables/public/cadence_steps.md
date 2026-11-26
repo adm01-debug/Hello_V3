@@ -36,6 +36,13 @@
 | cadence_steps_pkey | PRIMARY KEY | `PRIMARY KEY (id)` |  |  | sim |
 
 
+## Referenciada por (FKs de outras tabelas)
+
+| tabela | constraint | colunas | on delete |
+|---|---|---|---|
+| public.cadence_step_runs | cadence_step_runs_step_id_fkey | step_id | SET NULL |
+
+
 ## Índices
 
 | nome | método | colunas | único | válido | predicado | definição |
