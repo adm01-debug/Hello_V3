@@ -1,6 +1,6 @@
 # 07 · REGRAS DE NEGÓCIO
 
-> Gerado automaticamente por AI Context Sync v1.3.2 · commit `36baa4a5fa` · branch `main` · 2026-11-26 13:20 UTC
+> Gerado automaticamente por AI Context Sync v1.3.2 · commit `0ecc7a733d` · branch `main` · 2026-11-26 18:52 UTC
 > Não edite à mão — regras humanas vão em `manual/`.
 
 ## A. Regras escritas por humanos (`manual/` — prioridade máxima, nunca sobrescrito)
@@ -993,6 +993,7 @@ _nenhum mapa explícito encontrado — transições só existem implicitamente n
 | `type` | `spring` | escreve | `src/components/voice/VoiceAssistantDialog.tsx`<br>`src/components/voice/overlay/VoiceOrb.tsx` |
 | `type` | `start` | escreve | `src/pages/CallFlowDesigner.tsx` |
 | `type` | `string` | compara, escreve | `src/lib/queue-audio.ts`<br>`supabase/functions/chatbot-respond/index.ts`<br>`supabase/functions/detect-key-moments/index.ts`<br>`supabase/functions/extract-crm-fields/index.ts`<br>`supabase/functions/generate-meeting-summary/index.ts` |
+| `type` | `success` | escreve | `src/hooks/useAgentRanking.ts` |
 | `type` | `text` | escreve | `supabase/functions/ocr-virtual-fax/index.ts` |
 | `type` | `time_check` | escreve | `src/pages/CallFlowDesigner.tsx` |
 | `type` | `tomorrow` | compara | `src/components/callbacks/ScheduleCallbackDialog.tsx` |
@@ -2225,7 +2226,6 @@ _nenhum item encontrado_
 | 1 | `src/components/queue-alerts/useQueueMetricsSettings.ts` |
 | 30 | `src/components/settings/BitrixSyncStatus.tsx` |
 | 10 | `src/components/settings/SystemLogs.tsx` |
-| 1 | `src/hooks/useAgentRanking.ts` |
 | 1 | `src/hooks/useAlerts.ts` |
 | 50 | `src/hooks/useBestTimeToContact.ts` |
 | 200 | `src/hooks/useConsent.ts` |
@@ -2485,6 +2485,7 @@ _nenhum item encontrado_
 | Erro ao carregar dados dos agentes | `src/hooks/useAgentRanking.ts` |
 | Erro ao criar dados de teste | `src/hooks/useAgentRanking.ts` |
 | Erro ao salvar metas | `src/hooks/useAgentRanking.ts` |
+| Meta atingida, mas a notificação não foi registrada | `src/hooks/useAgentRanking.ts` |
 | Erro ao atualizar status | `src/hooks/useAgentStatus.ts` |
 | Erro ao consultar a sessão de teste | `src/hooks/useAlerts.ts` |
 | Erro ao criar alertas de teste | `src/hooks/useAlerts.ts` |
@@ -2637,8 +2638,7 @@ _nenhum item encontrado_
 | Erro ao limpar logs | `src/hooks/useRateLimitData.ts` |
 | Erro ao resolver alerta | `src/hooks/useRateLimitData.ts` |
 | Nada foi alterado para ${ipAddress} | `src/hooks/useRateLimitData.ts` |
-| Novo alerta de rate limit! | `src/hooks/useRateLimitData.ts` |
-| … +298 linhas — lista completa em `context.json` | |
+| … +299 linhas — lista completa em `context.json` | |
 
 ## J. Controle de acesso no código (checagens de perfil/permissão)
 
@@ -2689,7 +2689,7 @@ _nenhum item encontrado_
 | `admin` | `supabase/functions/data-lake-flush/index.ts` |
 | `admin` | `supabase/migrations/20261123000200_fix_has_role_oracle_and_debug_tables.sql` |
 
-## K. Testes como especificação (3783 testes em 419 arquivos — nomes completos em `context.json`)
+## K. Testes como especificação (3786 testes em 419 arquivos — nomes completos em `context.json`)
 
 | Arquivo | Testes | Exemplos do que o sistema DEVE fazer |
 |---|---|---|
@@ -2735,6 +2735,7 @@ _nenhum item encontrado_
 | `src/hooks/__tests__/useConversations.coverage.test.tsx` | 17 | useConversations · fetches with filters applied · handles fetch error · useConversationMessages … |
 | `src/hooks/__tests__/useSupervisorPanel.coverage.test.tsx` | 17 | useSupervisorPanel (coverage) · loads active calls and queue metrics on mount · selecting a call fetches whisper history · sendWhisper errors when no call/message selected … |
 | `src/lib/__tests__/softphone-utils.test.ts` | 17 | formatCallDuration · formats 0 seconds · formats under a minute · formats exact minutes … |
+| `src/hooks/__tests__/useAgentRanking.coverage.test.tsx` | 16 | useAgentRanking (coverage) · exposes the read error instead of an empty ranking · clears the ranking error after the next successful read · fetches agent stats on mount and exposes data … |
 | `src/hooks/__tests__/useLoginLockout.test.ts` | 16 | useLoginLockout · check_login_lockout RPC · returns unlocked for unknown email · returns locked after 5 failed attempts … |
 | `src/hooks/__tests__/useVoipTrunks.coverage.test.tsx` | 16 | useVoipTrunks (coverage) · lists trunks · lists assignments · throws when invoke returns error … |
 | `src/lib/__tests__/utils.coverage.test.ts` | 16 | utils (coverage) · merges class names · dedups tailwind conflicts · handles conditional / falsy values … |
@@ -2752,7 +2753,6 @@ _nenhum item encontrado_
 | `src/lib/__tests__/voice-preferences.test.ts` | 14 | voice-preferences (PBT) · clampTtsRate sempre devolve valor finito no intervalo permitido · nextTtsRate percorre apenas passos válidos · ciclo de velocidades é fechado e volta ao início … |
 | `src/lib/__tests__/webhook-health-utils.test.ts` | 14 | ratioColor · retorna muted quando attempts=0 · classifica faixas por ratio · aggregateEndpoints … |
 | `src/lib/notifications/__tests__/index.coverage.test.ts` | 14 | notifications · sendNotification · returns success when edge function succeeds · returns error when edge function returns error … |
-| `src/hooks/__tests__/useAgentRanking.coverage.test.tsx` | 13 | useAgentRanking (coverage) · exposes the read error instead of an empty ranking · clears the ranking error after the next successful read · fetches agent stats on mount and exposes data … |
 | `src/hooks/__tests__/useCadences.crud.test.tsx` | 13 | useCadences: edicao e exclusao · updateCadence envia o patch junto com a version atual e recarrega · updateCadence alterna is_active mantendo a version do registro · updateCadence trata conflito de version recarregando a lista … |
 | `src/hooks/__tests__/useCallSession.coverage.test.tsx` | 13 | useCallSession · starts a session successfully · returns null on start error · addTranscript/addAnalysis no-op without session … |
 | `src/hooks/__tests__/useDashboardData.coverage.test.tsx` | 13 | useDashboardData · useDashboardStats success · useDashboardStats error · useAgentsListData success returns data … |
@@ -3019,6 +3019,7 @@ _nenhum item encontrado_
 | `.add('dark'` | `src/contexts/ThemeContext.tsx` |
 | `invoke(` | `src/hooks/useAccounts.ts` |
 | `invoke(` | `src/hooks/useAdherence.ts` |
+| `notifyError` | `src/hooks/useAgentRanking.ts` |
 | `invoke(` | `src/hooks/useAlerts.ts` |
 | `invoke(` | `src/hooks/useBestTimeToContact.ts` |
 | `invoke(` | `src/hooks/useBitrix.ts` |

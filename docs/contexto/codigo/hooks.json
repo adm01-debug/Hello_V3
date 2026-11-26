@@ -772,14 +772,14 @@
    "hooks_exportados": [
     "useAgentRanking"
    ],
-   "linhas": 343,
+   "linhas": 360,
    "dominio": "hooks",
    "tabelas": [
     "agent_goals",
-    "call_alerts",
     "call_analyses",
     "call_sessions",
-    "call_summaries"
+    "call_summaries",
+    "notifications"
    ],
    "rpcs": [],
    "edges": [],

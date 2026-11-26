@@ -3558,10 +3558,10 @@
     "agent_weekly_stats",
     "agents",
     "badges",
-    "call_alerts",
     "call_analyses",
     "call_sessions",
-    "call_summaries"
+    "call_summaries",
+    "notifications"
    ],
    "rpcs": [],
    "edges": [],

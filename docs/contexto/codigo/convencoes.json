@@ -59,11 +59,11 @@
  "commits": {
   "convencao": "conventional commits (observado)",
   "exemplos": [
+   "fix: meta atingida vira notificacao do usuario, nao alerta de chamada (etapa 127) (#367)",
    "feat: tela de violacoes de SLA com atraso e filtros (etapa 179) (#352)",
    "feat: registra os erros do navegador em client_errors com tela admin (etapa 230) (#351)",
    "feat: edicao e trilha de auditoria na lista DNC (etapa 175) (#350)",
-   "feat: serie historica do pipeline aberto com tela e job diario (#349)",
-   "feat: historico de versoes dos artigos da base de conhecimento (#348)"
+   "feat: serie historica do pipeline aberto com tela e job diario (#349)"
   ]
  },
  "pr_template": null,

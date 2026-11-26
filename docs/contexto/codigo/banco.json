@@ -3930,7 +3930,7 @@
     "call_session_id->call_sessions"
    ],
    "criada_em": "20251222165402_c515f03e-0bf3-4c17-a56b-b209d783515a.sql",
-   "usada_no_front": 7,
+   "usada_no_front": 6,
    "usada_em_edges": [
     "check-alerts",
     "check-goals",
@@ -13708,7 +13708,7 @@
    ],
    "fks": [],
    "criada_em": "20260315144312_5b41e5e7-ff57-40a1-ad7e-68133720c86c.sql",
-   "usada_no_front": 4,
+   "usada_no_front": 5,
    "usada_em_edges": [
     "enforce-sla",
     "generate-coaching-track",

@@ -2,11 +2,16 @@
  "aviso": "GERADO AUTOMATICAMENTE por scripts/ai-context/gerar.mjs — não editar à mão; será sobrescrito.",
  "format_version": 2,
  "git": {
-  "commit": "36baa4a5fa4a0324e71ab1cf022ade207bfe44b6",
+  "commit": "0ecc7a733dd2cf317eb35bf3a6c9e2a140a72105",
   "branch": "main",
-  "data_commit": "2026-11-26T10:18:35-03:00",
+  "data_commit": "2026-11-26T15:51:33-03:00",
   "remote": "https://github.com/adm01-debug/Hello_V3",
   "ultimos_commits": [
+   {
+    "sha": "0ecc7a7",
+    "data": "2026-11-26",
+    "assunto": "fix: meta atingida vira notificacao do usuario, nao alerta de chamada (etapa 127) (#367)"
+   },
    {
     "sha": "36baa4a",
     "data": "2026-11-26",
@@ -126,18 +131,13 @@
     "sha": "7245964",
     "data": "2026-11-25",
     "assunto": "chore: remover componentes orfaos (etapa 296) e reaproveitar saida de audio e alertas de contato (#328)"
-   },
-   {
-    "sha": "f214b17",
-    "data": "2026-11-25",
-    "assunto": "feat: verifica voz ao vivo na chamada e remove resumo de reuniao duplicado (etapas 154,155) (#327)"
    }
   ],
-  "arquivos_mudados_7d": 2379,
+  "arquivos_mudados_7d": 2380,
   "pastas_mais_mudadas_30d": [
    {
     "pasta": "src/hooks/__tests__",
-    "mudancas": 294
+    "mudancas": 295
    },
    {
     "pasta": "covout/lcov-report/hooks",
@@ -145,7 +145,7 @@
    },
    {
     "pasta": "docs/qa/05-PROGRESSO.md",
-    "mudancas": 148
+    "mudancas": 149
    },
    {
     "pasta": "covout/lcov-report/lib",
@@ -199,7 +199,7 @@
   "arquivos_mais_mudados_90d": [
    {
     "arquivo": "docs/qa/05-PROGRESSO.md",
-    "mudancas": 148
+    "mudancas": 149
    },
    {
     "arquivo": "docs/estado/funcionalidades-planejadas.md",
@@ -254,6 +254,10 @@
     "mudancas": 8
    },
    {
+    "arquivo": "src/hooks/useAgentRanking.ts",
+    "mudancas": 8
+   },
+   {
     "arquivo": "src/pages/PhoneDialer.tsx",
     "mudancas": 8
    },
@@ -267,10 +271,6 @@
    },
    {
     "arquivo": "src/hooks/__tests__/useQueueMetrics.coverage.test.tsx",
-    "mudancas": 7
-   },
-   {
-    "arquivo": "src/hooks/useAgentRanking.ts",
     "mudancas": 7
    },
    {
@@ -310,9 +310,9 @@
   ]
  },
  "contagens": {
-  "arquivos_total": 1810,
+  "arquivos_total": 1811,
   "arquivos_codigo": 1383,
-  "linhas_codigo": 184613,
+  "linhas_codigo": 184681,
   "rotas": 108,
   "rotas_http_backend": 11,
   "vistas_por_id": 0,
@@ -324,7 +324,7 @@
   "tabelas": 172,
   "migrations": 253,
   "cron_jobs": 12,
-  "testes": 442,
+  "testes": 443,
   "workflows": 5,
   "scripts": 36,
   "docs_md": 121
@@ -492,7 +492,7 @@
   },
   "src/hooks": {
    "arquivos": 355,
-   "linhas": 45345
+   "linhas": 45413
   },
   "src/integrations": {
    "arquivos": 3,

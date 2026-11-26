@@ -1328,7 +1328,7 @@
     "pages/admin",
     "pages/roles"
    ],
-   "coberto_por_testes": 8,
+   "coberto_por_testes": 9,
    "orfao": false
   },
   {

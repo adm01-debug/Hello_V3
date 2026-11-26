@@ -2696,10 +2696,10 @@
    "edges": [],
    "tabelas": [
     "agent_goals",
-    "call_alerts",
     "call_analyses",
     "call_sessions",
-    "call_summaries"
+    "call_summaries",
+    "notifications"
    ],
    "rpcs": [],
    "buckets": [],
@@ -3564,7 +3564,7 @@
    "modulo": "hooks",
    "arquivos": 175,
    "testes": 0,
-   "linhas": 22655,
+   "linhas": 22672,
    "itens_menu": [],
    "telas": [],
    "rotas_http": [],
@@ -5067,6 +5067,7 @@
     "live_assist_signals",
     "live_sentiment_snapshots",
     "meeting_summaries",
+    "notifications",
     "parked_calls",
     "queue_audio_prompts",
     "renewals",

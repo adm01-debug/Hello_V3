@@ -5,7 +5,7 @@
   "vitest",
   "playwright"
  ],
- "total": 442,
+ "total": 443,
  "por_tipo": {
   "contrato": 1,
   "e2e": 16,
@@ -646,11 +646,12 @@
   {
    "arquivo": "src/hooks/__tests__/useAgentRanking.coverage.test.tsx",
    "tipo": "unit",
-   "linhas": 199,
+   "linhas": 250,
    "testa": [
-    "src/hooks/useAgentRanking.ts"
+    "src/hooks/useAgentRanking.ts",
+    "src/lib/logger.ts"
    ],
-   "casos": 12
+   "casos": 15
   },
   {
    "arquivo": "src/hooks/__tests__/useAgentStatus.coverage.test.tsx",
@@ -3932,6 +3933,7 @@
   "supabase/tests/deal_pipeline_snapshots_rls_test.sql",
   "supabase/tests/dnc_removal_audit_rls_test.sql",
   "supabase/tests/geo_write_policies_rls_test.sql",
+  "supabase/tests/goals_achieved_notification_rls_test.sql",
   "supabase/tests/internal_tables_rls_test.sql",
   "supabase/tests/kb_article_history_rls_test.sql",
   "supabase/tests/login_lockout_acl_rls_test.sql",
@@ -4176,7 +4178,7 @@
   "src/lib/holdReminderSounds.ts": 1,
   "src/lib/incoming-call-alert.ts": 1,
   "src/lib/language-detection.ts": 1,
-  "src/lib/logger.ts": 8,
+  "src/lib/logger.ts": 9,
   "src/lib/meeting-summary-utils.ts": 1,
   "src/lib/metrics/mos.ts": 1,
   "src/lib/metrics/queue.ts": 1,
