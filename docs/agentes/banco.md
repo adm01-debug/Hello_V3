@@ -139,6 +139,20 @@ Teste funcional do caminho de exclusão — usuário de teste `4a56062b-1fdb-42e
 Consultas feitas pela Management API (`POST /v1/projects/<ref>/database/query`), que roda sem RLS. Esta
 apuração libera as etapas 133 e 136.
 
+Reconferido em 2026-11-26 com gate que fica no repositório, para não depender de consulta avulsa:
+`supabase/tests/probe_132_lgpd_entity_versions_rls_test.sql` (somente leitura) roda no
+`migrations.yml modo=verificar`. Ele reconfirma o desfecho **(a)**, confirma que as 7 FKs do arquivo
+estão `SET NULL` e mede o que a apuração anterior não mediu: **nenhuma FK apontando para `auth.users`
+em schema nenhum do banco bloqueia o DELETE** (`NO ACTION`/`RESTRICT`: 0; 22 `CASCADE` + 18 `SET NULL`).
+Como a sonda roda em todo `modo=verificar`, essa condição vira regressão detectável no CI.
+
+## Testes de RLS — não confie nos que existem
+
+`src/__tests__/rls/` (7 arquivos) **não toca banco nem mock de PostgREST**: declara uma matriz literal e
+asserta que a matriz contém os próprios valores (`contacts.test.ts:11-36`, `rls-policies.test.ts:28-56`).
+Não podem detectar regressão de RLS. Teste de RLS que vale lê a migration ou roda contra Postgres
+descartável — ao mexer em RLS, não aceite essas suítes como evidência.
+
 ## Ponteiros polimórficos — contrato medido em 2026-11-27
 
 Etapa 129 do plano (achado A-127). Três colunas apontam para tabelas diferentes conforme a coluna de tipo
@@ -203,9 +217,3 @@ Aqui o tipo **não é nome de tabela**: é o marcador do produtor da notificaç�
 O gate `supabase/tests/polymorphic_pointer_comments_rls_test.sql` falha se algum desses comentários sumir e
 também se alguém criar `CHECK` nessas colunas antes da etapa 139.
 
-## Testes de RLS — não confie nos que existem
-
-`src/__tests__/rls/` (7 arquivos) **não toca banco nem mock de PostgREST**: declara uma matriz literal e
-asserta que a matriz contém os próprios valores (`contacts.test.ts:11-36`, `rls-policies.test.ts:28-56`).
-Não podem detectar regressão de RLS. Teste de RLS que vale lê a migration ou roda contra Postgres
-descartável — ao mexer em RLS, não aceite essas suítes como evidência.
