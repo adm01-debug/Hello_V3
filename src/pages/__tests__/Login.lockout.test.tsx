@@ -4,7 +4,7 @@ import { MemoryRouter } from 'react-router-dom';
 
 const signIn = vi.fn(async () => ({ data: { user: { id: 'u1' } }, error: null }));
 const signOut = vi.fn(async () => undefined);
-const rpc = vi.fn();
+const invoke = vi.fn();
 const toastError = vi.fn();
 
 vi.mock('sonner', () => ({ toast: { success: vi.fn(), error: (...a: unknown[]) => toastError(...a), info: vi.fn(), warning: vi.fn() } }));
@@ -14,7 +14,7 @@ vi.mock('@/contexts/AuthContext', () => ({
 }));
 vi.mock('@/hooks/useIPValidation', () => ({ useIPValidation: () => ({ validateIP: vi.fn(async () => ({ allowed: true })) }) }));
 vi.mock('@/integrations/supabase/client', () => ({
-  supabase: { rpc: (...a: unknown[]) => rpc(...a), functions: { invoke: vi.fn() } },
+  supabase: { rpc: vi.fn(), functions: { invoke: (...a: unknown[]) => invoke(...a) } },
 }));
 vi.mock('@/components/auth/PasskeyLogin', () => ({ PasskeyLogin: () => null }));
 vi.mock('@/components/auth/LoginBranding', () => ({ LoginBranding: () => null }));
@@ -42,7 +42,7 @@ describe('Login — bloqueio de força bruta falha fechado (E003)', () => {
   });
 
   it('quando a verificação de bloqueio falha, não tenta autenticar', async () => {
-    rpc.mockResolvedValue({ data: null, error: { message: 'rpc unavailable' } });
+    invoke.mockResolvedValue({ data: null, error: { message: 'edge unavailable' } });
 
     await renderLogin();
     await submit('agente@teste.com', 'senha123');
@@ -55,7 +55,7 @@ describe('Login — bloqueio de força bruta falha fechado (E003)', () => {
   });
 
   it('quando a verificação responde "não bloqueado", o login segue', async () => {
-    rpc.mockResolvedValue({ data: { locked: false, attempts: 0 }, error: null });
+    invoke.mockResolvedValue({ data: { locked: false, attempts: 0 }, error: null });
 
     await renderLogin();
     await submit('agente@teste.com', 'senha123');
