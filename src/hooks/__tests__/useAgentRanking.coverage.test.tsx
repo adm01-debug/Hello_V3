@@ -11,6 +11,8 @@ interface TableResult {
 // results; .single()/.maybeSingle() use `single` results.
 const tableResults: Record<string, TableResult> = {};
 const singleResults: Record<string, TableResult> = {};
+// Escritas registradas, para provar em qual tabela o hook gravou.
+const inserts: Array<{ table: string; payload: unknown }> = [];
 function setTable(name: string, data: unknown, error: unknown = null) {
   tableResults[name] = { data, error };
 }
@@ -36,16 +38,25 @@ function makeBuilder(table: string) {
   }
   builder.maybeSingle = vi.fn(() => Promise.resolve(singleResult()));
   builder.single = vi.fn(() => Promise.resolve(singleResult()));
+  builder.insert = vi.fn((payload: unknown) => {
+    inserts.push({ table, payload });
+    return builder;
+  });
   // Make the builder itself awaitable (terminal without single)
   builder.then = (resolve: (v: TableResult) => unknown) => resolve(listResult());
   return builder;
 }
 
 const fromMock = vi.fn((table: string) => makeBuilder(table));
+const getUserMock = vi.fn(
+  (): Promise<{ data: { user: { id: string } | null }; error: unknown }> =>
+    Promise.resolve({ data: { user: { id: 'user-1' } }, error: null }),
+);
 
 vi.mock('@/integrations/supabase/client', () => ({
   supabase: {
     from: (...a: unknown[]) => fromMock(...(a as [string])),
+    auth: { getUser: () => getUserMock() },
   },
 }));
 
@@ -59,10 +70,13 @@ vi.mock('@/lib/logger', () => {
 });
 
 import { toast } from 'sonner';
+import { logger } from '@/lib/logger';
 
 describe('useAgentRanking (coverage)', () => {
   beforeEach(() => {
     vi.clearAllMocks();
+    inserts.length = 0;
+    getUserMock.mockImplementation(() => Promise.resolve({ data: { user: { id: 'user-1' } }, error: null }));
     for (const k of Object.keys(tableResults)) delete tableResults[k];
     for (const k of Object.keys(singleResults)) delete singleResults[k];
     // Sensible defaults so the mount-time fetches succeed
@@ -119,6 +133,43 @@ describe('useAgentRanking (coverage)', () => {
     const { result } = renderHook(() => useAgentRanking());
     await waitFor(() => expect(result.current.agents.length).toBeGreaterThan(0));
     await waitFor(() => expect(toast.success).toHaveBeenCalled());
+  });
+
+  it('grava a meta atingida como notificação do usuário logado, não como alerta de chamada', async () => {
+    const { result } = renderHook(() => useAgentRanking());
+    await waitFor(() => expect(result.current.agents.length).toBeGreaterThan(0));
+    await waitFor(() => expect(inserts.some((i) => i.table === 'notifications')).toBe(true));
+
+    const found = inserts.find((i) => i.table === 'notifications') as
+      | { payload: Record<string, unknown> }
+      | undefined;
+    expect(found?.payload.user_id).toBe('user-1');
+    expect(found?.payload.category).toBe('gamification');
+    expect(found?.payload.type).toBe('success');
+    expect(found?.payload.source_type).toBe('agent_ranking');
+    expect(found?.payload.source_id).toBe('Alice');
+    expect(found?.payload.action_url).toBe('/ranking');
+    // Antes a FK de call_alerts.call_session_id obrigava a escolher uma chamada qualquer.
+    expect(inserts.some((i) => i.table === 'call_alerts')).toBe(false);
+    expect(inserts.some((i) => i.table === 'call_sessions')).toBe(false);
+  });
+
+  it('avisa quando a notificação da meta não foi gravada', async () => {
+    setTable('notifications', null, { message: 'permission denied' });
+    const { result } = renderHook(() => useAgentRanking());
+    await waitFor(() => expect(result.current.agents.length).toBeGreaterThan(0));
+    await waitFor(() =>
+      expect(toast.error).toHaveBeenCalledWith('Meta atingida, mas a notificação não foi registrada'),
+    );
+    expect(logger.error).toHaveBeenCalledWith('Error creating goals notification:', { message: 'permission denied' });
+  });
+
+  it('sem usuário logado não grava a meta e registra o motivo', async () => {
+    getUserMock.mockImplementation(() => Promise.resolve({ data: { user: null }, error: null }));
+    const { result } = renderHook(() => useAgentRanking());
+    await waitFor(() => expect(result.current.agents.length).toBeGreaterThan(0));
+    await waitFor(() => expect(logger.error).toHaveBeenCalledWith('Error resolving user for goals notification:', null));
+    expect(inserts.some((i) => i.table === 'notifications')).toBe(false);
   });
 
   it('changes sortBy across all branches', async () => {
