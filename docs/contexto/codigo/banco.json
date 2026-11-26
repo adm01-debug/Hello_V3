@@ -8,10 +8,10 @@
   "supabase/migrations",
   "typeorm"
  ],
- "migrations": 255,
+ "migrations": 259,
  "seeds": [],
  "avisos": [
-  "22 bloco(s) com DDL dinâmico (EXECUTE format/...) não modelado — policies/colunas criadas dinamicamente podem faltar; confira no banco vivo"
+  "25 bloco(s) com DDL dinâmico (EXECUTE format/...) não modelado — policies/colunas criadas dinamicamente podem faltar; confira no banco vivo"
  ],
  "extensoes": [
   "dblink",
@@ -572,6 +572,20 @@
    "quando": "before",
    "evento": "update",
    "tabela": "fraud_signals",
+   "funcao": "update_updated_at_column"
+  },
+  {
+   "nome": "update_geo_restrictions_updated_at",
+   "quando": "before",
+   "evento": "update",
+   "tabela": "geo_restrictions",
+   "funcao": "update_updated_at_column"
+  },
+  {
+   "nome": "update_geo_settings_updated_at",
+   "quando": "before",
+   "evento": "update",
+   "tabela": "geo_settings",
    "funcao": "update_updated_at_column"
   },
   {
@@ -9137,6 +9151,12 @@
      "tipo": "permissive"
     },
     {
+     "nome": "Admin supervisor update crm sync queue",
+     "comando": "update",
+     "para": "authenticated",
+     "tipo": "permissive"
+    },
+    {
      "nome": "Admins e supervisores podem ler fila CRM",
      "comando": "select",
      "para": "public",
@@ -11144,12 +11164,103 @@
    "nao_usada": false
   },
   "geo_access_logs": {
-   "colunas": {},
-   "rls": false,
+   "colunas": {
+    "action": {
+     "tipo": "text",
+     "nn": true,
+     "pk": false,
+     "default": null,
+     "ref": null
+    },
+    "city": {
+     "tipo": "text",
+     "nn": false,
+     "pk": false,
+     "default": null,
+     "ref": null
+    },
+    "country_code": {
+     "tipo": "text",
+     "nn": false,
+     "pk": false,
+     "default": null,
+     "ref": null
+    },
+    "country_name": {
+     "tipo": "text",
+     "nn": false,
+     "pk": false,
+     "default": null,
+     "ref": null
+    },
+    "created_at": {
+     "tipo": "timestamp with time zone",
+     "nn": true,
+     "pk": false,
+     "default": "now()",
+     "ref": null
+    },
+    "id": {
+     "tipo": "uuid",
+     "nn": true,
+     "pk": false,
+     "default": "gen_random_uuid()",
+     "ref": null
+    },
+    "ip_address": {
+     "tipo": "text",
+     "nn": true,
+     "pk": false,
+     "default": null,
+     "ref": null
+    },
+    "reason": {
+     "tipo": "text",
+     "nn": false,
+     "pk": false,
+     "default": null,
+     "ref": null
+    },
+    "region": {
+     "tipo": "text",
+     "nn": false,
+     "pk": false,
+     "default": null,
+     "ref": null
+    },
+    "user_agent": {
+     "tipo": "text",
+     "nn": false,
+     "pk": false,
+     "default": null,
+     "ref": null
+    },
+    "user_email": {
+     "tipo": "text",
+     "nn": false,
+     "pk": false,
+     "default": null,
+     "ref": null
+    },
+    "user_id": {
+     "tipo": "uuid",
+     "nn": false,
+     "pk": false,
+     "default": null,
+     "ref": null
+    }
+   },
+   "rls": true,
    "policies": [
     {
      "nome": "Admins can delete geo access logs",
      "comando": "delete",
+     "para": "authenticated",
+     "tipo": "permissive"
+    },
+    {
+     "nome": "Admins can view geo access logs",
+     "comando": "select",
      "para": "authenticated",
      "tipo": "permissive"
     },
@@ -11162,13 +11273,23 @@
    ],
    "indices": [
     {
+     "nome": "idx_geo_access_logs_country_code",
+     "colunas": "country_code",
+     "unico": false
+    },
+    {
+     "nome": "idx_geo_access_logs_created_at",
+     "colunas": "created_at desc",
+     "unico": false
+    },
+    {
      "nome": "idx_geo_access_logs_created_brin",
      "colunas": "created_at",
      "unico": false
     }
    ],
    "fks": [],
-   "criada_em": null,
+   "criada_em": "20260315143858_create_geo_tables_retroativo.sql",
    "usada_no_front": 1,
    "usada_em_edges": [
     "validate-geo"
@@ -11178,9 +11299,72 @@
    "nao_usada": false
   },
   "geo_restrictions": {
-   "colunas": {},
-   "rls": false,
+   "colunas": {
+    "country_code": {
+     "tipo": "text",
+     "nn": true,
+     "pk": false,
+     "default": null,
+     "ref": null
+    },
+    "country_name": {
+     "tipo": "text",
+     "nn": true,
+     "pk": false,
+     "default": null,
+     "ref": null
+    },
+    "created_at": {
+     "tipo": "timestamp with time zone",
+     "nn": true,
+     "pk": false,
+     "default": "now()",
+     "ref": null
+    },
+    "created_by": {
+     "tipo": "text",
+     "nn": false,
+     "pk": false,
+     "default": null,
+     "ref": null
+    },
+    "id": {
+     "tipo": "uuid",
+     "nn": true,
+     "pk": false,
+     "default": "gen_random_uuid()",
+     "ref": null
+    },
+    "reason": {
+     "tipo": "text",
+     "nn": false,
+     "pk": false,
+     "default": null,
+     "ref": null
+    },
+    "restriction_type": {
+     "tipo": "text",
+     "nn": true,
+     "pk": false,
+     "default": null,
+     "ref": null
+    },
+    "updated_at": {
+     "tipo": "timestamp with time zone",
+     "nn": true,
+     "pk": false,
+     "default": "now()",
+     "ref": null
+    }
+   },
+   "rls": true,
    "policies": [
+    {
+     "nome": "Admins can manage geo restrictions",
+     "comando": "all",
+     "para": "authenticated",
+     "tipo": "permissive"
+    },
     {
      "nome": "Authenticated users can read geo restrictions",
      "comando": "select",
@@ -11188,21 +11372,85 @@
      "tipo": "permissive"
     }
    ],
-   "indices": [],
+   "indices": [
+    {
+     "nome": "idx_geo_restrictions_country_code",
+     "colunas": "country_code",
+     "unico": false
+    }
+   ],
    "fks": [],
-   "criada_em": null,
+   "criada_em": "20260315143858_create_geo_tables_retroativo.sql",
    "usada_no_front": 1,
    "usada_em_edges": [
     "validate-geo"
    ],
-   "triggers": [],
+   "triggers": [
+    "update_geo_restrictions_updated_at"
+   ],
    "sem_rls": false,
    "nao_usada": false
   },
   "geo_settings": {
-   "colunas": {},
-   "rls": false,
+   "colunas": {
+    "created_at": {
+     "tipo": "timestamp with time zone",
+     "nn": true,
+     "pk": false,
+     "default": "now()",
+     "ref": null
+    },
+    "enabled": {
+     "tipo": "boolean",
+     "nn": true,
+     "pk": false,
+     "default": "false",
+     "ref": null
+    },
+    "id": {
+     "tipo": "uuid",
+     "nn": true,
+     "pk": false,
+     "default": "gen_random_uuid()",
+     "ref": null
+    },
+    "log_blocked_attempts": {
+     "tipo": "boolean",
+     "nn": true,
+     "pk": false,
+     "default": "true",
+     "ref": null
+    },
+    "mode": {
+     "tipo": "text",
+     "nn": true,
+     "pk": false,
+     "default": "'blocklist'::text",
+     "ref": null
+    },
+    "notify_on_block": {
+     "tipo": "boolean",
+     "nn": true,
+     "pk": false,
+     "default": "false",
+     "ref": null
+    },
+    "updated_at": {
+     "tipo": "timestamp with time zone",
+     "nn": true,
+     "pk": false,
+     "default": "now()",
+     "ref": null
+    }
+   },
+   "rls": true,
    "policies": [
+    {
+     "nome": "Admins can manage geo settings",
+     "comando": "all",
+     "para": "authenticated",
+     "tipo": "permissive"
+    },
     {
      "nome": "Admins supervisors view geo_settings",
      "comando": "select",
@@ -11212,12 +11460,14 @@
    ],
    "indices": [],
    "fks": [],
-   "criada_em": null,
+   "criada_em": "20260315143858_create_geo_tables_retroativo.sql",
    "usada_no_front": 1,
    "usada_em_edges": [
     "validate-geo"
    ],
-   "triggers": [],
+   "triggers": [
+    "update_geo_settings_updated_at"
+   ],
    "sem_rls": false,
    "nao_usada": false
   },
@@ -12438,6 +12688,12 @@
     {
      "nome": "Agents create own completions",
      "comando": "insert",
+     "para": "authenticated",
+     "tipo": "permissive"
+    },
+    {
+     "nome": "Agents update own completions",
+     "comando": "update",
      "para": "authenticated",
      "tipo": "permissive"
     },

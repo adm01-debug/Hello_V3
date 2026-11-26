@@ -59,11 +59,11 @@
  "commits": {
   "convencao": "conventional commits (observado)",
   "exemplos": [
-   "feat: vigia horario de cron com alerta no sino e card de saude (etapa 231) (#353)",
-   "test: sonda permanente da apuracao da LGPD e do ledger (etapa 132) (#369)",
-   "fix: meta atingida vira notificacao do usuario, nao alerta de chamada (etapa 127) (#367)",
-   "feat: tela de violacoes de SLA com atraso e filtros (etapa 179) (#352)",
-   "feat: registra os erros do navegador em client_errors com tela admin (etapa 230) (#351)"
+   "fix: policies de 5 tabelas sensiveis restritas a authenticated (etapa 052) (#357)",
+   "fix: policy de UPDATE em learning_completions (upsert do modulo nao atualizava a nota) (#356)",
+   "feat: CREATE TABLE retroativo das tabelas geo_* (etapa 130) (#355)",
+   "fix: policy de UPDATE na fila de sincronizacao do CRM (etapa 082) (#354)",
+   "feat: vigia horario de cron com alerta no sino e card de saude (etapa 231) (#353)"
   ]
  },
  "pr_template": null,

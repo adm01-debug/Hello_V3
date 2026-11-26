@@ -5,7 +5,7 @@
   "vitest",
   "playwright"
  ],
- "total": 446,
+ "total": 450,
  "por_tipo": {
   "contrato": 1,
   "e2e": 16,
@@ -3939,15 +3939,19 @@
  "sql": [
   "supabase/tests/calling_hours_fail_closed_rls_test.sql",
   "supabase/tests/client_errors_rls_test.sql",
+  "supabase/tests/crm_sync_queue_update_rls_test.sql",
   "supabase/tests/cron_credentials_rls_test.sql",
   "supabase/tests/cron_watchdog_rls_test.sql",
   "supabase/tests/deal_pipeline_snapshots_rls_test.sql",
   "supabase/tests/dnc_removal_audit_rls_test.sql",
+  "supabase/tests/geo_tables_retroativo_rls_test.sql",
   "supabase/tests/geo_write_policies_rls_test.sql",
   "supabase/tests/goals_achieved_notification_rls_test.sql",
   "supabase/tests/internal_tables_rls_test.sql",
   "supabase/tests/kb_article_history_rls_test.sql",
+  "supabase/tests/learning_completions_update_rls_test.sql",
   "supabase/tests/login_lockout_acl_rls_test.sql",
+  "supabase/tests/policies_to_authenticated_lote1_rls_test.sql",
   "supabase/tests/probe_132_lgpd_entity_versions_rls_test.sql",
   "supabase/tests/rate_limit_logs_write_policies_rls_test.sql",
   "supabase/tests/redaction_log_rls_test.sql",

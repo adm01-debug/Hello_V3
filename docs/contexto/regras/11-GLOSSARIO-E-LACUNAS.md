@@ -1,6 +1,6 @@
 # 11 · GLOSSÁRIO, DADOS DE REFERÊNCIA E LACUNAS
 
-> Gerado automaticamente por AI Context Sync v1.3.2 · commit `4e389575f3` · branch `main` · 2026-11-26 19:40 UTC
+> Gerado automaticamente por AI Context Sync v1.3.2 · commit `91a1fdc725` · branch `main` · 2026-11-26 19:43 UTC
 > Não edite à mão — regras humanas vão em `manual/`.
 
 ## Glossário do domínio (entidades do sistema)
@@ -84,11 +84,15 @@
 | `email_tickets` | _(sem COMMENT ON TABLE — significado não documentado)_ | 14 colunas | migration |
 | `email_verification_tokens` | _(sem COMMENT ON TABLE — significado não documentado)_ | 7 colunas | migration |
 | `entity_versions` | _(sem COMMENT ON TABLE — significado não documentado)_ | 8 colunas | migration |
+| `esperado_col` | _(sem COMMENT ON TABLE — significado não documentado)_ | 5 colunas | migration |
+| `esperado_idx` | _(sem COMMENT ON TABLE — significado não documentado)_ | 5 colunas | migration |
+| `esperado_pol` | _(sem COMMENT ON TABLE — significado não documentado)_ | 5 colunas | migration |
 | `financial_impact_daily` | _(sem COMMENT ON TABLE — significado não documentado)_ | 7 colunas | types.ts |
 | `fraud_signals` | _(sem COMMENT ON TABLE — significado não documentado)_ | 14 colunas | migration |
-| `geo_access_logs` | _(sem COMMENT ON TABLE — significado não documentado)_ | 12 colunas | types.ts |
-| `geo_restrictions` | _(sem COMMENT ON TABLE — significado não documentado)_ | 8 colunas | types.ts |
-| `geo_settings` | _(sem COMMENT ON TABLE — significado não documentado)_ | 7 colunas | types.ts |
+| `gate_ctx` | _(sem COMMENT ON TABLE — significado não documentado)_ | 2 colunas | migration |
+| `geo_access_logs` | _(sem COMMENT ON TABLE — significado não documentado)_ | 12 colunas | migration |
+| `geo_restrictions` | _(sem COMMENT ON TABLE — significado não documentado)_ | 8 colunas | migration |
+| `geo_settings` | _(sem COMMENT ON TABLE — significado não documentado)_ | 7 colunas | migration |
 | `goal_violations` | _(sem COMMENT ON TABLE — significado não documentado)_ | 9 colunas | migration |
 | `hold_alert_settings` | _(sem COMMENT ON TABLE — significado não documentado)_ | 8 colunas | migration |
 | `hold_events` | _(sem COMMENT ON TABLE — significado não documentado)_ | 7 colunas | migration |
@@ -358,11 +362,12 @@
 | tabela | tabela `tabela` usada no código não existe nas migrations/types do repo | `scripts/inventario/gerar-banco.mjs`<br>`scripts/inventario/gerar-repo.mjs` |
 | tabela | tabela `tools_runtime` usada no código não existe nas migrations/types do repo | `scripts/ai-context/gerar.unit.mjs` |
 | tabela | tabela `tx` usada no código não existe nas migrations/types do repo | `scripts/ai-context/cenarios.mjs` |
-| rls | `crm_sync_queue`: front faz UPDATE mas nenhuma política RLS permite UPDATE → vai falhar/retornar vazio para usuários | `src/lib/bitrix/sync-log.ts` |
 | rls | `financial_impact_daily`: acessada do front (1 arquivo(s)) sem RLS (não encontrado) | `src/hooks/useFinancialImpact.ts` |
-| rls | `geo_access_logs`: acessada do front (1 arquivo(s)) sem RLS (não encontrado) | `src/hooks/useGeoBlocking.ts` |
-| rls | `geo_restrictions`: acessada do front (1 arquivo(s)) sem RLS (não encontrado) | `src/hooks/useGeoBlocking.ts` |
-| rls | `geo_settings`: acessada do front (1 arquivo(s)) sem RLS (não encontrado) | `src/hooks/useGeoBlocking.ts` |
+| rls | `geo_access_logs`: front faz SELECT mas nenhuma política RLS permite SELECT → vai falhar/retornar vazio para usuários | `src/hooks/useGeoBlocking.ts` |
+| rls | `geo_restrictions`: front faz INSERT mas nenhuma política RLS permite INSERT → vai falhar/retornar vazio para usuários | `src/hooks/useGeoBlocking.ts` |
+| rls | `geo_restrictions`: front faz DELETE mas nenhuma política RLS permite DELETE → vai falhar/retornar vazio para usuários | `src/hooks/useGeoBlocking.ts` |
+| rls | `geo_settings`: front faz INSERT mas nenhuma política RLS permite INSERT → vai falhar/retornar vazio para usuários | `src/hooks/useGeoBlocking.ts` |
+| rls | `geo_settings`: front faz UPDATE mas nenhuma política RLS permite UPDATE → vai falhar/retornar vazio para usuários | `src/hooks/useGeoBlocking.ts` |
 | edge | edge function `charge` invocada mas não existe em supabase/functions/ | `src/lib/tracing.ts` |
 | edge | edge function `dashboard-edge` invocada mas não existe em supabase/functions/ | `scripts/ai-context/gerar.unit.mjs` |
 | edge | edge function `fixture-edge` invocada mas não existe em supabase/functions/ | `scripts/ai-context/gerar.unit.mjs` |
@@ -447,7 +452,7 @@
 - `data_lake_exports.status` tem valores ['completed', 'failed', 'pending', 'processing'] mas nenhum mapa de transições foi encontrado no código — a ordem permitida (ex.: pago → cancelado?) não está declarada.
 - `parked_calls.status` tem valores ['abandoned', 'expired', 'parked', 'retrieved'] mas nenhum mapa de transições foi encontrado no código — a ordem permitida (ex.: pago → cancelado?) não está declarada.
 - `migration_status.status` é uma coluna de status sem enum/CHECK — os valores válidos e as transições permitidas não estão no banco.
-- 168/172 tabelas sem `COMMENT ON TABLE` — o significado de negócio não está no schema: `entity_versions`, `schema_migrations`, `migration_rollbacks`, `contacts`, `call_records`, `queue_items`, `agents`, `call_sessions`, `call_transcriptions`, `call_analyses`, `call_summaries`, `call_alerts` …
+- 172/176 tabelas sem `COMMENT ON TABLE` — o significado de negócio não está no schema: `entity_versions`, `schema_migrations`, `migration_rollbacks`, `contacts`, `call_records`, `queue_items`, `agents`, `call_sessions`, `call_transcriptions`, `call_analyses`, `call_summaries`, `call_alerts` …
 - Há tabelas usadas no código sem migration no repo — o schema real pode ter sido alterado pelo painel.
 
 ## Regras manuais presentes

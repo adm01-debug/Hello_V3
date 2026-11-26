@@ -2,11 +2,31 @@
  "aviso": "GERADO AUTOMATICAMENTE por scripts/ai-context/gerar.mjs — não editar à mão; será sobrescrito.",
  "format_version": 2,
  "git": {
-  "commit": "4e389575f3b1c5e2dfa6444dc9097744573f3737",
+  "commit": "91a1fdc725b3782fe0a6182742cc8fb30f0c26c2",
   "branch": "main",
-  "data_commit": "2026-11-26T16:39:47-03:00",
+  "data_commit": "2026-11-26T16:40:55-03:00",
   "remote": "https://github.com/adm01-debug/Hello_V3",
   "ultimos_commits": [
+   {
+    "sha": "91a1fdc",
+    "data": "2026-11-26",
+    "assunto": "fix: policies de 5 tabelas sensiveis restritas a authenticated (etapa 052) (#357)"
+   },
+   {
+    "sha": "7f4740d",
+    "data": "2026-11-26",
+    "assunto": "fix: policy de UPDATE em learning_completions (upsert do modulo nao atualizava a nota) (#356)"
+   },
+   {
+    "sha": "2769d5d",
+    "data": "2026-11-26",
+    "assunto": "feat: CREATE TABLE retroativo das tabelas geo_* (etapa 130) (#355)"
+   },
+   {
+    "sha": "f430ead",
+    "data": "2026-11-26",
+    "assunto": "fix: policy de UPDATE na fila de sincronizacao do CRM (etapa 082) (#354)"
+   },
    {
     "sha": "4e38957",
     "data": "2026-11-26",
@@ -111,29 +131,9 @@
     "sha": "e34a05c",
     "data": "2026-11-25",
     "assunto": "fix: renumerar migration duplicada que quebrava a Supabase Preview"
-   },
-   {
-    "sha": "1d3fbd7",
-    "data": "2026-11-25",
-    "assunto": "fix: bloquear discagem quando DNC/horario nao puder ser verificado (etapa 035)"
-   },
-   {
-    "sha": "4ec7dd5",
-    "data": "2026-11-25",
-    "assunto": "fix: painel de chamadas ativas avisa quando a leitura falha (A-218) (#332)"
-   },
-   {
-    "sha": "7e93675",
-    "data": "2026-11-25",
-    "assunto": "fix: botao de excluir contato com icone proprio e acoes de UI que mentiam (#331)"
-   },
-   {
-    "sha": "bb76af5",
-    "data": "2026-11-25",
-    "assunto": "fix: ligar do cartao de contato e do retorno discam de verdade (#330)"
    }
   ],
-  "arquivos_mudados_7d": 1911,
+  "arquivos_mudados_7d": 1919,
   "pastas_mais_mudadas_30d": [
    {
     "pasta": "src/hooks/__tests__",
@@ -141,7 +141,7 @@
    },
    {
     "pasta": "docs/qa/05-PROGRESSO.md",
-    "mudancas": 151
+    "mudancas": 155
    },
    {
     "pasta": "src/components/calls",
@@ -199,7 +199,7 @@
   "arquivos_mais_mudados_90d": [
    {
     "arquivo": "docs/qa/05-PROGRESSO.md",
-    "mudancas": 151
+    "mudancas": 155
    },
    {
     "arquivo": "docs/estado/funcionalidades-planejadas.md",
@@ -310,7 +310,7 @@
   ]
  },
  "contagens": {
-  "arquivos_total": 1817,
+  "arquivos_total": 1825,
   "arquivos_codigo": 1385,
   "linhas_codigo": 184899,
   "rotas": 108,
@@ -322,9 +322,9 @@
   "hooks": 201,
   "edge_functions": 99,
   "tabelas": 172,
-  "migrations": 255,
+  "migrations": 259,
   "cron_jobs": 13,
-  "testes": 446,
+  "testes": 450,
   "workflows": 5,
   "scripts": 36,
   "docs_md": 121

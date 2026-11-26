@@ -1,6 +1,6 @@
 # 10 · ACESSO E SEGURANÇA — quem pode o quê
 
-> Gerado automaticamente por AI Context Sync v1.3.2 · commit `4e389575f3` · branch `main` · 2026-11-26 19:40 UTC
+> Gerado automaticamente por AI Context Sync v1.3.2 · commit `91a1fdc725` · branch `main` · 2026-11-26 19:43 UTC
 > Não edite à mão — regras humanas vão em `manual/`.
 
 ## Perfis / roles identificados
@@ -77,7 +77,7 @@
 | `conversation_messages` | enabled | public: is_admin_or_supervisor()<br>public: EXISTS ( SELECT 1 FROM public.conversations c WHERE c.id = conversation_messages.conversation_id AND c.assigned_agent_name = get_use<br>public: is_admin_or_supervisor()<br>public: EXISTS ( SELECT 1 FROM public.conversations c WHERE c.id = conversation_id AND c.assigned_agent_name = ( SELECT full_name FROM publi | public: is_admin_or_supervisor()<br>public: is_admin_or_supervisor() OR EXISTS ( SELECT 1 FROM public.conversations c WHERE c.id = conversation_messages.conversation_id AND c.a | public: is_admin_or_supervisor() | public: is_admin_or_supervisor() |
 | `conversations` | enabled | public: is_admin_or_supervisor()<br>public: assigned_agent_name = get_user_agent_name()<br>public: is_admin_or_supervisor()<br>public: auth.uid() = id OR EXISTS ( SELECT 1 FROM public.user_profiles WHERE id = auth.uid() AND role IN ('admin', 'supervisor') ) | public: is_admin_or_supervisor() | public: is_admin_or_supervisor()<br>public: assigned_agent_name = get_user_agent_name() | public: is_admin_or_supervisor() |
 | `crm_field_suggestions` | enabled | authenticated: public.is_admin_or_supervisor() | authenticated: is_admin_or_supervisor() | authenticated: is_admin_or_supervisor() | authenticated: is_admin_or_supervisor() |
-| `crm_sync_queue` | enabled | public: is_admin_or_supervisor() | authenticated: public.is_admin_or_supervisor() | — | — |
+| `crm_sync_queue` | enabled | public: is_admin_or_supervisor() | authenticated: public.is_admin_or_supervisor() | authenticated: public.is_admin_or_supervisor() | — |
 | `cultural_hints` | enabled | public: auth.uid() IS NOT NULL<br>public: is_admin_user(auth.uid()) | public: is_admin_user(auth.uid()) | public: is_admin_user(auth.uid()) | public: is_admin_user(auth.uid()) |
 | `customer_journey_stages` | enabled | authenticated: is_admin_or_supervisor()<br>authenticated: auth.uid() IS NOT NULL | authenticated: is_admin_or_supervisor() | authenticated: is_admin_or_supervisor() | authenticated: is_admin_or_supervisor() |
 | `dashboard_goals` | enabled | public: auth.uid() IS NOT NULL<br>public: is_admin_or_supervisor() | public: is_admin_or_supervisor() | public: is_admin_or_supervisor() | public: is_admin_or_supervisor() |
@@ -93,11 +93,15 @@
 | `email_tickets` | enabled | public: is_admin_or_supervisor()<br>public: EXISTS ( SELECT 1 FROM public.conversations c WHERE c.id = email_tickets.conversation_id AND c.assigned_agent_name = get_user_agent_<br>public: is_admin_or_supervisor() | public: is_admin_or_supervisor() | public: is_admin_or_supervisor() | public: is_admin_or_supervisor() |
 | `email_verification_tokens` | enabled | authenticated: auth.uid() = user_id | authenticated: auth.uid() = user_id | authenticated: false | public: auth.uid() = user_id OR is_admin_user(auth.uid()) |
 | `entity_versions` | enabled | authenticated: auth.uid() IS NOT NULL | authenticated: auth.uid() = changed_by | — | — |
+| `esperado_col` | não encontrado | sem RLS | sem RLS | sem RLS | sem RLS |
+| `esperado_idx` | não encontrado | sem RLS | sem RLS | sem RLS | sem RLS |
+| `esperado_pol` | não encontrado | sem RLS | sem RLS | sem RLS | sem RLS |
 | `financial_impact_daily` | não encontrado | sem RLS | sem RLS | sem RLS | sem RLS |
 | `fraud_signals` | enabled | public: is_admin_or_supervisor()<br>public: agent_name = get_user_agent_name()<br>public: is_admin_user(auth.uid()) | public: is_admin_user(auth.uid()) | public: is_admin_user(auth.uid()) | public: is_admin_user(auth.uid()) |
-| `geo_access_logs` | não encontrado | sem RLS | authenticated: is_admin_or_supervisor() | sem RLS | authenticated: is_admin_or_supervisor() |
-| `geo_restrictions` | não encontrado | authenticated: auth.uid() IS NOT NULL | sem RLS | sem RLS | sem RLS |
-| `geo_settings` | não encontrado | authenticated: is_admin_or_supervisor() | sem RLS | sem RLS | sem RLS |
+| `gate_ctx` | não encontrado | sem RLS | sem RLS | sem RLS | sem RLS |
+| `geo_access_logs` | enabled | — | authenticated: is_admin_or_supervisor() | — | authenticated: is_admin_or_supervisor() |
+| `geo_restrictions` | enabled | authenticated: auth.uid() IS NOT NULL | — | — | — |
+| `geo_settings` | enabled | authenticated: is_admin_or_supervisor() | — | — | — |
 | `goal_violations` | enabled | public: auth.uid() IS NOT NULL<br>public: is_admin_or_supervisor() | public: is_admin_or_supervisor()<br>authenticated: is_admin_or_supervisor() | public: is_admin_or_supervisor() | public: is_admin_or_supervisor() |
 | `hold_alert_settings` | enabled | public: true<br>public: auth.uid() IS NOT NULL<br>public: public.is_admin_or_supervisor() | public: true<br>public: public.is_admin_or_supervisor() | public: true<br>public: public.is_admin_or_supervisor() | public: public.is_admin_or_supervisor() |
 | `hold_events` | enabled | public: true<br>authenticated: is_admin_or_supervisor() OR agent_name = get_user_agent_name()<br>authenticated: public.is_admin() | public: true<br>authenticated: is_admin_or_supervisor()<br>authenticated: public.is_admin() | public: true<br>authenticated: is_admin_or_supervisor()<br>authenticated: public.is_admin() | public: public.is_admin_or_supervisor()<br>authenticated: public.is_admin() |
@@ -110,7 +114,7 @@
 | `kb_article_views` | enabled | public: is_admin_or_supervisor()<br>authenticated: viewer_id = auth.uid() | authenticated: viewer_type = 'agent' AND viewer_id = (SELECT auth.uid()) | — | — |
 | `kb_articles` | enabled | public: auth.uid() IS NOT NULL AND status = 'published'<br>public: is_admin_or_supervisor()<br>public: is_admin_or_supervisor() | public: is_admin_or_supervisor() | public: is_admin_or_supervisor() | public: is_admin_or_supervisor() |
 | `kb_categories` | enabled | public: auth.uid() IS NOT NULL AND is_published = true<br>public: is_admin_or_supervisor() | public: is_admin_or_supervisor() | public: is_admin_or_supervisor() | public: is_admin_or_supervisor() |
-| `learning_completions` | enabled | authenticated: is_admin_or_supervisor() OR get_user_agent_name() = agent_name | authenticated: get_user_agent_name() = agent_name OR is_admin_or_supervisor() | — | authenticated: is_admin_or_supervisor() |
+| `learning_completions` | enabled | authenticated: is_admin_or_supervisor() OR get_user_agent_name() = agent_name | authenticated: get_user_agent_name() = agent_name OR is_admin_or_supervisor() | authenticated: public.get_user_agent_name() = agent_name | authenticated: is_admin_or_supervisor() |
 | `learning_modules` | enabled | authenticated: is_active OR is_admin_or_supervisor()<br>authenticated: is_admin_or_supervisor() | authenticated: is_admin_or_supervisor() | authenticated: is_admin_or_supervisor() | authenticated: is_admin_or_supervisor() |
 | `live_assist_signals` | enabled | public: is_admin_or_supervisor() OR agent_name = get_user_agent_name() | authenticated: is_admin_or_supervisor() | public: is_admin_or_supervisor() OR agent_name = get_user_agent_name() | authenticated: is_admin_or_supervisor() |
 | `live_sentiment_snapshots` | enabled | public: is_admin_or_supervisor() OR EXISTS ( SELECT 1 FROM public.call_sessions cs WHERE cs.id = live_sentiment_snapshots.call_session_id AN | authenticated: is_admin_or_supervisor() OR EXISTS ( SELECT 1 FROM public.call_sessions cs WHERE cs.id = live_sentiment_snapshots.call_sessio | — | — |
@@ -191,7 +195,7 @@
 
 > `—` com RLS ligado = ninguém além de service_role. `sem RLS` = qualquer chave anon lê/escreve tudo.
 
-## Onde o RLS é IGNORADO (service_role) — 137 arquivo(s)
+## Onde o RLS é IGNORADO (service_role) — 138 arquivo(s)
 
 - `scripts/ai-context/cenarios.mjs`
 - `scripts/ai-context/gerar.unit.mjs`
@@ -294,6 +298,7 @@
 - `supabase/functions/webauthn-challenge/index.ts`
 - `supabase/functions/webhook-handler/index.ts`
 - `supabase/functions/whatsapp-inbound/index.ts`
+- `supabase/migrations/20260315143858_create_geo_tables_retroativo.sql`
 - `supabase/migrations/20260417001429_4d360a46-05bd-40b3-a5db-9ad5586337f2.sql`
 - `supabase/migrations/20260418123340_d3452a78-2e4f-4f47-9bd6-c59dabad34d6.sql`
 - `supabase/migrations/20260418123436_9d9ee1c4-c236-426f-8034-7ca5df2e6d70.sql`
@@ -475,11 +480,12 @@ Middleware matcher (Next.js): nenhum
 
 | Tabela | Problema | Arquivos |
 |---|---|---|
-| `crm_sync_queue` | front faz UPDATE mas nenhuma política RLS permite UPDATE → vai falhar/retornar vazio para usuários | `src/lib/bitrix/sync-log.ts` |
 | `financial_impact_daily` | acessada do front (1 arquivo(s)) sem RLS (não encontrado) | `src/hooks/useFinancialImpact.ts` |
-| `geo_access_logs` | acessada do front (1 arquivo(s)) sem RLS (não encontrado) | `src/hooks/useGeoBlocking.ts` |
-| `geo_restrictions` | acessada do front (1 arquivo(s)) sem RLS (não encontrado) | `src/hooks/useGeoBlocking.ts` |
-| `geo_settings` | acessada do front (1 arquivo(s)) sem RLS (não encontrado) | `src/hooks/useGeoBlocking.ts` |
+| `geo_access_logs` | front faz SELECT mas nenhuma política RLS permite SELECT → vai falhar/retornar vazio para usuários | `src/hooks/useGeoBlocking.ts` |
+| `geo_restrictions` | front faz INSERT mas nenhuma política RLS permite INSERT → vai falhar/retornar vazio para usuários | `src/hooks/useGeoBlocking.ts` |
+| `geo_restrictions` | front faz DELETE mas nenhuma política RLS permite DELETE → vai falhar/retornar vazio para usuários | `src/hooks/useGeoBlocking.ts` |
+| `geo_settings` | front faz INSERT mas nenhuma política RLS permite INSERT → vai falhar/retornar vazio para usuários | `src/hooks/useGeoBlocking.ts` |
+| `geo_settings` | front faz UPDATE mas nenhuma política RLS permite UPDATE → vai falhar/retornar vazio para usuários | `src/hooks/useGeoBlocking.ts` |
 
 ## Multi-tenancy
 
@@ -581,6 +587,9 @@ Middleware matcher (Next.js): nenhum
 | `holidays` | `created_at` |
 | `consent_history` | `created_at` |
 | `compliance_settings` | `created_at`, `updated_at`, `updated_by` |
+| `geo_access_logs` | `created_at` |
+| `geo_restrictions` | `created_at`, `created_by`, `updated_at` |
+| `geo_settings` | `created_at`, `updated_at` |
 | `notifications` | `created_at`, `updated_at` |
 | `notification_preferences` | `created_at`, `updated_at` |
 | `call_flows` | `created_at`, `created_by`, `updated_at` |
@@ -681,9 +690,6 @@ Middleware matcher (Next.js): nenhum
 | `parked_calls` | `created_at`, `updated_at` |
 | `user_preferences` | `created_at`, `updated_at` |
 | `deal_pipeline_snapshots` | `created_at`, `updated_at` |
-| `geo_access_logs` | `created_at` |
-| `geo_restrictions` | `created_at`, `created_by`, `updated_at` |
-| `geo_settings` | `created_at`, `updated_at` |
 
 ## Dados pessoais / sensíveis (LGPD — cuidado em logs, exports, prompts de IA)
 
@@ -710,12 +716,12 @@ Middleware matcher (Next.js): nenhum
 | `dnc_list` | `phone` |
 | `consent_history` | `phone` |
 | `consent_history` | `ip_address` |
+| `geo_access_logs` | `ip_address` |
 | `chat_sessions` | `ip_address` |
 | `consent_records` | `phone` |
 | `consent_records` | `ip_address` |
 | `bitrix_users` | `email` |
 | `dialer_favorites` | `phone` |
-| `geo_access_logs` | `ip_address` |
 
 ## Colunas de dinheiro (tipo importa: numeric ✅ / float ❌)
 

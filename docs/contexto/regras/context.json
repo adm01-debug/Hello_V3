@@ -1,15 +1,15 @@
 {
  "meta": {
-  "sha": "4e389575f3b1c5e2dfa6444dc9097744573f3737",
+  "sha": "91a1fdc725b3782fe0a6182742cc8fb30f0c26c2",
   "branch": "main",
   "remote": "https://github.com/adm01-debug/Hello_V3",
-  "generated_at": "2026-11-26 19:40 UTC",
-  "files_total": 1864,
-  "code_files": 1660,
-  "code_lines": 203936
+  "generated_at": "2026-11-26 19:43 UTC",
+  "files_total": 1872,
+  "code_files": 1668,
+  "code_lines": 205049
  },
  "version": "1.3.2",
- "facts_hash": "6cf5ea995ff93d96",
+ "facts_hash": "76da62131ef37b7c",
  "stack": {
   "frameworks": [
    "React + Vite",
@@ -170,7 +170,7 @@
   "languages": {
    ".tsx": 680,
    ".ts": 670,
-   ".sql": 274,
+   ".sql": 282,
    ".mjs": 29,
    ".py": 5,
    ".js": 2
@@ -4827,6 +4827,229 @@
     ],
     "constraints": [],
     "src": "supabase/migrations/20260103145030_b2c1f366-245b-4264-9139-4def0d930fd6.sql",
+    "comment": "",
+    "origin": "migration"
+   },
+   "geo_access_logs": {
+    "columns": [
+     {
+      "name": "id",
+      "type": "uuid not null default gen_random_uuid()",
+      "fk": "",
+      "generated": "",
+      "src": "supabase/migrations/20260315143858_create_geo_tables_retroativo.sql"
+     },
+     {
+      "name": "user_id",
+      "type": "uuid",
+      "fk": "",
+      "generated": "",
+      "src": "supabase/migrations/20260315143858_create_geo_tables_retroativo.sql"
+     },
+     {
+      "name": "user_email",
+      "type": "text",
+      "fk": "",
+      "generated": "",
+      "src": "supabase/migrations/20260315143858_create_geo_tables_retroativo.sql"
+     },
+     {
+      "name": "ip_address",
+      "type": "text not null",
+      "fk": "",
+      "generated": "",
+      "src": "supabase/migrations/20260315143858_create_geo_tables_retroativo.sql"
+     },
+     {
+      "name": "country_code",
+      "type": "text",
+      "fk": "",
+      "generated": "",
+      "src": "supabase/migrations/20260315143858_create_geo_tables_retroativo.sql"
+     },
+     {
+      "name": "country_name",
+      "type": "text",
+      "fk": "",
+      "generated": "",
+      "src": "supabase/migrations/20260315143858_create_geo_tables_retroativo.sql"
+     },
+     {
+      "name": "city",
+      "type": "text",
+      "fk": "",
+      "generated": "",
+      "src": "supabase/migrations/20260315143858_create_geo_tables_retroativo.sql"
+     },
+     {
+      "name": "region",
+      "type": "text",
+      "fk": "",
+      "generated": "",
+      "src": "supabase/migrations/20260315143858_create_geo_tables_retroativo.sql"
+     },
+     {
+      "name": "action",
+      "type": "text not null",
+      "fk": "",
+      "generated": "",
+      "src": "supabase/migrations/20260315143858_create_geo_tables_retroativo.sql"
+     },
+     {
+      "name": "reason",
+      "type": "text",
+      "fk": "",
+      "generated": "",
+      "src": "supabase/migrations/20260315143858_create_geo_tables_retroativo.sql"
+     },
+     {
+      "name": "user_agent",
+      "type": "text",
+      "fk": "",
+      "generated": "",
+      "src": "supabase/migrations/20260315143858_create_geo_tables_retroativo.sql"
+     },
+     {
+      "name": "created_at",
+      "type": "timestamp with time zone not null default now()",
+      "fk": "",
+      "generated": "",
+      "src": "supabase/migrations/20260315143858_create_geo_tables_retroativo.sql"
+     }
+    ],
+    "constraints": [
+     "constraint geo_access_logs_pkey primary key (id)",
+     "constraint geo_access_logs_action_check check (action = any (array['allowed'::text, 'blocked'::text]))"
+    ],
+    "src": "supabase/migrations/20260315143858_create_geo_tables_retroativo.sql",
+    "comment": "",
+    "origin": "migration"
+   },
+   "geo_restrictions": {
+    "columns": [
+     {
+      "name": "id",
+      "type": "uuid not null default gen_random_uuid()",
+      "fk": "",
+      "generated": "",
+      "src": "supabase/migrations/20260315143858_create_geo_tables_retroativo.sql"
+     },
+     {
+      "name": "country_code",
+      "type": "text not null",
+      "fk": "",
+      "generated": "",
+      "src": "supabase/migrations/20260315143858_create_geo_tables_retroativo.sql"
+     },
+     {
+      "name": "country_name",
+      "type": "text not null",
+      "fk": "",
+      "generated": "",
+      "src": "supabase/migrations/20260315143858_create_geo_tables_retroativo.sql"
+     },
+     {
+      "name": "restriction_type",
+      "type": "text not null",
+      "fk": "",
+      "generated": "",
+      "src": "supabase/migrations/20260315143858_create_geo_tables_retroativo.sql"
+     },
+     {
+      "name": "reason",
+      "type": "text",
+      "fk": "",
+      "generated": "",
+      "src": "supabase/migrations/20260315143858_create_geo_tables_retroativo.sql"
+     },
+     {
+      "name": "created_at",
+      "type": "timestamp with time zone not null default now()",
+      "fk": "",
+      "generated": "",
+      "src": "supabase/migrations/20260315143858_create_geo_tables_retroativo.sql"
+     },
+     {
+      "name": "created_by",
+      "type": "text",
+      "fk": "",
+      "generated": "",
+      "src": "supabase/migrations/20260315143858_create_geo_tables_retroativo.sql"
+     },
+     {
+      "name": "updated_at",
+      "type": "timestamp with time zone not null default now()",
+      "fk": "",
+      "generated": "",
+      "src": "supabase/migrations/20260315143858_create_geo_tables_retroativo.sql"
+     }
+    ],
+    "constraints": [
+     "constraint geo_restrictions_pkey primary key (id)",
+     "constraint geo_restrictions_country_code_key unique (country_code)",
+     "constraint geo_restrictions_restriction_type_check check (restriction_type = any (array['blocked'::text, 'allowed'::text]))"
+    ],
+    "src": "supabase/migrations/20260315143858_create_geo_tables_retroativo.sql",
+    "comment": "",
+    "origin": "migration"
+   },
+   "geo_settings": {
+    "columns": [
+     {
+      "name": "id",
+      "type": "uuid not null default gen_random_uuid()",
+      "fk": "",
+      "generated": "",
+      "src": "supabase/migrations/20260315143858_create_geo_tables_retroativo.sql"
+     },
+     {
+      "name": "enabled",
+      "type": "boolean not null default false",
+      "fk": "",
+      "generated": "",
+      "src": "supabase/migrations/20260315143858_create_geo_tables_retroativo.sql"
+     },
+     {
+      "name": "mode",
+      "type": "text not null default 'blocklist'::text",
+      "fk": "",
+      "generated": "",
+      "src": "supabase/migrations/20260315143858_create_geo_tables_retroativo.sql"
+     },
+     {
+      "name": "log_blocked_attempts",
+      "type": "boolean not null default true",
+      "fk": "",
+      "generated": "",
+      "src": "supabase/migrations/20260315143858_create_geo_tables_retroativo.sql"
+     },
+     {
+      "name": "notify_on_block",
+      "type": "boolean not null default false",
+      "fk": "",
+      "generated": "",
+      "src": "supabase/migrations/20260315143858_create_geo_tables_retroativo.sql"
+     },
+     {
+      "name": "created_at",
+      "type": "timestamp with time zone not null default now()",
+      "fk": "",
+      "generated": "",
+      "src": "supabase/migrations/20260315143858_create_geo_tables_retroativo.sql"
+     },
+     {
+      "name": "updated_at",
+      "type": "timestamp with time zone not null default now()",
+      "fk": "",
+      "generated": "",
+      "src": "supabase/migrations/20260315143858_create_geo_tables_retroativo.sql"
+     }
+    ],
+    "constraints": [
+     "constraint geo_settings_pkey primary key (id)",
+     "constraint geo_settings_mode_check check (mode = any (array['blocklist'::text, 'allowlist'::text]))"
+    ],
+    "src": "supabase/migrations/20260315143858_create_geo_tables_retroativo.sql",
     "comment": "",
     "origin": "migration"
    },
@@ -14210,218 +14433,156 @@
     "comment": "Erros nao tratados do navegador (etapa 230 / A-097). Alimentada por src/lib/errorReporter.ts, lida em /admin/client-errors.",
     "origin": "migration"
    },
-   "geo_access_logs": {
+   "esperado_col": {
     "columns": [
      {
-      "name": "action",
-      "type": "string not null",
+      "name": "tab",
+      "type": "text",
       "fk": "",
       "generated": "",
-      "src": "src/integrations/supabase/types.ts"
+      "src": "supabase/tests/geo_tables_retroativo_rls_test.sql"
      },
      {
-      "name": "city",
-      "type": "string | null",
+      "name": "col",
+      "type": "text",
       "fk": "",
       "generated": "",
-      "src": "src/integrations/supabase/types.ts"
+      "src": "supabase/tests/geo_tables_retroativo_rls_test.sql"
      },
      {
-      "name": "country_code",
-      "type": "string | null",
+      "name": "tipo",
+      "type": "text",
       "fk": "",
       "generated": "",
-      "src": "src/integrations/supabase/types.ts"
+      "src": "supabase/tests/geo_tables_retroativo_rls_test.sql"
      },
      {
-      "name": "country_name",
-      "type": "string | null",
+      "name": "nn",
+      "type": "boolean",
       "fk": "",
       "generated": "",
-      "src": "src/integrations/supabase/types.ts"
+      "src": "supabase/tests/geo_tables_retroativo_rls_test.sql"
      },
      {
-      "name": "created_at",
-      "type": "string not null",
+      "name": "defe",
+      "type": "text",
       "fk": "",
       "generated": "",
-      "src": "src/integrations/supabase/types.ts"
-     },
-     {
-      "name": "id",
-      "type": "string not null",
-      "fk": "",
-      "generated": "",
-      "src": "src/integrations/supabase/types.ts"
-     },
-     {
-      "name": "ip_address",
-      "type": "string not null",
-      "fk": "",
-      "generated": "",
-      "src": "src/integrations/supabase/types.ts"
-     },
-     {
-      "name": "reason",
-      "type": "string | null",
-      "fk": "",
-      "generated": "",
-      "src": "src/integrations/supabase/types.ts"
-     },
-     {
-      "name": "region",
-      "type": "string | null",
-      "fk": "",
-      "generated": "",
-      "src": "src/integrations/supabase/types.ts"
-     },
-     {
-      "name": "user_agent",
-      "type": "string | null",
-      "fk": "",
-      "generated": "",
-      "src": "src/integrations/supabase/types.ts"
-     },
-     {
-      "name": "user_email",
-      "type": "string | null",
-      "fk": "",
-      "generated": "",
-      "src": "src/integrations/supabase/types.ts"
-     },
-     {
-      "name": "user_id",
-      "type": "string | null",
-      "fk": "",
-      "generated": "",
-      "src": "src/integrations/supabase/types.ts"
+      "src": "supabase/tests/geo_tables_retroativo_rls_test.sql"
      }
     ],
     "constraints": [],
-    "src": "src/integrations/supabase/types.ts",
+    "src": "supabase/tests/geo_tables_retroativo_rls_test.sql",
     "comment": "",
-    "origin": "types.ts"
+    "origin": "migration"
    },
-   "geo_restrictions": {
+   "esperado_idx": {
     "columns": [
      {
-      "name": "country_code",
-      "type": "string not null",
+      "name": "tab",
+      "type": "text",
       "fk": "",
       "generated": "",
-      "src": "src/integrations/supabase/types.ts"
+      "src": "supabase/tests/geo_tables_retroativo_rls_test.sql"
      },
      {
-      "name": "country_name",
-      "type": "string not null",
+      "name": "idx",
+      "type": "text",
       "fk": "",
       "generated": "",
-      "src": "src/integrations/supabase/types.ts"
+      "src": "supabase/tests/geo_tables_retroativo_rls_test.sql"
      },
      {
-      "name": "created_at",
-      "type": "string not null",
+      "name": "metodo",
+      "type": "text",
       "fk": "",
       "generated": "",
-      "src": "src/integrations/supabase/types.ts"
+      "src": "supabase/tests/geo_tables_retroativo_rls_test.sql"
      },
      {
-      "name": "created_by",
-      "type": "string | null",
+      "name": "colunas",
+      "type": "text",
       "fk": "",
       "generated": "",
-      "src": "src/integrations/supabase/types.ts"
+      "src": "supabase/tests/geo_tables_retroativo_rls_test.sql"
      },
      {
-      "name": "id",
-      "type": "string not null",
+      "name": "relopts",
+      "type": "text",
       "fk": "",
       "generated": "",
-      "src": "src/integrations/supabase/types.ts"
-     },
-     {
-      "name": "reason",
-      "type": "string | null",
-      "fk": "",
-      "generated": "",
-      "src": "src/integrations/supabase/types.ts"
-     },
-     {
-      "name": "restriction_type",
-      "type": "string not null",
-      "fk": "",
-      "generated": "",
-      "src": "src/integrations/supabase/types.ts"
-     },
-     {
-      "name": "updated_at",
-      "type": "string not null",
-      "fk": "",
-      "generated": "",
-      "src": "src/integrations/supabase/types.ts"
+      "src": "supabase/tests/geo_tables_retroativo_rls_test.sql"
      }
     ],
     "constraints": [],
-    "src": "src/integrations/supabase/types.ts",
+    "src": "supabase/tests/geo_tables_retroativo_rls_test.sql",
     "comment": "",
-    "origin": "types.ts"
+    "origin": "migration"
    },
-   "geo_settings": {
+   "esperado_pol": {
     "columns": [
      {
-      "name": "created_at",
-      "type": "string not null",
+      "name": "tab",
+      "type": "text",
       "fk": "",
       "generated": "",
-      "src": "src/integrations/supabase/types.ts"
+      "src": "supabase/tests/geo_tables_retroativo_rls_test.sql"
      },
      {
-      "name": "enabled",
-      "type": "boolean not null",
+      "name": "pol",
+      "type": "text",
       "fk": "",
       "generated": "",
-      "src": "src/integrations/supabase/types.ts"
+      "src": "supabase/tests/geo_tables_retroativo_rls_test.sql"
      },
      {
-      "name": "id",
-      "type": "string not null",
+      "name": "cmd",
+      "type": "text",
       "fk": "",
       "generated": "",
-      "src": "src/integrations/supabase/types.ts"
+      "src": "supabase/tests/geo_tables_retroativo_rls_test.sql"
      },
      {
-      "name": "log_blocked_attempts",
-      "type": "boolean not null",
+      "name": "usando",
+      "type": "text",
       "fk": "",
       "generated": "",
-      "src": "src/integrations/supabase/types.ts"
+      "src": "supabase/tests/geo_tables_retroativo_rls_test.sql"
      },
      {
-      "name": "mode",
-      "type": "string not null",
+      "name": "checando",
+      "type": "text",
       "fk": "",
       "generated": "",
-      "src": "src/integrations/supabase/types.ts"
-     },
-     {
-      "name": "notify_on_block",
-      "type": "boolean not null",
-      "fk": "",
-      "generated": "",
-      "src": "src/integrations/supabase/types.ts"
-     },
-     {
-      "name": "updated_at",
-      "type": "string not null",
-      "fk": "",
-      "generated": "",
-      "src": "src/integrations/supabase/types.ts"
+      "src": "supabase/tests/geo_tables_retroativo_rls_test.sql"
      }
     ],
     "constraints": [],
-    "src": "src/integrations/supabase/types.ts",
+    "src": "supabase/tests/geo_tables_retroativo_rls_test.sql",
     "comment": "",
-    "origin": "types.ts"
+    "origin": "migration"
+   },
+   "gate_ctx": {
+    "columns": [
+     {
+      "name": "agente",
+      "type": "text",
+      "fk": "",
+      "generated": "",
+      "src": "supabase/tests/learning_completions_update_rls_test.sql"
+     },
+     {
+      "name": "modulo",
+      "type": "uuid",
+      "fk": "",
+      "generated": "",
+      "src": "supabase/tests/learning_completions_update_rls_test.sql"
+     }
+    ],
+    "constraints": [],
+    "src": "supabase/tests/learning_completions_update_rls_test.sql",
+    "comment": "",
+    "origin": "migration"
    },
    "financial_impact_daily": {
     "columns": [
@@ -20018,6 +20179,26 @@
     "using": "public.is_admin_or_supervisor()",
     "check": "public.is_admin_or_supervisor()",
     "src": "supabase/migrations/20261126140000_client_errors.sql"
+   },
+   {
+    "name": "Admin supervisor update crm sync queue",
+    "table": "crm_sync_queue",
+    "cmd": "UPDATE",
+    "roles": "authenticated",
+    "mode": "permissive",
+    "using": "public.is_admin_or_supervisor()",
+    "check": "public.is_admin_or_supervisor()",
+    "src": "supabase/migrations/20261127130000_crm_sync_queue_update_policy.sql"
+   },
+   {
+    "name": "Agents update own completions",
+    "table": "learning_completions",
+    "cmd": "UPDATE",
+    "roles": "authenticated",
+    "mode": "permissive",
+    "using": "public.get_user_agent_name() = agent_name",
+    "check": "public.get_user_agent_name() = agent_name",
+    "src": "supabase/migrations/20261127150000_learning_completions_update_policy.sql"
    }
   ],
   "triggers": [
@@ -23097,6 +23278,38 @@
     "src": "supabase/migrations/20260103145030_b2c1f366-245b-4264-9139-4def0d930fd6.sql"
    },
    {
+    "name": "idx_geo_access_logs_country_code",
+    "table": "geo_access_logs",
+    "columns": "country_code",
+    "unique": false,
+    "where": "",
+    "src": "supabase/migrations/20260315143858_create_geo_tables_retroativo.sql"
+   },
+   {
+    "name": "idx_geo_access_logs_created_at",
+    "table": "geo_access_logs",
+    "columns": "created_at desc",
+    "unique": false,
+    "where": "",
+    "src": "supabase/migrations/20260315143858_create_geo_tables_retroativo.sql"
+   },
+   {
+    "name": "idx_geo_access_logs_created_brin",
+    "table": "geo_access_logs",
+    "columns": "created_at",
+    "unique": false,
+    "where": "",
+    "src": "supabase/migrations/20260315143858_create_geo_tables_retroativo.sql"
+   },
+   {
+    "name": "idx_geo_restrictions_country_code",
+    "table": "geo_restrictions",
+    "columns": "country_code",
+    "unique": false,
+    "where": "",
+    "src": "supabase/migrations/20260315143858_create_geo_tables_retroativo.sql"
+   },
+   {
     "name": "idx_notifications_user_id",
     "table": "notifications",
     "columns": "user_id",
@@ -26091,6 +26304,7 @@
    "supabase/migrations/20260103145030_b2c1f366-245b-4264-9139-4def0d930fd6.sql",
    "supabase/migrations/20260306002511_8add8104-e5d1-4a4d-8e8b-d220fb8ebc88.sql",
    "supabase/migrations/20260315143846_e02c7525-49f2-4a6c-aeeb-b5cff06ba996.sql",
+   "supabase/migrations/20260315143858_create_geo_tables_retroativo.sql",
    "supabase/migrations/20260315143859_53accc1d-5241-481f-bb43-a20c0123dede.sql",
    "supabase/migrations/20260315144312_5b41e5e7-ff57-40a1-ad7e-68133720c86c.sql",
    "supabase/migrations/20260315144323_b1df060b-6599-4b27-8056-0999ad3897f9.sql",
@@ -26301,17 +26515,24 @@
    "supabase/migrations/20261126140000_client_errors.sql",
    "supabase/migrations/20261126170000_cron_watchdog.sql",
    "supabase/migrations/20261126190000_cron_watchdog_privilegios.sql",
+   "supabase/migrations/20261127130000_crm_sync_queue_update_policy.sql",
+   "supabase/migrations/20261127150000_learning_completions_update_policy.sql",
+   "supabase/migrations/20261127160000_policies_to_authenticated_lote1.sql",
    "supabase/tests/calling_hours_fail_closed_rls_test.sql",
    "supabase/tests/client_errors_rls_test.sql",
+   "supabase/tests/crm_sync_queue_update_rls_test.sql",
    "supabase/tests/cron_credentials_rls_test.sql",
    "supabase/tests/cron_watchdog_rls_test.sql",
    "supabase/tests/deal_pipeline_snapshots_rls_test.sql",
    "supabase/tests/dnc_removal_audit_rls_test.sql",
+   "supabase/tests/geo_tables_retroativo_rls_test.sql",
    "supabase/tests/geo_write_policies_rls_test.sql",
    "supabase/tests/goals_achieved_notification_rls_test.sql",
    "supabase/tests/internal_tables_rls_test.sql",
    "supabase/tests/kb_article_history_rls_test.sql",
+   "supabase/tests/learning_completions_update_rls_test.sql",
    "supabase/tests/login_lockout_acl_rls_test.sql",
+   "supabase/tests/policies_to_authenticated_lote1_rls_test.sql",
    "supabase/tests/probe_132_lgpd_entity_versions_rls_test.sql",
    "supabase/tests/rate_limit_logs_write_policies_rls_test.sql",
    "supabase/tests/redaction_log_rls_test.sql",
@@ -26378,6 +26599,9 @@
    "holidays": "enabled",
    "consent_history": "enabled",
    "compliance_settings": "enabled",
+   "geo_access_logs": "enabled",
+   "geo_restrictions": "enabled",
+   "geo_settings": "enabled",
    "notifications": "enabled",
    "notification_preferences": "enabled",
    "call_flows": "enabled",
@@ -35584,8 +35808,8 @@
   },
   {
    "module": "supabase/migrations",
-   "files": 255,
-   "lines": 16452,
+   "files": 259,
+   "lines": 16691,
    "tables": [],
    "exports": [],
    "docs": [],
@@ -35637,6 +35861,7 @@
     "supabase/migrations/20260103145030_b2c1f366-245b-4264-9139-4def0d930fd6.sql",
     "supabase/migrations/20260306002511_8add8104-e5d1-4a4d-8e8b-d220fb8ebc88.sql",
     "supabase/migrations/20260315143846_e02c7525-49f2-4a6c-aeeb-b5cff06ba996.sql",
+    "supabase/migrations/20260315143858_create_geo_tables_retroativo.sql",
     "supabase/migrations/20260315143859_53accc1d-5241-481f-bb43-a20c0123dede.sql",
     "supabase/migrations/20260315144312_5b41e5e7-ff57-40a1-ad7e-68133720c86c.sql",
     "supabase/migrations/20260315144323_b1df060b-6599-4b27-8056-0999ad3897f9.sql",
@@ -35670,14 +35895,13 @@
     "supabase/migrations/20260404155512_228999bb-182f-42dd-8f07-9258821cceba.sql",
     "supabase/migrations/20260404155544_4cc03565-fe66-4dfc-8a46-f4d0100185a7.sql",
     "supabase/migrations/20260404155609_627e85b5-59c7-4fe3-9f30-be9b31f20ef0.sql",
-    "supabase/migrations/20260404155727_801b1d27-2b56-4db6-acd1-cb754c060e69.sql",
-    "supabase/migrations/20260404155927_caf70895-2bf1-4c92-88a3-e66e16e17e66.sql"
+    "supabase/migrations/20260404155727_801b1d27-2b56-4db6-acd1-cb754c060e69.sql"
    ]
   },
   {
    "module": "supabase/tests",
-   "files": 17,
-   "lines": 2374,
+   "files": 21,
+   "lines": 3248,
    "tables": [],
    "exports": [],
    "docs": [],
@@ -35686,15 +35910,19 @@
    "file_list": [
     "supabase/tests/calling_hours_fail_closed_rls_test.sql",
     "supabase/tests/client_errors_rls_test.sql",
+    "supabase/tests/crm_sync_queue_update_rls_test.sql",
     "supabase/tests/cron_credentials_rls_test.sql",
     "supabase/tests/cron_watchdog_rls_test.sql",
     "supabase/tests/deal_pipeline_snapshots_rls_test.sql",
     "supabase/tests/dnc_removal_audit_rls_test.sql",
+    "supabase/tests/geo_tables_retroativo_rls_test.sql",
     "supabase/tests/geo_write_policies_rls_test.sql",
     "supabase/tests/goals_achieved_notification_rls_test.sql",
     "supabase/tests/internal_tables_rls_test.sql",
     "supabase/tests/kb_article_history_rls_test.sql",
+    "supabase/tests/learning_completions_update_rls_test.sql",
     "supabase/tests/login_lockout_acl_rls_test.sql",
+    "supabase/tests/policies_to_authenticated_lote1_rls_test.sql",
     "supabase/tests/probe_132_lgpd_entity_versions_rls_test.sql",
     "supabase/tests/rate_limit_logs_write_policies_rls_test.sql",
     "supabase/tests/redaction_log_rls_test.sql",
@@ -39927,6 +40155,10 @@
    "deal_revenue_snapshots",
    "email_verification_tokens",
    "entity_versions",
+   "esperado_col",
+   "esperado_idx",
+   "esperado_pol",
+   "gate_ctx",
    "index_usage",
    "migration_rollbacks",
    "migration_status",
@@ -46963,6 +47195,126 @@
     "rule": "default now()"
    },
    {
+    "table": "geo_access_logs",
+    "column": "id",
+    "rule": "default gen_random_uuid()"
+   },
+   {
+    "table": "geo_access_logs",
+    "column": "ip_address",
+    "rule": "obrigatório"
+   },
+   {
+    "table": "geo_access_logs",
+    "column": "action",
+    "rule": "obrigatório"
+   },
+   {
+    "table": "geo_access_logs",
+    "column": "created_at",
+    "rule": "default now()"
+   },
+   {
+    "table": "geo_access_logs",
+    "column": "(tabela)",
+    "rule": "constraint geo_access_logs_pkey primary key (id)"
+   },
+   {
+    "table": "geo_access_logs",
+    "column": "(tabela)",
+    "rule": "constraint geo_access_logs_action_check check (action = any (array['allowed'::text, 'blocked'::text]))"
+   },
+   {
+    "table": "geo_restrictions",
+    "column": "id",
+    "rule": "default gen_random_uuid()"
+   },
+   {
+    "table": "geo_restrictions",
+    "column": "country_code",
+    "rule": "obrigatório"
+   },
+   {
+    "table": "geo_restrictions",
+    "column": "country_name",
+    "rule": "obrigatório"
+   },
+   {
+    "table": "geo_restrictions",
+    "column": "restriction_type",
+    "rule": "obrigatório"
+   },
+   {
+    "table": "geo_restrictions",
+    "column": "created_at",
+    "rule": "default now()"
+   },
+   {
+    "table": "geo_restrictions",
+    "column": "updated_at",
+    "rule": "default now()"
+   },
+   {
+    "table": "geo_restrictions",
+    "column": "(tabela)",
+    "rule": "constraint geo_restrictions_pkey primary key (id)"
+   },
+   {
+    "table": "geo_restrictions",
+    "column": "(tabela)",
+    "rule": "constraint geo_restrictions_country_code_key unique (country_code)"
+   },
+   {
+    "table": "geo_restrictions",
+    "column": "(tabela)",
+    "rule": "constraint geo_restrictions_restriction_type_check check (restriction_type = any (array['blocked'::text, 'allowed'::text]))"
+   },
+   {
+    "table": "geo_settings",
+    "column": "id",
+    "rule": "default gen_random_uuid()"
+   },
+   {
+    "table": "geo_settings",
+    "column": "enabled",
+    "rule": "default false"
+   },
+   {
+    "table": "geo_settings",
+    "column": "mode",
+    "rule": "default 'blocklist'::text"
+   },
+   {
+    "table": "geo_settings",
+    "column": "log_blocked_attempts",
+    "rule": "default true"
+   },
+   {
+    "table": "geo_settings",
+    "column": "notify_on_block",
+    "rule": "default false"
+   },
+   {
+    "table": "geo_settings",
+    "column": "created_at",
+    "rule": "default now()"
+   },
+   {
+    "table": "geo_settings",
+    "column": "updated_at",
+    "rule": "default now()"
+   },
+   {
+    "table": "geo_settings",
+    "column": "(tabela)",
+    "rule": "constraint geo_settings_pkey primary key (id)"
+   },
+   {
+    "table": "geo_settings",
+    "column": "(tabela)",
+    "rule": "constraint geo_settings_mode_check check (mode = any (array['blocklist'::text, 'allowlist'::text]))"
+   },
+   {
     "table": "notifications",
     "column": "id",
     "rule": "PK; default gen_random_uuid()"
@@ -51541,91 +51893,6 @@
     "table": "client_errors",
     "column": "(tabela)",
     "rule": "CONSTRAINT client_errors_type_chk CHECK (error_type IN ('error', 'unhandled-rejection', 'react-component', 'network-error'))"
-   },
-   {
-    "table": "geo_access_logs",
-    "column": "action",
-    "rule": "obrigatório"
-   },
-   {
-    "table": "geo_access_logs",
-    "column": "created_at",
-    "rule": "obrigatório"
-   },
-   {
-    "table": "geo_access_logs",
-    "column": "id",
-    "rule": "obrigatório"
-   },
-   {
-    "table": "geo_access_logs",
-    "column": "ip_address",
-    "rule": "obrigatório"
-   },
-   {
-    "table": "geo_restrictions",
-    "column": "country_code",
-    "rule": "obrigatório"
-   },
-   {
-    "table": "geo_restrictions",
-    "column": "country_name",
-    "rule": "obrigatório"
-   },
-   {
-    "table": "geo_restrictions",
-    "column": "created_at",
-    "rule": "obrigatório"
-   },
-   {
-    "table": "geo_restrictions",
-    "column": "id",
-    "rule": "obrigatório"
-   },
-   {
-    "table": "geo_restrictions",
-    "column": "restriction_type",
-    "rule": "obrigatório"
-   },
-   {
-    "table": "geo_restrictions",
-    "column": "updated_at",
-    "rule": "obrigatório"
-   },
-   {
-    "table": "geo_settings",
-    "column": "created_at",
-    "rule": "obrigatório"
-   },
-   {
-    "table": "geo_settings",
-    "column": "enabled",
-    "rule": "obrigatório"
-   },
-   {
-    "table": "geo_settings",
-    "column": "id",
-    "rule": "obrigatório"
-   },
-   {
-    "table": "geo_settings",
-    "column": "log_blocked_attempts",
-    "rule": "obrigatório"
-   },
-   {
-    "table": "geo_settings",
-    "column": "mode",
-    "rule": "obrigatório"
-   },
-   {
-    "table": "geo_settings",
-    "column": "notify_on_block",
-    "rule": "obrigatório"
-   },
-   {
-    "table": "geo_settings",
-    "column": "updated_at",
-    "rule": "obrigatório"
    },
    {
     "table": "index_usage",
@@ -74676,6 +74943,10 @@
     "call": "notify_on_warning"
    },
    {
+    "file": "supabase/migrations/20260315143858_create_geo_tables_retroativo.sql",
+    "call": "notify_on_block"
+   },
+   {
     "file": "supabase/migrations/20260418134513_8f99e4ad-bf44-4a71-b2ac-bc59c555a283.sql",
     "call": "notify_lock_conflict_hotspot"
    },
@@ -80168,6 +80439,26 @@
     "using": "public.is_admin_or_supervisor()",
     "check": "public.is_admin_or_supervisor()",
     "src": "supabase/migrations/20261126140000_client_errors.sql"
+   },
+   {
+    "name": "Admin supervisor update crm sync queue",
+    "table": "crm_sync_queue",
+    "cmd": "UPDATE",
+    "roles": "authenticated",
+    "mode": "permissive",
+    "using": "public.is_admin_or_supervisor()",
+    "check": "public.is_admin_or_supervisor()",
+    "src": "supabase/migrations/20261127130000_crm_sync_queue_update_policy.sql"
+   },
+   {
+    "name": "Agents update own completions",
+    "table": "learning_completions",
+    "cmd": "UPDATE",
+    "roles": "authenticated",
+    "mode": "permissive",
+    "using": "public.get_user_agent_name() = agent_name",
+    "check": "public.get_user_agent_name() = agent_name",
+    "src": "supabase/migrations/20261127150000_learning_completions_update_policy.sql"
    }
   ],
   "db_triggers": [
@@ -85909,7 +86200,9 @@
     "INSERT": [
      "authenticated: public.is_admin_or_supervisor()"
     ],
-    "UPDATE": [],
+    "UPDATE": [
+     "authenticated: public.is_admin_or_supervisor()"
+    ],
     "DELETE": []
    },
    "cultural_hints": {
@@ -86143,6 +86436,27 @@
     "UPDATE": [],
     "DELETE": []
    },
+   "esperado_col": {
+    "rls": "não encontrado",
+    "SELECT": [],
+    "INSERT": [],
+    "UPDATE": [],
+    "DELETE": []
+   },
+   "esperado_idx": {
+    "rls": "não encontrado",
+    "SELECT": [],
+    "INSERT": [],
+    "UPDATE": [],
+    "DELETE": []
+   },
+   "esperado_pol": {
+    "rls": "não encontrado",
+    "SELECT": [],
+    "INSERT": [],
+    "UPDATE": [],
+    "DELETE": []
+   },
    "financial_impact_daily": {
     "rls": "não encontrado",
     "SELECT": [],
@@ -86167,8 +86481,15 @@
      "public: is_admin_user(auth.uid())"
     ]
    },
-   "geo_access_logs": {
+   "gate_ctx": {
     "rls": "não encontrado",
+    "SELECT": [],
+    "INSERT": [],
+    "UPDATE": [],
+    "DELETE": []
+   },
+   "geo_access_logs": {
+    "rls": "enabled",
     "SELECT": [],
     "INSERT": [
      "authenticated: is_admin_or_supervisor()"
@@ -86179,7 +86500,7 @@
     ]
    },
    "geo_restrictions": {
-    "rls": "não encontrado",
+    "rls": "enabled",
     "SELECT": [
      "authenticated: auth.uid() IS NOT NULL"
     ],
@@ -86188,7 +86509,7 @@
     "DELETE": []
    },
    "geo_settings": {
-    "rls": "não encontrado",
+    "rls": "enabled",
     "SELECT": [
      "authenticated: is_admin_or_supervisor()"
     ],
@@ -86381,7 +86702,9 @@
     "INSERT": [
      "authenticated: get_user_agent_name() = agent_name OR is_admin_or_supervisor()"
     ],
-    "UPDATE": [],
+    "UPDATE": [
+     "authenticated: public.get_user_agent_name() = agent_name"
+    ],
     "DELETE": [
      "authenticated: is_admin_or_supervisor()"
     ]
@@ -87549,13 +87872,6 @@
   },
   "risky": [
    {
-    "table": "crm_sync_queue",
-    "issue": "front faz UPDATE mas nenhuma política RLS permite UPDATE → vai falhar/retornar vazio para usuários",
-    "files": [
-     "src/lib/bitrix/sync-log.ts"
-    ]
-   },
-   {
     "table": "financial_impact_daily",
     "issue": "acessada do front (1 arquivo(s)) sem RLS (não encontrado)",
     "files": [
@@ -87564,21 +87880,35 @@
    },
    {
     "table": "geo_access_logs",
-    "issue": "acessada do front (1 arquivo(s)) sem RLS (não encontrado)",
+    "issue": "front faz SELECT mas nenhuma política RLS permite SELECT → vai falhar/retornar vazio para usuários",
     "files": [
      "src/hooks/useGeoBlocking.ts"
     ]
    },
    {
     "table": "geo_restrictions",
-    "issue": "acessada do front (1 arquivo(s)) sem RLS (não encontrado)",
+    "issue": "front faz INSERT mas nenhuma política RLS permite INSERT → vai falhar/retornar vazio para usuários",
+    "files": [
+     "src/hooks/useGeoBlocking.ts"
+    ]
+   },
+   {
+    "table": "geo_restrictions",
+    "issue": "front faz DELETE mas nenhuma política RLS permite DELETE → vai falhar/retornar vazio para usuários",
     "files": [
      "src/hooks/useGeoBlocking.ts"
     ]
    },
    {
     "table": "geo_settings",
-    "issue": "acessada do front (1 arquivo(s)) sem RLS (não encontrado)",
+    "issue": "front faz INSERT mas nenhuma política RLS permite INSERT → vai falhar/retornar vazio para usuários",
+    "files": [
+     "src/hooks/useGeoBlocking.ts"
+    ]
+   },
+   {
+    "table": "geo_settings",
+    "issue": "front faz UPDATE mas nenhuma política RLS permite UPDATE → vai falhar/retornar vazio para usuários",
     "files": [
      "src/hooks/useGeoBlocking.ts"
     ]
@@ -87686,6 +88016,7 @@
    "supabase/functions/webauthn-challenge/index.ts",
    "supabase/functions/webhook-handler/index.ts",
    "supabase/functions/whatsapp-inbound/index.ts",
+   "supabase/migrations/20260315143858_create_geo_tables_retroativo.sql",
    "supabase/migrations/20260417001429_4d360a46-05bd-40b3-a5db-9ad5586337f2.sql",
    "supabase/migrations/20260418123340_d3452a78-2e4f-4f47-9bd6-c59dabad34d6.sql",
    "supabase/migrations/20260418123436_9d9ee1c4-c236-426f-8034-7ca5df2e6d70.sql",
@@ -90451,6 +90782,18 @@
     "updated_at",
     "updated_by"
    ],
+   "geo_access_logs": [
+    "created_at"
+   ],
+   "geo_restrictions": [
+    "created_at",
+    "created_by",
+    "updated_at"
+   ],
+   "geo_settings": [
+    "created_at",
+    "updated_at"
+   ],
    "notifications": [
     "created_at",
     "updated_at"
@@ -90840,18 +91183,10 @@
     "updated_at"
    ],
    "client_errors": [],
-   "geo_access_logs": [
-    "created_at"
-   ],
-   "geo_restrictions": [
-    "created_at",
-    "created_by",
-    "updated_at"
-   ],
-   "geo_settings": [
-    "created_at",
-    "updated_at"
-   ],
+   "esperado_col": [],
+   "esperado_idx": [],
+   "esperado_pol": [],
+   "gate_ctx": [],
    "financial_impact_daily": [],
    "index_usage": [],
    "migration_status": [],
@@ -90943,6 +91278,10 @@
     "ip_address"
    ],
    [
+    "geo_access_logs",
+    "ip_address"
+   ],
+   [
     "chat_sessions",
     "ip_address"
    ],
@@ -90961,10 +91300,6 @@
    [
     "dialer_favorites",
     "phone"
-   ],
-   [
-    "geo_access_logs",
-    "ip_address"
    ]
   ],
   "money_float": [],
@@ -91474,13 +91809,6 @@
    },
    {
     "kind": "rls",
-    "msg": "`crm_sync_queue`: front faz UPDATE mas nenhuma política RLS permite UPDATE → vai falhar/retornar vazio para usuários",
-    "where": [
-     "src/lib/bitrix/sync-log.ts"
-    ]
-   },
-   {
-    "kind": "rls",
     "msg": "`financial_impact_daily`: acessada do front (1 arquivo(s)) sem RLS (não encontrado)",
     "where": [
      "src/hooks/useFinancialImpact.ts"
@@ -91488,21 +91816,35 @@
    },
    {
     "kind": "rls",
-    "msg": "`geo_access_logs`: acessada do front (1 arquivo(s)) sem RLS (não encontrado)",
+    "msg": "`geo_access_logs`: front faz SELECT mas nenhuma política RLS permite SELECT → vai falhar/retornar vazio para usuários",
     "where": [
      "src/hooks/useGeoBlocking.ts"
     ]
    },
    {
     "kind": "rls",
-    "msg": "`geo_restrictions`: acessada do front (1 arquivo(s)) sem RLS (não encontrado)",
+    "msg": "`geo_restrictions`: front faz INSERT mas nenhuma política RLS permite INSERT → vai falhar/retornar vazio para usuários",
     "where": [
      "src/hooks/useGeoBlocking.ts"
     ]
    },
    {
     "kind": "rls",
-    "msg": "`geo_settings`: acessada do front (1 arquivo(s)) sem RLS (não encontrado)",
+    "msg": "`geo_restrictions`: front faz DELETE mas nenhuma política RLS permite DELETE → vai falhar/retornar vazio para usuários",
+    "where": [
+     "src/hooks/useGeoBlocking.ts"
+    ]
+   },
+   {
+    "kind": "rls",
+    "msg": "`geo_settings`: front faz INSERT mas nenhuma política RLS permite INSERT → vai falhar/retornar vazio para usuários",
+    "where": [
+     "src/hooks/useGeoBlocking.ts"
+    ]
+   },
+   {
+    "kind": "rls",
+    "msg": "`geo_settings`: front faz UPDATE mas nenhuma política RLS permite UPDATE → vai falhar/retornar vazio para usuários",
     "where": [
      "src/hooks/useGeoBlocking.ts"
     ]
@@ -91794,7 +92136,7 @@
    "`data_lake_exports.status` tem valores ['completed', 'failed', 'pending', 'processing'] mas nenhum mapa de transições foi encontrado no código — a ordem permitida (ex.: pago → cancelado?) não está declarada.",
    "`parked_calls.status` tem valores ['abandoned', 'expired', 'parked', 'retrieved'] mas nenhum mapa de transições foi encontrado no código — a ordem permitida (ex.: pago → cancelado?) não está declarada.",
    "`migration_status.status` é uma coluna de status sem enum/CHECK — os valores válidos e as transições permitidas não estão no banco.",
-   "168/172 tabelas sem `COMMENT ON TABLE` — o significado de negócio não está no schema: `entity_versions`, `schema_migrations`, `migration_rollbacks`, `contacts`, `call_records`, `queue_items`, `agents`, `call_sessions`, `call_transcriptions`, `call_analyses`, `call_summaries`, `call_alerts` …",
+   "172/176 tabelas sem `COMMENT ON TABLE` — o significado de negócio não está no schema: `entity_versions`, `schema_migrations`, `migration_rollbacks`, `contacts`, `call_records`, `queue_items`, `agents`, `call_sessions`, `call_transcriptions`, `call_analyses`, `call_summaries`, `call_alerts` …",
    "Há tabelas usadas no código sem migration no repo — o schema real pode ter sido alterado pelo painel."
   ]
  },
@@ -126426,6 +126768,14 @@
    "path": "supabase/migrations/20260315143846_e02c7525-49f2-4a6c-aeeb-b5cff06ba996.sql",
    "lines": 9
   },
+  "supabase/migrations/20260315143858_create_geo_tables_retroativo.sql": {
+   "path": "supabase/migrations/20260315143858_create_geo_tables_retroativo.sql",
+   "lines": 147,
+   "side_effects": [
+    "notify_on_block"
+   ],
+   "uses_service_role": true
+  },
   "supabase/migrations/20260315143859_53accc1d-5241-481f-bb43-a20c0123dede.sql": {
    "path": "supabase/migrations/20260315143859_53accc1d-5241-481f-bb43-a20c0123dede.sql",
    "lines": 24
@@ -127409,6 +127759,18 @@
    "lines": 21,
    "uses_service_role": true
   },
+  "supabase/migrations/20261127130000_crm_sync_queue_update_policy.sql": {
+   "path": "supabase/migrations/20261127130000_crm_sync_queue_update_policy.sql",
+   "lines": 25
+  },
+  "supabase/migrations/20261127150000_learning_completions_update_policy.sql": {
+   "path": "supabase/migrations/20261127150000_learning_completions_update_policy.sql",
+   "lines": 25
+  },
+  "supabase/migrations/20261127160000_policies_to_authenticated_lote1.sql": {
+   "path": "supabase/migrations/20261127160000_policies_to_authenticated_lote1.sql",
+   "lines": 42
+  },
   "supabase/tests/calling_hours_fail_closed_rls_test.sql": {
    "path": "supabase/tests/calling_hours_fail_closed_rls_test.sql",
    "lines": 50,
@@ -127417,6 +127779,11 @@
   "supabase/tests/client_errors_rls_test.sql": {
    "path": "supabase/tests/client_errors_rls_test.sql",
    "lines": 176,
+   "is_test": true
+  },
+  "supabase/tests/crm_sync_queue_update_rls_test.sql": {
+   "path": "supabase/tests/crm_sync_queue_update_rls_test.sql",
+   "lines": 222,
    "is_test": true
   },
   "supabase/tests/cron_credentials_rls_test.sql": {
@@ -127446,6 +127813,14 @@
     "'complaint', 'editado no gate', (now() + interval '30 days')::text, v_id);"
    ]
   },
+  "supabase/tests/geo_tables_retroativo_rls_test.sql": {
+   "path": "supabase/tests/geo_tables_retroativo_rls_test.sql",
+   "lines": 247,
+   "is_test": true,
+   "side_effects": [
+    "notify_on_block"
+   ]
+  },
   "supabase/tests/geo_write_policies_rls_test.sql": {
    "path": "supabase/tests/geo_write_policies_rls_test.sql",
    "lines": 132,
@@ -127472,11 +127847,21 @@
    "lines": 232,
    "is_test": true
   },
+  "supabase/tests/learning_completions_update_rls_test.sql": {
+   "path": "supabase/tests/learning_completions_update_rls_test.sql",
+   "lines": 211,
+   "is_test": true
+  },
   "supabase/tests/login_lockout_acl_rls_test.sql": {
    "path": "supabase/tests/login_lockout_acl_rls_test.sql",
    "lines": 102,
    "is_test": true,
    "uses_service_role": true
+  },
+  "supabase/tests/policies_to_authenticated_lote1_rls_test.sql": {
+   "path": "supabase/tests/policies_to_authenticated_lote1_rls_test.sql",
+   "lines": 194,
+   "is_test": true
   },
   "supabase/tests/probe_132_lgpd_entity_versions_rls_test.sql": {
    "path": "supabase/tests/probe_132_lgpd_entity_versions_rls_test.sql",
@@ -127688,10 +128073,54 @@
   }
  },
  "git": {
-  "sha": "4e389575f3b1c5e2dfa6444dc9097744573f3737",
+  "sha": "91a1fdc725b3782fe0a6182742cc8fb30f0c26c2",
   "branch": "main",
   "remote": "https://github.com/adm01-debug/Hello_V3",
   "commits": [
+   {
+    "sha": "91a1fdc",
+    "date": "2026-11-26",
+    "author": "adm01-debug",
+    "subject": "fix: policies de 5 tabelas sensiveis restritas a authenticated (etapa 052) (#357)",
+    "files": [
+     "docs/qa/05-PROGRESSO.md",
+     "supabase/migrations/20261127160000_policies_to_authenticated_lote1.sql",
+     "supabase/tests/policies_to_authenticated_lote1_rls_test.sql"
+    ]
+   },
+   {
+    "sha": "7f4740d",
+    "date": "2026-11-26",
+    "author": "adm01-debug",
+    "subject": "fix: policy de UPDATE em learning_completions (upsert do modulo nao atualizava a nota) (#356)",
+    "files": [
+     "docs/qa/05-PROGRESSO.md",
+     "supabase/migrations/20261127150000_learning_completions_update_policy.sql",
+     "supabase/tests/learning_completions_update_rls_test.sql"
+    ]
+   },
+   {
+    "sha": "2769d5d",
+    "date": "2026-11-26",
+    "author": "adm01-debug",
+    "subject": "feat: CREATE TABLE retroativo das tabelas geo_* (etapa 130) (#355)",
+    "files": [
+     "docs/qa/05-PROGRESSO.md",
+     "supabase/migrations/20260315143858_create_geo_tables_retroativo.sql",
+     "supabase/tests/geo_tables_retroativo_rls_test.sql"
+    ]
+   },
+   {
+    "sha": "f430ead",
+    "date": "2026-11-26",
+    "author": "adm01-debug",
+    "subject": "fix: policy de UPDATE na fila de sincronizacao do CRM (etapa 082) (#354)",
+    "files": [
+     "docs/qa/05-PROGRESSO.md",
+     "supabase/migrations/20261127130000_crm_sync_queue_update_policy.sql",
+     "supabase/tests/crm_sync_queue_update_rls_test.sql"
+    ]
+   },
    {
     "sha": "4e38957",
     "date": "2026-11-26",
@@ -128060,84 +128489,12 @@
      "src/pages/Settings.tsx",
      "src/pages/__tests__/Settings.duploClique.test.tsx"
     ]
-   },
-   {
-    "sha": "7245964",
-    "date": "2026-11-25",
-    "author": "adm01-debug",
-    "subject": "chore: remover componentes orfaos (etapa 296) e reaproveitar saida de audio e alertas de contato (#328)",
-    "files": [
-     "docs/estado/hooks-dormentes.md",
-     "docs/qa/05-PROGRESSO.md",
-     "scripts/inventario/gerar-hooks-dormentes.mjs",
-     "src/components/alerts/AlertsDropdown.tsx",
-     "src/components/calls/CallQualityIndicator.tsx",
-     "src/components/calls/PostCallSummary.tsx",
-     "src/components/calls/UnifiedSoftphone.tsx",
-     "src/components/calls/WebRTCCall.tsx",
-     "src/components/calls/WebRTCMetricsPanel.tsx",
-     "src/components/calls/__tests__/PostCallSummary.test.tsx",
-     "src/components/calls/__tests__/WebRTCCall.test.tsx",
-     "src/components/calls/softphone/ActiveCallDisplay.tsx",
-     "src/components/calls/softphone/__tests__/ActiveCallDisplay.saidaAudio.test.tsx",
-     "src/components/contacts/ContactAlertsDropdown.tsx",
-     "src/components/layout/AppLayout.tsx",
-     "src/components/lazy/LazyComponent.tsx",
-     "src/components/loading/GlobalLoading.tsx",
-     "src/components/notifications/NotificationBell.tsx",
-     "src/hooks/__tests__/useContactAlerts.coverage.test.tsx",
-     "src/hooks/useContactAlerts.ts",
-     "src/hooks/useSipCall.ts",
-     "src/lib/__tests__/a11y-clickable.test.ts",
-     "src/lib/a11y-clickable.ts"
-    ]
-   },
-   {
-    "sha": "f214b17",
-    "date": "2026-11-25",
-    "author": "adm01-debug",
-    "subject": "feat: verifica voz ao vivo na chamada e remove resumo de reuniao duplicado (etapas 154,155) (#327)",
-    "files": [
-     "docs/qa/05-PROGRESSO.md",
-     "src/components/calls/ActiveCallBar.tsx",
-     "src/components/calls/__tests__/ActiveCallBar.espera.test.tsx",
-     "src/components/calls/__tests__/ActiveCallBar.verificacaoVoz.test.tsx",
-     "src/hooks/__tests__/useMeetingSummary.coverage.test.tsx",
-     "src/hooks/useMeetingSummary.ts"
-    ]
-   },
-   {
-    "sha": "0fc57cd",
-    "date": "2026-11-25",
-    "author": "adm01-debug",
-    "subject": "feat: liga enforcement de SLA, violacoes e registro de leitura da base (#326)",
-    "files": [
-     "src/hooks/__tests__/useSLA.coverage.test.tsx",
-     "src/hooks/useSLA.ts",
-     "src/pages/Knowledge.tsx",
-     "src/pages/SLAPolicies.tsx",
-     "src/pages/__tests__/Knowledge.reader.test.tsx",
-     "src/pages/__tests__/Knowledge.viewTracking.test.tsx",
-     "src/pages/__tests__/SLAPolicies.enforce.test.tsx"
-    ]
-   },
-   {
-    "sha": "abcba36",
-    "date": "2026-11-25",
-    "author": "adm01-debug",
-    "subject": "feat: inscricao e acompanhamento de contatos na cadencia (#325)",
-    "files": [
-     "src/hooks/__tests__/useCadences.crud.test.tsx",
-     "src/hooks/useCadences.ts",
-     "src/pages/Cadences.tsx",
-     "src/pages/__tests__/Cadences.crud.test.tsx"
-    ]
    }
   ],
   "hot_files": [
    [
     "docs/qa/05-PROGRESSO.md",
-    18
+    20
    ],
    [
     "docs/qa/03-ACHADOS.md",
@@ -128156,10 +128513,6 @@
     2
    ],
    [
-    "src/hooks/useSLA.ts",
-    2
-   ],
-   [
     "src/routes/protectedRoutes.tsx",
     2
    ],
@@ -128169,18 +128522,6 @@
    ],
    [
     "src/hooks/useDNCCompliance.ts",
-    2
-   ],
-   [
-    "src/pages/Knowledge.tsx",
-    2
-   ],
-   [
-    "src/pages/__tests__/Knowledge.reader.test.tsx",
-    2
-   ],
-   [
-    "src/pages/__tests__/Knowledge.viewTracking.test.tsx",
     2
    ],
    [
@@ -128196,23 +128537,39 @@
     2
    ],
    [
-    "src/components/calls/ActiveCallBar.tsx",
-    2
-   ],
-   [
     "src/components/callbacks/ScheduledCallbacksList.tsx",
     2
    ],
    [
-    "src/pages/admin/DatabaseHealth.tsx",
+    "supabase/migrations/20261127160000_policies_to_authenticated_lote1.sql",
     1
    ],
    [
-    "src/pages/admin/__tests__/CronHealthCard.test.tsx",
+    "supabase/tests/policies_to_authenticated_lote1_rls_test.sql",
     1
    ],
    [
-    "src/pages/admin/database-health/CronHealthCard.tsx",
+    "supabase/migrations/20261127150000_learning_completions_update_policy.sql",
+    1
+   ],
+   [
+    "supabase/tests/learning_completions_update_rls_test.sql",
+    1
+   ],
+   [
+    "supabase/migrations/20260315143858_create_geo_tables_retroativo.sql",
+    1
+   ],
+   [
+    "supabase/tests/geo_tables_retroativo_rls_test.sql",
+    1
+   ],
+   [
+    "supabase/migrations/20261127130000_crm_sync_queue_update_policy.sql",
+    1
+   ],
+   [
+    "supabase/tests/crm_sync_queue_update_rls_test.sql",
     1
    ]
   ]

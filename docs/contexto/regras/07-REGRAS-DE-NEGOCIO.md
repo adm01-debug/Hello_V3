@@ -1,6 +1,6 @@
 # 07 · REGRAS DE NEGÓCIO
 
-> Gerado automaticamente por AI Context Sync v1.3.2 · commit `4e389575f3` · branch `main` · 2026-11-26 19:40 UTC
+> Gerado automaticamente por AI Context Sync v1.3.2 · commit `91a1fdc725` · branch `main` · 2026-11-26 19:43 UTC
 > Não edite à mão — regras humanas vão em `manual/`.
 
 ## A. Regras escritas por humanos (`manual/` — prioridade máxima, nunca sobrescrito)
@@ -311,7 +311,7 @@ _Nenhum arquivo em `manual/`. Copie `manual/TEMPLATE-regras-de-negocio.md` para 
 | `playlist_items` | Manage items of own playlists | ALL | public | permissive | `EXISTS (SELECT 1 FROM public.call_playlists p WHERE p.id = playlist_id AND (p.owner_agent_name = get_user_agent_name() OR is_admin_or_supervisor()))` | `EXISTS (SELECT 1 FROM public.call_playlists p WHERE p.id = playlist_id AND (p.owner_agent_name = get_user_agent_name() OR is_admin_or_supervisor()))` |
 | `deals` | Authenticated create deals | INSERT | public | permissive |  | `auth.uid() IS NOT NULL AND ( is_admin_or_supervisor() OR owner_agent_name IS NULL OR owner_agent_name = get_user_agent_name() )` |
 | `cadence_enrollments` | Authenticated insert enrollments | INSERT | public | permissive |  | `auth.uid() IS NOT NULL AND (is_admin_or_supervisor() OR agent_name = get_user_agent_name())` |
-| … +238 linhas — lista completa em `context.json` | | | | | | |
+| … +240 linhas — lista completa em `context.json` | | | | | | |
 
 ## C. Restrições de dados (obrigatório / único / default / CHECK / FK / calculada)
 
@@ -617,7 +617,7 @@ _Nenhum arquivo em `manual/`. Copie `manual/TEMPLATE-regras-de-negocio.md` para 
 | `user_roles` | `is_active` | default true |
 | `user_roles` | `created_at` | default now() |
 | `permissions` | `id` | PK; default gen_random_uuid() |
-| … +1078 linhas — lista completa em `context.json` | | |
+| … +1085 linhas — lista completa em `context.json` | | |
 
 ## D. Automações no banco (triggers e funções — regras que rodam sozinhas)
 
@@ -3139,6 +3139,7 @@ _nenhum item encontrado_
 | `notify_on_warning` | `supabase/migrations/20251223220228_f4ebbaa7-ea1c-447d-a07b-e1c0f583963d.sql` |
 | `notify_on_critical` | `supabase/migrations/20251224142716_d2c04aae-f048-4e7c-b447-1d6e3a840412.sql` |
 | `notify_on_warning` | `supabase/migrations/20251224142716_d2c04aae-f048-4e7c-b447-1d6e3a840412.sql` |
+| `notify_on_block` | `supabase/migrations/20260315143858_create_geo_tables_retroativo.sql` |
 | `notify_lock_conflict_hotspot` | `supabase/migrations/20260418134513_8f99e4ad-bf44-4a71-b2ac-bc59c555a283.sql` |
 | `notify_trunk_offline` | `supabase/migrations/20260418143532_ce6a3be9-4e9b-4d97-85ba-276c8ee1354c.sql` |
 | `notify_bloat_hotspots` | `supabase/migrations/20260712110237_ae094d69-c026-433d-b7b1-232eb615e4cd.sql` |
