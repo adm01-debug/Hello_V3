@@ -7,6 +7,7 @@ import { KpiCards } from "@/components/admin/webhook-health/KpiCards";
 import { EndpointList } from "@/components/admin/webhook-health/EndpointList";
 import { EndpointsToolbar } from "@/components/admin/webhook-health/EndpointsToolbar";
 import { HealthHeatmap } from "@/components/admin/webhook-health/HealthHeatmap";
+import { WebhookSecretsCard } from "@/components/admin/webhook-health/WebhookSecretsCard";
 
 const SORT_KEY = "webhook-health:sort-mode";
 
@@ -108,6 +109,8 @@ export default function WebhookHealth() {
         failed={totals.failed}
         globalRatio={globalRatio}
       />
+
+      <WebhookSecretsCard />
 
       <Card>
         <CardHeader className="flex flex-row items-center justify-between gap-2 flex-wrap">
