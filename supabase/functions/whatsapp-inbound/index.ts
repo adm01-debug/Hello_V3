@@ -4,7 +4,7 @@ import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.45.0';
 import { buildCorsHeaders } from '../_shared/cors.ts';
 import { validateBody, createErrorResponse } from '../_shared/validator.ts';
 import { WhatsAppInboundV1Schema, WhatsAppInboundV2Schema } from './schema.ts';
-import { detectReplay, normalizePhone } from './idempotency.ts';
+import { detectReplay, normalizePhone, isDuplicateMessageError } from './idempotency.ts';
 import { GENERIC_INTERNAL_MESSAGE, getCorrelationId } from '../_shared/errors.ts';
 
 Deno.serve(async (req) => {
@@ -169,7 +169,28 @@ Deno.serve(async (req) => {
         metadata: { message_id: body.message_id, timestamp: body.timestamp, version },
       });
 
-    if (msgErr) throw msgErr;
+    if (msgErr) {
+      // Corrida entre reentregas: as duas passam pela leitura de dedup acima e a
+      // segunda é barrada pelo índice único (etapa 017). Reentrega é 200, não 500 —
+      // devolver 5xx faria o provedor insistir para sempre.
+      if (isDuplicateMessageError(msgErr) && externalMessageId) {
+        const { data: stored } = await supabase
+          .from('conversation_messages')
+          .select('id, conversation_id')
+          .eq('metadata->>message_id', externalMessageId)
+          .limit(1)
+          .maybeSingle();
+
+        const conflictReplay = detectReplay(version, stored ?? null, conversationByExternalId);
+        if (conflictReplay) {
+          return new Response(JSON.stringify(conflictReplay), {
+            status: 200,
+            headers: { ...cors, 'Content-Type': 'application/json' },
+          });
+        }
+      }
+      throw msgErr;
+    }
 
     return new Response(
       JSON.stringify({ success: true, conversation_id: conversationId, version }),
