@@ -94,6 +94,29 @@ describe('voipRecommendationCoaching', () => {
     expect(readQueue()[0].mosBefore).toBeNull();
   });
 
+  it('survives a queue entry that is not an array or holds invalid items', async () => {
+    localStorage.setItem(QUEUE_KEY, JSON.stringify({ not: 'an array' }));
+    await processCoachingQueue();
+    expect(toast.success).not.toHaveBeenCalled();
+
+    localStorage.setItem(QUEUE_KEY, JSON.stringify([{ bogus: true }, null]));
+    await processCoachingQueue();
+    expect(toast.success).not.toHaveBeenCalled();
+
+    setMos(4.0);
+    await scheduleCoachingCheck('rec-clean', 'Fila saneada');
+    const queue = readQueue();
+    expect(queue).toHaveLength(1);
+    expect(queue[0].recommendationId).toBe('rec-clean');
+  });
+
+  it('ignores a non-object coached map without breaking scheduling', async () => {
+    localStorage.setItem(COACHED_KEY, 'null');
+    setMos(4.0);
+    await scheduleCoachingCheck('rec-after-null', 'Depois de mapa inválido');
+    expect(readQueue()).toHaveLength(1);
+  });
+
   it('returns early when queue is empty', async () => {
     await processCoachingQueue();
     expect(toast.success).not.toHaveBeenCalled();
