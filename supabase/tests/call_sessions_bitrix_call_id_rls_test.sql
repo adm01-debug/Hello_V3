@@ -7,6 +7,10 @@
 -- que o caminho de escrita que o hook usa (INSERT + UPDATE pela sessao do
 -- agente) funciona em producao.
 --
+-- A producao nao tem o vinculo (usuario -> agente) preenchido, e a policy de
+-- INSERT de call_sessions exige agent_name = get_user_agent_name(): o vinculo e
+-- montado aqui dentro, na transacao revertida no fim.
+--
 -- Roda em transacao revertida: nada fica gravado.
 -- psql "$SUPABASE_DB_URL" -v ON_ERROR_STOP=1 -f <este arquivo>
 
@@ -46,6 +50,8 @@ declare
   v_a uuid;
   v_b uuid;
   v_sessao uuid;
+  v_agente_id uuid;
+  v_agente text;
   v_gravou bigint;
   v_lido text;
   v_alterou bigint;
@@ -62,18 +68,43 @@ begin
       end if;
     end if;
   end loop;
+  perform set_config('request.jwt.claims', '', true);
 
   if v_a is null then
     raise notice '3/4 pulado: nenhum usuario nao-admin em auth.users';
     return;
   end if;
 
-  -- 3/4: INSERT no padrao do E058 + UPDATE do CALL_ID, como o hook faz.
+  -- Vinculo usuario -> agente, montado dentro da transacao revertida.
+  select a.id, a.name into v_agente_id, v_agente from public.agents a order by a.name limit 1;
+  if v_agente_id is null then
+    insert into public.agents (name, extension) values ('gate-081 agente', 'gate081')
+    returning id, name into v_agente_id, v_agente;
+  end if;
+  if exists (
+    select 1 from information_schema.columns
+    where table_schema = 'public' and table_name = 'user_profiles' and column_name = 'email'
+  ) then
+    insert into public.user_profiles (id, email, agent_id)
+    values (v_a, 'gate-081@local.invalid', v_agente_id)
+    on conflict (id) do update set agent_id = excluded.agent_id;
+  else
+    insert into public.user_profiles (id, agent_id)
+    values (v_a, v_agente_id)
+    on conflict (id) do update set agent_id = excluded.agent_id;
+  end if;
+
   perform set_config('request.jwt.claims', json_build_object('sub', v_a)::text, true);
+  if public.get_user_agent_name() is null then
+    raise exception 'FALHA 3: o vinculo criado nao resolve agent_name (usuario %, agente %)', v_a, v_agente_id;
+  end if;
+  raise notice '3/4 info: vinculo usuario->agente criado na transacao (agente %)', v_agente;
+
+  -- 3/4: INSERT no padrao do E058 + UPDATE do CALL_ID, como o hook faz.
   execute 'set local role authenticated';
   begin
     execute $q$ insert into public.call_sessions (caller_name, caller_phone, agent_name, status)
-               values ('Gate 081', '5511900000000', 'gate-081', 'active')
+               values ('Gate 081', '5511900000000', public.get_user_agent_name(), 'active')
                returning id $q$ into v_sessao;
   exception when others then
     execute 'reset role';
