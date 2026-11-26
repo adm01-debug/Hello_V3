@@ -174,6 +174,15 @@ Duas inconsistências reais aparecem aí e **não foram normalizadas** (a normal
 então pode pôr o `CHECK`): `contacts` × `contact` e `SYSTEM` × `system`. Qualquer consulta que cruze
 `resource_id` com a tabela de destino precisa tolerar as duas grafias.
 
+**Não ponha `CHECK` em `audit_logs.resource_type` nem em `notifications.source_type`** (etapa 139). O valor é
+texto livre em toda a cadeia: `logAuditEvent({ resourceType: string })` (`src/lib/audit/index.ts:23`) e o RPC
+`log_audit_event` gravam sem validar. Já existem valores usados pelo código que **nunca** apareceram no banco
+porque a tela correspondente não rodou ainda: `extension_bulk` (`src/hooks/useExtensionAudit.ts:31`) e
+`system_maintenance` (`src/components/settings/SystemMaintenancePanel.tsx:32`). Um `CHECK` derivado do que foi
+observado faria esses dois caminhos falharem, e o erro é só registrado no console (`src/lib/audit/index.ts:38`)
+— a trilha de auditoria desapareceria em silêncio. Se algum dia houver restrição aqui, ela tem de ser
+alimentada por uma tabela de tipos (`audit_resource_types`), não por um `IN (...)` fixo.
+
 ### `notifications.source_type` → `notifications.source_id`
 
 Aqui o tipo **não é nome de tabela**: é o marcador do produtor da notificação.
