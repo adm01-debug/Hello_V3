@@ -94,11 +94,11 @@ Visão consolidada (inclui `storage.objects` e `realtime.messages`); detalhes po
 | public.call_playlists | Owners update playlists | UPDATE | PERMISSIVE | public | `((owner_agent_name = get_user_agent_name()) OR is_admin_or_supervisor())` | `((owner_agent_name = get_user_agent_name()) OR is_admin_or_supervisor())` |
 | public.call_playlists | View own or shared playlists | SELECT | PERMISSIVE | authenticated | `(is_admin_or_supervisor() OR (owner_agent_name = get_user_agent_name()) OR ((is_shared = true) AND (get_user_agent_name() = ANY (shared_with))))` |  |
 | public.call_quality_metrics | Admins have full access to call_quality_metrics | ALL | PERMISSIVE | authenticated | `is_admin()` |  |
-| public.call_quality_metrics | Role-based view quality metrics | SELECT | PERMISSIVE | public | `(is_admin() OR is_supervisor() OR (agent_name = get_user_agent_name()))` |  |
-| public.call_quality_metrics | admins_delete_quality_metrics | DELETE | PERMISSIVE | public | `is_admin_or_supervisor()` |  |
-| public.call_quality_metrics | agents_insert_own_quality_metrics | INSERT | PERMISSIVE | public |  | `(is_admin_or_supervisor() OR (get_user_agent_name() = agent_name) OR (agent_name IS NULL))` |
-| public.call_quality_metrics | agents_update_own_quality_metrics | UPDATE | PERMISSIVE | public | `(is_admin_or_supervisor() OR (get_user_agent_name() = agent_name))` |  |
-| public.call_quality_metrics | agents_view_own_quality_metrics | SELECT | PERMISSIVE | public | `(is_admin_or_supervisor() OR (get_user_agent_name() = agent_name))` |  |
+| public.call_quality_metrics | Role-based view quality metrics | SELECT | PERMISSIVE | authenticated | `(is_admin() OR is_supervisor() OR (agent_name = get_user_agent_name()))` |  |
+| public.call_quality_metrics | admins_delete_quality_metrics | DELETE | PERMISSIVE | authenticated | `is_admin_or_supervisor()` |  |
+| public.call_quality_metrics | agents_insert_own_quality_metrics | INSERT | PERMISSIVE | authenticated |  | `(is_admin_or_supervisor() OR (get_user_agent_name() = agent_name) OR (agent_name IS NULL))` |
+| public.call_quality_metrics | agents_update_own_quality_metrics | UPDATE | PERMISSIVE | authenticated | `(is_admin_or_supervisor() OR (get_user_agent_name() = agent_name))` |  |
+| public.call_quality_metrics | agents_view_own_quality_metrics | SELECT | PERMISSIVE | authenticated | `(is_admin_or_supervisor() OR (get_user_agent_name() = agent_name))` |  |
 | public.call_queue_members | call_queue_members_manage_admin_supervisor | ALL | PERMISSIVE | authenticated | `is_admin_or_supervisor()` | `is_admin_or_supervisor()` |
 | public.call_queue_members | call_queue_members_select_authenticated | SELECT | PERMISSIVE | authenticated | `true` |  |
 | public.call_queues | call_queues_manage_admin_supervisor | ALL | PERMISSIVE | authenticated | `is_admin_or_supervisor()` | `is_admin_or_supervisor()` |
@@ -172,16 +172,16 @@ Visão consolidada (inclui `storage.objects` e `realtime.messages`); detalhes po
 | public.contacts | Role-based update contacts | UPDATE | PERMISSIVE | authenticated | `(is_admin_or_supervisor() OR (EXISTS ( SELECT 1    FROM contact_interactions ci   WHERE ((ci.contact_id = contacts.id) AND (ci.agent_name = get_user_agent_name())))))` |  |
 | public.contacts | Role-based view contacts | SELECT | PERMISSIVE | authenticated | `(is_admin_or_supervisor() OR (EXISTS ( SELECT 1    FROM contact_interactions ci   WHERE ((ci.contact_id = contacts.id) AND (ci.agent_name = get_user_agent_name())))) OR (EXISTS ( SELECT 1    FROM call_sessions cs   WHERE ((cs.contact_id = contacts.id) AND (cs.agent_name = get_user_agent_name())))))` |  |
 | public.contacts | Supervisors can insert contacts | INSERT | PERMISSIVE | authenticated |  | `is_admin_or_supervisor()` |
-| public.conversation_messages | Admin/Supervisor manage messages | ALL | PERMISSIVE | public | `is_admin_or_supervisor()` | `is_admin_or_supervisor()` |
-| public.conversation_messages | Admin/Supervisor view all messages | SELECT | PERMISSIVE | public | `is_admin_or_supervisor()` |  |
-| public.conversation_messages | Agents insert in assigned conversations | INSERT | PERMISSIVE | public |  | `(is_admin_or_supervisor() OR (EXISTS ( SELECT 1    FROM conversations c   WHERE ((c.id = conversation_messages.conversation_id) AND (c.assigned_agent_name = get_user_agent_name())))))` |
-| public.conversation_messages | Agents view messages from assigned convs | SELECT | PERMISSIVE | public | `(EXISTS ( SELECT 1    FROM conversations c   WHERE ((c.id = conversation_messages.conversation_id) AND (c.assigned_agent_name = get_user_agent_name()))))` |  |
-| public.conversation_messages | Users can view messages of their conversations | SELECT | PERMISSIVE | public | `((EXISTS ( SELECT 1    FROM conversations c   WHERE ((c.id = conversation_messages.conversation_id) AND (c.assigned_agent_name = ( SELECT up.full_name            FROM user_profiles up           WHERE (up.id = ( SELECT auth.uid() AS uid))))))) OR is_admin_or_supervisor())` |  |
-| public.conversations | Admin/Supervisor manage conversations | ALL | PERMISSIVE | public | `is_admin_or_supervisor()` | `is_admin_or_supervisor()` |
-| public.conversations | Admin/Supervisor view all conversations | SELECT | PERMISSIVE | public | `is_admin_or_supervisor()` |  |
-| public.conversations | Agents update assigned conversations | UPDATE | PERMISSIVE | public | `(assigned_agent_name = get_user_agent_name())` | `(assigned_agent_name = get_user_agent_name())` |
-| public.conversations | Agents view assigned conversations | SELECT | PERMISSIVE | public | `(assigned_agent_name = get_user_agent_name())` |  |
-| public.conversations | Users can view their own conversations | SELECT | PERMISSIVE | public | `((( SELECT auth.uid() AS uid) = id) OR is_admin_or_supervisor())` |  |
+| public.conversation_messages | Admin/Supervisor manage messages | ALL | PERMISSIVE | authenticated | `is_admin_or_supervisor()` | `is_admin_or_supervisor()` |
+| public.conversation_messages | Admin/Supervisor view all messages | SELECT | PERMISSIVE | authenticated | `is_admin_or_supervisor()` |  |
+| public.conversation_messages | Agents insert in assigned conversations | INSERT | PERMISSIVE | authenticated |  | `(is_admin_or_supervisor() OR (EXISTS ( SELECT 1    FROM conversations c   WHERE ((c.id = conversation_messages.conversation_id) AND (c.assigned_agent_name = get_user_agent_name())))))` |
+| public.conversation_messages | Agents view messages from assigned convs | SELECT | PERMISSIVE | authenticated | `(EXISTS ( SELECT 1    FROM conversations c   WHERE ((c.id = conversation_messages.conversation_id) AND (c.assigned_agent_name = get_user_agent_name()))))` |  |
+| public.conversation_messages | Users can view messages of their conversations | SELECT | PERMISSIVE | authenticated | `((EXISTS ( SELECT 1    FROM conversations c   WHERE ((c.id = conversation_messages.conversation_id) AND (c.assigned_agent_name = ( SELECT up.full_name            FROM user_profiles up           WHERE (up.id = ( SELECT auth.uid() AS uid))))))) OR is_admin_or_supervisor())` |  |
+| public.conversations | Admin/Supervisor manage conversations | ALL | PERMISSIVE | authenticated | `is_admin_or_supervisor()` | `is_admin_or_supervisor()` |
+| public.conversations | Admin/Supervisor view all conversations | SELECT | PERMISSIVE | authenticated | `is_admin_or_supervisor()` |  |
+| public.conversations | Agents update assigned conversations | UPDATE | PERMISSIVE | authenticated | `(assigned_agent_name = get_user_agent_name())` | `(assigned_agent_name = get_user_agent_name())` |
+| public.conversations | Agents view assigned conversations | SELECT | PERMISSIVE | authenticated | `(assigned_agent_name = get_user_agent_name())` |  |
+| public.conversations | Users can view their own conversations | SELECT | PERMISSIVE | authenticated | `((( SELECT auth.uid() AS uid) = id) OR is_admin_or_supervisor())` |  |
 | public.crm_field_suggestions | Admin supervisor insert crm suggestions | INSERT | PERMISSIVE | authenticated |  | `is_admin_or_supervisor()` |
 | public.crm_field_suggestions | Admin supervisor read crm suggestions | SELECT | PERMISSIVE | authenticated | `is_admin_or_supervisor()` |  |
 | public.crm_field_suggestions | Admin supervisor update crm suggestions | UPDATE | PERMISSIVE | authenticated | `is_admin_or_supervisor()` | `is_admin_or_supervisor()` |
@@ -277,13 +277,13 @@ Visão consolidada (inclui `storage.objects` e `realtime.messages`); detalhes po
 | public.login_attempts | Deny direct insert login_attempts public | INSERT | PERMISSIVE | public |  | `false` |
 | public.manager_alerts | Admins can insert manager_alerts | INSERT | PERMISSIVE | authenticated |  | `is_admin_or_supervisor()` |
 | public.manager_alerts | Admins can manage manager_alerts | ALL | PERMISSIVE | authenticated | `is_admin_or_supervisor()` |  |
-| public.meeting_summaries | summaries_delete_admin | DELETE | PERMISSIVE | public | `is_admin_user(( SELECT auth.uid() AS uid))` |  |
+| public.meeting_summaries | summaries_delete_admin | DELETE | PERMISSIVE | authenticated | `is_admin_user(( SELECT auth.uid() AS uid))` |  |
 | public.meeting_summaries | summaries_insert_admin_supervisor | INSERT | PERMISSIVE | authenticated |  | `is_admin_or_supervisor()` |
-| public.meeting_summaries | summaries_insert_agent_own | INSERT | PERMISSIVE | public |  | `(EXISTS ( SELECT 1    FROM call_sessions cs   WHERE ((cs.id = meeting_summaries.call_session_id) AND (cs.agent_name = get_user_agent_name()))))` |
-| public.meeting_summaries | summaries_select_admin_supervisor | SELECT | PERMISSIVE | public | `is_admin_or_supervisor()` |  |
-| public.meeting_summaries | summaries_select_agent_own | SELECT | PERMISSIVE | public | `(EXISTS ( SELECT 1    FROM call_sessions cs   WHERE ((cs.id = meeting_summaries.call_session_id) AND (cs.agent_name = get_user_agent_name()))))` |  |
-| public.meeting_summaries | summaries_update_admin_supervisor | UPDATE | PERMISSIVE | public | `is_admin_or_supervisor()` |  |
-| public.meeting_summaries | summaries_update_agent_own | UPDATE | PERMISSIVE | public | `(EXISTS ( SELECT 1    FROM call_sessions cs   WHERE ((cs.id = meeting_summaries.call_session_id) AND (cs.agent_name = get_user_agent_name()))))` |  |
+| public.meeting_summaries | summaries_insert_agent_own | INSERT | PERMISSIVE | authenticated |  | `(EXISTS ( SELECT 1    FROM call_sessions cs   WHERE ((cs.id = meeting_summaries.call_session_id) AND (cs.agent_name = get_user_agent_name()))))` |
+| public.meeting_summaries | summaries_select_admin_supervisor | SELECT | PERMISSIVE | authenticated | `is_admin_or_supervisor()` |  |
+| public.meeting_summaries | summaries_select_agent_own | SELECT | PERMISSIVE | authenticated | `(EXISTS ( SELECT 1    FROM call_sessions cs   WHERE ((cs.id = meeting_summaries.call_session_id) AND (cs.agent_name = get_user_agent_name()))))` |  |
+| public.meeting_summaries | summaries_update_admin_supervisor | UPDATE | PERMISSIVE | authenticated | `is_admin_or_supervisor()` |  |
+| public.meeting_summaries | summaries_update_agent_own | UPDATE | PERMISSIVE | authenticated | `(EXISTS ( SELECT 1    FROM call_sessions cs   WHERE ((cs.id = meeting_summaries.call_session_id) AND (cs.agent_name = get_user_agent_name()))))` |  |
 | public.notification_preferences | Users can insert own preferences | INSERT | PERMISSIVE | authenticated |  | `(( SELECT auth.uid() AS uid) = user_id)` |
 | public.notification_preferences | Users can update own preferences | UPDATE | PERMISSIVE | authenticated | `(( SELECT auth.uid() AS uid) = user_id)` |  |
 | public.notification_preferences | Users can view own preferences | SELECT | PERMISSIVE | authenticated | `(( SELECT auth.uid() AS uid) = user_id)` |  |

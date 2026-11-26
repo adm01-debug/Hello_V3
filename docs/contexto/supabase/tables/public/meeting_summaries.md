@@ -75,7 +75,7 @@
 |---|---|
 | comando | DELETE |
 | tipo | PERMISSIVE |
-| roles | public |
+| roles | authenticated |
 | USING | `is_admin_user(( SELECT auth.uid() AS uid))` |
 | WITH CHECK |  |
 
@@ -95,7 +95,7 @@
 |---|---|
 | comando | INSERT |
 | tipo | PERMISSIVE |
-| roles | public |
+| roles | authenticated |
 | USING |  |
 | WITH CHECK | `(EXISTS ( SELECT 1    FROM call_sessions cs   WHERE ((cs.id = meeting_summaries.call_session_id) AND (cs.agent_name = get_user_agent_name()))))` |
 
@@ -105,7 +105,7 @@
 |---|---|
 | comando | SELECT |
 | tipo | PERMISSIVE |
-| roles | public |
+| roles | authenticated |
 | USING | `is_admin_or_supervisor()` |
 | WITH CHECK |  |
 
@@ -115,7 +115,7 @@
 |---|---|
 | comando | SELECT |
 | tipo | PERMISSIVE |
-| roles | public |
+| roles | authenticated |
 | USING | `(EXISTS ( SELECT 1    FROM call_sessions cs   WHERE ((cs.id = meeting_summaries.call_session_id) AND (cs.agent_name = get_user_agent_name()))))` |
 | WITH CHECK |  |
 
@@ -125,7 +125,7 @@
 |---|---|
 | comando | UPDATE |
 | tipo | PERMISSIVE |
-| roles | public |
+| roles | authenticated |
 | USING | `is_admin_or_supervisor()` |
 | WITH CHECK |  |
 
@@ -135,7 +135,7 @@
 |---|---|
 | comando | UPDATE |
 | tipo | PERMISSIVE |
-| roles | public |
+| roles | authenticated |
 | USING | `(EXISTS ( SELECT 1    FROM call_sessions cs   WHERE ((cs.id = meeting_summaries.call_session_id) AND (cs.agent_name = get_user_agent_name()))))` |
 | WITH CHECK |  |
 

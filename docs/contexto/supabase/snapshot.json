@@ -24729,6 +24729,25 @@
       },
       {
         "columns": [
+          "parent_id"
+        ],
+        "deferrable": false,
+        "definition": "FOREIGN KEY (parent_id) REFERENCES bitrix_departments(id) ON DELETE SET NULL",
+        "name": "bitrix_departments_parent_id_fkey",
+        "on_delete": "SET NULL",
+        "on_update": "NO ACTION",
+        "ref_columns": [
+          "id"
+        ],
+        "ref_schema": "public",
+        "ref_table": "bitrix_departments",
+        "schema": "public",
+        "table": "bitrix_departments",
+        "type": "FOREIGN KEY",
+        "validated": true
+      },
+      {
+        "columns": [
           "id"
         ],
         "deferrable": false,
@@ -25896,6 +25915,25 @@
       },
       {
         "columns": [
+          "reviewer_id"
+        ],
+        "deferrable": false,
+        "definition": "FOREIGN KEY (reviewer_id) REFERENCES auth.users(id) ON DELETE SET NULL",
+        "name": "call_scorecards_reviewer_id_fkey",
+        "on_delete": "SET NULL",
+        "on_update": "NO ACTION",
+        "ref_columns": [
+          "id"
+        ],
+        "ref_schema": "auth",
+        "ref_table": "users",
+        "schema": "public",
+        "table": "call_scorecards",
+        "type": "FOREIGN KEY",
+        "validated": true
+      },
+      {
+        "columns": [
           "template_id"
         ],
         "deferrable": false,
@@ -26477,6 +26515,25 @@
         "schema": "public",
         "table": "coaching_assignments",
         "type": "PRIMARY KEY",
+        "validated": true
+      },
+      {
+        "columns": [
+          "scorecard_id"
+        ],
+        "deferrable": false,
+        "definition": "FOREIGN KEY (scorecard_id) REFERENCES call_scorecards(id) ON DELETE SET NULL",
+        "name": "coaching_assignments_scorecard_id_fkey",
+        "on_delete": "SET NULL",
+        "on_update": "NO ACTION",
+        "ref_columns": [
+          "id"
+        ],
+        "ref_schema": "public",
+        "ref_table": "call_scorecards",
+        "schema": "public",
+        "table": "coaching_assignments",
+        "type": "FOREIGN KEY",
         "validated": true
       },
       {
@@ -47756,8 +47813,20 @@
       },
       {
         "code": "fk_without_index",
+        "detail": "FK sem índice nas colunas ['parent_id']: joins e DELETE/UPDATE na tabela pai ficam lentos.",
+        "object": "public.bitrix_departments.bitrix_departments_parent_id_fkey",
+        "severity": "BAIXA"
+      },
+      {
+        "code": "fk_without_index",
         "detail": "FK sem índice nas colunas ['moh_prompt_id']: joins e DELETE/UPDATE na tabela pai ficam lentos.",
         "object": "public.call_park_orbits.call_park_orbits_moh_prompt_id_fkey",
+        "severity": "BAIXA"
+      },
+      {
+        "code": "fk_without_index",
+        "detail": "FK sem índice nas colunas ['reviewer_id']: joins e DELETE/UPDATE na tabela pai ficam lentos.",
+        "object": "public.call_scorecards.call_scorecards_reviewer_id_fkey",
         "severity": "BAIXA"
       },
       {
@@ -47770,6 +47839,12 @@
         "code": "fk_without_index",
         "detail": "FK sem índice nas colunas ['user_id']: joins e DELETE/UPDATE na tabela pai ficam lentos.",
         "object": "public.client_errors.client_errors_user_id_fkey",
+        "severity": "BAIXA"
+      },
+      {
+        "code": "fk_without_index",
+        "detail": "FK sem índice nas colunas ['scorecard_id']: joins e DELETE/UPDATE na tabela pai ficam lentos.",
+        "object": "public.coaching_assignments.coaching_assignments_scorecard_id_fkey",
         "severity": "BAIXA"
       },
       {
@@ -50217,7 +50292,7 @@
         "name": "Role-based view quality metrics",
         "permissive": "PERMISSIVE",
         "roles": [
-          "public"
+          "authenticated"
         ],
         "schema": "public",
         "table": "call_quality_metrics",
@@ -50229,7 +50304,7 @@
         "name": "admins_delete_quality_metrics",
         "permissive": "PERMISSIVE",
         "roles": [
-          "public"
+          "authenticated"
         ],
         "schema": "public",
         "table": "call_quality_metrics",
@@ -50241,7 +50316,7 @@
         "name": "agents_insert_own_quality_metrics",
         "permissive": "PERMISSIVE",
         "roles": [
-          "public"
+          "authenticated"
         ],
         "schema": "public",
         "table": "call_quality_metrics",
@@ -50253,7 +50328,7 @@
         "name": "agents_update_own_quality_metrics",
         "permissive": "PERMISSIVE",
         "roles": [
-          "public"
+          "authenticated"
         ],
         "schema": "public",
         "table": "call_quality_metrics",
@@ -50265,7 +50340,7 @@
         "name": "agents_view_own_quality_metrics",
         "permissive": "PERMISSIVE",
         "roles": [
-          "public"
+          "authenticated"
         ],
         "schema": "public",
         "table": "call_quality_metrics",
@@ -51153,7 +51228,7 @@
         "name": "Admin/Supervisor manage messages",
         "permissive": "PERMISSIVE",
         "roles": [
-          "public"
+          "authenticated"
         ],
         "schema": "public",
         "table": "conversation_messages",
@@ -51165,7 +51240,7 @@
         "name": "Admin/Supervisor view all messages",
         "permissive": "PERMISSIVE",
         "roles": [
-          "public"
+          "authenticated"
         ],
         "schema": "public",
         "table": "conversation_messages",
@@ -51177,7 +51252,7 @@
         "name": "Agents insert in assigned conversations",
         "permissive": "PERMISSIVE",
         "roles": [
-          "public"
+          "authenticated"
         ],
         "schema": "public",
         "table": "conversation_messages",
@@ -51189,7 +51264,7 @@
         "name": "Agents view messages from assigned convs",
         "permissive": "PERMISSIVE",
         "roles": [
-          "public"
+          "authenticated"
         ],
         "schema": "public",
         "table": "conversation_messages",
@@ -51201,7 +51276,7 @@
         "name": "Users can view messages of their conversations",
         "permissive": "PERMISSIVE",
         "roles": [
-          "public"
+          "authenticated"
         ],
         "schema": "public",
         "table": "conversation_messages",
@@ -51213,7 +51288,7 @@
         "name": "Admin/Supervisor manage conversations",
         "permissive": "PERMISSIVE",
         "roles": [
-          "public"
+          "authenticated"
         ],
         "schema": "public",
         "table": "conversations",
@@ -51225,7 +51300,7 @@
         "name": "Admin/Supervisor view all conversations",
         "permissive": "PERMISSIVE",
         "roles": [
-          "public"
+          "authenticated"
         ],
         "schema": "public",
         "table": "conversations",
@@ -51237,7 +51312,7 @@
         "name": "Agents update assigned conversations",
         "permissive": "PERMISSIVE",
         "roles": [
-          "public"
+          "authenticated"
         ],
         "schema": "public",
         "table": "conversations",
@@ -51249,7 +51324,7 @@
         "name": "Agents view assigned conversations",
         "permissive": "PERMISSIVE",
         "roles": [
-          "public"
+          "authenticated"
         ],
         "schema": "public",
         "table": "conversations",
@@ -51261,7 +51336,7 @@
         "name": "Users can view their own conversations",
         "permissive": "PERMISSIVE",
         "roles": [
-          "public"
+          "authenticated"
         ],
         "schema": "public",
         "table": "conversations",
@@ -52413,7 +52488,7 @@
         "name": "summaries_delete_admin",
         "permissive": "PERMISSIVE",
         "roles": [
-          "public"
+          "authenticated"
         ],
         "schema": "public",
         "table": "meeting_summaries",
@@ -52437,7 +52512,7 @@
         "name": "summaries_insert_agent_own",
         "permissive": "PERMISSIVE",
         "roles": [
-          "public"
+          "authenticated"
         ],
         "schema": "public",
         "table": "meeting_summaries",
@@ -52449,7 +52524,7 @@
         "name": "summaries_select_admin_supervisor",
         "permissive": "PERMISSIVE",
         "roles": [
-          "public"
+          "authenticated"
         ],
         "schema": "public",
         "table": "meeting_summaries",
@@ -52461,7 +52536,7 @@
         "name": "summaries_select_agent_own",
         "permissive": "PERMISSIVE",
         "roles": [
-          "public"
+          "authenticated"
         ],
         "schema": "public",
         "table": "meeting_summaries",
@@ -52473,7 +52548,7 @@
         "name": "summaries_update_admin_supervisor",
         "permissive": "PERMISSIVE",
         "roles": [
-          "public"
+          "authenticated"
         ],
         "schema": "public",
         "table": "meeting_summaries",
@@ -52485,7 +52560,7 @@
         "name": "summaries_update_agent_own",
         "permissive": "PERMISSIVE",
         "roles": [
-          "public"
+          "authenticated"
         ],
         "schema": "public",
         "table": "meeting_summaries",

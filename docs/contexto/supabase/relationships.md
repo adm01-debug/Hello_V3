@@ -15,6 +15,7 @@
 | public.audit_logs | user_id | auth.users | id | SET NULL | NO ACTION |
 | public.barge_in_sessions | call_session_id | public.call_sessions | id | CASCADE | NO ACTION |
 | public.battle_card_triggers | battle_card_id | public.battle_cards | id | CASCADE | NO ACTION |
+| public.bitrix_departments | parent_id | public.bitrix_departments | id | SET NULL | NO ACTION |
 | public.blocked_access_logs | user_id | auth.users | id | SET NULL | NO ACTION |
 | public.bot_conversations | conversation_id | public.conversations | id | CASCADE | NO ACTION |
 | public.cadence_enrollments | cadence_id | public.cadences | id | CASCADE | NO ACTION |
@@ -36,6 +37,7 @@
 | public.call_recordings | call_session_id | public.call_sessions | id | SET NULL | NO ACTION |
 | public.call_records | contact_id | public.contacts | id | SET NULL | NO ACTION |
 | public.call_scorecards | call_session_id | public.call_sessions | id | CASCADE | NO ACTION |
+| public.call_scorecards | reviewer_id | auth.users | id | SET NULL | NO ACTION |
 | public.call_scorecards | template_id | public.scorecard_templates | id | RESTRICT | NO ACTION |
 | public.call_sessions | contact_id | public.contacts | id | SET NULL | NO ACTION |
 | public.call_sessions | deal_id | public.deals | id | SET NULL | NO ACTION |
@@ -48,6 +50,7 @@
 | public.client_errors | resolved_by | auth.users | id | SET NULL | NO ACTION |
 | public.client_errors | user_id | auth.users | id | SET NULL | NO ACTION |
 | public.coaching_assignments | call_session_id | public.call_sessions | id | SET NULL | NO ACTION |
+| public.coaching_assignments | scorecard_id | public.call_scorecards | id | SET NULL | NO ACTION |
 | public.coaching_recommendations | agent_id | public.agents | id | CASCADE | NO ACTION |
 | public.coaching_timestamps | call_session_id | public.call_sessions | id | CASCADE | NO ACTION |
 | public.consent_history | contact_id | public.contacts | id | CASCADE | NO ACTION |

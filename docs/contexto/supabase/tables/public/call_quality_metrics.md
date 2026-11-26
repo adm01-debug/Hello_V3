@@ -72,7 +72,7 @@
 |---|---|
 | comando | SELECT |
 | tipo | PERMISSIVE |
-| roles | public |
+| roles | authenticated |
 | USING | `(is_admin() OR is_supervisor() OR (agent_name = get_user_agent_name()))` |
 | WITH CHECK |  |
 
@@ -82,7 +82,7 @@
 |---|---|
 | comando | DELETE |
 | tipo | PERMISSIVE |
-| roles | public |
+| roles | authenticated |
 | USING | `is_admin_or_supervisor()` |
 | WITH CHECK |  |
 
@@ -92,7 +92,7 @@
 |---|---|
 | comando | INSERT |
 | tipo | PERMISSIVE |
-| roles | public |
+| roles | authenticated |
 | USING |  |
 | WITH CHECK | `(is_admin_or_supervisor() OR (get_user_agent_name() = agent_name) OR (agent_name IS NULL))` |
 
@@ -102,7 +102,7 @@
 |---|---|
 | comando | UPDATE |
 | tipo | PERMISSIVE |
-| roles | public |
+| roles | authenticated |
 | USING | `(is_admin_or_supervisor() OR (get_user_agent_name() = agent_name))` |
 | WITH CHECK |  |
 
@@ -112,7 +112,7 @@
 |---|---|
 | comando | SELECT |
 | tipo | PERMISSIVE |
-| roles | public |
+| roles | authenticated |
 | USING | `(is_admin_or_supervisor() OR (get_user_agent_name() = agent_name))` |
 | WITH CHECK |  |
 

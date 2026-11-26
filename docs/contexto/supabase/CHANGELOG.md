@@ -2,6 +2,12 @@
 
 Diff semântico gerado a cada coleta em que algo mudou.
 
+## 2026-11-26 15:15 UTC
+
+- **constraints** adicionado (3): `public.bitrix_departments.bitrix_departments_parent_id_fkey`, `public.call_scorecards.call_scorecards_reviewer_id_fkey`, `public.coaching_assignments.coaching_assignments_scorecard_id_fkey`
+- **lints** adicionado (3): `fk_without_index:public.bitrix_departments.bitrix_departments_parent_id_fkey`, `fk_without_index:public.call_scorecards.call_scorecards_reviewer_id_fkey`, `fk_without_index:public.coaching_assignments.coaching_assignments_scorecard_id_fkey`
+- **policies (RLS)** alterado (21): `public.call_quality_metrics.Role-based view quality metrics`, `public.call_quality_metrics.admins_delete_quality_metrics`, `public.call_quality_metrics.agents_insert_own_quality_metrics`, `public.call_quality_metrics.agents_update_own_quality_metrics`, `public.call_quality_metrics.agents_view_own_quality_metrics`, `public.conversation_messages.Admin/Supervisor manage messages`, `public.conversation_messages.Admin/Supervisor view all messages`, `public.conversation_messages.Agents insert in assigned conversations`, `public.conversation_messages.Agents view messages from assigned convs`, `public.conversation_messages.Users can view messages of their conversations`, `public.conversations.Admin/Supervisor manage conversations`, `public.conversations.Admin/Supervisor view all conversations`, `public.conversations.Agents update assigned conversations`, `public.conversations.Agents view assigned conversations`, `public.conversations.Users can view their own conversations`, `public.meeting_summaries.summaries_delete_admin`, `public.meeting_summaries.summaries_insert_agent_own`, `public.meeting_summaries.summaries_select_admin_supervisor`, `public.meeting_summaries.summaries_select_agent_own`, `public.meeting_summaries.summaries_update_admin_supervisor`, `public.meeting_summaries.summaries_update_agent_own`
+
 ## 2026-11-26 14:18 UTC
 
 - **functions** alterado (1): `public.is_admin_or_supervisor()`

@@ -37,6 +37,7 @@
 |---|---|---|---|---|---|
 | call_scorecards_call_session_id_fkey | FOREIGN KEY | `FOREIGN KEY (call_session_id) REFERENCES call_sessions(id) ON DELETE CASCADE` | CASCADE | NO ACTION | sim |
 | call_scorecards_pkey | PRIMARY KEY | `PRIMARY KEY (id)` |  |  | sim |
+| call_scorecards_reviewer_id_fkey | FOREIGN KEY | `FOREIGN KEY (reviewer_id) REFERENCES auth.users(id) ON DELETE SET NULL` | SET NULL | NO ACTION | sim |
 | call_scorecards_template_id_fkey | FOREIGN KEY | `FOREIGN KEY (template_id) REFERENCES scorecard_templates(id) ON DELETE RESTRICT` | RESTRICT | NO ACTION | sim |
 
 
@@ -44,6 +45,7 @@
 
 | tabela | constraint | colunas | on delete |
 |---|---|---|---|
+| public.coaching_assignments | coaching_assignments_scorecard_id_fkey | scorecard_id | SET NULL |
 | public.scorecard_responses | scorecard_responses_scorecard_id_fkey | scorecard_id | CASCADE |
 
 

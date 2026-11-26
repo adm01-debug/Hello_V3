@@ -39,6 +39,7 @@
 |---|---|---|---|---|---|
 | coaching_assignments_call_session_id_fkey | FOREIGN KEY | `FOREIGN KEY (call_session_id) REFERENCES call_sessions(id) ON DELETE SET NULL` | SET NULL | NO ACTION | sim |
 | coaching_assignments_pkey | PRIMARY KEY | `PRIMARY KEY (id)` |  |  | sim |
+| coaching_assignments_scorecard_id_fkey | FOREIGN KEY | `FOREIGN KEY (scorecard_id) REFERENCES call_scorecards(id) ON DELETE SET NULL` | SET NULL | NO ACTION | sim |
 
 
 ## Índices

@@ -83,7 +83,7 @@
 |---|---|
 | comando | ALL |
 | tipo | PERMISSIVE |
-| roles | public |
+| roles | authenticated |
 | USING | `is_admin_or_supervisor()` |
 | WITH CHECK | `is_admin_or_supervisor()` |
 
@@ -93,7 +93,7 @@
 |---|---|
 | comando | SELECT |
 | tipo | PERMISSIVE |
-| roles | public |
+| roles | authenticated |
 | USING | `is_admin_or_supervisor()` |
 | WITH CHECK |  |
 
@@ -103,7 +103,7 @@
 |---|---|
 | comando | UPDATE |
 | tipo | PERMISSIVE |
-| roles | public |
+| roles | authenticated |
 | USING | `(assigned_agent_name = get_user_agent_name())` |
 | WITH CHECK | `(assigned_agent_name = get_user_agent_name())` |
 
@@ -113,7 +113,7 @@
 |---|---|
 | comando | SELECT |
 | tipo | PERMISSIVE |
-| roles | public |
+| roles | authenticated |
 | USING | `(assigned_agent_name = get_user_agent_name())` |
 | WITH CHECK |  |
 
@@ -123,7 +123,7 @@
 |---|---|
 | comando | SELECT |
 | tipo | PERMISSIVE |
-| roles | public |
+| roles | authenticated |
 | USING | `((( SELECT auth.uid() AS uid) = id) OR is_admin_or_supervisor())` |
 | WITH CHECK |  |
 

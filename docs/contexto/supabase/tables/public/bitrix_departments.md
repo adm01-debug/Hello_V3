@@ -26,7 +26,15 @@
 
 | nome | tipo | definição | on delete | on update | validada |
 |---|---|---|---|---|---|
+| bitrix_departments_parent_id_fkey | FOREIGN KEY | `FOREIGN KEY (parent_id) REFERENCES bitrix_departments(id) ON DELETE SET NULL` | SET NULL | NO ACTION | sim |
 | bitrix_departments_pkey | PRIMARY KEY | `PRIMARY KEY (id)` |  |  | sim |
+
+
+## Referenciada por (FKs de outras tabelas)
+
+| tabela | constraint | colunas | on delete |
+|---|---|---|---|
+| public.bitrix_departments | bitrix_departments_parent_id_fkey | parent_id | SET NULL |
 
 
 ## Índices

@@ -60,7 +60,7 @@
 |---|---|
 | comando | ALL |
 | tipo | PERMISSIVE |
-| roles | public |
+| roles | authenticated |
 | USING | `is_admin_or_supervisor()` |
 | WITH CHECK | `is_admin_or_supervisor()` |
 
@@ -70,7 +70,7 @@
 |---|---|
 | comando | SELECT |
 | tipo | PERMISSIVE |
-| roles | public |
+| roles | authenticated |
 | USING | `is_admin_or_supervisor()` |
 | WITH CHECK |  |
 
@@ -80,7 +80,7 @@
 |---|---|
 | comando | INSERT |
 | tipo | PERMISSIVE |
-| roles | public |
+| roles | authenticated |
 | USING |  |
 | WITH CHECK | `(is_admin_or_supervisor() OR (EXISTS ( SELECT 1    FROM conversations c   WHERE ((c.id = conversation_messages.conversation_id) AND (c.assigned_agent_name = get_user_agent_name())))))` |
 
@@ -90,7 +90,7 @@
 |---|---|
 | comando | SELECT |
 | tipo | PERMISSIVE |
-| roles | public |
+| roles | authenticated |
 | USING | `(EXISTS ( SELECT 1    FROM conversations c   WHERE ((c.id = conversation_messages.conversation_id) AND (c.assigned_agent_name = get_user_agent_name()))))` |
 | WITH CHECK |  |
 
@@ -100,7 +100,7 @@
 |---|---|
 | comando | SELECT |
 | tipo | PERMISSIVE |
-| roles | public |
+| roles | authenticated |
 | USING | `((EXISTS ( SELECT 1    FROM conversations c   WHERE ((c.id = conversation_messages.conversation_id) AND (c.assigned_agent_name = ( SELECT up.full_name            FROM user_profiles up           WHERE (up.id = ( SELECT auth.uid() AS uid))))))) OR is_admin_or_supervisor())` |
 | WITH CHECK |  |
 
