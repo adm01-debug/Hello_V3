@@ -2,11 +2,16 @@
  "aviso": "GERADO AUTOMATICAMENTE por scripts/ai-context/gerar.mjs — não editar à mão; será sobrescrito.",
  "format_version": 2,
  "git": {
-  "commit": "074496185dcceef235be89b11923f81deba09048",
+  "commit": "305ee9e5c4796bdb525eabfd2608d9a2332b4e29",
   "branch": "main",
-  "data_commit": "2026-11-25T21:42:21-03:00",
+  "data_commit": "2026-11-25T21:59:26-03:00",
   "remote": "https://github.com/adm01-debug/Hello_V3",
   "ultimos_commits": [
+   {
+    "sha": "305ee9e",
+    "data": "2026-11-25",
+    "assunto": "fix: gate do cron lia coluna que nao existe e derrubava o CI de main (#343)"
+   },
    {
     "sha": "0744961",
     "data": "2026-11-25",
@@ -126,11 +131,6 @@
     "sha": "6be5522",
     "data": "2026-11-25",
     "assunto": "fix: renumera e enxuga a migration de indices morta (#318)"
-   },
-   {
-    "sha": "c9aede0",
-    "data": "2026-11-25",
-    "assunto": "fix: dry-run do migrations.yml nao pode gravar de verdade (#319)"
    }
   ],
   "arquivos_mudados_7d": 1319,

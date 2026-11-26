@@ -59,11 +59,11 @@
  "commits": {
   "convencao": "conventional commits (observado)",
   "exemplos": [
+   "fix: gate do cron lia coluna que nao existe e derrubava o CI de main (#343)",
    "fix: tirar as RPCs de lockout do alcance do navegador (etapa 002) (#342)",
    "fix: deploy de edge abortava sem confirmacao (--yes) (#341)",
    "fix: tirar host fixo e chave anon do cron e do trigger de scorecard (etapa 040) (#340)",
-   "test: provar em producao que o bloqueio geografico grava (etapa 043) (#339)",
-   "feat: edge login-attempt + gate de ACL e workflow de deploy de edges (etapa 002, parte 1/2) (#337)"
+   "test: provar em producao que o bloqueio geografico grava (etapa 043) (#339)"
   ]
  },
  "pr_template": null,
