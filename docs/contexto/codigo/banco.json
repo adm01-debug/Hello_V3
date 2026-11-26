@@ -8,7 +8,7 @@
   "supabase/migrations",
   "typeorm"
  ],
- "migrations": 262,
+ "migrations": 266,
  "seeds": [],
  "avisos": [
   "27 bloco(s) com DDL dinâmico (EXECUTE format/...) não modelado — policies/colunas criadas dinamicamente podem faltar; confira no banco vivo"
@@ -99,6 +99,7 @@
   "handle_new_user",
   "has_permission",
   "has_role",
+  "increment_weekly_stats",
   "is_active_agent",
   "is_admin",
   "is_admin_or_supervisor",
@@ -8652,6 +8653,11 @@
      "nome": "idx_conversation_messages_conversation_id",
      "colunas": "conversation_id",
      "unico": false
+    },
+    {
+     "nome": "idx_conversation_messages_msgid",
+     "colunas": "(metadata->>'message_id'",
+     "unico": true
     },
     {
      "nome": "idx_messages_conversation",
@@ -21983,6 +21989,11 @@
   },
   {
    "nome": "get_user_role",
+   "definida": true,
+   "usada_em": 1
+  },
+  {
+   "nome": "increment_weekly_stats",
    "definida": true,
    "usada_em": 1
   },

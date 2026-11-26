@@ -2450,7 +2450,7 @@
    "hooks_exportados": [
     "useGamification"
    ],
-   "linhas": 328,
+   "linhas": 300,
    "dominio": "hooks",
    "tabelas": [
     "agent_badges",
@@ -2458,7 +2458,9 @@
     "agents",
     "badges"
    ],
-   "rpcs": [],
+   "rpcs": [
+    "increment_weekly_stats"
+   ],
    "edges": [],
    "hooks_internos": [
     "useEffect",

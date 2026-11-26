@@ -1,6 +1,6 @@
 # 10 · ACESSO E SEGURANÇA — quem pode o quê
 
-> Gerado automaticamente por AI Context Sync v1.3.2 · commit `082fc1376d` · branch `main` · 2026-11-26 20:02 UTC
+> Gerado automaticamente por AI Context Sync v1.3.2 · commit `b85ce4934d` · branch `main` · 2026-11-26 20:15 UTC
 > Não edite à mão — regras humanas vão em `manual/`.
 
 ## Perfis / roles identificados
@@ -195,7 +195,7 @@
 
 > `—` com RLS ligado = ninguém além de service_role. `sem RLS` = qualquer chave anon lê/escreve tudo.
 
-## Onde o RLS é IGNORADO (service_role) — 140 arquivo(s)
+## Onde o RLS é IGNORADO (service_role) — 143 arquivo(s)
 
 - `scripts/ai-context/cenarios.mjs`
 - `scripts/ai-context/gerar.unit.mjs`
@@ -333,9 +333,12 @@
 - `supabase/migrations/20261126170000_cron_watchdog.sql`
 - `supabase/migrations/20261126190000_cron_watchdog_privilegios.sql`
 - `supabase/migrations/20261127200000_revoke_anon_role_helpers.sql`
+- `supabase/migrations/20261127250000_increment_weekly_stats_rpc.sql`
+- `supabase/tests/increment_weekly_stats_rpc_rls_test.sql`
 - `supabase/tests/login_lockout_acl_rls_test.sql`
 - `supabase/tests/redaction_log_rls_test.sql`
 - `supabase/tests/revoke_anon_role_helpers_rls_test.sql`
+- `supabase/tests/role_helpers_stable_rls_test.sql`
 - `supabase/tests/webhook_secrets_rls_test.sql`
 
 ## Funções SQL `SECURITY DEFINER` (rodam com privilégio do dono, ignoram RLS)
@@ -388,6 +391,7 @@
 - `handle_new_user`
 - `has_permission`
 - `has_role`
+- `increment_weekly_stats`
 - `is_active_agent`
 - `is_admin`
 - `is_admin_or_supervisor`
@@ -453,7 +457,7 @@ Middleware matcher (Next.js): nenhum
 | grant | authenticated | select, insert, update, delete | `deal_revenue_snapshots`, `shift_swap_suggestions`, `data_lake_exports`, `dialer_favorites`, `call_queues`, `call_queue_members`, `ring_groups`, `ring_group_members`, `queue_audio_prompts`, `call_park_orbits`, `parked_calls`, `user_preferences` |
 | grant | authenticated | select, update | `client_errors` |
 | grant | authenticated | update, delete | `rate_limit_logs` |
-| grant | authenticated, service_role | execute | `get_agent_financial_leaderboard`, `calculate_predictive_pace`, `recalc_deal_health`, `expire_parked_calls`, `calculate_predictive_pace`, `check_all_tables_rls_status`, `check_idle_indexes`, `expire_parked_calls`, `get_agent_financial_leaderboard`, `get_agent_performance`, `get_agents_with_active_calls`, `get_call_history_with_summaries`, `get_call_volume_stats`, `get_dashboard_stats`, `get_database_health_snapshot` … +17 |
+| grant | authenticated, service_role | execute | `get_agent_financial_leaderboard`, `calculate_predictive_pace`, `recalc_deal_health`, `expire_parked_calls`, `calculate_predictive_pace`, `check_all_tables_rls_status`, `check_idle_indexes`, `expire_parked_calls`, `get_agent_financial_leaderboard`, `get_agent_performance`, `get_agents_with_active_calls`, `get_call_history_with_summaries`, `get_call_volume_stats`, `get_dashboard_stats`, `get_database_health_snapshot` … +18 |
 | grant | optimistic_lock_writer | insert | `optimistic_lock_conflicts` |
 | grant | postgres | all privileges | `cron` |
 | grant | postgres, service_role | execute | `edge_function_url` |
@@ -476,6 +480,7 @@ Middleware matcher (Next.js): nenhum
 | revoke | anon, authenticated, service_role | all | `cron_health_rows` |
 | revoke | authenticated | execute | `apply_migration`, `audit_role_change`, `audit_table_change`, `bridge_voip_alert_to_notification`, `check_suspicious_activity`, `check_table_bloat`, `cleanup_old_data`, `cleanup_old_logs`, `enforce_optimistic_lock`, `ensure_single_default_filter`, `handle_kb_article_change`, `handle_kb_article_history`, `handle_new_user`, `log_critical_rls_event`, `notify_bloat_hotspots` … +24 |
 | revoke | public | all | `get_agent_financial_leaderboard` |
+| revoke | public, anon | execute | `increment_weekly_stats` |
 | revoke | public, anon, authenticated | execute | `dnc_track_removal` |
 
 ## Riscos de acesso detectados

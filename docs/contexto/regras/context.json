@@ -1,15 +1,15 @@
 {
  "meta": {
-  "sha": "082fc1376df91b587524d9e5e167ca88a2a93a41",
+  "sha": "b85ce4934df8acbd5f9a9c99db59675cf7c5d1ef",
   "branch": "main",
   "remote": "https://github.com/adm01-debug/Hello_V3",
-  "generated_at": "2026-11-26 20:02 UTC",
-  "files_total": 1878,
-  "code_files": 1674,
-  "code_lines": 205753
+  "generated_at": "2026-11-26 20:15 UTC",
+  "files_total": 1886,
+  "code_files": 1682,
+  "code_lines": 206724
  },
  "version": "1.3.2",
- "facts_hash": "9edb3b29aba94515",
+ "facts_hash": "17cb412d785f7dc6",
  "stack": {
   "frameworks": [
    "React + Vite",
@@ -170,7 +170,7 @@
   "languages": {
    ".tsx": 680,
    ".ts": 670,
-   ".sql": 288,
+   ".sql": 296,
    ".mjs": 29,
    ".py": 5,
    ".js": 2
@@ -21479,7 +21479,7 @@
     "args": "",
     "returns": "boolean",
     "lang": "plpgsql",
-    "src": "supabase/migrations/20261122250000_role_checks_honor_active_and_expiry.sql",
+    "src": "supabase/migrations/20261127210000_role_helpers_stable.sql",
     "security_definer": true,
     "search_path": true,
     "body": "BEGIN IF auth.uid() IS NULL THEN RETURN FALSE; END IF; RETURN EXISTS ( SELECT 1 FROM public.user_roles WHERE user_id = auth.uid() AND role IN ('admin', 'supervisor') AND coalesce(is_active, true) AND (expires_at IS NULL OR expires_at > now()) ); END;",
@@ -22067,7 +22067,7 @@
     "args": "",
     "returns": "boolean",
     "lang": "plpgsql",
-    "src": "supabase/migrations/20261122280000_is_admin_and_supervisor_honor_expiry.sql",
+    "src": "supabase/migrations/20261127210000_role_helpers_stable.sql",
     "security_definer": true,
     "search_path": true,
     "body": "BEGIN IF auth.uid() IS NULL THEN RETURN FALSE; END IF; RETURN EXISTS ( SELECT 1 FROM public.user_roles WHERE user_id = auth.uid() AND role = 'admin' AND coalesce(is_active, true) AND (expires_at IS NULL OR expires_at > now()) ); END;",
@@ -22094,7 +22094,7 @@
     "args": "",
     "returns": "boolean",
     "lang": "plpgsql",
-    "src": "supabase/migrations/20261122280000_is_admin_and_supervisor_honor_expiry.sql",
+    "src": "supabase/migrations/20261127210000_role_helpers_stable.sql",
     "security_definer": true,
     "search_path": true,
     "body": "BEGIN IF auth.uid() IS NULL THEN RETURN FALSE; END IF; RETURN EXISTS ( SELECT 1 FROM public.user_roles WHERE user_id = auth.uid() AND role IN ('admin', 'supervisor') AND coalesce(is_active, true) AND (expires_at IS NULL OR expires_at > now()) ); END;",
@@ -22738,6 +22738,25 @@
      "notifications",
      "user_profiles",
      "user_roles"
+    ]
+   },
+   "increment_weekly_stats": {
+    "args": "p_agent_id uuid, p_week_start date, p_calls integer default 0, p_duration_seconds integer default 0, p_badges integer default 0, p_points integer default 0, p_avg_satisfaction numeric default null, p_ …",
+    "returns": "public.agent_weekly_stats",
+    "lang": "plpgsql",
+    "src": "supabase/migrations/20261127260000_increment_weekly_stats_rpc_null_media_fix.sql",
+    "security_definer": true,
+    "search_path": true,
+    "body": "declare v_row public.agent_weekly_stats; begin if p_agent_id is null then raise exception 'increment_weekly_stats: p_agent_id obrigatorio'; end if; if p_week_start is null then raise exception 'increment_weekly_stats: p_week_start obrigatorio'; end if; if coalesce(p_calls, 0) < 0 or coalesce(p_duration_seconds, 0) < 0 or coalesce(p_badges, 0) < 0 or coalesce(p_points, 0) < 0 then raise exception 'increment_weekly_stats: incremento negativo nao e aceito'; end if; insert into public.agent_weekly_stats as s ( agent_id, week_start, total_calls, total_duration_seconds, badges_earned, points_earned, avg_satisfaction, avg_performance, updated_at ) values ( p_agent_id, p_week_start, coalesce(p_calls …",
+    "raises": [
+     "increment_weekly_stats: p_agent_id obrigatorio",
+     "increment_weekly_stats: p_week_start obrigatorio",
+     "increment_weekly_stats: incremento negativo nao e aceito"
+    ],
+    "tables": [
+     "agent_weekly_stats",
+     "set",
+     "v_row"
     ]
    },
    "graphql": {
@@ -26172,6 +26191,14 @@
     "unique": false,
     "where": "",
     "src": "supabase/migrations/20261126140000_client_errors.sql"
+   },
+   {
+    "name": "idx_conversation_messages_msgid",
+    "table": "conversation_messages",
+    "columns": "(metadata->>'message_id'",
+    "unique": true,
+    "where": "",
+    "src": "supabase/migrations/20261127230000_unique_conversation_message_id.sql"
    }
   ],
   "cron_jobs": [
@@ -26521,6 +26548,10 @@
    "supabase/migrations/20261127170000_add_missing_fks.sql",
    "supabase/migrations/20261127180000_policies_to_authenticated_restante.sql",
    "supabase/migrations/20261127200000_revoke_anon_role_helpers.sql",
+   "supabase/migrations/20261127210000_role_helpers_stable.sql",
+   "supabase/migrations/20261127230000_unique_conversation_message_id.sql",
+   "supabase/migrations/20261127250000_increment_weekly_stats_rpc.sql",
+   "supabase/migrations/20261127260000_increment_weekly_stats_rpc_null_media_fix.sql",
    "supabase/tests/add_missing_fks_rls_test.sql",
    "supabase/tests/calling_hours_fail_closed_rls_test.sql",
    "supabase/tests/client_errors_rls_test.sql",
@@ -26532,17 +26563,21 @@
    "supabase/tests/geo_tables_retroativo_rls_test.sql",
    "supabase/tests/geo_write_policies_rls_test.sql",
    "supabase/tests/goals_achieved_notification_rls_test.sql",
+   "supabase/tests/increment_weekly_stats_rpc_rls_test.sql",
    "supabase/tests/internal_tables_rls_test.sql",
    "supabase/tests/kb_article_history_rls_test.sql",
    "supabase/tests/learning_completions_update_rls_test.sql",
    "supabase/tests/login_lockout_acl_rls_test.sql",
    "supabase/tests/policies_to_authenticated_lote1_rls_test.sql",
    "supabase/tests/policies_to_authenticated_restante_rls_test.sql",
+   "supabase/tests/probe_065_101_rls_test.sql",
    "supabase/tests/probe_132_lgpd_entity_versions_rls_test.sql",
    "supabase/tests/rate_limit_logs_write_policies_rls_test.sql",
    "supabase/tests/redaction_log_rls_test.sql",
    "supabase/tests/revoke_anon_role_helpers_rls_test.sql",
+   "supabase/tests/role_helpers_stable_rls_test.sql",
    "supabase/tests/role_source_of_truth_test.sql",
+   "supabase/tests/unique_conversation_message_id_rls_test.sql",
    "supabase/tests/user_preferences_rls_test.sql",
    "supabase/tests/webhook_secrets_rls_test.sql",
    "src/integrations/supabase/types.ts"
@@ -28963,6 +28998,22 @@
     "objkind": "function",
     "roles": "service_role",
     "src": "supabase/migrations/20261126190000_cron_watchdog_privilegios.sql"
+   },
+   {
+    "kind": "revoke",
+    "privs": "execute",
+    "object": "increment_weekly_stats",
+    "objkind": "function",
+    "roles": "public, anon",
+    "src": "supabase/migrations/20261127250000_increment_weekly_stats_rpc.sql"
+   },
+   {
+    "kind": "grant",
+    "privs": "execute",
+    "object": "increment_weekly_stats",
+    "objkind": "function",
+    "roles": "authenticated, service_role",
+    "src": "supabase/migrations/20261127250000_increment_weekly_stats_rpc.sql"
    }
   ],
   "raises": [
@@ -29125,6 +29176,21 @@
     "function": "get_cron_health",
     "msg": "apenas administradores podem consultar a saude do cron",
     "src": "supabase/migrations/20261126170000_cron_watchdog.sql"
+   },
+   {
+    "function": "increment_weekly_stats",
+    "msg": "increment_weekly_stats: p_agent_id obrigatorio",
+    "src": "supabase/migrations/20261127260000_increment_weekly_stats_rpc_null_media_fix.sql"
+   },
+   {
+    "function": "increment_weekly_stats",
+    "msg": "increment_weekly_stats: p_week_start obrigatorio",
+    "src": "supabase/migrations/20261127260000_increment_weekly_stats_rpc_null_media_fix.sql"
+   },
+   {
+    "function": "increment_weekly_stats",
+    "msg": "increment_weekly_stats: incremento negativo nao e aceito",
+    "src": "supabase/migrations/20261127260000_increment_weekly_stats_rpc_null_media_fix.sql"
    }
   ],
   "seed": [
@@ -29228,7 +29294,9 @@
      "notifications"
     ],
     "invokes_transitive": [],
-    "rpc_transitive": [],
+    "rpc_transitive": [
+     "increment_weekly_stats"
+    ],
     "deps_count": 34
    },
    {
@@ -29668,7 +29736,9 @@
      "badges"
     ],
     "invokes_transitive": [],
-    "rpc_transitive": [],
+    "rpc_transitive": [
+     "increment_weekly_stats"
+    ],
     "deps_count": 20
    },
    {
@@ -34860,7 +34930,7 @@
   {
    "module": "src/hooks",
    "files": 355,
-   "lines": 45413,
+   "lines": 45394,
    "tables": [
     "accounts",
     "active_sessions",
@@ -35150,7 +35220,7 @@
   {
    "module": "src/integrations",
    "files": 3,
-   "lines": 8319,
+   "lines": 8344,
    "tables": [],
    "exports": [
     "index.ts: lovable",
@@ -35584,7 +35654,7 @@
   {
    "module": "supabase/functions",
    "files": 220,
-   "lines": 24576,
+   "lines": 24624,
    "tables": [
     "account_lockouts",
     "accounts",
@@ -35814,8 +35884,8 @@
   },
   {
    "module": "supabase/migrations",
-   "files": 262,
-   "lines": 16870,
+   "files": 266,
+   "lines": 17127,
    "tables": [],
    "exports": [],
    "docs": [],
@@ -35906,8 +35976,8 @@
   },
   {
    "module": "supabase/tests",
-   "files": 24,
-   "lines": 3773,
+   "files": 28,
+   "lines": 4433,
    "tables": [],
    "exports": [],
    "docs": [],
@@ -35925,17 +35995,21 @@
     "supabase/tests/geo_tables_retroativo_rls_test.sql",
     "supabase/tests/geo_write_policies_rls_test.sql",
     "supabase/tests/goals_achieved_notification_rls_test.sql",
+    "supabase/tests/increment_weekly_stats_rpc_rls_test.sql",
     "supabase/tests/internal_tables_rls_test.sql",
     "supabase/tests/kb_article_history_rls_test.sql",
     "supabase/tests/learning_completions_update_rls_test.sql",
     "supabase/tests/login_lockout_acl_rls_test.sql",
     "supabase/tests/policies_to_authenticated_lote1_rls_test.sql",
     "supabase/tests/policies_to_authenticated_restante_rls_test.sql",
+    "supabase/tests/probe_065_101_rls_test.sql",
     "supabase/tests/probe_132_lgpd_entity_versions_rls_test.sql",
     "supabase/tests/rate_limit_logs_write_policies_rls_test.sql",
     "supabase/tests/redaction_log_rls_test.sql",
     "supabase/tests/revoke_anon_role_helpers_rls_test.sql",
+    "supabase/tests/role_helpers_stable_rls_test.sql",
     "supabase/tests/role_source_of_truth_test.sql",
+    "supabase/tests/unique_conversation_message_id_rls_test.sql",
     "supabase/tests/user_preferences_rls_test.sql",
     "supabase/tests/webhook_secrets_rls_test.sql"
    ]
@@ -36104,12 +36178,6 @@
      "src/components/gamification/WeeklyRanking.tsx",
      "src/hooks/useGamification.ts",
      "supabase/functions/suggest-shift-swaps/index.ts"
-    ],
-    "update": [
-     "src/hooks/useGamification.ts"
-    ],
-    "insert": [
-     "src/hooks/useGamification.ts"
     ]
    },
    "agents": {
@@ -37972,7 +38040,6 @@
     "adherence_percent",
     "agent_id",
     "avg_call_score",
-    "id",
     "total_calls",
     "week_start"
    ],
@@ -39480,6 +39547,9 @@
    ],
    "ghost_rpc": [
     "scripts/ai-context/gerar.unit.mjs"
+   ],
+   "increment_weekly_stats": [
+    "src/hooks/useGamification.ts"
    ],
    "is_admin": [
     "scripts/ai-context/gerar.unit.mjs"
@@ -42597,10 +42667,6 @@
    {
     "file": "src/hooks/useExtensionsAdmin.ts",
     "msg": "Nada para exportar"
-   },
-   {
-    "file": "src/hooks/useGamification.ts",
-    "msg": "Não foi possível atualizar as estatísticas da semana"
    },
    {
     "file": "src/hooks/useGamification.ts",
@@ -62786,7 +62852,7 @@
    },
    {
     "file": "src/hooks/__tests__/useGamification.coverage.test.tsx",
-    "name": "awards a badge and updates weekly stats (existing row)"
+    "name": "awards a badge and soma os pontos pela RPC"
    },
    {
     "file": "src/hooks/__tests__/useGamification.coverage.test.tsx",
@@ -62794,19 +62860,15 @@
    },
    {
     "file": "src/hooks/__tests__/useGamification.coverage.test.tsx",
-    "name": "updateWeeklyStats inserts when no existing row"
+    "name": "updateWeeklyStats grava em uma unica RPC, sem ler antes"
    },
    {
     "file": "src/hooks/__tests__/useGamification.coverage.test.tsx",
-    "name": "não regrava a semana quando a leitura das estatísticas falha"
+    "name": "media nao enviada vai como null para a RPC preservar o valor da semana"
    },
    {
     "file": "src/hooks/__tests__/useGamification.coverage.test.tsx",
-    "name": "avisa quando o update das estatísticas da semana falha"
-   },
-   {
-    "file": "src/hooks/__tests__/useGamification.coverage.test.tsx",
-    "name": "avisa quando o insert das estatísticas da semana falha"
+    "name": "avisa quando a RPC das estatísticas da semana falha"
    },
    {
     "file": "src/hooks/__tests__/useGamification.coverage.test.tsx",
@@ -81748,7 +81810,7 @@
     "args": "",
     "returns": "boolean",
     "lang": "plpgsql",
-    "src": "supabase/migrations/20261122250000_role_checks_honor_active_and_expiry.sql",
+    "src": "supabase/migrations/20261127210000_role_helpers_stable.sql",
     "security_definer": true,
     "search_path": true,
     "body": "BEGIN IF auth.uid() IS NULL THEN RETURN FALSE; END IF; RETURN EXISTS ( SELECT 1 FROM public.user_roles WHERE user_id = auth.uid() AND role IN ('admin', 'supervisor') AND coalesce(is_active, true) AND (expires_at IS NULL OR expires_at > now()) ); END;",
@@ -82336,7 +82398,7 @@
     "args": "",
     "returns": "boolean",
     "lang": "plpgsql",
-    "src": "supabase/migrations/20261122280000_is_admin_and_supervisor_honor_expiry.sql",
+    "src": "supabase/migrations/20261127210000_role_helpers_stable.sql",
     "security_definer": true,
     "search_path": true,
     "body": "BEGIN IF auth.uid() IS NULL THEN RETURN FALSE; END IF; RETURN EXISTS ( SELECT 1 FROM public.user_roles WHERE user_id = auth.uid() AND role = 'admin' AND coalesce(is_active, true) AND (expires_at IS NULL OR expires_at > now()) ); END;",
@@ -82363,7 +82425,7 @@
     "args": "",
     "returns": "boolean",
     "lang": "plpgsql",
-    "src": "supabase/migrations/20261122280000_is_admin_and_supervisor_honor_expiry.sql",
+    "src": "supabase/migrations/20261127210000_role_helpers_stable.sql",
     "security_definer": true,
     "search_path": true,
     "body": "BEGIN IF auth.uid() IS NULL THEN RETURN FALSE; END IF; RETURN EXISTS ( SELECT 1 FROM public.user_roles WHERE user_id = auth.uid() AND role IN ('admin', 'supervisor') AND coalesce(is_active, true) AND (expires_at IS NULL OR expires_at > now()) ); END;",
@@ -83009,6 +83071,25 @@
      "user_roles"
     ]
    },
+   "increment_weekly_stats": {
+    "args": "p_agent_id uuid, p_week_start date, p_calls integer default 0, p_duration_seconds integer default 0, p_badges integer default 0, p_points integer default 0, p_avg_satisfaction numeric default null, p_ …",
+    "returns": "public.agent_weekly_stats",
+    "lang": "plpgsql",
+    "src": "supabase/migrations/20261127260000_increment_weekly_stats_rpc_null_media_fix.sql",
+    "security_definer": true,
+    "search_path": true,
+    "body": "declare v_row public.agent_weekly_stats; begin if p_agent_id is null then raise exception 'increment_weekly_stats: p_agent_id obrigatorio'; end if; if p_week_start is null then raise exception 'increment_weekly_stats: p_week_start obrigatorio'; end if; if coalesce(p_calls, 0) < 0 or coalesce(p_duration_seconds, 0) < 0 or coalesce(p_badges, 0) < 0 or coalesce(p_points, 0) < 0 then raise exception 'increment_weekly_stats: incremento negativo nao e aceito'; end if; insert into public.agent_weekly_stats as s ( agent_id, week_start, total_calls, total_duration_seconds, badges_earned, points_earned, avg_satisfaction, avg_performance, updated_at ) values ( p_agent_id, p_week_start, coalesce(p_calls …",
+    "raises": [
+     "increment_weekly_stats: p_agent_id obrigatorio",
+     "increment_weekly_stats: p_week_start obrigatorio",
+     "increment_weekly_stats: incremento negativo nao e aceito"
+    ],
+    "tables": [
+     "agent_weekly_stats",
+     "set",
+     "v_row"
+    ]
+   },
    "graphql": {
     "args": "",
     "returns": "?",
@@ -83193,6 +83274,21 @@
     "function": "get_cron_health",
     "msg": "apenas administradores podem consultar a saude do cron",
     "src": "supabase/migrations/20261126170000_cron_watchdog.sql"
+   },
+   {
+    "function": "increment_weekly_stats",
+    "msg": "increment_weekly_stats: p_agent_id obrigatorio",
+    "src": "supabase/migrations/20261127260000_increment_weekly_stats_rpc_null_media_fix.sql"
+   },
+   {
+    "function": "increment_weekly_stats",
+    "msg": "increment_weekly_stats: p_week_start obrigatorio",
+    "src": "supabase/migrations/20261127260000_increment_weekly_stats_rpc_null_media_fix.sql"
+   },
+   {
+    "function": "increment_weekly_stats",
+    "msg": "increment_weekly_stats: incremento negativo nao e aceito",
+    "src": "supabase/migrations/20261127260000_increment_weekly_stats_rpc_null_media_fix.sql"
    }
   ],
   "db_generated": [],
@@ -88060,9 +88156,12 @@
    "supabase/migrations/20261126170000_cron_watchdog.sql",
    "supabase/migrations/20261126190000_cron_watchdog_privilegios.sql",
    "supabase/migrations/20261127200000_revoke_anon_role_helpers.sql",
+   "supabase/migrations/20261127250000_increment_weekly_stats_rpc.sql",
+   "supabase/tests/increment_weekly_stats_rpc_rls_test.sql",
    "supabase/tests/login_lockout_acl_rls_test.sql",
    "supabase/tests/redaction_log_rls_test.sql",
    "supabase/tests/revoke_anon_role_helpers_rls_test.sql",
+   "supabase/tests/role_helpers_stable_rls_test.sql",
    "supabase/tests/webhook_secrets_rls_test.sql"
   ],
   "security_definer_fns": [
@@ -88114,6 +88213,7 @@
    "handle_new_user",
    "has_permission",
    "has_role",
+   "increment_weekly_stats",
    "is_active_agent",
    "is_admin",
    "is_admin_or_supervisor",
@@ -90403,6 +90503,22 @@
     "objkind": "function",
     "roles": "service_role",
     "src": "supabase/migrations/20261126190000_cron_watchdog_privilegios.sql"
+   },
+   {
+    "kind": "revoke",
+    "privs": "execute",
+    "object": "increment_weekly_stats",
+    "objkind": "function",
+    "roles": "public, anon",
+    "src": "supabase/migrations/20261127250000_increment_weekly_stats_rpc.sql"
+   },
+   {
+    "kind": "grant",
+    "privs": "execute",
+    "object": "increment_weekly_stats",
+    "objkind": "function",
+    "roles": "authenticated, service_role",
+    "src": "supabase/migrations/20261127250000_increment_weekly_stats_rpc.sql"
    }
   ],
   "guards": [
@@ -102731,7 +102847,7 @@
   },
   "src/hooks/useGamification.ts": {
    "path": "src/hooks/useGamification.ts",
-   "lines": 328,
+   "lines": 300,
    "exports": [
     "interface Badge",
     "interface AgentBadge",
@@ -102763,18 +102879,6 @@
     {
      "table": "agent_badges",
      "op": "insert,select"
-    },
-    {
-     "table": "agent_weekly_stats",
-     "op": "select"
-    },
-    {
-     "table": "agent_weekly_stats",
-     "op": "update"
-    },
-    {
-     "table": "agent_weekly_stats",
-     "op": "insert"
     }
    ],
    "table_cols": {
@@ -102783,7 +102887,6 @@
     ],
     "agent_weekly_stats": [
      "agent_id",
-     "id",
      "week_start"
     ],
     "agents": [
@@ -102792,8 +102895,10 @@
      "name"
     ]
    },
+   "rpc": [
+    "increment_weekly_stats"
+   ],
    "errors": [
-    "Não foi possível atualizar as estatísticas da semana",
     "Não foi possível salvar as estatísticas da semana"
    ],
    "hooks": [
@@ -108618,19 +108723,18 @@
   },
   "src/hooks/__tests__/useGamification.coverage.test.tsx": {
    "path": "src/hooks/__tests__/useGamification.coverage.test.tsx",
-   "lines": 247,
+   "lines": 256,
    "is_test": true,
    "tests": [
     "useGamification",
     "loads data successfully and computes rankings",
     "runs without agentId (skips agent-scoped fetches)",
     "handles fetch errors on all tables",
-    "awards a badge and updates weekly stats (existing row)",
+    "awards a badge and soma os pontos pela RPC",
     "awardBadge handles duplicate (23505) and generic errors",
-    "updateWeeklyStats inserts when no existing row",
-    "não regrava a semana quando a leitura das estatísticas falha",
-    "avisa quando o update das estatísticas da semana falha",
-    "avisa quando o insert das estatísticas da semana falha",
+    "updateWeeklyStats grava em uma unica RPC, sem ler antes",
+    "media nao enviada vai como null para a RPC preservar o valor da semana",
+    "avisa quando a RPC das estatísticas da semana falha",
     "updateWeeklyStats returns early without agentId",
     "checkAndAwardBadges evaluates all requirement types",
     "exposes refetch"
@@ -110666,7 +110770,7 @@
   },
   "src/integrations/supabase/types.ts": {
    "path": "src/integrations/supabase/types.ts",
-   "lines": 8256,
+   "lines": 8281,
    "exports": [
     "type Json",
     "type Database",
@@ -126394,11 +126498,12 @@
   },
   "supabase/functions/whatsapp-inbound/idempotency.ts": {
    "path": "supabase/functions/whatsapp-inbound/idempotency.ts",
-   "lines": 61,
+   "lines": 72,
    "exports": [
     "interface StoredMessageRef",
     "interface ReplayResponse",
     "function detectReplay",
+    "function isDuplicateMessageError",
     "function normalizePhone"
    ],
    "rule_comments": [
@@ -126408,11 +126513,11 @@
   },
   "supabase/functions/whatsapp-inbound/idempotency_test.ts": {
    "path": "supabase/functions/whatsapp-inbound/idempotency_test.ts",
-   "lines": 44
+   "lines": 60
   },
   "supabase/functions/whatsapp-inbound/index.ts": {
    "path": "supabase/functions/whatsapp-inbound/index.ts",
-   "lines": 186,
+   "lines": 207,
    "tables": [
     {
      "table": "conversation_messages",
@@ -126449,6 +126554,10 @@
     {
      "table": "conversation_messages",
      "op": "insert"
+    },
+    {
+     "table": "conversation_messages",
+     "op": "select"
     }
    ],
    "table_cols": {
@@ -127795,6 +127904,23 @@
    "lines": 59,
    "uses_service_role": true
   },
+  "supabase/migrations/20261127210000_role_helpers_stable.sql": {
+   "path": "supabase/migrations/20261127210000_role_helpers_stable.sql",
+   "lines": 73
+  },
+  "supabase/migrations/20261127230000_unique_conversation_message_id.sql": {
+   "path": "supabase/migrations/20261127230000_unique_conversation_message_id.sql",
+   "lines": 42
+  },
+  "supabase/migrations/20261127250000_increment_weekly_stats_rpc.sql": {
+   "path": "supabase/migrations/20261127250000_increment_weekly_stats_rpc.sql",
+   "lines": 74,
+   "uses_service_role": true
+  },
+  "supabase/migrations/20261127260000_increment_weekly_stats_rpc_null_media_fix.sql": {
+   "path": "supabase/migrations/20261127260000_increment_weekly_stats_rpc_null_media_fix.sql",
+   "lines": 68
+  },
   "supabase/tests/add_missing_fks_rls_test.sql": {
    "path": "supabase/tests/add_missing_fks_rls_test.sql",
    "lines": 144,
@@ -127866,6 +127992,12 @@
     "and created_at > now() - interval '1 hour';"
    ]
   },
+  "supabase/tests/increment_weekly_stats_rpc_rls_test.sql": {
+   "path": "supabase/tests/increment_weekly_stats_rpc_rls_test.sql",
+   "lines": 186,
+   "is_test": true,
+   "uses_service_role": true
+  },
   "supabase/tests/internal_tables_rls_test.sql": {
    "path": "supabase/tests/internal_tables_rls_test.sql",
    "lines": 60,
@@ -127897,6 +128029,19 @@
    "lines": 146,
    "is_test": true
   },
+  "supabase/tests/probe_065_101_rls_test.sql": {
+   "path": "supabase/tests/probe_065_101_rls_test.sql",
+   "lines": 112,
+   "is_test": true,
+   "temporal": [
+    "count(*) filter (where created_at > now() - interval '1 day') as d1,",
+    "count(*) filter (where created_at > now() - interval '1 hour') as h1,",
+    "count(*) filter (where created_at > now() - interval '30 days') as d30,",
+    "count(*) filter (where created_at > now() - interval '7 days') as d7,",
+    "into r from public.call_sessions where created_at > now() - interval '7 days';",
+    "where created_at > now() - interval '7 days'"
+   ]
+  },
   "supabase/tests/probe_132_lgpd_entity_versions_rls_test.sql": {
    "path": "supabase/tests/probe_132_lgpd_entity_versions_rls_test.sql",
    "lines": 177,
@@ -127923,9 +128068,20 @@
    "is_test": true,
    "uses_service_role": true
   },
+  "supabase/tests/role_helpers_stable_rls_test.sql": {
+   "path": "supabase/tests/role_helpers_stable_rls_test.sql",
+   "lines": 248,
+   "is_test": true,
+   "uses_service_role": true
+  },
   "supabase/tests/role_source_of_truth_test.sql": {
    "path": "supabase/tests/role_source_of_truth_test.sql",
    "lines": 72,
+   "is_test": true
+  },
+  "supabase/tests/unique_conversation_message_id_rls_test.sql": {
+   "path": "supabase/tests/unique_conversation_message_id_rls_test.sql",
+   "lines": 114,
    "is_test": true
   },
   "supabase/tests/user_preferences_rls_test.sql": {
@@ -128113,10 +128269,54 @@
   }
  },
  "git": {
-  "sha": "082fc1376df91b587524d9e5e167ca88a2a93a41",
+  "sha": "b85ce4934df8acbd5f9a9c99db59675cf7c5d1ef",
   "branch": "main",
   "remote": "https://github.com/adm01-debug/Hello_V3",
   "commits": [
+   {
+    "sha": "b85ce49",
+    "date": "2026-11-26",
+    "author": "adm01-debug",
+    "subject": "feat: somar o placar semanal da gamificacao no banco (etapa 126) (#366)",
+    "files": [
+     "docs/agentes/banco.md",
+     "docs/qa/05-PROGRESSO.md",
+     "src/hooks/__tests__/useGamification.coverage.test.tsx",
+     "src/hooks/useGamification.ts",
+     "src/integrations/supabase/types.ts",
+     "supabase/migrations/20261127250000_increment_weekly_stats_rpc.sql",
+     "supabase/migrations/20261127260000_increment_weekly_stats_rpc_null_media_fix.sql",
+     "supabase/tests/increment_weekly_stats_rpc_rls_test.sql"
+    ]
+   },
+   {
+    "sha": "83219b7",
+    "date": "2026-11-26",
+    "author": "adm01-debug",
+    "subject": "fix: índice único parcial do message_id de WhatsApp e reentrega como 200 (etapa 017) (#364)",
+    "files": [
+     "deno.lock",
+     "docs/qa/05-PROGRESSO.md",
+     "supabase/functions/whatsapp-inbound/deno.lock",
+     "supabase/functions/whatsapp-inbound/idempotency.ts",
+     "supabase/functions/whatsapp-inbound/idempotency_test.ts",
+     "supabase/functions/whatsapp-inbound/index.ts",
+     "supabase/migrations/20261127230000_unique_conversation_message_id.sql",
+     "supabase/tests/unique_conversation_message_id_rls_test.sql"
+    ]
+   },
+   {
+    "sha": "91bfc8a",
+    "date": "2026-11-26",
+    "author": "adm01-debug",
+    "subject": "fix(db): helpers de papel como STABLE (etapa 101) para as 274 policies (#362)",
+    "files": [
+     "docs/qa/05-PROGRESSO.md",
+     "supabase/migrations/20261127210000_role_helpers_stable.sql",
+     "supabase/tests/probe_065_101_rls_test.sql",
+     "supabase/tests/role_helpers_stable_rls_test.sql"
+    ]
+   },
    {
     "sha": "082fc13",
     "date": "2026-11-26",
@@ -128479,52 +128679,12 @@
      "docs/pendencias/_verificado-banco.md",
      "supabase/tests/internal_tables_rls_test.sql"
     ]
-   },
-   {
-    "sha": "e34a05c",
-    "date": "2026-11-25",
-    "author": "adm01-debug",
-    "subject": "fix: renumerar migration duplicada que quebrava a Supabase Preview",
-    "files": [
-     "supabase/migrations/20261125220000_recordings_retention_cron.sql"
-    ]
-   },
-   {
-    "sha": "1d3fbd7",
-    "date": "2026-11-25",
-    "author": "adm01-debug",
-    "subject": "fix: bloquear discagem quando DNC/horario nao puder ser verificado (etapa 035)",
-    "files": [
-     "docs/agentes/telefonia-voip.md",
-     "docs/qa/05-PROGRESSO.md",
-     "src/hooks/__tests__/useDNCCompliance.coverage.test.tsx",
-     "src/hooks/__tests__/useMultiChannelCall.compliance.test.tsx",
-     "src/hooks/__tests__/usePredictiveDialer.coverage.test.tsx",
-     "src/hooks/useDNCCompliance.ts",
-     "src/hooks/useMultiChannelCall.ts",
-     "src/hooks/usePredictiveDialer.ts",
-     "supabase/migrations/20261125190000_calling_hours_fail_closed.sql",
-     "supabase/tests/calling_hours_fail_closed_rls_test.sql"
-    ]
-   },
-   {
-    "sha": "4ec7dd5",
-    "date": "2026-11-25",
-    "author": "adm01-debug",
-    "subject": "fix: painel de chamadas ativas avisa quando a leitura falha (A-218) (#332)",
-    "files": [
-     "docs/qa/05-PROGRESSO.md",
-     "src/components/dashboard/ActiveCallsRealtime.tsx",
-     "src/components/dashboard/__tests__/ActiveCallsRealtime.erroLeitura.test.tsx",
-     "src/hooks/__tests__/useActiveCallsRealtime.coverage.test.tsx",
-     "src/hooks/useActiveCallsRealtime.ts"
-    ]
    }
   ],
   "hot_files": [
    [
     "docs/qa/05-PROGRESSO.md",
-    20
+    21
    ],
    [
     "docs/qa/03-ACHADOS.md",
@@ -128532,7 +128692,11 @@
    ],
    [
     "src/integrations/supabase/types.ts",
-    4
+    5
+   ],
+   [
+    "docs/agentes/banco.md",
+    2
    ],
    [
     "src/components/layout/AppSidebar.tsx",
@@ -128544,14 +128708,6 @@
    ],
    [
     "src/routes/protectedRoutes.tsx",
-    2
-   ],
-   [
-    "src/hooks/__tests__/useDNCCompliance.coverage.test.tsx",
-    2
-   ],
-   [
-    "src/hooks/useDNCCompliance.ts",
     2
    ],
    [
@@ -128567,39 +128723,43 @@
     2
    ],
    [
-    "supabase/migrations/20261127200000_revoke_anon_role_helpers.sql",
+    "src/hooks/__tests__/useGamification.coverage.test.tsx",
     1
    ],
    [
-    "supabase/tests/revoke_anon_role_helpers_rls_test.sql",
+    "src/hooks/useGamification.ts",
     1
    ],
    [
-    "supabase/migrations/20261127180000_policies_to_authenticated_restante.sql",
+    "supabase/migrations/20261127250000_increment_weekly_stats_rpc.sql",
     1
    ],
    [
-    "supabase/tests/policies_to_authenticated_restante_rls_test.sql",
+    "supabase/migrations/20261127260000_increment_weekly_stats_rpc_null_media_fix.sql",
     1
    ],
    [
-    "supabase/migrations/20261127170000_add_missing_fks.sql",
+    "supabase/tests/increment_weekly_stats_rpc_rls_test.sql",
     1
    ],
    [
-    "supabase/tests/add_missing_fks_rls_test.sql",
+    "deno.lock",
     1
    ],
    [
-    "supabase/migrations/20261127160000_policies_to_authenticated_lote1.sql",
+    "supabase/functions/whatsapp-inbound/deno.lock",
     1
    ],
    [
-    "supabase/tests/policies_to_authenticated_lote1_rls_test.sql",
+    "supabase/functions/whatsapp-inbound/idempotency.ts",
     1
    ],
    [
-    "supabase/migrations/20261127150000_learning_completions_update_policy.sql",
+    "supabase/functions/whatsapp-inbound/idempotency_test.ts",
+    1
+   ],
+   [
+    "supabase/functions/whatsapp-inbound/index.ts",
     1
    ]
   ]

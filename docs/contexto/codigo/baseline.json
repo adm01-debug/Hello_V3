@@ -2,11 +2,26 @@
  "aviso": "GERADO AUTOMATICAMENTE por scripts/ai-context/gerar.mjs — não editar à mão; será sobrescrito.",
  "format_version": 2,
  "git": {
-  "commit": "082fc1376df91b587524d9e5e167ca88a2a93a41",
+  "commit": "b85ce4934df8acbd5f9a9c99db59675cf7c5d1ef",
   "branch": "main",
-  "data_commit": "2026-11-26T16:59:48-03:00",
+  "data_commit": "2026-11-26T17:07:40-03:00",
   "remote": "https://github.com/adm01-debug/Hello_V3",
   "ultimos_commits": [
+   {
+    "sha": "b85ce49",
+    "data": "2026-11-26",
+    "assunto": "feat: somar o placar semanal da gamificacao no banco (etapa 126) (#366)"
+   },
+   {
+    "sha": "83219b7",
+    "data": "2026-11-26",
+    "assunto": "fix: índice único parcial do message_id de WhatsApp e reentrega como 200 (etapa 017) (#364)"
+   },
+   {
+    "sha": "91bfc8a",
+    "data": "2026-11-26",
+    "assunto": "fix(db): helpers de papel como STABLE (etapa 101) para as 274 policies (#362)"
+   },
    {
     "sha": "082fc13",
     "data": "2026-11-26",
@@ -116,32 +131,17 @@
     "sha": "045b0fb",
     "data": "2026-11-25",
     "assunto": "fix: tirar host fixo e chave anon do cron e do trigger de scorecard (etapa 040) (#340)"
-   },
-   {
-    "sha": "f5d665d",
-    "data": "2026-11-25",
-    "assunto": "test: provar em producao que o bloqueio geografico grava (etapa 043) (#339)"
-   },
-   {
-    "sha": "ff0f86e",
-    "data": "2026-11-25",
-    "assunto": "feat: edge login-attempt + gate de ACL e workflow de deploy de edges (etapa 002, parte 1/2) (#337)"
-   },
-   {
-    "sha": "ab5b810",
-    "data": "2026-11-25",
-    "assunto": "fix: policies de escrita em rate_limit_logs e conferencia do resultado real (etapa 029) (#338)"
    }
   ],
-  "arquivos_mudados_7d": 1923,
+  "arquivos_mudados_7d": 1931,
   "pastas_mais_mudadas_30d": [
    {
     "pasta": "src/hooks/__tests__",
-    "mudancas": 295
+    "mudancas": 296
    },
    {
     "pasta": "docs/qa/05-PROGRESSO.md",
-    "mudancas": 158
+    "mudancas": 161
    },
    {
     "pasta": "src/components/calls",
@@ -160,16 +160,16 @@
     "mudancas": 53
    },
    {
-    "pasta": "src/pages/admin",
-    "mudancas": 38
-   },
-   {
     "pasta": "src/components/compliance",
     "mudancas": 37
    },
    {
     "pasta": "src/components/layout",
     "mudancas": 37
+   },
+   {
+    "pasta": "src/pages/admin",
+    "mudancas": 35
    },
    {
     "pasta": "src/pages/__tests__",
@@ -199,7 +199,7 @@
   "arquivos_mais_mudados_90d": [
    {
     "arquivo": "docs/qa/05-PROGRESSO.md",
-    "mudancas": 158
+    "mudancas": 161
    },
    {
     "arquivo": "docs/estado/funcionalidades-planejadas.md",
@@ -234,10 +234,6 @@
     "mudancas": 9
    },
    {
-    "arquivo": "src/routes/protectedRoutes.tsx",
-    "mudancas": 9
-   },
-   {
     "arquivo": "supabase/functions/data-lake-flush/index.ts",
     "mudancas": 9
    },
@@ -254,7 +250,15 @@
     "mudancas": 8
    },
    {
+    "arquivo": "src/integrations/supabase/types.ts",
+    "mudancas": 8
+   },
+   {
     "arquivo": "src/pages/PhoneDialer.tsx",
+    "mudancas": 8
+   },
+   {
+    "arquivo": "src/routes/protectedRoutes.tsx",
     "mudancas": 8
    },
    {
@@ -271,10 +275,6 @@
    },
    {
     "arquivo": "src/hooks/useQueueMetrics.ts",
-    "mudancas": 7
-   },
-   {
-    "arquivo": "src/integrations/supabase/types.ts",
     "mudancas": 7
    },
    {
@@ -310,9 +310,9 @@
   ]
  },
  "contagens": {
-  "arquivos_total": 1831,
+  "arquivos_total": 1840,
   "arquivos_codigo": 1385,
-  "linhas_codigo": 184899,
+  "linhas_codigo": 184953,
   "rotas": 108,
   "rotas_http_backend": 11,
   "vistas_por_id": 0,
@@ -322,9 +322,9 @@
   "hooks": 201,
   "edge_functions": 99,
   "tabelas": 172,
-  "migrations": 262,
+  "migrations": 266,
   "cron_jobs": 13,
-  "testes": 453,
+  "testes": 457,
   "workflows": 5,
   "scripts": 36,
   "docs_md": 121
@@ -492,11 +492,11 @@
   },
   "src/hooks": {
    "arquivos": 355,
-   "linhas": 45413
+   "linhas": 45394
   },
   "src/integrations": {
    "arquivos": 3,
-   "linhas": 8319
+   "linhas": 8344
   },
   "src/lib": {
    "arquivos": 184,
@@ -520,7 +520,7 @@
   },
   "supabase/functions": {
    "arquivos": 220,
-   "linhas": 24576
+   "linhas": 24624
   },
   "tailwind.config.ts": {
    "arquivos": 1,
@@ -542,7 +542,7 @@
  "maiores_arquivos": [
   {
    "arquivo": "src/integrations/supabase/types.ts",
-   "linhas": 8256
+   "linhas": 8281
   },
   {
    "arquivo": "scripts/regras_negocio/generate.py",
@@ -664,7 +664,7 @@
   },
   {
    "arquivo": "src/hooks/__tests__/useGamification.coverage.test.tsx",
-   "linha": 137,
+   "linha": 153,
    "tipo": "XXX",
    "texto": "', message: 'fail' } }] });"
   },

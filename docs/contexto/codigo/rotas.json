@@ -2209,7 +2209,9 @@
     "agents",
     "badges"
    ],
-   "rpcs": [],
+   "rpcs": [
+    "increment_weekly_stats"
+   ],
    "edges": [],
    "canais_realtime": [],
    "flags": [],
@@ -3564,7 +3566,9 @@
     "call_summaries",
     "notifications"
    ],
-   "rpcs": [],
+   "rpcs": [
+    "increment_weekly_stats"
+   ],
    "edges": [],
    "canais_realtime": [
     "agents-status"

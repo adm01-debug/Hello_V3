@@ -1501,7 +1501,9 @@
     "agents",
     "badges"
    ],
-   "rpcs": [],
+   "rpcs": [
+    "increment_weekly_stats"
+   ],
    "buckets": [],
    "canais_realtime": [
     "agents-status",
@@ -2106,6 +2108,7 @@
     "get_database_health_snapshot",
     "get_queue_stats",
     "get_top_slow_queries",
+    "increment_weekly_stats",
     "log_audit_event",
     "log_index_drop_copy",
     "match_kb_articles",
@@ -3565,7 +3568,7 @@
    "modulo": "hooks",
    "arquivos": 175,
    "testes": 0,
-   "linhas": 22672,
+   "linhas": 22644,
    "itens_menu": [],
    "telas": [],
    "rotas_http": [],
@@ -4215,6 +4218,7 @@
     "get_call_volume_stats",
     "get_dashboard_stats",
     "get_queue_stats",
+    "increment_weekly_stats",
     "log_audit_event",
     "match_kb_articles",
     "record_trunk_usage"
@@ -4481,6 +4485,7 @@
      "get_call_volume_stats",
      "get_dashboard_stats",
      "get_queue_stats",
+     "increment_weekly_stats",
      "log_audit_event",
      "match_kb_articles",
      "record_trunk_usage"
@@ -4778,7 +4783,7 @@
    "modulo": "integrations/supabase",
    "arquivos": 2,
    "testes": 0,
-   "linhas": 8276,
+   "linhas": 8301,
    "itens_menu": [],
    "telas": [],
    "rotas_http": [],
@@ -5098,6 +5103,7 @@
     "get_call_volume_stats",
     "get_dashboard_stats",
     "get_queue_stats",
+    "increment_weekly_stats",
     "log_audit_event",
     "match_kb_articles",
     "record_trunk_usage"
@@ -6376,6 +6382,7 @@
     "get_call_volume_stats",
     "get_dashboard_stats",
     "get_queue_stats",
+    "increment_weekly_stats",
     "log_audit_event",
     "match_kb_articles",
     "record_trunk_usage"
@@ -7423,6 +7430,7 @@
     "get_database_health_snapshot",
     "get_queue_stats",
     "get_top_slow_queries",
+    "increment_weekly_stats",
     "log_audit_event",
     "log_index_drop_copy",
     "match_kb_articles",

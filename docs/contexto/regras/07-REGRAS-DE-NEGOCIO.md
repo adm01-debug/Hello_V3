@@ -1,6 +1,6 @@
 # 07 · REGRAS DE NEGÓCIO
 
-> Gerado automaticamente por AI Context Sync v1.3.2 · commit `082fc1376d` · branch `main` · 2026-11-26 20:02 UTC
+> Gerado automaticamente por AI Context Sync v1.3.2 · commit `b85ce4934d` · branch `main` · 2026-11-26 20:15 UTC
 > Não edite à mão — regras humanas vão em `manual/`.
 
 ## A. Regras escritas por humanos (`manual/` — prioridade máxima, nunca sobrescrito)
@@ -780,6 +780,9 @@ Erros lançados por funções SQL (`RAISE EXCEPTION` = regra de negócio no banc
 | `enforce_optimistic_lock` | OPTIMISTIC_LOCK_CONFLICT | `supabase/migrations/20261122210000_optimistic_lock_audit_survives_rollback.sql` |
 | `edge_function_url` | segredo edge_functions_base_url ausente no Vault | `supabase/migrations/20261126100000_edge_function_urls_from_vault.sql` |
 | `get_cron_health` | apenas administradores podem consultar a saude do cron | `supabase/migrations/20261126170000_cron_watchdog.sql` |
+| `increment_weekly_stats` | increment_weekly_stats: p_agent_id obrigatorio | `supabase/migrations/20261127260000_increment_weekly_stats_rpc_null_media_fix.sql` |
+| `increment_weekly_stats` | increment_weekly_stats: p_week_start obrigatorio | `supabase/migrations/20261127260000_increment_weekly_stats_rpc_null_media_fix.sql` |
+| `increment_weekly_stats` | increment_weekly_stats: incremento negativo nao e aceito | `supabase/migrations/20261127260000_increment_weekly_stats_rpc_null_media_fix.sql` |
 
 ## E. Estados, máquinas de estado e transições
 
@@ -2584,7 +2587,6 @@ _nenhum item encontrado_
 | Sessão expirada | `src/hooks/useDialerFavorites.ts` |
 | Falha ao atualizar status | `src/hooks/useExtensionsAdmin.ts` |
 | Nada para exportar | `src/hooks/useExtensionsAdmin.ts` |
-| Não foi possível atualizar as estatísticas da semana | `src/hooks/useGamification.ts` |
 | Não foi possível salvar as estatísticas da semana | `src/hooks/useGamification.ts` |
 | Erro ao atualizar configurações | `src/hooks/useGeoBlocking.ts` |
 | Erro ao remover país | `src/hooks/useGeoBlocking.ts` |
@@ -2646,7 +2648,8 @@ _nenhum item encontrado_
 | Erro ao limpar logs | `src/hooks/useRateLimitData.ts` |
 | Erro ao resolver alerta | `src/hooks/useRateLimitData.ts` |
 | Nada foi alterado para ${ipAddress} | `src/hooks/useRateLimitData.ts` |
-| … +299 linhas — lista completa em `context.json` | |
+| Novo alerta de rate limit! | `src/hooks/useRateLimitData.ts` |
+| … +298 linhas — lista completa em `context.json` | |
 
 ## J. Controle de acesso no código (checagens de perfil/permissão)
 
@@ -2697,7 +2700,7 @@ _nenhum item encontrado_
 | `admin` | `supabase/functions/data-lake-flush/index.ts` |
 | `admin` | `supabase/migrations/20261123000200_fix_has_role_oracle_and_debug_tables.sql` |
 
-## K. Testes como especificação (3794 testes em 420 arquivos — nomes completos em `context.json`)
+## K. Testes como especificação (3793 testes em 420 arquivos — nomes completos em `context.json`)
 
 | Arquivo | Testes | Exemplos do que o sistema DEVE fazer |
 |---|---|---|
@@ -2764,10 +2767,10 @@ _nenhum item encontrado_
 | `src/hooks/__tests__/useCadences.crud.test.tsx` | 13 | useCadences: edicao e exclusao · updateCadence envia o patch junto com a version atual e recarrega · updateCadence alterna is_active mantendo a version do registro · updateCadence trata conflito de version recarregando a lista … |
 | `src/hooks/__tests__/useCallSession.coverage.test.tsx` | 13 | useCallSession · starts a session successfully · returns null on start error · addTranscript/addAnalysis no-op without session … |
 | `src/hooks/__tests__/useDashboardData.coverage.test.tsx` | 13 | useDashboardData · useDashboardStats success · useDashboardStats error · useAgentsListData success returns data … |
-| `src/hooks/__tests__/useGamification.coverage.test.tsx` | 13 | useGamification · loads data successfully and computes rankings · runs without agentId (skips agent-scoped fetches) · handles fetch errors on all tables … |
 | `src/hooks/__tests__/useSurveys.coverage.test.tsx` | 13 | useSurveys · carrega respostas e calcula nps · npsScore null quando sem scores válidos · trata erro de carregamento … |
 | `src/lib/__tests__/executive-dashboard-utils.test.ts` | 13 | getPeriodLabel · returns correct label for today · returns correct label for week · returns correct label for month … |
 | `src/lib/__tests__/voipRecommendationCoaching.coverage.test.ts` | 13 | voipRecommendationCoaching · schedules a coaching check with mosBefore captured · does not schedule duplicates for the same recommendation · captures null mosBefore when supabase returns empty data … |
+| `src/hooks/__tests__/useGamification.coverage.test.tsx` | 12 | useGamification · loads data successfully and computes rankings · runs without agentId (skips agent-scoped fetches) · handles fetch errors on all tables … |
 | `src/hooks/__tests__/useWebhookSecrets.test.tsx` | 12 | useWebhookSecrets · lista os segredos ordenados por provedor · cadastra provedor normalizado e invalida o cache · distingue rotação de cadastro na mensagem de sucesso … |
 | `src/lib/__tests__/guard-edge-numeric.test.ts` | 12 | guard-edge-numeric — Regra 1 (z.number sem .finite) · detecta z.number() em qualquer disposição de whitespace · aceita z.number().finite() com whitespace variável · ignora z.number() dentro de comentários e strings … |
 | `src/lib/__tests__/meeting-summary-utils.test.ts` | 12 | isValidActionItem · aceita item válido · rejeita prioridade inválida · rejeita sem descrição … |

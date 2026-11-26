@@ -5,7 +5,7 @@
   "vitest",
   "playwright"
  ],
- "total": 453,
+ "total": 457,
  "por_tipo": {
   "contrato": 1,
   "e2e": 16,
@@ -1227,11 +1227,11 @@
   {
    "arquivo": "src/hooks/__tests__/useGamification.coverage.test.tsx",
    "tipo": "unit",
-   "linhas": 247,
+   "linhas": 256,
    "testa": [
     "src/hooks/useGamification.ts"
    ],
-   "casos": 12
+   "casos": 11
   },
   {
    "arquivo": "src/hooks/__tests__/useGeoBlocking.coverage.test.tsx",
@@ -3948,17 +3948,21 @@
   "supabase/tests/geo_tables_retroativo_rls_test.sql",
   "supabase/tests/geo_write_policies_rls_test.sql",
   "supabase/tests/goals_achieved_notification_rls_test.sql",
+  "supabase/tests/increment_weekly_stats_rpc_rls_test.sql",
   "supabase/tests/internal_tables_rls_test.sql",
   "supabase/tests/kb_article_history_rls_test.sql",
   "supabase/tests/learning_completions_update_rls_test.sql",
   "supabase/tests/login_lockout_acl_rls_test.sql",
   "supabase/tests/policies_to_authenticated_lote1_rls_test.sql",
   "supabase/tests/policies_to_authenticated_restante_rls_test.sql",
+  "supabase/tests/probe_065_101_rls_test.sql",
   "supabase/tests/probe_132_lgpd_entity_versions_rls_test.sql",
   "supabase/tests/rate_limit_logs_write_policies_rls_test.sql",
   "supabase/tests/redaction_log_rls_test.sql",
   "supabase/tests/revoke_anon_role_helpers_rls_test.sql",
+  "supabase/tests/role_helpers_stable_rls_test.sql",
   "supabase/tests/role_source_of_truth_test.sql",
+  "supabase/tests/unique_conversation_message_id_rls_test.sql",
   "supabase/tests/user_preferences_rls_test.sql",
   "supabase/tests/webhook_secrets_rls_test.sql"
  ],

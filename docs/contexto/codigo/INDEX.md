@@ -1,7 +1,7 @@
 # Contexto do projeto para agentes de IA
 
 GERADO AUTOMATICAMENTE por scripts/ai-context/gerar.mjs — não editar à mão; será sobrescrito.
-Publicado em `docs/contexto/codigo/` na branch `contexto` (gerada, nunca abra PR dela) a cada push em `main` e a cada 10 minutos pelo workflow `contexto.yml`; índice único das três fontes em `docs/contexto/00-INDEX.md`. Gere local com `node scripts/ai-context/gerar.mjs`. Commit-base: `082fc1376df91b587524d9e5e167ca88a2a93a41` (2026-11-26T16:59:48-03:00).
+Publicado em `docs/contexto/codigo/` na branch `contexto` (gerada, nunca abra PR dela) a cada push em `main` e a cada 10 minutos pelo workflow `contexto.yml`; índice único das três fontes em `docs/contexto/00-INDEX.md`. Gere local com `node scripts/ai-context/gerar.mjs`. Commit-base: `b85ce4934df8acbd5f9a9c99db59675cf7c5d1ef` (2026-11-26T17:07:40-03:00).
 
 ## Como usar (leia antes de planejar ou executar qualquer tarefa)
 1. **Tela/rota/menu** → `rotas.json` (url/vista/menu → arquivo → hooks → tabelas → edges; `rotas_http_backend` para APIs) e `modulos.json` (módulo inteiro + dependências entre módulos).
@@ -14,7 +14,7 @@ Publicado em `docs/contexto/codigo/` na branch `contexto` (gerada, nunca abra PR
 Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua tarefa; não carregue tudo.
 
 ## Stack
-- linguagens: TypeScript (1350), SQL (288), Markdown (121), JavaScript (31), JSON (16), Python (5), YAML (5), Shell (2)
+- linguagens: TypeScript (1350), SQL (296), Markdown (121), JavaScript (31), JSON (16), Python (5), YAML (5), Shell (2)
 - linguagem_principal: TypeScript
 - framework: React
 - backend_http: n/d
@@ -34,9 +34,9 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 ## Números
 | item | qtd |
 |---|---|
-| arquivos_total | 1831 |
+| arquivos_total | 1840 |
 | arquivos_codigo | 1385 |
-| linhas_codigo | 184899 |
+| linhas_codigo | 184953 |
 | rotas | 108 |
 | rotas_http_backend | 11 |
 | vistas_por_id | 0 |
@@ -46,9 +46,9 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 | hooks | 201 |
 | edge_functions | 99 |
 | tabelas | 172 |
-| migrations | 262 |
+| migrations | 266 |
 | cron_jobs | 13 |
-| testes | 453 |
+| testes | 457 |
 | workflows | 5 |
 | scripts | 36 |
 | docs_md | 121 |
@@ -375,13 +375,13 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 - possiveis_segredos_no_codigo: 3 — ex.: src/lib/__tests__/security-advanced.test.ts:203, src/lib/__tests__/security-advanced.test.ts:208, src/lib/__tests__/security-advanced.test.ts:213
 
 ## Grafo de código (graphify)
-- 10639 nós · 28074 arestas · 834 comunidades · grafo do commit `082fc137`
-- comunidades maiores: vitest (304), client.ts (303), card.tsx (275), 5. Em uso por rota (210), react (196), lucide-react (175), Rotas protegidas sem `roles:` (etapa 090) (143), Onda 6 — Performance (236–258, 23 etapas) (141), badge.tsx (133), buildCorsHeaders (133), button.tsx (119), getCorrelationId (113)
+- 10659 nós · 28092 arestas · 841 comunidades · grafo do commit `b85ce493`
+- comunidades maiores: card.tsx (315), cn (277), client.ts (211), react (203), vitest (201), traceHeaders (175), usePageTitle (151), gerar.mjs (130), CallDetailDialog.tsx (116), buildCorsHeaders (112), @tanstack/react-query (111), react-router-dom (106)
 - símbolos mais chamados: cn() (src/lib/utils.ts), usePageTitle() (src/hooks/usePageTitle.ts), safeFormatDatePtBR() (src/lib/safe-date.ts), useAuthContext() (src/contexts/AuthContext.tsx), q() (scripts/supabase_snapshot/snapshot.py), safeFormatDistanceToNow() (src/lib/safe-date.ts), traceHeaders() (src/lib/tracing.ts), withTrace() (src/lib/tracing.ts), safeToLocaleString() (src/lib/safe-date.ts), buildCorsHeaders() (supabase/functions/_shared/cors.ts), .collect() (scripts/supabase_snapshot/test_snapshot.py), formatDuration() (src/lib/utils.ts)
 - consulta local: `graphify query "<pergunta>"`, `graphify path "<A>" "<B>"`, `graphify explain "<X>"`
 
 ## Hotspots (arquivos mais alterados, 90 dias)
-- docs/qa/05-PROGRESSO.md (158)
+- docs/qa/05-PROGRESSO.md (161)
 - docs/estado/funcionalidades-planejadas.md (30)
 - src/components/calls/UnifiedSoftphone.tsx (13)
 - src/components/layout/AppSidebar.tsx (13)
@@ -390,11 +390,11 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 - docs/audits/pendencias-2026-07.md (10)
 - src/components/calls/ActiveCallBar.tsx (10)
 - .github/workflows/migrations.yml (9)
-- src/routes/protectedRoutes.tsx (9)
 - supabase/functions/data-lake-flush/index.ts (9)
 - docs/agentes/mapa-repo.md (8)
 - docs/qa/03-ACHADOS.md (8)
 - src/hooks/useAgentRanking.ts (8)
+- src/integrations/supabase/types.ts (8)
 - src/pages/PhoneDialer.tsx (8)
 
 ## Workflows
@@ -436,6 +436,9 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 
 
 ## Últimos commits
+- 2026-11-26 `b85ce49` feat: somar o placar semanal da gamificacao no banco (etapa 126) (#366)
+- 2026-11-26 `83219b7` fix: índice único parcial do message_id de WhatsApp e reentrega como 200 (etapa 017) (#364)
+- 2026-11-26 `91bfc8a` fix(db): helpers de papel como STABLE (etapa 101) para as 274 policies (#362)
 - 2026-11-26 `082fc13` fix: revogar de anon o EXECUTE dos helpers de papel (etapa 146) (#361)
 - 2026-11-26 `077071b` fix: restringir a authenticated as policies de public com predicado de usuario (etapas 143 e 144) (#359)
 - 2026-11-26 `8f07a35` fix: chaves estrangeiras nas colunas com destino unico (etapa 128) (#358)
@@ -448,9 +451,6 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 - 2026-11-26 `0ecc7a7` fix: meta atingida vira notificacao do usuario, nao alerta de chamada (etapa 127) (#367)
 - 2026-11-26 `36baa4a` feat: tela de violacoes de SLA com atraso e filtros (etapa 179) (#352)
 - 2026-11-26 `5c4337b` feat: registra os erros do navegador em client_errors com tela admin (etapa 230) (#351)
-- 2026-11-26 `31ef778` feat: edicao e trilha de auditoria na lista DNC (etapa 175) (#350)
-- 2026-11-26 `11e8d43` feat: serie historica do pipeline aberto com tela e job diario (#349)
-- 2026-11-26 `a1725d6` feat: historico de versoes dos artigos da base de conhecimento (#348)
 
 ## Arquivos deste diretório
 - `docs/contexto/codigo/rotas.json`

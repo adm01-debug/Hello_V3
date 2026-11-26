@@ -3565,7 +3565,7 @@
    "nome": "whatsapp-inbound",
    "entrada": "supabase/functions/whatsapp-inbound/index.ts",
    "arquivos": 5,
-   "linhas": 425,
+   "linhas": 473,
    "verify_jwt": true,
    "metodos": [
     "OPTIONS",

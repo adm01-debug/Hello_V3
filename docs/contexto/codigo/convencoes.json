@@ -59,11 +59,11 @@
  "commits": {
   "convencao": "conventional commits (observado)",
   "exemplos": [
+   "feat: somar o placar semanal da gamificacao no banco (etapa 126) (#366)",
+   "fix: índice único parcial do message_id de WhatsApp e reentrega como 200 (etapa 017) (#364)",
+   "fix(db): helpers de papel como STABLE (etapa 101) para as 274 policies (#362)",
    "fix: revogar de anon o EXECUTE dos helpers de papel (etapa 146) (#361)",
-   "fix: restringir a authenticated as policies de public com predicado de usuario (etapas 143 e 144) (#359)",
-   "fix: chaves estrangeiras nas colunas com destino unico (etapa 128) (#358)",
-   "fix: policies de 5 tabelas sensiveis restritas a authenticated (etapa 052) (#357)",
-   "fix: policy de UPDATE em learning_completions (upsert do modulo nao atualizava a nota) (#356)"
+   "fix: restringir a authenticated as policies de public com predicado de usuario (etapas 143 e 144) (#359)"
   ]
  },
  "pr_template": null,
