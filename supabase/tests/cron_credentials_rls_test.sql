@@ -122,21 +122,30 @@ begin
   raise notice 'OK 4: edge_function_url monta a URL do vault (%)', v_url;
 end $$;
 
--- 5. Todo job que dispara edge function usa o helper.
+-- 5. Todo job que dispara edge function chama o helper de verdade, e o comando
+--    passa por PREPARE (prova de sintaxe sem executar o net.http_post).
 do $$
-declare v_falta text[] := '{}'; r record;
+declare v_falta text[] := '{}'; v_quebra text[] := '{}'; r record;
 begin
-  for r in
-    select jobname from cron.job
-    where command like '%net.http_post%' and command not like '%public.edge_function_url(%'
-    order by jobname
-  loop
-    v_falta := v_falta || r.jobname;
+  for r in select jobname, command from cron.job where command like '%net.http_post%' order by jobname loop
+    if r.command not like '%url := public.edge_function_url(%' then
+      v_falta := v_falta || r.jobname;
+      continue;
+    end if;
+    begin
+      execute format('PREPARE %I AS %s', 'gate_' || replace(r.jobname, '-', '_'), r.command);
+      execute format('DEALLOCATE %I', 'gate_' || replace(r.jobname, '-', '_'));
+    exception when others then
+      v_quebra := v_quebra || (r.jobname || ': ' || sqlerrm);
+    end;
   end loop;
   if array_length(v_falta, 1) > 0 then
-    raise exception 'FALHA 5: job que ainda escreve a URL a mao: %', array_to_string(v_falta, ', ');
+    raise exception 'FALHA 5: job que nao chama o helper na URL (aspas em volta?): %', array_to_string(v_falta, ', ');
   end if;
-  raise notice 'OK 5: todos os jobs de edge function usam public.edge_function_url';
+  if array_length(v_quebra, 1) > 0 then
+    raise exception 'FALHA 5: comando do cron nao passa no PREPARE: %', array_to_string(v_quebra, ' | ');
+  end if;
+  raise notice 'OK 5: todos os jobs de edge function chamam public.edge_function_url e o comando planeja sem erro';
 end $$;
 
 rollback;
