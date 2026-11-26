@@ -8,10 +8,10 @@
   "supabase/migrations",
   "typeorm"
  ],
- "migrations": 249,
+ "migrations": 250,
  "seeds": [],
  "avisos": [
-  "21 bloco(s) com DDL dinâmico (EXECUTE format/...) não modelado — policies/colunas criadas dinamicamente podem faltar; confira no banco vivo"
+  "22 bloco(s) com DDL dinâmico (EXECUTE format/...) não modelado — policies/colunas criadas dinamicamente podem faltar; confira no banco vivo"
  ],
  "extensoes": [
   "dblink",
@@ -21417,11 +21417,6 @@
    "usada_em": 1
   },
   {
-   "nome": "check_login_lockout",
-   "definida": true,
-   "usada_em": 1
-  },
-  {
    "nome": "check_rate_limit",
    "definida": true,
    "usada_em": 2
@@ -21508,16 +21503,6 @@
   },
   {
    "nome": "match_kb_articles",
-   "definida": true,
-   "usada_em": 1
-  },
-  {
-   "nome": "record_failed_login",
-   "definida": true,
-   "usada_em": 1
-  },
-  {
-   "nome": "record_successful_login",
    "definida": true,
    "usada_em": 1
   },

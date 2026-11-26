@@ -3447,7 +3447,7 @@
    "modulo": "hooks",
    "arquivos": 170,
    "testes": 0,
-   "linhas": 21911,
+   "linhas": 21918,
    "itens_menu": [],
    "telas": [],
    "rotas_http": [],
@@ -3900,6 +3900,7 @@
     "generate-meeting-summary",
     "health-check",
     "ldap-sync",
+    "login-attempt",
     "notify-new-device",
     "ocr-virtual-fax",
     "record-consent",
@@ -4063,7 +4064,6 @@
     "calculate_predictive_pace",
     "check_calling_hours",
     "check_dnc",
-    "check_login_lockout",
     "expire_parked_calls",
     "get_agent_financial_leaderboard",
     "get_agents_with_active_calls",
@@ -4073,8 +4073,6 @@
     "get_queue_stats",
     "log_audit_event",
     "match_kb_articles",
-    "record_failed_login",
-    "record_successful_login",
     "record_trunk_usage"
    ],
    "buckets": [
@@ -4164,6 +4162,7 @@
      "generate-meeting-summary",
      "health-check",
      "ldap-sync",
+     "login-attempt",
      "notify-new-device",
      "ocr-virtual-fax",
      "record-consent",
@@ -4325,7 +4324,6 @@
      "calculate_predictive_pace",
      "check_calling_hours",
      "check_dnc",
-     "check_login_lockout",
      "expire_parked_calls",
      "get_agent_financial_leaderboard",
      "get_agents_with_active_calls",
@@ -4335,8 +4333,6 @@
      "get_queue_stats",
      "log_audit_event",
      "match_kb_articles",
-     "record_failed_login",
-     "record_successful_login",
      "record_trunk_usage"
     ]
    },
@@ -6010,6 +6006,7 @@
     "generate-meeting-summary",
     "health-check",
     "ldap-sync",
+    "login-attempt",
     "notify-blocked-ip",
     "notify-new-device",
     "ocr-virtual-fax",
@@ -6196,7 +6193,6 @@
     "check_all_tables_rls_status",
     "check_calling_hours",
     "check_dnc",
-    "check_login_lockout",
     "expire_parked_calls",
     "get_agent_financial_leaderboard",
     "get_agent_performance",
@@ -6207,8 +6203,6 @@
     "get_queue_stats",
     "log_audit_event",
     "match_kb_articles",
-    "record_failed_login",
-    "record_successful_login",
     "record_trunk_usage"
    ],
    "buckets": [
@@ -7020,6 +7014,7 @@
     "generate-meeting-summary",
     "health-check",
     "ldap-sync",
+    "login-attempt",
     "notify-blocked-ip",
     "notify-new-device",
     "ocr-virtual-fax",
@@ -7214,7 +7209,6 @@
     "check_calling_hours",
     "check_dnc",
     "check_idle_indexes",
-    "check_login_lockout",
     "expire_parked_calls",
     "get_agent_financial_leaderboard",
     "get_agent_performance",
@@ -7228,8 +7222,6 @@
     "log_audit_event",
     "log_index_drop_copy",
     "match_kb_articles",
-    "record_failed_login",
-    "record_successful_login",
     "record_trunk_usage"
    ],
    "buckets": [

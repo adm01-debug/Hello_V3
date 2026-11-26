@@ -1,17 +1,17 @@
 # Graph Report - Hello_V3  (2026-11-26)
 
 ## Corpus Check
-- 1804 files · ~1,047,730 words
+- 1805 files · ~1,048,574 words
 - Verdict: corpus is large enough that graph structure adds value.
 - Unclassified: 11 file(s) not represented in the graph (top: (none) 4, .lock 2, .example 1)
 
 ## Summary
-- 10375 nodes · 27375 edges · 804 communities (494 shown, 310 thin omitted)
+- 10376 nodes · 27375 edges · 805 communities (494 shown, 311 thin omitted)
 - Extraction: 93% EXTRACTED · 7% INFERRED · 0% AMBIGUOUS · INFERRED: 1845 edges (avg confidence: 0.94)
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `e145e740`
+- Built from commit: `07449618`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -713,7 +713,7 @@
 ## Import Cycles
 - None detected.
 
-## Communities (804 total, 310 thin omitted)
+## Communities (805 total, 311 thin omitted)
 
 ### Community 0 - "badge.tsx"
 Cohesion: 0.03
@@ -1201,7 +1201,7 @@ Nodes (18): jspdf, jspdf-autotable, papaparse, alert(), enqueueWebhook, recordWe
 
 ### Community 121 - "Login.tsx"
 Cohesion: 0.12
-Nodes (15): @lovable.dev/cloud-auth-js, LoginBranding(), rpc, RpcResult, LockoutStatus, useLoginLockout(), lovable, lovableAuth (+7 more)
+Nodes (15): @lovable.dev/cloud-auth-js, LoginBranding(), invoke, InvokeResult, LockoutStatus, useLoginLockout(), lovable, lovableAuth (+7 more)
 
 ### Community 122 - "fixes-exhaustive.test.ts"
 Cohesion: 0.12
@@ -2693,14 +2693,14 @@ Nodes (3): 7.1 Badges & Conquistas, 7.2 Ranking, 7. 🏆 Gamificação
 
 ## Knowledge Gaps
 - **3182 isolated node(s):** `$schema`, `style`, `rsc`, `tsx`, `config` (+3177 more)
-  These have ≤1 connection - possible missing edges or undocumented components. (Counts symbols only; 4324 node(s) total have ≤1 connection when file, concept and rationale nodes are included.)
-- **310 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
+  These have ≤1 connection - possible missing edges or undocumented components. (Counts symbols only; 4325 node(s) total have ≤1 connection when file, concept and rationale nodes are included.)
+- **311 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
 
 ## Suggested Questions
 _Questions this graph is uniquely positioned to answer:_
 
 - **Why does `vitest` connect `vitest` to `badge.tsx`, `logger.ts`, `client.ts`, `@tanstack/react-query`, `CardHeader`, `usePageTitle`, `cn`, `useAuthContext`, `safe-date.ts`, `sonner`, `ONDA 2 — Fluxos principais quebrados (056–100)`, `useQueueMetrics.ts`, `ONDA 1 — Segurança e risco de perda de dado (001–055)`, `package.json`, `HeaderDropdowns.tsx`, `sidebar.tsx`, `Onda 6 — Performance (236–258, 23 etapas)`, `UnifiedSoftphone.tsx`, `Tabela de funcionalidades`, `Tabela de funcionalidades`, `PhoneQuickAccess.tsx`, `usePredictiveDialer.ts`, `useChatbot`, `useVoicePreferences.ts`, `useRingtoneSettings.ts`, `schemas.ts`, `NextBestActionPanel.tsx`, `useBitrix.ts`, `useAuth.ts`, `useWebAuthn.ts`, `useMeetingSummary.ts`, `PhoneDialer.tsx`, `useMultiChannelCall.ts`, `WebhookHealth.tsx`, `tooltip.tsx`, `blf.ts`, `WebhookConfigDialog.tsx`, `useExecutiveDashboard.ts`, `SecurityAlerts.tsx`, `Onda 5 — Robustez: erros, estados, concorrência (181–235, 55 etapas)`, `ReauthContext.tsx`, `security-alerts-webhook.ts`, `security-infrastructure.test.ts`, `sync-history.ts`, `useHoldReminder.ts`, `ring-group.ts`, `safe-number.ts`, `ref_node_fs`, `utilities-comprehensive.test.ts`, `useDialerFavorites.ts`, `useConversations.ts`, `useNetworkMonitor`, `useQualityTrendAnalyzer.ts`, `LiveTranscription.tsx`, `queue-audio.ts`, `security/index.ts`, `useAuth`, `security-alerts-webhook-queue.ts`, `security-advanced.test.ts`, `useLiveTranslation`, `computeHealth`, `SupervisorPanel.tsx`, `useAlertsExport.ts`, `Login.tsx`, `fixes-exhaustive.test.ts`, `web-vitals.ts`, `useHoldSoundAlert.ts`, `useVoipAnomalies.ts`, `security-alerts-webhook-history.ts`, `call-queue.ts`, `useSessionManager.ts`, `ExecutiveReportExport.tsx`, `TabContents.tsx`, `voice-biometrics.coverage.test.ts`, `useVoipQualityMonitor.ts`, `useContacts.ts`, `device-identity.ts`, `useCadences.ts`, `useSipCall.coverage.test.tsx`, `pageVisibility.gating.test.tsx`, `mock-data-integrity.test.ts`, `useCrmFieldSuggestions.coverage.test.tsx`, `voipRecommendationCoaching.ts`, `useKnowledgeBase.coverage.test.tsx`, `error-tracking.ts`, `useCallHistory.ts`, `ParkOrbitCard.tsx`, `useConsent.coverage.test.tsx`, `useSupervisorPanel.coverage.test.tsx`, `rls-policies.test.ts`, `useLiveSentiment.coverage.test.tsx`, `navigation-progress-store.ts`, `useVoiceBiometrics.ts`, `useOptimisticLockConflicts.ts`, `voipProactiveSnapshot.ts`, `Tabela de funcionalidades (módulos)`, `ReconcileDNCDialog.test.tsx`, `BattleCardAlert.tsx`, `HoldTrendChart.test.tsx`, `useRecordings.ts`, `useQualityMetrics.ts`, `App.tsx`, `ConversationIntelligenceCard.test.tsx`, `useRealtimeHoldAlerts.ts`, `useGamification.coverage.test.tsx`, `useTimeOff.coverage.test.tsx`, `outbound-scoring.ts`, `ErrorBoundary`, `useAgentRanking.coverage.test.tsx`, `useFinancialImpact.ts`, `queue.ts`, `session/index.ts`, `useAlerts.coverage.test.tsx`, `useCallScoring.ts`, `useCallSession.ts`, `useContactAlerts.coverage.test.tsx`, `reportCsv.ts`, `predictive-pace.property.test.ts`, `reconcile.ts`, `StatsCard.tsx`, `useTrunkRealtimeMetrics.ts`, `useVoiceCommand.coverage.test.tsx`, `useWhatsappRewrite.ts`, `callHistoryCsv.ts`, `SecurityReport.test.tsx`, `security-headers-validator.ts`, `setup.ts`, `ScheduledCallbacksList.ligarAgora.test.tsx`, `useCoachingTrack.ts`, `useConferenceRecording.coverage.test.tsx`, `callHistoryAlias.test.tsx`, `supabase.ts`, `deals.test.ts`, `learning-completions.test.ts`, `security-alerts-webhook.property.test.ts`?**
-  _High betweenness centrality (0.149) - this node is a cross-community bridge._
+  _High betweenness centrality (0.148) - this node is a cross-community bridge._
 - **Why does `react` connect `react` to `badge.tsx`, `logger.ts`, `vitest`, `card.tsx`, `client.ts`, `usePageTitle.ts`, `@tanstack/react-query`, `CardHeader`, `cn`, `protectedRoutes.tsx`, `useAuthContext`, `safe-date.ts`, `sonner`, `ONDA 2 — Fluxos principais quebrados (056–100)`, `useQueueMetrics.ts`, `package.json`, `lucide-react`, `HeaderDropdowns.tsx`, `sidebar.tsx`, `UnifiedSoftphone.tsx`, `Tabela de funcionalidades`, `Tabela de funcionalidades`, `PhoneQuickAccess.tsx`, `usePredictiveDialer.ts`, `useVoicePreferences.ts`, `useRingtoneSettings.ts`, `publicRoutes.tsx`, `NextBestActionPanel.tsx`, `useBitrix.ts`, `useAuth.ts`, `VoiceAssistantDialog.tsx`, `useWebAuthn.ts`, `useMeetingSummary.ts`, `PhoneDialer.tsx`, `useMultiChannelCall.ts`, `WebhookHealth.tsx`, `tooltip.tsx`, `blf.ts`, `NetworkDiagnostics.tsx`, `useExecutiveDashboard.ts`, `SecurityAlerts.tsx`, `ReauthContext.tsx`, `security-alerts-webhook.ts`, `sync-history.ts`, `useHoldReminder.ts`, `hooks/use-toast.ts`, `ring-group.ts`, `useDialerFavorites.ts`, `useConversations.ts`, `useNetworkMonitor`, `useQualityTrendAnalyzer.ts`, `LiveTranscription.tsx`, `useAuth`, `AgentGoalsGrid.tsx`, `security-alerts-webhook-queue.ts`, `ObservabilityDashboard.tsx`, `AppLayout.tsx`, `SupervisorPanel.tsx`, `useAlertsExport.ts`, `Login.tsx`, `web-vitals.ts`, `useHoldSoundAlert.ts`, `useVoipAnomalies.ts`, `security-alerts-webhook-history.ts`, `useSessionManager.ts`, `RoleAuditTrail.tsx`, `ExecutiveReportExport.tsx`, `useVoipQualityMonitor.ts`, `useContacts.ts`, `device-identity.ts`, `useCadences.ts`, `useCrmFieldSuggestions.coverage.test.tsx`, `useKnowledgeBase.coverage.test.tsx`, `CommandPalette.tsx`, `carousel.tsx`, `useCallHistory.ts`, `ParkOrbitCard.tsx`, `useConsent.coverage.test.tsx`, `form.tsx`, `navigation-progress-store.ts`, `useVoiceBiometrics.ts`, `useCallPark.ts`, `useQueueAudioPrompts.ts`, `useOptimisticLockConflicts.ts`, `BattleCardAlert.tsx`, `useRecordings.ts`, `useQualityMetrics.ts`, `App.tsx`, `InsightPanels.tsx`, `chart.tsx`, `useRealtimeHoldAlerts.ts`, `PermissionGate.tsx`, `VirtualTimeline.tsx`, `ErrorBoundary`, `toggle-group.tsx`, `AchievementCelebration.tsx`, `useCallSession.ts`, `useContactAlerts.coverage.test.tsx`, `StatsCard.tsx`, `useTrunkRealtimeMetrics.ts`, `useWhatsappRewrite.ts`, `PasswordStrength.tsx`, `animations.tsx`, `useLDAPSync.ts`, `callHistoryAlias.test.tsx`?**
   _High betweenness centrality (0.087) - this node is a cross-community bridge._
 - **Why does `cn()` connect `cn` to `badge.tsx`, `card.tsx`, `useVoipRecommendationSimulate`, `usePageTitle.ts`, `react`, `CardHeader`, `usePageTitle`, `RoleAuditTrail.tsx`, `useVoipExecutiveNarrative`, `safe-date.ts`, `5. Em uso por rota`, `ONDA 2 — Fluxos principais quebrados (056–100)`, `TabContents.tsx`, `useQueueMetrics`, `package.json`, `lucide-react`, `HeaderDropdowns.tsx`, `sidebar.tsx`, `Onda 6 — Performance (236–258, 23 etapas)`, `UnifiedSoftphone.tsx`, `Tabela de funcionalidades`, `PhoneQuickAccess.tsx`, `AchievementCelebration.tsx`, `toggle-group.tsx`, `publicRoutes.tsx`, `NextBestActionPanel.tsx`, `isPoorMos`, `VoiceAssistantDialog.tsx`, `CommandPalette.tsx`, `carousel.tsx`, `PhoneDialer.tsx`, `ParkOrbitCard.tsx`, `useMultiChannelCall.ts`, `tooltip.tsx`, `blf.ts`, `Omnichannel Suite (ADR 012)`, `NetworkDiagnostics.tsx`, `WebhookConfigDialog.tsx`, `StatsCard.tsx`, `form.tsx`, `WhatsappComposer`, `sync-history.ts`, `useHoldReminder.ts`, `VoipRecommendationsPanel`, `hooks/use-toast.ts`, `Achados graves`, `useConversations.ts`, `useNetworkMonitor`, `useQualityTrendAnalyzer.ts`, `RecommendationInsightsCard`, `voipProactiveSnapshot.ts`, `LiveTranscription.tsx`, `queue-audio.ts`, `AgentGoalsGrid.tsx`, `BattleCardAlert.tsx`, `VoipHealthScoreCard`, `PasswordStrength.tsx`, `MeetingSummaryCard`, `useLiveTranslation`, `AppLayout.tsx`, `chart.tsx`, `02 — Matriz de cenários por jornada`, `SupervisorPanel.tsx`, `InsightPanels.tsx`, `Memories`?**

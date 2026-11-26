@@ -1792,7 +1792,9 @@
     "errors.ts",
     "rate-limit.ts"
    ],
-   "chamada_pelo_front": [],
+   "chamada_pelo_front": [
+    "src/hooks/useLoginLockout.ts"
+   ],
    "chamada_por_edges": [],
    "chamada_por_sql_ou_cron": false,
    "orfa": false,

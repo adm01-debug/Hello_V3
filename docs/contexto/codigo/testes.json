@@ -1288,13 +1288,13 @@
   {
    "arquivo": "src/hooks/__tests__/useLoginLockout.coverage.test.tsx",
    "tipo": "unit",
-   "linhas": 101,
+   "linhas": 116,
    "testa": [
     "src/hooks/useLoginLockout.ts",
     "src/integrations/supabase/client.ts",
     "src/lib/logger.ts"
    ],
-   "casos": 9
+   "casos": 10
   },
   {
    "arquivo": "src/hooks/__tests__/useLoginLockout.test.ts",

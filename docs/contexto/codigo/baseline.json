@@ -2,11 +2,16 @@
  "aviso": "GERADO AUTOMATICAMENTE por scripts/ai-context/gerar.mjs — não editar à mão; será sobrescrito.",
  "format_version": 2,
  "git": {
-  "commit": "e145e74013812c81300367b092c0a6946f9dce78",
+  "commit": "074496185dcceef235be89b11923f81deba09048",
   "branch": "main",
-  "data_commit": "2026-11-25T21:35:25-03:00",
+  "data_commit": "2026-11-25T21:42:21-03:00",
   "remote": "https://github.com/adm01-debug/Hello_V3",
   "ultimos_commits": [
+   {
+    "sha": "0744961",
+    "data": "2026-11-25",
+    "assunto": "fix: tirar as RPCs de lockout do alcance do navegador (etapa 002) (#342)"
+   },
    {
     "sha": "e145e74",
     "data": "2026-11-25",
@@ -126,14 +131,9 @@
     "sha": "c9aede0",
     "data": "2026-11-25",
     "assunto": "fix: dry-run do migrations.yml nao pode gravar de verdade (#319)"
-   },
-   {
-    "sha": "fffd1cc",
-    "data": "2026-11-25",
-    "assunto": "fix: normalizar nome registrado antes de comparar com o arquivo (#317)"
    }
   ],
-  "arquivos_mudados_7d": 1318,
+  "arquivos_mudados_7d": 1319,
   "pastas_mais_mudadas_30d": [
    {
     "pasta": "covout/lcov-report/hooks",
@@ -141,11 +141,11 @@
    },
    {
     "pasta": "src/hooks/__tests__",
-    "mudancas": 285
+    "mudancas": 286
    },
    {
     "pasta": "docs/qa/05-PROGRESSO.md",
-    "mudancas": 144
+    "mudancas": 145
    },
    {
     "pasta": "covout/lcov-report/lib",
@@ -165,7 +165,7 @@
    },
    {
     "pasta": "supabase/functions/_shared",
-    "mudancas": 54
+    "mudancas": 53
    },
    {
     "pasta": "covout/lib/security",
@@ -199,7 +199,7 @@
   "arquivos_mais_mudados_90d": [
    {
     "arquivo": "docs/qa/05-PROGRESSO.md",
-    "mudancas": 144
+    "mudancas": 145
    },
    {
     "arquivo": "docs/estado/funcionalidades-planejadas.md",
@@ -226,10 +226,6 @@
     "mudancas": 10
    },
    {
-    "arquivo": "supabase/functions/data-lake-flush/index.ts",
-    "mudancas": 10
-   },
-   {
     "arquivo": ".github/workflows/ci.yml",
     "mudancas": 9
    },
@@ -239,6 +235,10 @@
    },
    {
     "arquivo": "src/components/layout/CommandPalette.tsx",
+    "mudancas": 9
+   },
+   {
+    "arquivo": "supabase/functions/data-lake-flush/index.ts",
     "mudancas": 9
    },
    {
@@ -310,9 +310,9 @@
   ]
  },
  "contagens": {
-  "arquivos_total": 1772,
+  "arquivos_total": 1773,
   "arquivos_codigo": 1355,
-  "linhas_codigo": 180183,
+  "linhas_codigo": 180205,
   "rotas": 106,
   "rotas_http_backend": 11,
   "vistas_por_id": 0,
@@ -322,7 +322,7 @@
   "hooks": 196,
   "edge_functions": 99,
   "tabelas": 170,
-  "migrations": 249,
+  "migrations": 250,
   "cron_jobs": 11,
   "testes": 421,
   "workflows": 5,
@@ -492,7 +492,7 @@
   },
   "src/hooks": {
    "arquivos": 345,
-   "linhas": 43755
+   "linhas": 43777
   },
   "src/integrations": {
    "arquivos": 3,

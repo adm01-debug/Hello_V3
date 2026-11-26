@@ -2748,12 +2748,9 @@
     "user_roles",
     "webauthn_challenges"
    ],
-   "rpcs": [
-    "check_login_lockout",
-    "record_failed_login",
-    "record_successful_login"
-   ],
+   "rpcs": [],
    "edges": [
+    "login-attempt",
     "notify-blocked-ip",
     "validate-ip",
     "webauthn-authenticate",

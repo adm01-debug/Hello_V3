@@ -2858,15 +2858,13 @@
    "hooks_exportados": [
     "useLoginLockout"
    ],
-   "linhas": 120,
+   "linhas": 127,
    "dominio": "hooks",
    "tabelas": [],
-   "rpcs": [
-    "check_login_lockout",
-    "record_failed_login",
-    "record_successful_login"
+   "rpcs": [],
+   "edges": [
+    "login-attempt"
    ],
-   "edges": [],
    "hooks_internos": [
     "useCallback",
     "useState"

@@ -1,6 +1,6 @@
 # 07 · REGRAS DE NEGÓCIO
 
-> Gerado automaticamente por AI Context Sync v1.3.2 · commit `e145e74013` · branch `main` · 2026-11-26 00:43 UTC
+> Gerado automaticamente por AI Context Sync v1.3.2 · commit `074496185d` · branch `main` · 2026-11-26 00:47 UTC
 > Não edite à mão — regras humanas vão em `manual/`.
 
 ## A. Regras escritas por humanos (`manual/` — prioridade máxima, nunca sobrescrito)
@@ -2649,7 +2649,7 @@ _nenhum item encontrado_
 | `admin` | `supabase/functions/data-lake-flush/index.ts` |
 | `admin` | `supabase/migrations/20261123000200_fix_has_role_oracle_and_debug_tables.sql` |
 
-## K. Testes como especificação (3653 testes em 404 arquivos — nomes completos em `context.json`)
+## K. Testes como especificação (3654 testes em 404 arquivos — nomes completos em `context.json`)
 
 | Arquivo | Testes | Exemplos do que o sistema DEVE fazer |
 |---|---|---|
@@ -2727,6 +2727,7 @@ _nenhum item encontrado_
 | `src/hooks/__tests__/useAuth.coverage.test.tsx` | 11 | useAuth · calls getSession on mount and exposes API · hasRole false without profile, true with matching role · handles SIGNED_OUT auth state change … |
 | `src/hooks/__tests__/useContacts.coverage.test.tsx` | 11 | useContacts (coverage) · fetches contacts on mount · fetchContacts with search filter · getContactByPhone success and not found … |
 | `src/hooks/__tests__/useLiveAssist.coverage.test.tsx` | 11 | useLiveAssist · is disabled (no fetch) without callSessionId · loads signals and subscribes to realtime when callSessionId present · analyze invokes edge function when throttle allows … |
+| `src/hooks/__tests__/useLoginLockout.coverage.test.tsx` | 11 | useLoginLockout · checkLockout success returns parsed status · checkLockout handles error from rpc · checkLockout handles thrown exception … |
 | `src/hooks/__tests__/useScheduledCallbacks.coverage.test.tsx` | 11 | useScheduledCallbacks · loads pending callbacks and upcoming count on mount · fetchCallbacks with status filter and error branch · fetchUpcomingCount error branch … |
 | `src/hooks/__tests__/useSipCall.coverage.test.tsx` | 11 | useSipCall (coverage) · initial state is disconnected · connect succeeds and registers · connect with failover shows warning … |
 | `src/hooks/__tests__/useSuccessPlans.coverage.test.tsx` | 11 | useSuccessPlans · loads plans and milestones with accountId · loads plans without accountId · handles empty plans (no milestone fetch) … |
@@ -2748,7 +2749,6 @@ _nenhum item encontrado_
 | `src/hooks/__tests__/useGeoBlocking.coverage.test.tsx` | 10 | useGeoBlocking · carrega settings, restrictions e logs · inicializa settings quando ausentes · atualiza settings com sucesso … |
 | `src/hooks/__tests__/useIPWhitelist.coverage.test.tsx` | 10 | useIPWhitelist · does not fetch when not admin · fetches data when admin · publishes the read error instead of an empty list … |
 | `src/hooks/__tests__/useLiveTranslation.coverage.test.tsx` | 10 | useLiveTranslation · returns initial state · does nothing without callSessionId or empty text · queues short utterances below minWords without invoking … |
-| `src/hooks/__tests__/useLoginLockout.coverage.test.tsx` | 10 | useLoginLockout · checkLockout success returns parsed status · checkLockout handles error from rpc · checkLockout handles thrown exception … |
 | `src/hooks/__tests__/useMeetingSummary.coverage.test.tsx` | 10 | useMeetingSummary · loads summary and runs generate/update/share · disabled when no callSessionId · generate handles skipped response … |
 | `src/hooks/__tests__/useMultiChannelCall.coverage.test.tsx` | 10 | useMultiChannelCall · initiates calls, enforces MAX_SIMULTANEOUS_CALLS, switches and ends · updateCallStatus active starts timer, toggles mute/hold/recording, addTranscript · handles no-op branches when no active call id … |
 | `src/hooks/__tests__/useReauth.grant.test.tsx` | 10 | Reauth grant persistido (HMAC) · grava grant assinado no sessionStorage apos verificar · rehidrata lastVerified em nova montagem (nao exige reauth) · descarta grant com assinatura invalida … |
@@ -3012,6 +3012,7 @@ _nenhum item encontrado_
 | `invoke(` | `src/hooks/useLDAPSync.ts` |
 | `invoke(` | `src/hooks/useLiveAssist.ts` |
 | `invoke(` | `src/hooks/useLiveTranslation.ts` |
+| `invoke(` | `src/hooks/useLoginLockout.ts` |
 | `invoke(` | `src/hooks/useMeetingSummary.ts` |
 | `notify_incoming_calls` | `src/hooks/useNotificationPreferences.ts` |
 | `notify_missed_calls` | `src/hooks/useNotificationPreferences.ts` |
@@ -3153,6 +3154,7 @@ _nenhum item encontrado_
 | ').order('created_at', { ascending: false }).limit(100); | `src/hooks/useIPWhitelist.ts` |
 | * mínimo de palavras para disparar tradução */ | `src/hooks/useLiveTranslation.ts` |
 | * A RPC falhou: não sabemos se a conta está bloqueada. Quem consome deve recusar a tentativa. */ | `src/hooks/useLoginLockout.ts` |
+| rate limit por IP (lido do request, não do corpo) e chama as RPCs com | `src/hooks/useLoginLockout.ts` |
 | Autoplay bloqueado pelo navegador nao pode quebrar o painel: o som e acessorio. | `src/hooks/useNotifications.ts` |
 | critica nao repetimos o toast. O intervalo minimo existe para o caso de a | `src/hooks/useQueueMetrics.ts` |
 | pelo intervalo minimo, ele nao pode reaparecer no ciclo seguinte. | `src/hooks/useQueueMetrics.ts` |
