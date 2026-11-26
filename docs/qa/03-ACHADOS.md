@@ -1120,6 +1120,15 @@ A conta Vercel conectada a esta sessão **não é a conta que hospeda o produto*
 **Impacto no negócio.** A regra do próprio repositório diz que "pronto" exige **deploy confirmado + comportamento verificado**. Com esta configuração, nenhum agente pode cumprir essa regra — o melhor que consegue é dizer "mergeado". Isso explica, em parte, como o sistema chegou a ter documentos declarando conclusão sem verificação: a verificação era literalmente inalcançável. **Das 300 etapas do plano, as que exigem confirmar deploy, consulta ao banco ou cabeçalho servido vão terminar como `[~] parcial`** até que o dono conecte a conta Vercel do projeto, libere o host do Supabase na política de rede do ambiente, ou rode as verificações ele mesmo.
 
 
+### A-139 — "Enviar pesquisa" manda um id fixo ("nps") em vez da pesquisa cadastrada
+**Severidade: Alta · Confiança: CONFIRMADO · Marca: LIDO (código) + EXECUTADO (teste)**
+
+`src/components/call-library/SurveysPanel.tsx` chamava `sendSurvey({ survey_id: 'nps' })` — uma string fixa, mas `surveys.id` é `UUID PRIMARY KEY` (`supabase/migrations/20260416235642_…sql:217`) e a edge `send-survey/index.ts:36` faz `.from("surveys").select(...).eq("id", survey_id)`. O PostgREST responde erro de sintaxe de UUID e a edge devolve **404 "survey not found or inactive"**: o botão "Enviar" **nunca** funcionou, e a tabela `surveys` não tinha nenhuma tela — ou seja, nenhuma pesquisa chegava a existir para ser enviada. As respostas exibidas ao lado vêm de `survey_responses`, que só é alimentada por `send-survey`, então o painel inteiro era decorativo.
+
+**Impacto.** A aba **Pesquisas** de `/call-library` (NPS/CSAT pós-chamada) não enviava nada e não tinha como cadastrar uma pesquisa; o NPS mostrado na tela ficava permanentemente vazio ou alimentado por linhas inseridas à mão.
+
+**Correção.** `useSurveyDefinitions` (lista as ativas de `surveys`, cria e desativa, respeitando a RLS "Admin/supervisor manage surveys") e o painel passa a enviar o **id selecionado**, com estado vazio explícito e o botão de envio bloqueado sem pesquisa. Prova negativa: restaurado o `survey_id: 'nps'`, `SurveysPanel.test.tsx` falha 1/5; com o fix, 5/5 verdes.
+
 ## Contagem
 
 | Severidade | Quantidade |
@@ -1130,7 +1139,7 @@ A conta Vercel conectada a esta sessão **não é a conta que hospeda o produto*
 | **Baixa** | **18** |
 | **Total** | **137** + 1 resultado positivo registrado (A-137) |
 
-A-134 a A-137 vieram da verificação em navegador feita depois do fechamento da primeira versão (**CR-20**); A-138 veio da tentativa de ler os cabeçalhos reais pela Vercel, no mesmo dia.
+A-134 a A-137 vieram da verificação em navegador feita depois do fechamento da primeira versão (**CR-20**); A-138 veio da tentativa de ler os cabeçalhos reais pela Vercel, no mesmo dia; A-139 veio da recuperação do trabalho de outro agente na aba **Pesquisas** de `/call-library`.
 
 Contagem conferida mecanicamente: `grep -c "^### A-" 03-ACHADOS.md` → 133; `grep -oE "\*\*Severidade: [A-Za-zéí]+" | sort | uniq -c` → 9 / 55 / 51 / 18. IDs de A-001 a A-133 sem lacuna.
 

@@ -1,32 +1,44 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { renderHook, waitFor, act } from '@testing-library/react';
-import { useSurveys, type SurveyResponse } from '../useSurveys';
+import { useSurveys, useSurveyDefinitions, type SurveyResponse, type SurveyDefinition } from '../useSurveys';
 
 const invokeMock = vi.fn();
 
 interface ThenableBuilder {
+  table: string;
   select: ReturnType<typeof vi.fn>;
   order: ReturnType<typeof vi.fn>;
   limit: ReturnType<typeof vi.fn>;
   eq: ReturnType<typeof vi.fn>;
+  insert: ReturnType<typeof vi.fn>;
+  update: ReturnType<typeof vi.fn>;
+  single: ReturnType<typeof vi.fn>;
   then: (resolve: (v: { data: unknown; error: unknown }) => unknown) => Promise<unknown>;
 }
 
 let queryResult: { data: unknown; error: unknown } = { data: [], error: null };
+const builders: ThenableBuilder[] = [];
 
-function makeBuilder(): ThenableBuilder {
-  const builder: Partial<ThenableBuilder> = {};
+function makeBuilder(table = 'unknown'): ThenableBuilder {
+  const builder: Partial<ThenableBuilder> = { table };
   builder.select = vi.fn(() => builder as ThenableBuilder);
   builder.order = vi.fn(() => builder as ThenableBuilder);
   builder.limit = vi.fn(() => builder as ThenableBuilder);
   builder.eq = vi.fn(() => builder as ThenableBuilder);
+  builder.insert = vi.fn(() => builder as ThenableBuilder);
+  builder.update = vi.fn(() => builder as ThenableBuilder);
+  builder.single = vi.fn(() => Promise.resolve(queryResult));
   builder.then = (resolve) => Promise.resolve(resolve(queryResult));
   return builder as ThenableBuilder;
 }
 
 vi.mock('@/integrations/supabase/client', () => ({
   supabase: {
-    from: vi.fn(() => makeBuilder()),
+    from: vi.fn((table: string) => {
+      const builder = makeBuilder(table);
+      builders.push(builder);
+      return builder;
+    }),
     functions: { invoke: (...args: unknown[]) => invokeMock(...args) },
   },
 }));
@@ -93,5 +105,92 @@ describe('useSurveys', () => {
       await result.current.sendSurvey({ survey_id: 's1' });
     });
     expect(toast.error).toHaveBeenCalledWith('Falha ao enviar pesquisa');
+  });
+});
+
+describe('useSurveyDefinitions', () => {
+  const active: SurveyDefinition[] = [
+    { id: 's1', name: 'NPS', survey_type: 'nps', description: null, questions: [], is_active: true },
+  ];
+
+  beforeEach(() => {
+    vi.clearAllMocks();
+    builders.length = 0;
+    queryResult = { data: active, error: null };
+  });
+
+  it('carrega as pesquisas ativas da tabela surveys', async () => {
+    const { result } = renderHook(() => useSurveyDefinitions());
+    await waitFor(() => expect(result.current.loading).toBe(false));
+
+    expect(result.current.surveys).toHaveLength(1);
+    const builder = builders[builders.length - 1];
+    expect(builder.table).toBe('surveys');
+    expect(builder.eq).toHaveBeenCalledWith('is_active', true);
+  });
+
+  it('avisa quando o carregamento falha', async () => {
+    queryResult = { data: null, error: { message: 'boom' } };
+    const { result } = renderHook(() => useSurveyDefinitions());
+    await waitFor(() => expect(result.current.loading).toBe(false));
+    expect(toast.error).toHaveBeenCalledWith('Falha ao carregar pesquisas');
+  });
+
+  it('cria pesquisa com nome e tipo informados', async () => {
+    queryResult = { data: { id: 'novo', name: 'CSAT', survey_type: 'csat' }, error: null };
+    const { result } = renderHook(() => useSurveyDefinitions());
+    await waitFor(() => expect(result.current.loading).toBe(false));
+
+    let created: SurveyDefinition | null = null;
+    await act(async () => {
+      created = await result.current.createSurvey('CSAT', 'csat');
+    });
+
+    expect(created).toMatchObject({ id: 'novo' });
+    const inserted = builders.find((b) => b.insert.mock.calls.length > 0);
+    expect(inserted?.table).toBe('surveys');
+    expect(inserted?.insert).toHaveBeenCalledWith({ name: 'CSAT', survey_type: 'csat' });
+    expect(toast.success).toHaveBeenCalledWith('Pesquisa criada');
+  });
+
+  it('devolve null e avisa quando a criacao falha', async () => {
+    queryResult = { data: null, error: { message: 'rls' } };
+    const { result } = renderHook(() => useSurveyDefinitions());
+    await waitFor(() => expect(result.current.loading).toBe(false));
+
+    let created: SurveyDefinition | null = null;
+    await act(async () => {
+      created = await result.current.createSurvey('CSAT');
+    });
+
+    expect(created).toBeNull();
+    expect(toast.error).toHaveBeenCalledWith('Falha ao criar pesquisa');
+  });
+
+  it('desativa a pesquisa pelo id', async () => {
+    const { result } = renderHook(() => useSurveyDefinitions());
+    await waitFor(() => expect(result.current.loading).toBe(false));
+
+    await act(async () => {
+      await result.current.deactivateSurvey('s1');
+    });
+
+    const updated = builders.find((b) => b.update.mock.calls.length > 0);
+    expect(updated?.table).toBe('surveys');
+    expect(updated?.update).toHaveBeenCalledWith({ is_active: false });
+    expect(updated?.eq).toHaveBeenCalledWith('id', 's1');
+    expect(toast.success).toHaveBeenCalledWith('Pesquisa desativada');
+  });
+
+  it('avisa quando a desativacao falha', async () => {
+    queryResult = { data: null, error: { message: 'rls' } };
+    const { result } = renderHook(() => useSurveyDefinitions());
+    await waitFor(() => expect(result.current.loading).toBe(false));
+
+    await act(async () => {
+      await result.current.deactivateSurvey('s1');
+    });
+
+    expect(toast.error).toHaveBeenCalledWith('Falha ao desativar pesquisa');
   });
 });
