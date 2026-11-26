@@ -5,7 +5,7 @@
   "vitest",
   "playwright"
  ],
- "total": 460,
+ "total": 461,
  "por_tipo": {
   "contrato": 1,
   "e2e": 16,
@@ -3960,6 +3960,7 @@
   "supabase/tests/probe_129_polymorphic_rls_test.sql",
   "supabase/tests/probe_132_lgpd_entity_versions_rls_test.sql",
   "supabase/tests/rate_limit_logs_write_policies_rls_test.sql",
+  "supabase/tests/recurring_holidays_rls_test.sql",
   "supabase/tests/redaction_log_rls_test.sql",
   "supabase/tests/revoke_anon_role_helpers_rls_test.sql",
   "supabase/tests/role_helpers_stable_rls_test.sql",

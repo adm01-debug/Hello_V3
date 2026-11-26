@@ -2,11 +2,16 @@
  "aviso": "GERADO AUTOMATICAMENTE por scripts/ai-context/gerar.mjs — não editar à mão; será sobrescrito.",
  "format_version": 2,
  "git": {
-  "commit": "8bed0e51c9373083803b105e98f679bafb87044a",
+  "commit": "a7450263359056299d65597a1eadcb993340a75c",
   "branch": "main",
-  "data_commit": "2026-11-26T17:47:03-03:00",
+  "data_commit": "2026-11-26T17:47:07-03:00",
   "remote": "https://github.com/adm01-debug/Hello_V3",
   "ultimos_commits": [
+   {
+    "sha": "a745026",
+    "data": "2026-11-26",
+    "assunto": "docs: etapa 122 provada — feriado recorrente ja bloqueia; contrato escrito na funcao (#365)"
+   },
    {
     "sha": "8bed0e5",
     "data": "2026-11-26",
@@ -126,14 +131,9 @@
     "sha": "bd1b19c",
     "data": "2026-11-26",
     "assunto": "fix: aba Pesquisas enviava um id fixo e nunca cadastrava pesquisa (#345)"
-   },
-   {
-    "sha": "305ee9e",
-    "data": "2026-11-25",
-    "assunto": "fix: gate do cron lia coluna que nao existe e derrubava o CI de main (#343)"
    }
   ],
-  "arquivos_mudados_7d": 1937,
+  "arquivos_mudados_7d": 1939,
   "pastas_mais_mudadas_30d": [
    {
     "pasta": "src/hooks/__tests__",
@@ -141,7 +141,7 @@
    },
    {
     "pasta": "docs/qa/05-PROGRESSO.md",
-    "mudancas": 164
+    "mudancas": 165
    },
    {
     "pasta": "src/components/calls",
@@ -199,7 +199,7 @@
   "arquivos_mais_mudados_90d": [
    {
     "arquivo": "docs/qa/05-PROGRESSO.md",
-    "mudancas": 164
+    "mudancas": 165
    },
    {
     "arquivo": "docs/estado/funcionalidades-planejadas.md",
@@ -266,6 +266,10 @@
     "mudancas": 8
    },
    {
+    "arquivo": "docs/agentes/banco.md",
+    "mudancas": 7
+   },
+   {
     "arquivo": "docs/edge-functions/README.md",
     "mudancas": 7
    },
@@ -292,10 +296,6 @@
    {
     "arquivo": "supabase/functions/voip-load-test/index.ts",
     "mudancas": 7
-   },
-   {
-    "arquivo": ".github/workflows/ci.yml",
-    "mudancas": 6
    }
   ],
   "autores_30d": [
@@ -306,7 +306,7 @@
   ]
  },
  "contagens": {
-  "arquivos_total": 1846,
+  "arquivos_total": 1848,
   "arquivos_codigo": 1385,
   "linhas_codigo": 184953,
   "rotas": 108,
@@ -318,9 +318,9 @@
   "hooks": 201,
   "edge_functions": 99,
   "tabelas": 172,
-  "migrations": 269,
+  "migrations": 270,
   "cron_jobs": 13,
-  "testes": 460,
+  "testes": 461,
   "workflows": 5,
   "scripts": 36,
   "docs_md": 121
