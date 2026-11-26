@@ -41,33 +41,67 @@ begin
   raise notice '2/5 ok: % policy(ies) de public seguem sem TO, mantidas para revisao individual: %', v_n, left(coalesce(v_puladas, 'nenhuma'), 3000);
 end $$;
 
--- 3. Um usuario autenticado continua lendo as tabelas tipicas de cliente sem erro.
+-- 3. Um usuario autenticado ADMIN (vinculo usuario -> agente -> user_roles, criado e revertido
+--    nesta transacao) continua lendo de verdade -- nao basta "nao deu erro": a contagem tem de
+--    ser maior que zero numa tabela que sabidamente tem linhas.
 do $$
 declare
   t text;
   v_n bigint;
   v_log text := '';
-  v_lidas int := 0;
+  v_total bigint := 0;
+  v_user uuid;
+  v_agente_id uuid;
 begin
-  perform set_config('request.jwt.claims', json_build_object('sub', '00000000-0000-0000-0000-0000000000aa', 'role', 'authenticated')::text, true);
+  select up.id into v_user from public.user_profiles up where up.agent_id is not null limit 1;
+
+  if v_user is null then
+    select u.id into v_user from auth.users u order by u.created_at limit 1;
+    if v_user is null then
+      raise notice '3/5 pulado: auth.users tem 0 linhas - sem sessao autenticada para simular';
+      return;
+    end if;
+
+    select a.id into v_agente_id from public.agents a order by a.name limit 1;
+    if v_agente_id is null then
+      execute 'insert into public.agents (name, extension) values ($1, $2) returning id'
+        into v_agente_id using 'gate-143 agente', 'gate143';
+    end if;
+
+    if exists (select 1 from information_schema.columns
+               where table_schema = 'public' and table_name = 'user_profiles' and column_name = 'email') then
+      execute 'insert into public.user_profiles (id, email, agent_id) values ($1, $2, $3)
+               on conflict (id) do update set agent_id = excluded.agent_id'
+        using v_user, 'gate-143@local.invalid', v_agente_id;
+    else
+      execute 'insert into public.user_profiles (id, agent_id) values ($1, $2)
+               on conflict (id) do update set agent_id = excluded.agent_id'
+        using v_user, v_agente_id;
+    end if;
+  end if;
+
+  execute 'insert into public.user_roles (user_id, role, is_active) values ($1, ''admin'', true)
+           on conflict (user_id) do update set role = ''admin'', is_active = true'
+    using v_user;
+
+  perform set_config('request.jwt.claims', json_build_object('sub', v_user, 'role', 'authenticated')::text, true);
   execute 'set local role authenticated';
 
-  foreach t in array array['contacts', 'deals', 'accounts', 'contact_interactions', 'call_sessions'] loop
+  foreach t in array array['conversations', 'call_quality_metrics', 'contacts', 'deals', 'call_sessions'] loop
     if to_regclass('public.' || t) is not null then
       execute format('select count(*) from public.%I', t) into v_n;
-      v_lidas := v_lidas + 1;
+      v_total := v_total + v_n;
       v_log := v_log || format('%s=%s ', t, v_n);
     end if;
   end loop;
 
   execute 'reset role';
 
-  if v_lidas < 1 then
-    raise exception 'FALHA 3: nenhuma das tabelas de cliente foi encontrada em public';
+  if v_total = 0 then
+    raise exception 'FALHA 3: o admin autenticado leu 0 linhas em todas as tabelas de cliente (%) - a restricao pode ter trancado a leitura', v_log;
   end if;
-  raise notice '3/5 ok: authenticated le as tabelas de cliente sem erro (%)', v_log;
+  raise notice '3/5 ok: admin autenticado le de verdade apos a restricao (%)', v_log;
 end $$;
-
 -- 4. Anon continua vendo 0 linhas nelas (ou recebendo permission denied).
 do $$
 declare
