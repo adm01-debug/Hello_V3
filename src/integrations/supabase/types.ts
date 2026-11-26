@@ -7922,6 +7922,10 @@ export type Database = {
           schemaname: string
         }[]
       }
+      claim_next_dialer_contact: {
+        Args: { p_campaign_id: string }
+        Returns: Json[]
+      }
       cleanup_expired_challenges: { Args: never; Returns: undefined }
       cleanup_old_data: { Args: never; Returns: undefined }
       cleanup_old_logs: { Args: never; Returns: undefined }

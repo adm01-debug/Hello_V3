@@ -4,12 +4,11 @@ import { supabase } from '@/integrations/supabase/client';
 import { logger } from '@/lib/logger';
 import {
   apiAddToQueue,
+  apiClaimNextContact,
   apiCreateCampaign,
   apiDeleteCampaign,
   apiFetchCampaigns,
   apiFetchQueue,
-  apiGetNextContact,
-  apiMarkDialing,
   apiMarkSkipped,
   apiPauseCampaign,
   apiRemoveFromQueue,
@@ -157,15 +156,6 @@ export const usePredictiveDialer = (preDialCheck?: PreDialCheck) => {
     [fetchCampaigns],
   );
 
-  const getNextContact = useCallback(async (campaignId: string) => {
-    try {
-      return await apiGetNextContact(campaignId);
-    } catch (err) {
-      log.error('Error getting next contact:', err);
-      return null;
-    }
-  }, []);
-
   const dialContact = useCallback(async (queueItem: DialerQueueItem): Promise<void> => {
     // Barreira de compliance: o discador tambem e caminho de discagem, entao
     // passa pela mesma checagem do softphone antes de marcar como `dialing`.
@@ -198,22 +188,13 @@ export const usePredictiveDialer = (preDialCheck?: PreDialCheck) => {
       }
     }
 
-    try {
-      await apiMarkDialing(queueItem);
-      setCurrentCall(queueItem);
-      toast.info(`Discando para ${queueItem.name || queueItem.phone}...`, {
-        description: queueItem.phone,
-      });
-    } catch (err) {
-      // Um claim que falhou deixa a linha em estado desconhecido: seguir
-      // discando poderia duplicar a ligacao. Para a campanha (etapa 080).
-      log.error('Error dialing contact:', err);
-      setIsDialing(false);
-      setActiveCampaign(null);
-      toast.error('Não foi possível reservar o contato na fila. Campanha pausada.', {
-        description: 'A fila pode estar inconsistente. Retome quando o erro cessar.',
-      });
-    }
+    // Etapa 079: a reserva ja aconteceu no banco (claim_next_dialer_contact)
+    // antes da checagem de compliance. Aqui so sobra apresentar o contato; um
+    // contato pulado sai como `skipped` e libera a vez.
+    setCurrentCall(queueItem);
+    toast.info(`Discando para ${queueItem.name || queueItem.phone}...`, {
+      description: queueItem.phone,
+    });
   }, [preDialCheck]);
 
   const completeCall = useCallback(
@@ -302,7 +283,7 @@ export const usePredictiveDialer = (preDialCheck?: PreDialCheck) => {
   }, []);
 
   // "Priorizar" e so mudar `priority`: a fila e a escolha do proximo contato
-  // (apiFetchQueue e apiGetNextContact) ordenam por priority desc.
+  // (apiFetchQueue e claim_next_dialer_contact) ordenam por priority desc.
   const setPriority = useCallback(async (queueItemId: string, priority: number): Promise<boolean> => {
     try {
       await apiUpdateQueueItem(queueItemId, { priority });
@@ -318,12 +299,26 @@ export const usePredictiveDialer = (preDialCheck?: PreDialCheck) => {
   useEffect(() => {
     if (isDialing && activeCampaign && !currentCall) {
       const dial = async () => {
-        const next = await getNextContact(activeCampaign.id);
-        if (next) {
-          await dialContact(next);
-        } else {
-          toast.info('Fila de discagem concluída');
-          await pauseCampaign(activeCampaign.id);
+        try {
+          // Etapa 079: reserva atomica no banco — devolve o contato ja em
+          // `dialing` e so para este chamador.
+          const next = await apiClaimNextContact(activeCampaign.id);
+          if (next) {
+            await dialContact(next);
+          } else {
+            toast.info('Fila de discagem concluída');
+            await pauseCampaign(activeCampaign.id);
+          }
+        } catch (err) {
+          // Etapa 080: sem reserva confiavel nao da para seguir discando — a
+          // linha fica em estado desconhecido e o proximo ciclo poderia ligar
+          // de novo. Para a campanha.
+          log.error('Error claiming next contact:', err);
+          setIsDialing(false);
+          setActiveCampaign(null);
+          toast.error('Não foi possível reservar o contato na fila. Campanha pausada.', {
+            description: 'A fila pode estar inconsistente. Retome quando o erro cessar.',
+          });
         }
       };
       dialerIntervalRef.current = setTimeout(dial, 2000);
@@ -331,7 +326,7 @@ export const usePredictiveDialer = (preDialCheck?: PreDialCheck) => {
     return () => {
       if (dialerIntervalRef.current) clearTimeout(dialerIntervalRef.current);
     };
-  }, [isDialing, activeCampaign, currentCall, loopTick, getNextContact, dialContact, pauseCampaign]);
+  }, [isDialing, activeCampaign, currentCall, loopTick, dialContact, pauseCampaign]);
 
   // E244: sem agrupamento, cada linha de `dialer_queue`/`dialer_campaigns` que o
   // realtime entregava disparava uma leitura — e o canal era recriado a cada

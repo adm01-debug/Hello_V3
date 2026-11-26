@@ -89,34 +89,21 @@ export async function apiPauseCampaign(campaignId: string): Promise<void> {
   if (error) throw error;
 }
 
-export async function apiGetNextContact(campaignId: string): Promise<DialerQueueItem | null> {
-  const now = new Date().toISOString();
-  const { data, error } = await supabase
-    .from('dialer_queue')
-    .select('*')
-    .eq('campaign_id', campaignId)
-    .eq('status', 'pending')
-    .or(`next_attempt_at.is.null,next_attempt_at.lte.${now}`)
-    .order('priority', { ascending: false })
-    .order('created_at', { ascending: true })
-    .limit(1)
-    .maybeSingle();
+/**
+ * Etapa 079 (A-057): reivindica o proximo contato em **uma** operacao no banco
+ * (`claim_next_dialer_contact`). Antes eram duas idas — SELECT `pending` e
+ * depois UPDATE `dialing` sem condicao de status — e duas abas/dois agentes na
+ * mesma campanha pegavam o **mesmo** contato, ligando duas vezes para o mesmo
+ * cliente. `attempts` tambem passou a ser `attempts + 1` no SQL: antes vinha do
+ * objeto em memoria e duas tentativas simultaneas viravam uma.
+ */
+export async function apiClaimNextContact(campaignId: string): Promise<DialerQueueItem | null> {
+  const { data, error } = await supabase.rpc('claim_next_dialer_contact', {
+    p_campaign_id: campaignId,
+  });
   if (error) throw error;
-  return (data as DialerQueueItem | null) ?? null;
-}
-
-export async function apiMarkDialing(item: DialerQueueItem): Promise<void> {
-  const { error } = await supabase
-    .from('dialer_queue')
-    .update({
-      status: 'dialing',
-      last_attempt_at: new Date().toISOString(),
-      attempts: item.attempts + 1,
-    })
-    .eq('id', item.id);
-  // Sem checar o erro, um claim que falhou deixava a linha `pending` e ela era
-  // discada de novo no ciclo seguinte (etapa 080).
-  if (error) throw error;
+  const rows = (data ?? []) as unknown as DialerQueueItem[];
+  return rows[0] ?? null;
 }
 
 /**
