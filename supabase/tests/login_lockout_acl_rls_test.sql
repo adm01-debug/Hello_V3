@@ -36,5 +36,66 @@ begin
   end loop;
 end $$;
 
+
+-- Passo 3 (efeito real): como anon, o banco recusa a chamada.
+do $$
+declare v_recusou boolean := false; v_autenticado_recusou boolean := false;
+begin
+  begin
+    set local role anon;
+    perform public.record_failed_login('gate-anon@example.com', null, 'gate');
+  exception
+    when insufficient_privilege then
+      v_recusou := true;
+    when others then
+      reset role;
+      raise exception 'FALHA 3: anon recebeu erro inesperado: %', sqlerrm;
+  end;
+  reset role;
+  if not v_recusou then
+    raise exception 'FALHA 3: anon executou record_failed_login -- o banco nao esta protegido';
+  end if;
+  raise notice 'OK 3: anon recebe permission denied ao tentar travar uma conta';
+  begin
+    set local role authenticated;
+    perform public.check_login_lockout('gate-anon@example.com');
+  exception
+    when insufficient_privilege then
+      v_autenticado_recusou := true;
+    when others then
+      reset role;
+      raise exception 'FALHA 3: authenticated recebeu erro inesperado: %', sqlerrm;
+  end;
+  reset role;
+  if not v_autenticado_recusou then
+    raise exception 'FALHA 3: authenticated executou check_login_lockout';
+  end if;
+  raise notice 'OK 3b: authenticated recebe permission denied';
+end $$;
+
+-- Passo 4 (efeito real): por dentro o lockout continua funcionando, e a edge
+-- (service role) continua conseguindo chamar.
+do $$
+declare v_res jsonb; i int;
+begin
+  set local role service_role;
+  for i in 1..5 loop
+    select public.record_failed_login('gate-lock@example.com', '10.0.0.9', 'gate') into v_res;
+  end loop;
+  select public.check_login_lockout('gate-lock@example.com') into v_res;
+  reset role;
+  if coalesce((v_res->>'locked')::boolean, false) is not true then
+    raise exception 'FALHA 4: 5 falhas nao bloquearam a conta (retorno: %)', v_res;
+  end if;
+  set local role service_role;
+  perform public.record_successful_login('gate-lock@example.com', '10.0.0.9', 'gate');
+  select public.check_login_lockout('gate-lock@example.com') into v_res;
+  reset role;
+  if coalesce((v_res->>'locked')::boolean, false) then
+    raise exception 'FALHA 4: login bem-sucedido nao limpou o bloqueio (retorno: %)', v_res;
+  end if;
+  raise notice 'OK 4: service_role continua registrando falhas e limpando o bloqueio';
+end $$;
+
 \echo '=== fim: nada foi gravado (rollback) ==='
 rollback;

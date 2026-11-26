@@ -17,12 +17,27 @@ export function useLoginLockout() {
   const [lockoutStatus, setLockoutStatus] = useState<LockoutStatus | null>(null);
   const [isChecking, setIsChecking] = useState(false);
 
+  // A-019: as RPCs de lockout são SECURITY DEFINER e ficam sem EXECUTE para
+  // anon/authenticated. O único caminho é a edge login-attempt, que aplica
+  // rate limit por IP (lido do request, não do corpo) e chama as RPCs com
+  // service role.
+  const invokeLoginAttempt = useCallback(async (
+    action: 'check' | 'fail' | 'success',
+    email: string,
+  ): Promise<{ data: Record<string, unknown> | null; error: Error | null }> => {
+    const { data, error } = await supabase.functions.invoke('login-attempt', {
+      body: { email: email.toLowerCase(), action },
+    });
+    return {
+      data: (data as Record<string, unknown> | null) ?? null,
+      error: error ? (error as Error) : null,
+    };
+  }, []);
+
   const checkLockout = useCallback(async (email: string): Promise<LockoutStatus> => {
     setIsChecking(true);
     try {
-      const { data, error } = await supabase.rpc('check_login_lockout', {
-        p_email: email.toLowerCase()
-      });
+      const { data, error } = await invokeLoginAttempt('check', email);
 
       if (error) {
         logger.error('Error checking lockout:', error);
@@ -45,18 +60,14 @@ export function useLoginLockout() {
     } finally {
       setIsChecking(false);
     }
-  }, []);
+  }, [invokeLoginAttempt]);
 
   const recordFailedAttempt = useCallback(async (
     email: string,
-    ipAddress?: string
+    _ipAddress?: string
   ): Promise<LockoutStatus> => {
     try {
-      const { data, error } = await supabase.rpc('record_failed_login', {
-        p_email: email.toLowerCase(),
-        p_ip_address: ipAddress ?? undefined,
-        p_user_agent: navigator.userAgent
-      });
+      const { data, error } = await invokeLoginAttempt('fail', email);
 
       if (error) {
         logger.error('Error recording failed attempt:', error);
@@ -78,18 +89,14 @@ export function useLoginLockout() {
       logger.error('Error recording failed attempt:', err);
       return { locked: false, attempts: 0, unknown: true };
     }
-  }, []);
+  }, [invokeLoginAttempt]);
 
   const recordSuccessfulLogin = useCallback(async (
     email: string,
-    ipAddress?: string
+    _ipAddress?: string
   ): Promise<void> => {
     try {
-      const { error } = await supabase.rpc('record_successful_login', {
-        p_email: email.toLowerCase(),
-        p_ip_address: ipAddress ?? undefined,
-        p_user_agent: navigator.userAgent
-      });
+      const { error } = await invokeLoginAttempt('success', email);
       if (error) {
         logger.error('Error recording successful login:', error);
       }
@@ -98,7 +105,7 @@ export function useLoginLockout() {
     } catch (err) {
       logger.error('Error recording successful login:', err);
     }
-  }, []);
+  }, [invokeLoginAttempt]);
 
   const formatRemainingTime = useCallback((seconds: number): string => {
     if (seconds < 60) {
