@@ -113,6 +113,20 @@ via `format('CREATE POLICY %I …')` (`supabase/migrations/20260711192700_…`).
    (`grep -rn "ON public.<tabela>" supabase/migrations/`): há tabelas com várias rodadas de reescrita, e a
    última a rodar é a que vale.
 
+## Migrations conhecidas como não reaplicáveis (etapa 131)
+
+Um banco novo a partir do repositório exige que a sequência rode do zero. As migrations abaixo não
+rodam sozinhas num banco vazio e **não podem ser editadas** — já foram aplicadas, e o ledger guarda a
+versão, não o conteúdo:
+
+- `20260404151943_4d4acd99-….sql:87-90` — quatro `ALTER POLICY` em `geo_*`. Na sequência atual os alvos
+  existem (`20260315143858` cria três delas, `20260315143859:8` cria a quarta e `20260404153313:22` a
+  remove depois), então a ordem de timestamp resolve; a guarda idempotente é
+  `20261127270000_geo_policies_idempotente.sql`, que passa também em banco sem as tabelas. A lista
+  completa e o harness de banco descartável são as etapas 134 e 053.
+- `ALTER POLICY` **não** tem `IF EXISTS`; `DROP POLICY`, `CREATE TABLE` e `CREATE INDEX` têm — usar
+  sempre, e nunca escrever DDL contra o estado de produção como se ele fosse a sequência versionada.
+
 ## Exclusão de conta (LGPD) — apurado em 2026-11-24
 
 Etapa 132 do plano. Desfecho **(a)**: a correção de FK de
@@ -172,6 +186,73 @@ descartado e os pontos da semana se perdiam.
 Gate: `supabase/tests/increment_weekly_stats_rpc_rls_test.sql` (6 passos) pelo `migrations.yml modo=verificar`.
 **Aberto:** as policies da tabela seguem `FOR INSERT/UPDATE USING (true)` — um autenticado ainda escreve
 a estatística de qualquer agente por fora da RPC.
+
+
+## Ponteiros polimórficos — contrato medido em 2026-11-27
+
+Etapa 129 do plano (achado A-127). Três colunas apontam para tabelas diferentes conforme a coluna de tipo
+ao lado, e essas colunas de tipo eram `text` sem `CHECK` (A-125). O contrato vivia só no código que
+escreve; agora está no banco (`COMMENT ON COLUMN`, migration `20261127220000_polymorphic_pointer_comments.sql`)
+e aqui. Os conjuntos abaixo são os **valores reais em produção**, levantados pela sonda
+`supabase/tests/probe_129_polymorphic_rls_test.sql` (run 45865868536) — não o que o TypeScript promete.
+
+### `audit_logs.resource_type` → `audit_logs.resource_id`
+
+`resource_id` é `text` e **não tem FK**: o tipo escolhe a tabela. Quem grava é
+`public.log_audit_event(p_action, p_resource_type, p_resource_id, p_details)`, sem validar nada.
+
+| `resource_type` | Linhas | Destino de `resource_id` |
+|---|---:|---|
+| `contacts` | 107 | `public.contacts.id` |
+| `SYSTEM` | 100 | sem tabela — evento de sistema |
+| `user_profiles` | 78 | `public.user_profiles.id` |
+| `agents` | 20 | `public.agents.id` |
+| `contact` | 8 | `public.contacts.id` — **mesma tabela**, grafia antiga |
+| `user_roles` | 6 | linha de `public.user_roles` |
+| `consent_record` | 3 | `public.consent_records.id` (o tipo é singular, a tabela é plural) |
+| `webhook` | 3 | sem tabela (`webhook_secrets` é config, não o alvo) |
+| `edge_function` | 3 | sem tabela — nome da função |
+| `call_recordings` | 3 | `public.call_recordings.id` |
+| `api_endpoint` | 2 | sem tabela — rota |
+| `voip_trunks` | 2 | `public.voip_trunks.id` |
+| `system` | 2 | sem tabela — **mesma ideia de `SYSTEM`**, grafia minúscula |
+| `call_transcription` | 1 | `public.call_transcriptions.id` (singular × plural) |
+| `call_analysis` | 1 | `public.call_analyses.id` (singular × plural) |
+
+Duas inconsistências reais aparecem aí e **não foram normalizadas** (a normalização é a etapa 139, que só
+então pode pôr o `CHECK`): `contacts` × `contact` e `SYSTEM` × `system`. Qualquer consulta que cruze
+`resource_id` com a tabela de destino precisa tolerar as duas grafias.
+
+**Não ponha `CHECK` em `audit_logs.resource_type` nem em `notifications.source_type`** (etapa 139). O valor é
+texto livre em toda a cadeia: `logAuditEvent({ resourceType: string })` (`src/lib/audit/index.ts:23`) e o RPC
+`log_audit_event` gravam sem validar. Já existem valores usados pelo código que **nunca** apareceram no banco
+porque a tela correspondente não rodou ainda: `extension_bulk` (`src/hooks/useExtensionAudit.ts:31`) e
+`system_maintenance` (`src/components/settings/SystemMaintenancePanel.tsx:32`). Um `CHECK` derivado do que foi
+observado faria esses dois caminhos falharem, e o erro é só registrado no console (`src/lib/audit/index.ts:38`)
+— a trilha de auditoria desapareceria em silêncio. Se algum dia houver restrição aqui, ela tem de ser
+alimentada por uma tabela de tipos (`audit_resource_types`), não por um `IN (...)` fixo.
+
+### `notifications.source_type` → `notifications.source_id`
+
+Aqui o tipo **não é nome de tabela**: é o marcador do produtor da notificação.
+
+| `source_type` | Linhas | Significado de `source_id` |
+|---|---:|---|
+| `cron_health` | 16 | nome do job monitorado |
+| `optimistic_lock_hotspot` | 3 | tabela com conflito de versão |
+| `idle_index_hotspot` | 1 | nome do índice sem uso |
+
+### `optimistic_lock_conflicts.table_name` → `optimistic_lock_conflicts.record_id`
+
+| `table_name` | Linhas | `record_id` |
+|---|---:|---|
+| `deals` | 4 | PK da linha de `public.deals` |
+| `contacts` | 3 | PK da linha de `public.contacts` |
+
+O gate `supabase/tests/polymorphic_pointer_comments_rls_test.sql` falha se algum desses comentários sumir e
+também se alguém criar `CHECK` nessas colunas antes da etapa 139.
+
+
 
 
 ## Feriado e horário de discagem — contrato medido em 2026-11-27
