@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Database, RefreshCw, ShieldAlert } from "lucide-react";
 import { usePageTitle } from "@/hooks/usePageTitle";
 import type {
+  CronHealthRow,
   IdleIndex,
   IndexDropAuditRow,
   SlowQuery,
@@ -15,6 +16,7 @@ import { TopTablesCard } from "./database-health/TopTablesCard";
 import { IdleIndexesCard } from "./database-health/IdleIndexesCard";
 import { DropAuditCard } from "./database-health/DropAuditCard";
 import { SlowQueriesCard } from "./database-health/SlowQueriesCard";
+import { CronHealthCard } from "./database-health/CronHealthCard";
 
 import { safeToLocaleString } from "@/lib/safe-date";
 export default function DatabaseHealth() {
@@ -65,11 +67,23 @@ export default function DatabaseHealth() {
     staleTime: 60_000,
   });
 
+  const cron = useQuery({
+    queryKey: ["db-cron-health"],
+    queryFn: async (): Promise<CronHealthRow[]> => {
+      const { data, error } = await supabase.rpc("get_cron_health");
+      if (error) throw error;
+      return (data as unknown as CronHealthRow[]) ?? [];
+    },
+    staleTime: 60_000,
+    refetchInterval: 60_000,
+  });
+
   const refresh = () => {
     snapshot.refetch();
     slow.refetch();
     idle.refetch();
     dropAudit.refetch();
+    cron.refetch();
   };
 
   return (
@@ -101,6 +115,7 @@ export default function DatabaseHealth() {
       <ActivityCards isLoading={snapshot.isLoading} data={snapshot.data} />
       <BloatCard isLoading={snapshot.isLoading} bloat={snapshot.data?.bloat} />
       <TopTablesCard isLoading={snapshot.isLoading} tables={snapshot.data?.top_tables} />
+      <CronHealthCard isLoading={cron.isLoading} rows={cron.data} />
       <IdleIndexesCard
         isLoading={idle.isLoading}
         indexes={idle.data}
