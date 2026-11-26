@@ -3,7 +3,7 @@
  * Logs to console in dev; can be extended to forward to a logging endpoint.
  */
 
-interface ErrorReport {
+export interface ErrorReport {
   message: string;
   stack?: string;
   componentStack?: string;
@@ -20,6 +20,16 @@ interface ErrorReport {
 
 const ERROR_BUFFER: ErrorReport[] = [];
 const MAX_BUFFER = 20;
+
+/**
+ * Sink opcional para persistir os relatos (etapa 230). `error-tracking` segue
+ * sem dependencia de Supabase; `src/lib/errorReporter.ts` registra o sink.
+ */
+let errorSink: ((report: ErrorReport) => void) | null = null;
+
+export function setErrorSink(sink: ((report: ErrorReport) => void) | null): void {
+  errorSink = sink;
+}
 
 /** Shared environment fields attached to every report. */
 function context() {
@@ -40,6 +50,14 @@ function addReport(report: ErrorReport): void {
   if (ERROR_BUFFER.length >= MAX_BUFFER) ERROR_BUFFER.shift();
   ERROR_BUFFER.push(report);
   sendToLog(report);
+  if (errorSink) {
+    try {
+      errorSink(report);
+    } catch (e) {
+      // Persistir nunca pode derrubar o handler de erro.
+      console.warn('[ErrorTracker] Failed to persist report:', e);
+    }
+  }
 }
 
 export function reportError(params: {
