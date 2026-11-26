@@ -2,11 +2,26 @@
  "aviso": "GERADO AUTOMATICAMENTE por scripts/ai-context/gerar.mjs — não editar à mão; será sobrescrito.",
  "format_version": 2,
  "git": {
-  "commit": "dc142b62f23f22063946ec91519b34a04eb58f28",
+  "commit": "0a4fed06c136924806e920024f34da23e1b4f009",
   "branch": "main",
-  "data_commit": "2026-11-26T20:05:29-03:00",
+  "data_commit": "2026-11-26T20:48:31-03:00",
   "remote": "https://github.com/adm01-debug/Hello_V3",
   "ultimos_commits": [
+   {
+    "sha": "0a4fed0",
+    "data": "2026-11-26",
+    "assunto": "fix: valida forma do snapshot e da fila de coaching VoIP no localStorage (#378)"
+   },
+   {
+    "sha": "bdbd99f",
+    "data": "2026-11-26",
+    "assunto": "docs: reaudita o que foi descartado, arquivo por arquivo (nenhuma perda) (#377)"
+   },
+   {
+    "sha": "80b9200",
+    "data": "2026-11-26",
+    "assunto": "chore: registrar a varredura de branches e PRs (nenhum trabalho perdido) (#376)"
+   },
    {
     "sha": "dc142b6",
     "data": "2026-11-26",
@@ -116,24 +131,9 @@
     "sha": "11e8d43",
     "data": "2026-11-26",
     "assunto": "feat: serie historica do pipeline aberto com tela e job diario (#349)"
-   },
-   {
-    "sha": "a1725d6",
-    "data": "2026-11-26",
-    "assunto": "feat: historico de versoes dos artigos da base de conhecimento (#348)"
-   },
-   {
-    "sha": "96fa4dd",
-    "data": "2026-11-26",
-    "assunto": "feat: historico do log de auditoria de redacao de dados sensiveis (#347)"
-   },
-   {
-    "sha": "fbfb916",
-    "data": "2026-11-26",
-    "assunto": "feat: tela para cadastrar e rotacionar o segredo HMAC do webhook de entrada (#346)"
    }
   ],
-  "arquivos_mudados_7d": 1940,
+  "arquivos_mudados_7d": 1941,
   "pastas_mais_mudadas_30d": [
    {
     "pasta": "src/hooks/__tests__",
@@ -149,7 +149,7 @@
    },
    {
     "pasta": "src/lib/__tests__",
-    "mudancas": 95
+    "mudancas": 97
    },
    {
     "pasta": "src/components/ui",
@@ -165,7 +165,7 @@
    },
    {
     "pasta": "src/components/layout",
-    "mudancas": 37
+    "mudancas": 35
    },
    {
     "pasta": "src/pages/admin",
@@ -180,16 +180,16 @@
     "mudancas": 32
    },
    {
-    "pasta": "docs/estado/funcionalidades-planejadas.md",
-    "mudancas": 30
-   },
-   {
     "pasta": "src/components/dashboard",
     "mudancas": 30
    },
    {
     "pasta": "src/components/network",
     "mudancas": 30
+   },
+   {
+    "pasta": "docs/estado/funcionalidades-planejadas.md",
+    "mudancas": 29
    },
    {
     "pasta": "src/components/dialer",
@@ -203,19 +203,19 @@
    },
    {
     "arquivo": "docs/estado/funcionalidades-planejadas.md",
-    "mudancas": 30
+    "mudancas": 29
    },
    {
     "arquivo": "src/components/calls/UnifiedSoftphone.tsx",
     "mudancas": 13
    },
    {
-    "arquivo": "src/components/layout/AppSidebar.tsx",
-    "mudancas": 13
-   },
-   {
     "arquivo": "src/hooks/useMultiChannelCall.ts",
     "mudancas": 12
+   },
+   {
+    "arquivo": "src/components/layout/AppSidebar.tsx",
+    "mudancas": 11
    },
    {
     "arquivo": "src/components/layout/CommandPalette.tsx",
@@ -258,10 +258,6 @@
     "mudancas": 8
    },
    {
-    "arquivo": "src/routes/protectedRoutes.tsx",
-    "mudancas": 8
-   },
-   {
     "arquivo": "supabase/functions/validate-geo/index.ts",
     "mudancas": 8
    },
@@ -282,7 +278,7 @@
     "mudancas": 7
    },
    {
-    "arquivo": "src/pages/Calls.tsx",
+    "arquivo": "src/routes/protectedRoutes.tsx",
     "mudancas": 7
    },
    {
@@ -296,6 +292,10 @@
    {
     "arquivo": "supabase/functions/voip-load-test/index.ts",
     "mudancas": 7
+   },
+   {
+    "arquivo": ".github/workflows/ci.yml",
+    "mudancas": 6
    }
   ],
   "autores_30d": [
@@ -306,9 +306,9 @@
   ]
  },
  "contagens": {
-  "arquivos_total": 1849,
+  "arquivos_total": 1850,
   "arquivos_codigo": 1386,
-  "linhas_codigo": 184986,
+  "linhas_codigo": 185039,
   "rotas": 108,
   "rotas_http_backend": 11,
   "vistas_por_id": 0,
@@ -323,7 +323,7 @@
   "testes": 462,
   "workflows": 5,
   "scripts": 36,
-  "docs_md": 121
+  "docs_md": 122
  },
  "por_pasta": {
   "e2e/calls.spec.ts": {
@@ -496,7 +496,7 @@
   },
   "src/lib": {
    "arquivos": 184,
-   "linhas": 22179
+   "linhas": 22232
   },
   "src/main.tsx": {
    "arquivos": 1,

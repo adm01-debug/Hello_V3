@@ -2825,20 +2825,20 @@
   {
    "arquivo": "src/lib/__tests__/voipProactiveSnapshot.coverage.test.ts",
    "tipo": "unit",
-   "linhas": 88,
+   "linhas": 105,
    "testa": [
     "src/lib/voipProactiveSnapshot.ts"
    ],
-   "casos": 8
+   "casos": 10
   },
   {
    "arquivo": "src/lib/__tests__/voipRecommendationCoaching.coverage.test.ts",
    "tipo": "unit",
-   "linhas": 187,
+   "linhas": 210,
    "testa": [
     "src/lib/voipRecommendationCoaching.ts"
    ],
-   "casos": 12
+   "casos": 14
   },
   {
    "arquivo": "src/lib/__tests__/web-vitals.coverage.test.ts",

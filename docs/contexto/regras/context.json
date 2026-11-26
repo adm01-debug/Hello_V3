@@ -1,15 +1,15 @@
 {
  "meta": {
-  "sha": "dc142b62f23f22063946ec91519b34a04eb58f28",
+  "sha": "0a4fed06c136924806e920024f34da23e1b4f009",
   "branch": "main",
   "remote": "https://github.com/adm01-debug/Hello_V3",
-  "generated_at": "2026-11-26 23:08 UTC",
-  "files_total": 1895,
+  "generated_at": "2026-11-26 23:50 UTC",
+  "files_total": 1896,
   "code_files": 1691,
-  "code_lines": 207389
+  "code_lines": 207442
  },
  "version": "1.3.2",
- "facts_hash": "ca9b67d57b583397",
+ "facts_hash": "7548fae2f6bee236",
  "stack": {
   "frameworks": [
    "React + Vite",
@@ -35260,7 +35260,7 @@
   {
    "module": "src/lib",
    "files": 184,
-   "lines": 22179,
+   "lines": 22232,
    "tables": [
     "active_sessions",
     "call_quality_metrics",
@@ -58317,7 +58317,7 @@
     "file": "src/lib/voipProactiveSnapshot.ts",
     "name": "shouldRunProactiveCheck",
     "params": "",
-    "body": "if (!isProactiveEnabled()) return false; try { const raw = localStorage.getItem(SNAPSHOT_KEY); if (!raw) return true; const snap = JSON.parse(raw) as Snapshot; return Date.now() - snap.takenAt >= CHECK_INTERVAL_MS; } catch { return true; }"
+    "body": "if (!isProactiveEnabled()) return false; try { const raw = localStorage.getItem(SNAPSHOT_KEY); if (!raw) return true; const snap = JSON.parse(raw) as Partial<Snapshot> | null; if (typeof snap?.takenAt !== 'number' || !Number.isFinite(snap.takenAt)) return true; return Date.now() - snap.takenAt >= CHECK_INTERVAL_MS; } catch { return true; }"
    },
    {
     "file": "src/lib/bitrix/circuit-breaker.ts",
@@ -71815,6 +71815,14 @@
    },
    {
     "file": "src/lib/__tests__/voipProactiveSnapshot.coverage.test.ts",
+    "name": "shouldRunProactiveCheck true when snapshot has no numeric takenAt"
+   },
+   {
+    "file": "src/lib/__tests__/voipProactiveSnapshot.coverage.test.ts",
+    "name": "compareSnapshotAndNotify tolerates snapshot with non-array ids"
+   },
+   {
+    "file": "src/lib/__tests__/voipProactiveSnapshot.coverage.test.ts",
     "name": "compareSnapshotAndNotify warns for new critical and writes snapshot"
    },
    {
@@ -71836,6 +71844,14 @@
    {
     "file": "src/lib/__tests__/voipRecommendationCoaching.coverage.test.ts",
     "name": "captures null mosBefore when supabase returns empty data"
+   },
+   {
+    "file": "src/lib/__tests__/voipRecommendationCoaching.coverage.test.ts",
+    "name": "survives a queue entry that is not an array or holds invalid items"
+   },
+   {
+    "file": "src/lib/__tests__/voipRecommendationCoaching.coverage.test.ts",
+    "name": "ignores a non-object coached map without breaking scheduling"
    },
    {
     "file": "src/lib/__tests__/voipRecommendationCoaching.coverage.test.ts",
@@ -112267,7 +112283,7 @@
   },
   "src/lib/voipProactiveSnapshot.ts": {
    "path": "src/lib/voipProactiveSnapshot.ts",
-   "lines": 74,
+   "lines": 78,
    "exports": [
     "function isProactiveEnabled",
     "function setProactiveEnabled",
@@ -112288,7 +112304,7 @@
     {
      "name": "shouldRunProactiveCheck",
      "params": "",
-     "body": "if (!isProactiveEnabled()) return false; try { const raw = localStorage.getItem(SNAPSHOT_KEY); if (!raw) return true; const snap = JSON.parse(raw) as Snapshot; return Date.now() - snap.takenAt >= CHECK_INTERVAL_MS; } catch { return true; }"
+     "body": "if (!isProactiveEnabled()) return false; try { const raw = localStorage.getItem(SNAPSHOT_KEY); if (!raw) return true; const snap = JSON.parse(raw) as Partial<Snapshot> | null; if (typeof snap?.takenAt !== 'number' || !Number.isFinite(snap.takenAt)) return true; return Date.now() - snap.takenAt >= CHECK_INTERVAL_MS; } catch { return true; }"
     }
    ],
    "temporal": [
@@ -112297,7 +112313,7 @@
   },
   "src/lib/voipRecommendationCoaching.ts": {
    "path": "src/lib/voipRecommendationCoaching.ts",
-   "lines": 136,
+   "lines": 145,
    "exports": [
     "interface CoachingItem",
     "function scheduleCoachingCheck",
@@ -114460,7 +114476,7 @@
   },
   "src/lib/__tests__/voipProactiveSnapshot.coverage.test.ts": {
    "path": "src/lib/__tests__/voipProactiveSnapshot.coverage.test.ts",
-   "lines": 88,
+   "lines": 105,
    "is_test": true,
    "temporal": [
     "JSON.stringify({ ids: [], takenAt: Date.now() - 25 * 60 * 60 * 1000 }),"
@@ -114473,13 +114489,15 @@
     "shouldRunProactiveCheck true when enabled and no snapshot",
     "shouldRunProactiveCheck false for fresh snapshot, true for stale",
     "shouldRunProactiveCheck true on corrupt snapshot JSON",
+    "shouldRunProactiveCheck true when snapshot has no numeric takenAt",
+    "compareSnapshotAndNotify tolerates snapshot with non-array ids",
     "compareSnapshotAndNotify warns for new critical and writes snapshot",
     "compareSnapshotAndNotify does not warn when nothing new"
    ]
   },
   "src/lib/__tests__/voipRecommendationCoaching.coverage.test.ts": {
    "path": "src/lib/__tests__/voipRecommendationCoaching.coverage.test.ts",
-   "lines": 187,
+   "lines": 210,
    "is_test": true,
    "params": [
     {
@@ -114495,6 +114513,8 @@
     "schedules a coaching check with mosBefore captured",
     "does not schedule duplicates for the same recommendation",
     "captures null mosBefore when supabase returns empty data",
+    "survives a queue entry that is not an array or holds invalid items",
+    "ignores a non-object coached map without breaking scheduling",
     "returns early when queue is empty",
     "keeps items that are not yet due",
     "skips items with null mosBefore once due",
@@ -128360,10 +128380,40 @@
   }
  },
  "git": {
-  "sha": "dc142b62f23f22063946ec91519b34a04eb58f28",
+  "sha": "0a4fed06c136924806e920024f34da23e1b4f009",
   "branch": "main",
   "remote": "https://github.com/adm01-debug/Hello_V3",
   "commits": [
+   {
+    "sha": "0a4fed0",
+    "date": "2026-11-26",
+    "author": "adm01-debug",
+    "subject": "fix: valida forma do snapshot e da fila de coaching VoIP no localStorage (#378)",
+    "files": [
+     "src/lib/__tests__/voipProactiveSnapshot.coverage.test.ts",
+     "src/lib/__tests__/voipRecommendationCoaching.coverage.test.ts",
+     "src/lib/voipProactiveSnapshot.ts",
+     "src/lib/voipRecommendationCoaching.ts"
+    ]
+   },
+   {
+    "sha": "bdbd99f",
+    "date": "2026-11-26",
+    "author": "adm01-debug",
+    "subject": "docs: reaudita o que foi descartado, arquivo por arquivo (nenhuma perda) (#377)",
+    "files": [
+     "docs/qa/onda-39-varredura-branches-e-prs.md"
+    ]
+   },
+   {
+    "sha": "80b9200",
+    "date": "2026-11-26",
+    "author": "adm01-debug",
+    "subject": "chore: registrar a varredura de branches e PRs (nenhum trabalho perdido) (#376)",
+    "files": [
+     "docs/qa/onda-39-varredura-branches-e-prs.md"
+    ]
+   },
    {
     "sha": "dc142b6",
     "date": "2026-11-26",
@@ -128730,47 +128780,12 @@
     "files": [
      "supabase/tests/cron_credentials_rls_test.sql"
     ]
-   },
-   {
-    "sha": "0744961",
-    "date": "2026-11-25",
-    "author": "adm01-debug",
-    "subject": "fix: tirar as RPCs de lockout do alcance do navegador (etapa 002) (#342)",
-    "files": [
-     "docs/qa/05-PROGRESSO.md",
-     "src/hooks/__tests__/useLoginLockout.coverage.test.tsx",
-     "src/hooks/useLoginLockout.ts",
-     "src/pages/__tests__/Login.lockout.test.tsx",
-     "supabase/migrations/20261126101000_revoke_anon_login_rpcs.sql",
-     "supabase/tests/login_lockout_acl_rls_test.sql"
-    ]
-   },
-   {
-    "sha": "e145e74",
-    "date": "2026-11-25",
-    "author": "adm01-debug",
-    "subject": "fix: deploy de edge abortava sem confirmacao (--yes) (#341)",
-    "files": [
-     ".github/workflows/deploy-edge-functions.yml"
-    ]
-   },
-   {
-    "sha": "045b0fb",
-    "date": "2026-11-25",
-    "author": "adm01-debug",
-    "subject": "fix: tirar host fixo e chave anon do cron e do trigger de scorecard (etapa 040) (#340)",
-    "files": [
-     "docs/qa/05-PROGRESSO.md",
-     "supabase/migrations/20261126100000_edge_function_urls_from_vault.sql",
-     "supabase/migrations/20261126100100_fix_cron_urls_quoting.sql",
-     "supabase/tests/cron_credentials_rls_test.sql"
-    ]
    }
   ],
   "hot_files": [
    [
     "docs/qa/05-PROGRESSO.md",
-    22
+    20
    ],
    [
     "docs/qa/03-ACHADOS.md",
@@ -128785,6 +128800,10 @@
     5
    ],
    [
+    "docs/qa/onda-39-varredura-branches-e-prs.md",
+    2
+   ],
+   [
     "src/components/layout/AppSidebar.tsx",
     2
    ],
@@ -128797,8 +128816,20 @@
     2
    ],
    [
-    "supabase/tests/cron_credentials_rls_test.sql",
-    2
+    "src/lib/__tests__/voipProactiveSnapshot.coverage.test.ts",
+    1
+   ],
+   [
+    "src/lib/__tests__/voipRecommendationCoaching.coverage.test.ts",
+    1
+   ],
+   [
+    "src/lib/voipProactiveSnapshot.ts",
+    1
+   ],
+   [
+    "src/lib/voipRecommendationCoaching.ts",
+    1
    ],
    [
     "supabase/functions/_shared/__tests__/client-ip.test.ts",
@@ -128830,22 +128861,6 @@
    ],
    [
     "supabase/tests/polymorphic_pointer_comments_rls_test.sql",
-    1
-   ],
-   [
-    "supabase/tests/probe_129_polymorphic_rls_test.sql",
-    1
-   ],
-   [
-    "src/hooks/__tests__/useGamification.coverage.test.tsx",
-    1
-   ],
-   [
-    "src/hooks/useGamification.ts",
-    1
-   ],
-   [
-    "supabase/migrations/20261127250000_increment_weekly_stats_rpc.sql",
     1
    ]
   ]

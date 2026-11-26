@@ -3075,7 +3075,7 @@
     "shouldRunProactiveCheck"
    ],
    "export_default": null,
-   "linhas": 74,
+   "linhas": 78,
    "tabelas": [],
    "rpcs": [],
    "edges": [],
@@ -3103,7 +3103,7 @@
     "scheduleCoachingCheck"
    ],
    "export_default": null,
-   "linhas": 136,
+   "linhas": 145,
    "tabelas": [
     "call_quality_metrics"
    ],

@@ -1,7 +1,7 @@
 # Contexto do projeto para agentes de IA
 
 GERADO AUTOMATICAMENTE por scripts/ai-context/gerar.mjs — não editar à mão; será sobrescrito.
-Publicado em `docs/contexto/codigo/` na branch `contexto` (gerada, nunca abra PR dela) a cada push em `main` e a cada 10 minutos pelo workflow `contexto.yml`; índice único das três fontes em `docs/contexto/00-INDEX.md`. Gere local com `node scripts/ai-context/gerar.mjs`. Commit-base: `dc142b62f23f22063946ec91519b34a04eb58f28` (2026-11-26T20:05:29-03:00).
+Publicado em `docs/contexto/codigo/` na branch `contexto` (gerada, nunca abra PR dela) a cada push em `main` e a cada 10 minutos pelo workflow `contexto.yml`; índice único das três fontes em `docs/contexto/00-INDEX.md`. Gere local com `node scripts/ai-context/gerar.mjs`. Commit-base: `0a4fed06c136924806e920024f34da23e1b4f009` (2026-11-26T20:48:31-03:00).
 
 ## Como usar (leia antes de planejar ou executar qualquer tarefa)
 1. **Tela/rota/menu** → `rotas.json` (url/vista/menu → arquivo → hooks → tabelas → edges; `rotas_http_backend` para APIs) e `modulos.json` (módulo inteiro + dependências entre módulos).
@@ -14,7 +14,7 @@ Publicado em `docs/contexto/codigo/` na branch `contexto` (gerada, nunca abra PR
 Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua tarefa; não carregue tudo.
 
 ## Stack
-- linguagens: TypeScript (1351), SQL (304), Markdown (121), JavaScript (31), JSON (16), Python (5), YAML (5), Shell (2)
+- linguagens: TypeScript (1351), SQL (304), Markdown (122), JavaScript (31), JSON (16), Python (5), YAML (5), Shell (2)
 - linguagem_principal: TypeScript
 - framework: React
 - backend_http: n/d
@@ -34,9 +34,9 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 ## Números
 | item | qtd |
 |---|---|
-| arquivos_total | 1849 |
+| arquivos_total | 1850 |
 | arquivos_codigo | 1386 |
-| linhas_codigo | 184986 |
+| linhas_codigo | 185039 |
 | rotas | 108 |
 | rotas_http_backend | 11 |
 | vistas_por_id | 0 |
@@ -51,7 +51,7 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 | testes | 462 |
 | workflows | 5 |
 | scripts | 36 |
-| docs_md | 121 |
+| docs_md | 122 |
 
 ## Onde ficam as coisas
 - telas: src/pages (107), src/routes (1)
@@ -375,17 +375,17 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 - possiveis_segredos_no_codigo: 3 — ex.: src/lib/__tests__/security-advanced.test.ts:203, src/lib/__tests__/security-advanced.test.ts:208, src/lib/__tests__/security-advanced.test.ts:213
 
 ## Grafo de código (graphify)
-- 10674 nós · 28102 arestas · 853 comunidades · grafo do commit `dc142b62`
-- comunidades maiores: lucide-react (338), cn (277), usePageTitle (206), react (195), safeFormatDatePtBR (189), vitest (151), client.ts (139), @tanstack/react-query (134), gerar.mjs (130), getCorrelationId (128), sonner (113), buildCorsHeaders (110)
+- 10689 nós · 28122 arestas · 838 comunidades · grafo do commit `0a4fed06`
+- comunidades maiores: react (297), card.tsx (249), badge.tsx (241), usePageTitle (229), button.tsx (222), vitest (212), 5. Em uso por rota (175), @tanstack/react-query (149), cn (113), Onda 6 — Performance (236–258, 23 etapas) (112), skeleton.tsx (109), useSipCall (100)
 - símbolos mais chamados: cn() (src/lib/utils.ts), usePageTitle() (src/hooks/usePageTitle.ts), safeFormatDatePtBR() (src/lib/safe-date.ts), useAuthContext() (src/contexts/AuthContext.tsx), q() (scripts/supabase_snapshot/snapshot.py), safeFormatDistanceToNow() (src/lib/safe-date.ts), traceHeaders() (src/lib/tracing.ts), withTrace() (src/lib/tracing.ts), safeToLocaleString() (src/lib/safe-date.ts), buildCorsHeaders() (supabase/functions/_shared/cors.ts), .collect() (scripts/supabase_snapshot/test_snapshot.py), formatDuration() (src/lib/utils.ts)
 - consulta local: `graphify query "<pergunta>"`, `graphify path "<A>" "<B>"`, `graphify explain "<X>"`
 
 ## Hotspots (arquivos mais alterados, 90 dias)
 - docs/qa/05-PROGRESSO.md (165)
-- docs/estado/funcionalidades-planejadas.md (30)
+- docs/estado/funcionalidades-planejadas.md (29)
 - src/components/calls/UnifiedSoftphone.tsx (13)
-- src/components/layout/AppSidebar.tsx (13)
 - src/hooks/useMultiChannelCall.ts (12)
+- src/components/layout/AppSidebar.tsx (11)
 - src/components/layout/CommandPalette.tsx (11)
 - docs/audits/pendencias-2026-07.md (10)
 - src/components/calls/ActiveCallBar.tsx (10)
@@ -432,10 +432,13 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 - `docs/CONTEXTO-PARA-AGENTES.md` — Contexto para agentes de IA — leia ANTES de qualquer tarefa (41 linhas)
 - `docs/LEVANTA_FUNCIONALIDADES_SISTEMA.md` — 📊 Inventário Exaustivo de Funcionalidades e Roadmap - VoIP Enterprise (84 linhas)
 - `docs/prod-readiness.md` (97 linhas)
-- subpastas de docs/: docs/adr (53), docs/estado (19), docs/pendencias (12), docs/qa (8), docs/agentes (6), docs/audits (2), docs/contexto (2), docs/analises (1), docs/audit (1), docs/edge-functions (1), docs/observabilidade (1), docs/runbooks (1)
+- subpastas de docs/: docs/adr (53), docs/estado (19), docs/pendencias (12), docs/qa (9), docs/agentes (6), docs/audits (2), docs/contexto (2), docs/analises (1), docs/audit (1), docs/edge-functions (1), docs/observabilidade (1), docs/runbooks (1)
 
 
 ## Últimos commits
+- 2026-11-26 `0a4fed0` fix: valida forma do snapshot e da fila de coaching VoIP no localStorage (#378)
+- 2026-11-26 `bdbd99f` docs: reaudita o que foi descartado, arquivo por arquivo (nenhuma perda) (#377)
+- 2026-11-26 `80b9200` chore: registrar a varredura de branches e PRs (nenhum trabalho perdido) (#376)
 - 2026-11-26 `dc142b6` test: recuperar o teste do IP literal que ficou fora da main (resgate da PR 309) (#374)
 - 2026-11-26 `a745026` docs: etapa 122 provada — feriado recorrente ja bloqueia; contrato escrito na funcao (#365)
 - 2026-11-26 `8bed0e5` fix: restringir a authenticated o restante de public e provar storage bucket por bucket (etapa 145) (#360)
@@ -448,9 +451,6 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 - 2026-11-26 `077071b` fix: restringir a authenticated as policies de public com predicado de usuario (etapas 143 e 144) (#359)
 - 2026-11-26 `8f07a35` fix: chaves estrangeiras nas colunas com destino unico (etapa 128) (#358)
 - 2026-11-26 `91a1fdc` fix: policies de 5 tabelas sensiveis restritas a authenticated (etapa 052) (#357)
-- 2026-11-26 `7f4740d` fix: policy de UPDATE em learning_completions (upsert do modulo nao atualizava a nota) (#356)
-- 2026-11-26 `2769d5d` feat: CREATE TABLE retroativo das tabelas geo_* (etapa 130) (#355)
-- 2026-11-26 `f430ead` fix: policy de UPDATE na fila de sincronizacao do CRM (etapa 082) (#354)
 
 ## Arquivos deste diretório
 - `docs/contexto/codigo/rotas.json`

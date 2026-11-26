@@ -1,6 +1,6 @@
 # 07 · REGRAS DE NEGÓCIO
 
-> Gerado automaticamente por AI Context Sync v1.3.2 · commit `dc142b62f2` · branch `main` · 2026-11-26 23:08 UTC
+> Gerado automaticamente por AI Context Sync v1.3.2 · commit `0a4fed06c1` · branch `main` · 2026-11-26 23:50 UTC
 > Não edite à mão — regras humanas vão em `manual/`.
 
 ## A. Regras escritas por humanos (`manual/` — prioridade máxima, nunca sobrescrito)
@@ -1694,7 +1694,7 @@ _nenhum item encontrado_
   ```
 - **shouldRunProactiveCheck()** — `src/lib/voipProactiveSnapshot.ts`
   ```
-  if (!isProactiveEnabled()) return false; try { const raw = localStorage.getItem(SNAPSHOT_KEY); if (!raw) return true; const snap = JSON.parse(raw) as Snapshot; return Date.now() - snap.takenAt >= CHECK_INTERVAL_MS; } catch { return true; }
+  if (!isProactiveEnabled()) return false; try { const raw = localStorage.getItem(SNAPSHOT_KEY); if (!raw) return true; const snap = JSON.parse(raw) as Partial<Snapshot> | null; if (typeof snap?.takenAt !== 'number' || !Number.isFinite(snap.takenAt)) return true; return Date.now() - snap.takenAt >= CHECK_INTERVAL_MS; } catch { return true; }
   ```
 - **shouldShortCircuit()** — `src/lib/bitrix/circuit-breaker.ts`
   ```
@@ -2700,7 +2700,7 @@ _nenhum item encontrado_
 | `admin` | `supabase/functions/data-lake-flush/index.ts` |
 | `admin` | `supabase/migrations/20261123000200_fix_has_role_oracle_and_debug_tables.sql` |
 
-## K. Testes como especificação (3797 testes em 421 arquivos — nomes completos em `context.json`)
+## K. Testes como especificação (3801 testes em 421 arquivos — nomes completos em `context.json`)
 
 | Arquivo | Testes | Exemplos do que o sistema DEVE fazer |
 |---|---|---|
@@ -2756,6 +2756,7 @@ _nenhum item encontrado_
 | `src/lib/__tests__/call-queue.test.ts` | 15 | call-queue :: clampInt · sempre devolve inteiro dentro da faixa · usa o fallback para valores não finitos · call-queue :: normalizeQueueDraft … |
 | `src/lib/__tests__/safe-number.test.ts` | 15 | safe-number · safeParseInt · PBT: nunca retorna NaN, mesmo com entrada hostil · PBT: números válidos são truncados · PBT: respeita min/max clamp … |
 | `src/lib/__tests__/security-alerts-webhook.test.ts` | 15 | security-alerts-webhook · isValidHttpUrl · aceita http/https e rejeita esquemas inválidos · persistência (URL / retries) … |
+| `src/lib/__tests__/voipRecommendationCoaching.coverage.test.ts` | 15 | voipRecommendationCoaching · schedules a coaching check with mosBefore captured · does not schedule duplicates for the same recommendation · captures null mosBefore when supabase returns empty data … |
 | `src/hooks/__tests__/useReauth.coverage.test.tsx` | 14 | useReauth · needsReauth true sem verificação prévia · requestReauth marca isRequired · verifyWithPassword sucesso atualiza lastVerified e dispensa reauth … |
 | `src/lib/__tests__/dnc-reconcile.test.ts` | 14 | normalizarTelefone · leva o numero BR para a forma canonica +55 · cai para digitos quando nao da para reconhecer a forma BR · reconciliarDNC … |
 | `src/lib/__tests__/safe-date.test.ts` | 14 | safe-date · entradas hostis nunca lançam · PBT: qualquer string arbitrária é tolerada · PBT: qualquer número (inclui NaN, ±Infinity, valores fora do range) é tolerado · null / undefined /  … |
@@ -2769,7 +2770,6 @@ _nenhum item encontrado_
 | `src/hooks/__tests__/useDashboardData.coverage.test.tsx` | 13 | useDashboardData · useDashboardStats success · useDashboardStats error · useAgentsListData success returns data … |
 | `src/hooks/__tests__/useSurveys.coverage.test.tsx` | 13 | useSurveys · carrega respostas e calcula nps · npsScore null quando sem scores válidos · trata erro de carregamento … |
 | `src/lib/__tests__/executive-dashboard-utils.test.ts` | 13 | getPeriodLabel · returns correct label for today · returns correct label for week · returns correct label for month … |
-| `src/lib/__tests__/voipRecommendationCoaching.coverage.test.ts` | 13 | voipRecommendationCoaching · schedules a coaching check with mosBefore captured · does not schedule duplicates for the same recommendation · captures null mosBefore when supabase returns empty data … |
 | `src/hooks/__tests__/useGamification.coverage.test.tsx` | 12 | useGamification · loads data successfully and computes rankings · runs without agentId (skips agent-scoped fetches) · handles fetch errors on all tables … |
 | `src/hooks/__tests__/useWebhookSecrets.test.tsx` | 12 | useWebhookSecrets · lista os segredos ordenados por provedor · cadastra provedor normalizado e invalida o cache · distingue rotação de cadastro na mensagem de sucesso … |
 | `src/lib/__tests__/guard-edge-numeric.test.ts` | 12 | guard-edge-numeric — Regra 1 (z.number sem .finite) · detecta z.number() em qualquer disposição de whitespace · aceita z.number().finite() com whitespace variável · ignora z.number() dentro de comentários e strings … |
@@ -2790,6 +2790,7 @@ _nenhum item encontrado_
 | `src/lib/__tests__/holdReminderSounds.coverage.test.tsx` | 11 | holdReminderSounds · createNotificationSound plays two oscillators (timer branch) · createUrgentSound plays three beeps over time · formatHoldTime formats both branches … |
 | `src/lib/__tests__/tracing.coverage.test.ts` | 11 | tracing (coverage) · exports header name constants · returns undefined trace id/operation when no scope is active · withTrace generates id, sets operation, and clears on success … |
 | `src/lib/__tests__/voice-biometrics.coverage.test.ts` | 11 | voice-biometrics: isValidEmbedding · accepts an array of correct dimension with finite numbers · rejects non-arrays · rejects wrong-length arrays … |
+| `src/lib/__tests__/voipProactiveSnapshot.coverage.test.ts` | 11 | voipProactiveSnapshot · isProactiveEnabled reflects localStorage pref · setProactiveEnabled writes the pref · shouldRunProactiveCheck false when disabled … |
 | `src/pages/__tests__/Cadences.crud.test.tsx` | 11 | Cadences: acoes de edicao e exclusao na tela · mostra os controles de editar, ativar/desativar e excluir na cadencia · desativar a cadencia grava is_active=false pelo id · salvar o dialogo de edicao envia nome e descricao … |
 | `supabase/functions/_shared/__tests__/resilient-fetch.test.ts` | 11 | resilientFetch: sucesso em 2xx passa direto · resilientFetch: 500 é reciclado e sucede na 3ª tentativa · resilientFetch: 404 NÃO é reciclado · resilientFetch: 500 esgota retries e propaga … |
 | `supabase/functions/health-check/__tests__/slo-budget_test.ts` | 11 | budget - sem falhas mantem o budget intacto · budget - falha igual a tolerancia zera o budget · budget - falha acima da tolerancia escala o burn rate · budget - metade da tolerancia entra em warning … |
@@ -2838,7 +2839,6 @@ _nenhum item encontrado_
 | `src/hooks/__tests__/useShifts.coverage.test.tsx` | 9 | useShifts coverage · loads shifts and templates without weekStart · loads shifts with weekStart (gte/lt branch) · exposes CRUD mutations and runs createShift success … |
 | `src/lib/__tests__/device-identity.test.ts` | 9 | device-identity · sanitize sempre respeita o CHECK do banco (trim + limite) · sanitize é idempotente · sanitize rejeita não-strings … |
 | `src/lib/__tests__/errorReporter.test.ts` | 9 | errorReporter · nao monta linha sem usuario autenticado · grava so o pathname da rota (query e hash ficam de fora) · trunca mensagem e stack nos limites da tabela … |
-| `src/lib/__tests__/voipProactiveSnapshot.coverage.test.ts` | 9 | voipProactiveSnapshot · isProactiveEnabled reflects localStorage pref · setProactiveEnabled writes the pref · shouldRunProactiveCheck false when disabled … |
 | `src/lib/security/__tests__/https-enforcer.coverage.test.ts` | 9 | https-enforcer · does not enforce on localhost · does not enforce on 127.0.0.1 · does not enforce when already https … |
 | `supabase/functions/__tests__/geo-decision.test.ts` | 9 | allowlist: pais listado e permitido · allowlist: pais fora da lista e bloqueado · blocklist: pais listado e bloqueado · blocklist: pais fora da lista e permitido … |
 | `supabase/functions/_shared/__tests__/auth_test.ts` | 9 | auth: requireUser sem header Authorization devolve 401 · auth: requireUser com header que nao e Bearer devolve 401 · auth: header Bearer vazio devolve 401 · auth: erro de credencial devolve o envelope com CORS da origem do chamador … |
