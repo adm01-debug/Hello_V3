@@ -57,8 +57,11 @@ declare
 begin
   select id into v_mod from public.learning_modules order by id limit 1;
   if v_mod is null then
-    raise notice '3/6 pulado: nenhum learning_module cadastrado';
-    return;
+    -- Producao ainda nao tem modulo publicado: cria um descartavel para nao pular justamente
+    -- a prova do upsert (a transacao inteira e revertida no fim deste arquivo).
+    insert into public.learning_modules (title, is_active)
+    values ('gate-087 modulo descartavel', true)
+    returning id into v_mod;
   end if;
 
   for r in select u.id from auth.users u order by u.created_at limit 100 loop
