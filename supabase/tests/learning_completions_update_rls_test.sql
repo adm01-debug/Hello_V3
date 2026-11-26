@@ -53,6 +53,8 @@ declare
   v_mod uuid;
   v_score numeric;
   v_n int;
+  v_user uuid;
+  v_agente_id uuid;
   v_achou boolean := false;
 begin
   select id into v_mod from public.learning_modules order by id limit 1;
@@ -74,8 +76,37 @@ begin
   end loop;
 
   if not v_achou then
-    raise notice '3/6 pulado: nenhum usuario com agent_name resolvivel';
-    return;
+    -- Producao nao tem (usuario -> agente) ligado: monta o vinculo aqui dentro da transacao
+    -- (tudo e revertido no rollback do fim), senao o teste pularia justamente a prova do upsert.
+    select u.id into v_user from auth.users u order by u.created_at limit 1;
+    if v_user is null then
+      raise notice '3/6 pulado: auth.users tem 0 linhas - sem usuario nao existe sessao autenticada para simular';
+      return;
+    end if;
+
+    select a.id, a.name into v_agente_id, v_agente from public.agents a order by a.name limit 1;
+    if v_agente_id is null then
+      execute 'insert into public.agents (name, extension) values ($1, $2) returning id, name'
+        into v_agente_id, v_agente using 'gate-087 agente', 'gate087';
+    end if;
+
+    if exists (select 1 from information_schema.columns
+               where table_schema = 'public' and table_name = 'user_profiles' and column_name = 'email') then
+      execute 'insert into public.user_profiles (id, email, agent_id) values ($1, $2, $3)
+               on conflict (id) do update set agent_id = excluded.agent_id'
+        using v_user, 'gate-087@local.invalid', v_agente_id;
+    else
+      execute 'insert into public.user_profiles (id, agent_id) values ($1, $2)
+               on conflict (id) do update set agent_id = excluded.agent_id'
+        using v_user, v_agente_id;
+    end if;
+
+    perform set_config('request.jwt.claims', json_build_object('sub', v_user)::text, true);
+    v_agente := public.get_user_agent_name();
+    if v_agente is null then
+      raise exception 'FALHA 3: o vinculo criado nao resolve agent_name (usuario %, agente %)', v_user, v_agente_id;
+    end if;
+    raise notice '3/6 info: vinculo usuario->agente criado dentro da transacao (agente %)', v_agente;
   end if;
 
   execute 'set local role authenticated';
