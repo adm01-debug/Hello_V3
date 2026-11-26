@@ -108,20 +108,37 @@ export function useAgentRanking() {
           className: "bg-success/10 border-success/20",
         });
 
-        const { data: session, error: sessionError } = await supabase
-          .from('call_sessions').select('id').eq('agent_name', agent.name).limit(1).maybeSingle();
+        // O alerta de meta e uma notificacao do agente, nao um alerta de chamada: pendurar em
+        // call_alerts exigia escolher uma chamada qualquer so para satisfazer a FK
+        // (call_alerts.call_session_id) e, sem nenhuma chamada, o alerta era descartado.
+        const { data: auth, error: authError } = await supabase.auth.getUser();
+        const userId = auth?.user?.id;
 
-        if (sessionError) {
-          logger.error('Error finding session for goals alert:', sessionError);
-        } else if (session) {
-          const { error: alertError } = await supabase.from('call_alerts').insert({
-            call_session_id: session.id,
-            alert_type: 'goals_achieved',
-            severity: 'info',
-            title: `${agent.name} atingiu todas as metas!`,
+        if (authError || !userId) {
+          logger.error('Error resolving user for goals notification:', authError);
+        } else {
+          const { error: notifyError } = await supabase.from('notifications').insert({
+            user_id: userId,
+            title: `🎉 ${agent.name} atingiu todas as metas!`,
             message: `Parabéns! O agente ${agent.name} completou todas as metas: ${agent.totalCalls} chamadas, ${agent.avgSatisfaction.toFixed(1)} satisfação, ${agent.avgPerformance.toFixed(1)} performance.`,
+            type: 'success',
+            category: 'gamification',
+            severity: 'info',
+            source_type: 'agent_ranking',
+            source_id: agent.name,
+            metadata: {
+              agent_name: agent.name,
+              total_calls: agent.totalCalls,
+              avg_satisfaction: agent.avgSatisfaction,
+              avg_performance: agent.avgPerformance,
+            },
+            action_url: '/ranking',
           });
-          if (alertError) logger.error('Error creating goals alert:', alertError);
+
+          if (notifyError) {
+            logger.error('Error creating goals notification:', notifyError);
+            toast.error('Meta atingida, mas a notificação não foi registrada');
+          }
         }
       }
     }
