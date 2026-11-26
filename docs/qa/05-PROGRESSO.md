@@ -225,7 +225,7 @@
 - [x] **172** — Parar de contar "features de segurança" a partir de um array literal — onda 4 — Média — Frontend
 - [x] **173** — Dar estados e defesa ao gráfico de espera do dashboard — onda 4 — Alta — Frontend
 - [x] **174** — Fazer o painel de conflitos de concorrência mostrar conflitos — onda 4 — Média — Frontend
-- [ ] **175** — Completar o CRUD da lista DNC — onda 4 — Média — Frontend 🔒
+- [x] **175** — Completar o CRUD da lista DNC — onda 4 — Média — Frontend · (PR #350; edição de motivo/observação/validade via `EditDNCDialog`, validade na `DNCTable` e trilha de auditoria `removed_by`/`removed_at`/`removal_reason` carimbada por `trg_dnc_track_removal`. Prova: migration `20261126130000` aplicada em produção — "aplicada: 20261126130000_dnc_removal_audit.sql" — e gate `supabase/tests/dnc_removal_audit_rls_test.sql` 8/8 no run 45817625444; 23 testes de vitest, `tsc` e `eslint` rc=0)
 - [x] **176** — Fazer a remediação de anomalia atualizar a lista — onda 4 — Média — Hooks
 - [ ] **177** — Parar de responder "aplicado" sem aplicar nada — onda 4 — Alta — Edge Function 🔒
 - [x] **178** — Fazer o "Aplicar" da recomendação de capacidade registrar algo — onda 4 — Média — Frontend
