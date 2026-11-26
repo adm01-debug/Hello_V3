@@ -24,11 +24,11 @@
 | | Quantidade |
 |---|---:|
 | Total de etapas | 300 |
-| `[x]` concluídas | 154 |
+| `[x]` concluídas | 155 |
 | `[P]` aguardando o dono | 1 |
 | `[~]` parciais | 1 |
 | `[-]` descartadas | 0 |
-| `[ ]` não iniciadas | **144** |
+| `[ ]` não iniciadas | **143** |
 
 *Atualize esta tabela ao fim de cada onda.*
 
@@ -189,7 +189,7 @@
 - [ ] **142** — Decidir o que fazer quando a lista geográfica está vazia — onda 3 — Alta — Edge Function 🔒
 - [ ] **143** — `TO authenticated` nas policies de dados de cliente (lote 2) — onda 3 — Média — Banco 🔒
 - [ ] **144** — `TO authenticated` nas policies operacionais (lote 3) — onda 3 — Média — Banco 🔒
-- [ ] **145** — `TO authenticated` no restante das policies (lote 4) — onda 3 — Média — Banco 🔒
+- [x] **145** — `TO authenticated` no restante das policies (lote 4) — onda 3 — Média — Banco 🔒 (sonda de leitura no run `45851414557`: o plano estava desatualizado — `storage.objects` ja tinha as **7** policies `TO authenticated` e os 5 buckets (`avatars`, `call-recordings`, `data-lake-exports`, `queue-audio`, `virtual-fax-docs`) sao privados, sem nenhum `getPublicUrl` no codigo; todo acesso passa por `createSignedUrl` ou service role. Em `public` sobravam **6** deny-policies `WITH CHECK (false)` (account_lockouts x3, audit_logs, login_attempts, voip_trunk_health_checks); restringi-las a `authenticated` nao muda veredito de ninguem — quem casa continua negado e quem nao casa cai no deny default da RLS, com o mesmo erro. Migration `20261127190000_policies_to_authenticated_lote4.sql` le a lista de `pg_policies` e so troca a clausula `TO`: pre-estado reprovado no run `45852179929` (`FALHA 1: 6 policy(ies) ainda em {public}`), dry-run `45852802822`, apply `45853382889` (`6 policy(ies) restringida(s); storage.objects ja tinha 7 policy(ies) TO authenticated`). Gate `storage_objects_policies_rls_test.sql` **6/6** no run `45857258086`: 0 policy em `{public}` em public+storage; 0 bucket publico e 7/7 policies de objects autenticadas; usuario autenticado real grava e le nos 4 buckets de arquivo; avatar so no proprio prefixo `<uid>/` e prefixo alheio recusado; `anon` le 0 linhas e o INSERT e recusado pela RLS nos 5 buckets; `public` mantem 463 policies. Achado: `DELETE` por SQL em `storage.objects` nunca chega a RLS — o trigger do storage recusa o comando em qualquer role, entao o unico caminho de exclusao e a Storage API com service role. Sem alteracao de codigo de aplicacao.)
 - [ ] **146** — Revogar de `anon` o EXECUTE dos helpers de papel — onda 3 — Média — Banco 🔒
 - [ ] **147** — `CHECK` no status de `call_sessions` e de `conversations` — onda 3 — Média — Banco 🔒
 - [ ] **148** — `CHECK` no resultado da fila do discador — onda 3 — Baixa — Banco 🔒
