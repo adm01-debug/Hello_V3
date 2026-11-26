@@ -1,15 +1,15 @@
 {
  "meta": {
-  "sha": "8f07a3548f96cd50b03f14aec4649857d7e42107",
+  "sha": "082fc1376df91b587524d9e5e167ca88a2a93a41",
   "branch": "main",
   "remote": "https://github.com/adm01-debug/Hello_V3",
-  "generated_at": "2026-11-26 19:59 UTC",
-  "files_total": 1874,
-  "code_files": 1670,
-  "code_lines": 205259
+  "generated_at": "2026-11-26 20:02 UTC",
+  "files_total": 1878,
+  "code_files": 1674,
+  "code_lines": 205753
  },
  "version": "1.3.2",
- "facts_hash": "ff46fdb275c40835",
+ "facts_hash": "9edb3b29aba94515",
  "stack": {
   "frameworks": [
    "React + Vite",
@@ -170,7 +170,7 @@
   "languages": {
    ".tsx": 680,
    ".ts": 670,
-   ".sql": 284,
+   ".sql": 288,
    ".mjs": 29,
    ".py": 5,
    ".js": 2
@@ -26519,6 +26519,8 @@
    "supabase/migrations/20261127150000_learning_completions_update_policy.sql",
    "supabase/migrations/20261127160000_policies_to_authenticated_lote1.sql",
    "supabase/migrations/20261127170000_add_missing_fks.sql",
+   "supabase/migrations/20261127180000_policies_to_authenticated_restante.sql",
+   "supabase/migrations/20261127200000_revoke_anon_role_helpers.sql",
    "supabase/tests/add_missing_fks_rls_test.sql",
    "supabase/tests/calling_hours_fail_closed_rls_test.sql",
    "supabase/tests/client_errors_rls_test.sql",
@@ -26535,9 +26537,11 @@
    "supabase/tests/learning_completions_update_rls_test.sql",
    "supabase/tests/login_lockout_acl_rls_test.sql",
    "supabase/tests/policies_to_authenticated_lote1_rls_test.sql",
+   "supabase/tests/policies_to_authenticated_restante_rls_test.sql",
    "supabase/tests/probe_132_lgpd_entity_versions_rls_test.sql",
    "supabase/tests/rate_limit_logs_write_policies_rls_test.sql",
    "supabase/tests/redaction_log_rls_test.sql",
+   "supabase/tests/revoke_anon_role_helpers_rls_test.sql",
    "supabase/tests/role_source_of_truth_test.sql",
    "supabase/tests/user_preferences_rls_test.sql",
    "supabase/tests/webhook_secrets_rls_test.sql",
@@ -35810,8 +35814,8 @@
   },
   {
    "module": "supabase/migrations",
-   "files": 260,
-   "lines": 16757,
+   "files": 262,
+   "lines": 16870,
    "tables": [],
    "exports": [],
    "docs": [],
@@ -35902,8 +35906,8 @@
   },
   {
    "module": "supabase/tests",
-   "files": 22,
-   "lines": 3392,
+   "files": 24,
+   "lines": 3773,
    "tables": [],
    "exports": [],
    "docs": [],
@@ -35926,9 +35930,11 @@
     "supabase/tests/learning_completions_update_rls_test.sql",
     "supabase/tests/login_lockout_acl_rls_test.sql",
     "supabase/tests/policies_to_authenticated_lote1_rls_test.sql",
+    "supabase/tests/policies_to_authenticated_restante_rls_test.sql",
     "supabase/tests/probe_132_lgpd_entity_versions_rls_test.sql",
     "supabase/tests/rate_limit_logs_write_policies_rls_test.sql",
     "supabase/tests/redaction_log_rls_test.sql",
+    "supabase/tests/revoke_anon_role_helpers_rls_test.sql",
     "supabase/tests/role_source_of_truth_test.sql",
     "supabase/tests/user_preferences_rls_test.sql",
     "supabase/tests/webhook_secrets_rls_test.sql"
@@ -88053,8 +88059,10 @@
    "supabase/migrations/20261126140000_client_errors.sql",
    "supabase/migrations/20261126170000_cron_watchdog.sql",
    "supabase/migrations/20261126190000_cron_watchdog_privilegios.sql",
+   "supabase/migrations/20261127200000_revoke_anon_role_helpers.sql",
    "supabase/tests/login_lockout_acl_rls_test.sql",
    "supabase/tests/redaction_log_rls_test.sql",
+   "supabase/tests/revoke_anon_role_helpers_rls_test.sql",
    "supabase/tests/webhook_secrets_rls_test.sql"
   ],
   "security_definer_fns": [
@@ -127778,6 +127786,15 @@
    "path": "supabase/migrations/20261127170000_add_missing_fks.sql",
    "lines": 66
   },
+  "supabase/migrations/20261127180000_policies_to_authenticated_restante.sql": {
+   "path": "supabase/migrations/20261127180000_policies_to_authenticated_restante.sql",
+   "lines": 54
+  },
+  "supabase/migrations/20261127200000_revoke_anon_role_helpers.sql": {
+   "path": "supabase/migrations/20261127200000_revoke_anon_role_helpers.sql",
+   "lines": 59,
+   "uses_service_role": true
+  },
   "supabase/tests/add_missing_fks_rls_test.sql": {
    "path": "supabase/tests/add_missing_fks_rls_test.sql",
    "lines": 144,
@@ -127875,6 +127892,11 @@
    "lines": 194,
    "is_test": true
   },
+  "supabase/tests/policies_to_authenticated_restante_rls_test.sql": {
+   "path": "supabase/tests/policies_to_authenticated_restante_rls_test.sql",
+   "lines": 146,
+   "is_test": true
+  },
   "supabase/tests/probe_132_lgpd_entity_versions_rls_test.sql": {
    "path": "supabase/tests/probe_132_lgpd_entity_versions_rls_test.sql",
    "lines": 177,
@@ -127892,6 +127914,12 @@
   "supabase/tests/redaction_log_rls_test.sql": {
    "path": "supabase/tests/redaction_log_rls_test.sql",
    "lines": 148,
+   "is_test": true,
+   "uses_service_role": true
+  },
+  "supabase/tests/revoke_anon_role_helpers_rls_test.sql": {
+   "path": "supabase/tests/revoke_anon_role_helpers_rls_test.sql",
+   "lines": 235,
    "is_test": true,
    "uses_service_role": true
   },
@@ -128085,10 +128113,32 @@
   }
  },
  "git": {
-  "sha": "8f07a3548f96cd50b03f14aec4649857d7e42107",
+  "sha": "082fc1376df91b587524d9e5e167ca88a2a93a41",
   "branch": "main",
   "remote": "https://github.com/adm01-debug/Hello_V3",
   "commits": [
+   {
+    "sha": "082fc13",
+    "date": "2026-11-26",
+    "author": "adm01-debug",
+    "subject": "fix: revogar de anon o EXECUTE dos helpers de papel (etapa 146) (#361)",
+    "files": [
+     "docs/qa/05-PROGRESSO.md",
+     "supabase/migrations/20261127200000_revoke_anon_role_helpers.sql",
+     "supabase/tests/revoke_anon_role_helpers_rls_test.sql"
+    ]
+   },
+   {
+    "sha": "077071b",
+    "date": "2026-11-26",
+    "author": "adm01-debug",
+    "subject": "fix: restringir a authenticated as policies de public com predicado de usuario (etapas 143 e 144) (#359)",
+    "files": [
+     "docs/qa/05-PROGRESSO.md",
+     "supabase/migrations/20261127180000_policies_to_authenticated_restante.sql",
+     "supabase/tests/policies_to_authenticated_restante_rls_test.sql"
+    ]
+   },
    {
     "sha": "8f07a35",
     "date": "2026-11-26",
@@ -128469,35 +128519,6 @@
      "src/hooks/__tests__/useActiveCallsRealtime.coverage.test.tsx",
      "src/hooks/useActiveCallsRealtime.ts"
     ]
-   },
-   {
-    "sha": "7e93675",
-    "date": "2026-11-25",
-    "author": "adm01-debug",
-    "subject": "fix: botao de excluir contato com icone proprio e acoes de UI que mentiam (#331)",
-    "files": [
-     "docs/qa/05-PROGRESSO.md",
-     "src/components/calls/ActiveCallBar.tsx",
-     "src/components/calls/NextBestActionPanel.tsx",
-     "src/components/calls/__tests__/NextBestActionPanel.test.tsx",
-     "src/components/contacts/ContactDetailSheet.tsx"
-    ]
-   },
-   {
-    "sha": "bb76af5",
-    "date": "2026-11-25",
-    "author": "adm01-debug",
-    "subject": "fix: ligar do cartao de contato e do retorno discam de verdade (#330)",
-    "files": [
-     "docs/qa/05-PROGRESSO.md",
-     "src/components/callbacks/ScheduledCallbacksList.tsx",
-     "src/components/callbacks/__tests__/ScheduledCallbacksList.ligarAgora.test.tsx",
-     "src/lib/dialerLink.ts",
-     "src/pages/Contacts.tsx",
-     "src/pages/PhoneDialer.tsx",
-     "src/pages/__tests__/Contacts.ligar.test.tsx",
-     "src/pages/__tests__/PhoneDialer.discagemExterna.test.tsx"
-    ]
    }
   ],
   "hot_files": [
@@ -128546,6 +128567,22 @@
     2
    ],
    [
+    "supabase/migrations/20261127200000_revoke_anon_role_helpers.sql",
+    1
+   ],
+   [
+    "supabase/tests/revoke_anon_role_helpers_rls_test.sql",
+    1
+   ],
+   [
+    "supabase/migrations/20261127180000_policies_to_authenticated_restante.sql",
+    1
+   ],
+   [
+    "supabase/tests/policies_to_authenticated_restante_rls_test.sql",
+    1
+   ],
+   [
     "supabase/migrations/20261127170000_add_missing_fks.sql",
     1
    ],
@@ -128563,22 +128600,6 @@
    ],
    [
     "supabase/migrations/20261127150000_learning_completions_update_policy.sql",
-    1
-   ],
-   [
-    "supabase/tests/learning_completions_update_rls_test.sql",
-    1
-   ],
-   [
-    "supabase/migrations/20260315143858_create_geo_tables_retroativo.sql",
-    1
-   ],
-   [
-    "supabase/tests/geo_tables_retroativo_rls_test.sql",
-    1
-   ],
-   [
-    "supabase/migrations/20261127130000_crm_sync_queue_update_policy.sql",
     1
    ]
   ]

@@ -1,6 +1,6 @@
 # 10 · ACESSO E SEGURANÇA — quem pode o quê
 
-> Gerado automaticamente por AI Context Sync v1.3.2 · commit `8f07a3548f` · branch `main` · 2026-11-26 19:59 UTC
+> Gerado automaticamente por AI Context Sync v1.3.2 · commit `082fc1376d` · branch `main` · 2026-11-26 20:02 UTC
 > Não edite à mão — regras humanas vão em `manual/`.
 
 ## Perfis / roles identificados
@@ -195,7 +195,7 @@
 
 > `—` com RLS ligado = ninguém além de service_role. `sem RLS` = qualquer chave anon lê/escreve tudo.
 
-## Onde o RLS é IGNORADO (service_role) — 138 arquivo(s)
+## Onde o RLS é IGNORADO (service_role) — 140 arquivo(s)
 
 - `scripts/ai-context/cenarios.mjs`
 - `scripts/ai-context/gerar.unit.mjs`
@@ -332,8 +332,10 @@
 - `supabase/migrations/20261126140000_client_errors.sql`
 - `supabase/migrations/20261126170000_cron_watchdog.sql`
 - `supabase/migrations/20261126190000_cron_watchdog_privilegios.sql`
+- `supabase/migrations/20261127200000_revoke_anon_role_helpers.sql`
 - `supabase/tests/login_lockout_acl_rls_test.sql`
 - `supabase/tests/redaction_log_rls_test.sql`
+- `supabase/tests/revoke_anon_role_helpers_rls_test.sql`
 - `supabase/tests/webhook_secrets_rls_test.sql`
 
 ## Funções SQL `SECURITY DEFINER` (rodam com privilégio do dono, ignoram RLS)

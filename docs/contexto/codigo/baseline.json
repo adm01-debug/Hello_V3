@@ -2,11 +2,21 @@
  "aviso": "GERADO AUTOMATICAMENTE por scripts/ai-context/gerar.mjs — não editar à mão; será sobrescrito.",
  "format_version": 2,
  "git": {
-  "commit": "8f07a3548f96cd50b03f14aec4649857d7e42107",
+  "commit": "082fc1376df91b587524d9e5e167ca88a2a93a41",
   "branch": "main",
-  "data_commit": "2026-11-26T16:54:48-03:00",
+  "data_commit": "2026-11-26T16:59:48-03:00",
   "remote": "https://github.com/adm01-debug/Hello_V3",
   "ultimos_commits": [
+   {
+    "sha": "082fc13",
+    "data": "2026-11-26",
+    "assunto": "fix: revogar de anon o EXECUTE dos helpers de papel (etapa 146) (#361)"
+   },
+   {
+    "sha": "077071b",
+    "data": "2026-11-26",
+    "assunto": "fix: restringir a authenticated as policies de public com predicado de usuario (etapas 143 e 144) (#359)"
+   },
    {
     "sha": "8f07a35",
     "data": "2026-11-26",
@@ -121,19 +131,9 @@
     "sha": "ab5b810",
     "data": "2026-11-25",
     "assunto": "fix: policies de escrita em rate_limit_logs e conferencia do resultado real (etapa 029) (#338)"
-   },
-   {
-    "sha": "778149d",
-    "data": "2026-11-25",
-    "assunto": "fix: travar duplo clique nas 4 acoes de escrita que escaparam da etapa 218 (#336)"
-   },
-   {
-    "sha": "6943f53",
-    "data": "2026-11-25",
-    "assunto": "chore: corrigir achados A-216/A-217 e criar gate contra regressao de RLS no historico de migrations"
    }
   ],
-  "arquivos_mudados_7d": 1919,
+  "arquivos_mudados_7d": 1923,
   "pastas_mais_mudadas_30d": [
    {
     "pasta": "src/hooks/__tests__",
@@ -141,7 +141,7 @@
    },
    {
     "pasta": "docs/qa/05-PROGRESSO.md",
-    "mudancas": 156
+    "mudancas": 158
    },
    {
     "pasta": "src/components/calls",
@@ -199,7 +199,7 @@
   "arquivos_mais_mudados_90d": [
    {
     "arquivo": "docs/qa/05-PROGRESSO.md",
-    "mudancas": 156
+    "mudancas": 158
    },
    {
     "arquivo": "docs/estado/funcionalidades-planejadas.md",
@@ -310,7 +310,7 @@
   ]
  },
  "contagens": {
-  "arquivos_total": 1827,
+  "arquivos_total": 1831,
   "arquivos_codigo": 1385,
   "linhas_codigo": 184899,
   "rotas": 108,
@@ -322,9 +322,9 @@
   "hooks": 201,
   "edge_functions": 99,
   "tabelas": 172,
-  "migrations": 260,
+  "migrations": 262,
   "cron_jobs": 13,
-  "testes": 451,
+  "testes": 453,
   "workflows": 5,
   "scripts": 36,
   "docs_md": 121
