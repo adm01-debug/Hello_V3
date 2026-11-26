@@ -6,11 +6,11 @@
 
 | Marca | Significado |
 |---|---|
-| `[ ]` | **144** |
+| `[ ]` | **143** |
 | `[>]` | em andamento (branch criada) |
 | `[P]` | 1 |
 | `[~]` | 1 |
-| `[x]` | 153 |
+| `[x]` | 154 |
 | `[-]` | 0 |
 
 **`[x]` exige evidência.** Escreva ao lado, entre parênteses, o comando ou a consulta que você rodou e o resultado. Sem isso, a marca é `[~]`.
@@ -166,7 +166,7 @@
 - [ ] **119** — Fazer o health check do tronco rodar — onda 3 — Alta — Edge Function + Banco 🔒
 - [ ] **120** — Reagendar o retorno conforme a configuração da campanha — onda 3 — Baixa — Hooks
 - [ ] **121** — Aplicar as três regras de compliance que hoje são só configuração — onda 3 — Média — Hooks 🔒
-- [ ] **122** — Fazer feriados recorrentes bloquearem todo ano — onda 3 — Média — Banco 🔒
+- [x] **122** — Fazer feriados recorrentes bloquearem todo ano — onda 3 — Média — Banco 🔒 · (**já estava implementada pela etapa 035**; nada de comportamento foi escrito aqui — a 035 recriou `check_calling_hours` por outro motivo e levou a comparação por mês/dia junto, e o plano da 122 partiu da versão anterior do arquivo, que comparava só a data exata e ignorava `holidays.recurring`). **Prova do comportamento em produção** — gate `supabase/tests/recurring_holidays_rls_test.sql`, run `45870661250` **success 5/5**: (1) a definição viva da função referencia `recurring` e compara `EXTRACT(MONTH)`/`EXTRACT(DAY)`; (2) feriado **recorrente cadastrado em 2025-11-26 bloqueou o dia de hoje** (`can_call: false`, "Hoje é feriado — ligações não permitidas"); (3) feriado do ano passado **sem** `recurring` é ignorado (a data exata manda — motivo devolvido foi a janela de dias úteis); (4) feriado com data exata de hoje continua bloqueando, ou seja a 122 não afrouxou o que a 035 protegia; (5) o contrato está escrito na função e na coluna. **O que faltava de verdade era documentação**, e ela foi feita em DDL: migration `20261127240000_calling_hours_recurring_comment.sql` (só `COMMENT ON FUNCTION` + `COMMENT ON COLUMN public.holidays.recurring`, sem mudança de comportamento) — dry-run run `45870457144` (`COMMENT` + `ROLLBACK`), apply run `45870580644` (`aplicada: 20261127240000_calling_hours_recurring_comment.sql`). Seção nova em `docs/agentes/banco.md` ("Feriado e horário de discagem — contrato medido em 2026-11-27"). **Limitação registrada no código e no doc**: feriado **móvel** (Carnaval, Páscoa, Corpus Christi) não é calculado — precisa ser cadastrado em `holidays` por ano com `recurring = false`. **Ressalva de honestidade**: o gate prova o comportamento da função aplicada, mas nada aqui prova que uma chamada real tenha sido bloqueada por feriado em produção — `call_sessions` não recebe escrita desde 2026-11-22 (mesmo achado da etapa 017).) · `docs/agentes/banco.md`
 - [ ] **123** — Resolver a unidade do "intervalo mínimo entre ligações" — onda 3 — Média — Banco + Frontend 🔒
 - [ ] **124** — Validar a transição de status de conversa — onda 3 — Média — Hooks
 - [ ] **125** — Validar a transição de status de scorecard — onda 3 — Média — Hooks + Banco 🔒

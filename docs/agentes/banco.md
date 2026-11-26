@@ -139,6 +139,24 @@ Teste funcional do caminho de exclusão — usuário de teste `4a56062b-1fdb-42e
 Consultas feitas pela Management API (`POST /v1/projects/<ref>/database/query`), que roda sem RLS. Esta
 apuração libera as etapas 133 e 136.
 
+## Feriado e horário de discagem — contrato medido em 2026-11-27
+
+`public.check_calling_hours(p_region_code text default 'BR')` decide se a discagem é permitida agora
+(`SECURITY DEFINER`, `search_path = public`). O comentário da própria função carrega o contrato; o
+resumo:
+
+| Situação | Resultado |
+|---|---|
+| Sem `calling_hours_config` ativa para a região nem `BR` | `can_call: false` — **fail-closed** (etapa 035) |
+| `holidays.date` = hoje, com `is_national` ou `region_code` da região | bloqueia se `holidays_allowed = false` |
+| `holidays.recurring = true` com **mesmo mês e dia** de qualquer ano | bloqueia igual (etapa 122) |
+| `holidays.recurring = false` de outro ano | **não** bloqueia — a data exata manda |
+| Feriado móvel (Carnaval, Páscoa, Corpus Christi) | **não é calculado** — precisa ser cadastrado por ano com `recurring = false` |
+
+Gate: `supabase/tests/recurring_holidays_rls_test.sql` (prova os 4 primeiros casos e que o contrato está
+escrito na função e na coluna). Não confunda com `calling_hours_fail_closed_rls_test.sql`, que prova o
+fail-closed da 035.
+
 ## Testes de RLS — não confie nos que existem
 
 `src/__tests__/rls/` (7 arquivos) **não toca banco nem mock de PostgREST**: declara uma matriz literal e
