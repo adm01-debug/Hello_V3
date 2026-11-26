@@ -2,11 +2,21 @@
  "aviso": "GERADO AUTOMATICAMENTE por scripts/ai-context/gerar.mjs — não editar à mão; será sobrescrito.",
  "format_version": 2,
  "git": {
-  "commit": "b85ce4934df8acbd5f9a9c99db59675cf7c5d1ef",
+  "commit": "957a28355826923316b6ed8bbdeeac7accc73c67",
   "branch": "main",
-  "data_commit": "2026-11-26T17:07:40-03:00",
+  "data_commit": "2026-11-26T17:21:52-03:00",
   "remote": "https://github.com/adm01-debug/Hello_V3",
   "ultimos_commits": [
+   {
+    "sha": "957a283",
+    "data": "2026-11-26",
+    "assunto": "fix: guarda idempotente nos ALTER POLICY das geo_ (etapa 131) (#368)"
+   },
+   {
+    "sha": "c2181b6",
+    "data": "2026-11-26",
+    "assunto": "docs(db): contrato dos ponteiros polimorficos (etapa 129) (#363)"
+   },
    {
     "sha": "b85ce49",
     "data": "2026-11-26",
@@ -121,19 +131,9 @@
     "sha": "0744961",
     "data": "2026-11-25",
     "assunto": "fix: tirar as RPCs de lockout do alcance do navegador (etapa 002) (#342)"
-   },
-   {
-    "sha": "e145e74",
-    "data": "2026-11-25",
-    "assunto": "fix: deploy de edge abortava sem confirmacao (--yes) (#341)"
-   },
-   {
-    "sha": "045b0fb",
-    "data": "2026-11-25",
-    "assunto": "fix: tirar host fixo e chave anon do cron e do trigger de scorecard (etapa 040) (#340)"
    }
   ],
-  "arquivos_mudados_7d": 1931,
+  "arquivos_mudados_7d": 1935,
   "pastas_mais_mudadas_30d": [
    {
     "pasta": "src/hooks/__tests__",
@@ -141,7 +141,7 @@
    },
    {
     "pasta": "docs/qa/05-PROGRESSO.md",
-    "mudancas": 161
+    "mudancas": 163
    },
    {
     "pasta": "src/components/calls",
@@ -199,7 +199,7 @@
   "arquivos_mais_mudados_90d": [
    {
     "arquivo": "docs/qa/05-PROGRESSO.md",
-    "mudancas": 161
+    "mudancas": 163
    },
    {
     "arquivo": "docs/estado/funcionalidades-planejadas.md",
@@ -301,16 +301,16 @@
   "autores_30d": [
    {
     "autor": "adm01-debug",
-    "commits": 298
+    "commits": 299
    },
    {
     "autor": "Joaquim Ataides",
-    "commits": 2
+    "commits": 1
    }
   ]
  },
  "contagens": {
-  "arquivos_total": 1840,
+  "arquivos_total": 1844,
   "arquivos_codigo": 1385,
   "linhas_codigo": 184953,
   "rotas": 108,
@@ -322,9 +322,9 @@
   "hooks": 201,
   "edge_functions": 99,
   "tabelas": 172,
-  "migrations": 266,
+  "migrations": 268,
   "cron_jobs": 13,
-  "testes": 457,
+  "testes": 459,
   "workflows": 5,
   "scripts": 36,
   "docs_md": 121

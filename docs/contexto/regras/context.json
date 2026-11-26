@@ -1,15 +1,15 @@
 {
  "meta": {
-  "sha": "b85ce4934df8acbd5f9a9c99db59675cf7c5d1ef",
+  "sha": "957a28355826923316b6ed8bbdeeac7accc73c67",
   "branch": "main",
   "remote": "https://github.com/adm01-debug/Hello_V3",
-  "generated_at": "2026-11-26 20:15 UTC",
-  "files_total": 1886,
-  "code_files": 1682,
-  "code_lines": 206724
+  "generated_at": "2026-11-26 20:28 UTC",
+  "files_total": 1890,
+  "code_files": 1686,
+  "code_lines": 206956
  },
  "version": "1.3.2",
- "facts_hash": "17cb412d785f7dc6",
+ "facts_hash": "76f345c2d15bf49c",
  "stack": {
   "frameworks": [
    "React + Vite",
@@ -170,7 +170,7 @@
   "languages": {
    ".tsx": 680,
    ".ts": 670,
-   ".sql": 296,
+   ".sql": 300,
    ".mjs": 29,
    ".py": 5,
    ".js": 2
@@ -26549,9 +26549,11 @@
    "supabase/migrations/20261127180000_policies_to_authenticated_restante.sql",
    "supabase/migrations/20261127200000_revoke_anon_role_helpers.sql",
    "supabase/migrations/20261127210000_role_helpers_stable.sql",
+   "supabase/migrations/20261127220000_polymorphic_pointer_comments.sql",
    "supabase/migrations/20261127230000_unique_conversation_message_id.sql",
    "supabase/migrations/20261127250000_increment_weekly_stats_rpc.sql",
    "supabase/migrations/20261127260000_increment_weekly_stats_rpc_null_media_fix.sql",
+   "supabase/migrations/20261127270000_geo_policies_idempotente.sql",
    "supabase/tests/add_missing_fks_rls_test.sql",
    "supabase/tests/calling_hours_fail_closed_rls_test.sql",
    "supabase/tests/client_errors_rls_test.sql",
@@ -26570,7 +26572,9 @@
    "supabase/tests/login_lockout_acl_rls_test.sql",
    "supabase/tests/policies_to_authenticated_lote1_rls_test.sql",
    "supabase/tests/policies_to_authenticated_restante_rls_test.sql",
+   "supabase/tests/polymorphic_pointer_comments_rls_test.sql",
    "supabase/tests/probe_065_101_rls_test.sql",
+   "supabase/tests/probe_129_polymorphic_rls_test.sql",
    "supabase/tests/probe_132_lgpd_entity_versions_rls_test.sql",
    "supabase/tests/rate_limit_logs_write_policies_rls_test.sql",
    "supabase/tests/redaction_log_rls_test.sql",
@@ -29232,7 +29236,13 @@
    "column:dnc_list.removal_reason": "Motivo textual da desativacao, quando informado na tela. Gatilho preenche um padrao se vier vazio.",
    "table:client_errors": "Erros nao tratados do navegador (etapa 230 / A-097). Alimentada por src/lib/errorReporter.ts, lida em /admin/client-errors.",
    "column:client_errors.route": "pathname da tela onde o erro ocorreu",
-   "column:client_errors.correlation_id": "trace id do client (src/lib/tracing.ts) para cruzar com logs de edge function"
+   "column:client_errors.correlation_id": "trace id do client (src/lib/tracing.ts) para cruzar com logs de edge function",
+   "column:audit_logs.resource_type": "Tipo do recurso auditado: ou o nome da tabela de destino de resource_id, ou um marcador sintetico sem tabela. Valores medidos em producao em 2026-11-27: contacts (tabela public.contacts), contact (grafia antiga da MESMA tabela), user_profiles, agents, user_roles, consent_record (tabela public.consent_records), call_recordings, voip_trunks, call_transcription (tabela public.call_transcriptions), call_analysis (tabela public.call_analyses), webhook, edge_function, api_endpoint, system e SYSTEM (evento de sistema, sem tabela de destino). Mapa completo em docs/agentes/banco.md. CHECK previsto na etapa 139.",
+   "column:audit_logs.resource_id": "Id em texto da linha indicada por resource_type (nao ha FK: o tipo escolhe a tabela). NULL ou vazio nos tipos sinteticos (system/SYSTEM, edge_function, api_endpoint). A funcao public.log_audit_event(text,text,text,jsonb) grava o valor cru recebido; nenhuma validacao de existencia e feita aqui.",
+   "column:notifications.source_type": "Origem da notificacao. NAO e nome de tabela: e um marcador sintetico do produtor. Valores medidos em producao em 2026-11-27: cron_health (job monitorado), optimistic_lock_hotspot (tabela com conflito de versao), idle_index_hotspot (indice sem uso). CHECK previsto na etapa 139.",
+   "column:notifications.source_id": "Identificador do objeto de origem; o significado depende de source_type: cron_health -> nome do job, optimistic_lock_hotspot -> tabela com conflito, idle_index_hotspot -> nome do indice. Sem FK de proposito.",
+   "column:optimistic_lock_conflicts.table_name": "Tabela em que o conflito de versao aconteceu. Valores medidos em producao em 2026-11-27: deals, contacts.",
+   "column:optimistic_lock_conflicts.record_id": "PK, em texto, da linha de optimistic_lock_conflicts.table_name que sofreu o conflito. Sem FK: a tabela e escolhida por table_name."
   },
   "types_file": "src/integrations/supabase/types.ts"
  },
@@ -35884,8 +35894,8 @@
   },
   {
    "module": "supabase/migrations",
-   "files": 266,
-   "lines": 17127,
+   "files": 268,
+   "lines": 17206,
    "tables": [],
    "exports": [],
    "docs": [],
@@ -35976,8 +35986,8 @@
   },
   {
    "module": "supabase/tests",
-   "files": 28,
-   "lines": 4433,
+   "files": 30,
+   "lines": 4586,
    "tables": [],
    "exports": [],
    "docs": [],
@@ -36002,7 +36012,9 @@
     "supabase/tests/login_lockout_acl_rls_test.sql",
     "supabase/tests/policies_to_authenticated_lote1_rls_test.sql",
     "supabase/tests/policies_to_authenticated_restante_rls_test.sql",
+    "supabase/tests/polymorphic_pointer_comments_rls_test.sql",
     "supabase/tests/probe_065_101_rls_test.sql",
+    "supabase/tests/probe_129_polymorphic_rls_test.sql",
     "supabase/tests/probe_132_lgpd_entity_versions_rls_test.sql",
     "supabase/tests/rate_limit_logs_write_policies_rls_test.sql",
     "supabase/tests/redaction_log_rls_test.sql",
@@ -127908,6 +127920,10 @@
    "path": "supabase/migrations/20261127210000_role_helpers_stable.sql",
    "lines": 73
   },
+  "supabase/migrations/20261127220000_polymorphic_pointer_comments.sql": {
+   "path": "supabase/migrations/20261127220000_polymorphic_pointer_comments.sql",
+   "lines": 32
+  },
   "supabase/migrations/20261127230000_unique_conversation_message_id.sql": {
    "path": "supabase/migrations/20261127230000_unique_conversation_message_id.sql",
    "lines": 42
@@ -127920,6 +127936,10 @@
   "supabase/migrations/20261127260000_increment_weekly_stats_rpc_null_media_fix.sql": {
    "path": "supabase/migrations/20261127260000_increment_weekly_stats_rpc_null_media_fix.sql",
    "lines": 68
+  },
+  "supabase/migrations/20261127270000_geo_policies_idempotente.sql": {
+   "path": "supabase/migrations/20261127270000_geo_policies_idempotente.sql",
+   "lines": 47
   },
   "supabase/tests/add_missing_fks_rls_test.sql": {
    "path": "supabase/tests/add_missing_fks_rls_test.sql",
@@ -128029,6 +128049,11 @@
    "lines": 146,
    "is_test": true
   },
+  "supabase/tests/polymorphic_pointer_comments_rls_test.sql": {
+   "path": "supabase/tests/polymorphic_pointer_comments_rls_test.sql",
+   "lines": 104,
+   "is_test": true
+  },
   "supabase/tests/probe_065_101_rls_test.sql": {
    "path": "supabase/tests/probe_065_101_rls_test.sql",
    "lines": 112,
@@ -128041,6 +128066,11 @@
     "into r from public.call_sessions where created_at > now() - interval '7 days';",
     "where created_at > now() - interval '7 days'"
    ]
+  },
+  "supabase/tests/probe_129_polymorphic_rls_test.sql": {
+   "path": "supabase/tests/probe_129_polymorphic_rls_test.sql",
+   "lines": 49,
+   "is_test": true
   },
   "supabase/tests/probe_132_lgpd_entity_versions_rls_test.sql": {
    "path": "supabase/tests/probe_132_lgpd_entity_versions_rls_test.sql",
@@ -128269,10 +128299,34 @@
   }
  },
  "git": {
-  "sha": "b85ce4934df8acbd5f9a9c99db59675cf7c5d1ef",
+  "sha": "957a28355826923316b6ed8bbdeeac7accc73c67",
   "branch": "main",
   "remote": "https://github.com/adm01-debug/Hello_V3",
   "commits": [
+   {
+    "sha": "957a283",
+    "date": "2026-11-26",
+    "author": "adm01-debug",
+    "subject": "fix: guarda idempotente nos ALTER POLICY das geo_ (etapa 131) (#368)",
+    "files": [
+     "docs/agentes/banco.md",
+     "docs/qa/05-PROGRESSO.md",
+     "supabase/migrations/20261127270000_geo_policies_idempotente.sql"
+    ]
+   },
+   {
+    "sha": "c2181b6",
+    "date": "2026-11-26",
+    "author": "adm01-debug",
+    "subject": "docs(db): contrato dos ponteiros polimorficos (etapa 129) (#363)",
+    "files": [
+     "docs/agentes/banco.md",
+     "docs/qa/05-PROGRESSO.md",
+     "supabase/migrations/20261127220000_polymorphic_pointer_comments.sql",
+     "supabase/tests/polymorphic_pointer_comments_rls_test.sql",
+     "supabase/tests/probe_129_polymorphic_rls_test.sql"
+    ]
+   },
    {
     "sha": "b85ce49",
     "date": "2026-11-26",
@@ -128654,37 +128708,12 @@
      "supabase/migrations/20261126090001_rate_limit_logs_revoke_anon_write.sql",
      "supabase/tests/rate_limit_logs_write_policies_rls_test.sql"
     ]
-   },
-   {
-    "sha": "778149d",
-    "date": "2026-11-25",
-    "author": "adm01-debug",
-    "subject": "fix: travar duplo clique nas 4 acoes de escrita que escaparam da etapa 218 (#336)",
-    "files": [
-     "docs/qa/05-PROGRESSO.md",
-     "src/components/conversation-intelligence/BattleCardAlert.tsx",
-     "src/components/conversation-intelligence/__tests__/BattleCardAlert.doubleClick.test.tsx",
-     "src/pages/Deals.tsx",
-     "src/pages/Trackers.tsx",
-     "src/pages/VideoConference.tsx",
-     "src/pages/__tests__/VideoConference.duploClique.test.tsx"
-    ]
-   },
-   {
-    "sha": "6943f53",
-    "date": "2026-11-25",
-    "author": "adm01-debug",
-    "subject": "chore: corrigir achados A-216/A-217 e criar gate contra regressao de RLS no historico de migrations",
-    "files": [
-     "docs/pendencias/_verificado-banco.md",
-     "supabase/tests/internal_tables_rls_test.sql"
-    ]
    }
   ],
   "hot_files": [
    [
     "docs/qa/05-PROGRESSO.md",
-    21
+    22
    ],
    [
     "docs/qa/03-ACHADOS.md",
@@ -128696,7 +128725,7 @@
    ],
    [
     "docs/agentes/banco.md",
-    2
+    4
    ],
    [
     "src/components/layout/AppSidebar.tsx",
@@ -128723,6 +128752,22 @@
     2
    ],
    [
+    "supabase/migrations/20261127270000_geo_policies_idempotente.sql",
+    1
+   ],
+   [
+    "supabase/migrations/20261127220000_polymorphic_pointer_comments.sql",
+    1
+   ],
+   [
+    "supabase/tests/polymorphic_pointer_comments_rls_test.sql",
+    1
+   ],
+   [
+    "supabase/tests/probe_129_polymorphic_rls_test.sql",
+    1
+   ],
+   [
     "src/hooks/__tests__/useGamification.coverage.test.tsx",
     1
    ],
@@ -128744,22 +128789,6 @@
    ],
    [
     "deno.lock",
-    1
-   ],
-   [
-    "supabase/functions/whatsapp-inbound/deno.lock",
-    1
-   ],
-   [
-    "supabase/functions/whatsapp-inbound/idempotency.ts",
-    1
-   ],
-   [
-    "supabase/functions/whatsapp-inbound/idempotency_test.ts",
-    1
-   ],
-   [
-    "supabase/functions/whatsapp-inbound/index.ts",
     1
    ]
   ]
