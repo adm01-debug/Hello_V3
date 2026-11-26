@@ -1,6 +1,6 @@
 # 07 · REGRAS DE NEGÓCIO
 
-> Gerado automaticamente por AI Context Sync v1.3.2 · commit `11e8d43f39` · branch `main` · 2026-11-26 12:06 UTC
+> Gerado automaticamente por AI Context Sync v1.3.2 · commit `31ef7782f6` · branch `main` · 2026-11-26 12:24 UTC
 > Não edite à mão — regras humanas vão em `manual/`.
 
 ## A. Regras escritas por humanos (`manual/` — prioridade máxima, nunca sobrescrito)
@@ -742,6 +742,7 @@ _Nenhum arquivo em `manual/`. Copie `manual/TEMPLATE-regras-de-negocio.md` para 
 | trg_sync_profile_role | AFTER INSERT OR UPDATE OR DELETE | `user_roles` | `sync_profile_role_from_user_roles` |  |
 | trg_hold_events_recalc_hold_time | AFTER UPDATE OF ENDED_AT | `hold_events` | `recalc_hold_time_from_events` | `NEW.ended_at IS DISTINCT FROM OLD.ended_at` |
 | set_user_preferences_updated_at | BEFORE UPDATE | `user_preferences` | `update_updated_at_column` |  |
+| trg_dnc_track_removal | BEFORE UPDATE | `dnc_list` | `dnc_track_removal` |  |
 
 Erros lançados por funções SQL (`RAISE EXCEPTION` = regra de negócio no banco):
 
@@ -2539,6 +2540,7 @@ _nenhum item encontrado_
 | Mensagem enviada, mas a conversa não foi atualizada na lista. Recarregue antes de continuar. | `src/hooks/useConversations.ts` |
 | callSessionId ausente | `src/hooks/useCrmFieldSuggestions.ts` |
 | Erro ao adicionar | `src/hooks/useDNCCompliance.ts` |
+| Erro ao atualizar | `src/hooks/useDNCCompliance.ts` |
 | Erro ao remover | `src/hooks/useDNCCompliance.ts` |
 | Erro ao salvar | `src/hooks/useDNCCompliance.ts` |
 | Erro ao atualizar meta | `src/hooks/useDashboardGoals.ts` |
@@ -2623,8 +2625,7 @@ _nenhum item encontrado_
 | Nada foi alterado para ${ipAddress} | `src/hooks/useRateLimitData.ts` |
 | Novo alerta de rate limit! | `src/hooks/useRateLimitData.ts` |
 | Notificações não suportadas | `src/hooks/useRealtimeHoldAlerts.ts` |
-| Permissão negada | `src/hooks/useRealtimeHoldAlerts.ts` |
-| … +296 linhas — lista completa em `context.json` | |
+| … +297 linhas — lista completa em `context.json` | |
 
 ## J. Controle de acesso no código (checagens de perfil/permissão)
 
@@ -2675,7 +2676,7 @@ _nenhum item encontrado_
 | `admin` | `supabase/functions/data-lake-flush/index.ts` |
 | `admin` | `supabase/migrations/20261123000200_fix_has_role_oracle_and_debug_tables.sql` |
 
-## K. Testes como especificação (3742 testes em 413 arquivos — nomes completos em `context.json`)
+## K. Testes como especificação (3753 testes em 415 arquivos — nomes completos em `context.json`)
 
 | Arquivo | Testes | Exemplos do que o sistema DEVE fazer |
 |---|---|---|
@@ -2754,6 +2755,7 @@ _nenhum item encontrado_
 | `src/lib/validation/__tests__/zod-schemas.property.test.ts` | 12 | Zod schemas — property-based (1000 runs cada) · uuidSchema aceita UUIDs válidos · uuidSchema rejeita strings arbitrárias não-UUID · emailSchema aceita emails válidos … |
 | `src/hooks/__tests__/useAuth.coverage.test.tsx` | 11 | useAuth · calls getSession on mount and exposes API · hasRole false without profile, true with matching role · handles SIGNED_OUT auth state change … |
 | `src/hooks/__tests__/useContacts.coverage.test.tsx` | 11 | useContacts (coverage) · fetches contacts on mount · fetchContacts with search filter · getContactByPhone success and not found … |
+| `src/hooks/__tests__/useDNCCompliance.coverage.test.tsx` | 11 | useDNCCompliance · loads queries and getSettingValue parses values · checkDNC success and error branches · checkCallingHours success and error branches … |
 | `src/hooks/__tests__/useLiveAssist.coverage.test.tsx` | 11 | useLiveAssist · is disabled (no fetch) without callSessionId · loads signals and subscribes to realtime when callSessionId present · analyze invokes edge function when throttle allows … |
 | `src/hooks/__tests__/useLoginLockout.coverage.test.tsx` | 11 | useLoginLockout · checkLockout success returns parsed status · checkLockout handles error from rpc · checkLockout handles thrown exception … |
 | `src/hooks/__tests__/useScheduledCallbacks.coverage.test.tsx` | 11 | useScheduledCallbacks · loads pending callbacks and upcoming count on mount · fetchCallbacks with status filter and error branch · fetchUpcomingCount error branch … |
@@ -2773,7 +2775,6 @@ _nenhum item encontrado_
 | `src/components/layout/__tests__/AppSidebar.test.tsx` | 10 | routeRoles (E088) · declara papéis para rota admin e undefined para rota aberta · AppSidebar — filtro por papel (E089) · agente não vê itens de rota com roles (Executivo, Logs de Auditoria) … |
 | `src/hooks/__tests__/useAlerts.coverage.test.tsx` | 10 | useAlerts · loads alerts and computes counts · applies filters · checks for new alerts (success and none) … |
 | `src/hooks/__tests__/useAnomalyRemediation.coverage.test.tsx` | 10 | useAnomalyRemediation · applied success · idempotent_skip → info · dryRun → info … |
-| `src/hooks/__tests__/useDNCCompliance.coverage.test.tsx` | 10 | useDNCCompliance · loads queries and getSettingValue parses values · checkDNC success and error branches · checkCallingHours success and error branches … |
 | `src/hooks/__tests__/useDashboardGoals.coverage.test.tsx` | 10 | useDashboardGoals · fetches goals on mount · handles fetch error · opens dialog for new and for editing … |
 | `src/hooks/__tests__/useGeoBlocking.coverage.test.tsx` | 10 | useGeoBlocking · carrega settings, restrictions e logs · inicializa settings quando ausentes · atualiza settings com sucesso … |
 | `src/hooks/__tests__/useIPWhitelist.coverage.test.tsx` | 10 | useIPWhitelist · does not fetch when not admin · fetches data when admin · publishes the read error instead of an empty list … |
@@ -2887,6 +2888,7 @@ _nenhum item encontrado_
 | `src/__tests__/rls/storage-recordings.test.ts` | 6 | Storage — call-recordings (ownership por path) · bucket é privado: anônimo é bloqueado · agente lê apenas próprias gravações · agente faz upload apenas no próprio prefixo … |
 | `src/components/auth/__tests__/PermissionGate.test.tsx` | 6 | PermissionGate · nao renderiza nada enquanto as permissoes carregam · mostra o estado padrao de sem permissao quando nao ha fallback · respeita fallback explicito, inclusive null … |
 | `src/components/call-library/__tests__/SurveysPanel.test.tsx` | 6 | SurveysPanel · envia a pesquisa escolhida pelo id real (nao um valor fixo) · sem pesquisa cadastrada bloqueia o envio e explica o motivo · cria pesquisa com o nome informado … |
+| `src/components/compliance/dnc/__tests__/DNCTable.test.tsx` | 6 | DNCTable — rastreabilidade e edicao (etapa 175) · tem rotulo acessivel para editar e para remover, com o telefone · pede confirmacao mostrando o numero antes de remover · mostra autor e data quando a entrada foi removida … |
 | `src/hooks/__tests__/useAudioOutputDevices.test.tsx` | 6 | useAudioOutputDevices · reporta não suportado quando setSinkId ausente · enumera dispositivos de saída e ignora inputs · persiste a preferência ao chamar setSinkId com sucesso … |
 | `src/hooks/__tests__/useBattleCardDetection.test.ts` | 6 | useBattleCardDetection · does nothing when inactive · matches contains keyword · matches exact keyword as a whole word … |
 | `src/hooks/__tests__/useBitrixAndWebAuthn.test.ts` | 6 | useBitrix · gets contacts from Bitrix · handles unconfigured service · useWebAuthn … |
@@ -2975,11 +2977,10 @@ _nenhum item encontrado_
 | `src/components/calls/softphone/__tests__/ActiveCallDisplay.saidaAudio.test.tsx` | 4 | ActiveCallDisplay — saída de áudio da chamada · oferece a escolha de saída na chamada SIP e aplica o sink no áudio remoto · não mostra o seletor fora da chamada SIP · não mostra o seletor quando o navegador não suporta trocar a saída |
 | `src/components/calls/softphone/__tests__/DialpadTab.a11y.test.tsx` | 4 | DialpadTab - rótulo acessível no apagar (A-123) · expõe  · ConferenceSection - rótulo acessível ao remover participante (A-123) · identifica o participante que será removido |
 | `src/components/coaching/__tests__/CoachingAssignmentsPanel.rules.test.tsx` | 4 | CoachingAssignmentsPanel - regra do coaching automático (A-131) · explica a regra com os números que vieram da edge · mostra a contagem atual de cada agente que ficou de fora · sem regra conhecida, orienta a rodar a geração |
+| `src/components/compliance/dnc/__tests__/EditDNCDialog.test.tsx` | 4 | EditDNCDialog (etapa 175) · grava observacao e validade mantendo o motivo atual · validade em branco remove o prazo e observacao vazia vira nulo · explica que o autor da remocao e registrado automaticamente |
 | `src/components/compliance/dnc/__tests__/ReconcileDNCDialog.test.tsx` | 4 | ReconcileDNCDialog · aponta exatamente o numero ausente da lista · reenvia apenas os ausentes e recontabiliza · mostra o erro da consulta em vez de dizer que esta tudo certo |
 | `src/components/executive/__tests__/OmnichannelCard.test.tsx` | 4 | OmnichannelCard · renderiza KPIs principais (abertas, SLA, violações) · exibe badge de SLA quando há violações · lista todos os canais com contagem |
-| `src/components/network/__tests__/QualityForecastCard.test.tsx` | 4 | QualityForecastCard — recomendacao de capacity registra leitura (E178) · nao promete execucao: o botao diz  · grava a acao com outcome dismissed e os dados da recomendacao · nao afirma sucesso quando o insert falha |
-| `src/hooks/__tests__/callLifecycle-integration.test.tsx` | 4 | Ciclo de vida da chamada — integracao (E064) · INSERT em call_sessions ao ficar ativa com campos corretos · UPDATE em call_sessions ao encerrar chamada · sem INSERT se chamada for encerrada antes de ficar ativa |
-| … +113 linhas — lista completa em `context.json` | | |
+| … +115 linhas — lista completa em `context.json` | | |
 
 ## L. Eventos de webhook tratados (contratos com sistemas externos)
 

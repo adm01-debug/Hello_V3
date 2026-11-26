@@ -743,12 +743,22 @@
    "src/components/ui/card.tsx"
   ],
   "src/components/compliance/dnc/DNCTable.tsx": [
+   "src/components/compliance/dnc/EditDNCDialog.tsx",
    "src/components/compliance/dnc/constants.ts",
    "src/components/ui/alert-dialog.tsx",
    "src/components/ui/badge.tsx",
    "src/components/ui/button.tsx",
    "src/components/ui/table.tsx",
    "src/lib/safe-date.ts"
+  ],
+  "src/components/compliance/dnc/EditDNCDialog.tsx": [
+   "src/components/compliance/dnc/constants.ts",
+   "src/components/ui/button.tsx",
+   "src/components/ui/dialog.tsx",
+   "src/components/ui/input.tsx",
+   "src/components/ui/label.tsx",
+   "src/components/ui/select.tsx",
+   "src/components/ui/textarea.tsx"
   ],
   "src/components/compliance/dnc/ImportDNCDialog.tsx": [
    "src/components/compliance/dnc/constants.ts",

@@ -2206,7 +2206,7 @@
    "hooks_exportados": [
     "useDNCCompliance"
    ],
-   "linhas": 327,
+   "linhas": 357,
    "dominio": "hooks",
    "tabelas": [
     "calling_hours_config",

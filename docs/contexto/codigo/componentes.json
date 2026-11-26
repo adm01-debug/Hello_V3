@@ -1,7 +1,7 @@
 {
  "aviso": "GERADO AUTOMATICAMENTE por scripts/ai-context/gerar.mjs — não editar à mão; será sobrescrito.",
  "format_version": 2,
- "total": 450,
+ "total": 451,
  "orfaos": 13,
  "nomes_duplicados": {
   "KpiCards": [
@@ -1357,7 +1357,22 @@
     "DNCTable"
    ],
    "export_default": null,
-   "linhas": 104,
+   "linhas": 126,
+   "dominio": "components/compliance",
+   "hooks_locais": [],
+   "tabelas": [],
+   "edges": [],
+   "usado_por": 1,
+   "orfao": false
+  },
+  {
+   "arquivo": "src/components/compliance/dnc/EditDNCDialog.tsx",
+   "exports": [
+    "DNCItemEditable",
+    "EditDNCDialog"
+   ],
+   "export_default": null,
+   "linhas": 118,
    "dominio": "components/compliance",
    "hooks_locais": [],
    "tabelas": [],
@@ -1417,7 +1432,7 @@
     "DNCListManager"
    ],
    "export_default": null,
-   "linhas": 100,
+   "linhas": 106,
    "dominio": "components/compliance",
    "hooks_locais": [
     "useDNCCompliance"
@@ -4142,7 +4157,7 @@
    "hooks_locais": [],
    "tabelas": [],
    "edges": [],
-   "usado_por": 247,
+   "usado_por": 248,
    "orfao": false
   },
   {
@@ -4302,7 +4317,7 @@
    "hooks_locais": [],
    "tabelas": [],
    "edges": [],
-   "usado_por": 49,
+   "usado_por": 50,
    "orfao": false
   },
   {
@@ -4445,7 +4460,7 @@
    "hooks_locais": [],
    "tabelas": [],
    "edges": [],
-   "usado_por": 95,
+   "usado_por": 96,
    "orfao": false
   },
   {
@@ -4478,7 +4493,7 @@
    "hooks_locais": [],
    "tabelas": [],
    "edges": [],
-   "usado_por": 70,
+   "usado_por": 71,
    "orfao": false
   },
   {
@@ -4662,7 +4677,7 @@
    "hooks_locais": [],
    "tabelas": [],
    "edges": [],
-   "usado_por": 70,
+   "usado_por": 71,
    "orfao": false
   },
   {
@@ -4873,7 +4888,7 @@
    "hooks_locais": [],
    "tabelas": [],
    "edges": [],
-   "usado_por": 24,
+   "usado_por": 25,
    "orfao": false
   },
   {

@@ -1,6 +1,6 @@
 # 11 · GLOSSÁRIO, DADOS DE REFERÊNCIA E LACUNAS
 
-> Gerado automaticamente por AI Context Sync v1.3.2 · commit `11e8d43f39` · branch `main` · 2026-11-26 12:06 UTC
+> Gerado automaticamente por AI Context Sync v1.3.2 · commit `31ef7782f6` · branch `main` · 2026-11-26 12:24 UTC
 > Não edite à mão — regras humanas vão em `manual/`.
 
 ## Glossário do domínio (entidades do sistema)
@@ -79,7 +79,7 @@
 | `dialer_favorites` | _(sem COMMENT ON TABLE — significado não documentado)_ | 8 colunas | migration |
 | `dialer_queue` | _(sem COMMENT ON TABLE — significado não documentado)_ | 16 colunas | migration |
 | `dnc_import_logs` | _(sem COMMENT ON TABLE — significado não documentado)_ | 12 colunas | migration |
-| `dnc_list` | _(sem COMMENT ON TABLE — significado não documentado)_ | 11 colunas | migration |
+| `dnc_list` | _(sem COMMENT ON TABLE — significado não documentado)_ | 14 colunas | migration |
 | `email_tickets` | _(sem COMMENT ON TABLE — significado não documentado)_ | 14 colunas | migration |
 | `email_verification_tokens` | _(sem COMMENT ON TABLE — significado não documentado)_ | 7 colunas | migration |
 | `entity_versions` | _(sem COMMENT ON TABLE — significado não documentado)_ | 8 colunas | migration |

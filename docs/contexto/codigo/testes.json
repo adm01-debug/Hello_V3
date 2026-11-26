@@ -5,17 +5,17 @@
   "vitest",
   "playwright"
  ],
- "total": 434,
+ "total": 437,
  "por_tipo": {
   "contrato": 1,
   "e2e": 16,
   "pytest": 2,
-  "unit": 403
+  "unit": 405
  },
  "onde_ficam": [
   {
    "padrao": "co-localizado (__tests__)",
-   "arquivos": 396
+   "arquivos": 398
   },
   {
    "padrao": "tests/",
@@ -337,6 +337,24 @@
    "testa": [
     "src/components/coaching/CoachingAssignmentsPanel.tsx",
     "src/hooks/useCoachingTrack.ts"
+   ],
+   "casos": 3
+  },
+  {
+   "arquivo": "src/components/compliance/dnc/__tests__/DNCTable.test.tsx",
+   "tipo": "unit",
+   "linhas": 66,
+   "testa": [
+    "src/components/compliance/dnc/DNCTable.tsx"
+   ],
+   "casos": 5
+  },
+  {
+   "arquivo": "src/components/compliance/dnc/__tests__/EditDNCDialog.test.tsx",
+   "tipo": "unit",
+   "linhas": 49,
+   "testa": [
+    "src/components/compliance/dnc/EditDNCDialog.tsx"
    ],
    "casos": 3
   },
@@ -1125,11 +1143,11 @@
   {
    "arquivo": "src/hooks/__tests__/useDNCCompliance.coverage.test.tsx",
    "tipo": "unit",
-   "linhas": 201,
+   "linhas": 231,
    "testa": [
     "src/hooks/useDNCCompliance.ts"
    ],
-   "casos": 9
+   "casos": 10
   },
   {
    "arquivo": "src/hooks/__tests__/useExecutiveDashboard.coverage.test.tsx",
@@ -3872,6 +3890,7 @@
   "supabase/tests/calling_hours_fail_closed_rls_test.sql",
   "supabase/tests/cron_credentials_rls_test.sql",
   "supabase/tests/deal_pipeline_snapshots_rls_test.sql",
+  "supabase/tests/dnc_removal_audit_rls_test.sql",
   "supabase/tests/geo_write_policies_rls_test.sql",
   "supabase/tests/internal_tables_rls_test.sql",
   "supabase/tests/kb_article_history_rls_test.sql",
@@ -3903,6 +3922,8 @@
   "src/components/calls/softphone/TabContents.tsx": 1,
   "src/components/calls/softphone/constants.tsx": 1,
   "src/components/coaching/CoachingAssignmentsPanel.tsx": 1,
+  "src/components/compliance/dnc/DNCTable.tsx": 1,
+  "src/components/compliance/dnc/EditDNCDialog.tsx": 1,
   "src/components/compliance/dnc/ImportDNCDialog.tsx": 1,
   "src/components/compliance/dnc/ReconcileDNCDialog.tsx": 1,
   "src/components/contacts/ContactCard.tsx": 1,

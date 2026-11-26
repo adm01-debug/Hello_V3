@@ -1,6 +1,6 @@
 # 10 · ACESSO E SEGURANÇA — quem pode o quê
 
-> Gerado automaticamente por AI Context Sync v1.3.2 · commit `11e8d43f39` · branch `main` · 2026-11-26 12:06 UTC
+> Gerado automaticamente por AI Context Sync v1.3.2 · commit `31ef7782f6` · branch `main` · 2026-11-26 12:24 UTC
 > Não edite à mão — regras humanas vão em `manual/`.
 
 ## Perfis / roles identificados
@@ -350,6 +350,7 @@
 - `cleanup_expired_challenges`
 - `cleanup_old_data`
 - `cleanup_old_logs`
+- `dnc_track_removal`
 - `edge_function_url`
 - `enforce_optimistic_lock`
 - `expire_parked_calls`
@@ -457,6 +458,7 @@ Middleware matcher (Next.js): nenhum
 | revoke | anon, authenticated | execute | `cleanup_old_data`, `check_all_tables_rls_status`, `cleanup_expired_challenges`, `check_all_tables_rls_status`, `cleanup_old_data`, `cleanup_expired_challenges`, `check_rls_enabled` |
 | revoke | authenticated | execute | `apply_migration`, `audit_role_change`, `audit_table_change`, `bridge_voip_alert_to_notification`, `check_suspicious_activity`, `check_table_bloat`, `cleanup_old_data`, `cleanup_old_logs`, `enforce_optimistic_lock`, `ensure_single_default_filter`, `handle_kb_article_change`, `handle_kb_article_history`, `handle_new_user`, `log_critical_rls_event`, `notify_bloat_hotspots` … +24 |
 | revoke | public | all | `get_agent_financial_leaderboard` |
+| revoke | public, anon, authenticated | execute | `dnc_track_removal` |
 
 ## Riscos de acesso detectados
 
@@ -481,6 +483,7 @@ Middleware matcher (Next.js): nenhum
 | `user_roles` | `is_active` |
 | `active_sessions` | `is_active` |
 | `dnc_list` | `is_active` |
+| `dnc_list` | `removed_at` |
 | `calling_hours_config` | `is_active` |
 | `call_flows` | `is_active` |
 | `battle_cards` | `is_active` |

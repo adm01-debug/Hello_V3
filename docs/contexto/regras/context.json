@@ -1,15 +1,15 @@
 {
  "meta": {
-  "sha": "11e8d43f394625b325efa098094a88e3fc676b7b",
+  "sha": "31ef7782f6fcd79bed1112c7e1ebdb721a161ee1",
   "branch": "main",
   "remote": "https://github.com/adm01-debug/Hello_V3",
-  "generated_at": "2026-11-26 12:06 UTC",
-  "files_total": 1842,
-  "code_files": 1638,
-  "code_lines": 200635
+  "generated_at": "2026-11-26 12:24 UTC",
+  "files_total": 1847,
+  "code_files": 1643,
+  "code_lines": 201234
  },
  "version": "1.3.2",
- "facts_hash": "99c0a7781b3f1165",
+ "facts_hash": "d6b0cdde1fbc50b4",
  "stack": {
   "frameworks": [
    "React + Vite",
@@ -168,9 +168,9 @@
   ],
   "package_manager": "bun",
   "languages": {
-   ".tsx": 671,
+   ".tsx": 674,
    ".ts": 666,
-   ".sql": 265,
+   ".sql": 267,
    ".mjs": 29,
    ".py": 5,
    ".js": 2
@@ -4373,6 +4373,27 @@
       "fk": "",
       "generated": "",
       "src": "supabase/migrations/20260103145030_b2c1f366-245b-4264-9139-4def0d930fd6.sql"
+     },
+     {
+      "name": "removed_by",
+      "type": "text",
+      "fk": "",
+      "generated": "",
+      "src": "supabase/migrations/20261126130000_dnc_removal_audit.sql"
+     },
+     {
+      "name": "removed_at",
+      "type": "timestamp with time zone",
+      "fk": "",
+      "generated": "",
+      "src": "supabase/migrations/20261126130000_dnc_removal_audit.sql"
+     },
+     {
+      "name": "removal_reason",
+      "type": "text",
+      "fk": "",
+      "generated": "",
+      "src": "supabase/migrations/20261126130000_dnc_removal_audit.sql"
      }
     ],
     "constraints": [
@@ -20948,6 +20969,15 @@
     "condition": "",
     "each": "row",
     "src": "supabase/migrations/20261123120000_user_preferences.sql"
+   },
+   {
+    "name": "trg_dnc_track_removal",
+    "when": "BEFORE UPDATE",
+    "table": "dnc_list",
+    "function": "dnc_track_removal",
+    "condition": "",
+    "each": "row",
+    "src": "supabase/migrations/20261126130000_dnc_removal_audit.sql"
    }
   ],
   "functions": {
@@ -22342,6 +22372,20 @@
     "tables": [
      "v_base",
      "vault"
+    ]
+   },
+   "dnc_track_removal": {
+    "args": "",
+    "returns": "trigger",
+    "lang": "plpgsql",
+    "src": "supabase/migrations/20261126130000_dnc_removal_audit.sql",
+    "security_definer": true,
+    "search_path": true,
+    "body": "declare v_email text; begin if old.is_active is distinct from new.is_active then if new.is_active is false then select email into v_email from public.user_profiles where id = auth.uid(); new.removed_at := now(); new.removed_by := coalesce( nullif(btrim(coalesce(new.removed_by, '')), ''), v_email, nullif(btrim(coalesce(current_setting('request.jwt.claims', true)::jsonb ->> 'email', '')), ''), 'desconhecido' ); new.removal_reason := coalesce(nullif(btrim(coalesce(new.removal_reason, '')), ''), 'removido na interface'); else new.removed_at := null; new.removed_by := null; new.removal_reason := null; end if; end if; return new; end;",
+    "raises": [],
+    "tables": [
+     "user_profiles",
+     "v_email"
     ]
    },
    "graphql": {
@@ -26052,9 +26096,11 @@
    "supabase/migrations/20261126100100_fix_cron_urls_quoting.sql",
    "supabase/migrations/20261126101000_revoke_anon_login_rpcs.sql",
    "supabase/migrations/20261126120000_deal_pipeline_snapshots.sql",
+   "supabase/migrations/20261126130000_dnc_removal_audit.sql",
    "supabase/tests/calling_hours_fail_closed_rls_test.sql",
    "supabase/tests/cron_credentials_rls_test.sql",
    "supabase/tests/deal_pipeline_snapshots_rls_test.sql",
+   "supabase/tests/dnc_removal_audit_rls_test.sql",
    "supabase/tests/geo_write_policies_rls_test.sql",
    "supabase/tests/internal_tables_rls_test.sql",
    "supabase/tests/kb_article_history_rls_test.sql",
@@ -28358,6 +28404,14 @@
     "objkind": "function",
     "roles": "service_role",
     "src": "supabase/migrations/20261126120000_deal_pipeline_snapshots.sql"
+   },
+   {
+    "kind": "revoke",
+    "privs": "execute",
+    "object": "dnc_track_removal",
+    "objkind": "function",
+    "roles": "public, anon, authenticated",
+    "src": "supabase/migrations/20261126130000_dnc_removal_audit.sql"
    }
   ],
   "raises": [
@@ -28550,7 +28604,10 @@
    "column:webhook_flush_metrics.endpoint_hash": "SHA-256 (12 primeiros hex) da URL do webhook, para drill-down sem expor a URL bruta.",
    "column:user_profiles.role": "Espelho de exibicao. NAO use para autorizacao: use public.user_roles.role via is_admin_or_supervisor().",
    "column:user_profiles.avatar_url": "Caminho do objeto no bucket avatars (<user_id>/<timestamp>.<ext>), nao URL publica. Render usa createSignedUrl.",
-   "table:user_preferences": "Preferências de notificação e áudio por usuário (E076/E077)"
+   "table:user_preferences": "Preferências de notificação e áudio por usuário (E076/E077)",
+   "column:dnc_list.removed_by": "E-mail de quem desativou a entrada. Gravado pelo gatilho trg_dnc_track_removal, nunca pelo cliente.",
+   "column:dnc_list.removed_at": "Momento da desativacao (soft delete). Gravado pelo gatilho; volta a NULL se a entrada for reativada.",
+   "column:dnc_list.removal_reason": "Motivo textual da desativacao, quando informado na tela. Gatilho preenche um padrao se vier vazio."
   },
   "types_file": "src/integrations/supabase/types.ts"
  },
@@ -28886,7 +28943,7 @@
      "check_calling_hours",
      "check_dnc"
     ],
-    "deps_count": 44
+    "deps_count": 45
    },
    {
     "path": "",
@@ -32754,7 +32811,7 @@
     "file": ".github/workflows/migrations.yml"
    }
   ],
-  "components_count": 381,
+  "components_count": 384,
   "hooks": [
    {
     "name": "useContacts",
@@ -33942,8 +33999,8 @@
   },
   {
    "module": "src/components",
-   "files": 381,
-   "lines": 45227,
+   "files": 384,
+   "lines": 45488,
    "tables": [
     "accounts",
     "agent_goals",
@@ -34204,7 +34261,7 @@
   {
    "module": "src/hooks",
    "files": 353,
-   "lines": 44924,
+   "lines": 44984,
    "tables": [
     "accounts",
     "active_sessions",
@@ -34493,7 +34550,7 @@
   {
    "module": "src/integrations",
    "files": 3,
-   "lines": 8251,
+   "lines": 8260,
    "tables": [],
    "exports": [
     "index.ts: lovable",
@@ -35154,8 +35211,8 @@
   },
   {
    "module": "supabase/migrations",
-   "files": 251,
-   "lines": 16052,
+   "files": 252,
+   "lines": 16104,
    "tables": [],
    "exports": [],
    "docs": [],
@@ -35246,8 +35303,8 @@
   },
   {
    "module": "supabase/tests",
-   "files": 12,
-   "lines": 1492,
+   "files": 13,
+   "lines": 1709,
    "tables": [],
    "exports": [],
    "docs": [],
@@ -35257,6 +35314,7 @@
     "supabase/tests/calling_hours_fail_closed_rls_test.sql",
     "supabase/tests/cron_credentials_rls_test.sql",
     "supabase/tests/deal_pipeline_snapshots_rls_test.sql",
+    "supabase/tests/dnc_removal_audit_rls_test.sql",
     "supabase/tests/geo_write_policies_rls_test.sql",
     "supabase/tests/internal_tables_rls_test.sql",
     "supabase/tests/kb_article_history_rls_test.sql",
@@ -41799,6 +41857,10 @@
    {
     "file": "src/hooks/useDNCCompliance.ts",
     "msg": "Erro ao adicionar"
+   },
+   {
+    "file": "src/hooks/useDNCCompliance.ts",
+    "msg": "Erro ao atualizar"
    },
    {
     "file": "src/hooks/useDNCCompliance.ts",
@@ -59110,6 +59172,46 @@
     "name": "sem regra conhecida, orienta a rodar a geração"
    },
    {
+    "file": "src/components/compliance/dnc/__tests__/DNCTable.test.tsx",
+    "name": "DNCTable — rastreabilidade e edicao (etapa 175)"
+   },
+   {
+    "file": "src/components/compliance/dnc/__tests__/DNCTable.test.tsx",
+    "name": "tem rotulo acessivel para editar e para remover, com o telefone"
+   },
+   {
+    "file": "src/components/compliance/dnc/__tests__/DNCTable.test.tsx",
+    "name": "pede confirmacao mostrando o numero antes de remover"
+   },
+   {
+    "file": "src/components/compliance/dnc/__tests__/DNCTable.test.tsx",
+    "name": "mostra autor e data quando a entrada foi removida"
+   },
+   {
+    "file": "src/components/compliance/dnc/__tests__/DNCTable.test.tsx",
+    "name": "mostra a validade e um traco quando nao ha prazo"
+   },
+   {
+    "file": "src/components/compliance/dnc/__tests__/DNCTable.test.tsx",
+    "name": "esconde a edicao quando nao ha tratador"
+   },
+   {
+    "file": "src/components/compliance/dnc/__tests__/EditDNCDialog.test.tsx",
+    "name": "EditDNCDialog (etapa 175)"
+   },
+   {
+    "file": "src/components/compliance/dnc/__tests__/EditDNCDialog.test.tsx",
+    "name": "grava observacao e validade mantendo o motivo atual"
+   },
+   {
+    "file": "src/components/compliance/dnc/__tests__/EditDNCDialog.test.tsx",
+    "name": "validade em branco remove o prazo e observacao vazia vira nulo"
+   },
+   {
+    "file": "src/components/compliance/dnc/__tests__/EditDNCDialog.test.tsx",
+    "name": "explica que o autor da remocao e registrado automaticamente"
+   },
+   {
     "file": "src/components/compliance/dnc/__tests__/ImportDNCDialog.test.tsx",
     "name": "ImportDNCDialog"
    },
@@ -61304,6 +61406,10 @@
    {
     "file": "src/hooks/__tests__/useDNCCompliance.coverage.test.tsx",
     "name": "updateSetting mutation success and error"
+   },
+   {
+    "file": "src/hooks/__tests__/useDNCCompliance.coverage.test.tsx",
+    "name": "updateDNC grava motivo, observacao e validade da entrada"
    },
    {
     "file": "src/hooks/__tests__/useDashboardData.coverage.test.tsx",
@@ -80352,6 +80458,15 @@
     "condition": "",
     "each": "row",
     "src": "supabase/migrations/20261123120000_user_preferences.sql"
+   },
+   {
+    "name": "trg_dnc_track_removal",
+    "when": "BEFORE UPDATE",
+    "table": "dnc_list",
+    "function": "dnc_track_removal",
+    "condition": "",
+    "each": "row",
+    "src": "supabase/migrations/20261126130000_dnc_removal_audit.sql"
    }
   ],
   "db_functions": {
@@ -81746,6 +81861,20 @@
     "tables": [
      "v_base",
      "vault"
+    ]
+   },
+   "dnc_track_removal": {
+    "args": "",
+    "returns": "trigger",
+    "lang": "plpgsql",
+    "src": "supabase/migrations/20261126130000_dnc_removal_audit.sql",
+    "security_definer": true,
+    "search_path": true,
+    "body": "declare v_email text; begin if old.is_active is distinct from new.is_active then if new.is_active is false then select email into v_email from public.user_profiles where id = auth.uid(); new.removed_at := now(); new.removed_by := coalesce( nullif(btrim(coalesce(new.removed_by, '')), ''), v_email, nullif(btrim(coalesce(current_setting('request.jwt.claims', true)::jsonb ->> 'email', '')), ''), 'desconhecido' ); new.removal_reason := coalesce(nullif(btrim(coalesce(new.removal_reason, '')), ''), 'removido na interface'); else new.removed_at := null; new.removed_by := null; new.removal_reason := null; end if; end if; return new; end;",
+    "raises": [],
+    "tables": [
+     "user_profiles",
+     "v_email"
     ]
    },
    "graphql": {
@@ -86761,6 +86890,7 @@
    "cleanup_expired_challenges",
    "cleanup_old_data",
    "cleanup_old_logs",
+   "dnc_track_removal",
    "edge_function_url",
    "enforce_optimistic_lock",
    "expire_parked_calls",
@@ -88953,6 +89083,14 @@
     "objkind": "function",
     "roles": "service_role",
     "src": "supabase/migrations/20261126120000_deal_pipeline_snapshots.sql"
+   },
+   {
+    "kind": "revoke",
+    "privs": "execute",
+    "object": "dnc_track_removal",
+    "objkind": "function",
+    "roles": "public, anon, authenticated",
+    "src": "supabase/migrations/20261126130000_dnc_removal_audit.sql"
    }
   ],
   "guards": [
@@ -89037,6 +89175,10 @@
    [
     "dnc_list",
     "is_active"
+   ],
+   [
+    "dnc_list",
+    "removed_at"
    ],
    [
     "calling_hours_config",
@@ -94131,7 +94273,7 @@
   },
   "src/components/compliance/DNCListManager.tsx": {
    "path": "src/components/compliance/DNCListManager.tsx",
-   "lines": 100,
+   "lines": 106,
    "exports": [
     "function DNCListManager"
    ]
@@ -94305,9 +94447,17 @@
   },
   "src/components/compliance/dnc/DNCTable.tsx": {
    "path": "src/components/compliance/dnc/DNCTable.tsx",
-   "lines": 104,
+   "lines": 126,
    "exports": [
     "function DNCTable"
+   ]
+  },
+  "src/components/compliance/dnc/EditDNCDialog.tsx": {
+   "path": "src/components/compliance/dnc/EditDNCDialog.tsx",
+   "lines": 118,
+   "exports": [
+    "interface DNCItemEditable",
+    "function EditDNCDialog"
    ]
   },
   "src/components/compliance/dnc/ImportDNCDialog.tsx": {
@@ -94351,6 +94501,30 @@
      "name": "DNC_REASONS",
      "values": "{ value: 'manual', label: 'Adição Manual' }, { value: 'customer_request', label: 'Solicitação do Cliente' }, { value: 'complaint', label: 'Reclamação' }, { value: 'legal', label: 'Determinação Legal' }, { value: 'opt_out', label: 'Opt-out' }, { value: 'wrong_number', label: 'Número Incorreto' }, { v …"
     }
+   ]
+  },
+  "src/components/compliance/dnc/__tests__/DNCTable.test.tsx": {
+   "path": "src/components/compliance/dnc/__tests__/DNCTable.test.tsx",
+   "lines": 66,
+   "is_test": true,
+   "tests": [
+    "DNCTable — rastreabilidade e edicao (etapa 175)",
+    "tem rotulo acessivel para editar e para remover, com o telefone",
+    "pede confirmacao mostrando o numero antes de remover",
+    "mostra autor e data quando a entrada foi removida",
+    "mostra a validade e um traco quando nao ha prazo",
+    "esconde a edicao quando nao ha tratador"
+   ]
+  },
+  "src/components/compliance/dnc/__tests__/EditDNCDialog.test.tsx": {
+   "path": "src/components/compliance/dnc/__tests__/EditDNCDialog.test.tsx",
+   "lines": 49,
+   "is_test": true,
+   "tests": [
+    "EditDNCDialog (etapa 175)",
+    "grava observacao e validade mantendo o motivo atual",
+    "validade em branco remove o prazo e observacao vazia vira nulo",
+    "explica que o autor da remocao e registrado automaticamente"
    ]
   },
   "src/components/compliance/dnc/__tests__/ImportDNCDialog.test.tsx": {
@@ -100362,7 +100536,7 @@
   },
   "src/hooks/useDNCCompliance.ts": {
    "path": "src/hooks/useDNCCompliance.ts",
-   "lines": 327,
+   "lines": 357,
    "exports": [
     "interface DNCBulkImportResult",
     "function useDNCCompliance"
@@ -100379,6 +100553,10 @@
     {
      "table": "compliance_settings",
      "op": "select"
+    },
+    {
+     "table": "dnc_list",
+     "op": "update"
     },
     {
      "table": "dnc_list",
@@ -100404,6 +100582,7 @@
    ],
    "errors": [
     "Erro ao adicionar",
+    "Erro ao atualizar",
     "Erro ao remover",
     "Erro ao salvar"
    ],
@@ -106716,7 +106895,7 @@
   },
   "src/hooks/__tests__/useDNCCompliance.coverage.test.tsx": {
    "path": "src/hooks/__tests__/useDNCCompliance.coverage.test.tsx",
-   "lines": 201,
+   "lines": 231,
    "is_test": true,
    "tests": [
     "useDNCCompliance",
@@ -106728,7 +106907,8 @@
     "bulkImportDNC tallies success, duplicates and failures",
     "addToDNC mutation success and error",
     "removeFromDNC mutation success and error",
-    "updateSetting mutation success and error"
+    "updateSetting mutation success and error",
+    "updateDNC grava motivo, observacao e validade da entrada"
    ]
   },
   "src/hooks/__tests__/useDashboardData.coverage.test.tsx": {
@@ -109029,7 +109209,7 @@
   },
   "src/integrations/supabase/types.ts": {
    "path": "src/integrations/supabase/types.ts",
-   "lines": 8188,
+   "lines": 8197,
    "exports": [
     "type Json",
     "type Database",
@@ -125938,6 +126118,10 @@
    "lines": 83,
    "uses_service_role": true
   },
+  "supabase/migrations/20261126130000_dnc_removal_audit.sql": {
+   "path": "supabase/migrations/20261126130000_dnc_removal_audit.sql",
+   "lines": 52
+  },
   "supabase/tests/calling_hours_fail_closed_rls_test.sql": {
    "path": "supabase/tests/calling_hours_fail_closed_rls_test.sql",
    "lines": 50,
@@ -125952,6 +126136,14 @@
    "path": "supabase/tests/deal_pipeline_snapshots_rls_test.sql",
    "lines": 172,
    "is_test": true
+  },
+  "supabase/tests/dnc_removal_audit_rls_test.sql": {
+   "path": "supabase/tests/dnc_removal_audit_rls_test.sql",
+   "lines": 217,
+   "is_test": true,
+   "temporal": [
+    "'complaint', 'editado no gate', (now() + interval '30 days')::text, v_id);"
+   ]
   },
   "supabase/tests/geo_write_policies_rls_test.sql": {
    "path": "supabase/tests/geo_write_policies_rls_test.sql",
@@ -126182,10 +126374,30 @@
   }
  },
  "git": {
-  "sha": "11e8d43f394625b325efa098094a88e3fc676b7b",
+  "sha": "31ef7782f6fcd79bed1112c7e1ebdb721a161ee1",
   "branch": "main",
   "remote": "https://github.com/adm01-debug/Hello_V3",
   "commits": [
+   {
+    "sha": "31ef778",
+    "date": "2026-11-26",
+    "author": "adm01-debug",
+    "subject": "feat: edicao e trilha de auditoria na lista DNC (etapa 175) (#350)",
+    "files": [
+     "docs/qa/03-ACHADOS.md",
+     "docs/qa/05-PROGRESSO.md",
+     "src/components/compliance/DNCListManager.tsx",
+     "src/components/compliance/dnc/DNCTable.tsx",
+     "src/components/compliance/dnc/EditDNCDialog.tsx",
+     "src/components/compliance/dnc/__tests__/DNCTable.test.tsx",
+     "src/components/compliance/dnc/__tests__/EditDNCDialog.test.tsx",
+     "src/hooks/__tests__/useDNCCompliance.coverage.test.tsx",
+     "src/hooks/useDNCCompliance.ts",
+     "src/integrations/supabase/types.ts",
+     "supabase/migrations/20261126130000_dnc_removal_audit.sql",
+     "supabase/tests/dnc_removal_audit_rls_test.sql"
+    ]
+   },
    {
     "sha": "11e8d43",
     "date": "2026-11-26",
@@ -126579,27 +126791,16 @@
     "files": [
      ".github/workflows/migrations.yml"
     ]
-   },
-   {
-    "sha": "6be5522",
-    "date": "2026-11-25",
-    "author": "adm01-debug",
-    "subject": "fix: renumera e enxuga a migration de indices morta (#318)",
-    "files": [
-     "docs/estado/dados-schema-migrations.md",
-     "supabase/migrations/20250102000000_performance_indexes.sql",
-     "supabase/migrations/20261125120000_indices_auditoria_e_busca_contatos.sql"
-    ]
    }
   ],
   "hot_files": [
    [
     "docs/qa/05-PROGRESSO.md",
-    13
+    14
    ],
    [
     "docs/qa/03-ACHADOS.md",
-    5
+    6
    ],
    [
     "src/components/calls/ActiveCallBar.tsx",
@@ -126608,6 +126809,18 @@
    [
     "src/components/calls/__tests__/ActiveCallBar.espera.test.tsx",
     3
+   ],
+   [
+    "src/hooks/__tests__/useDNCCompliance.coverage.test.tsx",
+    2
+   ],
+   [
+    "src/hooks/useDNCCompliance.ts",
+    2
+   ],
+   [
+    "src/integrations/supabase/types.ts",
+    2
    ],
    [
     "src/pages/Knowledge.tsx",
@@ -126658,19 +126871,7 @@
     2
    ],
    [
-    "src/components/executive/DealPipelineTrendCard.tsx",
-    1
-   ],
-   [
-    "src/components/executive/__tests__/DealPipelineTrendCard.test.tsx",
-    1
-   ],
-   [
-    "src/hooks/__tests__/useDealPipelineTrend.test.tsx",
-    1
-   ],
-   [
-    "src/hooks/useDealPipelineTrend.ts",
+    "src/components/compliance/DNCListManager.tsx",
     1
    ]
   ]

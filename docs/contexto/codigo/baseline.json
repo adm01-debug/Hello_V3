@@ -2,11 +2,16 @@
  "aviso": "GERADO AUTOMATICAMENTE por scripts/ai-context/gerar.mjs — não editar à mão; será sobrescrito.",
  "format_version": 2,
  "git": {
-  "commit": "11e8d43f394625b325efa098094a88e3fc676b7b",
+  "commit": "31ef7782f6fcd79bed1112c7e1ebdb721a161ee1",
   "branch": "main",
-  "data_commit": "2026-11-26T09:05:17-03:00",
+  "data_commit": "2026-11-26T09:24:26-03:00",
   "remote": "https://github.com/adm01-debug/Hello_V3",
   "ultimos_commits": [
+   {
+    "sha": "31ef778",
+    "data": "2026-11-26",
+    "assunto": "feat: edicao e trilha de auditoria na lista DNC (etapa 175) (#350)"
+   },
    {
     "sha": "11e8d43",
     "data": "2026-11-26",
@@ -126,18 +131,13 @@
     "sha": "abcba36",
     "data": "2026-11-25",
     "assunto": "feat: inscricao e acompanhamento de contatos na cadencia (#325)"
-   },
-   {
-    "sha": "2e71e7b",
-    "data": "2026-11-25",
-    "assunto": "chore: marca a etapa 086 como concluida no backlog (#324)"
    }
   ],
-  "arquivos_mudados_7d": 2364,
+  "arquivos_mudados_7d": 2369,
   "pastas_mais_mudadas_30d": [
    {
     "pasta": "src/hooks/__tests__",
-    "mudancas": 293
+    "mudancas": 294
    },
    {
     "pasta": "covout/lcov-report/hooks",
@@ -145,7 +145,7 @@
    },
    {
     "pasta": "docs/qa/05-PROGRESSO.md",
-    "mudancas": 145
+    "mudancas": 146
    },
    {
     "pasta": "covout/lcov-report/lib",
@@ -168,6 +168,10 @@
     "mudancas": 53
    },
    {
+    "pasta": "src/components/compliance",
+    "mudancas": 37
+   },
+   {
     "pasta": "covout/lib/security",
     "mudancas": 36
    },
@@ -177,10 +181,6 @@
    },
    {
     "pasta": "src/components/admin",
-    "mudancas": 32
-   },
-   {
-    "pasta": "src/components/compliance",
     "mudancas": 32
    },
    {
@@ -199,7 +199,7 @@
   "arquivos_mais_mudados_90d": [
    {
     "arquivo": "docs/qa/05-PROGRESSO.md",
-    "mudancas": 145
+    "mudancas": 146
    },
    {
     "arquivo": "docs/estado/funcionalidades-planejadas.md",
@@ -226,10 +226,6 @@
     "mudancas": 10
    },
    {
-    "arquivo": ".github/workflows/ci.yml",
-    "mudancas": 9
-   },
-   {
     "arquivo": ".github/workflows/migrations.yml",
     "mudancas": 9
    },
@@ -240,6 +236,10 @@
    {
     "arquivo": "supabase/functions/data-lake-flush/index.ts",
     "mudancas": 9
+   },
+   {
+    "arquivo": ".github/workflows/ci.yml",
+    "mudancas": 8
    },
    {
     "arquivo": "docs/agentes/mapa-repo.md",
@@ -255,6 +255,10 @@
    },
    {
     "arquivo": "docs/edge-functions/README.md",
+    "mudancas": 7
+   },
+   {
+    "arquivo": "docs/qa/03-ACHADOS.md",
     "mudancas": 7
    },
    {
@@ -292,10 +296,6 @@
    {
     "arquivo": "supabase/functions/score-call/index.ts",
     "mudancas": 7
-   },
-   {
-    "arquivo": "supabase/functions/teams-fetch-recordings/index.ts",
-    "mudancas": 7
    }
   ],
   "autores_30d": [
@@ -310,21 +310,21 @@
   ]
  },
  "contagens": {
-  "arquivos_total": 1795,
-  "arquivos_codigo": 1372,
-  "linhas_codigo": 182880,
+  "arquivos_total": 1800,
+  "arquivos_codigo": 1375,
+  "linhas_codigo": 183210,
   "rotas": 106,
   "rotas_http_backend": 11,
   "vistas_por_id": 0,
   "itens_menu": 96,
   "modulos": 83,
-  "componentes": 450,
+  "componentes": 451,
   "hooks": 200,
   "edge_functions": 99,
   "tabelas": 171,
-  "migrations": 251,
+  "migrations": 252,
   "cron_jobs": 12,
-  "testes": 434,
+  "testes": 437,
   "workflows": 5,
   "scripts": 36,
   "docs_md": 121
@@ -479,8 +479,8 @@
    "linhas": 450
   },
   "src/components": {
-   "arquivos": 381,
-   "linhas": 45227
+   "arquivos": 384,
+   "linhas": 45488
   },
   "src/contexts": {
    "arquivos": 5,
@@ -492,11 +492,11 @@
   },
   "src/hooks": {
    "arquivos": 353,
-   "linhas": 44924
+   "linhas": 44984
   },
   "src/integrations": {
    "arquivos": 3,
-   "linhas": 8251
+   "linhas": 8260
   },
   "src/lib": {
    "arquivos": 182,
@@ -542,7 +542,7 @@
  "maiores_arquivos": [
   {
    "arquivo": "src/integrations/supabase/types.ts",
-   "linhas": 8188
+   "linhas": 8197
   },
   {
    "arquivo": "scripts/regras_negocio/generate.py",
