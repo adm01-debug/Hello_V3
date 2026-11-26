@@ -97,8 +97,19 @@ export function useRateLimitData() {
 
   const unblockIP = async (ipAddress: string) => {
     try {
-      const { error } = await supabase.from('rate_limit_logs').update({ is_blocked: false }).eq('ip_address', ipAddress).eq('is_blocked', true);
+      const { error, count } = await supabase
+        .from('rate_limit_logs')
+        .update({ is_blocked: false }, { count: 'exact' })
+        .eq('ip_address', ipAddress)
+        .eq('is_blocked', true);
       if (error) throw error;
+      // RLS sem policy nao devolve erro: devolve 0 linhas. Sem conferir o count a
+      // tela anunciava "desbloqueado" e o IP continuava bloqueado (A-065).
+      if (count === 0) {
+        toast.error(`Nada foi alterado para ${ipAddress}`, { description: 'Confira se o IP está bloqueado.' });
+        await loadData();
+        return;
+      }
       toast.success(`IP ${ipAddress} desbloqueado`);
       await loadData();
     } catch { toast.error('Erro ao desbloquear IP'); }
@@ -108,9 +119,17 @@ export function useRateLimitData() {
     try {
       const oneWeekAgo = new Date();
       oneWeekAgo.setDate(oneWeekAgo.getDate() - 7);
-      const { error } = await supabase.from('rate_limit_logs').delete().lt('created_at', oneWeekAgo.toISOString());
+      const { error, count } = await supabase
+        .from('rate_limit_logs')
+        .delete({ count: 'exact' })
+        .lt('created_at', oneWeekAgo.toISOString());
       if (error) throw error;
-      toast.success('Logs antigos removidos');
+      if (count === 0) {
+        toast.info('Nenhum log com mais de 7 dias para remover');
+        await loadData();
+        return;
+      }
+      toast.success(`${count ?? ''} log(s) antigo(s) removidos`.trim());
       await loadData();
     } catch { toast.error('Erro ao limpar logs'); }
   };
