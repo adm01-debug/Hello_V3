@@ -3220,6 +3220,33 @@ export type Database = {
         }
         Relationships: []
       }
+      deal_pipeline_snapshots: {
+        Row: {
+          created_at: string
+          open_count: number
+          snapshot_date: string
+          total_value_cents: number
+          updated_at: string
+          weighted_value_cents: number
+        }
+        Insert: {
+          created_at?: string
+          open_count: number
+          snapshot_date: string
+          total_value_cents: number
+          updated_at?: string
+          weighted_value_cents: number
+        }
+        Update: {
+          created_at?: string
+          open_count?: number
+          snapshot_date?: string
+          total_value_cents?: number
+          updated_at?: string
+          weighted_value_cents?: number
+        }
+        Relationships: []
+      }
       deal_revenue_snapshots: {
         Row: {
           created_at: string

@@ -6,6 +6,13 @@ const { hookMock } = vi.hoisted(() => ({ hookMock: vi.fn() }));
 vi.mock('@/hooks/usePageTitle', () => ({ usePageTitle: vi.fn() }));
 vi.mock('@/hooks/useExecutiveDashboard', () => ({ useExecutiveDashboardData: hookMock }));
 vi.mock('@/integrations/supabase/client', () => ({ supabase: { from: vi.fn() } }));
+vi.mock('@/hooks/useDealPipelineTrend', async (importOriginal) => {
+  const actual = await importOriginal<typeof import('@/hooks/useDealPipelineTrend')>();
+  return {
+    ...actual,
+    useDealPipelineTrend: () => ({ data: [], isLoading: false, isError: false, refetch: vi.fn() }),
+  };
+});
 
 import ExecutiveDashboard from '../ExecutiveDashboard';
 

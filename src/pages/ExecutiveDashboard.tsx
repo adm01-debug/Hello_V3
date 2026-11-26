@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { lazy, Suspense, useState } from 'react';
 import { Calendar, RefreshCw } from 'lucide-react';
 import {
   Select, SelectContent, SelectItem, SelectTrigger, SelectValue,
@@ -24,6 +24,13 @@ import { OmnichannelCard } from '@/components/executive/OmnichannelCard';
 import { PendingFollowupsCard } from '@/components/executive/PendingFollowupsCard';
 import { usePageTitle } from '@/hooks/usePageTitle';
 import { EmptyErrorState } from '@/components/ui/empty-state';
+
+// O cartao de serie historica concentra hook + barras e nao precisa estar no bundle
+// inicial do dashboard: carrega sob demanda para a rota caber no orcamento
+// (scripts/check-bundle-budget.mjs), mesmo padrao do LiveTranslationPanel em Calls.
+const DealPipelineTrendCard = lazy(() =>
+  import('@/components/executive/DealPipelineTrendCard').then((m) => ({ default: m.DealPipelineTrendCard })),
+);
 
 export default function ExecutiveDashboard() {
   usePageTitle('Dashboard Executivo');
@@ -91,6 +98,9 @@ export default function ExecutiveDashboard() {
 
       <ConversationIntelligenceCard />
       <ForecastCard />
+      <Suspense fallback={null}>
+        <DealPipelineTrendCard />
+      </Suspense>
       <CustomerSuccessCard />
       <VolumeForecastCard />
       <MeetingSummaryDashboardCard />
