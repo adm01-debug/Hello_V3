@@ -13,7 +13,7 @@ import { ReconcileDNCDialog } from './dnc/ReconcileDNCDialog';
 import { DNCTable } from './dnc/DNCTable';
 
 export function DNCListManager() {
-  const { dncList, isLoadingDNC, addToDNC, removeFromDNC, isAddingToDNC, bulkImportDNC } = useDNCCompliance();
+  const { dncList, isLoadingDNC, addToDNC, removeFromDNC, updateDNC, isAddingToDNC, isUpdatingDNC, bulkImportDNC } = useDNCCompliance();
   const [searchTerm, setSearchTerm] = useState('');
 
   const filteredList = dncList.filter(item =>
@@ -85,7 +85,13 @@ export function DNCListManager() {
             />
           </div>
 
-          <DNCTable items={filteredList} isLoading={isLoadingDNC} onRemove={removeFromDNC} />
+          <DNCTable
+            items={filteredList}
+            isLoading={isLoadingDNC}
+            onRemove={removeFromDNC}
+            onUpdate={updateDNC}
+            isUpdating={isUpdatingDNC}
+          />
 
           {filteredList.length > 50 && (
             <p className="text-sm text-muted-foreground text-center mt-4">

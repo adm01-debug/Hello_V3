@@ -197,4 +197,34 @@ describe('useDNCCompliance', () => {
     });
     await waitFor(() => expect(toast.error).toHaveBeenCalled());
   });
+
+  it('updateDNC grava motivo, observacao e validade da entrada', async () => {
+    const { result } = renderHook(() => useDNCCompliance(), { wrapper });
+    await waitFor(() => expect(result.current.isLoadingSettings).toBe(false));
+
+    const updateFn = vi.fn((_payload: Record<string, unknown>) => makeChain({ data: null, error: null }));
+    fromMock.mockImplementationOnce(() => ({ update: updateFn }));
+    await act(async () => {
+      result.current.updateDNC({
+        id: 'dnc-1',
+        reason: 'complaint',
+        notes: 'pedido do titular',
+        expires_at: '2026-12-31T23:59:59.000Z',
+      });
+    });
+    await waitFor(() => expect(toast.success).toHaveBeenCalled());
+
+    expect(fromMock).toHaveBeenCalledWith('dnc_list');
+    const payload = updateFn.mock.calls[0][0];
+    expect(payload.reason).toBe('complaint');
+    expect(payload.notes).toBe('pedido do titular');
+    expect(payload.expires_at).toBe('2026-12-31T23:59:59.000Z');
+    expect(payload.updated_at).toEqual(expect.any(String));
+
+    fromMock.mockImplementationOnce(() => ({ update: vi.fn(() => makeChain({ data: null, error: new Error('dnc upd fail') })) }));
+    await act(async () => {
+      result.current.updateDNC({ id: 'dnc-2', reason: 'manual' });
+    });
+    await waitFor(() => expect(toast.error).toHaveBeenCalled());
+  });
 });

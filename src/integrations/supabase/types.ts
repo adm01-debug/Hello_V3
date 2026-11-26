@@ -3595,6 +3595,9 @@ export type Database = {
           phone: string
           phone_normalized: string
           reason: string
+          removal_reason: string | null
+          removed_at: string | null
+          removed_by: string | null
           source: string
           updated_at: string
         }
@@ -3608,6 +3611,9 @@ export type Database = {
           phone: string
           phone_normalized: string
           reason?: string
+          removal_reason?: string | null
+          removed_at?: string | null
+          removed_by?: string | null
           source?: string
           updated_at?: string
         }
@@ -3621,6 +3627,9 @@ export type Database = {
           phone?: string
           phone_normalized?: string
           reason?: string
+          removal_reason?: string | null
+          removed_at?: string | null
+          removed_by?: string | null
           source?: string
           updated_at?: string
         }
