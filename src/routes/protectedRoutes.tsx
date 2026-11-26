@@ -80,6 +80,7 @@ const Inbox = lazy(() => import("@/pages/Inbox"));
 const Knowledge = lazy(() => import("@/pages/Knowledge"));
 const RoutingRules = lazy(() => import("@/pages/RoutingRules"));
 const SLAPolicies = lazy(() => import("@/pages/SLAPolicies"));
+const SlaViolations = lazy(() => import("@/pages/SlaViolations"));
 const ConcurrencyConflicts = lazy(() => import("@/pages/ConcurrencyConflicts"));
 const VoipTrunksAdmin = lazy(() => import("@/pages/admin/VoipTrunksAdmin"));
 const ExtensionsAdmin = lazy(() => import("@/pages/admin/ExtensionsAdmin"));
@@ -160,6 +161,7 @@ export const protectedRoutes: RouteConfig[] = [
   { path: "/knowledge", element: Knowledge },
   { path: "/routing-rules", element: RoutingRules, roles: ["supervisor", "admin"] },
   { path: "/sla-policies", element: SLAPolicies, roles: ["supervisor", "admin"] },
+  { path: "/sla-violations", element: SlaViolations, roles: ["supervisor", "admin"] },
 
   // Supervisor + Admin
   { path: "/queue-dashboard", element: QueueMetricsDashboard, roles: ["supervisor", "admin"] },

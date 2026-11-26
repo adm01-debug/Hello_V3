@@ -77,6 +77,7 @@ const omnichannelNavItems = [
   { title: 'Base de Conhecimento', url: '/knowledge', icon: BookOpen },
   { title: 'Regras de Roteamento', url: '/routing-rules', icon: GitBranch },
   { title: 'Políticas SLA', url: '/sla-policies', icon: ClockIcon },
+  { title: 'Violações de SLA', url: '/sla-violations', icon: AlertTriangle },
 ];
 
 const securityNavItems = [

@@ -37,6 +37,7 @@ const allRoutes = [
   { title: 'Base de Conhecimento', url: '/knowledge', icon: BookOpen, group: 'Atendimento' },
   { title: 'Regras de Roteamento', url: '/routing-rules', icon: GitBranch, group: 'Atendimento' },
   { title: 'Políticas SLA', url: '/sla-policies', icon: Clock, group: 'Atendimento' },
+  { title: 'Violações de SLA', url: '/sla-violations', icon: AlertTriangle, group: 'Atendimento' },
   { title: 'Assistente IA', url: '/ai', icon: Bot, group: 'Ferramentas' },
   { title: 'Coaching IA', url: '/coaching', icon: MessageCircle, group: 'Ferramentas' },
   { title: 'Call Flow Designer', url: '/call-flow-designer', icon: GitBranch, group: 'Ferramentas' },

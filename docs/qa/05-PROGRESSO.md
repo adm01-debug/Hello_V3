@@ -229,7 +229,11 @@
 - [x] **176** — Fazer a remediação de anomalia atualizar a lista — onda 4 — Média — Hooks
 - [ ] **177** — Parar de responder "aplicado" sem aplicar nada — onda 4 — Alta — Edge Function 🔒
 - [x] **178** — Fazer o "Aplicar" da recomendação de capacidade registrar algo — onda 4 — Média — Frontend
-- [ ] **179** — Mostrar as violações de SLA numa tela — onda 4 — Média — Frontend
+- [x] **179** — Mostrar as violações de SLA numa tela — onda 4 — Média — Frontend
+  - **Entregue em 26/11/2026.** A tela `/sla-violations` (supervisor e admin) lista as conversas com `sla_breached`, com filtro de período (7/30/90 dias), canal, "só abertas", contato, prioridade, status, agente, motivo do estouro e atraso, mais paginação de 20 e estados de carregando/vazio/erro. `describeSlaBreach` (`src/hooks/useSLA.ts`) separa primeira resposta de resolução — a coluna `sla_breached` sozinha não dizia qual prazo venceu.
+  - O card resumido de 7 dias que já existia em `/sla-policies` foi mantido intacto (sem regressão no teste `SLAPolicies.enforce.test.tsx`); a tela é a versão completa dele.
+  - Verificação: `bunx tsc --noEmit` rc=0, `bunx eslint` rc=0 nos arquivos tocados, `bunx vitest run` 25 arquivos / 76 testes em `src/pages/__tests__` passed; 11 testes novos em `src/hooks/__tests__/slaBreach.test.ts` (5) e `src/pages/__tests__/SlaViolations.test.tsx` (6).
+  - Ressalva: os números vêm de `conversations.sla_breached`, gravado pelo edge `enforce-sla`, que está com deploy bloqueado por token (issue #344); a tela mostra o que o banco tem hoje, sem recalcular SLA no cliente.
 - [ ] **180** — Fechar a onda 4 com o inventário de fios ligados — onda 4 — Média — Documentação
 
 
