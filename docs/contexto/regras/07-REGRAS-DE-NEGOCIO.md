@@ -1,6 +1,6 @@
 # 07 · REGRAS DE NEGÓCIO
 
-> Gerado automaticamente por AI Context Sync v1.3.2 · commit `778149d880` · branch `main` · 2026-11-25 23:15 UTC
+> Gerado automaticamente por AI Context Sync v1.3.2 · commit `ab5b810222` · branch `main` · 2026-11-26 00:03 UTC
 > Não edite à mão — regras humanas vão em `manual/`.
 
 ## A. Regras escritas por humanos (`manual/` — prioridade máxima, nunca sobrescrito)
@@ -311,7 +311,7 @@ _Nenhum arquivo em `manual/`. Copie `manual/TEMPLATE-regras-de-negocio.md` para 
 | `playlist_items` | Manage items of own playlists | ALL | public | permissive | `EXISTS (SELECT 1 FROM public.call_playlists p WHERE p.id = playlist_id AND (p.owner_agent_name = get_user_agent_name() OR is_admin_or_supervisor()))` | `EXISTS (SELECT 1 FROM public.call_playlists p WHERE p.id = playlist_id AND (p.owner_agent_name = get_user_agent_name() OR is_admin_or_supervisor()))` |
 | `deals` | Authenticated create deals | INSERT | public | permissive |  | `auth.uid() IS NOT NULL AND ( is_admin_or_supervisor() OR owner_agent_name IS NULL OR owner_agent_name = get_user_agent_name() )` |
 | `cadence_enrollments` | Authenticated insert enrollments | INSERT | public | permissive |  | `auth.uid() IS NOT NULL AND (is_admin_or_supervisor() OR agent_name = get_user_agent_name())` |
-| … +232 linhas — lista completa em `context.json` | | | | | | |
+| … +234 linhas — lista completa em `context.json` | | | | | | |
 
 ## C. Restrições de dados (obrigatório / único / default / CHECK / FK / calculada)
 
@@ -2589,6 +2589,7 @@ _nenhum item encontrado_
 | Erro ao desbloquear IP | `src/hooks/useRateLimitData.ts` |
 | Erro ao limpar logs | `src/hooks/useRateLimitData.ts` |
 | Erro ao resolver alerta | `src/hooks/useRateLimitData.ts` |
+| Nada foi alterado para ${ipAddress} | `src/hooks/useRateLimitData.ts` |
 | Novo alerta de rate limit! | `src/hooks/useRateLimitData.ts` |
 | Notificações não suportadas | `src/hooks/useRealtimeHoldAlerts.ts` |
 | Permissão negada | `src/hooks/useRealtimeHoldAlerts.ts` |
@@ -2596,8 +2597,7 @@ _nenhum item encontrado_
 | Erro ao analisar sentimento | `src/hooks/useRecordings.ts` |
 | Erro ao baixar gravação | `src/hooks/useRecordings.ts` |
 | Erro ao carregar gravações | `src/hooks/useRecordings.ts` |
-| Erro ao carregar áudio | `src/hooks/useRecordings.ts` |
-| … +286 linhas — lista completa em `context.json` | |
+| … +287 linhas — lista completa em `context.json` | |
 
 ## J. Controle de acesso no código (checagens de perfil/permissão)
 
@@ -2648,7 +2648,7 @@ _nenhum item encontrado_
 | `admin` | `supabase/functions/data-lake-flush/index.ts` |
 | `admin` | `supabase/migrations/20261123000200_fix_has_role_oracle_and_debug_tables.sql` |
 
-## K. Testes como especificação (3647 testes em 403 arquivos — nomes completos em `context.json`)
+## K. Testes como especificação (3653 testes em 404 arquivos — nomes completos em `context.json`)
 
 | Arquivo | Testes | Exemplos do que o sistema DEVE fazer |
 |---|---|---|
@@ -2864,6 +2864,7 @@ _nenhum item encontrado_
 | `src/hooks/__tests__/useMeetingSummary.test.ts` | 6 | useMeetingSummary - parse · normaliza arrays nulos para [] · useMeetingSummary - generate · sucesso → toast.success … |
 | `src/hooks/__tests__/useMultiChannelCall.compliance.test.tsx` | 6 | useMultiChannelCall — barreira de compliance (etapa 034) · bloqueia a discagem quando o pre-dial check reprova · libera a discagem quando ha mais de um motivo aprovado · chamada recebida ignora a barreira (skipComplianceCheck) … |
 | `src/hooks/__tests__/useNetworkMonitor.coverage.test.tsx` | 6 | useNetworkMonitor (coverage) · pings /favicon.ico and classifies as online on success · reports offline when navigator is offline · handles ping error -> unstable then offline after repeated failures … |
+| `src/hooks/__tests__/useRateLimitData.writeResult.test.tsx` | 6 | useRateLimitData — resultado real das escritas · pede a contagem ao banco nas duas escritas · unblockIP nao anuncia sucesso quando 0 linhas foram alteradas · unblockIP anuncia sucesso quando a linha foi alterada … |
 | `src/hooks/__tests__/useSurveys.coverage.test.tsx` | 6 | useSurveys · carrega respostas e calcula nps · npsScore null quando sem scores válidos · trata erro de carregamento … |
 | `src/hooks/__tests__/useTrunkHealth.coverage.test.tsx` | 6 | useTrunkHealth (coverage) · loads health history for a trunk · is disabled without trunkId · history fetch error throws … |
 | `src/hooks/__tests__/useVoiceCommand.coverage.test.tsx` | 6 | useVoiceCommand (coverage) · processes audio successfully via start/stop · handles transcribe error · handles command error but keeps transcription … |
@@ -2951,8 +2952,7 @@ _nenhum item encontrado_
 | `src/hooks/__tests__/useHoldMetrics.coverage.test.tsx` | 4 | useHoldMetrics · aggregates 7d metrics · handles 30d and 90d ranges with empty data · handles 90d range |
 | `src/hooks/__tests__/useIPValidation.coverage.test.tsx` | 4 | useIPValidation · returns data on success · handles supabase error branch · handles thrown exception branch |
 | `src/hooks/__tests__/useLockedWrite.test.ts` | 4 | useLockedWrite · ignora o segundo clique enquanto a gravacao da mesma linha esta em voo · libera a trava mesmo quando a gravacao falha · nao bloqueia linhas diferentes |
-| `src/hooks/__tests__/useNotificationPreferences.test.tsx` | 4 | useNotificationPreferences · retorna DEFAULT_PREFERENCES quando nao ha registro · carrega preferencias do banco · upsert no salvar usa onConflict user_id |
-| … +103 linhas — lista completa em `context.json` | | |
+| … +104 linhas — lista completa em `context.json` | | |
 
 ## L. Eventos de webhook tratados (contratos com sistemas externos)
 

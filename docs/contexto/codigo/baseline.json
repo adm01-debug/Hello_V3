@@ -2,11 +2,16 @@
  "aviso": "GERADO AUTOMATICAMENTE por scripts/ai-context/gerar.mjs — não editar à mão; será sobrescrito.",
  "format_version": 2,
  "git": {
-  "commit": "778149d880be770aa14ab459cf22bb3d39f4e75c",
+  "commit": "ab5b8102226e9abe130cf05c1904fa8dd50af7ec",
   "branch": "main",
-  "data_commit": "2026-11-25T20:07:52-03:00",
+  "data_commit": "2026-11-25T21:00:31-03:00",
   "remote": "https://github.com/adm01-debug/Hello_V3",
   "ultimos_commits": [
+   {
+    "sha": "ab5b810",
+    "data": "2026-11-25",
+    "assunto": "fix: policies de escrita em rate_limit_logs e conferencia do resultado real (etapa 029) (#338)"
+   },
    {
     "sha": "778149d",
     "data": "2026-11-25",
@@ -126,14 +131,9 @@
     "sha": "6873e82",
     "data": "2026-11-25",
     "assunto": "infra: fila de migrations em um clique e teste de RLS (#313)"
-   },
-   {
-    "sha": "4707eca",
-    "data": "2026-11-25",
-    "assunto": "infra: atualiza checkout e upload-artifact para as versoes atuais (v7) (#312)"
    }
   ],
-  "arquivos_mudados_7d": 1306,
+  "arquivos_mudados_7d": 1311,
   "pastas_mais_mudadas_30d": [
    {
     "pasta": "covout/lcov-report/hooks",
@@ -141,11 +141,11 @@
    },
    {
     "pasta": "src/hooks/__tests__",
-    "mudancas": 284
+    "mudancas": 285
    },
    {
     "pasta": "docs/qa/05-PROGRESSO.md",
-    "mudancas": 141
+    "mudancas": 142
    },
    {
     "pasta": "covout/lcov-report/lib",
@@ -199,7 +199,7 @@
   "arquivos_mais_mudados_90d": [
    {
     "arquivo": "docs/qa/05-PROGRESSO.md",
-    "mudancas": 141
+    "mudancas": 142
    },
    {
     "arquivo": "docs/estado/funcionalidades-planejadas.md",
@@ -310,9 +310,9 @@
   ]
  },
  "contagens": {
-  "arquivos_total": 1761,
-  "arquivos_codigo": 1353,
-  "linhas_codigo": 179990,
+  "arquivos_total": 1765,
+  "arquivos_codigo": 1354,
+  "linhas_codigo": 180114,
   "rotas": 106,
   "rotas_http_backend": 11,
   "vistas_por_id": 0,
@@ -322,9 +322,9 @@
   "hooks": 196,
   "edge_functions": 98,
   "tabelas": 170,
-  "migrations": 245,
+  "migrations": 247,
   "cron_jobs": 11,
-  "testes": 416,
+  "testes": 418,
   "workflows": 4,
   "scripts": 36,
   "docs_md": 121
@@ -491,8 +491,8 @@
    "linhas": 312
   },
   "src/hooks": {
-   "arquivos": 344,
-   "linhas": 43631
+   "arquivos": 345,
+   "linhas": 43755
   },
   "src/integrations": {
    "arquivos": 3,

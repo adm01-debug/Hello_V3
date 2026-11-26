@@ -22,7 +22,7 @@
    "scripts/regras_negocio (2)"
   ],
   "testes": [
-   "co-localizado (__tests__) (386)",
+   "co-localizado (__tests__) (387)",
    "tests/ (9)",
    "e2e/ (7)"
   ],
@@ -59,11 +59,11 @@
  "commits": {
   "convencao": "conventional commits (observado)",
   "exemplos": [
+   "fix: policies de escrita em rate_limit_logs e conferencia do resultado real (etapa 029) (#338)",
    "fix: travar duplo clique nas 4 acoes de escrita que escaparam da etapa 218 (#336)",
    "chore: corrigir achados A-216/A-217 e criar gate contra regressao de RLS no historico de migrations",
    "fix: renumerar migration duplicada que quebrava a Supabase Preview",
-   "fix: bloquear discagem quando DNC/horario nao puder ser verificado (etapa 035)",
-   "fix: painel de chamadas ativas avisa quando a leitura falha (A-218) (#332)"
+   "fix: bloquear discagem quando DNC/horario nao puder ser verificado (etapa 035)"
   ]
  },
  "pr_template": null,

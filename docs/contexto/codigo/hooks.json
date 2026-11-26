@@ -3472,7 +3472,7 @@
    "hooks_exportados": [
     "useRateLimitData"
    ],
-   "linhas": 139,
+   "linhas": 158,
    "dominio": "hooks",
    "tabelas": [
     "rate_limit_alerts",
@@ -3493,7 +3493,7 @@
    "usado_por_arquivos": [
     "src/pages/RateLimitDashboard.tsx"
    ],
-   "coberto_por_testes": 1
+   "coberto_por_testes": 2
   },
   {
    "arquivo": "src/hooks/useRealtimeHoldAlerts.ts",

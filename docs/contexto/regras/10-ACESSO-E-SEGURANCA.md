@@ -1,6 +1,6 @@
 # 10 · ACESSO E SEGURANÇA — quem pode o quê
 
-> Gerado automaticamente por AI Context Sync v1.3.2 · commit `778149d880` · branch `main` · 2026-11-25 23:15 UTC
+> Gerado automaticamente por AI Context Sync v1.3.2 · commit `ab5b810222` · branch `main` · 2026-11-26 00:03 UTC
 > Não edite à mão — regras humanas vão em `manual/`.
 
 ## Perfis / roles identificados
@@ -133,7 +133,7 @@
 | `queue_metrics_settings` | enabled | public: is_admin_or_supervisor()<br>public: auth.uid() IS NOT NULL | public: is_admin_or_supervisor() | public: is_admin_or_supervisor() | public: is_admin_or_supervisor() |
 | `queue_skill_requirements` | enabled | authenticated: is_admin_or_supervisor()<br>authenticated: auth.uid() IS NOT NULL | authenticated: is_admin_or_supervisor() | authenticated: is_admin_or_supervisor() | authenticated: is_admin_or_supervisor() |
 | `rate_limit_alerts` | enabled | public: is_admin_or_supervisor() | authenticated: is_admin_or_supervisor() | public: public.has_role(auth.uid(), 'admin') | — |
-| `rate_limit_logs` | enabled | public: is_admin_or_supervisor() | authenticated: is_admin_or_supervisor() | — | — |
+| `rate_limit_logs` | enabled | public: is_admin_or_supervisor() | authenticated: is_admin_or_supervisor() | authenticated: public.is_admin() | authenticated: public.is_admin() |
 | `rate_limit_settings` | enabled | public: public.has_role(auth.uid(), 'admin')<br>public: has_role(auth.uid(), 'admin') | public: public.has_role(auth.uid(), 'admin') | public: public.has_role(auth.uid(), 'admin') | public: public.has_role(auth.uid(), 'admin') |
 | `redaction_log` | enabled | public: is_admin_user(auth.uid()) | — | — | — |
 | `renewals` | enabled | authenticated: is_admin_or_supervisor()<br>authenticated: owner_agent_name = get_user_agent_name() OR EXISTS ( SELECT 1 FROM public.accounts a WHERE a.id = renewals.account_id AND a.c | authenticated: is_admin_or_supervisor() | authenticated: is_admin_or_supervisor()<br>authenticated: owner_agent_name = get_user_agent_name() | authenticated: is_admin_or_supervisor() |
@@ -189,7 +189,7 @@
 
 > `—` com RLS ligado = ninguém além de service_role. `sem RLS` = qualquer chave anon lê/escreve tudo.
 
-## Onde o RLS é IGNORADO (service_role) — 126 arquivo(s)
+## Onde o RLS é IGNORADO (service_role) — 127 arquivo(s)
 
 - `scripts/ai-context/cenarios.mjs`
 - `scripts/ai-context/gerar.unit.mjs`
@@ -317,6 +317,7 @@
 - `supabase/migrations/20261123000000_fix_anon_rpc_exposure.sql`
 - `supabase/migrations/20261123000100_fix_anon_rls_helper_exposure.sql`
 - `supabase/migrations/20261123000200_fix_has_role_oracle_and_debug_tables.sql`
+- `supabase/migrations/20261126090001_rate_limit_logs_revoke_anon_write.sql`
 
 ## Funções SQL `SECURITY DEFINER` (rodam com privilégio do dono, ignoram RLS)
 
@@ -424,6 +425,7 @@ Middleware matcher (Next.js): nenhum
 | grant | authenticated | select | `financial_impact_daily`, `index_drop_audit` |
 | grant | authenticated | select, insert | `webhook_flush_metrics` |
 | grant | authenticated | select, insert, update, delete | `deal_revenue_snapshots`, `shift_swap_suggestions`, `data_lake_exports`, `dialer_favorites`, `call_queues`, `call_queue_members`, `ring_groups`, `ring_group_members`, `queue_audio_prompts`, `call_park_orbits`, `parked_calls`, `user_preferences` |
+| grant | authenticated | update, delete | `rate_limit_logs` |
 | grant | authenticated, service_role | execute | `get_agent_financial_leaderboard`, `calculate_predictive_pace`, `recalc_deal_health`, `expire_parked_calls`, `calculate_predictive_pace`, `check_all_tables_rls_status`, `check_idle_indexes`, `expire_parked_calls`, `get_agent_financial_leaderboard`, `get_agent_performance`, `get_agents_with_active_calls`, `get_call_history_with_summaries`, `get_call_volume_stats`, `get_dashboard_stats`, `get_database_health_snapshot` … +17 |
 | grant | optimistic_lock_writer | insert | `optimistic_lock_conflicts` |
 | grant | postgres | all privileges | `cron` |
@@ -438,6 +440,7 @@ Middleware matcher (Next.js): nenhum
 | revoke | PUBLIC, anon, authenticated | execute | `trigger_auto_scorecard` |
 | revoke | anon | all | `financial_impact_daily` |
 | revoke | anon | execute | `cleanup_old_logs` |
+| revoke | anon | update, delete | `rate_limit_logs` |
 | revoke | anon, PUBLIC | execute | `get_agent_financial_leaderboard`, `get_agent_financial_leaderboard` |
 | revoke | anon, authenticated | all | `index_usage`, `unused_indexes`, `migration_status`, `schema_migrations`, `migration_rollbacks` |
 | revoke | anon, authenticated | execute | `cleanup_old_data`, `check_all_tables_rls_status`, `cleanup_expired_challenges`, `check_all_tables_rls_status`, `cleanup_old_data`, `cleanup_expired_challenges`, `check_rls_enabled` |
@@ -453,8 +456,6 @@ Middleware matcher (Next.js): nenhum
 | `geo_access_logs` | acessada do front (1 arquivo(s)) sem RLS (não encontrado) | `src/hooks/useGeoBlocking.ts` |
 | `geo_restrictions` | acessada do front (1 arquivo(s)) sem RLS (não encontrado) | `src/hooks/useGeoBlocking.ts` |
 | `geo_settings` | acessada do front (1 arquivo(s)) sem RLS (não encontrado) | `src/hooks/useGeoBlocking.ts` |
-| `rate_limit_logs` | front faz UPDATE mas nenhuma política RLS permite UPDATE → vai falhar/retornar vazio para usuários | `src/hooks/useRateLimitData.ts` |
-| `rate_limit_logs` | front faz DELETE mas nenhuma política RLS permite DELETE → vai falhar/retornar vazio para usuários | `src/hooks/useRateLimitData.ts` |
 
 ## Multi-tenancy
 

@@ -1,15 +1,15 @@
 {
  "meta": {
-  "sha": "778149d880be770aa14ab459cf22bb3d39f4e75c",
+  "sha": "ab5b8102226e9abe130cf05c1904fa8dd50af7ec",
   "branch": "main",
   "remote": "https://github.com/adm01-debug/Hello_V3",
-  "generated_at": "2026-11-25 23:15 UTC",
-  "files_total": 1808,
-  "code_files": 1605,
-  "code_lines": 196130
+  "generated_at": "2026-11-26 00:03 UTC",
+  "files_total": 1812,
+  "code_files": 1609,
+  "code_lines": 196403
  },
  "version": "1.3.2",
- "facts_hash": "d85a269c470c6e70",
+ "facts_hash": "ce2deb98a55c8923",
  "stack": {
   "frameworks": [
    "React + Vite",
@@ -162,8 +162,8 @@
   "package_manager": "bun",
   "languages": {
    ".ts": 661,
-   ".tsx": 657,
-   ".sql": 251,
+   ".tsx": 658,
+   ".sql": 254,
    ".mjs": 29,
    ".py": 5,
    ".js": 2
@@ -19787,6 +19787,26 @@
     "using": "auth.uid() = user_id",
     "check": "auth.uid() = user_id",
     "src": "supabase/migrations/20261123120000_user_preferences.sql"
+   },
+   {
+    "name": "Admins can update rate_limit_logs",
+    "table": "rate_limit_logs",
+    "cmd": "UPDATE",
+    "roles": "authenticated",
+    "mode": "permissive",
+    "using": "public.is_admin()",
+    "check": "public.is_admin()",
+    "src": "supabase/migrations/20261126090000_rate_limit_logs_write_policies.sql"
+   },
+   {
+    "name": "Admins can delete rate_limit_logs",
+    "table": "rate_limit_logs",
+    "cmd": "DELETE",
+    "roles": "authenticated",
+    "mode": "permissive",
+    "using": "public.is_admin()",
+    "check": "",
+    "src": "supabase/migrations/20261126090000_rate_limit_logs_write_policies.sql"
    }
   ],
   "triggers": [
@@ -25939,8 +25959,11 @@
    "supabase/migrations/20261125120000_indices_auditoria_e_busca_contatos.sql",
    "supabase/migrations/20261125190000_calling_hours_fail_closed.sql",
    "supabase/migrations/20261125220000_recordings_retention_cron.sql",
+   "supabase/migrations/20261126090000_rate_limit_logs_write_policies.sql",
+   "supabase/migrations/20261126090001_rate_limit_logs_revoke_anon_write.sql",
    "supabase/tests/calling_hours_fail_closed_rls_test.sql",
    "supabase/tests/internal_tables_rls_test.sql",
+   "supabase/tests/rate_limit_logs_write_policies_rls_test.sql",
    "supabase/tests/role_source_of_truth_test.sql",
    "supabase/tests/user_preferences_rls_test.sql",
    "src/integrations/supabase/types.ts"
@@ -28172,6 +28195,22 @@
     "objkind": "table",
     "roles": "authenticated",
     "src": "supabase/migrations/20261123120000_user_preferences.sql"
+   },
+   {
+    "kind": "grant",
+    "privs": "update, delete",
+    "object": "rate_limit_logs",
+    "objkind": "table",
+    "roles": "authenticated",
+    "src": "supabase/migrations/20261126090000_rate_limit_logs_write_policies.sql"
+   },
+   {
+    "kind": "revoke",
+    "privs": "update, delete",
+    "object": "rate_limit_logs",
+    "objkind": "table",
+    "roles": "anon",
+    "src": "supabase/migrations/20261126090001_rate_limit_logs_revoke_anon_write.sql"
    }
   ],
   "raises": [
@@ -33970,8 +34009,8 @@
   },
   {
    "module": "src/hooks",
-   "files": 344,
-   "lines": 43631,
+   "files": 345,
+   "lines": 43755,
    "tables": [
     "accounts",
     "active_sessions",
@@ -34916,8 +34955,8 @@
   },
   {
    "module": "supabase/migrations",
-   "files": 245,
-   "lines": 15667,
+   "files": 247,
+   "lines": 15704,
    "tables": [],
    "exports": [],
    "docs": [],
@@ -35008,8 +35047,8 @@
   },
   {
    "module": "supabase/tests",
-   "files": 4,
-   "lines": 262,
+   "files": 5,
+   "lines": 374,
    "tables": [],
    "exports": [],
    "docs": [],
@@ -35018,6 +35057,7 @@
    "file_list": [
     "supabase/tests/calling_hours_fail_closed_rls_test.sql",
     "supabase/tests/internal_tables_rls_test.sql",
+    "supabase/tests/rate_limit_logs_write_policies_rls_test.sql",
     "supabase/tests/role_source_of_truth_test.sql",
     "supabase/tests/user_preferences_rls_test.sql"
    ]
@@ -41791,6 +41831,10 @@
    {
     "file": "src/hooks/useRateLimitData.ts",
     "msg": "Erro ao resolver alerta"
+   },
+   {
+    "file": "src/hooks/useRateLimitData.ts",
+    "msg": "Nada foi alterado para ${ipAddress}"
    },
    {
     "file": "src/hooks/useRateLimitData.ts",
@@ -62374,6 +62418,30 @@
     "name": "handles load errors gracefully"
    },
    {
+    "file": "src/hooks/__tests__/useRateLimitData.writeResult.test.tsx",
+    "name": "useRateLimitData — resultado real das escritas"
+   },
+   {
+    "file": "src/hooks/__tests__/useRateLimitData.writeResult.test.tsx",
+    "name": "pede a contagem ao banco nas duas escritas"
+   },
+   {
+    "file": "src/hooks/__tests__/useRateLimitData.writeResult.test.tsx",
+    "name": "unblockIP nao anuncia sucesso quando 0 linhas foram alteradas"
+   },
+   {
+    "file": "src/hooks/__tests__/useRateLimitData.writeResult.test.tsx",
+    "name": "unblockIP anuncia sucesso quando a linha foi alterada"
+   },
+   {
+    "file": "src/hooks/__tests__/useRateLimitData.writeResult.test.tsx",
+    "name": "cleanOldLogs informa quando nao havia log antigo"
+   },
+   {
+    "file": "src/hooks/__tests__/useRateLimitData.writeResult.test.tsx",
+    "name": "cleanOldLogs informa quantos logs foram removidos"
+   },
+   {
     "file": "src/hooks/__tests__/useRealtimeHoldAlerts.coverage.test.tsx",
     "name": "useRealtimeHoldAlerts"
    },
@@ -78413,6 +78481,26 @@
     "using": "auth.uid() = user_id",
     "check": "auth.uid() = user_id",
     "src": "supabase/migrations/20261123120000_user_preferences.sql"
+   },
+   {
+    "name": "Admins can update rate_limit_logs",
+    "table": "rate_limit_logs",
+    "cmd": "UPDATE",
+    "roles": "authenticated",
+    "mode": "permissive",
+    "using": "public.is_admin()",
+    "check": "public.is_admin()",
+    "src": "supabase/migrations/20261126090000_rate_limit_logs_write_policies.sql"
+   },
+   {
+    "name": "Admins can delete rate_limit_logs",
+    "table": "rate_limit_logs",
+    "cmd": "DELETE",
+    "roles": "authenticated",
+    "mode": "permissive",
+    "using": "public.is_admin()",
+    "check": "",
+    "src": "supabase/migrations/20261126090000_rate_limit_logs_write_policies.sql"
    }
   ],
   "db_triggers": [
@@ -84854,8 +84942,12 @@
     "INSERT": [
      "authenticated: is_admin_or_supervisor()"
     ],
-    "UPDATE": [],
-    "DELETE": []
+    "UPDATE": [
+     "authenticated: public.is_admin()"
+    ],
+    "DELETE": [
+     "authenticated: public.is_admin()"
+    ]
    },
    "rate_limit_settings": {
     "rls": "enabled",
@@ -85694,20 +85786,6 @@
     "files": [
      "src/hooks/useGeoBlocking.ts"
     ]
-   },
-   {
-    "table": "rate_limit_logs",
-    "issue": "front faz UPDATE mas nenhuma política RLS permite UPDATE → vai falhar/retornar vazio para usuários",
-    "files": [
-     "src/hooks/useRateLimitData.ts"
-    ]
-   },
-   {
-    "table": "rate_limit_logs",
-    "issue": "front faz DELETE mas nenhuma política RLS permite DELETE → vai falhar/retornar vazio para usuários",
-    "files": [
-     "src/hooks/useRateLimitData.ts"
-    ]
    }
   ],
   "service_role_files": [
@@ -85836,7 +85914,8 @@
    "supabase/migrations/20261122183000_hardening_revoke_internal_functions.sql",
    "supabase/migrations/20261123000000_fix_anon_rpc_exposure.sql",
    "supabase/migrations/20261123000100_fix_anon_rls_helper_exposure.sql",
-   "supabase/migrations/20261123000200_fix_has_role_oracle_and_debug_tables.sql"
+   "supabase/migrations/20261123000200_fix_has_role_oracle_and_debug_tables.sql",
+   "supabase/migrations/20261126090001_rate_limit_logs_revoke_anon_write.sql"
   ],
   "security_definer_fns": [
    "add_to_dnc",
@@ -87986,6 +88065,22 @@
     "objkind": "table",
     "roles": "authenticated",
     "src": "supabase/migrations/20261123120000_user_preferences.sql"
+   },
+   {
+    "kind": "grant",
+    "privs": "update, delete",
+    "object": "rate_limit_logs",
+    "objkind": "table",
+    "roles": "authenticated",
+    "src": "supabase/migrations/20261126090000_rate_limit_logs_write_policies.sql"
+   },
+   {
+    "kind": "revoke",
+    "privs": "update, delete",
+    "object": "rate_limit_logs",
+    "objkind": "table",
+    "roles": "anon",
+    "src": "supabase/migrations/20261126090001_rate_limit_logs_revoke_anon_write.sql"
    }
   ],
   "guards": [
@@ -89402,20 +89497,6 @@
     "msg": "`geo_settings`: acessada do front (1 arquivo(s)) sem RLS (não encontrado)",
     "where": [
      "src/hooks/useGeoBlocking.ts"
-    ]
-   },
-   {
-    "kind": "rls",
-    "msg": "`rate_limit_logs`: front faz UPDATE mas nenhuma política RLS permite UPDATE → vai falhar/retornar vazio para usuários",
-    "where": [
-     "src/hooks/useRateLimitData.ts"
-    ]
-   },
-   {
-    "kind": "rls",
-    "msg": "`rate_limit_logs`: front faz DELETE mas nenhuma política RLS permite DELETE → vai falhar/retornar vazio para usuários",
-    "where": [
-     "src/hooks/useRateLimitData.ts"
     ]
    },
    {
@@ -101929,7 +102010,7 @@
   },
   "src/hooks/useRateLimitData.ts": {
    "path": "src/hooks/useRateLimitData.ts",
-   "lines": 139,
+   "lines": 158,
    "exports": [
     "interface RateLimitLog",
     "interface RateLimitAlert",
@@ -101980,6 +102061,7 @@
     "Erro ao desbloquear IP",
     "Erro ao limpar logs",
     "Erro ao resolver alerta",
+    "Nada foi alterado para ${ipAddress}",
     "Novo alerta de rate limit!"
    ],
    "rule_comments": [
@@ -106261,6 +106343,19 @@
     "filters logs by search term",
     "runs refresh, resolveAlert, unblockIP and cleanOldLogs",
     "handles load errors gracefully"
+   ]
+  },
+  "src/hooks/__tests__/useRateLimitData.writeResult.test.tsx": {
+   "path": "src/hooks/__tests__/useRateLimitData.writeResult.test.tsx",
+   "lines": 105,
+   "is_test": true,
+   "tests": [
+    "useRateLimitData — resultado real das escritas",
+    "pede a contagem ao banco nas duas escritas",
+    "unblockIP nao anuncia sucesso quando 0 linhas foram alteradas",
+    "unblockIP anuncia sucesso quando a linha foi alterada",
+    "cleanOldLogs informa quando nao havia log antigo",
+    "cleanOldLogs informa quantos logs foram removidos"
    ]
   },
   "src/hooks/__tests__/useRealtimeHoldAlerts.coverage.test.tsx": {
@@ -124473,6 +124568,15 @@
    "path": "supabase/migrations/20261125220000_recordings_retention_cron.sql",
    "lines": 50
   },
+  "supabase/migrations/20261126090000_rate_limit_logs_write_policies.sql": {
+   "path": "supabase/migrations/20261126090000_rate_limit_logs_write_policies.sql",
+   "lines": 26
+  },
+  "supabase/migrations/20261126090001_rate_limit_logs_revoke_anon_write.sql": {
+   "path": "supabase/migrations/20261126090001_rate_limit_logs_revoke_anon_write.sql",
+   "lines": 11,
+   "uses_service_role": true
+  },
   "supabase/tests/calling_hours_fail_closed_rls_test.sql": {
    "path": "supabase/tests/calling_hours_fail_closed_rls_test.sql",
    "lines": 50,
@@ -124482,6 +124586,15 @@
    "path": "supabase/tests/internal_tables_rls_test.sql",
    "lines": 60,
    "is_test": true
+  },
+  "supabase/tests/rate_limit_logs_write_policies_rls_test.sql": {
+   "path": "supabase/tests/rate_limit_logs_write_policies_rls_test.sql",
+   "lines": 112,
+   "is_test": true,
+   "temporal": [
+    "delete from public.rate_limit_logs where endpoint = 'gate-etapa-029' and created_at < now() - interval '7 days';",
+    "values ('203.0.113.90', 'gate-etapa-029', true, now() - interval '30 days'),"
+   ]
   },
   "supabase/tests/role_source_of_truth_test.sql": {
    "path": "supabase/tests/role_source_of_truth_test.sql",
@@ -124667,10 +124780,24 @@
   }
  },
  "git": {
-  "sha": "778149d880be770aa14ab459cf22bb3d39f4e75c",
+  "sha": "ab5b8102226e9abe130cf05c1904fa8dd50af7ec",
   "branch": "main",
   "remote": "https://github.com/adm01-debug/Hello_V3",
   "commits": [
+   {
+    "sha": "ab5b810",
+    "date": "2026-11-25",
+    "author": "adm01-debug",
+    "subject": "fix: policies de escrita em rate_limit_logs e conferencia do resultado real (etapa 029) (#338)",
+    "files": [
+     "docs/qa/05-PROGRESSO.md",
+     "src/hooks/__tests__/useRateLimitData.writeResult.test.tsx",
+     "src/hooks/useRateLimitData.ts",
+     "supabase/migrations/20261126090000_rate_limit_logs_write_policies.sql",
+     "supabase/migrations/20261126090001_rate_limit_logs_revoke_anon_write.sql",
+     "supabase/tests/rate_limit_logs_write_policies_rls_test.sql"
+    ]
+   },
    {
     "sha": "778149d",
     "date": "2026-11-25",
@@ -125024,22 +125151,12 @@
      "docs/qa/05-PROGRESSO.md",
      "scripts/guard-supabase-error.mjs"
     ]
-   },
-   {
-    "sha": "ddf4d95",
-    "date": "2026-11-24",
-    "author": "adm01-debug",
-    "subject": "fix: foco sempre volta ao gatilho ao fechar o assistente de voz (e2e do teclado deterministico) (#310)",
-    "files": [
-     "src/components/voice/VoiceAssistantDialog.tsx",
-     "tests/e2e/teclado.spec.ts"
-    ]
    }
   ],
   "hot_files": [
    [
     "docs/qa/05-PROGRESSO.md",
-    11
+    12
    ],
    [
     ".github/workflows/migrations.yml",
@@ -125094,27 +125211,27 @@
     2
    ],
    [
+    "src/hooks/__tests__/useRateLimitData.writeResult.test.tsx",
+    1
+   ],
+   [
+    "src/hooks/useRateLimitData.ts",
+    1
+   ],
+   [
+    "supabase/migrations/20261126090000_rate_limit_logs_write_policies.sql",
+    1
+   ],
+   [
+    "supabase/migrations/20261126090001_rate_limit_logs_revoke_anon_write.sql",
+    1
+   ],
+   [
+    "supabase/tests/rate_limit_logs_write_policies_rls_test.sql",
+    1
+   ],
+   [
     "src/components/conversation-intelligence/BattleCardAlert.tsx",
-    1
-   ],
-   [
-    "src/components/conversation-intelligence/__tests__/BattleCardAlert.doubleClick.test.tsx",
-    1
-   ],
-   [
-    "src/pages/Deals.tsx",
-    1
-   ],
-   [
-    "src/pages/Trackers.tsx",
-    1
-   ],
-   [
-    "src/pages/VideoConference.tsx",
-    1
-   ],
-   [
-    "src/pages/__tests__/VideoConference.duploClique.test.tsx",
     1
    ]
   ]

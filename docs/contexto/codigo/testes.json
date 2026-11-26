@@ -5,17 +5,17 @@
   "vitest",
   "playwright"
  ],
- "total": 416,
+ "total": 418,
  "por_tipo": {
   "contrato": 1,
   "e2e": 16,
   "pytest": 2,
-  "unit": 393
+  "unit": 394
  },
  "onde_ficam": [
   {
    "padrao": "co-localizado (__tests__)",
-   "arquivos": 386
+   "arquivos": 387
   },
   {
    "padrao": "tests/",
@@ -1496,6 +1496,15 @@
     "src/integrations/supabase/client.ts"
    ],
    "casos": 4
+  },
+  {
+   "arquivo": "src/hooks/__tests__/useRateLimitData.writeResult.test.tsx",
+   "tipo": "unit",
+   "linhas": 105,
+   "testa": [
+    "src/hooks/useRateLimitData.ts"
+   ],
+   "casos": 5
   },
   {
    "arquivo": "src/hooks/__tests__/useRealtimeHoldAlerts.coverage.test.tsx",
@@ -3773,6 +3782,7 @@
  "sql": [
   "supabase/tests/calling_hours_fail_closed_rls_test.sql",
   "supabase/tests/internal_tables_rls_test.sql",
+  "supabase/tests/rate_limit_logs_write_policies_rls_test.sql",
   "supabase/tests/role_source_of_truth_test.sql",
   "supabase/tests/user_preferences_rls_test.sql"
  ],
@@ -3924,7 +3934,7 @@
   "src/hooks/useQualityTrendAnalyzer.ts": 1,
   "src/hooks/useQueueAudioPrompts.ts": 1,
   "src/hooks/useQueueMetrics.ts": 1,
-  "src/hooks/useRateLimitData.ts": 1,
+  "src/hooks/useRateLimitData.ts": 2,
   "src/hooks/useRealtimeHoldAlerts.ts": 2,
   "src/hooks/useReauth.ts": 2,
   "src/hooks/useRecordings.ts": 2,

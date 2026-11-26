@@ -1,6 +1,6 @@
 # 11 · GLOSSÁRIO, DADOS DE REFERÊNCIA E LACUNAS
 
-> Gerado automaticamente por AI Context Sync v1.3.2 · commit `778149d880` · branch `main` · 2026-11-25 23:15 UTC
+> Gerado automaticamente por AI Context Sync v1.3.2 · commit `ab5b810222` · branch `main` · 2026-11-26 00:03 UTC
 > Não edite à mão — regras humanas vão em `manual/`.
 
 ## Glossário do domínio (entidades do sistema)
@@ -351,8 +351,6 @@
 | rls | `geo_access_logs`: acessada do front (1 arquivo(s)) sem RLS (não encontrado) | `src/hooks/useGeoBlocking.ts` |
 | rls | `geo_restrictions`: acessada do front (1 arquivo(s)) sem RLS (não encontrado) | `src/hooks/useGeoBlocking.ts` |
 | rls | `geo_settings`: acessada do front (1 arquivo(s)) sem RLS (não encontrado) | `src/hooks/useGeoBlocking.ts` |
-| rls | `rate_limit_logs`: front faz UPDATE mas nenhuma política RLS permite UPDATE → vai falhar/retornar vazio para usuários | `src/hooks/useRateLimitData.ts` |
-| rls | `rate_limit_logs`: front faz DELETE mas nenhuma política RLS permite DELETE → vai falhar/retornar vazio para usuários | `src/hooks/useRateLimitData.ts` |
 | edge | edge function `charge` invocada mas não existe em supabase/functions/ | `src/lib/tracing.ts` |
 | edge | edge function `dashboard-edge` invocada mas não existe em supabase/functions/ | `scripts/ai-context/gerar.unit.mjs` |
 | edge | edge function `fixture-edge` invocada mas não existe em supabase/functions/ | `scripts/ai-context/gerar.unit.mjs` |
