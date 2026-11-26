@@ -54,6 +54,20 @@ begin
   end loop;
 end $$;
 
+-- Inventario: ultimas execucoes do cron (prova de que os jobs rodam de verdade).
+do $$
+declare r record;
+begin
+  for r in
+    select jobname, status, start_time
+      from cron.job_run_details
+     order by start_time desc
+     limit 10
+  loop
+    raise notice 'execucao: % % %', r.jobname, r.status, r.start_time;
+  end loop;
+end $$;
+
 -- 1. Nenhum job do cron com JWT ou host literal.
 do $$
 declare v_falta text[] := '{}'; r record;
