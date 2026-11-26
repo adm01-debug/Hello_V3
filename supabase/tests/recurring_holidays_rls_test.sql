@@ -99,7 +99,12 @@ declare
   v_col text;
 begin
   v_fn := obj_description('public.check_calling_hours(text)'::regprocedure, 'pg_proc');
-  v_col := col_description('public.holidays'::regclass, 'recurring');
+  select d.description into v_col
+    from pg_description d
+    join pg_attribute a on a.attrelid = d.objoid and a.attnum = d.objsubid
+   where d.objoid = 'public.holidays'::regclass
+     and d.objsubid > 0
+     and a.attname = 'recurring';
 
   if v_fn is null or position('recurring' in v_fn) = 0 then
     raise exception 'FALHA 5: check_calling_hours sem comentario do contrato de feriado';
