@@ -24,11 +24,11 @@
 | | Quantidade |
 |---|---:|
 | Total de etapas | 300 |
-| `[x]` concluídas | 154 |
+| `[x]` concluídas | 155 |
 | `[P]` aguardando o dono | 1 |
 | `[~]` parciais | 1 |
 | `[-]` descartadas | 0 |
-| `[ ]` não iniciadas | **144** |
+| `[ ]` não iniciadas | **143** |
 
 *Atualize esta tabela ao fim de cada onda.*
 
@@ -145,7 +145,7 @@
 
 ## Onda 3 — Integridade de dados e regras de negócio (101–150, 50 etapas)
 
-- [ ] **101** — Marcar como `STABLE` as três funções que governam 270 policies — onda 3 — Alta — Banco 🔒
+- [x] **101** — Marcar como `STABLE` as três funções que governam 270 policies — onda 3 — Alta — Banco 🔒 · (as três estavam `provolatile = v` em produção — sonda run 45862725374; pré-estado do gate reprovado no run 45863380747 com `FALHA 1: public.is_admin() ainda e VOLATILE`; dry-run 45864051931 (`CREATE FUNCTION` ×3 + `ROLLBACK`); apply 45864676494 — `20261127210000_role_helpers_stable.sql` registrada em `schema_migrations`; gate `role_helpers_stable_rls_test.sql` **6/6** no run 45865595932: os quatro helpers `s` + SECURITY DEFINER + `search_path=public`, ACL da etapa 146 preservada (`anon` sem EXECUTE, `authenticated`/`service_role` com), admin autenticado lê `call_sessions = 101` com `is_admin()/is_supervisor()/is_admin_or_supervisor() = true`, usuário `role=agent` recebe `false` e lê 1 sem erro, `anon` recebe `permission denied` e lê 0, e o corpo segue honrando `is_active`/`expires_at` (vigente = true, `is_active=false` = false, expirado = false). Corpos copiados sem alteração; 274 policies usam um desses helpers.)
 - [x] **102** — Criar o módulo único de métricas de fila — onda 3 — Alta — Lib
 - [ ] **103** — Unificar o nível de serviço: um limiar, uma janela, um denominador — onda 3 — Alta — Hooks + Edge Function 🔒
 - [ ] **104** — Unificar a taxa de abandono — onda 3 — Alta — Hooks + Banco 🔒
