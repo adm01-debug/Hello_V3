@@ -113,6 +113,20 @@ via `format('CREATE POLICY %I …')` (`supabase/migrations/20260711192700_…`).
    (`grep -rn "ON public.<tabela>" supabase/migrations/`): há tabelas com várias rodadas de reescrita, e a
    última a rodar é a que vale.
 
+## Migrations conhecidas como não reaplicáveis (etapa 131)
+
+Um banco novo a partir do repositório exige que a sequência rode do zero. As migrations abaixo não
+rodam sozinhas num banco vazio e **não podem ser editadas** — já foram aplicadas, e o ledger guarda a
+versão, não o conteúdo:
+
+- `20260404151943_4d4acd99-….sql:87-90` — quatro `ALTER POLICY` em `geo_*`. Na sequência atual os alvos
+  existem (`20260315143858` cria três delas, `20260315143859:8` cria a quarta e `20260404153313:22` a
+  remove depois), então a ordem de timestamp resolve; a guarda idempotente é
+  `20261127150000_geo_policies_idempotente.sql`, que passa também em banco sem as tabelas. A lista
+  completa e o harness de banco descartável são as etapas 134 e 053.
+- `ALTER POLICY` **não** tem `IF EXISTS`; `DROP POLICY`, `CREATE TABLE` e `CREATE INDEX` têm — usar
+  sempre, e nunca escrever DDL contra o estado de produção como se ele fosse a sequência versionada.
+
 ## Exclusão de conta (LGPD) — apurado em 2026-11-24
 
 Etapa 132 do plano. Desfecho **(a)**: a correção de FK de
