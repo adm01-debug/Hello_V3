@@ -5,6 +5,7 @@ import { logger } from '@/lib/logger';
 import { useCallTimers } from './useCallTimers';
 import { useCallTransfer } from './useCallTransfer';
 import { useCallSession } from './useCallSession';
+import { useBitrix, type BitrixCallData } from './useBitrix';
 import { useAuthContext } from '@/contexts/AuthContext';
 
 const log = logger.create('MultiChannelCall');
@@ -40,6 +41,8 @@ export interface CallSession {
   transferTarget?: TransferTarget;
   transcripts: Array<{ role: 'user' | 'agent' | 'system'; text: string; timestamp: Date }>;
   dbSessionId?: string;
+  /** Etapa 081: CALL_ID do Bitrix, devolvido por telephony.externalcall.register. */
+  bitrixCallId?: string;
   agentName?: string;
 }
 
@@ -84,6 +87,21 @@ const AVAILABLE_CHANNELS: ChannelConfig[] = [
   { id: 'sip', name: 'SIP Genérico', enabled: true, configured: true, icon: 'Headphones', description: 'Servidor SIP próprio (Bitrix)' },
 ];
 
+/**
+ * Etapa 081: o CALL_ID volta do Bitrix como numero (`{ CALL_ID: 123 }`) e, em
+ * algumas versoes, dentro de `result`. Sem normalizar, o id se perde e o
+ * `telephony.externalcall.finish` nunca casa com o registro.
+ */
+export function extrairCallIdBitrix(resposta: unknown): string | null {
+  if (!resposta || typeof resposta !== 'object') return null;
+  const corpo = resposta as Record<string, unknown>;
+  const interno = corpo.result;
+  const bruto = corpo.CALL_ID
+    ?? (interno && typeof interno === 'object' ? (interno as Record<string, unknown>).CALL_ID : undefined);
+  if (bruto === null || bruto === undefined || bruto === '') return null;
+  return String(bruto);
+}
+
 export function useMultiChannelCall(preDialCheck?: PreDialCheck) {
   const [activeChannel, setActiveChannel] = useState<CallChannel>('sip');
   const [activeCalls, setActiveCalls] = useState<CallSession[]>([]);
@@ -95,6 +113,7 @@ export function useMultiChannelCall(preDialCheck?: PreDialCheck) {
 
   const { startSession, endSession, currentSession, addAnalysis: addCallAnalysis, addTranscript: addDbTranscript } = useCallSession();
   const { profile } = useAuthContext();
+  const { registerCall, finishCall } = useBitrix();
 
   const { startDurationTimer, stopDurationTimer, startHoldTimer, stopHoldTimer, stopAllTimers } = useCallTimers(setActiveCalls);
   const { transferCall, completeTransfer, cancelTransfer } = useCallTransfer(
@@ -149,6 +168,41 @@ export function useMultiChannelCall(preDialCheck?: PreDialCheck) {
     if (call) { setActiveCallId(callId); setActiveChannel(call.channel); }
   }, [activeCalls]);
 
+  // Etapa 081: a ponte que da nome ao produto ("Bitrix Call Connect"). Ao atender,
+  // registra a chamada no CRM do cliente e guarda o CALL_ID em call_sessions.
+  // Fire-and-forget de proposito: CRM fora do ar nao pode derrubar a ligacao, e
+  // registerCall ja cai na fila crm_sync_queue quando falha (etapas 082-084).
+  const registrarChamadaNoBitrix = useCallback(async (
+    chamadaLocalId: string,
+    dbSessionId: string,
+    phoneNumber: string | undefined,
+    direction: CallDirection,
+  ) => {
+    // Sem numero nao ha o que registrar no CRM.
+    if (!phoneNumber) return;
+    try {
+      const dados: BitrixCallData = {
+        PHONE_NUMBER: phoneNumber,
+        TYPE: direction === 'inbound' ? 2 : 1,
+        CRM_CREATE: 1,
+        SHOW: 0,
+      };
+      const resposta = await registerCall(dados);
+      const callIdBitrix = extrairCallIdBitrix(resposta);
+      if (!callIdBitrix) {
+        log.warn('Bitrix nao devolveu CALL_ID ao registrar a chamada', { chamadaLocalId });
+        return;
+      }
+      setActiveCalls(prev => prev.map(c => c.id === chamadaLocalId ? { ...c, bitrixCallId: callIdBitrix } : c));
+      const { error } = await supabase.from('call_sessions')
+        .update({ bitrix_call_id: callIdBitrix })
+        .eq('id', dbSessionId);
+      if (error) log.error('Falha ao gravar bitrix_call_id em call_sessions', error);
+    } catch (e) {
+      log.error('registrarChamadaNoBitrix falhou', e);
+    }
+  }, [registerCall]);
+
   const updateCallStatus = useCallback((status: CallStatus, callId?: string) => {
     const targetId = callId || activeCallId;
     if (!targetId) return;
@@ -166,6 +220,8 @@ export function useMultiChannelCall(preDialCheck?: PreDialCheck) {
             );
             if (session) {
               setActiveCalls(p => p.map(c => c.id === targetId ? { ...c, dbSessionId: session.id, agentName: profile?.full_name ?? undefined } : c));
+              // Etapa 081: registra a chamada no CRM do cliente (nao bloqueia o atendimento)
+              void registrarChamadaNoBitrix(targetId, session.id, call.phoneNumber, call.direction);
             } else {
               log.error('startSession returned null — call_sessions não gravado');
             }
@@ -180,7 +236,7 @@ export function useMultiChannelCall(preDialCheck?: PreDialCheck) {
       if (status === 'active' && call.status !== 'active') startDurationTimer(targetId);
       return { ...call, status };
     }));
-  }, [activeCallId, startDurationTimer, startSession, profile]);
+  }, [activeCallId, startDurationTimer, startSession, profile, registrarChamadaNoBitrix]);
 
   const endCall = useCallback((callId?: string) => {
     const targetId = callId || activeCallId;
@@ -202,6 +258,15 @@ export function useMultiChannelCall(preDialCheck?: PreDialCheck) {
         void endSession(ended.duration, undefined, finalStatus).catch(err => {
           log.error(`endSession falhou (${finalStatus}):`, err);
         });
+        // Etapa 081: fecha a chamada no CRM com duracao e desfecho (200 atendida,
+        // 304 nao atendida). Sem CALL_ID nao existe o que fechar -- o registro
+        // segue pendente na fila e o log diz por que.
+        if (ended.bitrixCallId) {
+          void finishCall(ended.bitrixCallId, Math.max(0, Math.round(ended.duration)), finalStatus === 'completed' ? '200' : '304')
+            .catch(err => log.error('finishCall falhou', err));
+        } else {
+          log.warn('Chamada sem bitrixCallId: telephony.externalcall.finish nao enviado', { callId: targetId });
+        }
       }
     }
     setActiveCalls(prev => {
@@ -210,7 +275,7 @@ export function useMultiChannelCall(preDialCheck?: PreDialCheck) {
       else if (remaining.length === 0) setActiveCallId(null);
       return remaining;
     });
-  }, [activeCallId, activeCalls, stopDurationTimer, endSession, currentSession]);
+  }, [activeCallId, activeCalls, stopDurationTimer, endSession, currentSession, finishCall]);
 
   const endAllCalls = useCallback(() => {
     stopAllTimers();
