@@ -2,11 +2,16 @@
  "aviso": "GERADO AUTOMATICAMENTE por scripts/ai-context/gerar.mjs — não editar à mão; será sobrescrito.",
  "format_version": 2,
  "git": {
-  "commit": "0ecc7a733dd2cf317eb35bf3a6c9e2a140a72105",
+  "commit": "6b5425c47ba25282f73ac29f3cdbaa7d1a1d173f",
   "branch": "main",
-  "data_commit": "2026-11-26T15:51:33-03:00",
+  "data_commit": "2026-11-26T16:32:38-03:00",
   "remote": "https://github.com/adm01-debug/Hello_V3",
   "ultimos_commits": [
+   {
+    "sha": "6b5425c",
+    "data": "2026-11-26",
+    "assunto": "test: sonda permanente da apuracao da LGPD e do ledger (etapa 132) (#369)"
+   },
    {
     "sha": "0ecc7a7",
     "data": "2026-11-26",
@@ -126,30 +131,17 @@
     "sha": "89fede1",
     "data": "2026-11-25",
     "assunto": "fix: proteger gravacao de preferencias e callbacks contra duplo clique (#329)"
-   },
-   {
-    "sha": "7245964",
-    "data": "2026-11-25",
-    "assunto": "chore: remover componentes orfaos (etapa 296) e reaproveitar saida de audio e alertas de contato (#328)"
    }
   ],
-  "arquivos_mudados_7d": 2380,
+  "arquivos_mudados_7d": 1906,
   "pastas_mais_mudadas_30d": [
    {
     "pasta": "src/hooks/__tests__",
     "mudancas": 295
    },
    {
-    "pasta": "covout/lcov-report/hooks",
-    "mudancas": 286
-   },
-   {
     "pasta": "docs/qa/05-PROGRESSO.md",
-    "mudancas": 149
-   },
-   {
-    "pasta": "covout/lcov-report/lib",
-    "mudancas": 110
+    "mudancas": 150
    },
    {
     "pasta": "src/components/calls",
@@ -176,10 +168,6 @@
     "mudancas": 37
    },
    {
-    "pasta": "covout/lib/security",
-    "mudancas": 36
-   },
-   {
     "pasta": "src/pages/admin",
     "mudancas": 34
    },
@@ -194,12 +182,24 @@
    {
     "pasta": "docs/estado/funcionalidades-planejadas.md",
     "mudancas": 30
+   },
+   {
+    "pasta": "src/components/dashboard",
+    "mudancas": 30
+   },
+   {
+    "pasta": "src/components/network",
+    "mudancas": 30
+   },
+   {
+    "pasta": "src/components/dialer",
+    "mudancas": 29
    }
   ],
   "arquivos_mais_mudados_90d": [
    {
     "arquivo": "docs/qa/05-PROGRESSO.md",
-    "mudancas": 149
+    "mudancas": 150
    },
    {
     "arquivo": "docs/estado/funcionalidades-planejadas.md",
@@ -242,10 +242,6 @@
     "mudancas": 9
    },
    {
-    "arquivo": ".github/workflows/ci.yml",
-    "mudancas": 8
-   },
-   {
     "arquivo": "docs/agentes/mapa-repo.md",
     "mudancas": 8
    },
@@ -264,6 +260,10 @@
    {
     "arquivo": "supabase/functions/validate-geo/index.ts",
     "mudancas": 8
+   },
+   {
+    "arquivo": ".github/workflows/ci.yml",
+    "mudancas": 7
    },
    {
     "arquivo": "docs/edge-functions/README.md",
@@ -310,7 +310,7 @@
   ]
  },
  "contagens": {
-  "arquivos_total": 1811,
+  "arquivos_total": 1812,
   "arquivos_codigo": 1383,
   "linhas_codigo": 184681,
   "rotas": 108,
@@ -324,7 +324,7 @@
   "tabelas": 172,
   "migrations": 253,
   "cron_jobs": 12,
-  "testes": 443,
+  "testes": 444,
   "workflows": 5,
   "scripts": 36,
   "docs_md": 121

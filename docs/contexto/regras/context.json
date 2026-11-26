@@ -1,15 +1,15 @@
 {
  "meta": {
-  "sha": "0ecc7a733dd2cf317eb35bf3a6c9e2a140a72105",
+  "sha": "6b5425c47ba25282f73ac29f3cdbaa7d1a1d173f",
   "branch": "main",
   "remote": "https://github.com/adm01-debug/Hello_V3",
-  "generated_at": "2026-11-26 18:52 UTC",
-  "files_total": 1858,
-  "code_files": 1654,
-  "code_lines": 203107
+  "generated_at": "2026-11-26 19:34 UTC",
+  "files_total": 1859,
+  "code_files": 1655,
+  "code_lines": 203284
  },
  "version": "1.3.2",
- "facts_hash": "24a3c2fdb0412800",
+ "facts_hash": "22a6e4673cef854b",
  "stack": {
   "frameworks": [
    "React + Vite",
@@ -170,7 +170,7 @@
   "languages": {
    ".tsx": 678,
    ".ts": 670,
-   ".sql": 270,
+   ".sql": 271,
    ".mjs": 29,
    ".py": 5,
    ".js": 2
@@ -26254,6 +26254,7 @@
    "supabase/tests/internal_tables_rls_test.sql",
    "supabase/tests/kb_article_history_rls_test.sql",
    "supabase/tests/login_lockout_acl_rls_test.sql",
+   "supabase/tests/probe_132_lgpd_entity_versions_rls_test.sql",
    "supabase/tests/rate_limit_logs_write_policies_rls_test.sql",
    "supabase/tests/redaction_log_rls_test.sql",
    "supabase/tests/role_source_of_truth_test.sql",
@@ -35518,8 +35519,8 @@
   },
   {
    "module": "supabase/tests",
-   "files": 15,
-   "lines": 2032,
+   "files": 16,
+   "lines": 2209,
    "tables": [],
    "exports": [],
    "docs": [],
@@ -35536,6 +35537,7 @@
     "supabase/tests/internal_tables_rls_test.sql",
     "supabase/tests/kb_article_history_rls_test.sql",
     "supabase/tests/login_lockout_acl_rls_test.sql",
+    "supabase/tests/probe_132_lgpd_entity_versions_rls_test.sql",
     "supabase/tests/rate_limit_logs_write_policies_rls_test.sql",
     "supabase/tests/redaction_log_rls_test.sql",
     "supabase/tests/role_source_of_truth_test.sql",
@@ -127031,6 +127033,11 @@
    "is_test": true,
    "uses_service_role": true
   },
+  "supabase/tests/probe_132_lgpd_entity_versions_rls_test.sql": {
+   "path": "supabase/tests/probe_132_lgpd_entity_versions_rls_test.sql",
+   "lines": 177,
+   "is_test": true
+  },
   "supabase/tests/rate_limit_logs_write_policies_rls_test.sql": {
    "path": "supabase/tests/rate_limit_logs_write_policies_rls_test.sql",
    "lines": 112,
@@ -127236,10 +127243,21 @@
   }
  },
  "git": {
-  "sha": "0ecc7a733dd2cf317eb35bf3a6c9e2a140a72105",
+  "sha": "6b5425c47ba25282f73ac29f3cdbaa7d1a1d173f",
   "branch": "main",
   "remote": "https://github.com/adm01-debug/Hello_V3",
   "commits": [
+   {
+    "sha": "6b5425c",
+    "date": "2026-11-26",
+    "author": "adm01-debug",
+    "subject": "test: sonda permanente da apuracao da LGPD e do ledger (etapa 132) (#369)",
+    "files": [
+     "docs/agentes/banco.md",
+     "docs/qa/05-PROGRESSO.md",
+     "supabase/tests/probe_132_lgpd_entity_versions_rls_test.sql"
+    ]
+   },
    {
     "sha": "0ecc7a7",
     "date": "2026-11-26",
@@ -127661,24 +127679,12 @@
     "files": [
      "docs/qa/05-PROGRESSO.md"
     ]
-   },
-   {
-    "sha": "19d29d8",
-    "date": "2026-11-25",
-    "author": "adm01-debug",
-    "subject": "feat: permite editar e excluir cadencia e passo (etapa 086) (#323)",
-    "files": [
-     "src/hooks/__tests__/useCadences.crud.test.tsx",
-     "src/hooks/useCadences.ts",
-     "src/pages/Cadences.tsx",
-     "src/pages/__tests__/Cadences.crud.test.tsx"
-    ]
    }
   ],
   "hot_files": [
    [
     "docs/qa/05-PROGRESSO.md",
-    17
+    18
    ],
    [
     "docs/qa/03-ACHADOS.md",
@@ -127745,16 +127751,16 @@
     2
    ],
    [
-    "src/hooks/__tests__/useCadences.crud.test.tsx",
-    2
+    "docs/agentes/banco.md",
+    1
    ],
    [
-    "src/hooks/useCadences.ts",
-    2
+    "supabase/tests/probe_132_lgpd_entity_versions_rls_test.sql",
+    1
    ],
    [
-    "src/pages/Cadences.tsx",
-    2
+    "src/hooks/__tests__/useAgentRanking.coverage.test.tsx",
+    1
    ]
   ]
  }
