@@ -8,7 +8,7 @@
   "supabase/migrations",
   "typeorm"
  ],
- "migrations": 250,
+ "migrations": 251,
  "seeds": [],
  "avisos": [
   "22 bloco(s) com DDL dinâmico (EXECUTE format/...) não modelado — policies/colunas criadas dinamicamente podem faltar; confira no banco vivo"
@@ -1007,6 +1007,11 @@
    "agenda": "0 3 * * *",
    "migration": "20261122180000_data_lake_flush_cron_token.sql",
    "chama_edge": "data-lake-flush"
+  },
+  {
+   "nome": "deal-pipeline-snapshot-daily",
+   "agenda": "5 3 * * *",
+   "migration": "20261126120000_deal_pipeline_snapshots.sql"
   },
   {
    "nome": "dialer-pacing-tick",
@@ -9441,6 +9446,69 @@
     "data-lake-flush",
     "export-data-lake"
    ],
+   "triggers": [],
+   "sem_rls": false,
+   "nao_usada": false
+  },
+  "deal_pipeline_snapshots": {
+   "colunas": {
+    "created_at": {
+     "tipo": "timestamptz",
+     "nn": true,
+     "pk": false,
+     "default": "now()",
+     "ref": null
+    },
+    "open_count": {
+     "tipo": "integer",
+     "nn": true,
+     "pk": false,
+     "default": null,
+     "ref": null
+    },
+    "snapshot_date": {
+     "tipo": "date",
+     "nn": false,
+     "pk": true,
+     "default": null,
+     "ref": null
+    },
+    "total_value_cents": {
+     "tipo": "bigint",
+     "nn": true,
+     "pk": false,
+     "default": null,
+     "ref": null
+    },
+    "updated_at": {
+     "tipo": "timestamptz",
+     "nn": true,
+     "pk": false,
+     "default": "now()",
+     "ref": null
+    },
+    "weighted_value_cents": {
+     "tipo": "bigint",
+     "nn": true,
+     "pk": false,
+     "default": null,
+     "ref": null
+    }
+   },
+   "rls": true,
+   "policies": [
+    {
+     "nome": "Admin/Supervisor veem retratos do pipeline",
+     "comando": "select",
+     "para": "authenticated",
+     "tipo": "permissive"
+    }
+   ],
+   "indices": [],
+   "fks": [],
+   "criada_em": "20261126120000_deal_pipeline_snapshots.sql",
+   "usada_no_front": 1,
+   "usada_em_edges": [],
    "triggers": [],
    "sem_rls": false,
    "nao_usada": false

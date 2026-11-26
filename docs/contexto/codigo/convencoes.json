@@ -7,12 +7,12 @@
    "src/routes (1)"
   ],
   "componentes": [
-   "src/components (316)",
+   "src/components (317)",
    "src/pages (126)",
    "src/contexts (5)"
   ],
   "hooks": [
-   "src/hooks (179)",
+   "src/hooks (180)",
    "src/components (12)",
    "src/contexts (5)"
   ],
@@ -22,7 +22,7 @@
    "scripts/regras_negocio (2)"
   ],
   "testes": [
-   "co-localizado (__tests__) (394)",
+   "co-localizado (__tests__) (396)",
    "tests/ (9)",
    "e2e/ (7)"
   ],
@@ -48,7 +48,7 @@
  },
  "barrels_index": 17,
  "extensao_componentes": [
-  ".tsx (449)"
+  ".tsx (450)"
  ],
  "alias_imports": {
   "(raiz)": {
@@ -59,11 +59,11 @@
  "commits": {
   "convencao": "conventional commits (observado)",
   "exemplos": [
+   "feat: serie historica do pipeline aberto com tela e job diario (#349)",
    "feat: historico de versoes dos artigos da base de conhecimento (#348)",
    "feat: historico do log de auditoria de redacao de dados sensiveis (#347)",
    "feat: tela para cadastrar e rotacionar o segredo HMAC do webhook de entrada (#346)",
-   "fix: aba Pesquisas enviava um id fixo e nunca cadastrava pesquisa (#345)",
-   "fix: gate do cron lia coluna que nao existe e derrubava o CI de main (#343)"
+   "fix: aba Pesquisas enviava um id fixo e nunca cadastrava pesquisa (#345)"
   ]
  },
  "pr_template": null,

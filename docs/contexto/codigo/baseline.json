@@ -2,11 +2,16 @@
  "aviso": "GERADO AUTOMATICAMENTE por scripts/ai-context/gerar.mjs — não editar à mão; será sobrescrito.",
  "format_version": 2,
  "git": {
-  "commit": "a1725d68d8dc158db216b91e112e2d6b97da5ed1",
+  "commit": "11e8d43f394625b325efa098094a88e3fc676b7b",
   "branch": "main",
-  "data_commit": "2026-11-26T08:32:05-03:00",
+  "data_commit": "2026-11-26T09:05:17-03:00",
   "remote": "https://github.com/adm01-debug/Hello_V3",
   "ultimos_commits": [
+   {
+    "sha": "11e8d43",
+    "data": "2026-11-26",
+    "assunto": "feat: serie historica do pipeline aberto com tela e job diario (#349)"
+   },
    {
     "sha": "a1725d6",
     "data": "2026-11-26",
@@ -126,18 +131,13 @@
     "sha": "2e71e7b",
     "data": "2026-11-25",
     "assunto": "chore: marca a etapa 086 como concluida no backlog (#324)"
-   },
-   {
-    "sha": "19d29d8",
-    "data": "2026-11-25",
-    "assunto": "feat: permite editar e excluir cadencia e passo (etapa 086) (#323)"
    }
   ],
-  "arquivos_mudados_7d": 2358,
+  "arquivos_mudados_7d": 2364,
   "pastas_mais_mudadas_30d": [
    {
     "pasta": "src/hooks/__tests__",
-    "mudancas": 292
+    "mudancas": 293
    },
    {
     "pasta": "covout/lcov-report/hooks",
@@ -184,12 +184,12 @@
     "mudancas": 32
    },
    {
-    "pasta": "src/pages/admin",
+    "pasta": "src/pages/__tests__",
     "mudancas": 32
    },
    {
-    "pasta": "src/pages/__tests__",
-    "mudancas": 31
+    "pasta": "src/pages/admin",
+    "mudancas": 32
    },
    {
     "pasta": "docs/estado/funcionalidades-planejadas.md",
@@ -310,21 +310,21 @@
   ]
  },
  "contagens": {
-  "arquivos_total": 1789,
-  "arquivos_codigo": 1368,
-  "linhas_codigo": 182449,
+  "arquivos_total": 1795,
+  "arquivos_codigo": 1372,
+  "linhas_codigo": 182880,
   "rotas": 106,
   "rotas_http_backend": 11,
   "vistas_por_id": 0,
   "itens_menu": 96,
   "modulos": 83,
-  "componentes": 449,
-  "hooks": 199,
+  "componentes": 450,
+  "hooks": 200,
   "edge_functions": 99,
-  "tabelas": 170,
-  "migrations": 250,
-  "cron_jobs": 11,
-  "testes": 431,
+  "tabelas": 171,
+  "migrations": 251,
+  "cron_jobs": 12,
+  "testes": 434,
   "workflows": 5,
   "scripts": 36,
   "docs_md": 121
@@ -479,8 +479,8 @@
    "linhas": 450
   },
   "src/components": {
-   "arquivos": 379,
-   "linhas": 45007
+   "arquivos": 381,
+   "linhas": 45227
   },
   "src/contexts": {
    "arquivos": 5,
@@ -491,12 +491,12 @@
    "linhas": 312
   },
   "src/hooks": {
-   "arquivos": 351,
-   "linhas": 44757
+   "arquivos": 353,
+   "linhas": 44924
   },
   "src/integrations": {
    "arquivos": 3,
-   "linhas": 8224
+   "linhas": 8251
   },
   "src/lib": {
    "arquivos": 182,
@@ -508,7 +508,7 @@
   },
   "src/pages": {
    "arquivos": 155,
-   "linhas": 23721
+   "linhas": 23738
   },
   "src/routes": {
    "arquivos": 4,
@@ -542,7 +542,7 @@
  "maiores_arquivos": [
   {
    "arquivo": "src/integrations/supabase/types.ts",
-   "linhas": 8161
+   "linhas": 8188
   },
   {
    "arquivo": "scripts/regras_negocio/generate.py",

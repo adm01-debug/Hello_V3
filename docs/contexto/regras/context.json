@@ -1,15 +1,15 @@
 {
  "meta": {
-  "sha": "a1725d68d8dc158db216b91e112e2d6b97da5ed1",
+  "sha": "11e8d43f394625b325efa098094a88e3fc676b7b",
   "branch": "main",
   "remote": "https://github.com/adm01-debug/Hello_V3",
-  "generated_at": "2026-11-26 11:33 UTC",
-  "files_total": 1836,
-  "code_files": 1632,
-  "code_lines": 199949
+  "generated_at": "2026-11-26 12:06 UTC",
+  "files_total": 1842,
+  "code_files": 1638,
+  "code_lines": 200635
  },
  "version": "1.3.2",
- "facts_hash": "e8885e28e67bc6cc",
+ "facts_hash": "99c0a7781b3f1165",
  "stack": {
   "frameworks": [
    "React + Vite",
@@ -168,9 +168,9 @@
   ],
   "package_manager": "bun",
   "languages": {
-   ".tsx": 668,
-   ".ts": 665,
-   ".sql": 263,
+   ".tsx": 671,
+   ".ts": 666,
+   ".sql": 265,
    ".mjs": 29,
    ".py": 5,
    ".js": 2
@@ -14047,6 +14047,56 @@
     "comment": "Preferências de notificação e áudio por usuário (E076/E077)",
     "origin": "migration"
    },
+   "deal_pipeline_snapshots": {
+    "columns": [
+     {
+      "name": "snapshot_date",
+      "type": "DATE PRIMARY KEY",
+      "fk": "",
+      "generated": "",
+      "src": "supabase/migrations/20261126120000_deal_pipeline_snapshots.sql"
+     },
+     {
+      "name": "open_count",
+      "type": "INTEGER NOT NULL",
+      "fk": "",
+      "generated": "",
+      "src": "supabase/migrations/20261126120000_deal_pipeline_snapshots.sql"
+     },
+     {
+      "name": "total_value_cents",
+      "type": "BIGINT NOT NULL",
+      "fk": "",
+      "generated": "",
+      "src": "supabase/migrations/20261126120000_deal_pipeline_snapshots.sql"
+     },
+     {
+      "name": "weighted_value_cents",
+      "type": "BIGINT NOT NULL",
+      "fk": "",
+      "generated": "",
+      "src": "supabase/migrations/20261126120000_deal_pipeline_snapshots.sql"
+     },
+     {
+      "name": "created_at",
+      "type": "TIMESTAMPTZ NOT NULL DEFAULT now()",
+      "fk": "",
+      "generated": "",
+      "src": "supabase/migrations/20261126120000_deal_pipeline_snapshots.sql"
+     },
+     {
+      "name": "updated_at",
+      "type": "TIMESTAMPTZ NOT NULL DEFAULT now()",
+      "fk": "",
+      "generated": "",
+      "src": "supabase/migrations/20261126120000_deal_pipeline_snapshots.sql"
+     }
+    ],
+    "constraints": [],
+    "src": "supabase/migrations/20261126120000_deal_pipeline_snapshots.sql",
+    "comment": "",
+    "origin": "migration"
+   },
    "geo_access_logs": {
     "columns": [
      {
@@ -19815,6 +19865,16 @@
     "using": "public.is_admin()",
     "check": "",
     "src": "supabase/migrations/20261126090000_rate_limit_logs_write_policies.sql"
+   },
+   {
+    "name": "Admin/Supervisor veem retratos do pipeline",
+    "table": "deal_pipeline_snapshots",
+    "cmd": "SELECT",
+    "roles": "authenticated",
+    "mode": "permissive",
+    "using": "public.is_admin_or_supervisor()",
+    "check": "",
+    "src": "supabase/migrations/20261126120000_deal_pipeline_snapshots.sql"
    }
   ],
   "triggers": [
@@ -22081,14 +22141,14 @@
     "args": "",
     "returns": "JSONB",
     "lang": "plpgsql",
-    "src": "supabase/migrations/20260722213827_7ee185db-587f-4046-8507-474be04327a8.sql",
+    "src": "supabase/migrations/20261126120000_deal_pipeline_snapshots.sql",
     "security_definer": true,
     "search_path": true,
-    "body": "DECLARE v_count INTEGER := 0; v_total_value BIGINT := 0; v_weighted BIGINT := 0; BEGIN SELECT COUNT(*), COALESCE(SUM(value_cents), 0), COALESCE(SUM((value_cents * probability / 100)::BIGINT), 0) INTO v_count, v_total_value, v_weighted FROM public.deals WHERE status = 'open'; INSERT INTO public.deal_revenue_snapshots (snapshot_date, open_count, total_value_cents, weighted_value_cents) VALUES (CURRENT_DATE, v_count, v_total_value, v_weighted) ON CONFLICT (snapshot_date) DO UPDATE SET open_count = EXCLUDED.open_count, total_value_cents = EXCLUDED.total_value_cents, weighted_value_cents = EXCLUDED.weighted_value_cents; RETURN jsonb_build_object('open_count', v_count, 'total_value_cents', v_total …",
+    "body": "DECLARE v_count INTEGER := 0; v_total_value BIGINT := 0; v_weighted BIGINT := 0; BEGIN SELECT COUNT(*), COALESCE(SUM(value_cents), 0), COALESCE(SUM((value_cents * probability / 100)::BIGINT), 0) INTO v_count, v_total_value, v_weighted FROM public.deals WHERE status = 'open'; INSERT INTO public.deal_pipeline_snapshots AS s (snapshot_date, open_count, total_value_cents, weighted_value_cents) VALUES (CURRENT_DATE, v_count, v_total_value, v_weighted) ON CONFLICT (snapshot_date) DO UPDATE SET open_count = EXCLUDED.open_count, total_value_cents = EXCLUDED.total_value_cents, weighted_value_cents = EXCLUDED.weighted_value_cents, updated_at = now(); RETURN jsonb_build_object( 'snapshot_date', CURRENT …",
     "raises": [],
     "tables": [
      "SET",
-     "deal_revenue_snapshots",
+     "deal_pipeline_snapshots",
      "deals",
      "v_count"
     ]
@@ -25991,8 +26051,10 @@
    "supabase/migrations/20261126100000_edge_function_urls_from_vault.sql",
    "supabase/migrations/20261126100100_fix_cron_urls_quoting.sql",
    "supabase/migrations/20261126101000_revoke_anon_login_rpcs.sql",
+   "supabase/migrations/20261126120000_deal_pipeline_snapshots.sql",
    "supabase/tests/calling_hours_fail_closed_rls_test.sql",
    "supabase/tests/cron_credentials_rls_test.sql",
+   "supabase/tests/deal_pipeline_snapshots_rls_test.sql",
    "supabase/tests/geo_write_policies_rls_test.sql",
    "supabase/tests/internal_tables_rls_test.sql",
    "supabase/tests/kb_article_history_rls_test.sql",
@@ -26165,7 +26227,8 @@
    "queue_audio_prompts": "enabled",
    "call_park_orbits": "enabled",
    "parked_calls": "enabled",
-   "user_preferences": "enabled"
+   "user_preferences": "enabled",
+   "deal_pipeline_snapshots": "enabled"
   },
   "grants": [
    {
@@ -28263,6 +28326,38 @@
     "objkind": "function",
     "roles": "postgres, service_role",
     "src": "supabase/migrations/20261126100000_edge_function_urls_from_vault.sql"
+   },
+   {
+    "kind": "grant",
+    "privs": "select",
+    "object": "deal_pipeline_snapshots",
+    "objkind": "table",
+    "roles": "authenticated",
+    "src": "supabase/migrations/20261126120000_deal_pipeline_snapshots.sql"
+   },
+   {
+    "kind": "grant",
+    "privs": "all",
+    "object": "deal_pipeline_snapshots",
+    "objkind": "table",
+    "roles": "service_role",
+    "src": "supabase/migrations/20261126120000_deal_pipeline_snapshots.sql"
+   },
+   {
+    "kind": "revoke",
+    "privs": "all",
+    "object": "snapshot_deals_daily",
+    "objkind": "function",
+    "roles": "PUBLIC, anon, authenticated",
+    "src": "supabase/migrations/20261126120000_deal_pipeline_snapshots.sql"
+   },
+   {
+    "kind": "grant",
+    "privs": "execute",
+    "object": "snapshot_deals_daily",
+    "objkind": "function",
+    "roles": "service_role",
+    "src": "supabase/migrations/20261126120000_deal_pipeline_snapshots.sql"
    }
   ],
   "raises": [
@@ -32659,7 +32754,7 @@
     "file": ".github/workflows/migrations.yml"
    }
   ],
-  "components_count": 379,
+  "components_count": 381,
   "hooks": [
    {
     "name": "useContacts",
@@ -32992,6 +33087,10 @@
    {
     "name": "useDealForecast",
     "file": "src/hooks/useDealForecast.ts"
+   },
+   {
+    "name": "useDealPipelineTrend",
+    "file": "src/hooks/useDealPipelineTrend.ts"
    },
    {
     "name": "useDeals",
@@ -33843,8 +33942,8 @@
   },
   {
    "module": "src/components",
-   "files": 379,
-   "lines": 45007,
+   "files": 381,
+   "lines": 45227,
    "tables": [
     "accounts",
     "agent_goals",
@@ -34104,8 +34203,8 @@
   },
   {
    "module": "src/hooks",
-   "files": 351,
-   "lines": 44757,
+   "files": 353,
+   "lines": 44924,
    "tables": [
     "accounts",
     "active_sessions",
@@ -34162,6 +34261,7 @@
     "cultural_hints",
     "dashboard_goals",
     "data_lake_exports",
+    "deal_pipeline_snapshots",
     "deals",
     "dialer_campaigns",
     "dialer_favorites",
@@ -34365,6 +34465,7 @@
     "src/hooks/useDashboardLayout.ts",
     "src/hooks/useDataLakeExports.ts",
     "src/hooks/useDealForecast.ts",
+    "src/hooks/useDealPipelineTrend.ts",
     "src/hooks/useDeals.ts",
     "src/hooks/useDebouncedSearchParam.ts",
     "src/hooks/useDeviceDetection.ts",
@@ -34386,14 +34487,13 @@
     "src/hooks/useHoldSoundAlert.ts",
     "src/hooks/useIPValidation.ts",
     "src/hooks/useIPWhitelist.ts",
-    "src/hooks/useKbArticleHistory.ts",
-    "src/hooks/useKeyMoments.ts"
+    "src/hooks/useKbArticleHistory.ts"
    ]
   },
   {
    "module": "src/integrations",
    "files": 3,
-   "lines": 8224,
+   "lines": 8251,
    "tables": [],
    "exports": [
     "index.ts: lovable",
@@ -34589,7 +34689,7 @@
   {
    "module": "src/pages",
    "files": 155,
-   "lines": 23721,
+   "lines": 23738,
    "tables": [
     "audit_logs",
     "battle_card_triggers",
@@ -35054,8 +35154,8 @@
   },
   {
    "module": "supabase/migrations",
-   "files": 250,
-   "lines": 15969,
+   "files": 251,
+   "lines": 16052,
    "tables": [],
    "exports": [],
    "docs": [],
@@ -35146,8 +35246,8 @@
   },
   {
    "module": "supabase/tests",
-   "files": 11,
-   "lines": 1320,
+   "files": 12,
+   "lines": 1492,
    "tables": [],
    "exports": [],
    "docs": [],
@@ -35156,6 +35256,7 @@
    "file_list": [
     "supabase/tests/calling_hours_fail_closed_rls_test.sql",
     "supabase/tests/cron_credentials_rls_test.sql",
+    "supabase/tests/deal_pipeline_snapshots_rls_test.sql",
     "supabase/tests/geo_write_policies_rls_test.sql",
     "supabase/tests/internal_tables_rls_test.sql",
     "supabase/tests/kb_article_history_rls_test.sql",
@@ -36064,6 +36165,11 @@
     "update": [
      "supabase/functions/data-lake-flush/index.ts",
      "supabase/functions/export-data-lake/index.ts"
+    ]
+   },
+   "deal_pipeline_snapshots": {
+    "select": [
+     "src/hooks/useDealPipelineTrend.ts"
     ]
    },
    "deals": {
@@ -37490,6 +37596,9 @@
     "id",
     "since_date",
     "status"
+   ],
+   "deal_pipeline_snapshots": [
+    "snapshot_date"
    ],
    "deals": [
     "currency",
@@ -40463,6 +40572,11 @@
     "file": "src/hooks/useDataLakeExports.ts",
     "name": "ExportFormat",
     "values": "csv | ndjson | parquet"
+   },
+   {
+    "file": "src/hooks/useDealPipelineTrend.ts",
+    "name": "DEAL_PIPELINE_TREND_QUERY_KEY",
+    "values": "'deal-pipeline-trend'"
    },
    {
     "file": "src/hooks/useDeals.ts",
@@ -50841,6 +50955,36 @@
     "rule": "default now()"
    },
    {
+    "table": "deal_pipeline_snapshots",
+    "column": "snapshot_date",
+    "rule": "PK"
+   },
+   {
+    "table": "deal_pipeline_snapshots",
+    "column": "open_count",
+    "rule": "obrigatório"
+   },
+   {
+    "table": "deal_pipeline_snapshots",
+    "column": "total_value_cents",
+    "rule": "obrigatório"
+   },
+   {
+    "table": "deal_pipeline_snapshots",
+    "column": "weighted_value_cents",
+    "rule": "obrigatório"
+   },
+   {
+    "table": "deal_pipeline_snapshots",
+    "column": "created_at",
+    "rule": "default now()"
+   },
+   {
+    "table": "deal_pipeline_snapshots",
+    "column": "updated_at",
+    "rule": "default now()"
+   },
+   {
     "table": "geo_access_logs",
     "column": "action",
     "rule": "obrigatório"
@@ -57574,6 +57718,14 @@
     "line": "if (alert.severity !== 'critical') setTimeout(() => notification.close(), 10000);"
    },
    {
+    "file": "src/hooks/useDealPipelineTrend.ts",
+    "line": "const start = new Date(now.getTime() - Math.max(days - 1, 0) * 24 * 60 * 60 * 1000);"
+   },
+   {
+    "file": "src/hooks/useDealPipelineTrend.ts",
+    "line": "staleTime: 5 * 60 * 1000,"
+   },
+   {
     "file": "src/hooks/useDialerFavorites.ts",
     "line": "gcTime: 30 * 60 * 1000,"
    },
@@ -59104,6 +59256,38 @@
    {
     "file": "src/components/executive/__tests__/ConversationIntelligenceCard.test.tsx",
     "name": "mostra "
+   },
+   {
+    "file": "src/components/executive/__tests__/DealPipelineTrendCard.test.tsx",
+    "name": "DealPipelineTrendCard"
+   },
+   {
+    "file": "src/components/executive/__tests__/DealPipelineTrendCard.test.tsx",
+    "name": "mostra carregamento enquanto a serie nao chega"
+   },
+   {
+    "file": "src/components/executive/__tests__/DealPipelineTrendCard.test.tsx",
+    "name": "explica quando ainda nao existe retrato no periodo"
+   },
+   {
+    "file": "src/components/executive/__tests__/DealPipelineTrendCard.test.tsx",
+    "name": "mostra erro com opcao de tentar de novo"
+   },
+   {
+    "file": "src/components/executive/__tests__/DealPipelineTrendCard.test.tsx",
+    "name": "mostra o valor de hoje, a variacao e as oportunidades abertas"
+   },
+   {
+    "file": "src/components/executive/__tests__/DealPipelineTrendCard.test.tsx",
+    "name": "avisa quando o periodo tem apenas o primeiro retrato"
+   },
+   {
+    "file": "src/components/executive/__tests__/DealPipelineTrendCard.test.tsx",
+    "name": "troca o periodo e recarrega a serie"
+   },
+   {
+    "file": "src/components/executive/__tests__/DealPipelineTrendCard.test.tsx",
+    "name": "deixa claro que a serie e restrita e permite atualizar na mao"
    },
    {
     "file": "src/components/executive/__tests__/OmnichannelCard.test.tsx",
@@ -61252,6 +61436,42 @@
    {
     "file": "src/hooks/__tests__/useDealForecast.test.ts",
     "name": "handles error gracefully"
+   },
+   {
+    "file": "src/hooks/__tests__/useDealPipelineTrend.test.tsx",
+    "name": "useDealPipelineTrend"
+   },
+   {
+    "file": "src/hooks/__tests__/useDealPipelineTrend.test.tsx",
+    "name": "le a tabela de retratos filtrando pelo inicio do periodo e em ordem cronologica"
+   },
+   {
+    "file": "src/hooks/__tests__/useDealPipelineTrend.test.tsx",
+    "name": "usa periodo de 7 dias por escolha da tela"
+   },
+   {
+    "file": "src/hooks/__tests__/useDealPipelineTrend.test.tsx",
+    "name": "propaga erro de leitura para a tela"
+   },
+   {
+    "file": "src/hooks/__tests__/useDealPipelineTrend.test.tsx",
+    "name": "helpers da tendencia do pipeline"
+   },
+   {
+    "file": "src/hooks/__tests__/useDealPipelineTrend.test.tsx",
+    "name": "calcula a data inicial incluindo o dia de hoje"
+   },
+   {
+    "file": "src/hooks/__tests__/useDealPipelineTrend.test.tsx",
+    "name": "calcula variacao percentual com base zero"
+   },
+   {
+    "file": "src/hooks/__tests__/useDealPipelineTrend.test.tsx",
+    "name": "classifica o tom da variacao"
+   },
+   {
+    "file": "src/hooks/__tests__/useDealPipelineTrend.test.tsx",
+    "name": "limita a altura das barras entre 4% e 100%"
    },
    {
     "file": "src/hooks/__tests__/useDeals.conflict.test.ts",
@@ -79049,6 +79269,16 @@
     "using": "public.is_admin()",
     "check": "",
     "src": "supabase/migrations/20261126090000_rate_limit_logs_write_policies.sql"
+   },
+   {
+    "name": "Admin/Supervisor veem retratos do pipeline",
+    "table": "deal_pipeline_snapshots",
+    "cmd": "SELECT",
+    "roles": "authenticated",
+    "mode": "permissive",
+    "using": "public.is_admin_or_supervisor()",
+    "check": "",
+    "src": "supabase/migrations/20261126120000_deal_pipeline_snapshots.sql"
    }
   ],
   "db_triggers": [
@@ -81315,14 +81545,14 @@
     "args": "",
     "returns": "JSONB",
     "lang": "plpgsql",
-    "src": "supabase/migrations/20260722213827_7ee185db-587f-4046-8507-474be04327a8.sql",
+    "src": "supabase/migrations/20261126120000_deal_pipeline_snapshots.sql",
     "security_definer": true,
     "search_path": true,
-    "body": "DECLARE v_count INTEGER := 0; v_total_value BIGINT := 0; v_weighted BIGINT := 0; BEGIN SELECT COUNT(*), COALESCE(SUM(value_cents), 0), COALESCE(SUM((value_cents * probability / 100)::BIGINT), 0) INTO v_count, v_total_value, v_weighted FROM public.deals WHERE status = 'open'; INSERT INTO public.deal_revenue_snapshots (snapshot_date, open_count, total_value_cents, weighted_value_cents) VALUES (CURRENT_DATE, v_count, v_total_value, v_weighted) ON CONFLICT (snapshot_date) DO UPDATE SET open_count = EXCLUDED.open_count, total_value_cents = EXCLUDED.total_value_cents, weighted_value_cents = EXCLUDED.weighted_value_cents; RETURN jsonb_build_object('open_count', v_count, 'total_value_cents', v_total …",
+    "body": "DECLARE v_count INTEGER := 0; v_total_value BIGINT := 0; v_weighted BIGINT := 0; BEGIN SELECT COUNT(*), COALESCE(SUM(value_cents), 0), COALESCE(SUM((value_cents * probability / 100)::BIGINT), 0) INTO v_count, v_total_value, v_weighted FROM public.deals WHERE status = 'open'; INSERT INTO public.deal_pipeline_snapshots AS s (snapshot_date, open_count, total_value_cents, weighted_value_cents) VALUES (CURRENT_DATE, v_count, v_total_value, v_weighted) ON CONFLICT (snapshot_date) DO UPDATE SET open_count = EXCLUDED.open_count, total_value_cents = EXCLUDED.total_value_cents, weighted_value_cents = EXCLUDED.weighted_value_cents, updated_at = now(); RETURN jsonb_build_object( 'snapshot_date', CURRENT …",
     "raises": [],
     "tables": [
      "SET",
-     "deal_revenue_snapshots",
+     "deal_pipeline_snapshots",
      "deals",
      "v_count"
     ]
@@ -84764,6 +84994,15 @@
      "authenticated: public.is_admin()"
     ]
    },
+   "deal_pipeline_snapshots": {
+    "rls": "enabled",
+    "SELECT": [
+     "authenticated: public.is_admin_or_supervisor()"
+    ],
+    "INSERT": [],
+    "UPDATE": [],
+    "DELETE": []
+   },
    "deal_revenue_snapshots": {
     "rls": "enabled",
     "SELECT": [
@@ -86495,6 +86734,7 @@
    "supabase/migrations/20261126090001_rate_limit_logs_revoke_anon_write.sql",
    "supabase/migrations/20261126100000_edge_function_urls_from_vault.sql",
    "supabase/migrations/20261126101000_revoke_anon_login_rpcs.sql",
+   "supabase/migrations/20261126120000_deal_pipeline_snapshots.sql",
    "supabase/tests/login_lockout_acl_rls_test.sql",
    "supabase/tests/redaction_log_rls_test.sql",
    "supabase/tests/webhook_secrets_rls_test.sql"
@@ -88681,6 +88921,38 @@
     "objkind": "function",
     "roles": "postgres, service_role",
     "src": "supabase/migrations/20261126100000_edge_function_urls_from_vault.sql"
+   },
+   {
+    "kind": "grant",
+    "privs": "select",
+    "object": "deal_pipeline_snapshots",
+    "objkind": "table",
+    "roles": "authenticated",
+    "src": "supabase/migrations/20261126120000_deal_pipeline_snapshots.sql"
+   },
+   {
+    "kind": "grant",
+    "privs": "all",
+    "object": "deal_pipeline_snapshots",
+    "objkind": "table",
+    "roles": "service_role",
+    "src": "supabase/migrations/20261126120000_deal_pipeline_snapshots.sql"
+   },
+   {
+    "kind": "revoke",
+    "privs": "all",
+    "object": "snapshot_deals_daily",
+    "objkind": "function",
+    "roles": "PUBLIC, anon, authenticated",
+    "src": "supabase/migrations/20261126120000_deal_pipeline_snapshots.sql"
+   },
+   {
+    "kind": "grant",
+    "privs": "execute",
+    "object": "snapshot_deals_daily",
+    "objkind": "function",
+    "roles": "service_role",
+    "src": "supabase/migrations/20261126120000_deal_pipeline_snapshots.sql"
    }
   ],
   "guards": [
@@ -89451,6 +89723,10 @@
     "created_at",
     "updated_at"
    ],
+   "deal_pipeline_snapshots": [
+    "created_at",
+    "updated_at"
+   ],
    "geo_access_logs": [
     "created_at"
    ],
@@ -89639,6 +89915,11 @@
     "voip_trunks",
     "cost_per_minute_cents",
     "INTEGER"
+   ],
+   [
+    "deal_pipeline_snapshots",
+    "total_value_cents",
+    "BIGINT"
    ],
    [
     "financial_impact_daily",
@@ -90393,7 +90674,7 @@
    "`data_lake_exports.status` tem valores ['completed', 'failed', 'pending', 'processing'] mas nenhum mapa de transições foi encontrado no código — a ordem permitida (ex.: pago → cancelado?) não está declarada.",
    "`parked_calls.status` tem valores ['abandoned', 'expired', 'parked', 'retrieved'] mas nenhum mapa de transições foi encontrado no código — a ordem permitida (ex.: pago → cancelado?) não está declarada.",
    "`migration_status.status` é uma coluna de status sem enum/CHECK — os valores válidos e as transições permitidas não estão no banco.",
-   "167/170 tabelas sem `COMMENT ON TABLE` — o significado de negócio não está no schema: `entity_versions`, `schema_migrations`, `migration_rollbacks`, `contacts`, `call_records`, `queue_items`, `agents`, `call_sessions`, `call_transcriptions`, `call_analyses`, `call_summaries`, `call_alerts` …",
+   "168/171 tabelas sem `COMMENT ON TABLE` — o significado de negócio não está no schema: `entity_versions`, `schema_migrations`, `migration_rollbacks`, `contacts`, `call_records`, `queue_items`, `agents`, `call_sessions`, `call_transcriptions`, `call_analyses`, `call_summaries`, `call_alerts` …",
    "Há tabelas usadas no código sem migration no repo — o schema real pode ter sido alterado pelo painel."
   ]
  },
@@ -95030,6 +95311,13 @@
     "function TopAgentsChart"
    ]
   },
+  "src/components/executive/DealPipelineTrendCard.tsx": {
+   "path": "src/components/executive/DealPipelineTrendCard.tsx",
+   "lines": 135,
+   "exports": [
+    "function DealPipelineTrendCard"
+   ]
+  },
   "src/components/executive/ForecastCard.tsx": {
    "path": "src/components/executive/ForecastCard.tsx",
    "lines": 76,
@@ -95258,6 +95546,21 @@
     "ConversationIntelligenceCard — talk ratio real",
     "calcula o talk ratio a partir das transcrições, não um valor fixo",
     "mostra "
+   ]
+  },
+  "src/components/executive/__tests__/DealPipelineTrendCard.test.tsx": {
+   "path": "src/components/executive/__tests__/DealPipelineTrendCard.test.tsx",
+   "lines": 85,
+   "is_test": true,
+   "tests": [
+    "DealPipelineTrendCard",
+    "mostra carregamento enquanto a serie nao chega",
+    "explica quando ainda nao existe retrato no periodo",
+    "mostra erro com opcao de tentar de novo",
+    "mostra o valor de hoje, a variacao e as oportunidades abertas",
+    "avisa quando o periodo tem apenas o primeiro retrato",
+    "troca o periodo e recarrega a serie",
+    "deixa claro que a serie e restrita e permite atualizar na mao"
    ]
   },
   "src/components/executive/__tests__/OmnichannelCard.test.tsx": {
@@ -100292,6 +100595,45 @@
    ],
    "side_effects": [
     "invoke("
+   ]
+  },
+  "src/hooks/useDealPipelineTrend.ts": {
+   "path": "src/hooks/useDealPipelineTrend.ts",
+   "lines": 53,
+   "exports": [
+    "const DEAL_PIPELINE_TREND_QUERY_KEY",
+    "const DEAL_PIPELINE_TREND_COLUMNS",
+    "interface DealPipelineSnapshot",
+    "type PipelineTrendPeriod",
+    "function pipelineTrendStartDate",
+    "function pipelineTrendDeltaPercent",
+    "function pipelineTrendDeltaTone",
+    "function pipelineTrendBarHeight",
+    "function useDealPipelineTrend"
+   ],
+   "tables": [
+    {
+     "table": "deal_pipeline_snapshots",
+     "op": "select"
+    }
+   ],
+   "table_cols": {
+    "deal_pipeline_snapshots": [
+     "snapshot_date"
+    ]
+   },
+   "enums": [
+    {
+     "name": "DEAL_PIPELINE_TREND_QUERY_KEY",
+     "values": "'deal-pipeline-trend'"
+    }
+   ],
+   "hooks": [
+    "useDealPipelineTrend"
+   ],
+   "temporal": [
+    "const start = new Date(now.getTime() - Math.max(days - 1, 0) * 24 * 60 * 60 * 1000);",
+    "staleTime: 5 * 60 * 1000,"
    ]
   },
   "src/hooks/useDeals.ts": {
@@ -106454,6 +106796,22 @@
     "handles error gracefully"
    ]
   },
+  "src/hooks/__tests__/useDealPipelineTrend.test.tsx": {
+   "path": "src/hooks/__tests__/useDealPipelineTrend.test.tsx",
+   "lines": 114,
+   "is_test": true,
+   "tests": [
+    "useDealPipelineTrend",
+    "le a tabela de retratos filtrando pelo inicio do periodo e em ordem cronologica",
+    "usa periodo de 7 dias por escolha da tela",
+    "propaga erro de leitura para a tela",
+    "helpers da tendencia do pipeline",
+    "calcula a data inicial incluindo o dia de hoje",
+    "calcula variacao percentual com base zero",
+    "classifica o tom da variacao",
+    "limita a altura das barras entre 4% e 100%"
+   ]
+  },
   "src/hooks/__tests__/useDeals.conflict.test.ts": {
    "path": "src/hooks/__tests__/useDeals.conflict.test.ts",
    "lines": 94,
@@ -108671,7 +109029,7 @@
   },
   "src/integrations/supabase/types.ts": {
    "path": "src/integrations/supabase/types.ts",
-   "lines": 8161,
+   "lines": 8188,
    "exports": [
     "type Json",
     "type Database",
@@ -114060,7 +114418,7 @@
   },
   "src/pages/ExecutiveDashboard.tsx": {
    "path": "src/pages/ExecutiveDashboard.tsx",
-   "lines": 115,
+   "lines": 125,
    "exports": [
     "function ExecutiveDashboard"
    ]
@@ -115740,7 +116098,7 @@
   },
   "src/pages/__tests__/ExecutiveDashboard.test.tsx": {
    "path": "src/pages/__tests__/ExecutiveDashboard.test.tsx",
-   "lines": 41,
+   "lines": 48,
    "is_test": true,
    "tests": [
     "ExecutiveDashboard",
@@ -125575,6 +125933,11 @@
    "lines": 32,
    "uses_service_role": true
   },
+  "supabase/migrations/20261126120000_deal_pipeline_snapshots.sql": {
+   "path": "supabase/migrations/20261126120000_deal_pipeline_snapshots.sql",
+   "lines": 83,
+   "uses_service_role": true
+  },
   "supabase/tests/calling_hours_fail_closed_rls_test.sql": {
    "path": "supabase/tests/calling_hours_fail_closed_rls_test.sql",
    "lines": 50,
@@ -125583,6 +125946,11 @@
   "supabase/tests/cron_credentials_rls_test.sql": {
    "path": "supabase/tests/cron_credentials_rls_test.sql",
    "lines": 166,
+   "is_test": true
+  },
+  "supabase/tests/deal_pipeline_snapshots_rls_test.sql": {
+   "path": "supabase/tests/deal_pipeline_snapshots_rls_test.sql",
+   "lines": 172,
    "is_test": true
   },
   "supabase/tests/geo_write_policies_rls_test.sql": {
@@ -125814,10 +126182,28 @@
   }
  },
  "git": {
-  "sha": "a1725d68d8dc158db216b91e112e2d6b97da5ed1",
+  "sha": "11e8d43f394625b325efa098094a88e3fc676b7b",
   "branch": "main",
   "remote": "https://github.com/adm01-debug/Hello_V3",
   "commits": [
+   {
+    "sha": "11e8d43",
+    "date": "2026-11-26",
+    "author": "adm01-debug",
+    "subject": "feat: serie historica do pipeline aberto com tela e job diario (#349)",
+    "files": [
+     "docs/qa/03-ACHADOS.md",
+     "src/components/executive/DealPipelineTrendCard.tsx",
+     "src/components/executive/__tests__/DealPipelineTrendCard.test.tsx",
+     "src/hooks/__tests__/useDealPipelineTrend.test.tsx",
+     "src/hooks/useDealPipelineTrend.ts",
+     "src/integrations/supabase/types.ts",
+     "src/pages/ExecutiveDashboard.tsx",
+     "src/pages/__tests__/ExecutiveDashboard.test.tsx",
+     "supabase/migrations/20261126120000_deal_pipeline_snapshots.sql",
+     "supabase/tests/deal_pipeline_snapshots_rls_test.sql"
+    ]
+   },
    {
     "sha": "a1725d6",
     "date": "2026-11-26",
@@ -126204,15 +126590,6 @@
      "supabase/migrations/20250102000000_performance_indexes.sql",
      "supabase/migrations/20261125120000_indices_auditoria_e_busca_contatos.sql"
     ]
-   },
-   {
-    "sha": "c9aede0",
-    "date": "2026-11-25",
-    "author": "adm01-debug",
-    "subject": "fix: dry-run do migrations.yml nao pode gravar de verdade (#319)",
-    "files": [
-     ".github/workflows/migrations.yml"
-    ]
    }
   ],
   "hot_files": [
@@ -126222,7 +126599,7 @@
    ],
    [
     "docs/qa/03-ACHADOS.md",
-    4
+    5
    ],
    [
     "src/components/calls/ActiveCallBar.tsx",
@@ -126281,19 +126658,19 @@
     2
    ],
    [
-    ".github/workflows/migrations.yml",
-    2
-   ],
-   [
-    "src/components/knowledge/ArticleHistoryCard.tsx",
+    "src/components/executive/DealPipelineTrendCard.tsx",
     1
    ],
    [
-    "src/components/knowledge/__tests__/ArticleHistoryCard.test.tsx",
+    "src/components/executive/__tests__/DealPipelineTrendCard.test.tsx",
     1
    ],
    [
-    "src/hooks/__tests__/useKbArticleHistory.test.tsx",
+    "src/hooks/__tests__/useDealPipelineTrend.test.tsx",
+    1
+   ],
+   [
+    "src/hooks/useDealPipelineTrend.ts",
     1
    ]
   ]

@@ -1,6 +1,6 @@
 # 11 · GLOSSÁRIO, DADOS DE REFERÊNCIA E LACUNAS
 
-> Gerado automaticamente por AI Context Sync v1.3.2 · commit `a1725d68d8` · branch `main` · 2026-11-26 11:33 UTC
+> Gerado automaticamente por AI Context Sync v1.3.2 · commit `11e8d43f39` · branch `main` · 2026-11-26 12:06 UTC
 > Não edite à mão — regras humanas vão em `manual/`.
 
 ## Glossário do domínio (entidades do sistema)
@@ -72,6 +72,7 @@
 | `customer_journey_stages` | _(sem COMMENT ON TABLE — significado não documentado)_ | 11 colunas | migration |
 | `dashboard_goals` | _(sem COMMENT ON TABLE — significado não documentado)_ | 12 colunas | migration |
 | `data_lake_exports` | _(sem COMMENT ON TABLE — significado não documentado)_ | 13 colunas | migration |
+| `deal_pipeline_snapshots` | _(sem COMMENT ON TABLE — significado não documentado)_ | 6 colunas | migration |
 | `deal_revenue_snapshots` | _(sem COMMENT ON TABLE — significado não documentado)_ | 6 colunas | migration |
 | `deals` | _(sem COMMENT ON TABLE — significado não documentado)_ | 20 colunas | migration |
 | `dialer_campaigns` | _(sem COMMENT ON TABLE — significado não documentado)_ | 22 colunas | migration |
@@ -208,6 +209,7 @@
 | `WidgetId` (TS) | stats \| active-calls \| call-volume \| queue-status \| callbacks \| supervisor \| recent-calls \| agents-list |  | `src/hooks/useDashboardLayout.ts` |
 | `ExportDataset` (TS) | call_sessions \| call_summaries \| deals \| contacts \| audit_logs |  | `src/hooks/useDataLakeExports.ts` |
 | `ExportFormat` (TS) | csv \| ndjson \| parquet |  | `src/hooks/useDataLakeExports.ts` |
+| `DEAL_PIPELINE_TREND_QUERY_KEY` (TS) | 'deal-pipeline-trend' |  | `src/hooks/useDealPipelineTrend.ts` |
 | `DEAL_STAGES` (TS) | { id: "prospecting", label: "Prospecção" }, { id: "qualification", label: "Qualificação" }, { id: "proposal", label: "Proposta" }, { id: "negotiation", label: "Negociação" }, { id: "closed_won", label: "Ganha" }, { id: "closed_lost", label: "Perdida" }, |  | `src/hooks/useDeals.ts` |
 | `PeriodType` (TS) | today \| week \| month \| all |  | `src/hooks/useExecutiveDashboard.ts` |
 | `ExtensionBulkAction` (TS) | bulk_assign_trunk \| bulk_force_offline \| bulk_export_csv |  | `src/hooks/useExtensionAudit.ts` |
@@ -441,7 +443,7 @@
 - `data_lake_exports.status` tem valores ['completed', 'failed', 'pending', 'processing'] mas nenhum mapa de transições foi encontrado no código — a ordem permitida (ex.: pago → cancelado?) não está declarada.
 - `parked_calls.status` tem valores ['abandoned', 'expired', 'parked', 'retrieved'] mas nenhum mapa de transições foi encontrado no código — a ordem permitida (ex.: pago → cancelado?) não está declarada.
 - `migration_status.status` é uma coluna de status sem enum/CHECK — os valores válidos e as transições permitidas não estão no banco.
-- 167/170 tabelas sem `COMMENT ON TABLE` — o significado de negócio não está no schema: `entity_versions`, `schema_migrations`, `migration_rollbacks`, `contacts`, `call_records`, `queue_items`, `agents`, `call_sessions`, `call_transcriptions`, `call_analyses`, `call_summaries`, `call_alerts` …
+- 168/171 tabelas sem `COMMENT ON TABLE` — o significado de negócio não está no schema: `entity_versions`, `schema_migrations`, `migration_rollbacks`, `contacts`, `call_records`, `queue_items`, `agents`, `call_sessions`, `call_transcriptions`, `call_analyses`, `call_summaries`, `call_alerts` …
 - Há tabelas usadas no código sem migration no repo — o schema real pode ter sido alterado pelo painel.
 
 ## Regras manuais presentes

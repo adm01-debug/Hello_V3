@@ -6,7 +6,7 @@
   "rotas_http_backend": 11,
   "vistas_por_id": 0,
   "itens_menu": 96,
-  "lazy": 106
+  "lazy": 107
  },
  "urls": [
   {
@@ -1937,6 +1937,7 @@
     "useConversationMessages",
     "useConversations",
     "useDealForecast",
+    "useDealPipelineTrend",
     "useEffect",
     "useEnforceSla",
     "useExecutiveDashboardData",
@@ -1963,6 +1964,7 @@
     "useConversationMessages",
     "useConversations",
     "useDealForecast",
+    "useDealPipelineTrend",
     "useEnforceSla",
     "useExecutiveDashboardData",
     "useForecastVolume",
@@ -1991,6 +1993,7 @@
     "contact_engagement_patterns",
     "conversation_messages",
     "conversations",
+    "deal_pipeline_snapshots",
     "hold_events",
     "live_assist_signals",
     "meeting_summaries",
@@ -2017,9 +2020,10 @@
    "papeis": [
     "agent",
     "customer",
+    "img",
     "status"
    ],
-   "arquivos_puxados": 39
+   "arquivos_puxados": 41
   },
   {
    "protegida": false,
@@ -6005,6 +6009,7 @@
   "Contacts": "src/pages/Contacts.tsx",
   "DataExport": "src/pages/admin/DataExport.tsx",
   "DatabaseHealth": "src/pages/admin/DatabaseHealth.tsx",
+  "DealPipelineTrendCard": "src/components/executive/DealPipelineTrendCard.tsx",
   "Deals": "src/pages/Deals.tsx",
   "Dialer": "src/pages/Dialer.tsx",
   "ExecutiveDashboard": "src/pages/ExecutiveDashboard.tsx",

@@ -1,6 +1,6 @@
 # 10 · ACESSO E SEGURANÇA — quem pode o quê
 
-> Gerado automaticamente por AI Context Sync v1.3.2 · commit `a1725d68d8` · branch `main` · 2026-11-26 11:33 UTC
+> Gerado automaticamente por AI Context Sync v1.3.2 · commit `11e8d43f39` · branch `main` · 2026-11-26 12:06 UTC
 > Não edite à mão — regras humanas vão em `manual/`.
 
 ## Perfis / roles identificados
@@ -81,6 +81,7 @@
 | `customer_journey_stages` | enabled | authenticated: is_admin_or_supervisor()<br>authenticated: auth.uid() IS NOT NULL | authenticated: is_admin_or_supervisor() | authenticated: is_admin_or_supervisor() | authenticated: is_admin_or_supervisor() |
 | `dashboard_goals` | enabled | public: auth.uid() IS NOT NULL<br>public: is_admin_or_supervisor() | public: is_admin_or_supervisor() | public: is_admin_or_supervisor() | public: is_admin_or_supervisor() |
 | `data_lake_exports` | enabled | authenticated: public.is_admin() | authenticated: public.is_admin() | authenticated: public.is_admin() | authenticated: public.is_admin() |
+| `deal_pipeline_snapshots` | enabled | authenticated: public.is_admin_or_supervisor() | — | — | — |
 | `deal_revenue_snapshots` | enabled | authenticated: public.is_admin_or_supervisor() | authenticated: public.is_admin_or_supervisor() | authenticated: public.is_admin_or_supervisor() | authenticated: public.is_admin_or_supervisor() |
 | `deals` | enabled | public: is_admin_or_supervisor()<br>public: owner_agent_name = get_user_agent_name() OR is_admin_or_supervisor() | public: is_admin_or_supervisor()<br>public: auth.uid() IS NOT NULL AND ( is_admin_or_supervisor() OR owner_agent_name IS NULL OR owner_agent_name = get_user_agent_name() ) | public: is_admin_or_supervisor()<br>public: owner_agent_name = get_user_agent_name() | public: is_admin_or_supervisor() |
 | `dialer_campaigns` | enabled | public: true<br>public: auth.uid() IS NOT NULL<br>public: public.is_admin_or_supervisor() | public: true<br>public: public.is_admin_or_supervisor() | public: true<br>public: public.is_admin_or_supervisor() | public: true<br>public: public.is_admin_or_supervisor() |
@@ -189,7 +190,7 @@
 
 > `—` com RLS ligado = ninguém além de service_role. `sem RLS` = qualquer chave anon lê/escreve tudo.
 
-## Onde o RLS é IGNORADO (service_role) — 133 arquivo(s)
+## Onde o RLS é IGNORADO (service_role) — 134 arquivo(s)
 
 - `scripts/ai-context/cenarios.mjs`
 - `scripts/ai-context/gerar.unit.mjs`
@@ -321,6 +322,7 @@
 - `supabase/migrations/20261126090001_rate_limit_logs_revoke_anon_write.sql`
 - `supabase/migrations/20261126100000_edge_function_urls_from_vault.sql`
 - `supabase/migrations/20261126101000_revoke_anon_login_rpcs.sql`
+- `supabase/migrations/20261126120000_deal_pipeline_snapshots.sql`
 - `supabase/tests/login_lockout_acl_rls_test.sql`
 - `supabase/tests/redaction_log_rls_test.sql`
 - `supabase/tests/webhook_secrets_rls_test.sql`
@@ -430,7 +432,7 @@ Middleware matcher (Next.js): nenhum
 |---|---|---|---|
 | grant | anon, authenticated | execute | `check_login_lockout`, `record_failed_login`, `record_successful_login`, `check_ip_allowed` |
 | grant | authenticated | execute | `log_audit_event`, `get_dashboard_stats`, `get_queue_stats`, `log_audit_event`, `get_agent_performance`, `get_call_history_with_summaries`, `get_call_volume_stats`, `get_agents_with_active_calls`, `check_all_tables_rls_status`, `has_role`, `has_permission`, `get_user_role`, `get_user_agent_name`, `get_auth_agent_id`, `get_user_agent_id` … +18 |
-| grant | authenticated | select | `financial_impact_daily`, `index_drop_audit` |
+| grant | authenticated | select | `financial_impact_daily`, `index_drop_audit`, `deal_pipeline_snapshots` |
 | grant | authenticated | select, insert | `webhook_flush_metrics` |
 | grant | authenticated | select, insert, update, delete | `deal_revenue_snapshots`, `shift_swap_suggestions`, `data_lake_exports`, `dialer_favorites`, `call_queues`, `call_queue_members`, `ring_groups`, `ring_group_members`, `queue_audio_prompts`, `call_park_orbits`, `parked_calls`, `user_preferences` |
 | grant | authenticated | update, delete | `rate_limit_logs` |
@@ -438,14 +440,14 @@ Middleware matcher (Next.js): nenhum
 | grant | optimistic_lock_writer | insert | `optimistic_lock_conflicts` |
 | grant | postgres | all privileges | `cron` |
 | grant | postgres, service_role | execute | `edge_function_url` |
-| grant | service_role | all | `deal_revenue_snapshots`, `shift_swap_suggestions`, `data_lake_exports`, `index_drop_audit`, `webhook_flush_metrics`, `dialer_favorites`, `call_queues`, `call_queue_members`, `ring_groups`, `ring_group_members`, `queue_audio_prompts`, `call_park_orbits`, `parked_calls` |
-| grant | service_role | execute | `check_all_tables_rls_status`, `log_rls_event`, `apply_predictive_pacing`, `snapshot_deals_daily`, `trigger_auto_scorecard`, `apply_predictive_pacing`, `check_ip_in_cidr`, `check_rate_limit`, `check_rls_enabled`, `cleanup_expired_challenges` |
+| grant | service_role | all | `deal_revenue_snapshots`, `shift_swap_suggestions`, `data_lake_exports`, `index_drop_audit`, `webhook_flush_metrics`, `dialer_favorites`, `call_queues`, `call_queue_members`, `ring_groups`, `ring_group_members`, `queue_audio_prompts`, `call_park_orbits`, `parked_calls`, `deal_pipeline_snapshots` |
+| grant | service_role | execute | `check_all_tables_rls_status`, `log_rls_event`, `apply_predictive_pacing`, `snapshot_deals_daily`, `trigger_auto_scorecard`, `apply_predictive_pacing`, `check_ip_in_cidr`, `check_rate_limit`, `check_rls_enabled`, `cleanup_expired_challenges`, `snapshot_deals_daily` |
 | grant | service_role | select | `index_usage`, `unused_indexes`, `migration_status`, `schema_migrations`, `migration_rollbacks` |
 | revoke | PUBLIC | all | `log_index_drop_copy`, `expire_parked_calls` |
 | revoke | PUBLIC | execute | `get_dashboard_stats`, `get_queue_stats`, `get_call_history_with_summaries`, `get_call_volume_stats`, `get_agents_with_active_calls`, `cleanup_old_logs`, `log_rls_event` |
 | revoke | PUBLIC, anon | all | `calculate_predictive_pace`, `recalc_deal_health` |
 | revoke | PUBLIC, anon | execute | `apply_migration`, `audit_role_change`, `audit_table_change`, `bridge_voip_alert_to_notification`, `check_suspicious_activity`, `check_table_bloat`, `cleanup_old_data`, `cleanup_old_logs`, `enforce_optimistic_lock`, `ensure_single_default_filter`, `get_call_queues_overview`, `handle_kb_article_change`, `handle_kb_article_history`, `handle_new_user`, `log_critical_rls_event` … +59 |
-| revoke | PUBLIC, anon, authenticated | all | `apply_predictive_pacing`, `snapshot_deals_daily`, `edge_function_url` |
+| revoke | PUBLIC, anon, authenticated | all | `apply_predictive_pacing`, `snapshot_deals_daily`, `edge_function_url`, `snapshot_deals_daily` |
 | revoke | PUBLIC, anon, authenticated | execute | `trigger_auto_scorecard` |
 | revoke | anon | all | `financial_impact_daily` |
 | revoke | anon | execute | `cleanup_old_logs` |
@@ -664,6 +666,7 @@ Middleware matcher (Next.js): nenhum
 | `call_park_orbits` | `created_at`, `updated_at` |
 | `parked_calls` | `created_at`, `updated_at` |
 | `user_preferences` | `created_at`, `updated_at` |
+| `deal_pipeline_snapshots` | `created_at`, `updated_at` |
 | `geo_access_logs` | `created_at` |
 | `geo_restrictions` | `created_at`, `created_by`, `updated_at` |
 | `geo_settings` | `created_at`, `updated_at` |
@@ -716,5 +719,6 @@ Middleware matcher (Next.js): nenhum
 | `contact_engagement_patterns` | `total_attempts` | `INTEGER` |
 | `contact_engagement_patterns` | `total_answered` | `INTEGER` |
 | `voip_trunks` | `cost_per_minute_cents` | `INTEGER` |
+| `deal_pipeline_snapshots` | `total_value_cents` | `BIGINT` |
 | `financial_impact_daily` | `total_calls` | `number` |
 | `financial_impact_daily` | `total_seconds` | `number` |

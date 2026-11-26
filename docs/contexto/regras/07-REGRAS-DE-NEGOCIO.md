@@ -1,6 +1,6 @@
 # 07 · REGRAS DE NEGÓCIO
 
-> Gerado automaticamente por AI Context Sync v1.3.2 · commit `a1725d68d8` · branch `main` · 2026-11-26 11:33 UTC
+> Gerado automaticamente por AI Context Sync v1.3.2 · commit `11e8d43f39` · branch `main` · 2026-11-26 12:06 UTC
 > Não edite à mão — regras humanas vão em `manual/`.
 
 ## A. Regras escritas por humanos (`manual/` — prioridade máxima, nunca sobrescrito)
@@ -311,7 +311,7 @@ _Nenhum arquivo em `manual/`. Copie `manual/TEMPLATE-regras-de-negocio.md` para 
 | `playlist_items` | Manage items of own playlists | ALL | public | permissive | `EXISTS (SELECT 1 FROM public.call_playlists p WHERE p.id = playlist_id AND (p.owner_agent_name = get_user_agent_name() OR is_admin_or_supervisor()))` | `EXISTS (SELECT 1 FROM public.call_playlists p WHERE p.id = playlist_id AND (p.owner_agent_name = get_user_agent_name() OR is_admin_or_supervisor()))` |
 | `deals` | Authenticated create deals | INSERT | public | permissive |  | `auth.uid() IS NOT NULL AND ( is_admin_or_supervisor() OR owner_agent_name IS NULL OR owner_agent_name = get_user_agent_name() )` |
 | `cadence_enrollments` | Authenticated insert enrollments | INSERT | public | permissive |  | `auth.uid() IS NOT NULL AND (is_admin_or_supervisor() OR agent_name = get_user_agent_name())` |
-| … +234 linhas — lista completa em `context.json` | | | | | | |
+| … +235 linhas — lista completa em `context.json` | | | | | | |
 
 ## C. Restrições de dados (obrigatório / único / default / CHECK / FK / calculada)
 
@@ -617,7 +617,7 @@ _Nenhum arquivo em `manual/`. Copie `manual/TEMPLATE-regras-de-negocio.md` para 
 | `user_roles` | `is_active` | default true |
 | `user_roles` | `created_at` | default now() |
 | `permissions` | `id` | PK; default gen_random_uuid() |
-| … +1059 linhas — lista completa em `context.json` | | |
+| … +1065 linhas — lista completa em `context.json` | | |
 
 ## D. Automações no banco (triggers e funções — regras que rodam sozinhas)
 
@@ -1070,6 +1070,7 @@ _nenhum mapa explícito encontrado — transições só existem implicitamente n
 | WidgetId | stats \| active-calls \| call-volume \| queue-status \| callbacks \| supervisor \| recent-calls \| agents-list | `src/hooks/useDashboardLayout.ts` |
 | ExportDataset | call_sessions \| call_summaries \| deals \| contacts \| audit_logs | `src/hooks/useDataLakeExports.ts` |
 | ExportFormat | csv \| ndjson \| parquet | `src/hooks/useDataLakeExports.ts` |
+| DEAL_PIPELINE_TREND_QUERY_KEY | 'deal-pipeline-trend' | `src/hooks/useDealPipelineTrend.ts` |
 | DEAL_STAGES | { id: "prospecting", label: "Prospecção" }, { id: "qualification", label: "Qualificação" }, { id: "proposal", label: "Proposta" }, { id: "negotiation", label: "Negociação" }, { id: "closed_won", label: "Ganha" }, { id: "closed_lost", label: "Perdida" }, | `src/hooks/useDeals.ts` |
 | PeriodType | today \| week \| month \| all | `src/hooks/useExecutiveDashboard.ts` |
 | ExtensionBulkAction | bulk_assign_trunk \| bulk_force_offline \| bulk_export_csv | `src/hooks/useExtensionAudit.ts` |
@@ -2085,6 +2086,8 @@ _nenhum item encontrado_
 | `gcTime: 30 * 60 * 1000,` | `src/hooks/useCallQueues.ts` |
 | `staleTime: 5 * 60 * 1000,` | `src/hooks/useCallQueues.ts` |
 | `if (alert.severity !== 'critical') setTimeout(() => notification.close(), 10000);` | `src/hooks/useCriticalAlertNotifications.ts` |
+| `const start = new Date(now.getTime() - Math.max(days - 1, 0) * 24 * 60 * 60 * 1000);` | `src/hooks/useDealPipelineTrend.ts` |
+| `staleTime: 5 * 60 * 1000,` | `src/hooks/useDealPipelineTrend.ts` |
 | `gcTime: 30 * 60 * 1000,` | `src/hooks/useDialerFavorites.ts` |
 | `staleTime: 5 * 60 * 1000,` | `src/hooks/useDialerFavorites.ts` |
 | `case 'month': return subDays(new Date(), 30);` | `src/hooks/useExecutiveDashboard.ts` |
@@ -2672,7 +2675,7 @@ _nenhum item encontrado_
 | `admin` | `supabase/functions/data-lake-flush/index.ts` |
 | `admin` | `supabase/migrations/20261123000200_fix_has_role_oracle_and_debug_tables.sql` |
 
-## K. Testes como especificação (3725 testes em 411 arquivos — nomes completos em `context.json`)
+## K. Testes como especificação (3742 testes em 413 arquivos — nomes completos em `context.json`)
 
 | Arquivo | Testes | Exemplos do que o sistema DEVE fazer |
 |---|---|---|
@@ -2797,6 +2800,7 @@ _nenhum item encontrado_
 | `src/hooks/__tests__/useCoaching.coverage.test.tsx` | 9 | useCoaching · returns empty without agentId (no fetch) · fetches recommendations and subscribes · handles fetch error … |
 | `src/hooks/__tests__/useConferenceRecording.coverage.test.tsx` | 9 | useConferenceRecording (coverage) · auto-starts recording and fires onRecordingStarted · does not start when conference is null · saves recording when conference ends and fires onRecordingSaved … |
 | `src/hooks/__tests__/useCriticalAlertNotifications.coverage.test.tsx` | 9 | useCriticalAlertNotifications · initAudioContext returns and memoizes an AudioContext · requestNotificationPermission returns true when granted · playAlertSound exercises all patterns (warning + critical) … |
+| `src/hooks/__tests__/useDealPipelineTrend.test.tsx` | 9 | useDealPipelineTrend · le a tabela de retratos filtrando pelo inicio do periodo e em ordem cronologica · usa periodo de 7 dias por escolha da tela · propaga erro de leitura para a tela … |
 | `src/hooks/__tests__/useDebouncedSearchParam.test.tsx` | 9 | useDebouncedSearchParam · hidrata a partir da URL · debounce: uma rajada de setValue commita apenas uma vez · string vazia aplica imediatamente (bypass debounce) … |
 | `src/hooks/__tests__/useExtensionsOverview.scenarios.test.ts` | 9 | useExtensionsOverview — 50+ cenários de agregação · lista vazia retorna array vazio · 1 agente sem chamadas: call_count_7d=0 · 1 agente com 3 chamadas: count=3, média correta … |
 | `src/hooks/__tests__/useKbArticleHistory.test.tsx` | 9 | useKbArticleHistory · nao consulta o banco sem artigo selecionado · filtra por artigo, ordena do mais recente e limita o resultado · propaga erro de leitura para a tela … |
@@ -2817,6 +2821,7 @@ _nenhum item encontrado_
 | `supabase/functions/voip-recommendation-insights/__tests__/index.test.ts` | 9 | rejeita requisição sem JWT · rejeita período inválido (validação oneOf) · buildHeatmap gera 7×24 = 168 buckets · buildHeatmap incrementa bucket correto … |
 | `supabase/functions/webauthn-authenticate/__tests__/verify.test.ts` | 9 | verify: assercao legitima e aceita e devolve signCount · verify: assinatura de OUTRA chave e rejeitada · verify: desafio diferente e rejeitado (replay) · verify: origem estranha e rejeitada (phishing) … |
 | `src/__tests__/rls/audit-logs.test.ts` | 8 | RLS — audit_logs (imutabilidade + admin-only read) · admin pode ler logs de auditoria · admin pode inserir via função RPC · admin NÃO pode atualizar logs (imutabilidade) … |
+| `src/components/executive/__tests__/DealPipelineTrendCard.test.tsx` | 8 | DealPipelineTrendCard · mostra carregamento enquanto a serie nao chega · explica quando ainda nao existe retrato no periodo · mostra erro com opcao de tentar de novo … |
 | `src/components/knowledge/__tests__/ArticleHistoryCard.test.tsx` | 8 | ArticleHistoryCard · mostra carregamento enquanto a leitura nao termina · explica o vazio em vez de deixar a area muda · mostra erro e permite tentar de novo … |
 | `src/hooks/__tests__/pageVisibility.gating.test.tsx` | 8 | etapa 253: poll de painel respeita a visibilidade da aba · ${file} usa usePageVisibility · ${file} nao tem refetchInterval sempre ligado · useQualityMetrics entrega refetchInterval falso com a aba oculta … |
 | `src/hooks/__tests__/useAchievementNotifications.coverage.test.tsx` | 8 | useAchievementNotifications (coverage) · não injeta badge inválida quando o enriquecimento falha · subscribes to channels and exposes initial state · handles a new badge award and shows a toast (no agent filter) … |
@@ -2974,9 +2979,7 @@ _nenhum item encontrado_
 | `src/components/executive/__tests__/OmnichannelCard.test.tsx` | 4 | OmnichannelCard · renderiza KPIs principais (abertas, SLA, violações) · exibe badge de SLA quando há violações · lista todos os canais com contagem |
 | `src/components/network/__tests__/QualityForecastCard.test.tsx` | 4 | QualityForecastCard — recomendacao de capacity registra leitura (E178) · nao promete execucao: o botao diz  · grava a acao com outcome dismissed e os dados da recomendacao · nao afirma sucesso quando o insert falha |
 | `src/hooks/__tests__/callLifecycle-integration.test.tsx` | 4 | Ciclo de vida da chamada — integracao (E064) · INSERT em call_sessions ao ficar ativa com campos corretos · UPDATE em call_sessions ao encerrar chamada · sem INSERT se chamada for encerrada antes de ficar ativa |
-| `src/hooks/__tests__/use-mobile.coverage.test.tsx` | 4 | useIsMobile · returns false for desktop width · returns true for mobile width and reacts to change · cleans up listener on unmount |
-| `src/hooks/__tests__/useAccounts.test.ts` | 4 | useAccounts · loads accounts on mount · recomputes health via edge function · triggers churn detection |
-| … +111 linhas — lista completa em `context.json` | | |
+| … +113 linhas — lista completa em `context.json` | | |
 
 ## L. Eventos de webhook tratados (contratos com sistemas externos)
 

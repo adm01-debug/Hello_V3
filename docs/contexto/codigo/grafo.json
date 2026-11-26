@@ -1,20 +1,20 @@
 {
  "aviso": "GERADO AUTOMATICAMENTE por scripts/ai-context/gerar.mjs — não editar à mão; será sobrescrito.",
  "format_version": 2,
- "nos": 948,
- "arestas": 3765,
+ "nos": 950,
+ "arestas": 3773,
  "hubs": [
   {
    "arquivo": "src/integrations/supabase/client.ts",
-   "importado_por": 273
+   "importado_por": 275
   },
   {
    "arquivo": "src/components/ui/button.tsx",
-   "importado_por": 246
+   "importado_por": 247
   },
   {
    "arquivo": "src/components/ui/card.tsx",
-   "importado_por": 235
+   "importado_por": 236
   },
   {
    "arquivo": "src/lib/logger.ts",
@@ -22,11 +22,11 @@
   },
   {
    "arquivo": "src/components/ui/badge.tsx",
-   "importado_por": 201
+   "importado_por": 202
   },
   {
    "arquivo": "src/lib/utils.ts",
-   "importado_por": 148
+   "importado_por": 149
   },
   {
    "arquivo": "src/lib/safe-date.ts",
@@ -70,7 +70,7 @@
   },
   {
    "arquivo": "src/components/ui/tabs.tsx",
-   "importado_por": 45
+   "importado_por": 46
   },
   {
    "arquivo": "supabase/functions/_shared/validator.ts",

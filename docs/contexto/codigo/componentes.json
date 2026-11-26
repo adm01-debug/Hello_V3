@@ -1,7 +1,7 @@
 {
  "aviso": "GERADO AUTOMATICAMENTE por scripts/ai-context/gerar.mjs — não editar à mão; será sobrescrito.",
  "format_version": 2,
- "total": 449,
+ "total": 450,
  "orfaos": 13,
  "nomes_duplicados": {
   "KpiCards": [
@@ -2206,6 +2206,22 @@
    "orfao": false
   },
   {
+   "arquivo": "src/components/executive/DealPipelineTrendCard.tsx",
+   "exports": [
+    "DealPipelineTrendCard"
+   ],
+   "export_default": null,
+   "linhas": 135,
+   "dominio": "components/executive",
+   "hooks_locais": [
+    "useDealPipelineTrend"
+   ],
+   "tabelas": [],
+   "edges": [],
+   "usado_por": 1,
+   "orfao": false
+  },
+  {
    "arquivo": "src/components/executive/ForecastCard.tsx",
    "exports": [
     "ForecastCard"
@@ -4076,7 +4092,7 @@
    "hooks_locais": [],
    "tabelas": [],
    "edges": [],
-   "usado_por": 201,
+   "usado_por": 202,
    "orfao": false
   },
   {
@@ -4126,7 +4142,7 @@
    "hooks_locais": [],
    "tabelas": [],
    "edges": [],
-   "usado_por": 246,
+   "usado_por": 247,
    "orfao": false
   },
   {
@@ -4161,7 +4177,7 @@
    "hooks_locais": [],
    "tabelas": [],
    "edges": [],
-   "usado_por": 235,
+   "usado_por": 236,
    "orfao": false
   },
   {
@@ -4842,7 +4858,7 @@
    "hooks_locais": [],
    "tabelas": [],
    "edges": [],
-   "usado_por": 45,
+   "usado_por": 46,
    "orfao": false
   },
   {
@@ -5959,7 +5975,7 @@
     "ExecutiveDashboard"
    ],
    "export_default": "ExecutiveDashboard",
-   "linhas": 115,
+   "linhas": 125,
    "dominio": "pages",
    "hooks_locais": [
     "useExecutiveDashboardData",

@@ -3,8 +3,8 @@
  "format_version": 2,
  "stack": {
   "linguagens": [
-   "TypeScript (1333)",
-   "SQL (263)",
+   "TypeScript (1337)",
+   "SQL (265)",
    "Markdown (121)",
    "JavaScript (31)",
    "JSON (16)",
@@ -844,15 +844,15 @@
     "ocorrencias": 5
    },
    {
+    "papel": "img",
+    "ocorrencias": 4
+   },
+   {
     "papel": "article",
     "ocorrencias": 3
    },
    {
     "papel": "dialog",
-    "ocorrencias": 3
-   },
-   {
-    "papel": "img",
     "ocorrencias": 3
    },
    {

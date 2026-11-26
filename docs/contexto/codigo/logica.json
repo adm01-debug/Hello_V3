@@ -317,7 +317,7 @@
    "zod_schemas": 0,
    "flags": [],
    "papeis": [],
-   "usado_por": 239,
+   "usado_por": 240,
    "usado_por_modulos": [
     "components/admin",
     "components/agent",
@@ -353,7 +353,7 @@
     "pages/admin",
     "pages/roles"
    ],
-   "coberto_por_testes": 34,
+   "coberto_por_testes": 35,
    "orfao": false
   },
   {
@@ -370,7 +370,7 @@
     "TablesUpdate"
    ],
    "export_default": null,
-   "linhas": 8161,
+   "linhas": 8188,
    "tabelas": [],
    "rpcs": [],
    "edges": [],
@@ -2700,7 +2700,7 @@
    "zod_schemas": 0,
    "flags": [],
    "papeis": [],
-   "usado_por": 145,
+   "usado_por": 146,
    "usado_por_modulos": [
     "components",
     "components/admin",
