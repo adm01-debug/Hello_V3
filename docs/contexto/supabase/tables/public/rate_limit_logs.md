@@ -6,7 +6,7 @@
 | owner | postgres |
 | RLS habilitado | sim |
 | RLS forçado (owner) | não |
-| policies | 2 |
+| policies | 4 |
 | realtime (publication) | não |
 | replica identity | default |
 | vem de extensão | não |
@@ -50,6 +50,26 @@
 
 ## Policies (RLS)
 
+### `Admins can delete rate_limit_logs`
+
+| campo | valor |
+|---|---|
+| comando | DELETE |
+| tipo | PERMISSIVE |
+| roles | authenticated |
+| USING | `is_admin()` |
+| WITH CHECK |  |
+
+### `Admins can update rate_limit_logs`
+
+| campo | valor |
+|---|---|
+| comando | UPDATE |
+| tipo | PERMISSIVE |
+| roles | authenticated |
+| USING | `is_admin()` |
+| WITH CHECK | `is_admin()` |
+
 ### `Admins can view rate_limit_logs`
 
 | campo | valor |
@@ -80,6 +100,6 @@ _nenhum_
 
 | role | privilégios |
 |---|---|
-| anon | DELETE, INSERT, REFERENCES, SELECT, TRIGGER, TRUNCATE, UPDATE |
+| anon | INSERT, REFERENCES, SELECT, TRIGGER, TRUNCATE |
 | authenticated | DELETE, INSERT, REFERENCES, SELECT, TRIGGER, TRUNCATE, UPDATE |
 | service_role | DELETE, INSERT, REFERENCES, SELECT, TRIGGER, TRUNCATE, UPDATE |

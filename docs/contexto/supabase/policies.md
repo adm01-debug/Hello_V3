@@ -319,6 +319,8 @@ Visão consolidada (inclui `storage.objects` e `realtime.messages`); detalhes po
 | public.rate_limit_alerts | Admins can update rate_limit_alerts | UPDATE | PERMISSIVE | authenticated | `has_role(( SELECT auth.uid() AS uid), 'admin'::app_role)` |  |
 | public.rate_limit_alerts | Admins can view rate_limit_alerts | SELECT | PERMISSIVE | authenticated | `is_admin_or_supervisor()` |  |
 | public.rate_limit_alerts | Only admins can insert rate limit alerts | INSERT | PERMISSIVE | authenticated |  | `is_admin_or_supervisor()` |
+| public.rate_limit_logs | Admins can delete rate_limit_logs | DELETE | PERMISSIVE | authenticated | `is_admin()` |  |
+| public.rate_limit_logs | Admins can update rate_limit_logs | UPDATE | PERMISSIVE | authenticated | `is_admin()` | `is_admin()` |
 | public.rate_limit_logs | Admins can view rate_limit_logs | SELECT | PERMISSIVE | authenticated | `is_admin_or_supervisor()` |  |
 | public.rate_limit_logs | Only admins can insert rate limit logs | INSERT | PERMISSIVE | authenticated |  | `is_admin_or_supervisor()` |
 | public.rate_limit_settings | Admins can manage rate_limit_settings | ALL | PERMISSIVE | authenticated | `has_role(( SELECT auth.uid() AS uid), 'admin'::app_role)` |  |

@@ -31620,7 +31620,7 @@
       "jobs": [
         {
           "active": true,
-          "command": "\n  SELECT net.http_post(\n    url := 'https://cfmlmcdyjuotqobjapng.supabase.co/functions/v1/generate-coaching-track',\n    headers := jsonb_build_object(\n      'Content-Type', 'application/json',\n      'Authorization', 'Bearer ' || (\n        SELECT decrypted_secret FROM vault.decrypted_secrets WHERE name = 'coaching_cron_token'\n      )\n    ),\n    body := jsonb_build_object('trigger', 'cron')\n  );\n  ",
+          "command": "\n  SELECT net.http_post(\n    url := public.edge_function_url('generate-coaching-track'),\n    headers := jsonb_build_object(\n      'Content-Type', 'application/json',\n      'Authorization', 'Bearer ' || (\n        SELECT decrypted_secret FROM vault.decrypted_secrets WHERE name = 'coaching_cron_token'\n      )\n    ),\n    body := jsonb_build_object('trigger', 'cron')\n  );\n  ",
           "database": "postgres",
           "jobid": 11,
           "jobname": "generate-coaching-tracks-daily",
@@ -31629,7 +31629,7 @@
         },
         {
           "active": true,
-          "command": "\n  SELECT net.http_post(\n    url := 'https://cfmlmcdyjuotqobjapng.supabase.co/functions/v1/dialer-pacing-tick',\n    headers := jsonb_build_object(\n      'Content-Type', 'application/json',\n      'Authorization', 'Bearer ' || (\n        SELECT decrypted_secret FROM vault.decrypted_secrets WHERE name = 'dialer_cron_token'\n      )\n    ),\n    body := jsonb_build_object('trigger', 'cron')\n  );\n  ",
+          "command": "\n  SELECT net.http_post(\n    url := public.edge_function_url('dialer-pacing-tick'),\n    headers := jsonb_build_object(\n      'Content-Type', 'application/json',\n      'Authorization', 'Bearer ' || (\n        SELECT decrypted_secret FROM vault.decrypted_secrets WHERE name = 'dialer_cron_token'\n      )\n    ),\n    body := jsonb_build_object('trigger', 'cron')\n  );\n  ",
           "database": "postgres",
           "jobid": 12,
           "jobname": "dialer-pacing-tick",
@@ -31638,7 +31638,7 @@
         },
         {
           "active": true,
-          "command": "\n  SELECT net.http_post(\n    url := 'https://cfmlmcdyjuotqobjapng.supabase.co/functions/v1/cleanup-lock-conflicts',\n    headers := jsonb_build_object(\n      'Content-Type', 'application/json',\n      'Authorization', 'Bearer ' || (\n        SELECT decrypted_secret FROM vault.decrypted_secrets WHERE name = 'cleanup_lock_conflicts_cron_token'\n      )\n    ),\n    body := jsonb_build_object('trigger', 'cron')\n  );\n  ",
+          "command": "\n  SELECT net.http_post(\n    url := public.edge_function_url('cleanup-lock-conflicts'),\n    headers := jsonb_build_object(\n      'Content-Type', 'application/json',\n      'Authorization', 'Bearer ' || (\n        SELECT decrypted_secret FROM vault.decrypted_secrets WHERE name = 'cleanup_lock_conflicts_cron_token'\n      )\n    ),\n    body := jsonb_build_object('trigger', 'cron')\n  );\n  ",
           "database": "postgres",
           "jobid": 14,
           "jobname": "cleanup-lock-conflicts-weekly",
@@ -31647,7 +31647,7 @@
         },
         {
           "active": true,
-          "command": "\n  SELECT net.http_post(\n    url := 'https://cfmlmcdyjuotqobjapng.supabase.co/functions/v1/data-lake-flush',\n    headers := jsonb_build_object(\n      'Content-Type', 'application/json',\n      'Authorization', 'Bearer ' || (\n        SELECT decrypted_secret FROM vault.decrypted_secrets\n        WHERE name = 'data_lake_cron_token'\n      )\n    ),\n    body := jsonb_build_object('trigger', 'cron'),\n    timeout_milliseconds := 120000\n  );\n  ",
+          "command": "\n  SELECT net.http_post(\n    url := public.edge_function_url('data-lake-flush'),\n    headers := jsonb_build_object(\n      'Content-Type', 'application/json',\n      'Authorization', 'Bearer ' || (\n        SELECT decrypted_secret FROM vault.decrypted_secrets\n        WHERE name = 'data_lake_cron_token'\n      )\n    ),\n    body := jsonb_build_object('trigger', 'cron'),\n    timeout_milliseconds := 120000\n  );\n  ",
           "database": "postgres",
           "jobid": 16,
           "jobname": "data-lake-flush-daily",
@@ -31656,7 +31656,7 @@
         },
         {
           "active": true,
-          "command": "\n  SELECT net.http_post(\n    url := 'https://cfmlmcdyjuotqobjapng.supabase.co/functions/v1/cleanup-recordings',\n    headers := jsonb_build_object(\n      'Content-Type', 'application/json',\n      'Authorization', 'Bearer ' || (\n        SELECT decrypted_secret FROM vault.decrypted_secrets WHERE name = 'cleanup_recordings_cron_token'\n      )\n    ),\n    body := jsonb_build_object('trigger', 'cron')\n  );\n  ",
+          "command": "\n  SELECT net.http_post(\n    url := public.edge_function_url('cleanup-recordings'),\n    headers := jsonb_build_object(\n      'Content-Type', 'application/json',\n      'Authorization', 'Bearer ' || (\n        SELECT decrypted_secret FROM vault.decrypted_secrets WHERE name = 'cleanup_recordings_cron_token'\n      )\n    ),\n    body := jsonb_build_object('trigger', 'cron')\n  );\n  ",
           "database": "postgres",
           "jobid": 33,
           "jobname": "cleanup-recordings-daily",
@@ -32316,11 +32316,11 @@
         "callers": {
           "code": [
             {
-              "file": "src/hooks/useLoginLockout.ts",
+              "file": "supabase/migrations/20260712220202_52e516fc-3b1c-45ce-9c00-3dd4f6acb406.sql",
               "hits": 1
             },
             {
-              "file": "supabase/migrations/20260712220202_52e516fc-3b1c-45ce-9c00-3dd4f6acb406.sql",
+              "file": "supabase/migrations/20261126101000_revoke_anon_login_rpcs.sql",
               "hits": 1
             }
           ],
@@ -32336,8 +32336,8 @@
         ],
         "definition": null,
         "definition_sha": "f3c4c44cf3dedd58",
-        "execute_api_roles": "anon, authenticated, service_role",
-        "execute_public": true,
+        "execute_api_roles": "service_role",
+        "execute_public": false,
         "is_trigger_fn": false,
         "kind": "function",
         "language": "plpgsql",
@@ -32635,6 +32635,53 @@
         "security_definer": true,
         "strict": false,
         "volatility": "volatile"
+      },
+      {
+        "args": "p_slug text",
+        "callers": {
+          "code": [
+            {
+              "file": "supabase/migrations/20261126100000_edge_function_urls_from_vault.sql",
+              "hits": 3
+            },
+            {
+              "file": "supabase/migrations/20261126100100_fix_cron_urls_quoting.sql",
+              "hits": 6
+            }
+          ],
+          "code_total_files": 2,
+          "cron": [
+            "11:generate-coaching-tracks-daily",
+            "12:dialer-pacing-tick",
+            "14:cleanup-lock-conflicts-weekly",
+            "16:data-lake-flush-daily",
+            "33:cleanup-recordings-daily"
+          ],
+          "db": [
+            "public.trigger_auto_scorecard"
+          ],
+          "triggers": [],
+          "views": []
+        },
+        "comment": null,
+        "config": [
+          "search_path=\"\""
+        ],
+        "definition": null,
+        "definition_sha": "440854a80da9739e",
+        "execute_api_roles": "service_role",
+        "execute_public": false,
+        "is_trigger_fn": false,
+        "kind": "function",
+        "language": "plpgsql",
+        "leakproof": false,
+        "name": "edge_function_url",
+        "owner": "postgres",
+        "returns": "text",
+        "schema": "public",
+        "security_definer": true,
+        "strict": false,
+        "volatility": "stable"
       },
       {
         "args": "",
@@ -33919,9 +33966,13 @@
             {
               "file": "supabase/migrations/20261123000100_fix_anon_rls_helper_exposure.sql",
               "hits": 1
+            },
+            {
+              "file": "supabase/migrations/20261126090000_rate_limit_logs_write_policies.sql",
+              "hits": 4
             }
           ],
-          "code_total_files": 10,
+          "code_total_files": 11,
           "cron": [],
           "db": [
             "public.get_database_health_snapshot",
@@ -34076,7 +34127,7 @@
               "hits": 1
             }
           ],
-          "code_total_files": 78,
+          "code_total_files": 79,
           "cron": [],
           "db": [
             "public.can_access_agent_data",
@@ -34934,11 +34985,11 @@
         "callers": {
           "code": [
             {
-              "file": "src/hooks/useLoginLockout.ts",
+              "file": "supabase/migrations/20260712220202_52e516fc-3b1c-45ce-9c00-3dd4f6acb406.sql",
               "hits": 1
             },
             {
-              "file": "supabase/migrations/20260712220202_52e516fc-3b1c-45ce-9c00-3dd4f6acb406.sql",
+              "file": "supabase/migrations/20261126101000_revoke_anon_login_rpcs.sql",
               "hits": 1
             }
           ],
@@ -34954,8 +35005,8 @@
         ],
         "definition": null,
         "definition_sha": "b3db85bc69310004",
-        "execute_api_roles": "anon, authenticated, service_role",
-        "execute_public": true,
+        "execute_api_roles": "service_role",
+        "execute_public": false,
         "is_trigger_fn": false,
         "kind": "function",
         "language": "plpgsql",
@@ -34973,11 +35024,11 @@
         "callers": {
           "code": [
             {
-              "file": "src/hooks/useLoginLockout.ts",
+              "file": "supabase/migrations/20260712220202_52e516fc-3b1c-45ce-9c00-3dd4f6acb406.sql",
               "hits": 1
             },
             {
-              "file": "supabase/migrations/20260712220202_52e516fc-3b1c-45ce-9c00-3dd4f6acb406.sql",
+              "file": "supabase/migrations/20261126101000_revoke_anon_login_rpcs.sql",
               "hits": 1
             }
           ],
@@ -34993,8 +35044,8 @@
         ],
         "definition": null,
         "definition_sha": "232000e2aa78c910",
-        "execute_api_roles": "anon, authenticated, service_role",
-        "execute_public": true,
+        "execute_api_roles": "service_role",
+        "execute_public": false,
         "is_trigger_fn": false,
         "kind": "function",
         "language": "plpgsql",
@@ -35276,7 +35327,7 @@
           "search_path=public"
         ],
         "definition": null,
-        "definition_sha": "a220b20d2d71ee18",
+        "definition_sha": "d085817817fb1e94",
         "execute_api_roles": "service_role",
         "execute_public": false,
         "is_trigger_fn": true,
@@ -38297,7 +38348,7 @@
         },
         {
           "grantee": "anon",
-          "privileges": "DELETE, INSERT, REFERENCES, SELECT, TRIGGER, TRUNCATE, UPDATE",
+          "privileges": "INSERT, REFERENCES, SELECT, TRIGGER, TRUNCATE",
           "schema": "public",
           "table": "rate_limit_logs"
         },
@@ -47049,12 +47100,6 @@
       {
         "code": "rpc_anon_executable",
         "detail": "SECURITY DEFINER chamável via RPC por anon (sem login): roda com privilégios do owner. Confirme que é intencional (Supabase dá EXECUTE a anon por padrão; revogue se não for API pública).",
-        "object": "public.check_login_lockout(p_email text)",
-        "severity": "INFO"
-      },
-      {
-        "code": "rpc_anon_executable",
-        "detail": "SECURITY DEFINER chamável via RPC por anon (sem login): roda com privilégios do owner. Confirme que é intencional (Supabase dá EXECUTE a anon por padrão; revogue se não for API pública).",
         "object": "public.get_user_agent_id()",
         "severity": "INFO"
       },
@@ -47092,18 +47137,6 @@
         "code": "rpc_anon_executable",
         "detail": "SECURITY DEFINER chamável via RPC por anon (sem login): roda com privilégios do owner. Confirme que é intencional (Supabase dá EXECUTE a anon por padrão; revogue se não for API pública).",
         "object": "public.is_supervisor()",
-        "severity": "INFO"
-      },
-      {
-        "code": "rpc_anon_executable",
-        "detail": "SECURITY DEFINER chamável via RPC por anon (sem login): roda com privilégios do owner. Confirme que é intencional (Supabase dá EXECUTE a anon por padrão; revogue se não for API pública).",
-        "object": "public.record_failed_login(p_email text, p_ip_address text, p_user_agent text)",
-        "severity": "INFO"
-      },
-      {
-        "code": "rpc_anon_executable",
-        "detail": "SECURITY DEFINER chamável via RPC por anon (sem login): roda com privilégios do owner. Confirme que é intencional (Supabase dá EXECUTE a anon por padrão; revogue se não for API pública).",
-        "object": "public.record_successful_login(p_email text, p_ip_address text, p_user_agent text)",
         "severity": "INFO"
       }
     ],
@@ -48349,6 +48382,36 @@
         "statements": 3,
         "statements_sha": "4dd664fac652d89f",
         "version": "20261125220000"
+      },
+      {
+        "name": "rate_limit_logs_write_policies",
+        "statements": 5,
+        "statements_sha": "682de6f7520ba53a",
+        "version": "20261126090000"
+      },
+      {
+        "name": "rate_limit_logs_revoke_anon_write",
+        "statements": 1,
+        "statements_sha": "87f292dbfbb4c44b",
+        "version": "20261126090001"
+      },
+      {
+        "name": "edge_function_urls_from_vault",
+        "statements": 7,
+        "statements_sha": "fd0f638dbd6822ca",
+        "version": "20261126100000"
+      },
+      {
+        "name": "fix_cron_urls_quoting",
+        "statements": 1,
+        "statements_sha": "ca5805f9c6f0b341",
+        "version": "20261126100100"
+      },
+      {
+        "name": "revoke_anon_login_rpcs",
+        "statements": 1,
+        "statements_sha": "a2c7b77e7cee2330",
+        "version": "20261126101000"
       }
     ],
     "policies": [
@@ -52121,6 +52184,30 @@
         "with_check": "is_admin_or_supervisor()"
       },
       {
+        "cmd": "DELETE",
+        "name": "Admins can delete rate_limit_logs",
+        "permissive": "PERMISSIVE",
+        "roles": [
+          "authenticated"
+        ],
+        "schema": "public",
+        "table": "rate_limit_logs",
+        "using": "is_admin()",
+        "with_check": null
+      },
+      {
+        "cmd": "UPDATE",
+        "name": "Admins can update rate_limit_logs",
+        "permissive": "PERMISSIVE",
+        "roles": [
+          "authenticated"
+        ],
+        "schema": "public",
+        "table": "rate_limit_logs",
+        "using": "is_admin()",
+        "with_check": "is_admin()"
+      },
+      {
         "cmd": "SELECT",
         "name": "Admins can view rate_limit_logs",
         "permissive": "PERMISSIVE",
@@ -53924,11 +54011,6 @@
         {
           "publication": "supabase_realtime_messages_publication",
           "schema": "realtime",
-          "table": "messages_2026_11_22"
-        },
-        {
-          "publication": "supabase_realtime_messages_publication",
-          "schema": "realtime",
           "table": "messages_2026_11_23"
         },
         {
@@ -53955,6 +54037,11 @@
           "publication": "supabase_realtime_messages_publication",
           "schema": "realtime",
           "table": "messages_2026_11_28"
+        },
+        {
+          "publication": "supabase_realtime_messages_publication",
+          "schema": "realtime",
+          "table": "messages_2026_11_29"
         }
       ]
     },
@@ -58150,6 +58237,11 @@
     ],
     "vault": [
       {
+        "created_at": "2026-11-26T00:15:15.447994+00:00",
+        "description": "Bearer usado pelo trigger_auto_scorecard ao chamar a edge auto-scorecard",
+        "name": "auto_scorecard_token"
+      },
+      {
         "created_at": "2026-11-22T02:39:26.437636+00:00",
         "description": "Token do cron semanal de purga de optimistic_lock_conflicts (>90 dias)",
         "name": "cleanup_lock_conflicts_cron_token"
@@ -58173,6 +58265,11 @@
         "created_at": "2026-11-22T00:52:23.452551+00:00",
         "description": "Token do cron do discador preditivo",
         "name": "dialer_cron_token"
+      },
+      {
+        "created_at": "2026-11-26T00:15:15.447994+00:00",
+        "description": "Base das edge functions, usada por public.edge_function_url(slug)",
+        "name": "edge_functions_base_url"
       },
       {
         "created_at": "2026-11-22T02:36:16.535732+00:00",

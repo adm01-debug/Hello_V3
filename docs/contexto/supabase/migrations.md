@@ -249,3 +249,8 @@ SQL em `migrations/<versao>_<nome>.sql`. Mudanças feitas pelo Dashboard/SQL Edi
 | 20261125120000 | [indices_auditoria_e_busca_contatos](migrations/20261125120000_indices_auditoria_e_busca_contatos.sql) | 6 |
 | 20261125190000 | [calling_hours_fail_closed](migrations/20261125190000_calling_hours_fail_closed.sql) | 2 |
 | 20261125220000 | [recordings_retention_cron](migrations/20261125220000_recordings_retention_cron.sql) | 3 |
+| 20261126090000 | [rate_limit_logs_write_policies](migrations/20261126090000_rate_limit_logs_write_policies.sql) | 5 |
+| 20261126090001 | [rate_limit_logs_revoke_anon_write](migrations/20261126090001_rate_limit_logs_revoke_anon_write.sql) | 1 |
+| 20261126100000 | [edge_function_urls_from_vault](migrations/20261126100000_edge_function_urls_from_vault.sql) | 7 |
+| 20261126100100 | [fix_cron_urls_quoting](migrations/20261126100100_fix_cron_urls_quoting.sql) | 1 |
+| 20261126101000 | [revoke_anon_login_rpcs](migrations/20261126101000_revoke_anon_login_rpcs.sql) | 1 |

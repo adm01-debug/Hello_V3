@@ -2,6 +2,19 @@
 
 Diff semântico gerado a cada coleta em que algo mudou.
 
+## 2026-11-26 01:17 UTC
+
+- **cron jobs** alterado (5): `11:generate-coaching-tracks-daily`, `12:dialer-pacing-tick`, `14:cleanup-lock-conflicts-weekly`, `16:data-lake-flush-daily`, `33:cleanup-recordings-daily`
+- **functions** adicionado (1): `public.edge_function_url(p_slug text)`
+- **functions** alterado (6): `public.check_login_lockout(p_email text)`, `public.is_admin()`, `public.is_admin_or_supervisor()`, `public.record_failed_login(p_email text, p_ip_address text, p_user_agent text)`, `public.record_successful_login(p_email text, p_ip_address text, p_user_agent text)`, `public.trigger_auto_scorecard()`
+- **grants** alterado (1): `public.rate_limit_logs:anon`
+- **lints** removido (3): `rpc_anon_executable:public.check_login_lockout(p_email text)`, `rpc_anon_executable:public.record_failed_login(p_email text, p_ip_address text, p_user_agent text)`, `rpc_anon_executable:public.record_successful_login(p_email text, p_ip_address text, p_user_agent text)`
+- **migrations** adicionado (5): `20261126090000_rate_limit_logs_write_policies`, `20261126090001_rate_limit_logs_revoke_anon_write`, `20261126100000_edge_function_urls_from_vault`, `20261126100100_fix_cron_urls_quoting`, `20261126101000_revoke_anon_login_rpcs`
+- **policies (RLS)** adicionado (2): `public.rate_limit_logs.Admins can delete rate_limit_logs`, `public.rate_limit_logs.Admins can update rate_limit_logs`
+- **realtime** adicionado (1): `supabase_realtime_messages_publication:realtime.messages_2026_11_29`
+- **realtime** removido (1): `supabase_realtime_messages_publication:realtime.messages_2026_11_22`
+- **vault secrets (nomes)** adicionado (2): `auto_scorecard_token`, `edge_functions_base_url`
+
 ## 2026-11-25 22:16 UTC
 
 - **cron jobs** adicionado (1): `33:cleanup-recordings-daily`

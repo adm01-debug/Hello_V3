@@ -118,7 +118,7 @@ Um arquivo por tabela em `tables/<schema>/<tabela>.md` (colunas, constraints, í
 | [public.queue_metrics_settings](tables/public/queue_metrics_settings.md) | table | sim | 2 | 11 | não |  |
 | [public.queue_skill_requirements](tables/public/queue_skill_requirements.md) | table | sim | 2 | 6 | não |  |
 | [public.rate_limit_alerts](tables/public/rate_limit_alerts.md) | table | sim | 3 | 11 | não |  |
-| [public.rate_limit_logs](tables/public/rate_limit_logs.md) | table | sim | 2 | 10 | não |  |
+| [public.rate_limit_logs](tables/public/rate_limit_logs.md) | table | sim | 4 | 10 | não |  |
 | [public.rate_limit_settings](tables/public/rate_limit_settings.md) | table | sim | 2 | 8 | não |  |
 | [public.redaction_log](tables/public/redaction_log.md) | table | sim | 1 | 10 | não |  |
 | [public.renewals](tables/public/renewals.md) | table | sim | 3 | 15 | não |  |
