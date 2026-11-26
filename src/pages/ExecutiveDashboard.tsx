@@ -14,6 +14,7 @@ import {
 import { GoalsComparisonSection } from '@/components/executive/GoalsComparisonSection';
 import { ConversationIntelligenceCard } from '@/components/executive/ConversationIntelligenceCard';
 import { ForecastCard } from '@/components/executive/ForecastCard';
+import { DealPipelineTrendCard } from '@/components/executive/DealPipelineTrendCard';
 import { CustomerSuccessCard } from '@/components/executive/CustomerSuccessCard';
 import { VolumeForecastCard } from '@/components/executive/VolumeForecastCard';
 import { MeetingSummaryDashboardCard } from '@/components/executive/MeetingSummaryDashboardCard';
@@ -91,6 +92,7 @@ export default function ExecutiveDashboard() {
 
       <ConversationIntelligenceCard />
       <ForecastCard />
+      <DealPipelineTrendCard />
       <CustomerSuccessCard />
       <VolumeForecastCard />
       <MeetingSummaryDashboardCard />
