@@ -63,3 +63,18 @@ export function formatBytes(n: number): string {
   }
   return `${v.toFixed(1)} ${units[i]}`;
 }
+
+export type CronHealthRow = {
+  jobname: string;
+  schedule: string;
+  active: boolean;
+  last_status: string | null;
+  last_start: string | null;
+  last_end: string | null;
+  last_duration_seconds: number | null;
+  runs_24h: number;
+  failures_24h: number;
+  hours_since_last: number | null;
+  expected_every_minutes: number | null;
+  state: "ok" | "falhando" | "parado" | "nunca_executou" | "inativo";
+};
