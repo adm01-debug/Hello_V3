@@ -6,11 +6,11 @@
 
 | Marca | Significado |
 |---|---|
-| `[ ]` | **144** |
+| `[ ]` | **132** |
 | `[>]` | em andamento (branch criada) |
 | `[P]` | 1 |
 | `[~]` | 1 |
-| `[x]` | 153 |
+| `[x]` | 166 |
 | `[-]` | 0 |
 
 **`[x]` exige evidência.** Escreva ao lado, entre parênteses, o comando ou a consulta que você rodou e o resultado. Sem isso, a marca é `[~]`.
@@ -24,11 +24,11 @@
 | | Quantidade |
 |---|---:|
 | Total de etapas | 300 |
-| `[x]` concluídas | 154 |
+| `[x]` concluídas | 166 |
 | `[P]` aguardando o dono | 1 |
 | `[~]` parciais | 1 |
 | `[-]` descartadas | 0 |
-| `[ ]` não iniciadas | **144** |
+| `[ ]` não iniciadas | **132** |
 
 *Atualize esta tabela ao fim de cada onda.*
 
@@ -170,7 +170,7 @@
 - [ ] **123** — Resolver a unidade do "intervalo mínimo entre ligações" — onda 3 — Média — Banco + Frontend 🔒
 - [ ] **124** — Validar a transição de status de conversa — onda 3 — Média — Hooks
 - [ ] **125** — Validar a transição de status de scorecard — onda 3 — Média — Hooks + Banco 🔒
-- [ ] **126** — Somar os pontos da gamificação no banco, não no cliente — onda 3 — Média — Hooks + Banco 🔒
+- [x] **126** — Somar os pontos da gamificação no banco, não no cliente — onda 3 — Média — Hooks + Banco 🔒 (achado A-059: `updateWeeklyStats` em `src/hooks/useGamification.ts:196` lia a linha da semana, somava em JavaScript e gravava — duas execuções que caíssem no ramo de insert ao mesmo tempo faziam a segunda bater no `UNIQUE(agent_id, week_start)` com `23505`, e o erro era descartado, com os pontos da semana perdidos. Agora é uma única chamada `supabase.rpc('increment_weekly_stats', {...})` e o erro da RPC é registrado (`useGamification.updateWeeklyStats.rpc`) com `toast.error` antes de refazer as buscas. Migration `20261127250000_increment_weekly_stats_rpc.sql` — `INSERT ... ON CONFLICT (agent_id, week_start) DO UPDATE` em uma instrução (contadores somam, médias substituem quando enviadas), `SECURITY DEFINER`, `search_path=public`, validação de incremento negativo e ACL `REVOKE ... FROM PUBLIC, anon` + `GRANT ... TO authenticated, service_role` — dry-run `45871116594` rc=0 e APLICAR `45871386250` rc=0 (`aplicada: 20261127250000_increment_weekly_stats_rpc.sql`). **O gate pegou um bug real na primeira versão** (run `45871456475`): como a lista de `VALUES` já gravava as médias com `coalesce(p_avg_satisfaction, 0)` — necessário para a primeira linha da semana nascer com 0, como o DEFAULT da coluna —, dentro do `DO UPDATE` o `excluded.avg_satisfaction` nunca chegava NULL e a média anterior era zerada (`ERROR: FALHA 5: media sem valor enviado foi zerada (0.0 / 0.0)`). Corrigido com `20261127260000_increment_weekly_stats_rpc_null_media_fix.sql`, que no ramo de update passa a decidir pelo **parâmetro** (NULL preserva, valor substitui) e mantém o insert igual: dry-run `45871856840` rc=0 e APLICAR `45872456996` rc=0. Gate `supabase/tests/increment_weekly_stats_rpc_rls_test.sql` **6/6** no run `45873096721`: (1) RPC `SECURITY DEFINER` com `search_path` fixo e soma em uma instrução; (2) `anon` barrado e `authenticated`/`service_role` liberados; (3) o insert direto do caminho antigo reproduz o `23505`; (4) 10 gravações seguidas → 10 pontos, 10 chamadas, 600 s em **1 linha**; (5) média enviada substitui (9.9) e média ausente preserva (7.0); (6) primeira linha da semana nasce com médias 0. `src/integrations/supabase/types.ts` ganhou a entrada tipada `increment_weekly_stats` (argumentos de média aceitam `null`, senão o `tsc` recusa o `?? null` do hook); `src/hooks/__tests__/useGamification.coverage.test.tsx` com `rpcMock` → **11 passed** (selo soma pela RPC; uma única chamada sem leitura prévia; média não enviada vai `null`; falha da RPC avisa e não grava direto); `tsc --noEmit` rc=0 e `eslint` rc=0 nos 3 arquivos. **Limite registrado:** as policies de `agent_weekly_stats` continuam `FOR INSERT/UPDATE USING (true)`, então um autenticado ainda escreve a estatística de qualquer agente por fora da RPC — a RPC só fecha o `anon`; apertar essas policies é etapa de RLS própria)
 - [ ] **127** — Parar de pendurar o alerta de meta numa chamada aleatória — onda 3 — Média — Hooks + Banco 🔒
 - [ ] **128** — Chaves estrangeiras nas quatro colunas que apontam para uma tabela só — onda 3 — Baixa — Banco 🔒
 - [ ] **129** — Documentar o contrato dos ponteiros polimórficos — onda 3 — Baixa — Banco
