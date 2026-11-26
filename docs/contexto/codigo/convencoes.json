@@ -22,7 +22,7 @@
    "scripts/regras_negocio (2)"
   ],
   "testes": [
-   "co-localizado (__tests__) (403)",
+   "co-localizado (__tests__) (404)",
    "tests/ (9)",
    "e2e/ (7)"
   ],
@@ -59,11 +59,11 @@
  "commits": {
   "convencao": "conventional commits (observado)",
   "exemplos": [
+   "test: recuperar o teste do IP literal que ficou fora da main (resgate da PR 309) (#374)",
    "docs: etapa 122 provada — feriado recorrente ja bloqueia; contrato escrito na funcao (#365)",
    "fix: restringir a authenticated o restante de public e provar storage bucket por bucket (etapa 145) (#360)",
    "fix: guarda idempotente nos ALTER POLICY das geo_ (etapa 131) (#368)",
-   "docs(db): contrato dos ponteiros polimorficos (etapa 129) (#363)",
-   "feat: somar o placar semanal da gamificacao no banco (etapa 126) (#366)"
+   "docs(db): contrato dos ponteiros polimorficos (etapa 129) (#363)"
   ]
  },
  "pr_template": null,

@@ -15,6 +15,7 @@
   "supabase/functions/_shared/__tests__/allowed-hosts.test.ts",
   "supabase/functions/_shared/__tests__/auth_test.ts",
   "supabase/functions/_shared/__tests__/capture-handler.ts",
+  "supabase/functions/_shared/__tests__/client-ip.test.ts",
   "supabase/functions/_shared/__tests__/cors.test.ts",
   "supabase/functions/_shared/__tests__/local-supabase.ts",
   "supabase/functions/_shared/__tests__/rate-limit.test.ts",

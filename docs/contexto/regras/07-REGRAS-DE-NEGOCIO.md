@@ -1,6 +1,6 @@
 # 07 · REGRAS DE NEGÓCIO
 
-> Gerado automaticamente por AI Context Sync v1.3.2 · commit `a745026335` · branch `main` · 2026-11-26 21:07 UTC
+> Gerado automaticamente por AI Context Sync v1.3.2 · commit `dc142b62f2` · branch `main` · 2026-11-26 23:08 UTC
 > Não edite à mão — regras humanas vão em `manual/`.
 
 ## A. Regras escritas por humanos (`manual/` — prioridade máxima, nunca sobrescrito)
@@ -2700,7 +2700,7 @@ _nenhum item encontrado_
 | `admin` | `supabase/functions/data-lake-flush/index.ts` |
 | `admin` | `supabase/migrations/20261123000200_fix_has_role_oracle_and_debug_tables.sql` |
 
-## K. Testes como especificação (3793 testes em 420 arquivos — nomes completos em `context.json`)
+## K. Testes como especificação (3797 testes em 421 arquivos — nomes completos em `context.json`)
 
 | Arquivo | Testes | Exemplos do que o sistema DEVE fazer |
 |---|---|---|
@@ -3004,7 +3004,7 @@ _nenhum item encontrado_
 | `src/components/call-history/__tests__/CallSessionsList.test.tsx` | 4 | CallSessionsList · avisa que a leitura falhou em vez de dizer que nao ha chamada · explica o vazio quando a leitura funcionou · com filtros aplicados, diz que o filtro esconde resultados e oferece limpar |
 | `src/components/calls/__tests__/ActiveCallBar.verificacaoVoz.test.tsx` | 4 | ActiveCallBar: verificacao de voz ao vivo (etapa 155) · verifica a voz da sessao ativa e mostra o veredito na barra · avisa na barra quando a voz nao confere com o padrao cadastrado · nao deixa verificar sem sessao de banco gravada |
 | `src/components/calls/softphone/__tests__/ActiveCallDisplay.saidaAudio.test.tsx` | 4 | ActiveCallDisplay — saída de áudio da chamada · oferece a escolha de saída na chamada SIP e aplica o sink no áudio remoto · não mostra o seletor fora da chamada SIP · não mostra o seletor quando o navegador não suporta trocar a saída |
-| … +120 linhas — lista completa em `context.json` | | |
+| … +121 linhas — lista completa em `context.json` | | |
 
 ## L. Eventos de webhook tratados (contratos com sistemas externos)
 

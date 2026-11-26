@@ -2,11 +2,16 @@
  "aviso": "GERADO AUTOMATICAMENTE por scripts/ai-context/gerar.mjs — não editar à mão; será sobrescrito.",
  "format_version": 2,
  "git": {
-  "commit": "a7450263359056299d65597a1eadcb993340a75c",
+  "commit": "dc142b62f23f22063946ec91519b34a04eb58f28",
   "branch": "main",
-  "data_commit": "2026-11-26T17:47:07-03:00",
+  "data_commit": "2026-11-26T20:05:29-03:00",
   "remote": "https://github.com/adm01-debug/Hello_V3",
   "ultimos_commits": [
+   {
+    "sha": "dc142b6",
+    "data": "2026-11-26",
+    "assunto": "test: recuperar o teste do IP literal que ficou fora da main (resgate da PR 309) (#374)"
+   },
    {
     "sha": "a745026",
     "data": "2026-11-26",
@@ -126,14 +131,9 @@
     "sha": "fbfb916",
     "data": "2026-11-26",
     "assunto": "feat: tela para cadastrar e rotacionar o segredo HMAC do webhook de entrada (#346)"
-   },
-   {
-    "sha": "bd1b19c",
-    "data": "2026-11-26",
-    "assunto": "fix: aba Pesquisas enviava um id fixo e nunca cadastrava pesquisa (#345)"
    }
   ],
-  "arquivos_mudados_7d": 1939,
+  "arquivos_mudados_7d": 1940,
   "pastas_mais_mudadas_30d": [
    {
     "pasta": "src/hooks/__tests__",
@@ -157,7 +157,7 @@
    },
    {
     "pasta": "supabase/functions/_shared",
-    "mudancas": 53
+    "mudancas": 54
    },
    {
     "pasta": "src/components/compliance",
@@ -306,9 +306,9 @@
   ]
  },
  "contagens": {
-  "arquivos_total": 1848,
-  "arquivos_codigo": 1385,
-  "linhas_codigo": 184953,
+  "arquivos_total": 1849,
+  "arquivos_codigo": 1386,
+  "linhas_codigo": 184986,
   "rotas": 108,
   "rotas_http_backend": 11,
   "vistas_por_id": 0,
@@ -320,7 +320,7 @@
   "tabelas": 172,
   "migrations": 270,
   "cron_jobs": 13,
-  "testes": 461,
+  "testes": 462,
   "workflows": 5,
   "scripts": 36,
   "docs_md": 121
@@ -515,8 +515,8 @@
    "linhas": 170
   },
   "supabase/functions": {
-   "arquivos": 220,
-   "linhas": 24624
+   "arquivos": 221,
+   "linhas": 24657
   },
   "tailwind.config.ts": {
    "arquivos": 1,

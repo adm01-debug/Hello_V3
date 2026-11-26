@@ -1,15 +1,15 @@
 {
  "meta": {
-  "sha": "a7450263359056299d65597a1eadcb993340a75c",
+  "sha": "dc142b62f23f22063946ec91519b34a04eb58f28",
   "branch": "main",
   "remote": "https://github.com/adm01-debug/Hello_V3",
-  "generated_at": "2026-11-26 21:07 UTC",
-  "files_total": 1894,
-  "code_files": 1690,
-  "code_lines": 207356
+  "generated_at": "2026-11-26 23:08 UTC",
+  "files_total": 1895,
+  "code_files": 1691,
+  "code_lines": 207389
  },
  "version": "1.3.2",
- "facts_hash": "a435d0c4ed7ff8f8",
+ "facts_hash": "ca9b67d57b583397",
  "stack": {
   "frameworks": [
    "React + Vite",
@@ -169,7 +169,7 @@
   "package_manager": "bun",
   "languages": {
    ".tsx": 680,
-   ".ts": 670,
+   ".ts": 671,
    ".sql": 304,
    ".mjs": 29,
    ".py": 5,
@@ -35668,8 +35668,8 @@
   },
   {
    "module": "supabase/functions",
-   "files": 220,
-   "lines": 24624,
+   "files": 221,
+   "lines": 24657,
    "tables": [
     "account_lockouts",
     "accounts",
@@ -35855,6 +35855,7 @@
     "supabase/functions/_shared/__tests__/allowed-hosts.test.ts",
     "supabase/functions/_shared/__tests__/auth_test.ts",
     "supabase/functions/_shared/__tests__/capture-handler.ts",
+    "supabase/functions/_shared/__tests__/client-ip.test.ts",
     "supabase/functions/_shared/__tests__/cors.test.ts",
     "supabase/functions/_shared/__tests__/local-supabase.ts",
     "supabase/functions/_shared/__tests__/rate-limit.test.ts",
@@ -35893,8 +35894,7 @@
     "supabase/functions/check-calling-hours/index.ts",
     "supabase/functions/check-calling-hours/__tests__/index.test.ts",
     "supabase/functions/check-contact-alerts/index.ts",
-    "supabase/functions/check-dnc/index.ts",
-    "supabase/functions/check-dnc/__tests__/index.test.ts"
+    "supabase/functions/check-dnc/index.ts"
    ]
   },
   {
@@ -73184,6 +73184,22 @@
    {
     "file": "supabase/functions/_shared/__tests__/auth_test.ts",
     "name": "auth: requireCronToken sem a env configurada recusa tudo"
+   },
+   {
+    "file": "supabase/functions/_shared/__tests__/client-ip.test.ts",
+    "name": "isIpLiteral aceita IPv4 e IPv6 validos"
+   },
+   {
+    "file": "supabase/functions/_shared/__tests__/client-ip.test.ts",
+    "name": "isIpLiteral rejeita hostname, porta e path"
+   },
+   {
+    "file": "supabase/functions/_shared/__tests__/client-ip.test.ts",
+    "name": "isIpLiteral rejeita octeto fora da faixa e valor longo"
+   },
+   {
+    "file": "supabase/functions/_shared/__tests__/client-ip.test.ts",
+    "name": "clientIpFromHeaders so devolve IP literal valido"
    },
    {
     "file": "supabase/functions/_shared/__tests__/cors.test.ts",
@@ -119897,6 +119913,21 @@
    ],
    "doc": "Captura o handler de uma edge escrita com `Deno.serve(fn)` sem alterar o codigo de producao. Muitas edges registram o handler direto no modulo, entao importa-las subiria um servidor de verdade. Este helper substitui `Deno.serve` por um espião, importa o modulo e devolve o handler capturado para o te …"
   },
+  "supabase/functions/_shared/__tests__/client-ip.test.ts": {
+   "path": "supabase/functions/_shared/__tests__/client-ip.test.ts",
+   "lines": 33,
+   "is_test": true,
+   "rule_comments": [
+    "O modulo de validacao foi incorporado a _shared/client-ip.ts, mas o teste dele"
+   ],
+   "doc": "Resgate do teste de IP literal (branch claude/fix-validate-geo-ip-261122-0500). O modulo de validacao foi incorporado a _shared/client-ip.ts, mas o teste dele nunca entrou: validate-geo deixava o header do cliente chegar cru na URL do provedor de geo (hostname, porta, path). Estes casos travam essa …",
+   "tests": [
+    "isIpLiteral aceita IPv4 e IPv6 validos",
+    "isIpLiteral rejeita hostname, porta e path",
+    "isIpLiteral rejeita octeto fora da faixa e valor longo",
+    "clientIpFromHeaders so devolve IP literal valido"
+   ]
+  },
   "supabase/functions/_shared/__tests__/cors.test.ts": {
    "path": "supabase/functions/_shared/__tests__/cors.test.ts",
    "lines": 62,
@@ -128329,10 +128360,19 @@
   }
  },
  "git": {
-  "sha": "a7450263359056299d65597a1eadcb993340a75c",
+  "sha": "dc142b62f23f22063946ec91519b34a04eb58f28",
   "branch": "main",
   "remote": "https://github.com/adm01-debug/Hello_V3",
   "commits": [
+   {
+    "sha": "dc142b6",
+    "date": "2026-11-26",
+    "author": "adm01-debug",
+    "subject": "test: recuperar o teste do IP literal que ficou fora da main (resgate da PR 309) (#374)",
+    "files": [
+     "supabase/functions/_shared/__tests__/client-ip.test.ts"
+    ]
+   },
    {
     "sha": "a745026",
     "date": "2026-11-26",
@@ -128725,22 +128765,12 @@
      "supabase/migrations/20261126100100_fix_cron_urls_quoting.sql",
      "supabase/tests/cron_credentials_rls_test.sql"
     ]
-   },
-   {
-    "sha": "f5d665d",
-    "date": "2026-11-25",
-    "author": "adm01-debug",
-    "subject": "test: provar em producao que o bloqueio geografico grava (etapa 043) (#339)",
-    "files": [
-     "docs/qa/05-PROGRESSO.md",
-     "supabase/tests/geo_write_policies_rls_test.sql"
-    ]
    }
   ],
   "hot_files": [
    [
     "docs/qa/05-PROGRESSO.md",
-    23
+    22
    ],
    [
     "docs/qa/03-ACHADOS.md",
@@ -128769,6 +128799,10 @@
    [
     "supabase/tests/cron_credentials_rls_test.sql",
     2
+   ],
+   [
+    "supabase/functions/_shared/__tests__/client-ip.test.ts",
+    1
    ],
    [
     "supabase/migrations/20261127240000_calling_hours_recurring_comment.sql",
@@ -128812,10 +128846,6 @@
    ],
    [
     "supabase/migrations/20261127250000_increment_weekly_stats_rpc.sql",
-    1
-   ],
-   [
-    "supabase/migrations/20261127260000_increment_weekly_stats_rpc_null_media_fix.sql",
     1
    ]
   ]
