@@ -64,3 +64,66 @@ export function useSurveys(accountId?: string) {
 
   return { responses, loading, refresh: load, sendSurvey, npsScore };
 }
+
+export interface SurveyDefinition {
+  id: string;
+  name: string;
+  survey_type: string;
+  description: string | null;
+  questions: unknown;
+  is_active: boolean;
+}
+
+const SURVEY_COLUMNS = 'id, name, survey_type, description, questions, is_active';
+
+export function useSurveyDefinitions() {
+  const [surveys, setSurveys] = useState<SurveyDefinition[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  const load = useCallback(async () => {
+    setLoading(true);
+    try {
+      const { data, error } = await supabase
+        .from('surveys').select(SURVEY_COLUMNS)
+        .eq('is_active', true).order('name');
+      if (error) throw error;
+      setSurveys((data ?? []) as unknown as SurveyDefinition[]);
+    } catch (err) {
+      logger.error('useSurveyDefinitions load failed', err);
+      toast.error('Falha ao carregar pesquisas');
+    } finally { setLoading(false); }
+  }, []);
+
+  const createSurvey = useCallback(async (name: string, surveyType = 'nps') => {
+    try {
+      const { data, error } = await supabase
+        .from('surveys').insert({ name, survey_type: surveyType })
+        .select(SURVEY_COLUMNS).single();
+      if (error) throw error;
+      toast.success('Pesquisa criada');
+      await load();
+      return data as unknown as SurveyDefinition;
+    } catch (err) {
+      logger.error('create survey failed', err);
+      toast.error('Falha ao criar pesquisa');
+      return null;
+    }
+  }, [load]);
+
+  const deactivateSurvey = useCallback(async (id: string) => {
+    try {
+      const { error } = await supabase
+        .from('surveys').update({ is_active: false }).eq('id', id);
+      if (error) throw error;
+      toast.success('Pesquisa desativada');
+      await load();
+    } catch (err) {
+      logger.error('deactivate survey failed', err);
+      toast.error('Falha ao desativar pesquisa');
+    }
+  }, [load]);
+
+  useEffect(() => { load(); }, [load]);
+
+  return { surveys, loading, refresh: load, createSurvey, deactivateSurvey };
+}
