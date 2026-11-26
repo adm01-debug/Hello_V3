@@ -11747,11 +11747,11 @@
     "changed_by->auth"
    ],
    "criada_em": "20260507221454_8ee1f1c8-e52c-42d1-93f5-136662aa8772.sql",
-   "usada_no_front": 0,
+   "usada_no_front": 1,
    "usada_em_edges": [],
    "triggers": [],
    "sem_rls": false,
-   "nao_usada": true
+   "nao_usada": false
   },
   "kb_article_views": {
    "colunas": {

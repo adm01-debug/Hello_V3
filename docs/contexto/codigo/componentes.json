@@ -1,7 +1,7 @@
 {
  "aviso": "GERADO AUTOMATICAMENTE por scripts/ai-context/gerar.mjs — não editar à mão; será sobrescrito.",
  "format_version": 2,
- "total": 448,
+ "total": 449,
  "orfaos": 13,
  "nomes_duplicados": {
   "KpiCards": [
@@ -2582,6 +2582,22 @@
    "orfao": false
   },
   {
+   "arquivo": "src/components/knowledge/ArticleHistoryCard.tsx",
+   "exports": [
+    "ArticleHistoryCard"
+   ],
+   "export_default": null,
+   "linhas": 136,
+   "dominio": "components/knowledge",
+   "hooks_locais": [
+    "useKbArticleHistory"
+   ],
+   "tabelas": [],
+   "edges": [],
+   "usado_por": 1,
+   "orfao": false
+  },
+  {
    "arquivo": "src/components/layout/AppLayout.tsx",
    "exports": [
     "AppLayout"
@@ -4060,7 +4076,7 @@
    "hooks_locais": [],
    "tabelas": [],
    "edges": [],
-   "usado_por": 200,
+   "usado_por": 201,
    "orfao": false
   },
   {
@@ -4110,7 +4126,7 @@
    "hooks_locais": [],
    "tabelas": [],
    "edges": [],
-   "usado_por": 245,
+   "usado_por": 246,
    "orfao": false
   },
   {
@@ -4145,7 +4161,7 @@
    "hooks_locais": [],
    "tabelas": [],
    "edges": [],
-   "usado_por": 234,
+   "usado_por": 235,
    "orfao": false
   },
   {
@@ -6176,7 +6192,7 @@
     "Knowledge"
    ],
    "export_default": "Knowledge",
-   "linhas": 350,
+   "linhas": 352,
    "dominio": "pages",
    "hooks_locais": [
     "useAuthContext",

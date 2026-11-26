@@ -1567,6 +1567,49 @@
    ]
   },
   {
+   "modulo": "components/knowledge",
+   "arquivos": 1,
+   "testes": 1,
+   "linhas": 136,
+   "itens_menu": [],
+   "telas": [],
+   "rotas_http": [],
+   "componentes": 1,
+   "hooks_locais": [
+    "useKbArticleHistory"
+   ],
+   "hooks_definidos": [],
+   "edges": [],
+   "tabelas": [
+    "kb_article_history"
+   ],
+   "rpcs": [],
+   "buckets": [],
+   "canais_realtime": [],
+   "env": [
+    "VITE_SUPABASE_PUBLISHABLE_KEY",
+    "VITE_SUPABASE_URL"
+   ],
+   "flags": [],
+   "papeis": [],
+   "diretos": {
+    "edges": [],
+    "tabelas": [],
+    "rpcs": []
+   },
+   "importado_por_outros_modulos": [
+    "pages"
+   ],
+   "depende_de_modulos": [
+    "components/ui",
+    "hooks",
+    "lib"
+   ],
+   "pacotes_externos": [
+    "lucide-react"
+   ]
+  },
+  {
    "modulo": "components/layout",
    "arquivos": 9,
    "testes": 1,
@@ -1678,6 +1721,7 @@
     "useIPWhitelist",
     "useIsMobile",
     "useKbArticle",
+    "useKbArticleHistory",
     "useKbArticles",
     "useKbCategories",
     "useKeyMoments",
@@ -1956,6 +2000,7 @@
     "hot_desking_stations",
     "index_drop_audit",
     "ip_whitelist",
+    "kb_article_history",
     "kb_article_views",
     "kb_articles",
     "kb_categories",
@@ -3168,6 +3213,7 @@
     "components/financial",
     "components/gamification",
     "components/hold-alerts",
+    "components/knowledge",
     "components/layout",
     "components/navigation",
     "components/network",
@@ -3503,9 +3549,9 @@
   },
   {
    "modulo": "hooks",
-   "arquivos": 172,
+   "arquivos": 173,
    "testes": 0,
-   "linhas": 22199,
+   "linhas": 22298,
    "itens_menu": [],
    "telas": [],
    "rotas_http": [],
@@ -3606,6 +3652,7 @@
     "useIPWhitelist",
     "useIsMobile",
     "useKbArticle",
+    "useKbArticleHistory",
     "useKbArticles",
     "useKbCategories",
     "useKeyMoments",
@@ -3813,6 +3860,7 @@
     "useHoldSoundAlert",
     "useIPValidation",
     "useIPWhitelist",
+    "useKbArticleHistory",
     "useKeyMoments",
     "useKbArticle",
     "useKbArticles",
@@ -4067,6 +4115,7 @@
     "hold_alert_settings",
     "hold_events",
     "ip_whitelist",
+    "kb_article_history",
     "kb_article_views",
     "kb_articles",
     "kb_categories",
@@ -4330,6 +4379,7 @@
      "hold_alert_settings",
      "hold_events",
      "ip_whitelist",
+     "kb_article_history",
      "kb_article_views",
      "kb_articles",
      "kb_categories",
@@ -4423,6 +4473,7 @@
     "components/executive",
     "components/financial",
     "components/gamification",
+    "components/knowledge",
     "components/layout",
     "components/network",
     "components/notifications",
@@ -4476,7 +4527,7 @@
   {
    "modulo": "hooks/__tests__",
    "arquivos": 0,
-   "testes": 165,
+   "testes": 166,
    "linhas": 0,
    "itens_menu": [],
    "telas": [],
@@ -4834,6 +4885,7 @@
     "useHoldReminder",
     "useHoldSoundAlert",
     "useKbArticle",
+    "useKbArticleHistory",
     "useKbArticles",
     "useKbCategories",
     "useKeyMoments",
@@ -4974,6 +5026,7 @@
     "goal_violations",
     "hold_alert_settings",
     "hold_events",
+    "kb_article_history",
     "kb_article_views",
     "kb_articles",
     "kb_categories",
@@ -5099,6 +5152,7 @@
     "components/executive",
     "components/gamification",
     "components/hold-alerts",
+    "components/knowledge",
     "components/layout",
     "components/navigation",
     "components/network",
@@ -5663,7 +5717,7 @@
    "modulo": "pages",
    "arquivos": 93,
    "testes": 0,
-   "linhas": 17560,
+   "linhas": 17562,
    "itens_menu": [
     "Acessos Bloqueados",
     "Agent Assist",
@@ -5940,6 +5994,7 @@
     "useIPValidation",
     "useIPWhitelist",
     "useKbArticle",
+    "useKbArticleHistory",
     "useKbArticles",
     "useKbCategories",
     "useKeyMoments",
@@ -6194,6 +6249,7 @@
     "holidays",
     "hot_desking_stations",
     "ip_whitelist",
+    "kb_article_history",
     "kb_article_views",
     "kb_articles",
     "kb_categories",
@@ -6414,6 +6470,7 @@
     "components/financial",
     "components/gamification",
     "components/hold-alerts",
+    "components/knowledge",
     "components/layout",
     "components/network",
     "components/notification-center",
@@ -6943,6 +7000,7 @@
     "useIPValidation",
     "useIPWhitelist",
     "useKbArticle",
+    "useKbArticleHistory",
     "useKbArticles",
     "useKbCategories",
     "useKeyMoments",
@@ -7214,6 +7272,7 @@
     "hot_desking_stations",
     "index_drop_audit",
     "ip_whitelist",
+    "kb_article_history",
     "kb_article_views",
     "kb_articles",
     "kb_categories",

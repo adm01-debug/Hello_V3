@@ -1,6 +1,6 @@
 # 11 · GLOSSÁRIO, DADOS DE REFERÊNCIA E LACUNAS
 
-> Gerado automaticamente por AI Context Sync v1.3.2 · commit `96fa4dd42e` · branch `main` · 2026-11-26 11:14 UTC
+> Gerado automaticamente por AI Context Sync v1.3.2 · commit `a1725d68d8` · branch `main` · 2026-11-26 11:33 UTC
 > Não edite à mão — regras humanas vão em `manual/`.
 
 ## Glossário do domínio (entidades do sistema)
@@ -212,6 +212,8 @@
 | `PeriodType` (TS) | today \| week \| month \| all |  | `src/hooks/useExecutiveDashboard.ts` |
 | `ExtensionBulkAction` (TS) | bulk_assign_trunk \| bulk_force_offline \| bulk_export_csv |  | `src/hooks/useExtensionAudit.ts` |
 | `AgentStatus` (TS) | available \| busy \| away \| offline \| inactive |  | `src/hooks/useExtensionsOverview.ts` |
+| `KbHistoryTone` (TS) | create \| update \| status \| neutral |  | `src/hooks/useKbArticleHistory.ts` |
+| `KB_ARTICLE_HISTORY_QUERY_KEY` (TS) | 'kb-article-history' |  | `src/hooks/useKbArticleHistory.ts` |
 | `MFAMethod` (TS) | totp \| phone \| both |  | `src/hooks/useMFA.ts` |
 | `CallChannel` (TS) | webrtc \| wavoip \| sip |  | `src/hooks/useMultiChannelCall.ts` |
 | `CallStatus` (TS) | idle \| connecting \| ringing \| active \| on-hold \| ended \| conference \| transferring |  | `src/hooks/useMultiChannelCall.ts` |

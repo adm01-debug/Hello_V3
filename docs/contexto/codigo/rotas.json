@@ -2554,6 +2554,7 @@
     "useContext",
     "useEffect",
     "useKbArticle",
+    "useKbArticleHistory",
     "useKbArticles",
     "useKbCategories",
     "useMemo",
@@ -2574,6 +2575,7 @@
     "useAuthSession",
     "useAuthState",
     "useKbArticle",
+    "useKbArticleHistory",
     "useKbArticles",
     "useKbCategories",
     "usePageTitle",
@@ -2581,6 +2583,7 @@
     "useUpsertArticle"
    ],
    "tabelas": [
+    "kb_article_history",
     "kb_article_views",
     "kb_articles",
     "kb_categories",
@@ -2600,7 +2603,7 @@
     "status",
     "supervisor"
    ],
-   "arquivos_puxados": 25
+   "arquivos_puxados": 27
   },
   {
    "protegida": false,

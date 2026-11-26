@@ -1,7 +1,7 @@
 {
  "aviso": "GERADO AUTOMATICAMENTE por scripts/ai-context/gerar.mjs — não editar à mão; será sobrescrito.",
  "format_version": 2,
- "total": 198,
+ "total": 199,
  "hooks": [
   {
    "arquivo": "scripts/ai-context/cenarios.mjs",
@@ -2635,6 +2635,29 @@
    "coberto_por_testes": 2
   },
   {
+   "arquivo": "src/hooks/useKbArticleHistory.ts",
+   "hooks_exportados": [
+    "useKbArticleHistory"
+   ],
+   "linhas": 96,
+   "dominio": "hooks",
+   "tabelas": [
+    "kb_article_history"
+   ],
+   "rpcs": [],
+   "edges": [],
+   "hooks_internos": [
+    "useQuery"
+   ],
+   "canais_realtime": [],
+   "usado_por": 2,
+   "usado_por_arquivos": [
+    "src/components/knowledge/ArticleHistoryCard.tsx",
+    "src/hooks/useKnowledgeBase.ts"
+   ],
+   "coberto_por_testes": 2
+  },
+  {
    "arquivo": "src/hooks/useKeyMoments.ts",
    "hooks_exportados": [
     "useKeyMoments"
@@ -2670,7 +2693,7 @@
     "useRecordKbView",
     "useUpsertArticle"
    ],
-   "linhas": 191,
+   "linhas": 194,
    "dominio": "hooks",
    "tabelas": [
     "kb_article_views",

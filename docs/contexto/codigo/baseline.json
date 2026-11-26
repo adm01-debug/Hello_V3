@@ -2,11 +2,16 @@
  "aviso": "GERADO AUTOMATICAMENTE por scripts/ai-context/gerar.mjs — não editar à mão; será sobrescrito.",
  "format_version": 2,
  "git": {
-  "commit": "96fa4dd42ef12da47c4c9d119d3e68865723d469",
+  "commit": "a1725d68d8dc158db216b91e112e2d6b97da5ed1",
   "branch": "main",
-  "data_commit": "2026-11-26T08:13:51-03:00",
+  "data_commit": "2026-11-26T08:32:05-03:00",
   "remote": "https://github.com/adm01-debug/Hello_V3",
   "ultimos_commits": [
+   {
+    "sha": "a1725d6",
+    "data": "2026-11-26",
+    "assunto": "feat: historico de versoes dos artigos da base de conhecimento (#348)"
+   },
    {
     "sha": "96fa4dd",
     "data": "2026-11-26",
@@ -126,18 +131,13 @@
     "sha": "19d29d8",
     "data": "2026-11-25",
     "assunto": "feat: permite editar e excluir cadencia e passo (etapa 086) (#323)"
-   },
-   {
-    "sha": "31ec3c6",
-    "data": "2026-11-25",
-    "assunto": "fix: microfone da barra de chamada nao silenciava o audio (#322)"
    }
   ],
-  "arquivos_mudados_7d": 1333,
+  "arquivos_mudados_7d": 2358,
   "pastas_mais_mudadas_30d": [
    {
     "pasta": "src/hooks/__tests__",
-    "mudancas": 290
+    "mudancas": 292
    },
    {
     "pasta": "covout/lcov-report/hooks",
@@ -188,11 +188,11 @@
     "mudancas": 32
    },
    {
-    "pasta": "docs/estado/funcionalidades-planejadas.md",
-    "mudancas": 30
+    "pasta": "src/pages/__tests__",
+    "mudancas": 31
    },
    {
-    "pasta": "src/components/dashboard",
+    "pasta": "docs/estado/funcionalidades-planejadas.md",
     "mudancas": 30
    }
   ],
@@ -310,21 +310,21 @@
   ]
  },
  "contagens": {
-  "arquivos_total": 1784,
-  "arquivos_codigo": 1364,
-  "linhas_codigo": 181953,
+  "arquivos_total": 1789,
+  "arquivos_codigo": 1368,
+  "linhas_codigo": 182449,
   "rotas": 106,
   "rotas_http_backend": 11,
   "vistas_por_id": 0,
   "itens_menu": 96,
-  "modulos": 82,
-  "componentes": 448,
-  "hooks": 198,
+  "modulos": 83,
+  "componentes": 449,
+  "hooks": 199,
   "edge_functions": 99,
   "tabelas": 170,
   "migrations": 250,
   "cron_jobs": 11,
-  "testes": 428,
+  "testes": 431,
   "workflows": 5,
   "scripts": 36,
   "docs_md": 121
@@ -479,8 +479,8 @@
    "linhas": 450
   },
   "src/components": {
-   "arquivos": 377,
-   "linhas": 44758
+   "arquivos": 379,
+   "linhas": 45007
   },
   "src/contexts": {
    "arquivos": 5,
@@ -491,8 +491,8 @@
    "linhas": 312
   },
   "src/hooks": {
-   "arquivos": 349,
-   "linhas": 44518
+   "arquivos": 351,
+   "linhas": 44757
   },
   "src/integrations": {
    "arquivos": 3,
@@ -508,7 +508,7 @@
   },
   "src/pages": {
    "arquivos": 155,
-   "linhas": 23713
+   "linhas": 23721
   },
   "src/routes": {
    "arquivos": 4,

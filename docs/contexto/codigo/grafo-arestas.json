@@ -1279,6 +1279,13 @@
    "src/lib/safe-date.ts",
    "src/lib/utils.ts"
   ],
+  "src/components/knowledge/ArticleHistoryCard.tsx": [
+   "src/components/ui/badge.tsx",
+   "src/components/ui/button.tsx",
+   "src/components/ui/card.tsx",
+   "src/hooks/useKbArticleHistory.ts",
+   "src/lib/safe-date.ts"
+  ],
   "src/components/layout/AppLayout.tsx": [
    "src/components/calls/ActiveCallBar.tsx",
    "src/components/contacts/ContactAlertsDropdown.tsx",
@@ -2583,6 +2590,10 @@
    "src/lib/error-message.ts",
    "src/lib/logger.ts"
   ],
+  "src/hooks/useKbArticleHistory.ts": [
+   "src/integrations/supabase/client.ts",
+   "src/lib/logger.ts"
+  ],
   "src/hooks/useKeyMoments.ts": [
    "src/integrations/supabase/client.ts",
    "src/integrations/supabase/types.ts",
@@ -2590,6 +2601,7 @@
    "src/lib/tracing.ts"
   ],
   "src/hooks/useKnowledgeBase.ts": [
+   "src/hooks/useKbArticleHistory.ts",
    "src/integrations/supabase/client.ts",
    "src/lib/logger.ts"
   ],
@@ -3656,6 +3668,7 @@
    "src/lib/utils.ts"
   ],
   "src/pages/Knowledge.tsx": [
+   "src/components/knowledge/ArticleHistoryCard.tsx",
    "src/components/layout/NeonPageHeader.tsx",
    "src/components/layout/NeonPageLayout.tsx",
    "src/components/ui/badge.tsx",

@@ -1,28 +1,28 @@
 {
  "aviso": "GERADO AUTOMATICAMENTE por scripts/ai-context/gerar.mjs — não editar à mão; será sobrescrito.",
  "format_version": 2,
- "nos": 946,
- "arestas": 3756,
+ "nos": 948,
+ "arestas": 3765,
  "hubs": [
   {
    "arquivo": "src/integrations/supabase/client.ts",
-   "importado_por": 271
+   "importado_por": 273
   },
   {
    "arquivo": "src/components/ui/button.tsx",
-   "importado_por": 245
+   "importado_por": 246
   },
   {
    "arquivo": "src/components/ui/card.tsx",
-   "importado_por": 234
+   "importado_por": 235
   },
   {
    "arquivo": "src/lib/logger.ts",
-   "importado_por": 202
+   "importado_por": 203
   },
   {
    "arquivo": "src/components/ui/badge.tsx",
-   "importado_por": 200
+   "importado_por": 201
   },
   {
    "arquivo": "src/lib/utils.ts",
@@ -30,7 +30,7 @@
   },
   {
    "arquivo": "src/lib/safe-date.ts",
-   "importado_por": 107
+   "importado_por": 108
   },
   {
    "arquivo": "supabase/functions/_shared/cors.ts",
@@ -219,22 +219,22 @@
   {
    "modulo": "lib",
    "depende_de": 4,
-   "importado_por": 52
+   "importado_por": 53
   },
   {
    "modulo": "pages",
-   "depende_de": 54,
+   "depende_de": 55,
    "importado_por": 2
   },
   {
    "modulo": "hooks",
    "depende_de": 14,
-   "importado_por": 41
+   "importado_por": 42
   },
   {
    "modulo": "components/ui",
    "depende_de": 2,
-   "importado_por": 51
+   "importado_por": 52
   },
   {
    "modulo": "integrations/supabase",

@@ -1,6 +1,6 @@
 # 07 · REGRAS DE NEGÓCIO
 
-> Gerado automaticamente por AI Context Sync v1.3.2 · commit `96fa4dd42e` · branch `main` · 2026-11-26 11:14 UTC
+> Gerado automaticamente por AI Context Sync v1.3.2 · commit `a1725d68d8` · branch `main` · 2026-11-26 11:33 UTC
 > Não edite à mão — regras humanas vão em `manual/`.
 
 ## A. Regras escritas por humanos (`manual/` — prioridade máxima, nunca sobrescrito)
@@ -1074,6 +1074,8 @@ _nenhum mapa explícito encontrado — transições só existem implicitamente n
 | PeriodType | today \| week \| month \| all | `src/hooks/useExecutiveDashboard.ts` |
 | ExtensionBulkAction | bulk_assign_trunk \| bulk_force_offline \| bulk_export_csv | `src/hooks/useExtensionAudit.ts` |
 | AgentStatus | available \| busy \| away \| offline \| inactive | `src/hooks/useExtensionsOverview.ts` |
+| KbHistoryTone | create \| update \| status \| neutral | `src/hooks/useKbArticleHistory.ts` |
+| KB_ARTICLE_HISTORY_QUERY_KEY | 'kb-article-history' | `src/hooks/useKbArticleHistory.ts` |
 | MFAMethod | totp \| phone \| both | `src/hooks/useMFA.ts` |
 | CallChannel | webrtc \| wavoip \| sip | `src/hooks/useMultiChannelCall.ts` |
 | CallStatus | idle \| connecting \| ringing \| active \| on-hold \| ended \| conference \| transferring | `src/hooks/useMultiChannelCall.ts` |
@@ -1888,6 +1890,7 @@ _nenhum item encontrado_
 |---|---|---|
 | `PREVIEW_TEXT` | `'Assistente de voz pronto para discar.'` | `src/components/dialer/phone/VoicePreferencesPanel.tsx` |
 | `SEVEN_DAYS_MS` | `7` | `src/components/executive/AgentAssistDashboardCard.tsx` |
+| `DATE_MASK` | `"dd/MM/yyyy '` | `src/components/knowledge/ArticleHistoryCard.tsx` |
 | `SNOOZE_HOURS` | `24` | `src/components/network/VoipRecommendationsPanel.tsx` |
 | `AUTO_APPLY_DELAY_MS` | `3000` | `src/components/network/VoipRecommendationsPanel.tsx` |
 | `MAX_HISTORY` | `5` | `src/components/network/VoipVoiceQAPanel.tsx` |
@@ -1917,6 +1920,7 @@ _nenhum item encontrado_
 | `CONTACTS_PAGE_SIZE` | `50` | `src/hooks/useContacts.ts` |
 | `DEALS_PAGE_SIZE` | `50` | `src/hooks/useDeals.ts` |
 | `MAX_FAVORITES` | `12` | `src/hooks/useDialerFavorites.ts` |
+| `KB_ARTICLE_HISTORY_LIMIT` | `20` | `src/hooks/useKbArticleHistory.ts` |
 | `ANALYSIS_THROTTLE_MS` | `5000` | `src/hooks/useLiveAssist.ts` |
 | `MIN_NEW_WORDS` | `30` | `src/hooks/useLiveAssist.ts` |
 | `ALPHABET` | `'ABCDEFGHJKLMNPQRSTUVWXYZ23456789'` | `src/hooks/useMFA.ts` |
@@ -2668,7 +2672,7 @@ _nenhum item encontrado_
 | `admin` | `supabase/functions/data-lake-flush/index.ts` |
 | `admin` | `supabase/migrations/20261123000200_fix_has_role_oracle_and_debug_tables.sql` |
 
-## K. Testes como especificação (3708 testes em 409 arquivos — nomes completos em `context.json`)
+## K. Testes como especificação (3725 testes em 411 arquivos — nomes completos em `context.json`)
 
 | Arquivo | Testes | Exemplos do que o sistema DEVE fazer |
 |---|---|---|
@@ -2795,6 +2799,7 @@ _nenhum item encontrado_
 | `src/hooks/__tests__/useCriticalAlertNotifications.coverage.test.tsx` | 9 | useCriticalAlertNotifications · initAudioContext returns and memoizes an AudioContext · requestNotificationPermission returns true when granted · playAlertSound exercises all patterns (warning + critical) … |
 | `src/hooks/__tests__/useDebouncedSearchParam.test.tsx` | 9 | useDebouncedSearchParam · hidrata a partir da URL · debounce: uma rajada de setValue commita apenas uma vez · string vazia aplica imediatamente (bypass debounce) … |
 | `src/hooks/__tests__/useExtensionsOverview.scenarios.test.ts` | 9 | useExtensionsOverview — 50+ cenários de agregação · lista vazia retorna array vazio · 1 agente sem chamadas: call_count_7d=0 · 1 agente com 3 chamadas: count=3, média correta … |
+| `src/hooks/__tests__/useKbArticleHistory.test.tsx` | 9 | useKbArticleHistory · nao consulta o banco sem artigo selecionado · filtra por artigo, ordena do mais recente e limita o resultado · propaga erro de leitura para a tela … |
 | `src/hooks/__tests__/useMFA.coverage.test.tsx` | 9 | useMFA · loads factors and settings · enrollTOTP success and error · enrollPhone success and error … |
 | `src/hooks/__tests__/useNotifications.coverage.test.tsx` | 9 | useNotifications · loads notifications and unread count · marks single and all as read · archives a notification … |
 | `src/hooks/__tests__/useQualityTrendAnalyzer.coverage.test.tsx` | 9 | useQualityTrendAnalyzer · não faz nada quando desabilitado · ignora MOS null ou não finito · detecta degradação progressiva e persiste alerta … |
@@ -2812,6 +2817,7 @@ _nenhum item encontrado_
 | `supabase/functions/voip-recommendation-insights/__tests__/index.test.ts` | 9 | rejeita requisição sem JWT · rejeita período inválido (validação oneOf) · buildHeatmap gera 7×24 = 168 buckets · buildHeatmap incrementa bucket correto … |
 | `supabase/functions/webauthn-authenticate/__tests__/verify.test.ts` | 9 | verify: assercao legitima e aceita e devolve signCount · verify: assinatura de OUTRA chave e rejeitada · verify: desafio diferente e rejeitado (replay) · verify: origem estranha e rejeitada (phishing) … |
 | `src/__tests__/rls/audit-logs.test.ts` | 8 | RLS — audit_logs (imutabilidade + admin-only read) · admin pode ler logs de auditoria · admin pode inserir via função RPC · admin NÃO pode atualizar logs (imutabilidade) … |
+| `src/components/knowledge/__tests__/ArticleHistoryCard.test.tsx` | 8 | ArticleHistoryCard · mostra carregamento enquanto a leitura nao termina · explica o vazio em vez de deixar a area muda · mostra erro e permite tentar de novo … |
 | `src/hooks/__tests__/pageVisibility.gating.test.tsx` | 8 | etapa 253: poll de painel respeita a visibilidade da aba · ${file} usa usePageVisibility · ${file} nao tem refetchInterval sempre ligado · useQualityMetrics entrega refetchInterval falso com a aba oculta … |
 | `src/hooks/__tests__/useAchievementNotifications.coverage.test.tsx` | 8 | useAchievementNotifications (coverage) · não injeta badge inválida quando o enriquecimento falha · subscribes to channels and exposes initial state · handles a new badge award and shows a toast (no agent filter) … |
 | `src/hooks/__tests__/useAgentStatus.coverage.test.tsx` | 8 | useAgentStatus (coverage) · fetches agents on mount · setAgent selects and toasts; clearAgent clears · updateStatus returns false without selected agent … |
@@ -2970,9 +2976,7 @@ _nenhum item encontrado_
 | `src/hooks/__tests__/callLifecycle-integration.test.tsx` | 4 | Ciclo de vida da chamada — integracao (E064) · INSERT em call_sessions ao ficar ativa com campos corretos · UPDATE em call_sessions ao encerrar chamada · sem INSERT se chamada for encerrada antes de ficar ativa |
 | `src/hooks/__tests__/use-mobile.coverage.test.tsx` | 4 | useIsMobile · returns false for desktop width · returns true for mobile width and reacts to change · cleans up listener on unmount |
 | `src/hooks/__tests__/useAccounts.test.ts` | 4 | useAccounts · loads accounts on mount · recomputes health via edge function · triggers churn detection |
-| `src/hooks/__tests__/useCallRecording.test.ts` | 4 | useCallRecording · inicia a captura e persiste o audio ao parar · devolve null e nao grava quando o microfone e negado · devolve null quando o audio sobe mas a gravacao nao e registrada no banco |
-| `src/hooks/__tests__/useCallScoring.coverage.test.tsx` | 4 | useCallScoring · expõe o estado inicial · calcula score com sucesso · lança erro quando a edge function falha |
-| … +109 linhas — lista completa em `context.json` | | |
+| … +111 linhas — lista completa em `context.json` | | |
 
 ## L. Eventos de webhook tratados (contratos com sistemas externos)
 
