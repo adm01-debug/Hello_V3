@@ -66,7 +66,7 @@ declare
 begin
   for i in 1..2 loop
     v_role := case when i = 1 then 'anon' else 'authenticated' end;
-    if not pg_has_role(current_user, v_role, 'member') then
+    if not pg_has_role(current_user, v_role::name, 'member') then
       raise notice 'OK 4 (%): pulado -- a conexao % nao tem o papel % para assumir', v_role, current_user, v_role;
       continue;
     end if;
