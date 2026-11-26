@@ -6,7 +6,7 @@
 | owner | postgres |
 | RLS habilitado | sim |
 | RLS forçado (owner) | não |
-| policies | 2 |
+| policies | 3 |
 | realtime (publication) | não |
 | replica identity | default |
 | vem de extensão | não |
@@ -53,6 +53,16 @@
 | tipo | PERMISSIVE |
 | roles | authenticated |
 | USING |  |
+| WITH CHECK | `is_admin_or_supervisor()` |
+
+### `Admin supervisor update crm sync queue`
+
+| campo | valor |
+|---|---|
+| comando | UPDATE |
+| tipo | PERMISSIVE |
+| roles | authenticated |
+| USING | `is_admin_or_supervisor()` |
 | WITH CHECK | `is_admin_or_supervisor()` |
 
 ### `Admins e supervisores podem ler fila CRM`

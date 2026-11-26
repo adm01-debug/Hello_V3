@@ -6,7 +6,7 @@
 | owner | postgres |
 | RLS habilitado | sim |
 | RLS forçado (owner) | não |
-| policies | 3 |
+| policies | 4 |
 | realtime (publication) | não |
 | replica identity | default |
 | vem de extensão | não |
@@ -64,6 +64,16 @@
 | roles | authenticated |
 | USING |  |
 | WITH CHECK | `((get_user_agent_name() = agent_name) OR is_admin_or_supervisor())` |
+
+### `Agents update own completions`
+
+| campo | valor |
+|---|---|
+| comando | UPDATE |
+| tipo | PERMISSIVE |
+| roles | authenticated |
+| USING | `(get_user_agent_name() = agent_name)` |
+| WITH CHECK | `(get_user_agent_name() = agent_name)` |
 
 ### `Agents view own completions`
 

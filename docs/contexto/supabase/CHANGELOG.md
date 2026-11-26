@@ -2,6 +2,12 @@
 
 Diff semântico gerado a cada coleta em que algo mudou.
 
+## 2026-11-26 14:18 UTC
+
+- **functions** alterado (1): `public.is_admin_or_supervisor()`
+- **migrations** adicionado (1): `20261126140000_client_errors`
+- **policies (RLS)** adicionado (2): `public.crm_sync_queue.Admin supervisor update crm sync queue`, `public.learning_completions.Agents update own completions`
+
 ## 2026-11-26 13:17 UTC
 
 - **colunas** adicionado (11): `public.client_errors.correlation_id`, `public.client_errors.error_type`, `public.client_errors.id`, `public.client_errors.message`, `public.client_errors.occurred_at`, `public.client_errors.resolved_at`, `public.client_errors.resolved_by`, `public.client_errors.route`, `public.client_errors.stack`, `public.client_errors.user_agent`, `public.client_errors.user_id`

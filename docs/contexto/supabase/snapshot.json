@@ -34712,7 +34712,7 @@
               "hits": 1
             }
           ],
-          "code_total_files": 80,
+          "code_total_files": 81,
           "cron": [],
           "db": [
             "public.can_access_agent_data",
@@ -49135,6 +49135,12 @@
         "statements": 10,
         "statements_sha": "ca4c010d3b9c85bd",
         "version": "20261126130000"
+      },
+      {
+        "name": "client_errors",
+        "statements": 17,
+        "statements_sha": "6ec735a2a02f06cf",
+        "version": "20261126140000"
       }
     ],
     "policies": [
@@ -51323,6 +51329,18 @@
         "with_check": "is_admin_or_supervisor()"
       },
       {
+        "cmd": "UPDATE",
+        "name": "Admin supervisor update crm sync queue",
+        "permissive": "PERMISSIVE",
+        "roles": [
+          "authenticated"
+        ],
+        "schema": "public",
+        "table": "crm_sync_queue",
+        "using": "is_admin_or_supervisor()",
+        "with_check": "is_admin_or_supervisor()"
+      },
+      {
         "cmd": "SELECT",
         "name": "Admins e supervisores podem ler fila CRM",
         "permissive": "PERMISSIVE",
@@ -52185,6 +52203,18 @@
         "table": "learning_completions",
         "using": null,
         "with_check": "((get_user_agent_name() = agent_name) OR is_admin_or_supervisor())"
+      },
+      {
+        "cmd": "UPDATE",
+        "name": "Agents update own completions",
+        "permissive": "PERMISSIVE",
+        "roles": [
+          "authenticated"
+        ],
+        "schema": "public",
+        "table": "learning_completions",
+        "using": "(get_user_agent_name() = agent_name)",
+        "with_check": "(get_user_agent_name() = agent_name)"
       },
       {
         "cmd": "SELECT",

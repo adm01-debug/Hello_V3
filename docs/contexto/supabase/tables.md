@@ -65,7 +65,7 @@ Um arquivo por tabela em `tables/<schema>/<tabela>.md` (colunas, constraints, í
 | [public.conversation_messages](tables/public/conversation_messages.md) | table | sim | 5 | 13 | não |  |
 | [public.conversations](tables/public/conversations.md) | table | sim | 5 | 21 | não |  |
 | [public.crm_field_suggestions](tables/public/crm_field_suggestions.md) | table | sim | 4 | 14 | não |  |
-| [public.crm_sync_queue](tables/public/crm_sync_queue.md) | table | sim | 2 | 10 | não |  |
+| [public.crm_sync_queue](tables/public/crm_sync_queue.md) | table | sim | 3 | 10 | não |  |
 | [public.cultural_hints](tables/public/cultural_hints.md) | table | sim | 2 | 8 | não |  |
 | [public.customer_journey_stages](tables/public/customer_journey_stages.md) | table | sim | 2 | 11 | não |  |
 | [public.dashboard_goals](tables/public/dashboard_goals.md) | table | sim | 2 | 12 | não |  |
@@ -96,7 +96,7 @@ Um arquivo por tabela em `tables/<schema>/<tabela>.md` (colunas, constraints, í
 | [public.kb_article_views](tables/public/kb_article_views.md) | table | sim | 3 | 7 | não |  |
 | [public.kb_articles](tables/public/kb_articles.md) | table | sim | 3 | 17 | não |  |
 | [public.kb_categories](tables/public/kb_categories.md) | table | sim | 2 | 10 | não |  |
-| [public.learning_completions](tables/public/learning_completions.md) | table | sim | 3 | 6 | não |  |
+| [public.learning_completions](tables/public/learning_completions.md) | table | sim | 4 | 6 | não |  |
 | [public.learning_modules](tables/public/learning_modules.md) | table | sim | 2 | 14 | não |  |
 | [public.live_assist_signals](tables/public/live_assist_signals.md) | table | sim | 4 | 14 | não |  |
 | [public.live_sentiment_snapshots](tables/public/live_sentiment_snapshots.md) | table | sim | 2 | 9 | não |  |

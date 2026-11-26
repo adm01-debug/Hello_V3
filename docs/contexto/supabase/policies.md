@@ -187,6 +187,7 @@ Visão consolidada (inclui `storage.objects` e `realtime.messages`); detalhes po
 | public.crm_field_suggestions | Admin supervisor update crm suggestions | UPDATE | PERMISSIVE | authenticated | `is_admin_or_supervisor()` | `is_admin_or_supervisor()` |
 | public.crm_field_suggestions | Admin/supervisor deletam sugestões | DELETE | PERMISSIVE | authenticated | `is_admin_or_supervisor()` |  |
 | public.crm_sync_queue | Admin supervisor insert crm sync queue | INSERT | PERMISSIVE | authenticated |  | `is_admin_or_supervisor()` |
+| public.crm_sync_queue | Admin supervisor update crm sync queue | UPDATE | PERMISSIVE | authenticated | `is_admin_or_supervisor()` | `is_admin_or_supervisor()` |
 | public.crm_sync_queue | Admins e supervisores podem ler fila CRM | SELECT | PERMISSIVE | public | `is_admin_or_supervisor()` |  |
 | public.cultural_hints | Admin can manage cultural hints | ALL | PERMISSIVE | public | `is_admin_user(( SELECT auth.uid() AS uid))` | `is_admin_user(( SELECT auth.uid() AS uid))` |
 | public.cultural_hints | Authenticated can view cultural hints | SELECT | PERMISSIVE | public | `(( SELECT auth.uid() AS uid) IS NOT NULL)` |  |
@@ -259,6 +260,7 @@ Visão consolidada (inclui `storage.objects` e `realtime.messages`); detalhes po
 | public.kb_categories | Authenticated read kb_categories | SELECT | PERMISSIVE | public | `((( SELECT auth.uid() AS uid) IS NOT NULL) AND (is_published = true))` |  |
 | public.learning_completions | Admin/supervisor delete completions | DELETE | PERMISSIVE | authenticated | `is_admin_or_supervisor()` |  |
 | public.learning_completions | Agents create own completions | INSERT | PERMISSIVE | authenticated |  | `((get_user_agent_name() = agent_name) OR is_admin_or_supervisor())` |
+| public.learning_completions | Agents update own completions | UPDATE | PERMISSIVE | authenticated | `(get_user_agent_name() = agent_name)` | `(get_user_agent_name() = agent_name)` |
 | public.learning_completions | Agents view own completions | SELECT | PERMISSIVE | authenticated | `(is_admin_or_supervisor() OR (get_user_agent_name() = agent_name))` |  |
 | public.learning_modules | Admin/supervisor manage learning modules | ALL | PERMISSIVE | authenticated | `is_admin_or_supervisor()` | `is_admin_or_supervisor()` |
 | public.learning_modules | Authenticated view learning modules | SELECT | PERMISSIVE | authenticated | `(is_active OR is_admin_or_supervisor())` |  |
