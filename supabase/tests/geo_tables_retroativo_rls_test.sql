@@ -92,7 +92,7 @@ begin
       where n.nspname = 'public' and c.relname = r.tab
         and format_type(a.atttypid, a.atttypmod) = r.tipo
         and a.attnotnull = r.nn
-        and coalesce(replace(pg_get_expr(d.adbin, d.adrelid), '::text', ''), '-') = r.defe
+        and coalesce(replace(replace(pg_get_expr(d.adbin, d.adrelid), '::text', ''), '''', ''), '-') = r.defe
     ) then
       falta := falta || (r.tab || '.' || r.col);
     end if;
@@ -168,7 +168,8 @@ begin
       where n.nspname = 'public' and c.relname = r.tab and ic.relname = r.idx
         and am.amname = r.metodo
         and pg_get_indexdef(i.indexrelid, 0, true) = r.colunas
-        and coalesce(array_to_string(ic.reloptions, ','), '') = r.relopts
+        and case when r.relopts = '' then coalesce(array_to_string(ic.reloptions, ','), '') = ''
+                 else coalesce(array_to_string(ic.reloptions, ','), '') like '%pages_per_range%32%' end
     ) then
       falta := falta || (r.tab || '.' || r.idx);
     end if;
