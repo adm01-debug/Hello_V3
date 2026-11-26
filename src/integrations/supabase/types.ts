@@ -2197,6 +2197,48 @@ export type Database = {
           },
         ]
       }
+      client_errors: {
+        Row: {
+          correlation_id: string | null
+          error_type: string
+          id: string
+          message: string
+          occurred_at: string
+          resolved_at: string | null
+          resolved_by: string | null
+          route: string
+          stack: string | null
+          user_agent: string | null
+          user_id: string | null
+        }
+        Insert: {
+          correlation_id?: string | null
+          error_type?: string
+          id?: string
+          message: string
+          occurred_at?: string
+          resolved_at?: string | null
+          resolved_by?: string | null
+          route: string
+          stack?: string | null
+          user_agent?: string | null
+          user_id?: string | null
+        }
+        Update: {
+          correlation_id?: string | null
+          error_type?: string
+          id?: string
+          message?: string
+          occurred_at?: string
+          resolved_at?: string | null
+          resolved_by?: string | null
+          route?: string
+          stack?: string | null
+          user_agent?: string | null
+          user_id?: string | null
+        }
+        Relationships: []
+      }
       coaching_assignments: {
         Row: {
           agent_name: string

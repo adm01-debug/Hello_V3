@@ -2,11 +2,14 @@ import { createRoot } from "react-dom/client";
 import App from "./App.tsx";
 import "./index.css";
 import { initErrorTracking } from "./lib/error-tracking";
+import { installErrorReporter } from "./lib/errorReporter";
 import { initWebVitals } from "./lib/web-vitals";
 import { logger } from "./lib/logger";
 import { supabase } from "./integrations/supabase/client";
 // Initialize global error tracking & web vitals
 initErrorTracking();
+// Etapa 230: persiste cada erro capturado em public.client_errors
+installErrorReporter();
 initWebVitals();
 
 // Forward webhook queue flush metrics to structured logger + persist for BI

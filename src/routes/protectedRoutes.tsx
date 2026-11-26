@@ -91,6 +91,7 @@ const DataExport = lazy(() => import("@/pages/admin/DataExport"));
 const DatabaseHealth = lazy(() => import("@/pages/admin/DatabaseHealth"));
 const SecurityAlerts = lazy(() => import("@/pages/admin/SecurityAlerts"));
 const WebhookHealth = lazy(() => import("@/pages/admin/WebhookHealth"));
+const ClientErrors = lazy(() => import("@/pages/admin/ClientErrors"));
 const Onboarding = lazy(() => import("@/pages/Onboarding"));
 const PredictiveDialer = lazy(() => import("@/pages/PredictiveDialer"));
 const VoiceQuality = lazy(() => import("@/pages/admin/VoiceQuality"));
@@ -203,6 +204,7 @@ export const protectedRoutes: RouteConfig[] = [
   { path: "/admin/security-alerts", element: SecurityAlerts, roles: ["admin"] },
   { path: "/admin/webhook-health", element: WebhookHealth, roles: ["admin"] },
   { path: "/admin/slo", element: SloDashboard, roles: ["admin"] },
+  { path: "/admin/client-errors", element: ClientErrors, roles: ["admin", "supervisor"] },
 
   // Catch-all
   { path: "*", element: NotFound },
