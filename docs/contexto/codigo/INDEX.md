@@ -1,7 +1,7 @@
 # Contexto do projeto para agentes de IA
 
 GERADO AUTOMATICAMENTE por scripts/ai-context/gerar.mjs — não editar à mão; será sobrescrito.
-Publicado em `docs/contexto/codigo/` na branch `contexto` (gerada, nunca abra PR dela) a cada push em `main` e a cada 10 minutos pelo workflow `contexto.yml`; índice único das três fontes em `docs/contexto/00-INDEX.md`. Gere local com `node scripts/ai-context/gerar.mjs`. Commit-base: `045b0fbdae7a2989ac9052925d0f96f007bda706` (2026-11-25T21:30:55-03:00).
+Publicado em `docs/contexto/codigo/` na branch `contexto` (gerada, nunca abra PR dela) a cada push em `main` e a cada 10 minutos pelo workflow `contexto.yml`; índice único das três fontes em `docs/contexto/00-INDEX.md`. Gere local com `node scripts/ai-context/gerar.mjs`. Commit-base: `e145e74013812c81300367b092c0a6946f9dce78` (2026-11-25T21:35:25-03:00).
 
 ## Como usar (leia antes de planejar ou executar qualquer tarefa)
 1. **Tela/rota/menu** → `rotas.json` (url/vista/menu → arquivo → hooks → tabelas → edges; `rotas_http_backend` para APIs) e `modulos.json` (módulo inteiro + dependências entre módulos).
@@ -371,7 +371,7 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 - possiveis_segredos_no_codigo: 3 — ex.: src/lib/__tests__/security-advanced.test.ts:203, src/lib/__tests__/security-advanced.test.ts:208, src/lib/__tests__/security-advanced.test.ts:213
 
 ## Grafo de código (graphify)
-- 10375 nós · 27375 arestas · 804 comunidades · grafo do commit `045b0fbd`
+- 10375 nós · 27375 arestas · 804 comunidades · grafo do commit `e145e740`
 - comunidades maiores: badge.tsx (169), logger.ts (163), vitest (157), card.tsx (155), client.ts (155), usePageTitle.ts (154), react (141), getCorrelationId (137), @tanstack/react-query (124), CardHeader (122), usePageTitle (118), buildCorsHeaders (109)
 - símbolos mais chamados: cn() (src/lib/utils.ts), usePageTitle() (src/hooks/usePageTitle.ts), safeFormatDatePtBR() (src/lib/safe-date.ts), useAuthContext() (src/contexts/AuthContext.tsx), q() (scripts/supabase_snapshot/snapshot.py), safeFormatDistanceToNow() (src/lib/safe-date.ts), traceHeaders() (src/lib/tracing.ts), withTrace() (src/lib/tracing.ts), safeToLocaleString() (src/lib/safe-date.ts), buildCorsHeaders() (supabase/functions/_shared/cors.ts), .collect() (scripts/supabase_snapshot/test_snapshot.py), formatDuration() (src/lib/utils.ts)
 - consulta local: `graphify query "<pergunta>"`, `graphify path "<A>" "<B>"`, `graphify explain "<X>"`
@@ -432,6 +432,7 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 
 
 ## Últimos commits
+- 2026-11-25 `e145e74` fix: deploy de edge abortava sem confirmacao (--yes) (#341)
 - 2026-11-25 `045b0fb` fix: tirar host fixo e chave anon do cron e do trigger de scorecard (etapa 040) (#340)
 - 2026-11-25 `f5d665d` test: provar em producao que o bloqueio geografico grava (etapa 043) (#339)
 - 2026-11-25 `ff0f86e` feat: edge login-attempt + gate de ACL e workflow de deploy de edges (etapa 002, parte 1/2) (#337)
@@ -446,7 +447,6 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 - 2026-11-25 `89fede1` fix: proteger gravacao de preferencias e callbacks contra duplo clique (#329)
 - 2026-11-25 `7245964` chore: remover componentes orfaos (etapa 296) e reaproveitar saida de audio e alertas de contato (#328)
 - 2026-11-25 `f214b17` feat: verifica voz ao vivo na chamada e remove resumo de reuniao duplicado (etapas 154,155) (#327)
-- 2026-11-25 `0fc57cd` feat: liga enforcement de SLA, violacoes e registro de leitura da base (#326)
 
 ## Arquivos deste diretório
 - `docs/contexto/codigo/rotas.json`

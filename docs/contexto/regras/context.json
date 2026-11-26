@@ -1,9 +1,9 @@
 {
  "meta": {
-  "sha": "045b0fbdae7a2989ac9052925d0f96f007bda706",
+  "sha": "e145e74013812c81300367b092c0a6946f9dce78",
   "branch": "main",
   "remote": "https://github.com/adm01-debug/Hello_V3",
-  "generated_at": "2026-11-26 00:34 UTC",
+  "generated_at": "2026-11-26 00:43 UTC",
   "files_total": 1819,
   "code_files": 1615,
   "code_lines": 197043
@@ -124942,10 +124942,19 @@
   }
  },
  "git": {
-  "sha": "045b0fbdae7a2989ac9052925d0f96f007bda706",
+  "sha": "e145e74013812c81300367b092c0a6946f9dce78",
   "branch": "main",
   "remote": "https://github.com/adm01-debug/Hello_V3",
   "commits": [
+   {
+    "sha": "e145e74",
+    "date": "2026-11-25",
+    "author": "adm01-debug",
+    "subject": "fix: deploy de edge abortava sem confirmacao (--yes) (#341)",
+    "files": [
+     ".github/workflows/deploy-edge-functions.yml"
+    ]
+   },
    {
     "sha": "045b0fb",
     "date": "2026-11-25",
@@ -125301,28 +125310,12 @@
      ".github/workflows/ci.yml",
      ".github/workflows/migrations.yml"
     ]
-   },
-   {
-    "sha": "960c999",
-    "date": "2026-11-25",
-    "author": "adm01-debug",
-    "subject": "feat: preferencias de notificacao e audio persistem (E076) (#171)",
-    "files": [
-     "docs/qa/05-PROGRESSO.md",
-     "src/components/calls/WebRTCCall.tsx",
-     "src/components/calls/__tests__/WebRTCCall.test.tsx",
-     "src/hooks/__tests__/useNotificationPreferences.test.tsx",
-     "src/hooks/useNotificationPreferences.ts",
-     "src/integrations/supabase/types.ts",
-     "src/pages/Settings.tsx",
-     "supabase/migrations/20261123120000_user_preferences.sql"
-    ]
    }
   ],
   "hot_files": [
    [
     "docs/qa/05-PROGRESSO.md",
-    13
+    12
    ],
    [
     ".github/workflows/migrations.yml",
@@ -125337,23 +125330,15 @@
     3
    ],
    [
+    ".github/workflows/deploy-edge-functions.yml",
+    2
+   ],
+   [
     "src/components/callbacks/ScheduledCallbacksList.tsx",
     2
    ],
    [
-    "src/pages/Settings.tsx",
-    2
-   ],
-   [
     "src/components/calls/UnifiedSoftphone.tsx",
-    2
-   ],
-   [
-    "src/components/calls/WebRTCCall.tsx",
-    2
-   ],
-   [
-    "src/components/calls/__tests__/WebRTCCall.test.tsx",
     2
    ],
    [
@@ -125389,15 +125374,23 @@
     1
    ],
    [
-    ".github/workflows/deploy-edge-functions.yml",
-    1
-   ],
-   [
     "supabase/config.toml",
     1
    ],
    [
     "supabase/functions/login-attempt/index.ts",
+    1
+   ],
+   [
+    "supabase/tests/login_lockout_acl_rls_test.sql",
+    1
+   ],
+   [
+    "src/hooks/__tests__/useRateLimitData.writeResult.test.tsx",
+    1
+   ],
+   [
+    "src/hooks/useRateLimitData.ts",
     1
    ]
   ]

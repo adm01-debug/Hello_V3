@@ -2,11 +2,16 @@
  "aviso": "GERADO AUTOMATICAMENTE por scripts/ai-context/gerar.mjs — não editar à mão; será sobrescrito.",
  "format_version": 2,
  "git": {
-  "commit": "045b0fbdae7a2989ac9052925d0f96f007bda706",
+  "commit": "e145e74013812c81300367b092c0a6946f9dce78",
   "branch": "main",
-  "data_commit": "2026-11-25T21:30:55-03:00",
+  "data_commit": "2026-11-25T21:35:25-03:00",
   "remote": "https://github.com/adm01-debug/Hello_V3",
   "ultimos_commits": [
+   {
+    "sha": "e145e74",
+    "data": "2026-11-25",
+    "assunto": "fix: deploy de edge abortava sem confirmacao (--yes) (#341)"
+   },
    {
     "sha": "045b0fb",
     "data": "2026-11-25",
@@ -126,11 +131,6 @@
     "sha": "fffd1cc",
     "data": "2026-11-25",
     "assunto": "fix: normalizar nome registrado antes de comparar com o arquivo (#317)"
-   },
-   {
-    "sha": "f95122a",
-    "data": "2026-11-25",
-    "assunto": "fix: colisao de versao nao impede o diagnostico da fila (#316)"
    }
   ],
   "arquivos_mudados_7d": 1318,
@@ -180,15 +180,15 @@
     "mudancas": 32
    },
    {
-    "pasta": "src/components/admin",
-    "mudancas": 31
-   },
-   {
     "pasta": "src/pages/admin",
     "mudancas": 31
    },
    {
     "pasta": "docs/estado/funcionalidades-planejadas.md",
+    "mudancas": 30
+   },
+   {
+    "pasta": "src/components/admin",
     "mudancas": 30
    },
    {
