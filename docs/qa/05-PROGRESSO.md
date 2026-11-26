@@ -122,7 +122,7 @@
 - [ ] **079** — Reivindicação atômica do contato no discador — onda 2 — Crítica — Hooks 🔒
 - [x] **080** — Verificar o erro nas escritas do discador — onda 2 — Alta — Hooks · (5 escritas em `api.ts` agora fazem `if (error) throw error`; falha do claim para a campanha com toast — teste novo falha sem o fix; vitest 20/20, tsc=0, eslint=0)
 - [ ] **081** — Registrar a chamada no Bitrix (a proposta do produto) — onda 2 — Alta — Hooks 🔒
-- [ ] **082** — Policy de UPDATE para `crm_sync_queue` — onda 2 — Alta — Banco 🔒
+- [x] **082** — Policy de UPDATE para `crm_sync_queue` — onda 2 — Alta — Banco 🔒 · (policy `"Admin supervisor update crm sync queue"` FOR UPDATE TO authenticated com `public.is_admin_or_supervisor()`, casando com a de INSERT; migration `20261127130000_crm_sync_queue_update_policy.sql` aplicada em producao — dry-run 45830194028, apply 45830341539 ("aplicada: 20261127130000_crm_sync_queue_update_policy.sql"); gate `supabase/tests/crm_sync_queue_update_rls_test.sql` 7/7 no run 45830786755, e o MESMO gate reprovava antes do fix (run 45829908912: "crm_sync_queue nao tem policy de UPDATE"); prova que usuario comum e anon alteram 0 linhas e que a leitura continua restrita a admin/supervisor; PR aberta aguardando o dono — DDL em producao)
 - [ ] **083** — Dar um gatilho à fila de sincronização do CRM — onda 2 — Alta — Banco + Edge Function 🔒
 - [ ] **084** — Parar de perder lead em silêncio quando o Bitrix está fora — onda 2 — Alta — Hooks 🔒
 - [ ] **085** — Executor das cadências (hoje elas nunca disparam) — onda 2 — Alta — Edge Function + Banco 🔒
