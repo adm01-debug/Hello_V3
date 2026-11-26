@@ -59,9 +59,10 @@ do $$
 declare r record;
 begin
   for r in
-    select jobname, status, start_time
-      from cron.job_run_details
-     order by start_time desc
+    select j.jobname, d.status, d.start_time
+      from cron.job_run_details d
+      join cron.job j on j.jobid = d.jobid
+     order by d.start_time desc
      limit 10
   loop
     raise notice 'execucao: % % %', r.jobname, r.status, r.start_time;
