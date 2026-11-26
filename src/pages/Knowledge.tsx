@@ -12,6 +12,7 @@ import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, Di
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { EmptyState } from '@/components/ui/empty-state';
 import { Skeleton } from '@/components/ui/skeleton';
+import { ArticleHistoryCard } from '@/components/knowledge/ArticleHistoryCard';
 import { usePageTitle } from '@/hooks/usePageTitle';
 import { useKbCategories, useKbArticles, useKbArticle, useUpsertArticle, useRecordKbView, type KbArticle } from '@/hooks/useKnowledgeBase';
 import { useAuthContext } from '@/contexts/AuthContext';
@@ -296,6 +297,7 @@ export default function Knowledge() {
                     ))}
                   </div>
                   <p className="text-sm whitespace-pre-wrap leading-relaxed">{articleQuery.data.content}</p>
+                  <ArticleHistoryCard articleId={articleQuery.data.id} />
                 </div>
               </ScrollArea>
               <DialogFooter className="sm:justify-between">

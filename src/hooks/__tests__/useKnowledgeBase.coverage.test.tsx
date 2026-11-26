@@ -202,6 +202,8 @@ describe('useUpsertArticle', () => {
     expect(keys).toContain(JSON.stringify(['kb-articles']));
     // prefix match: invalida ['kb-article', id] de useKbArticle
     expect(keys).toContain(JSON.stringify(['kb-article']));
+    // o trigger grava a versao nova; sem isso o historico fica velho na tela
+    expect(keys).toContain(JSON.stringify(['kb-article-history']));
   });
 });
 
