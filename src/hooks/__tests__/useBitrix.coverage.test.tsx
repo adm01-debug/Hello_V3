@@ -123,14 +123,16 @@ describe('useBitrix', () => {
     expect(insertMock).toHaveBeenCalled();
   });
 
-  it('createLead returns null when queue also fails', async () => {
+  it('createLead returns the error when queue also fails', async () => {
     setInvoke({ data: { success: false }, error: null });
     insertResult = { error: { message: 'queue-fail' }, data: null };
     const { result } = renderHook(() => useBitrix());
     await act(async () => {
       const res = await result.current.createLead({ TITLE: 'Fail' });
-      expect(res).toBeNull();
+      expect(res).toEqual({ error: 'queue-fail' });
     });
+    // Etapa 084: sem fila o lead nao existe em lugar nenhum -- o usuario precisa saber.
+    expect(toast.error).toHaveBeenCalled();
   });
 
   it('registerCall success and enqueue paths', async () => {
@@ -144,11 +146,24 @@ describe('useBitrix', () => {
     });
 
     setInvoke({ data: { success: false }, error: null });
+    insertResult = { error: null, data: null };
     await act(async () => {
       const res = await result.current.registerCall(callData);
-      expect(res).toBeNull();
+      expect(res).toEqual({ queued: true });
     });
     expect(insertMock).toHaveBeenCalled();
+    expect(toast.info).toHaveBeenCalled();
+  });
+
+  it('registerCall avisa quando a fila tambem falha (etapa 084)', async () => {
+    const callData: BitrixCallData = { PHONE_NUMBER: '5511888', TYPE: 1 };
+    setInvoke({ data: { success: false }, error: null });
+    insertResult = { error: { message: 'queue-fail' }, data: null };
+    const { result } = renderHook(() => useBitrix());
+    await act(async () => {
+      expect(await result.current.registerCall(callData)).toEqual({ error: 'queue-fail' });
+    });
+    expect(toast.error).toHaveBeenCalled();
   });
 
   it('finishCall success and failure', async () => {
