@@ -57,3 +57,56 @@ Resultado: arquivo de 32 linhas recuperado byte a byte, `deno test -A` -> **4 pa
 - A varredura compara **PRs** e **branches** com a `main`; nao julga valor de negocio de codigo ja mergeado.
 - Sessoes antigas usaram clones proprios: aqui, `merge_commit_sha` + `--is-ancestor` cobrem o que foi mergeado, que e o universo do "nao se perde o que entrou".
 - As 4 PRs abertas (#370–#373) e as 2 desta onda (#374, #375) continuam **abertas de proposito** (DDL/cron/segredo = regra 8).
+## 6. Segunda passada — auditoria do que foi descartado (2026-11-27)
+
+Pergunta do dono: *"analise exaustiva em tudo que foi descartado, procurando o que NAO deveria ter sido descartado por ser trabalho de outro agente, PARCIAL"*. Metodo: nada de amostragem — **todos** os arquivos de **todas** as PRs fechadas sem merge foram reauditados, e todas as branches locais/remotas apagadas foram confrontadas com a `main` por conteudo.
+
+### 6.1 Metodo (byte a byte, nao por nome)
+
+1. `gh api .../pulls?state=closed` (paginado) -> universo de PRs fechadas.
+2. Para cada PR: `git fetch origin <head_sha>` e `git diff --numstat origin/main...<sha>` (tres pontos = so o que a PR acrescentou).
+3. Para cada arquivo: `git show origin/main:<path>` e comparacao **linha a linha** das linhas acrescentadas, com normalizacao de espacos/aspas/pontuacao (elimina falso "faltando" por reformatacao).
+4. Veredito so com `arquivo:linha` na `main`.
+
+### 6.2 As 14 PRs fechadas sem merge, reauditadas arquivo por arquivo
+
+Resultado: **nenhuma funcionalidade perdida**. Todo diferenca restante e codigo que a `main` reescreveu depois.
+
+| PR | O que a 2a passada achou na `main` |
+| --- | --- |
+| #1 | `StatsCard` com `glowColor` (`:15,25,77,120`), `useMFA` com alfabeto Crockford + `crypto.getRandomValues` (`:162-166`), `jwt-handler` com decode base64url (`:21-23`), `web-vitals` FCP (`:119`), `useDashboardLayout` (`:37`), `useSupervisorPanel` (`:55-79`), `client.ts` com guarda de env, `Index.tsx` invalidando cache (`:58`). `LazyComponent.tsx` extinto por ADR 007 (remocao deliberada). Os 4 testes antigos (`useComprehensive`, `useDeviceAndSecurity`, `useAuthAndDataIntegrity`, `useAlertSoundAndNotifications`) foram consolidados: a `main` tem **168** arquivos de teste em `src/hooks/__tests__`. |
+| #9 | todas as linhas acrescentadas presentes |
+| #12 / #15 | `usePhaseColors.ts:10` com `safeParseFloat(..., { context })`; `error-boundaries.test.tsx:123` cobre `/Erro ao carregar/` |
+| #18 / #19 | semeadura de sessao admin vive em `tests/e2e/helpers/adminSession.ts` + `skipGuard.ts` |
+| #20 | `deno.lock` com `react-router-dom@^7.18.6` (mais novo que o da PR); `health-check/index.ts:159` com `Deno.serve(withRequestLog(...))` |
+| #47 | `diag-ci.yml` era diagnostico temporario do `startup_failure`; nada equivalente e necessario hoje |
+| #49 | todas as linhas presentes |
+| #94 | exigencia de admin em `fuzz-test-runner/index.ts:22-46` (401 + `is_admin_user`) |
+| #104 | `cleanup-lock-conflicts/index.ts:25-39` com token de cron `CLEANUP_CRON_TOKEN`; teste `optimistic-lock.test.ts` existe (conteudo reescrito depois) |
+| #106 | as **18** migrations da PR estao identicas na `main`; `data-lake-flush/index.ts:30-51` com token de cron + 401/403 |
+| #169 | persistencia de transcricao em `useCallSession.ts:43-76`; **`hold_events` e gravado e fechado** em `useMultiChannelCall.ts:225-255`; botao de cancelar transferencia em `ActiveCallDisplay.tsx:254-274` |
+| #309 | resgatada na 1a passada (PR #374) — arquivo identico na `main` |
+
+### 6.3 As 16 PRs mergeadas com conflito resolvido a mao (#353–#368)
+
+A 1a passada provou apenas **existencia** de arquivo (`git cat-file -e`). A 2a passada provou **conteudo**: `git diff origin/main...<head>` de cada PR -> **0 linhas ausentes** nas 16. A resolucao mecanica dos conflitos de `docs/qa/05-PROGRESSO.md` e `docs/agentes/banco.md` nao perdeu byte.
+
+### 6.4 Branches apagadas
+
+- **16 branches locais** do clone antigo: 13 mapeiam para PRs **mergeadas** (merge commit ancestral da `main`), 1 e a branch da PR **#370** (aberta, conteudo vivo), 2 sao sondas (`tmp-probe`, `tmp-probe-128`).
+- **13 branches remotas apagadas** (Events API, janela de 300 eventos): 11 mapeiam para PRs mergeadas; `claude/test-e076-rls-*` teve o conteudo incorporado pela **#313** (`supabase/tests/user_preferences_rls_test.sql` esta na `main`); `claude/tmp-diag-hold-rls-*` era sonda de diagnostico; `tmp-probe-128` sonda.
+- `claude/fix-espera-nao-grava-hold-*` -> **PR #321 mergeada**; o codigo esta em `src/hooks/useMultiChannelCall.ts:225-255`.
+- `claude/infra-geo-tables-retroativo-*` (sem PR): sonda de leitura do DDL real em producao; a entrega real (CREATE TABLE retroativo) entrou pela **#355**.
+
+### 6.5 Arquivos deletados do historico da `main`
+
+`git log --diff-filter=D`: **1** migration apagada em toda a historia — `supabase/migrations/20250102000000_performance_indexes.sql`, removida pela **#318** porque reusava a versao `20250102000000` (nunca registrava em `public.schema_migrations`) e foi substituida por `20261125120000_indices_auditoria_e_busca_contatos.sql`. **0** testes E2E e **0** gates (`supabase/tests/`) apagados.
+
+### 6.6 Nao perdido, porem nao adotado (hardening mais fraco que o proposto)
+
+`src/lib/voipProactiveSnapshot.ts` e `src/lib/voipRecommendationCoaching.ts` tem `try/catch` em volta do `JSON.parse` do `localStorage`, mas **sem validacao de forma** (a PR #1 validava `ids`/`takenAt` e filtrava o array). Com JSON valido de forma errada o retorno pode sair `NaN`/nao-array. Sem efeito hoje (chaves sao escritas so por este modulo); registrado como divida, nao como perda.
+
+### 6.7 Limites
+
+- A Events API do GitHub devolve no maximo 300 eventos por chamada (paginacao limitada) — branches remotas apagadas **antes** dessa janela nao sao enumeraveis por ela. O universo "mergeado" continua coberto por completo: toda PR mergeada foi provada por `merge_commit_sha` + `--is-ancestor`, e toda PR fechada sem merge foi reauditada arquivo por arquivo.
+- Branches que nunca subiram para o remoto e nunca viraram PR so existiriam em clones locais; os clones que restam (`/tmp/hv2`, `/tmp/hv083`) foram auditados por inteiro.
