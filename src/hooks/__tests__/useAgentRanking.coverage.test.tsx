@@ -48,7 +48,10 @@ function makeBuilder(table: string) {
 }
 
 const fromMock = vi.fn((table: string) => makeBuilder(table));
-const getUserMock = vi.fn(() => Promise.resolve({ data: { user: { id: 'user-1' } }, error: null }));
+const getUserMock = vi.fn(
+  (): Promise<{ data: { user: { id: string } | null }; error: unknown }> =>
+    Promise.resolve({ data: { user: { id: 'user-1' } }, error: null }),
+);
 
 vi.mock('@/integrations/supabase/client', () => ({
   supabase: {
