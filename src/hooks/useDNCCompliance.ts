@@ -23,6 +23,9 @@ interface DNCEntry {
   notes: string | null;
   expires_at: string | null;
   is_active: boolean;
+  removed_by?: string | null;
+  removed_at?: string | null;
+  removal_reason?: string | null;
   created_at: string;
   updated_at: string;
 }
@@ -188,6 +191,31 @@ export function useDNCCompliance() {
     },
   });
 
+  // Edita motivo, observacao e validade de uma entrada existente (etapa 175).
+  // O autor e a data da remocao continuam sendo carimbados pelo gatilho do banco.
+  const updateDNCMutation = useMutation({
+    mutationFn: async (payload: {
+      id: string;
+      reason?: string;
+      notes?: string | null;
+      expires_at?: string | null;
+    }) => {
+      const { id, ...fields } = payload;
+      const { error } = await supabase
+        .from('dnc_list')
+        .update({ ...fields, updated_at: new Date().toISOString() })
+        .eq('id', id);
+      if (error) throw error;
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['dnc-list'] });
+      toast.success('Entrada atualizada', { description: 'Motivo, observação e validade foram salvos.' });
+    },
+    onError: (error: Error) => {
+      toast.error('Erro ao atualizar', { description: (error instanceof Error ? error.message : String(error)) });
+    },
+  });
+
   // Update compliance setting
   const updateSettingMutation = useMutation({
     mutationFn: async ({ key, value }: { key: string; value: Json }) => {
@@ -317,10 +345,12 @@ export function useDNCCompliance() {
     // Mutations
     addToDNC: addToDNCMutation.mutate,
     removeFromDNC: removeFromDNCMutation.mutate,
+    updateDNC: updateDNCMutation.mutate,
     updateSetting: updateSettingMutation.mutate,
     
     // Mutation states
     isAddingToDNC: addToDNCMutation.isPending,
     isRemovingFromDNC: removeFromDNCMutation.isPending,
+    isUpdatingDNC: updateDNCMutation.isPending,
   };
 }
