@@ -12,7 +12,8 @@
 --      trigger passar pela RLS sem policy de INSERT);
 --   6) a condicao da policy e verdadeira para admin ativo e falsa para quem nao
 --      tem papel de admin/supervisor;
---   7) anon nao le.
+--   7) anon nao le;
+--   8) criar+editar um artigo grava as versoes (prova funcional do trigger).
 --
 -- Roda dentro de transacao revertida no fim (nada fica gravado no banco).
 -- Rodar com: psql "$SUPABASE_DB_URL" -v ON_ERROR_STOP=1 -f <este arquivo>
@@ -29,7 +30,7 @@ begin
     raise exception 'RLS desligado em public.kb_article_history';
   end if;
   select count(*) into v_rows from public.kb_article_history;
-  raise notice '1/7 ok: RLS ligado; versoes ja gravadas = %', v_rows;
+  raise notice '1/8 ok: RLS ligado; versoes ja gravadas = %', v_rows;
 end $$;
 
 -- 2. Nenhuma policy de escrita: historico so entra pelo trigger
@@ -44,7 +45,7 @@ begin
   if v_write > 0 then
     raise exception 'kb_article_history tem % policy(s) de escrita; o historico deve ser imutavel', v_write;
   end if;
-  raise notice '2/7 ok: nenhuma policy de escrita';
+  raise notice '2/8 ok: nenhuma policy de escrita';
 end $$;
 
 -- 3. Toda policy de leitura exige admin/supervisor
@@ -70,7 +71,7 @@ begin
     end if;
   end loop;
 
-  raise notice '3/7 ok: % policy(s) de leitura restritas a admin/supervisor', v_total;
+  raise notice '3/8 ok: % policy(s) de leitura restritas a admin/supervisor', v_total;
 end $$;
 
 -- 4. Trigger ativo em INSERT/UPDATE apontando para handle_kb_article_history
@@ -102,7 +103,7 @@ begin
     raise exception 'trigger aponta para % em vez de handle_kb_article_history', v_proc::regprocedure;
   end if;
 
-  raise notice '4/7 ok: trigger AFTER INSERT/UPDATE ativo';
+  raise notice '4/8 ok: trigger AFTER INSERT/UPDATE ativo';
 end $$;
 
 -- 5. Funcao do trigger roda como dono (SECURITY DEFINER) com search_path fixo
@@ -123,7 +124,7 @@ begin
     raise exception 'handle_kb_article_history sem search_path fixo';
   end if;
 
-  raise notice '5/7 ok: SECURITY DEFINER com search_path fixo';
+  raise notice '5/8 ok: SECURITY DEFINER com search_path fixo';
 end $$;
 
 -- 6. A condicao da policy separa admin/supervisor de usuario comum
@@ -140,7 +141,7 @@ begin
    limit 1;
 
   if v_admin is null then
-    raise notice '6/7 pulado: nenhum admin/supervisor ativo para simular';
+    raise notice '6/8 pulado: nenhum admin/supervisor ativo para simular';
     return;
   end if;
 
@@ -160,7 +161,7 @@ begin
    limit 1;
 
   if v_other is null then
-    raise notice '6/7 parcial: admin ok; nenhum usuario comum para simular';
+    raise notice '6/8 parcial: admin ok; nenhum usuario comum para simular';
     return;
   end if;
 
@@ -170,7 +171,7 @@ begin
   end if;
 
   perform set_config('request.jwt.claims', '', true);
-  raise notice '6/7 ok: admin ve, usuario comum nao ve';
+  raise notice '6/8 ok: admin ve, usuario comum nao ve';
 end $$;
 
 -- 7. anon nao le o historico
@@ -180,7 +181,7 @@ declare
   v_cnt bigint;
 begin
   if not pg_has_role(current_user, v_role::name, 'member') then
-    raise notice '7/7 pulado: % nao e assumivel por %', v_role, current_user;
+    raise notice '7/8 pulado: % nao e assumivel por %', v_role, current_user;
     return;
   end if;
 
@@ -191,12 +192,41 @@ begin
     if v_cnt > 0 then
       raise exception 'anon leu % linha(s) de kb_article_history', v_cnt;
     end if;
-    raise notice '7/7 ok: anon nao ve linhas';
+    raise notice '7/8 ok: anon nao ve linhas';
   exception
     when insufficient_privilege then
       reset role;
-      raise notice '7/7 ok: anon sem privilegio de leitura';
+      raise notice '7/8 ok: anon sem privilegio de leitura';
   end;
 end $$;
 
+-- 8. Prova funcional: o mesmo caminho do upsert da tela grava a versao
+do $$
+declare
+  v_article uuid;
+  v_versions integer;
+  v_types text[];
+begin
+  insert into public.kb_articles (title, slug, content, status)
+  values ('Gate A-142', 'gate-a-142-' || substr(gen_random_uuid()::text, 1, 8), 'conteudo v1', 'draft')
+  returning id into v_article;
+
+  update public.kb_articles
+     set content = 'conteudo v2', status = 'published'
+   where id = v_article;
+
+  select count(*), array_agg(change_type)
+    into v_versions, v_types
+    from public.kb_article_history
+   where article_id = v_article;
+
+  if v_versions <> 2 then
+    raise exception 'trigger gravou % versao(oes); esperado 2 (create + status_change)', v_versions;
+  end if;
+  if not (v_types @> array['create', 'status_change']) then
+    raise exception 'tipos gravados inesperados: %', v_types;
+  end if;
+
+  raise notice '8/8 ok: criar+editar gerou % versoes (%)', v_versions, v_types;
+end $$;
 rollback;
