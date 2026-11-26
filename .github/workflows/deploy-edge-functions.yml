@@ -61,4 +61,5 @@ jobs:
       - name: Deploy
         run: |
           set -euo pipefail
-          supabase functions deploy "${FUNCTION}" --project-ref cfmlmcdyjuotqobjapng
+          # --yes: sem terminal o CLI pede confirmacao e aborta sem deployar.
+          supabase functions deploy "${FUNCTION}" --project-ref cfmlmcdyjuotqobjapng --yes
