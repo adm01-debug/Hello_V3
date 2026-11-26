@@ -1,7 +1,7 @@
 {
  "aviso": "GERADO AUTOMATICAMENTE por scripts/ai-context/gerar.mjs — não editar à mão; será sobrescrito.",
  "format_version": 2,
- "total": 446,
+ "total": 447,
  "orfaos": 13,
  "nomes_duplicados": {
   "KpiCards": [
@@ -383,6 +383,22 @@
    "linhas": 36,
    "dominio": "components/admin",
    "hooks_locais": [],
+   "tabelas": [],
+   "edges": [],
+   "usado_por": 1,
+   "orfao": false
+  },
+  {
+   "arquivo": "src/components/admin/webhook-health/WebhookSecretsCard.tsx",
+   "exports": [
+    "WebhookSecretsCard"
+   ],
+   "export_default": null,
+   "linhas": 341,
+   "dominio": "components/admin",
+   "hooks_locais": [
+    "useWebhookSecrets"
+   ],
    "tabelas": [],
    "edges": [],
    "usado_por": 1,
@@ -3983,7 +3999,7 @@
    "hooks_locais": [],
    "tabelas": [],
    "edges": [],
-   "usado_por": 8,
+   "usado_por": 9,
    "orfao": false
   },
   {
@@ -3999,7 +4015,7 @@
    "hooks_locais": [],
    "tabelas": [],
    "edges": [],
-   "usado_por": 21,
+   "usado_por": 22,
    "orfao": false
   },
   {
@@ -4044,7 +4060,7 @@
    "hooks_locais": [],
    "tabelas": [],
    "edges": [],
-   "usado_por": 198,
+   "usado_por": 199,
    "orfao": false
   },
   {
@@ -4094,7 +4110,7 @@
    "hooks_locais": [],
    "tabelas": [],
    "edges": [],
-   "usado_por": 243,
+   "usado_por": 244,
    "orfao": false
   },
   {
@@ -4129,7 +4145,7 @@
    "hooks_locais": [],
    "tabelas": [],
    "edges": [],
-   "usado_por": 232,
+   "usado_por": 233,
    "orfao": false
   },
   {
@@ -4254,7 +4270,7 @@
    "hooks_locais": [],
    "tabelas": [],
    "edges": [],
-   "usado_por": 48,
+   "usado_por": 49,
    "orfao": false
   },
   {
@@ -4397,7 +4413,7 @@
    "hooks_locais": [],
    "tabelas": [],
    "edges": [],
-   "usado_por": 94,
+   "usado_por": 95,
    "orfao": false
   },
   {
@@ -4430,7 +4446,7 @@
    "hooks_locais": [],
    "tabelas": [],
    "edges": [],
-   "usado_por": 69,
+   "usado_por": 70,
    "orfao": false
   },
   {
@@ -4793,7 +4809,7 @@
    "hooks_locais": [],
    "tabelas": [],
    "edges": [],
-   "usado_por": 27,
+   "usado_por": 28,
    "orfao": false
   },
   {
@@ -5372,7 +5388,7 @@
     "WebhookHealth"
    ],
    "export_default": "WebhookHealth",
-   "linhas": 156,
+   "linhas": 159,
    "dominio": "pages/admin",
    "hooks_locais": [
     "usePageTitle",

@@ -1,7 +1,7 @@
 {
  "aviso": "GERADO AUTOMATICAMENTE por scripts/ai-context/gerar.mjs — não editar à mão; será sobrescrito.",
  "format_version": 2,
- "total": 196,
+ "total": 197,
  "hooks": [
   {
    "arquivo": "scripts/ai-context/cenarios.mjs",
@@ -4969,6 +4969,30 @@
     "src/pages/admin/SecurityAlerts.tsx"
    ],
    "coberto_por_testes": 0
+  },
+  {
+   "arquivo": "src/hooks/useWebhookSecrets.ts",
+   "hooks_exportados": [
+    "useWebhookSecrets"
+   ],
+   "linhas": 143,
+   "dominio": "hooks",
+   "tabelas": [
+    "webhook_secrets"
+   ],
+   "rpcs": [],
+   "edges": [],
+   "hooks_internos": [
+    "useMutation",
+    "useQuery",
+    "useQueryClient"
+   ],
+   "canais_realtime": [],
+   "usado_por": 1,
+   "usado_por_arquivos": [
+    "src/components/admin/webhook-health/WebhookSecretsCard.tsx"
+   ],
+   "coberto_por_testes": 2
   },
   {
    "arquivo": "src/hooks/useWebVitals.ts",

@@ -5,17 +5,17 @@
   "vitest",
   "playwright"
  ],
- "total": 422,
+ "total": 425,
  "por_tipo": {
   "contrato": 1,
   "e2e": 16,
   "pytest": 2,
-  "unit": 395
+  "unit": 397
  },
  "onde_ficam": [
   {
    "padrao": "co-localizado (__tests__)",
-   "arquivos": 388
+   "arquivos": 390
   },
   {
    "padrao": "tests/",
@@ -166,6 +166,16 @@
     "src/components/admin/extensions/HealthScoreBadge.tsx"
    ],
    "casos": 7
+  },
+  {
+   "arquivo": "src/components/admin/webhook-health/__tests__/WebhookSecretsCard.test.tsx",
+   "tipo": "unit",
+   "linhas": 157,
+   "testa": [
+    "src/components/admin/webhook-health/WebhookSecretsCard.tsx",
+    "src/hooks/useWebhookSecrets.ts"
+   ],
+   "casos": 9
   },
   {
    "arquivo": "src/components/auth/__tests__/PermissionGate.test.tsx",
@@ -1977,6 +1987,15 @@
     "src/hooks/useWebAuthn.ts"
    ],
    "casos": 25
+  },
+  {
+   "arquivo": "src/hooks/__tests__/useWebhookSecrets.test.tsx",
+   "tipo": "unit",
+   "linhas": 213,
+   "testa": [
+    "src/hooks/useWebhookSecrets.ts"
+   ],
+   "casos": 10
   },
   {
    "arquivo": "src/hooks/__tests__/useWebVitals.coverage.test.tsx",
@@ -3796,10 +3815,12 @@
   "supabase/tests/login_lockout_acl_rls_test.sql",
   "supabase/tests/rate_limit_logs_write_policies_rls_test.sql",
   "supabase/tests/role_source_of_truth_test.sql",
-  "supabase/tests/user_preferences_rls_test.sql"
+  "supabase/tests/user_preferences_rls_test.sql",
+  "supabase/tests/webhook_secrets_rls_test.sql"
  ],
  "cobertura_por_arquivo": {
   "src/components/admin/extensions/HealthScoreBadge.tsx": 1,
+  "src/components/admin/webhook-health/WebhookSecretsCard.tsx": 1,
   "src/components/auth/PermissionGate.tsx": 1,
   "src/components/auth/ProtectedRoute.tsx": 3,
   "src/components/auth/SessionExpiredDialog.tsx": 1,
@@ -3995,6 +4016,7 @@
   "src/hooks/useWavoipCall.ts": 1,
   "src/hooks/useWebAuthn.ts": 2,
   "src/hooks/useWebVitals.ts": 1,
+  "src/hooks/useWebhookSecrets.ts": 2,
   "src/hooks/useWhatsappRewrite.ts": 1,
   "src/integrations/supabase/client.ts": 32,
   "src/lib/a11y-clickable.ts": 1,

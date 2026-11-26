@@ -21272,7 +21272,7 @@
    "indices": [],
    "fks": [],
    "criada_em": "20260523172256_ea1ae0b2-2688-4a63-aaf0-242d16a570e9.sql",
-   "usada_no_front": 0,
+   "usada_no_front": 1,
    "usada_em_edges": [
     "_shared"
    ],

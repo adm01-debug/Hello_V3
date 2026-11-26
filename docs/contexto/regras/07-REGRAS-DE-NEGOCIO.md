@@ -1,6 +1,6 @@
 # 07 · REGRAS DE NEGÓCIO
 
-> Gerado automaticamente por AI Context Sync v1.3.2 · commit `bd1b19ca9b` · branch `main` · 2026-11-26 10:35 UTC
+> Gerado automaticamente por AI Context Sync v1.3.2 · commit `fbfb9167d8` · branch `main` · 2026-11-26 10:52 UTC
 > Não edite à mão — regras humanas vão em `manual/`.
 
 ## A. Regras escritas por humanos (`manual/` — prioridade máxima, nunca sobrescrito)
@@ -1098,6 +1098,7 @@ _nenhum mapa explícito encontrado — transições só existem implicitamente n
 | RecActionType | link \| function \| acknowledge | `src/hooks/useVoipRecommendations.ts` |
 | VoipProvider | nvoip \| directcall \| totalvoice \| generic \| wavoip | `src/hooks/useVoipTrunks.ts` |
 | WavoipStatus | disconnected \| connecting \| connected \| calling \| active \| error | `src/hooks/useWavoipCall.ts` |
+| WEBHOOK_SECRETS_QUERY_KEY | 'webhook-secrets' | `src/hooks/useWebhookSecrets.ts` |
 | RewriteTone | profissional \| amigavel \| conciso \| empatico | `src/hooks/useWhatsappRewrite.ts` |
 | UserRole | admin \| supervisor \| agent \| viewer | `src/hooks/auth/useAuthState.ts` |
 | CallResult | answered \| no_answer \| busy \| voicemail \| wrong_number \| callback | `src/hooks/predictive-dialer/types.ts` |
@@ -1467,6 +1468,7 @@ _nenhum item encontrado_
 | `sip_password` | type=password | `src/components/admin/voip/VoipTrunkFormDrawer.tsx` |
 | `max_channels` | max, type=number, max | `src/components/admin/voip/VoipTrunkFormDrawer.tsx` |
 | `priority` | type=number | `src/components/admin/voip/VoipTrunkFormDrawer.tsx` |
+| `webhook-secret-provider` | disabled=mode ===  | `src/components/admin/webhook-health/WebhookSecretsCard.tsx` |
 | `passkey-email` | type=email | `src/components/auth/PasskeyLogin.tsx` |
 | `reauth-password` | type=password | `src/components/auth/ReauthDialog.tsx` |
 | `mfa-code` | max | `src/components/auth/ReauthDialog.tsx` |
@@ -1594,6 +1596,18 @@ _nenhum item encontrado_
 - **calculateMos(rttMs: number, jitterMs: number, lossPct: number)** — `src/hooks/useVoipQualityMonitor.ts`
   ```
   const effectiveLatency = rttMs / 2 + jitterMs * 2 + 10; let R = effectiveLatency < 160 ? 93.2 - effectiveLatency / 40 : 93.2 - (effectiveLatency - 120) / 10; R = R - lossPct * 2.5; if (R < 0) R = 0; if (R > 100) R = 100; const mos = 1 + 0.035 * R + R * (R - 60) * (100 - R) * 7e-6; return Math.max(1, Math.min(5, Number(mos.toFixed(2))));
+  ```
+- **validateProvider(value: string)** — `src/hooks/useWebhookSecrets.ts`
+  ```
+  const normalized = normalizeProvider(value); if (!normalized) return 'Informe o provedor'; if (!PROVIDER_PATTERN.test(normalized)) { return 'Use de 3 a 64 caracteres: letras minúsculas, números, ponto, hífen ou sublinhado'; } return null;
+  ```
+- **validateSecret(value: string)** — `src/hooks/useWebhookSecrets.ts`
+  ```
+  if (!value) return 'Informe ou gere um segredo'; if (value.trim().length < WEBHOOK_SECRET_MIN_LENGTH) { return `O segredo precisa de ao menos ${WEBHOOK_SECRET_MIN_LENGTH} caracteres`; } return null;
+  ```
+- **generateWebhookSecret(bytes = 32)** — `src/hooks/useWebhookSecrets.ts`
+  ```
+  const buffer = new Uint8Array(bytes); crypto.getRandomValues(buffer); return Array.from(buffer, (byte) => byte.toString(16).padStart(2, '0')).join('');
   ```
 - **calculateAcceptanceRate(signals: Array<{ was_used: boolean }>)** — `src/lib/agent-assist-utils.ts`
   ```
@@ -2351,6 +2365,8 @@ _nenhum item encontrado_
 | view sem permissão na fixture | `scripts/supabase_snapshot/test_snapshot.py` |
 | Erro ao carregar trunks | `src/components/admin/extensions/BulkAssignTrunkDialog.tsx` |
 | Falha ao atribuir trunk | `src/components/admin/extensions/BulkAssignTrunkDialog.tsx` |
+| ; import { Badge } from  | `src/components/admin/webhook-health/WebhookSecretsCard.tsx` |
+| O navegador bloqueou a cópia | `src/components/admin/webhook-health/WebhookSecretsCard.tsx` |
 | Erro na análise | `src/components/ai/AICallAnalysis.tsx` |
 | Transcrição vazia | `src/components/ai/AICallAnalysis.tsx` |
 | ; import {   Dialog,   DialogContent,   DialogDescription,   DialogFooter,   DialogHeader,   DialogTitle,   DialogTrigger, } from  | `src/components/auth/PasskeyManager.tsx` |
@@ -2597,9 +2613,7 @@ _nenhum item encontrado_
 | Novo alerta de rate limit! | `src/hooks/useRateLimitData.ts` |
 | Notificações não suportadas | `src/hooks/useRealtimeHoldAlerts.ts` |
 | Permissão negada | `src/hooks/useRealtimeHoldAlerts.ts` |
-| ⚠️ Alerta de Tempo em Espera | `src/hooks/useRealtimeHoldAlerts.ts` |
-| Erro ao analisar sentimento | `src/hooks/useRecordings.ts` |
-| … +292 linhas — lista completa em `context.json` | |
+| … +296 linhas — lista completa em `context.json` | |
 
 ## J. Controle de acesso no código (checagens de perfil/permissão)
 
@@ -2650,7 +2664,7 @@ _nenhum item encontrado_
 | `admin` | `supabase/functions/data-lake-flush/index.ts` |
 | `admin` | `supabase/migrations/20261123000200_fix_has_role_oracle_and_debug_tables.sql` |
 
-## K. Testes como especificação (3667 testes em 405 arquivos — nomes completos em `context.json`)
+## K. Testes como especificação (3689 testes em 407 arquivos — nomes completos em `context.json`)
 
 | Arquivo | Testes | Exemplos do que o sistema DEVE fazer |
 |---|---|---|
@@ -2721,6 +2735,7 @@ _nenhum item encontrado_
 | `src/hooks/__tests__/useSurveys.coverage.test.tsx` | 13 | useSurveys · carrega respostas e calcula nps · npsScore null quando sem scores válidos · trata erro de carregamento … |
 | `src/lib/__tests__/executive-dashboard-utils.test.ts` | 13 | getPeriodLabel · returns correct label for today · returns correct label for week · returns correct label for month … |
 | `src/lib/__tests__/voipRecommendationCoaching.coverage.test.ts` | 13 | voipRecommendationCoaching · schedules a coaching check with mosBefore captured · does not schedule duplicates for the same recommendation · captures null mosBefore when supabase returns empty data … |
+| `src/hooks/__tests__/useWebhookSecrets.test.tsx` | 12 | useWebhookSecrets · lista os segredos ordenados por provedor · cadastra provedor normalizado e invalida o cache · distingue rotação de cadastro na mensagem de sucesso … |
 | `src/lib/__tests__/guard-edge-numeric.test.ts` | 12 | guard-edge-numeric — Regra 1 (z.number sem .finite) · detecta z.number() em qualquer disposição de whitespace · aceita z.number().finite() com whitespace variável · ignora z.number() dentro de comentários e strings … |
 | `src/lib/__tests__/meeting-summary-utils.test.ts` | 12 | isValidActionItem · aceita item válido · rejeita prioridade inválida · rejeita sem descrição … |
 | `src/lib/__tests__/security-alerts-webhook-validation.test.ts` | 12 | validateWebhookConfig · aceita config mínima válida sem erros nem avisos · aceita URL vazia (= remover config) · rejeita URL inválida: %s … |
@@ -2742,6 +2757,7 @@ _nenhum item encontrado_
 | `supabase/functions/_shared/__tests__/resilient-fetch.test.ts` | 11 | resilientFetch: sucesso em 2xx passa direto · resilientFetch: 500 é reciclado e sucede na 3ª tentativa · resilientFetch: 404 NÃO é reciclado · resilientFetch: 500 esgota retries e propaga … |
 | `supabase/functions/health-check/__tests__/slo-budget_test.ts` | 11 | budget - sem falhas mantem o budget intacto · budget - falha igual a tolerancia zera o budget · budget - falha acima da tolerancia escala o burn rate · budget - metade da tolerancia entra em warning … |
 | `supabase/functions/voip-executive-summary/__tests__/index.test.ts` | 11 | computeHealthScore — perfeito = 100 · computeHealthScore — fórmula ponderada correta · computeHealthScore — cobre só as dimensões medidas · computeHealthScore — cobertura < 2 devolve null … |
+| `src/components/admin/webhook-health/__tests__/WebhookSecretsCard.test.tsx` | 10 | WebhookSecretsCard · mostra estado vazio com chamada para cadastrar quando nao ha segredo · nunca renderiza o segredo completo antes de revelar · revela e copia o valor completo quando o admin pede … |
 | `src/components/dialer/phone/__tests__/phone-dialer.test.ts` | 10 | phone-utils · sanitiza entrada removendo caracteres inválidos · formata número BR no display · valida se o número é discável … |
 | `src/components/layout/__tests__/AppSidebar.test.tsx` | 10 | routeRoles (E088) · declara papéis para rota admin e undefined para rota aberta · AppSidebar — filtro por papel (E089) · agente não vê itens de rota com roles (Executivo, Logs de Auditoria) … |
 | `src/hooks/__tests__/useAlerts.coverage.test.tsx` | 10 | useAlerts · loads alerts and computes counts · applies filters · checks for new alerts (success and none) … |
@@ -2952,9 +2968,7 @@ _nenhum item encontrado_
 | `src/hooks/__tests__/useCallScoring.coverage.test.tsx` | 4 | useCallScoring · expõe o estado inicial · calcula score com sucesso · lança erro quando a edge function falha |
 | `src/hooks/__tests__/useContactInsights.coverage.test.tsx` | 4 | useContactInsights · returns empty metrics with no contacts · computes distributions across varied personality profiles · handles fetch error gracefully |
 | `src/hooks/__tests__/useDeals.test.ts` | 4 | useDeals · loads deals · createDeal returns true on success · computeHealth invokes edge function |
-| `src/hooks/__tests__/useHoldMetrics.coverage.test.tsx` | 4 | useHoldMetrics · aggregates 7d metrics · handles 30d and 90d ranges with empty data · handles 90d range |
-| `src/hooks/__tests__/useIPValidation.coverage.test.tsx` | 4 | useIPValidation · returns data on success · handles supabase error branch · handles thrown exception branch |
-| … +105 linhas — lista completa em `context.json` | | |
+| … +107 linhas — lista completa em `context.json` | | |
 
 ## L. Eventos de webhook tratados (contratos com sistemas externos)
 
@@ -3177,6 +3191,7 @@ _nenhum item encontrado_
 | (`validation`) para a UI renderizar mensagens inline por campo e bloqueia | `src/hooks/useWebhookConfig.ts` |
 | base já validado; garantimos apenas que max >= base ao persistir | `src/hooks/useWebhookConfig.ts` |
 | validação (para UI inline) | `src/hooks/useWebhookConfig.ts` |
+| * Mostra apenas o final do segredo; o valor completo só sai na ação de revelar/copiar. */ | `src/hooks/useWebhookSecrets.ts` |
 | Le apenas papeis ativos e nao expirados, aplicando precedencia | `src/hooks/auth/useAuthProfile.ts` |
 | somente se o usuario nao tiver nenhum papel em user_roles. | `src/hooks/auth/useAuthProfile.ts` |
 | Telemetria e acessoria: nao pode quebrar a pagina do usuario. | `src/hooks/telemetry/useTelemetry.ts` |

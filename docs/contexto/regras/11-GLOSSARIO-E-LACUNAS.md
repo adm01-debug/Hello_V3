@@ -1,6 +1,6 @@
 # 11 · GLOSSÁRIO, DADOS DE REFERÊNCIA E LACUNAS
 
-> Gerado automaticamente por AI Context Sync v1.3.2 · commit `bd1b19ca9b` · branch `main` · 2026-11-26 10:35 UTC
+> Gerado automaticamente por AI Context Sync v1.3.2 · commit `fbfb9167d8` · branch `main` · 2026-11-26 10:52 UTC
 > Não edite à mão — regras humanas vão em `manual/`.
 
 ## Glossário do domínio (entidades do sistema)
@@ -237,6 +237,7 @@
 | `RecActionType` (TS) | link \| function \| acknowledge |  | `src/hooks/useVoipRecommendations.ts` |
 | `VoipProvider` (TS) | nvoip \| directcall \| totalvoice \| generic \| wavoip |  | `src/hooks/useVoipTrunks.ts` |
 | `WavoipStatus` (TS) | disconnected \| connecting \| connected \| calling \| active \| error |  | `src/hooks/useWavoipCall.ts` |
+| `WEBHOOK_SECRETS_QUERY_KEY` (TS) | 'webhook-secrets' |  | `src/hooks/useWebhookSecrets.ts` |
 | `RewriteTone` (TS) | profissional \| amigavel \| conciso \| empatico |  | `src/hooks/useWhatsappRewrite.ts` |
 | `UserRole` (TS) | admin \| supervisor \| agent \| viewer |  | `src/hooks/auth/useAuthState.ts` |
 | `CallResult` (TS) | answered \| no_answer \| busy \| voicemail \| wrong_number \| callback |  | `src/hooks/predictive-dialer/types.ts` |

@@ -595,27 +595,34 @@
     "useCallback",
     "useEffect",
     "useMemo",
+    "useMutation",
     "usePageTitle",
+    "useQuery",
+    "useQueryClient",
     "useRef",
     "useState",
-    "useWebhookHealthData"
+    "useWebhookHealthData",
+    "useWebhookSecrets"
    ],
    "hooks_locais": [
     "usePageTitle",
-    "useWebhookHealthData"
+    "useWebhookHealthData",
+    "useWebhookSecrets"
    ],
    "tabelas": [
-    "webhook_flush_metrics"
+    "webhook_flush_metrics",
+    "webhook_secrets"
    ],
    "rpcs": [],
    "edges": [],
    "canais_realtime": [],
    "flags": [],
    "papeis": [
+    "alert",
     "group",
     "img"
    ],
-   "arquivos_puxados": 14
+   "arquivos_puxados": 23
   },
   {
    "protegida": false,

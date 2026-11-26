@@ -1,28 +1,28 @@
 {
  "aviso": "GERADO AUTOMATICAMENTE por scripts/ai-context/gerar.mjs — não editar à mão; será sobrescrito.",
  "format_version": 2,
- "nos": 942,
- "arestas": 3734,
+ "nos": 944,
+ "arestas": 3747,
  "hubs": [
   {
    "arquivo": "src/integrations/supabase/client.ts",
-   "importado_por": 268
+   "importado_por": 269
   },
   {
    "arquivo": "src/components/ui/button.tsx",
-   "importado_por": 243
+   "importado_por": 244
   },
   {
    "arquivo": "src/components/ui/card.tsx",
-   "importado_por": 232
+   "importado_por": 233
   },
   {
    "arquivo": "src/lib/logger.ts",
-   "importado_por": 201
+   "importado_por": 202
   },
   {
    "arquivo": "src/components/ui/badge.tsx",
-   "importado_por": 198
+   "importado_por": 199
   },
   {
    "arquivo": "src/lib/utils.ts",
@@ -42,15 +42,15 @@
   },
   {
    "arquivo": "src/components/ui/input.tsx",
-   "importado_por": 94
+   "importado_por": 95
+  },
+  {
+   "arquivo": "src/components/ui/label.tsx",
+   "importado_por": 70
   },
   {
    "arquivo": "src/components/ui/select.tsx",
    "importado_por": 70
-  },
-  {
-   "arquivo": "src/components/ui/label.tsx",
-   "importado_por": 69
   },
   {
    "arquivo": "src/components/ui/skeleton.tsx",
@@ -62,7 +62,7 @@
   },
   {
    "arquivo": "src/components/ui/dialog.tsx",
-   "importado_por": 48
+   "importado_por": 49
   },
   {
    "arquivo": "src/components/ui/scroll-area.tsx",
@@ -98,7 +98,7 @@
   },
   {
    "arquivo": "src/components/ui/table.tsx",
-   "importado_por": 27
+   "importado_por": 28
   },
   {
    "arquivo": "src/hooks/useMultiChannelCall.ts",
@@ -130,7 +130,7 @@
   },
   {
    "arquivo": "src/components/ui/alert.tsx",
-   "importado_por": 21
+   "importado_por": 22
   },
   {
    "arquivo": "src/lib/safe-number.ts",

@@ -7,12 +7,12 @@
    "src/routes (1)"
   ],
   "componentes": [
-   "src/components (313)",
+   "src/components (314)",
    "src/pages (126)",
    "src/contexts (5)"
   ],
   "hooks": [
-   "src/hooks (176)",
+   "src/hooks (177)",
    "src/components (12)",
    "src/contexts (5)"
   ],
@@ -22,7 +22,7 @@
    "scripts/regras_negocio (2)"
   ],
   "testes": [
-   "co-localizado (__tests__) (388)",
+   "co-localizado (__tests__) (390)",
    "tests/ (9)",
    "e2e/ (7)"
   ],
@@ -48,7 +48,7 @@
  },
  "barrels_index": 17,
  "extensao_componentes": [
-  ".tsx (446)"
+  ".tsx (447)"
  ],
  "alias_imports": {
   "(raiz)": {
@@ -59,11 +59,11 @@
  "commits": {
   "convencao": "conventional commits (observado)",
   "exemplos": [
+   "feat: tela para cadastrar e rotacionar o segredo HMAC do webhook de entrada (#346)",
    "fix: aba Pesquisas enviava um id fixo e nunca cadastrava pesquisa (#345)",
    "fix: gate do cron lia coluna que nao existe e derrubava o CI de main (#343)",
    "fix: tirar as RPCs de lockout do alcance do navegador (etapa 002) (#342)",
-   "fix: deploy de edge abortava sem confirmacao (--yes) (#341)",
-   "fix: tirar host fixo e chave anon do cron e do trigger de scorecard (etapa 040) (#340)"
+   "fix: deploy de edge abortava sem confirmacao (--yes) (#341)"
   ]
  },
  "pr_template": null,

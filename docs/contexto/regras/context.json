@@ -1,15 +1,15 @@
 {
  "meta": {
-  "sha": "bd1b19ca9b712dd8bf0d532f82e4096e8da342f8",
+  "sha": "fbfb9167d81295f67aba690ccc681c0d0f1f0de4",
   "branch": "main",
   "remote": "https://github.com/adm01-debug/Hello_V3",
-  "generated_at": "2026-11-26 10:35 UTC",
-  "files_total": 1821,
-  "code_files": 1617,
-  "code_lines": 197528
+  "generated_at": "2026-11-26 10:52 UTC",
+  "files_total": 1826,
+  "code_files": 1622,
+  "code_lines": 198551
  },
  "version": "1.3.2",
- "facts_hash": "87900fb95b6e1648",
+ "facts_hash": "0f3baa9bd6b37fdc",
  "stack": {
   "frameworks": [
    "React + Vite",
@@ -168,9 +168,9 @@
   ],
   "package_manager": "bun",
   "languages": {
-   ".ts": 662,
-   ".tsx": 659,
-   ".sql": 260,
+   ".ts": 663,
+   ".tsx": 662,
+   ".sql": 261,
    ".mjs": 29,
    ".py": 5,
    ".js": 2
@@ -25999,6 +25999,7 @@
    "supabase/tests/rate_limit_logs_write_policies_rls_test.sql",
    "supabase/tests/role_source_of_truth_test.sql",
    "supabase/tests/user_preferences_rls_test.sql",
+   "supabase/tests/webhook_secrets_rls_test.sql",
    "src/integrations/supabase/types.ts"
   ],
   "rls": {
@@ -32654,7 +32655,7 @@
     "file": ".github/workflows/migrations.yml"
    }
   ],
-  "components_count": 373,
+  "components_count": 375,
   "hooks": [
    {
     "name": "useContacts",
@@ -33541,6 +33542,10 @@
     "file": "src/hooks/useWebhookQueue.ts"
    },
    {
+    "name": "useWebhookSecrets",
+    "file": "src/hooks/useWebhookSecrets.ts"
+   },
+   {
     "name": "useWhatsappRewrite",
     "file": "src/hooks/useWhatsappRewrite.ts"
    },
@@ -33826,8 +33831,8 @@
   },
   {
    "module": "src/components",
-   "files": 373,
-   "lines": 43963,
+   "files": 375,
+   "lines": 44461,
    "tables": [
     "accounts",
     "agent_goals",
@@ -33893,6 +33898,7 @@
     "EndpointsToolbar.tsx: EndpointsToolbar",
     "HealthHeatmap.tsx: HealthHeatmap",
     "KpiCards.tsx: KpiCards",
+    "WebhookSecretsCard.tsx: WebhookSecretsCard",
     "BargeInNotification.tsx: BargeInNotification",
     "WhisperNotification.tsx: WhisperNotification",
     "AICallAnalysis.tsx: AICallAnalysis",
@@ -33906,8 +33912,7 @@
     "AlertsTrendChart.tsx: AlertsTrendChart",
     "CallAlertsList.tsx: CallAlertsList",
     "ContactAlertsList.tsx: ContactAlertsList",
-    "LoginBranding.tsx: LoginBranding",
-    "PasskeyLogin.tsx: PasskeyLogin"
+    "LoginBranding.tsx: LoginBranding"
    ],
    "docs": [
     "SearchInput.tsx: Componente de Input de Busca @module components/SearchInput",
@@ -33978,6 +33983,8 @@
     "src/components/admin/webhook-health/EndpointsToolbar.tsx",
     "src/components/admin/webhook-health/HealthHeatmap.tsx",
     "src/components/admin/webhook-health/KpiCards.tsx",
+    "src/components/admin/webhook-health/WebhookSecretsCard.tsx",
+    "src/components/admin/webhook-health/__tests__/WebhookSecretsCard.test.tsx",
     "src/components/agent/BargeInNotification.tsx",
     "src/components/agent/WhisperNotification.tsx",
     "src/components/ai/AICallAnalysis.tsx",
@@ -34029,9 +34036,7 @@
     "src/components/calls/VoipQualityIndicator.tsx",
     "src/components/calls/__tests__/ActiveCallBar.espera.test.tsx",
     "src/components/calls/__tests__/ActiveCallBar.verificacaoVoz.test.tsx",
-    "src/components/calls/__tests__/AudioOutputSelector.test.tsx",
-    "src/components/calls/__tests__/CrmSuggestionsCard.test.tsx",
-    "src/components/calls/__tests__/NextBestActionPanel.test.tsx"
+    "src/components/calls/__tests__/AudioOutputSelector.test.tsx"
    ]
   },
   {
@@ -34087,8 +34092,8 @@
   },
   {
    "module": "src/hooks",
-   "files": 345,
-   "lines": 43939,
+   "files": 347,
+   "lines": 44295,
    "tables": [
     "accounts",
     "active_sessions",
@@ -34215,6 +34220,7 @@
     "voip_trunks",
     "webauthn_challenges",
     "webhook_flush_metrics",
+    "webhook_secrets",
     "whisper_messages"
    ],
    "exports": [
@@ -34569,7 +34575,7 @@
   {
    "module": "src/pages",
    "files": 155,
-   "lines": 23708,
+   "lines": 23711,
    "tables": [
     "audit_logs",
     "battle_card_triggers",
@@ -35126,8 +35132,8 @@
   },
   {
    "module": "supabase/tests",
-   "files": 8,
-   "lines": 774,
+   "files": 9,
+   "lines": 940,
    "tables": [],
    "exports": [],
    "docs": [],
@@ -35141,7 +35147,8 @@
     "supabase/tests/login_lockout_acl_rls_test.sql",
     "supabase/tests/rate_limit_logs_write_policies_rls_test.sql",
     "supabase/tests/role_source_of_truth_test.sql",
-    "supabase/tests/user_preferences_rls_test.sql"
+    "supabase/tests/user_preferences_rls_test.sql",
+    "supabase/tests/webhook_secrets_rls_test.sql"
    ]
   },
   {
@@ -37081,7 +37088,14 @@
    },
    "webhook_secrets": {
     "select": [
+     "src/hooks/useWebhookSecrets.ts",
      "supabase/functions/_shared/hmac.ts"
+    ],
+    "upsert": [
+     "src/hooks/useWebhookSecrets.ts"
+    ],
+    "delete": [
+     "src/hooks/useWebhookSecrets.ts"
     ]
    },
    "whisper_messages": {
@@ -37884,6 +37898,7 @@
     "sent"
    ],
    "webhook_secrets": [
+    "id",
     "provider",
     "secret_key"
    ],
@@ -40017,6 +40032,11 @@
     "rules": "type=number"
    },
    {
+    "file": "src/components/admin/webhook-health/WebhookSecretsCard.tsx",
+    "field": "webhook-secret-provider",
+    "rules": "disabled=mode === "
+   },
+   {
     "file": "src/components/auth/PasskeyLogin.tsx",
     "field": "passkey-email",
     "rules": "type=email"
@@ -40564,6 +40584,11 @@
     "values": "disconnected | connecting | connected | calling | active | error"
    },
    {
+    "file": "src/hooks/useWebhookSecrets.ts",
+    "name": "WEBHOOK_SECRETS_QUERY_KEY",
+    "values": "'webhook-secrets'"
+   },
+   {
     "file": "src/hooks/useWhatsappRewrite.ts",
     "name": "RewriteTone",
     "values": "profissional | amigavel | conciso | empatico"
@@ -40962,6 +40987,14 @@
    {
     "file": "src/components/admin/extensions/BulkAssignTrunkDialog.tsx",
     "msg": "Falha ao atribuir trunk"
+   },
+   {
+    "file": "src/components/admin/webhook-health/WebhookSecretsCard.tsx",
+    "msg": ";\nimport { Badge } from "
+   },
+   {
+    "file": "src/components/admin/webhook-health/WebhookSecretsCard.tsx",
+    "msg": "O navegador bloqueou a cópia"
    },
    {
     "file": "src/components/ai/AICallAnalysis.tsx",
@@ -42412,6 +42445,14 @@
     "msg": "Reenviados: ${res.sent} · Falharam: ${res.failed} · Restantes: ${res.remaining}"
    },
    {
+    "file": "src/hooks/useWebhookSecrets.ts",
+    "msg": "Não foi possível remover o segredo"
+   },
+   {
+    "file": "src/hooks/useWebhookSecrets.ts",
+    "msg": "Não foi possível salvar o segredo"
+   },
+   {
     "file": "src/hooks/useWhatsappRewrite.ts",
     "msg": "Digite uma mensagem para melhorar"
    },
@@ -43514,6 +43555,10 @@
    {
     "file": "src/hooks/useWebhookConfig.ts",
     "text": "validação (para UI inline)"
+   },
+   {
+    "file": "src/hooks/useWebhookSecrets.ts",
+    "text": "* Mostra apenas o final do segredo; o valor completo só sai na ação de revelar/copiar. */"
    },
    {
     "file": "src/hooks/auth/useAuthProfile.ts",
@@ -56956,6 +57001,24 @@
     "body": "const effectiveLatency = rttMs / 2 + jitterMs * 2 + 10; let R = effectiveLatency < 160 ? 93.2 - effectiveLatency / 40 : 93.2 - (effectiveLatency - 120) / 10; R = R - lossPct * 2.5; if (R < 0) R = 0; if (R > 100) R = 100; const mos = 1 + 0.035 * R + R * (R - 60) * (100 - R) * 7e-6; return Math.max(1, Math.min(5, Number(mos.toFixed(2))));"
    },
    {
+    "file": "src/hooks/useWebhookSecrets.ts",
+    "name": "validateProvider",
+    "params": "value: string",
+    "body": "const normalized = normalizeProvider(value); if (!normalized) return 'Informe o provedor'; if (!PROVIDER_PATTERN.test(normalized)) { return 'Use de 3 a 64 caracteres: letras minúsculas, números, ponto, hífen ou sublinhado'; } return null;"
+   },
+   {
+    "file": "src/hooks/useWebhookSecrets.ts",
+    "name": "validateSecret",
+    "params": "value: string",
+    "body": "if (!value) return 'Informe ou gere um segredo'; if (value.trim().length < WEBHOOK_SECRET_MIN_LENGTH) { return `O segredo precisa de ao menos ${WEBHOOK_SECRET_MIN_LENGTH} caracteres`; } return null;"
+   },
+   {
+    "file": "src/hooks/useWebhookSecrets.ts",
+    "name": "generateWebhookSecret",
+    "params": "bytes = 32",
+    "body": "const buffer = new Uint8Array(bytes); crypto.getRandomValues(buffer); return Array.from(buffer, (byte) => byte.toString(16).padStart(2, '0')).join('');"
+   },
+   {
     "file": "src/lib/agent-assist-utils.ts",
     "name": "calculateAcceptanceRate",
     "params": "signals: Array<{ was_used: boolean }>",
@@ -58460,6 +58523,46 @@
    {
     "file": "src/components/admin/extensions/__tests__/HealthScoreBadge.test.tsx",
     "name": "boundary 49 vai para bad"
+   },
+   {
+    "file": "src/components/admin/webhook-health/__tests__/WebhookSecretsCard.test.tsx",
+    "name": "WebhookSecretsCard"
+   },
+   {
+    "file": "src/components/admin/webhook-health/__tests__/WebhookSecretsCard.test.tsx",
+    "name": "mostra estado vazio com chamada para cadastrar quando nao ha segredo"
+   },
+   {
+    "file": "src/components/admin/webhook-health/__tests__/WebhookSecretsCard.test.tsx",
+    "name": "nunca renderiza o segredo completo antes de revelar"
+   },
+   {
+    "file": "src/components/admin/webhook-health/__tests__/WebhookSecretsCard.test.tsx",
+    "name": "revela e copia o valor completo quando o admin pede"
+   },
+   {
+    "file": "src/components/admin/webhook-health/__tests__/WebhookSecretsCard.test.tsx",
+    "name": "avisa que o provedor nao e lido por nenhuma edge"
+   },
+   {
+    "file": "src/components/admin/webhook-health/__tests__/WebhookSecretsCard.test.tsx",
+    "name": "bloqueia o cadastro sem provedor e nao chama o banco"
+   },
+   {
+    "file": "src/components/admin/webhook-health/__tests__/WebhookSecretsCard.test.tsx",
+    "name": "cadastra com provedor normalizado e segredo gerado"
+   },
+   {
+    "file": "src/components/admin/webhook-health/__tests__/WebhookSecretsCard.test.tsx",
+    "name": "rotaciona mantendo o provedor travado"
+   },
+   {
+    "file": "src/components/admin/webhook-health/__tests__/WebhookSecretsCard.test.tsx",
+    "name": "exclui somente depois da confirmacao"
+   },
+   {
+    "file": "src/components/admin/webhook-health/__tests__/WebhookSecretsCard.test.tsx",
+    "name": "mostra o erro de leitura com opcao de tentar de novo"
    },
    {
     "file": "src/components/auth/__tests__/PermissionGate.test.tsx",
@@ -64532,6 +64635,54 @@
    {
     "file": "src/hooks/__tests__/useWebVitals.coverage.test.tsx",
     "name": "clears interval on unmount"
+   },
+   {
+    "file": "src/hooks/__tests__/useWebhookSecrets.test.tsx",
+    "name": "useWebhookSecrets"
+   },
+   {
+    "file": "src/hooks/__tests__/useWebhookSecrets.test.tsx",
+    "name": "lista os segredos ordenados por provedor"
+   },
+   {
+    "file": "src/hooks/__tests__/useWebhookSecrets.test.tsx",
+    "name": "cadastra provedor normalizado e invalida o cache"
+   },
+   {
+    "file": "src/hooks/__tests__/useWebhookSecrets.test.tsx",
+    "name": "distingue rotação de cadastro na mensagem de sucesso"
+   },
+   {
+    "file": "src/hooks/__tests__/useWebhookSecrets.test.tsx",
+    "name": "expoe o erro do banco e nao invalida o cache quando a gravacao falha"
+   },
+   {
+    "file": "src/hooks/__tests__/useWebhookSecrets.test.tsx",
+    "name": "remove o segredo pela chave primaria e invalida o cache"
+   },
+   {
+    "file": "src/hooks/__tests__/useWebhookSecrets.test.tsx",
+    "name": "expoe erro quando a exclusao falha"
+   },
+   {
+    "file": "src/hooks/__tests__/useWebhookSecrets.test.tsx",
+    "name": "useWebhookSecrets helpers"
+   },
+   {
+    "file": "src/hooks/__tests__/useWebhookSecrets.test.tsx",
+    "name": "mascara tudo menos os 4 ultimos caracteres"
+   },
+   {
+    "file": "src/hooks/__tests__/useWebhookSecrets.test.tsx",
+    "name": "gera 32 bytes em hex, sem repetir entre chamadas"
+   },
+   {
+    "file": "src/hooks/__tests__/useWebhookSecrets.test.tsx",
+    "name": "normaliza e valida o provedor"
+   },
+   {
+    "file": "src/hooks/__tests__/useWebhookSecrets.test.tsx",
+    "name": "exige segredo com pelo menos o minimo de caracteres"
    },
    {
     "file": "src/hooks/__tests__/useWhatsappRewrite.test.tsx",
@@ -86123,7 +86274,8 @@
    "supabase/migrations/20261126090001_rate_limit_logs_revoke_anon_write.sql",
    "supabase/migrations/20261126100000_edge_function_urls_from_vault.sql",
    "supabase/migrations/20261126101000_revoke_anon_login_rpcs.sql",
-   "supabase/tests/login_lockout_acl_rls_test.sql"
+   "supabase/tests/login_lockout_acl_rls_test.sql",
+   "supabase/tests/webhook_secrets_rls_test.sql"
   ],
   "security_definer_fns": [
    "add_to_dnc",
@@ -92028,6 +92180,40 @@
    "lines": 36,
    "exports": [
     "function KpiCards"
+   ]
+  },
+  "src/components/admin/webhook-health/WebhookSecretsCard.tsx": {
+   "path": "src/components/admin/webhook-health/WebhookSecretsCard.tsx",
+   "lines": 341,
+   "exports": [
+    "function WebhookSecretsCard"
+   ],
+   "errors": [
+    ";\nimport { Badge } from ",
+    "O navegador bloqueou a cópia"
+   ],
+   "html_constraints": [
+    {
+     "field": "webhook-secret-provider",
+     "rules": "disabled=mode === "
+    }
+   ]
+  },
+  "src/components/admin/webhook-health/__tests__/WebhookSecretsCard.test.tsx": {
+   "path": "src/components/admin/webhook-health/__tests__/WebhookSecretsCard.test.tsx",
+   "lines": 157,
+   "is_test": true,
+   "tests": [
+    "WebhookSecretsCard",
+    "mostra estado vazio com chamada para cadastrar quando nao ha segredo",
+    "nunca renderiza o segredo completo antes de revelar",
+    "revela e copia o valor completo quando o admin pede",
+    "avisa que o provedor nao e lido por nenhuma edge",
+    "bloqueia o cadastro sem provedor e nao chama o banco",
+    "cadastra com provedor normalizado e segredo gerado",
+    "rotaciona mantendo o provedor travado",
+    "exclui somente depois da confirmacao",
+    "mostra o erro de leitura com opcao de tentar de novo"
    ]
   },
   "src/components/agent/BargeInNotification.tsx": {
@@ -104854,6 +105040,76 @@
     "useWebhookQueue"
    ]
   },
+  "src/hooks/useWebhookSecrets.ts": {
+   "path": "src/hooks/useWebhookSecrets.ts",
+   "lines": 143,
+   "exports": [
+    "const WEBHOOK_SECRETS_QUERY_KEY",
+    "const WEBHOOK_SECRET_COLUMNS",
+    "const WEBHOOK_SECRET_MIN_LENGTH",
+    "const PROVIDER_PATTERN",
+    "interface WebhookSecret",
+    "const WEBHOOK_SECRET_CONSUMERS",
+    "function normalizeProvider",
+    "function validateProvider",
+    "function validateSecret",
+    "function maskSecret",
+    "function generateWebhookSecret",
+    "function useWebhookSecrets"
+   ],
+   "tables": [
+    {
+     "table": "webhook_secrets",
+     "op": "select"
+    },
+    {
+     "table": "webhook_secrets",
+     "op": "select,upsert"
+    },
+    {
+     "table": "webhook_secrets",
+     "op": "delete"
+    }
+   ],
+   "table_cols": {
+    "webhook_secrets": [
+     "id"
+    ]
+   },
+   "errors": [
+    "Não foi possível remover o segredo",
+    "Não foi possível salvar o segredo"
+   ],
+   "enums": [
+    {
+     "name": "WEBHOOK_SECRETS_QUERY_KEY",
+     "values": "'webhook-secrets'"
+    }
+   ],
+   "rule_comments": [
+    "* Mostra apenas o final do segredo; o valor completo só sai na ação de revelar/copiar. */"
+   ],
+   "hooks": [
+    "useWebhookSecrets"
+   ],
+   "calc_fns": [
+    {
+     "name": "validateProvider",
+     "params": "value: string",
+     "body": "const normalized = normalizeProvider(value); if (!normalized) return 'Informe o provedor'; if (!PROVIDER_PATTERN.test(normalized)) { return 'Use de 3 a 64 caracteres: letras minúsculas, números, ponto, hífen ou sublinhado'; } return null;"
+    },
+    {
+     "name": "validateSecret",
+     "params": "value: string",
+     "body": "if (!value) return 'Informe ou gere um segredo'; if (value.trim().length < WEBHOOK_SECRET_MIN_LENGTH) { return `O segredo precisa de ao menos ${WEBHOOK_SECRET_MIN_LENGTH} caracteres`; } return null;"
+    },
+    {
+     "name": "generateWebhookSecret",
+     "params": "bytes = 32",
+     "body": "const buffer = new Uint8Array(bytes); crypto.getRandomValues(buffer); return Array.from(buffer, (byte) => byte.toString(16).padStart(2, '0')).join('');"
+    }
+   ]
+  },
   "src/hooks/useWhatsappRewrite.ts": {
    "path": "src/hooks/useWhatsappRewrite.ts",
    "lines": 75,
@@ -107642,6 +107898,25 @@
     "loads vitals on mount and refreshes on interval",
     "manual refresh invokes getters",
     "clears interval on unmount"
+   ]
+  },
+  "src/hooks/__tests__/useWebhookSecrets.test.tsx": {
+   "path": "src/hooks/__tests__/useWebhookSecrets.test.tsx",
+   "lines": 213,
+   "is_test": true,
+   "tests": [
+    "useWebhookSecrets",
+    "lista os segredos ordenados por provedor",
+    "cadastra provedor normalizado e invalida o cache",
+    "distingue rotação de cadastro na mensagem de sucesso",
+    "expoe o erro do banco e nao invalida o cache quando a gravacao falha",
+    "remove o segredo pela chave primaria e invalida o cache",
+    "expoe erro quando a exclusao falha",
+    "useWebhookSecrets helpers",
+    "mascara tudo menos os 4 ultimos caracteres",
+    "gera 32 bytes em hex, sem repetir entre chamadas",
+    "normaliza e valida o provedor",
+    "exige segredo com pelo menos o minimo de caracteres"
    ]
   },
   "src/hooks/__tests__/useWhatsappRewrite.test.tsx": {
@@ -115493,7 +115768,7 @@
   },
   "src/pages/admin/WebhookHealth.tsx": {
    "path": "src/pages/admin/WebhookHealth.tsx",
-   "lines": 156,
+   "lines": 159,
    "exports": [
     "function WebhookHealth"
    ]
@@ -124937,6 +125212,12 @@
     "notify_sound"
    ]
   },
+  "supabase/tests/webhook_secrets_rls_test.sql": {
+   "path": "supabase/tests/webhook_secrets_rls_test.sql",
+   "lines": 166,
+   "is_test": true,
+   "uses_service_role": true
+  },
   "tests/e2e/auth.spec.ts": {
    "path": "tests/e2e/auth.spec.ts",
    "lines": 34,
@@ -125108,10 +125389,25 @@
   }
  },
  "git": {
-  "sha": "bd1b19ca9b712dd8bf0d532f82e4096e8da342f8",
+  "sha": "fbfb9167d81295f67aba690ccc681c0d0f1f0de4",
   "branch": "main",
   "remote": "https://github.com/adm01-debug/Hello_V3",
   "commits": [
+   {
+    "sha": "fbfb916",
+    "date": "2026-11-26",
+    "author": "adm01-debug",
+    "subject": "feat: tela para cadastrar e rotacionar o segredo HMAC do webhook de entrada (#346)",
+    "files": [
+     "docs/qa/03-ACHADOS.md",
+     "src/components/admin/webhook-health/WebhookSecretsCard.tsx",
+     "src/components/admin/webhook-health/__tests__/WebhookSecretsCard.test.tsx",
+     "src/hooks/__tests__/useWebhookSecrets.test.tsx",
+     "src/hooks/useWebhookSecrets.ts",
+     "src/pages/admin/WebhookHealth.tsx",
+     "supabase/tests/webhook_secrets_rls_test.sql"
+    ]
+   },
    {
     "sha": "bd1b19c",
     "date": "2026-11-26",
@@ -125474,15 +125770,6 @@
     "files": [
      ".github/workflows/migrations.yml"
     ]
-   },
-   {
-    "sha": "5df6b47",
-    "date": "2026-11-25",
-    "author": "adm01-debug",
-    "subject": "fix: comparar migration pelo slug do nome e permitir registrar sem executar (#315)",
-    "files": [
-     ".github/workflows/migrations.yml"
-    ]
    }
   ],
   "hot_files": [
@@ -125491,16 +125778,20 @@
     13
    ],
    [
-    ".github/workflows/migrations.yml",
-    5
+    "src/components/calls/ActiveCallBar.tsx",
+    4
    ],
    [
-    "src/components/calls/ActiveCallBar.tsx",
+    ".github/workflows/migrations.yml",
     4
    ],
    [
     "src/components/calls/__tests__/ActiveCallBar.espera.test.tsx",
     3
+   ],
+   [
+    "docs/qa/03-ACHADOS.md",
+    2
    ],
    [
     "supabase/tests/cron_credentials_rls_test.sql",
@@ -125539,31 +125830,27 @@
     2
    ],
    [
-    "docs/qa/03-ACHADOS.md",
+    "src/components/admin/webhook-health/WebhookSecretsCard.tsx",
     1
    ],
    [
-    "src/components/call-library/SurveysPanel.tsx",
+    "src/components/admin/webhook-health/__tests__/WebhookSecretsCard.test.tsx",
     1
    ],
    [
-    "src/components/call-library/__tests__/SurveysPanel.test.tsx",
+    "src/hooks/__tests__/useWebhookSecrets.test.tsx",
     1
    ],
    [
-    "src/hooks/__tests__/useSurveys.coverage.test.tsx",
+    "src/hooks/useWebhookSecrets.ts",
     1
    ],
    [
-    "src/hooks/useSurveys.ts",
+    "src/pages/admin/WebhookHealth.tsx",
     1
    ],
    [
-    "src/hooks/__tests__/useLoginLockout.coverage.test.tsx",
-    1
-   ],
-   [
-    "src/hooks/useLoginLockout.ts",
+    "supabase/tests/webhook_secrets_rls_test.sql",
     1
    ]
   ]

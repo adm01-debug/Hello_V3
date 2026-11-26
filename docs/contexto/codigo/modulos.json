@@ -109,13 +109,13 @@
   },
   {
    "modulo": "components/admin",
-   "arquivos": 23,
-   "testes": 1,
-   "linhas": 2158,
+   "arquivos": 24,
+   "testes": 2,
+   "linhas": 2499,
    "itens_menu": [],
    "telas": [],
    "rotas_http": [],
-   "componentes": 22,
+   "componentes": 23,
    "hooks_locais": [
     "useDeleteAssignment",
     "useDeleteTrunk",
@@ -131,7 +131,8 @@
     "useTrunkHealthHistory",
     "useTrunkMetrics",
     "useVoipMonitoringSettings",
-    "useVoipTrunks"
+    "useVoipTrunks",
+    "useWebhookSecrets"
    ],
    "hooks_definidos": [],
    "edges": [
@@ -148,7 +149,8 @@
     "voip_monitoring_settings",
     "voip_trunk_health_checks",
     "voip_trunk_usage_metrics",
-    "voip_trunks"
+    "voip_trunks",
+    "webhook_secrets"
    ],
    "rpcs": [
     "log_audit_event"
@@ -163,6 +165,7 @@
    ],
    "flags": [],
    "papeis": [
+    "alert",
     "group",
     "img"
    ],
@@ -1798,6 +1801,7 @@
     "useWebhookHealthData",
     "useWebhookHistory",
     "useWebhookQueue",
+    "useWebhookSecrets",
     "useWhatsappRewrite"
    ],
    "hooks_definidos": [],
@@ -2019,6 +2023,7 @@
     "voip_trunks",
     "webauthn_challenges",
     "webhook_flush_metrics",
+    "webhook_secrets",
     "whisper_messages"
    ],
    "rpcs": [
@@ -3450,9 +3455,9 @@
   },
   {
    "modulo": "hooks",
-   "arquivos": 170,
+   "arquivos": 171,
    "testes": 0,
-   "linhas": 21981,
+   "linhas": 22124,
    "itens_menu": [],
    "telas": [],
    "rotas_http": [],
@@ -3667,6 +3672,7 @@
     "useWebhookHealthData",
     "useWebhookHistory",
     "useWebhookQueue",
+    "useWebhookSecrets",
     "useWhatsappRewrite"
    ],
    "hooks_definidos": [
@@ -3877,6 +3883,7 @@
     "useWebhookHealthData",
     "useWebhookHistory",
     "useWebhookQueue",
+    "useWebhookSecrets",
     "useWebVitals",
     "useWhatsappRewrite"
    ],
@@ -4065,6 +4072,7 @@
     "voip_trunks",
     "webauthn_challenges",
     "webhook_flush_metrics",
+    "webhook_secrets",
     "whisper_messages"
    ],
    "rpcs": [
@@ -4326,6 +4334,7 @@
      "voip_trunks",
      "webauthn_challenges",
      "webhook_flush_metrics",
+     "webhook_secrets",
      "whisper_messages"
     ],
     "rpcs": [
@@ -4414,7 +4423,7 @@
   {
    "modulo": "hooks/__tests__",
    "arquivos": 0,
-   "testes": 163,
+   "testes": 164,
    "linhas": 0,
    "itens_menu": [],
    "telas": [],
@@ -6427,7 +6436,7 @@
    "modulo": "pages/admin",
    "arquivos": 16,
    "testes": 1,
-   "linhas": 2181,
+   "linhas": 2184,
    "itens_menu": [
     "Alertas de Segurança",
     "Auditoria de Segurança",
@@ -6488,7 +6497,8 @@
     "useWebhookConfig",
     "useWebhookHealthData",
     "useWebhookHistory",
-    "useWebhookQueue"
+    "useWebhookQueue",
+    "useWebhookSecrets"
    ],
    "hooks_definidos": [],
    "edges": [
@@ -6515,7 +6525,8 @@
     "voip_trunk_health_checks",
     "voip_trunk_usage_metrics",
     "voip_trunks",
-    "webhook_flush_metrics"
+    "webhook_flush_metrics",
+    "webhook_secrets"
    ],
    "rpcs": [
     "check_idle_indexes",
@@ -6992,6 +7003,7 @@
     "useWebhookHealthData",
     "useWebhookHistory",
     "useWebhookQueue",
+    "useWebhookSecrets",
     "useWhatsappRewrite"
    ],
    "hooks_definidos": [],
@@ -7213,6 +7225,7 @@
     "voip_trunks",
     "webauthn_challenges",
     "webhook_flush_metrics",
+    "webhook_secrets",
     "whisper_messages"
    ],
    "rpcs": [

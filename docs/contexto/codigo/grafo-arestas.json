@@ -176,6 +176,18 @@
   "src/components/admin/webhook-health/KpiCards.tsx": [
    "src/components/ui/card.tsx"
   ],
+  "src/components/admin/webhook-health/WebhookSecretsCard.tsx": [
+   "src/components/ui/alert-dialog.tsx",
+   "src/components/ui/alert.tsx",
+   "src/components/ui/badge.tsx",
+   "src/components/ui/button.tsx",
+   "src/components/ui/card.tsx",
+   "src/components/ui/dialog.tsx",
+   "src/components/ui/input.tsx",
+   "src/components/ui/label.tsx",
+   "src/components/ui/table.tsx",
+   "src/hooks/useWebhookSecrets.ts"
+  ],
   "src/components/agent/BargeInNotification.tsx": [
    "src/components/ui/badge.tsx",
    "src/components/ui/card.tsx",
@@ -2978,6 +2990,10 @@
   "src/hooks/useWebhookQueue.ts": [
    "src/lib/security-alerts-webhook-queue.ts"
   ],
+  "src/hooks/useWebhookSecrets.ts": [
+   "src/integrations/supabase/client.ts",
+   "src/lib/logger.ts"
+  ],
   "src/hooks/useWhatsappRewrite.ts": [
    "src/integrations/supabase/client.ts",
    "src/lib/logger.ts"
@@ -4400,6 +4416,7 @@
    "src/components/admin/webhook-health/EndpointsToolbar.tsx",
    "src/components/admin/webhook-health/HealthHeatmap.tsx",
    "src/components/admin/webhook-health/KpiCards.tsx",
+   "src/components/admin/webhook-health/WebhookSecretsCard.tsx",
    "src/components/ui/card.tsx",
    "src/hooks/usePageTitle.ts",
    "src/hooks/useWebhookHealthData.ts",
