@@ -1,7 +1,7 @@
 {
  "aviso": "GERADO AUTOMATICAMENTE por scripts/ai-context/gerar.mjs — não editar à mão; será sobrescrito.",
  "format_version": 2,
- "total": 197,
+ "total": 198,
  "hooks": [
   {
    "arquivo": "scripts/ai-context/cenarios.mjs",
@@ -3572,6 +3572,29 @@
    "coberto_por_testes": 2
   },
   {
+   "arquivo": "src/hooks/useRedactionLog.ts",
+   "hooks_exportados": [
+    "useRedactionLog"
+   ],
+   "linhas": 72,
+   "dominio": "hooks",
+   "tabelas": [
+    "redaction_log"
+   ],
+   "rpcs": [],
+   "edges": [],
+   "hooks_internos": [
+    "useQuery"
+   ],
+   "canais_realtime": [],
+   "usado_por": 2,
+   "usado_por_arquivos": [
+    "src/components/voice-security/RedactionLogCard.tsx",
+    "src/hooks/useVoiceBiometrics.ts"
+   ],
+   "coberto_por_testes": 2
+  },
+  {
    "arquivo": "src/hooks/useRenewals.ts",
    "hooks_exportados": [
     "useRenewals"
@@ -4394,7 +4417,7 @@
     "useRedactCall",
     "useVoicePrints"
    ],
-   "linhas": 207,
+   "linhas": 210,
    "dominio": "hooks",
    "tabelas": [
     "fraud_signals",

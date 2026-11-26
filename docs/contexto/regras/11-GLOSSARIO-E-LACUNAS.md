@@ -1,6 +1,6 @@
 # 11 · GLOSSÁRIO, DADOS DE REFERÊNCIA E LACUNAS
 
-> Gerado automaticamente por AI Context Sync v1.3.2 · commit `fbfb9167d8` · branch `main` · 2026-11-26 10:52 UTC
+> Gerado automaticamente por AI Context Sync v1.3.2 · commit `96fa4dd42e` · branch `main` · 2026-11-26 11:14 UTC
 > Não edite à mão — regras humanas vão em `manual/`.
 
 ## Glossário do domínio (entidades do sistema)
@@ -219,6 +219,8 @@
 | `TransferType` (TS) | blind \| attended |  | `src/hooks/useMultiChannelCall.ts` |
 | `NetworkStatus` (TS) | online \| unstable \| offline \| checking |  | `src/hooks/useNetworkMonitor.ts` |
 | `ConflictPeriod` (TS) | 24h \| 7d \| 30d |  | `src/hooks/useOptimisticLockConflicts.ts` |
+| `RedactionStatusTone` (TS) | success \| neutral \| danger |  | `src/hooks/useRedactionLog.ts` |
+| `REDACTION_LOG_QUERY_KEY` (TS) | 'redaction-log' |  | `src/hooks/useRedactionLog.ts` |
 | `SipStatus` (TS) | disconnected \| connecting \| registered \| calling \| ringing \| active \| error |  | `src/hooks/useSipCall.ts` |
 | `AnomalyKind` (TS) | spike \| drift \| outage |  | `src/hooks/useVoipAnomalies.ts` |
 | `AnomalyMetric` (TS) | mos \| jitter \| volume |  | `src/hooks/useVoipAnomalies.ts` |
@@ -310,6 +312,7 @@
 | status | valor `on_hold` para `status` usado no código não existe em nenhum enum do banco/TS | `compara:src/hooks/useQueueMetrics.ts` |
 | status | valor `on_call` para `status` usado no código não existe em nenhum enum do banco/TS | `compara:src/hooks/useQueueMetrics.ts` |
 | status | valor `break` para `status` usado no código não existe em nenhum enum do banco/TS | `compara:src/hooks/useQueueMetrics.ts` |
+| status | valor `no_matches` para `status` usado no código não existe em nenhum enum do banco/TS | `compara:src/hooks/useRedactionLog.ts` |
 | status | valor `in_negotiation` para `status` usado no código não existe em nenhum enum do banco/TS | `compara:src/hooks/useRenewals.ts` |
 | status | valor `won` para `status` usado no código não existe em nenhum enum do banco/TS | `compara:src/hooks/useRenewals.ts` |
 | status | valor `skipped` para `status` usado no código não existe em nenhum enum do banco/TS | `escreve:src/hooks/predictive-dialer/api.ts`<br>`escreve:supabase/functions/auto-scorecard/index.ts` |

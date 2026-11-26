@@ -2,11 +2,16 @@
  "aviso": "GERADO AUTOMATICAMENTE por scripts/ai-context/gerar.mjs — não editar à mão; será sobrescrito.",
  "format_version": 2,
  "git": {
-  "commit": "fbfb9167d81295f67aba690ccc681c0d0f1f0de4",
+  "commit": "96fa4dd42ef12da47c4c9d119d3e68865723d469",
   "branch": "main",
-  "data_commit": "2026-11-26T07:51:46-03:00",
+  "data_commit": "2026-11-26T08:13:51-03:00",
   "remote": "https://github.com/adm01-debug/Hello_V3",
   "ultimos_commits": [
+   {
+    "sha": "96fa4dd",
+    "data": "2026-11-26",
+    "assunto": "feat: historico do log de auditoria de redacao de dados sensiveis (#347)"
+   },
    {
     "sha": "fbfb916",
     "data": "2026-11-26",
@@ -126,18 +131,13 @@
     "sha": "31ec3c6",
     "data": "2026-11-25",
     "assunto": "fix: microfone da barra de chamada nao silenciava o audio (#322)"
-   },
-   {
-    "sha": "ba31d8b",
-    "data": "2026-11-25",
-    "assunto": "fix: espera da chamada agora grava hold_events (#321)"
    }
   ],
-  "arquivos_mudados_7d": 1328,
+  "arquivos_mudados_7d": 1333,
   "pastas_mais_mudadas_30d": [
    {
     "pasta": "src/hooks/__tests__",
-    "mudancas": 288
+    "mudancas": 290
    },
    {
     "pasta": "covout/lcov-report/hooks",
@@ -310,21 +310,21 @@
   ]
  },
  "contagens": {
-  "arquivos_total": 1779,
-  "arquivos_codigo": 1360,
-  "linhas_codigo": 181431,
+  "arquivos_total": 1784,
+  "arquivos_codigo": 1364,
+  "linhas_codigo": 181953,
   "rotas": 106,
   "rotas_http_backend": 11,
   "vistas_por_id": 0,
   "itens_menu": 96,
-  "modulos": 81,
-  "componentes": 447,
-  "hooks": 197,
+  "modulos": 82,
+  "componentes": 448,
+  "hooks": 198,
   "edge_functions": 99,
   "tabelas": 170,
   "migrations": 250,
   "cron_jobs": 11,
-  "testes": 425,
+  "testes": 428,
   "workflows": 5,
   "scripts": 36,
   "docs_md": 121
@@ -479,8 +479,8 @@
    "linhas": 450
   },
   "src/components": {
-   "arquivos": 375,
-   "linhas": 44461
+   "arquivos": 377,
+   "linhas": 44758
   },
   "src/contexts": {
    "arquivos": 5,
@@ -491,8 +491,8 @@
    "linhas": 312
   },
   "src/hooks": {
-   "arquivos": 347,
-   "linhas": 44295
+   "arquivos": 349,
+   "linhas": 44518
   },
   "src/integrations": {
    "arquivos": 3,
@@ -508,7 +508,7 @@
   },
   "src/pages": {
    "arquivos": 155,
-   "linhas": 23711
+   "linhas": 23713
   },
   "src/routes": {
    "arquivos": 4,

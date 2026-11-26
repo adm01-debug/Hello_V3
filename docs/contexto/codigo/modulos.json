@@ -684,6 +684,7 @@
     "usePendingActionItems",
     "useQualityTrendAnalyzer",
     "useRedactCall",
+    "useRedactionLog",
     "useSipCall",
     "useTrunkUsageReporter",
     "useVoiceCommand",
@@ -735,6 +736,7 @@
     "live_assist_signals",
     "live_sentiment_snapshots",
     "meeting_summaries",
+    "redaction_log",
     "user_profiles",
     "user_roles",
     "voice_prints",
@@ -1725,6 +1727,7 @@
     "useRecordVoipRecommendationAction",
     "useRecordings",
     "useRedactCall",
+    "useRedactionLog",
     "useRenewals",
     "useRingGroups",
     "useRingtoneSettings",
@@ -1978,6 +1981,7 @@
     "rate_limit_alerts",
     "rate_limit_logs",
     "rate_limit_settings",
+    "redaction_log",
     "renewals",
     "ring_group_members",
     "ring_groups",
@@ -3183,6 +3187,7 @@
     "components/settings",
     "components/supervisor",
     "components/translation",
+    "components/voice-security",
     "components/whatsapp",
     "hooks",
     "pages",
@@ -3292,6 +3297,49 @@
    ],
    "pacotes_externos": [
     "framer-motion",
+    "lucide-react"
+   ]
+  },
+  {
+   "modulo": "components/voice-security",
+   "arquivos": 1,
+   "testes": 1,
+   "linhas": 186,
+   "itens_menu": [],
+   "telas": [],
+   "rotas_http": [],
+   "componentes": 1,
+   "hooks_locais": [
+    "useRedactionLog"
+   ],
+   "hooks_definidos": [],
+   "edges": [],
+   "tabelas": [
+    "redaction_log"
+   ],
+   "rpcs": [],
+   "buckets": [],
+   "canais_realtime": [],
+   "env": [
+    "VITE_SUPABASE_PUBLISHABLE_KEY",
+    "VITE_SUPABASE_URL"
+   ],
+   "flags": [],
+   "papeis": [],
+   "diretos": {
+    "edges": [],
+    "tabelas": [],
+    "rpcs": []
+   },
+   "importado_por_outros_modulos": [
+    "pages"
+   ],
+   "depende_de_modulos": [
+    "components/ui",
+    "hooks",
+    "lib"
+   ],
+   "pacotes_externos": [
     "lucide-react"
    ]
   },
@@ -3455,9 +3503,9 @@
   },
   {
    "modulo": "hooks",
-   "arquivos": 171,
+   "arquivos": 172,
    "testes": 0,
-   "linhas": 22124,
+   "linhas": 22199,
    "itens_menu": [],
    "telas": [],
    "rotas_http": [],
@@ -3600,6 +3648,7 @@
     "useRecordVoipRecommendationAction",
     "useRecordings",
     "useRedactCall",
+    "useRedactionLog",
     "useRenewals",
     "useRingGroups",
     "useRingtoneSettings",
@@ -3807,6 +3856,7 @@
     "useRealtimeHoldAlerts",
     "useReauth",
     "useRecordings",
+    "useRedactionLog",
     "useRenewals",
     "useRingGroups",
     "useRingtoneSettings",
@@ -4035,6 +4085,7 @@
     "rate_limit_alerts",
     "rate_limit_logs",
     "rate_limit_settings",
+    "redaction_log",
     "renewals",
     "ring_group_members",
     "ring_groups",
@@ -4297,6 +4348,7 @@
      "rate_limit_alerts",
      "rate_limit_logs",
      "rate_limit_settings",
+     "redaction_log",
      "renewals",
      "ring_group_members",
      "ring_groups",
@@ -4386,6 +4438,7 @@
     "components/translation",
     "components/ui",
     "components/voice",
+    "components/voice-security",
     "components/whatsapp",
     "contexts",
     "hooks/auth",
@@ -4423,7 +4476,7 @@
   {
    "modulo": "hooks/__tests__",
    "arquivos": 0,
-   "testes": 164,
+   "testes": 165,
    "linhas": 0,
    "itens_menu": [],
    "telas": [],
@@ -5064,6 +5117,7 @@
     "components/translation",
     "components/ui",
     "components/voice",
+    "components/voice-security",
     "contexts",
     "hooks",
     "hooks/auth",
@@ -5609,7 +5663,7 @@
    "modulo": "pages",
    "arquivos": 93,
    "testes": 0,
-   "linhas": 17558,
+   "linhas": 17560,
    "itens_menu": [
     "Acessos Bloqueados",
     "Agent Assist",
@@ -5932,6 +5986,7 @@
     "useRecordVoipRecommendationAction",
     "useRecordings",
     "useRedactCall",
+    "useRedactionLog",
     "useRenewals",
     "useRingGroups",
     "useRingtoneSettings",
@@ -6163,6 +6218,7 @@
     "rate_limit_alerts",
     "rate_limit_logs",
     "rate_limit_settings",
+    "redaction_log",
     "renewals",
     "ring_group_members",
     "ring_groups",
@@ -6376,6 +6432,7 @@
     "components/translation",
     "components/ui",
     "components/voice",
+    "components/voice-security",
     "components/whatsapp",
     "contexts",
     "hooks",
@@ -6932,6 +6989,7 @@
     "useRecordVoipRecommendationAction",
     "useRecordings",
     "useRedactCall",
+    "useRedactionLog",
     "useRenewals",
     "useRingGroups",
     "useRingtoneSettings",
@@ -7180,6 +7238,7 @@
     "rate_limit_alerts",
     "rate_limit_logs",
     "rate_limit_settings",
+    "redaction_log",
     "renewals",
     "ring_group_members",
     "ring_groups",

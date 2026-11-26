@@ -1,15 +1,15 @@
 {
  "meta": {
-  "sha": "fbfb9167d81295f67aba690ccc681c0d0f1f0de4",
+  "sha": "96fa4dd42ef12da47c4c9d119d3e68865723d469",
   "branch": "main",
   "remote": "https://github.com/adm01-debug/Hello_V3",
-  "generated_at": "2026-11-26 10:52 UTC",
-  "files_total": 1826,
-  "code_files": 1622,
-  "code_lines": 198551
+  "generated_at": "2026-11-26 11:14 UTC",
+  "files_total": 1831,
+  "code_files": 1627,
+  "code_lines": 199221
  },
  "version": "1.3.2",
- "facts_hash": "0f3baa9bd6b37fdc",
+ "facts_hash": "e8a6fb669a05f721",
  "stack": {
   "frameworks": [
    "React + Vite",
@@ -168,9 +168,9 @@
   ],
   "package_manager": "bun",
   "languages": {
-   ".ts": 663,
-   ".tsx": 662,
-   ".sql": 261,
+   ".tsx": 665,
+   ".ts": 664,
+   ".sql": 262,
    ".mjs": 29,
    ".py": 5,
    ".js": 2
@@ -25997,6 +25997,7 @@
    "supabase/tests/internal_tables_rls_test.sql",
    "supabase/tests/login_lockout_acl_rls_test.sql",
    "supabase/tests/rate_limit_logs_write_policies_rls_test.sql",
+   "supabase/tests/redaction_log_rls_test.sql",
    "supabase/tests/role_source_of_truth_test.sql",
    "supabase/tests/user_preferences_rls_test.sql",
    "supabase/tests/webhook_secrets_rls_test.sql",
@@ -29772,6 +29773,7 @@
     "component": "VoiceSecurity",
     "tables_transitive": [
      "fraud_signals",
+     "redaction_log",
      "voice_prints"
     ],
     "invokes_transitive": [
@@ -29781,7 +29783,7 @@
      "verify-voice"
     ],
     "rpc_transitive": [],
-    "deps_count": 15
+    "deps_count": 18
    },
    {
     "path": "",
@@ -32655,7 +32657,7 @@
     "file": ".github/workflows/migrations.yml"
    }
   ],
-  "components_count": 375,
+  "components_count": 377,
   "hooks": [
    {
     "name": "useContacts",
@@ -33236,6 +33238,10 @@
    {
     "name": "useRecordings",
     "file": "src/hooks/useRecordings.ts"
+   },
+   {
+    "name": "useRedactionLog",
+    "file": "src/hooks/useRedactionLog.ts"
    },
    {
     "name": "useRenewals",
@@ -33831,8 +33837,8 @@
   },
   {
    "module": "src/components",
-   "files": 375,
-   "lines": 44461,
+   "files": 377,
+   "lines": 44758,
    "tables": [
     "accounts",
     "agent_goals",
@@ -34092,8 +34098,8 @@
   },
   {
    "module": "src/hooks",
-   "files": 347,
-   "lines": 44295,
+   "files": 349,
+   "lines": 44518,
    "tables": [
     "accounts",
     "active_sessions",
@@ -34183,6 +34189,7 @@
     "rate_limit_alerts",
     "rate_limit_logs",
     "rate_limit_settings",
+    "redaction_log",
     "renewals",
     "ring_group_members",
     "ring_groups",
@@ -34575,7 +34582,7 @@
   {
    "module": "src/pages",
    "files": 155,
-   "lines": 23711,
+   "lines": 23713,
    "tables": [
     "audit_logs",
     "battle_card_triggers",
@@ -35132,8 +35139,8 @@
   },
   {
    "module": "supabase/tests",
-   "files": 9,
-   "lines": 940,
+   "files": 10,
+   "lines": 1088,
    "tables": [],
    "exports": [],
    "docs": [],
@@ -35146,6 +35153,7 @@
     "supabase/tests/internal_tables_rls_test.sql",
     "supabase/tests/login_lockout_acl_rls_test.sql",
     "supabase/tests/rate_limit_logs_write_policies_rls_test.sql",
+    "supabase/tests/redaction_log_rls_test.sql",
     "supabase/tests/role_source_of_truth_test.sql",
     "supabase/tests/user_preferences_rls_test.sql",
     "supabase/tests/webhook_secrets_rls_test.sql"
@@ -36534,6 +36542,9 @@
     ]
    },
    "redaction_log": {
+    "select": [
+     "src/hooks/useRedactionLog.ts"
+    ],
     "insert": [
      "supabase/functions/redact-sensitive-audio/index.ts"
     ]
@@ -40492,6 +40503,16 @@
     "file": "src/hooks/useOptimisticLockConflicts.ts",
     "name": "ConflictPeriod",
     "values": "24h | 7d | 30d"
+   },
+   {
+    "file": "src/hooks/useRedactionLog.ts",
+    "name": "RedactionStatusTone",
+    "values": "success | neutral | danger"
+   },
+   {
+    "file": "src/hooks/useRedactionLog.ts",
+    "name": "REDACTION_LOG_QUERY_KEY",
+    "values": "'redaction-log'"
    },
    {
     "file": "src/hooks/useSipCall.ts",
@@ -51137,6 +51158,11 @@
     "value": "50"
    },
    {
+    "file": "src/hooks/useRedactionLog.ts",
+    "name": "REDACTION_LOG_LIMIT",
+    "value": "50"
+   },
+   {
     "file": "src/hooks/useSecurityAlertNotifications.ts",
     "name": "ALL_SOURCES",
     "value": "\"__all__\""
@@ -53900,6 +53926,18 @@
     "file": "src/hooks/useQueueMetrics.ts",
     "field": "status",
     "value": "warning",
+    "kind": "compara"
+   },
+   {
+    "file": "src/hooks/useRedactionLog.ts",
+    "field": "status",
+    "value": "completed",
+    "kind": "compara"
+   },
+   {
+    "file": "src/hooks/useRedactionLog.ts",
+    "field": "status",
+    "value": "no_matches",
     "kind": "compara"
    },
    {
@@ -59193,6 +59231,42 @@
     "name": "disabled esconde botão limpar"
    },
    {
+    "file": "src/components/voice-security/__tests__/RedactionLogCard.test.tsx",
+    "name": "RedactionLogCard"
+   },
+   {
+    "file": "src/components/voice-security/__tests__/RedactionLogCard.test.tsx",
+    "name": "mostra o estado vazio quando nao ha execucao registrada"
+   },
+   {
+    "file": "src/components/voice-security/__tests__/RedactionLogCard.test.tsx",
+    "name": "lista a execucao com sessao abreviada, padroes e ocorrencias"
+   },
+   {
+    "file": "src/components/voice-security/__tests__/RedactionLogCard.test.tsx",
+    "name": "explica o total de ocorrencias no cabecalho"
+   },
+   {
+    "file": "src/components/voice-security/__tests__/RedactionLogCard.test.tsx",
+    "name": "mostra "
+   },
+   {
+    "file": "src/components/voice-security/__tests__/RedactionLogCard.test.tsx",
+    "name": "abre e fecha os segmentos marcados"
+   },
+   {
+    "file": "src/components/voice-security/__tests__/RedactionLogCard.test.tsx",
+    "name": "mostra o erro de leitura com botao de nova tentativa"
+   },
+   {
+    "file": "src/components/voice-security/__tests__/RedactionLogCard.test.tsx",
+    "name": "mostra status desconhecido cru, sem esconder a linha"
+   },
+   {
+    "file": "src/components/voice-security/__tests__/RedactionLogCard.test.tsx",
+    "name": "atualiza o historico ao clicar em Atualizar"
+   },
+   {
     "file": "src/hooks/__tests__/callLifecycle-integration.test.tsx",
     "name": "Ciclo de vida da chamada — integracao (E064)"
    },
@@ -62857,6 +62931,42 @@
     "name": "transcribe error and unsuccessful response"
    },
    {
+    "file": "src/hooks/__tests__/useRedactionLog.test.tsx",
+    "name": "useRedactionLog"
+   },
+   {
+    "file": "src/hooks/__tests__/useRedactionLog.test.tsx",
+    "name": "le redaction_log com as colunas esperadas e ordena do mais recente"
+   },
+   {
+    "file": "src/hooks/__tests__/useRedactionLog.test.tsx",
+    "name": "respeita o limite informado"
+   },
+   {
+    "file": "src/hooks/__tests__/useRedactionLog.test.tsx",
+    "name": "devolve lista vazia quando a tabela nao tem linhas"
+   },
+   {
+    "file": "src/hooks/__tests__/useRedactionLog.test.tsx",
+    "name": "propaga o erro da leitura (RLS ou rede)"
+   },
+   {
+    "file": "src/hooks/__tests__/useRedactionLog.test.tsx",
+    "name": "helpers de redaction_log"
+   },
+   {
+    "file": "src/hooks/__tests__/useRedactionLog.test.tsx",
+    "name": "rotula e colore cada status conhecido"
+   },
+   {
+    "file": "src/hooks/__tests__/useRedactionLog.test.tsx",
+    "name": "quebra pattern_type em lista e ignora "
+   },
+   {
+    "file": "src/hooks/__tests__/useRedactionLog.test.tsx",
+    "name": "conta segmentos apenas quando e array"
+   },
+   {
     "file": "src/hooks/__tests__/useRenewals.test.ts",
     "name": "useRenewals"
    },
@@ -64075,6 +64185,10 @@
    {
     "file": "src/hooks/__tests__/useVoiceBiometrics.coverage.test.tsx",
     "name": "redacts successfully"
+   },
+   {
+    "file": "src/hooks/__tests__/useVoiceBiometrics.coverage.test.tsx",
+    "name": "invalida o historico de redacoes depois de redatar"
    },
    {
     "file": "src/hooks/__tests__/useVoiceBiometrics.coverage.test.tsx",
@@ -82547,6 +82661,7 @@
       "compara:src/hooks/useCoaching.ts",
       "compara:src/hooks/useExecutiveDashboard.ts",
       "compara:src/hooks/useQueueMetrics.ts",
+      "compara:src/hooks/useRedactionLog.ts",
       "compara:src/hooks/useSuccessPlans.ts",
       "compara:src/pages/CallHistory.tsx",
       "compara:src/pages/NumberPorting.tsx",
@@ -82891,6 +83006,9 @@
      ],
      "break": [
       "compara:src/hooks/useQueueMetrics.ts"
+     ],
+     "no_matches": [
+      "compara:src/hooks/useRedactionLog.ts"
      ],
      "in_negotiation": [
       "compara:src/hooks/useRenewals.ts"
@@ -86275,6 +86393,7 @@
    "supabase/migrations/20261126100000_edge_function_urls_from_vault.sql",
    "supabase/migrations/20261126101000_revoke_anon_login_rpcs.sql",
    "supabase/tests/login_lockout_acl_rls_test.sql",
+   "supabase/tests/redaction_log_rls_test.sql",
    "supabase/tests/webhook_secrets_rls_test.sql"
   ],
   "security_definer_fns": [
@@ -89583,6 +89702,13 @@
     "msg": "valor `break` para `status` usado no código não existe em nenhum enum do banco/TS",
     "where": [
      "compara:src/hooks/useQueueMetrics.ts"
+    ]
+   },
+   {
+    "kind": "status",
+    "msg": "valor `no_matches` para `status` usado no código não existe em nenhum enum do banco/TS",
+    "where": [
+     "compara:src/hooks/useRedactionLog.ts"
     ]
    },
    {
@@ -97239,6 +97365,29 @@
     "usePhaseColors"
    ]
   },
+  "src/components/voice-security/RedactionLogCard.tsx": {
+   "path": "src/components/voice-security/RedactionLogCard.tsx",
+   "lines": 186,
+   "exports": [
+    "function RedactionLogCard"
+   ]
+  },
+  "src/components/voice-security/__tests__/RedactionLogCard.test.tsx": {
+   "path": "src/components/voice-security/__tests__/RedactionLogCard.test.tsx",
+   "lines": 111,
+   "is_test": true,
+   "tests": [
+    "RedactionLogCard",
+    "mostra o estado vazio quando nao ha execucao registrada",
+    "lista a execucao com sessao abreviada, padroes e ocorrencias",
+    "explica o total de ocorrencias no cabecalho",
+    "mostra ",
+    "abre e fecha os segmentos marcados",
+    "mostra o erro de leitura com botao de nova tentativa",
+    "mostra status desconhecido cru, sem esconder a linha",
+    "atualiza o historico ao clicar em Atualizar"
+   ]
+  },
   "src/components/whatsapp/WhatsappComposer.tsx": {
    "path": "src/components/whatsapp/WhatsappComposer.tsx",
    "lines": 107,
@@ -102609,6 +102758,59 @@
     "invoke("
    ]
   },
+  "src/hooks/useRedactionLog.ts": {
+   "path": "src/hooks/useRedactionLog.ts",
+   "lines": 72,
+   "exports": [
+    "const REDACTION_LOG_QUERY_KEY",
+    "const REDACTION_LOG_COLUMNS",
+    "const REDACTION_LOG_LIMIT",
+    "interface RedactionLogEntry",
+    "type RedactionStatusTone",
+    "function redactionStatusLabel",
+    "function redactionStatusTone",
+    "function redactionPatternList",
+    "function countRedactionSegments",
+    "function useRedactionLog"
+   ],
+   "tables": [
+    {
+     "table": "redaction_log",
+     "op": "select"
+    }
+   ],
+   "enums": [
+    {
+     "name": "RedactionStatusTone",
+     "values": "success | neutral | danger"
+    },
+    {
+     "name": "REDACTION_LOG_QUERY_KEY",
+     "values": "'redaction-log'"
+    }
+   ],
+   "params": [
+    {
+     "name": "REDACTION_LOG_LIMIT",
+     "value": "50"
+    }
+   ],
+   "status_values": [
+    {
+     "field": "status",
+     "value": "completed",
+     "kind": "compara"
+    },
+    {
+     "field": "status",
+     "value": "no_matches",
+     "kind": "compara"
+    }
+   ],
+   "hooks": [
+    "useRedactionLog"
+   ]
+  },
   "src/hooks/useRenewals.ts": {
    "path": "src/hooks/useRenewals.ts",
    "lines": 87,
@@ -104193,7 +104395,7 @@
   },
   "src/hooks/useVoiceBiometrics.ts": {
    "path": "src/hooks/useVoiceBiometrics.ts",
-   "lines": 207,
+   "lines": 210,
    "exports": [
     "interface VoicePrint",
     "interface VerifyResult",
@@ -106959,6 +107161,22 @@
     "transcribe error and unsuccessful response"
    ]
   },
+  "src/hooks/__tests__/useRedactionLog.test.tsx": {
+   "path": "src/hooks/__tests__/useRedactionLog.test.tsx",
+   "lines": 136,
+   "is_test": true,
+   "tests": [
+    "useRedactionLog",
+    "le redaction_log com as colunas esperadas e ordena do mais recente",
+    "respeita o limite informado",
+    "devolve lista vazia quando a tabela nao tem linhas",
+    "propaga o erro da leitura (RLS ou rede)",
+    "helpers de redaction_log",
+    "rotula e colore cada status conhecido",
+    "quebra pattern_type em lista e ignora ",
+    "conta segmentos apenas quando e array"
+   ]
+  },
   "src/hooks/__tests__/useRenewals.test.ts": {
    "path": "src/hooks/__tests__/useRenewals.test.ts",
    "lines": 42,
@@ -107597,7 +107815,7 @@
   },
   "src/hooks/__tests__/useVoiceBiometrics.coverage.test.tsx": {
    "path": "src/hooks/__tests__/useVoiceBiometrics.coverage.test.tsx",
-   "lines": 217,
+   "lines": 229,
    "is_test": true,
    "errors": [
     ", async () => {\n    invokeMock.mockResolvedValue({ data: null, error: { message: "
@@ -107616,6 +107834,7 @@
     "applies severity and status filters",
     "useRedactCall",
     "redacts successfully",
+    "invalida o historico de redacoes depois de redatar",
     "redact error path triggers toast.error",
     "useLiveVoiceVerification",
     "returns null when no callSessionId",
@@ -115243,7 +115462,7 @@
   },
   "src/pages/VoiceSecurity.tsx": {
    "path": "src/pages/VoiceSecurity.tsx",
-   "lines": 220,
+   "lines": 222,
    "exports": [
     "function VoiceSecurity"
    ]
@@ -125199,6 +125418,12 @@
     "values ('203.0.113.90', 'gate-etapa-029', true, now() - interval '30 days'),"
    ]
   },
+  "supabase/tests/redaction_log_rls_test.sql": {
+   "path": "supabase/tests/redaction_log_rls_test.sql",
+   "lines": 148,
+   "is_test": true,
+   "uses_service_role": true
+  },
   "supabase/tests/role_source_of_truth_test.sql": {
    "path": "supabase/tests/role_source_of_truth_test.sql",
    "lines": 72,
@@ -125389,10 +125614,27 @@
   }
  },
  "git": {
-  "sha": "fbfb9167d81295f67aba690ccc681c0d0f1f0de4",
+  "sha": "96fa4dd42ef12da47c4c9d119d3e68865723d469",
   "branch": "main",
   "remote": "https://github.com/adm01-debug/Hello_V3",
   "commits": [
+   {
+    "sha": "96fa4dd",
+    "date": "2026-11-26",
+    "author": "adm01-debug",
+    "subject": "feat: historico do log de auditoria de redacao de dados sensiveis (#347)",
+    "files": [
+     "docs/qa/03-ACHADOS.md",
+     "src/components/voice-security/RedactionLogCard.tsx",
+     "src/components/voice-security/__tests__/RedactionLogCard.test.tsx",
+     "src/hooks/__tests__/useRedactionLog.test.tsx",
+     "src/hooks/__tests__/useVoiceBiometrics.coverage.test.tsx",
+     "src/hooks/useRedactionLog.ts",
+     "src/hooks/useVoiceBiometrics.ts",
+     "src/pages/VoiceSecurity.tsx",
+     "supabase/tests/redaction_log_rls_test.sql"
+    ]
+   },
    {
     "sha": "fbfb916",
     "date": "2026-11-26",
@@ -125761,15 +126003,6 @@
     "files": [
      ".github/workflows/migrations.yml"
     ]
-   },
-   {
-    "sha": "f95122a",
-    "date": "2026-11-25",
-    "author": "adm01-debug",
-    "subject": "fix: colisao de versao nao impede o diagnostico da fila (#316)",
-    "files": [
-     ".github/workflows/migrations.yml"
-    ]
    }
   ],
   "hot_files": [
@@ -125782,16 +126015,16 @@
     4
    ],
    [
-    ".github/workflows/migrations.yml",
-    4
+    "docs/qa/03-ACHADOS.md",
+    3
    ],
    [
     "src/components/calls/__tests__/ActiveCallBar.espera.test.tsx",
     3
    ],
    [
-    "docs/qa/03-ACHADOS.md",
-    2
+    ".github/workflows/migrations.yml",
+    3
    ],
    [
     "supabase/tests/cron_credentials_rls_test.sql",
@@ -125830,27 +126063,27 @@
     2
    ],
    [
-    "src/components/admin/webhook-health/WebhookSecretsCard.tsx",
+    "src/components/voice-security/RedactionLogCard.tsx",
     1
    ],
    [
-    "src/components/admin/webhook-health/__tests__/WebhookSecretsCard.test.tsx",
+    "src/components/voice-security/__tests__/RedactionLogCard.test.tsx",
     1
    ],
    [
-    "src/hooks/__tests__/useWebhookSecrets.test.tsx",
+    "src/hooks/__tests__/useRedactionLog.test.tsx",
     1
    ],
    [
-    "src/hooks/useWebhookSecrets.ts",
+    "src/hooks/__tests__/useVoiceBiometrics.coverage.test.tsx",
     1
    ],
    [
-    "src/pages/admin/WebhookHealth.tsx",
+    "src/hooks/useRedactionLog.ts",
     1
    ],
    [
-    "supabase/tests/webhook_secrets_rls_test.sql",
+    "src/hooks/useVoiceBiometrics.ts",
     1
    ]
   ]

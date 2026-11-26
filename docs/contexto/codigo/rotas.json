@@ -4846,6 +4846,7 @@
     "useQuery",
     "useQueryClient",
     "useRedactCall",
+    "useRedactionLog",
     "useState",
     "useVoicePrints"
    ],
@@ -4854,10 +4855,12 @@
     "useLiveVoiceVerification",
     "usePageTitle",
     "useRedactCall",
+    "useRedactionLog",
     "useVoicePrints"
    ],
    "tabelas": [
     "fraud_signals",
+    "redaction_log",
     "voice_prints"
    ],
    "rpcs": [],
@@ -4869,7 +4872,7 @@
    "canais_realtime": [],
    "flags": [],
    "papeis": [],
-   "arquivos_puxados": 15
+   "arquivos_puxados": 18
   },
   {
    "protegida": false,

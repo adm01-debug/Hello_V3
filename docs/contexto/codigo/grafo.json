@@ -1,20 +1,20 @@
 {
  "aviso": "GERADO AUTOMATICAMENTE por scripts/ai-context/gerar.mjs — não editar à mão; será sobrescrito.",
  "format_version": 2,
- "nos": 944,
- "arestas": 3747,
+ "nos": 946,
+ "arestas": 3756,
  "hubs": [
   {
    "arquivo": "src/integrations/supabase/client.ts",
-   "importado_por": 269
+   "importado_por": 271
   },
   {
    "arquivo": "src/components/ui/button.tsx",
-   "importado_por": 244
+   "importado_por": 245
   },
   {
    "arquivo": "src/components/ui/card.tsx",
-   "importado_por": 233
+   "importado_por": 234
   },
   {
    "arquivo": "src/lib/logger.ts",
@@ -22,7 +22,7 @@
   },
   {
    "arquivo": "src/components/ui/badge.tsx",
-   "importado_por": 199
+   "importado_por": 200
   },
   {
    "arquivo": "src/lib/utils.ts",
@@ -30,7 +30,7 @@
   },
   {
    "arquivo": "src/lib/safe-date.ts",
-   "importado_por": 106
+   "importado_por": 107
   },
   {
    "arquivo": "supabase/functions/_shared/cors.ts",
@@ -98,7 +98,7 @@
   },
   {
    "arquivo": "src/components/ui/table.tsx",
-   "importado_por": 28
+   "importado_por": 29
   },
   {
    "arquivo": "src/hooks/useMultiChannelCall.ts",
@@ -219,22 +219,22 @@
   {
    "modulo": "lib",
    "depende_de": 4,
-   "importado_por": 51
+   "importado_por": 52
   },
   {
    "modulo": "pages",
-   "depende_de": 53,
+   "depende_de": 54,
    "importado_por": 2
   },
   {
    "modulo": "hooks",
    "depende_de": 14,
-   "importado_por": 40
+   "importado_por": 41
   },
   {
    "modulo": "components/ui",
    "depende_de": 2,
-   "importado_por": 50
+   "importado_por": 51
   },
   {
    "modulo": "integrations/supabase",

@@ -15467,7 +15467,7 @@
     "call_session_id->call_sessions"
    ],
    "criada_em": "20260417113024_b37afec8-ce2c-47c3-9009-50ef0e86b65c.sql",
-   "usada_no_front": 0,
+   "usada_no_front": 1,
    "usada_em_edges": [
     "redact-sensitive-audio"
    ],

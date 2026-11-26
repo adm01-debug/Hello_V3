@@ -1,7 +1,7 @@
 {
  "aviso": "GERADO AUTOMATICAMENTE por scripts/ai-context/gerar.mjs — não editar à mão; será sobrescrito.",
  "format_version": 2,
- "total": 447,
+ "total": 448,
  "orfaos": 13,
  "nomes_duplicados": {
   "KpiCards": [
@@ -4060,7 +4060,7 @@
    "hooks_locais": [],
    "tabelas": [],
    "edges": [],
-   "usado_por": 199,
+   "usado_por": 200,
    "orfao": false
   },
   {
@@ -4110,7 +4110,7 @@
    "hooks_locais": [],
    "tabelas": [],
    "edges": [],
-   "usado_por": 244,
+   "usado_por": 245,
    "orfao": false
   },
   {
@@ -4145,7 +4145,7 @@
    "hooks_locais": [],
    "tabelas": [],
    "edges": [],
-   "usado_por": 233,
+   "usado_por": 234,
    "orfao": false
   },
   {
@@ -4809,7 +4809,7 @@
    "hooks_locais": [],
    "tabelas": [],
    "edges": [],
-   "usado_por": 28,
+   "usado_por": 29,
    "orfao": false
   },
   {
@@ -4938,6 +4938,22 @@
    "tabelas": [],
    "edges": [],
    "usado_por": 3,
+   "orfao": false
+  },
+  {
+   "arquivo": "src/components/voice-security/RedactionLogCard.tsx",
+   "exports": [
+    "RedactionLogCard"
+   ],
+   "export_default": "RedactionLogCard",
+   "linhas": 186,
+   "dominio": "components/voice-security",
+   "hooks_locais": [
+    "useRedactionLog"
+   ],
+   "tabelas": [],
+   "edges": [],
+   "usado_por": 1,
    "orfao": false
   },
   {
@@ -7292,7 +7308,7 @@
     "VoiceSecurity"
    ],
    "export_default": "VoiceSecurity",
-   "linhas": 220,
+   "linhas": 222,
    "dominio": "pages",
    "hooks_locais": [
     "useFraudSignals",

@@ -2143,6 +2143,14 @@
   "src/components/ui/use-toast.ts": [
    "src/hooks/use-toast.ts"
   ],
+  "src/components/voice-security/RedactionLogCard.tsx": [
+   "src/components/ui/badge.tsx",
+   "src/components/ui/button.tsx",
+   "src/components/ui/card.tsx",
+   "src/components/ui/table.tsx",
+   "src/hooks/useRedactionLog.ts",
+   "src/lib/safe-date.ts"
+  ],
   "src/components/voice/VoiceAssistantDialog.tsx": [
    "src/components/voice/overlay/FloatingParticles.tsx",
    "src/components/voice/overlay/VoiceOrb.tsx",
@@ -2725,6 +2733,9 @@
    "src/lib/logger.ts",
    "src/lib/safe-date.ts"
   ],
+  "src/hooks/useRedactionLog.ts": [
+   "src/integrations/supabase/client.ts"
+  ],
   "src/hooks/useRenewals.ts": [
    "src/integrations/supabase/client.ts",
    "src/lib/logger.ts"
@@ -2871,6 +2882,7 @@
    "src/integrations/supabase/client.ts"
   ],
   "src/hooks/useVoiceBiometrics.ts": [
+   "src/hooks/useRedactionLog.ts",
    "src/integrations/supabase/client.ts",
    "src/lib/logger.ts",
    "src/lib/tracing.ts",
@@ -4290,6 +4302,7 @@
    "src/components/ui/input.tsx",
    "src/components/ui/skeleton.tsx",
    "src/components/ui/tabs.tsx",
+   "src/components/voice-security/RedactionLogCard.tsx",
    "src/hooks/usePageTitle.ts",
    "src/hooks/useVoiceBiometrics.ts",
    "src/lib/safe-date.ts"

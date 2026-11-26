@@ -1,6 +1,6 @@
 # 07 · REGRAS DE NEGÓCIO
 
-> Gerado automaticamente por AI Context Sync v1.3.2 · commit `fbfb9167d8` · branch `main` · 2026-11-26 10:52 UTC
+> Gerado automaticamente por AI Context Sync v1.3.2 · commit `96fa4dd42e` · branch `main` · 2026-11-26 11:14 UTC
 > Não edite à mão — regras humanas vão em `manual/`.
 
 ## A. Regras escritas por humanos (`manual/` — prioridade máxima, nunca sobrescrito)
@@ -860,7 +860,7 @@ _nenhum mapa explícito encontrado — transições só existem implicitamente n
 | `status` | `calling` | compara, escreve | `src/components/calls/SipConnectionStatus.tsx`<br>`src/hooks/useSipCall.ts`<br>`src/hooks/useWavoipCall.ts` |
 | `status` | `cancelled` | escreve | `src/hooks/useScheduledCallbacks.ts` |
 | `status` | `checking` | compara, escreve | `src/components/network/NetworkStatusIndicator.tsx`<br>`src/components/observability/HealthTab.tsx`<br>`src/hooks/useHealthCheck.ts`<br>`src/hooks/useNetworkMonitor.ts` |
-| `status` | `completed` | compara, escreve, filtra | `src/components/call-history/CallSessionsList.tsx`<br>`src/components/callbacks/ScheduledCallbacksList.tsx`<br>`src/components/coaching/CoachingAssignmentsPanel.tsx`<br>`src/components/coaching/CoachingPanel.tsx`<br>`src/components/dashboard/RecentCalls.tsx`<br>… +30 |
+| `status` | `completed` | compara, escreve, filtra | `src/components/call-history/CallSessionsList.tsx`<br>`src/components/callbacks/ScheduledCallbacksList.tsx`<br>`src/components/coaching/CoachingAssignmentsPanel.tsx`<br>`src/components/coaching/CoachingPanel.tsx`<br>`src/components/dashboard/RecentCalls.tsx`<br>… +31 |
 | `status` | `conference` | compara, escreve | `src/hooks/useMultiChannelCall.ts` |
 | `status` | `connected` | escreve | `src/data/mockData.ts`<br>`src/hooks/useWavoipCall.ts` |
 | `status` | `connecting` | compara, escreve | `src/components/calls/SipConnectionStatus.tsx`<br>`src/components/calls/softphone/ActiveCallDisplay.tsx`<br>`src/hooks/useMultiChannelCall.ts`<br>`src/hooks/useSipCall.ts`<br>`src/hooks/useWavoipCall.ts`<br>… +2 |
@@ -889,6 +889,7 @@ _nenhum mapa explícito encontrado — transições só existem implicitamente n
 | `status` | `listening` | escreve | `src/hooks/useSupervisorPanel.ts` |
 | `status` | `loading` | compara | `src/pages/VerifyEmail.tsx` |
 | `status` | `missed` | compara, escreve | `src/components/dashboard/RecentCalls.tsx`<br>`src/data/mockData.ts`<br>`src/hooks/useQueueMetrics.ts`<br>`src/pages/CallHistory.tsx` |
+| `status` | `no_matches` | compara | `src/hooks/useRedactionLog.ts` |
 | `status` | `number` | compara | `src/lib/security-alerts-webhook-history.ts`<br>`supabase/functions/_shared/resilience.ts` |
 | `status` | `offline` | compara, escreve | `src/components/admin/extensions/ExtensionStatusBadge.tsx`<br>`src/components/executive/VoipInfrastructureTab.tsx`<br>`src/components/network/NetworkStatusIndicator.tsx`<br>`src/hooks/useAgentStatus.ts`<br>`src/hooks/useExtensionsAdmin.ts`<br>… +4 |
 | `status` | `ok` | compara, escreve | `src/components/queue/QueueGoalsTab.tsx`<br>`src/hooks/useQueueMetrics.ts`<br>`src/pages/QueueMetricsDashboard.tsx`<br>`supabase/functions/check-goals/index.ts`<br>`supabase/functions/data-lake-flush/index.ts` |
@@ -1080,6 +1081,8 @@ _nenhum mapa explícito encontrado — transições só existem implicitamente n
 | TransferType | blind \| attended | `src/hooks/useMultiChannelCall.ts` |
 | NetworkStatus | online \| unstable \| offline \| checking | `src/hooks/useNetworkMonitor.ts` |
 | ConflictPeriod | 24h \| 7d \| 30d | `src/hooks/useOptimisticLockConflicts.ts` |
+| RedactionStatusTone | success \| neutral \| danger | `src/hooks/useRedactionLog.ts` |
+| REDACTION_LOG_QUERY_KEY | 'redaction-log' | `src/hooks/useRedactionLog.ts` |
 | SipStatus | disconnected \| connecting \| registered \| calling \| ringing \| active \| error | `src/hooks/useSipCall.ts` |
 | AnomalyKind | spike \| drift \| outage | `src/hooks/useVoipAnomalies.ts` |
 | AnomalyMetric | mos \| jitter \| volume | `src/hooks/useVoipAnomalies.ts` |
@@ -1928,6 +1931,7 @@ _nenhum item encontrado_
 | `REALTIME_DEBOUNCE_MS` | `1` | `src/hooks/useQueueMetrics.ts` |
 | `GOAL_NOTIFY_COOLDOWN_MS` | `15` | `src/hooks/useQueueMetrics.ts` |
 | `PAGE_SIZE` | `50` | `src/hooks/useRecordings.ts` |
+| `REDACTION_LOG_LIMIT` | `50` | `src/hooks/useRedactionLog.ts` |
 | `ALL_SOURCES` | `"__all__"` | `src/hooks/useSecurityAlertNotifications.ts` |
 | `PAGE_SIZE` | `50` | `src/hooks/useSecurityAlertNotifications.ts` |
 | `SESSION_DURATION_HOURS` | `24` | `src/hooks/useSessionManager.ts` |
@@ -2664,7 +2668,7 @@ _nenhum item encontrado_
 | `admin` | `supabase/functions/data-lake-flush/index.ts` |
 | `admin` | `supabase/migrations/20261123000200_fix_has_role_oracle_and_debug_tables.sql` |
 
-## K. Testes como especificação (3689 testes em 407 arquivos — nomes completos em `context.json`)
+## K. Testes como especificação (3708 testes em 409 arquivos — nomes completos em `context.json`)
 
 | Arquivo | Testes | Exemplos do que o sistema DEVE fazer |
 |---|---|---|
@@ -2699,13 +2703,13 @@ _nenhum item encontrado_
 | `src/lib/__tests__/logger.test.ts` | 21 | Logger Module · Basic logging methods · logger.debug calls console.debug · logger.info calls console.info … |
 | `src/lib/__tests__/queue-metrics.test.ts` | 21 | serviceLevel · devolve null para lista vazia · conta atendida dentro do limiar como 100% · limiar e inclusivo … |
 | `src/__tests__/rls/rls-policies.test.ts` | 19 | RLS — call_sessions · agent vê apenas as próprias sessões · supervisor lê todas as sessões da equipe · admin tem acesso total (delete incluído) … |
+| `src/hooks/__tests__/useVoiceBiometrics.coverage.test.tsx` | 19 | useVoicePrints · loads voice prints list · enrolls successfully · enroll error path triggers toast.error … |
 | `src/lib/__tests__/dialer-favorites-and-alert.test.ts` | 19 | dialer-favorites-order — simulação de centenas de cenários · preserva o conjunto de itens em qualquer movimento (PBT) · sempre gera posições densas 0..n-1 (PBT) · é imutável: nunca altera o array original … |
 | `src/lib/webauthn/__tests__/webauthn-utils.coverage.test.ts` | 19 | webauthn-utils (coverage) · base64 helpers · round-trips a buffer through base64url · accepts a plain ArrayBuffer input … |
 | `src/hooks/__tests__/useBitrix.coverage.test.tsx` | 18 | useBitrix · checkConfiguration returns true when configured · callBitrixApi returns null when configured === false · getContacts / getLeads / getDeals populate state … |
 | `src/hooks/__tests__/useContactAlerts.coverage.test.tsx` | 18 | useContactAlerts · fetches alerts on mount and computes unread count · fetchAlerts with unreadOnly applies eq filter · fetchAlerts handles error and returns empty … |
 | `src/hooks/__tests__/useQueueMetrics.coverage.test.tsx` | 18 | useQueueMetrics · fetches metrics and computes values · conta em espera apenas chamadas on_hold, nunca um status inventado · checkGoalStatus handles gte and lte operators … |
 | `src/hooks/__tests__/useSecurityHooks.test.ts` | 18 | usePermissions · Permission checking logic · hasPermission returns true for existing permission · hasPermission returns false for missing permission … |
-| `src/hooks/__tests__/useVoiceBiometrics.coverage.test.tsx` | 18 | useVoicePrints · loads voice prints list · enrolls successfully · enroll error path triggers toast.error … |
 | `src/lib/__tests__/security-alerts-presets.test.ts` | 18 | security-alerts-presets · loadPresets · retorna [] quando storage vazio · retorna [] quando JSON inválido … |
 | `src/hooks/__tests__/useConversations.coverage.test.tsx` | 17 | useConversations · fetches with filters applied · handles fetch error · useConversationMessages … |
 | `src/hooks/__tests__/useSupervisorPanel.coverage.test.tsx` | 17 | useSupervisorPanel (coverage) · loads active calls and queue metrics on mount · selecting a call fetches whisper history · sendWhisper errors when no call/message selected … |
@@ -2781,6 +2785,7 @@ _nenhum item encontrado_
 | `supabase/functions/enforce-sla/__tests__/index.test.ts` | 10 | enforce-sla: prioriza política de canal específico sobre  · enforce-sla: prioriza prioridade específica sobre  · enforce-sla: canal exato vence combinação genérica · enforce-sla: cai no fallback  … |
 | `e2e/dashboard.spec.ts` | 9 | Dashboard · Unauthenticated · should redirect to login when not authenticated · Authenticated … |
 | `src/components/ui/__tests__/search-input.test.tsx` | 9 | SearchInput · renderiza com placeholder e valor · chama onValueChange ao digitar · mostra botão limpar somente quando há valor … |
+| `src/components/voice-security/__tests__/RedactionLogCard.test.tsx` | 9 | RedactionLogCard · mostra o estado vazio quando nao ha execucao registrada · lista a execucao com sessao abreviada, padroes e ocorrencias · explica o total de ocorrencias no cabecalho … |
 | `src/hooks/__tests__/useAccounts.coverage.test.tsx` | 9 | useAccounts coverage · handles load error · create success · create error returns null … |
 | `src/hooks/__tests__/useAlertsExport.test.ts` | 9 | useAlertsExport · exporta CSV com escopo  · filtra por scope= · filtra por scope= … |
 | `src/hooks/__tests__/useCallPlaylists.coverage.test.tsx` | 9 | useCallPlaylists (coverage) · loads playlists on mount · handles list error · createPlaylist success and error … |
@@ -2793,6 +2798,7 @@ _nenhum item encontrado_
 | `src/hooks/__tests__/useMFA.coverage.test.tsx` | 9 | useMFA · loads factors and settings · enrollTOTP success and error · enrollPhone success and error … |
 | `src/hooks/__tests__/useNotifications.coverage.test.tsx` | 9 | useNotifications · loads notifications and unread count · marks single and all as read · archives a notification … |
 | `src/hooks/__tests__/useQualityTrendAnalyzer.coverage.test.tsx` | 9 | useQualityTrendAnalyzer · não faz nada quando desabilitado · ignora MOS null ou não finito · detecta degradação progressiva e persiste alerta … |
+| `src/hooks/__tests__/useRedactionLog.test.tsx` | 9 | useRedactionLog · le redaction_log com as colunas esperadas e ordena do mais recente · respeita o limite informado · devolve lista vazia quando a tabela nao tem linhas … |
 | `src/hooks/__tests__/useSLA.coverage.test.tsx` | 9 | useSLA · useSlaPolicies loads policies · useSlaPolicies surfaces error · useSlaCompliance computes compliance … |
 | `src/hooks/__tests__/useSecurityDashboard.coverage.test.tsx` | 9 | useSecurityDashboard · returns early without userId · loads data and computes full score · computes lower score branches (no mfa, many sessions, ip off, no alerts) … |
 | `src/hooks/__tests__/useShifts.coverage.test.tsx` | 9 | useShifts coverage · loads shifts and templates without weekStart · loads shifts with weekStart (gte/lt branch) · exposes CRUD mutations and runs createShift success … |
@@ -2966,9 +2972,7 @@ _nenhum item encontrado_
 | `src/hooks/__tests__/useAccounts.test.ts` | 4 | useAccounts · loads accounts on mount · recomputes health via edge function · triggers churn detection |
 | `src/hooks/__tests__/useCallRecording.test.ts` | 4 | useCallRecording · inicia a captura e persiste o audio ao parar · devolve null e nao grava quando o microfone e negado · devolve null quando o audio sobe mas a gravacao nao e registrada no banco |
 | `src/hooks/__tests__/useCallScoring.coverage.test.tsx` | 4 | useCallScoring · expõe o estado inicial · calcula score com sucesso · lança erro quando a edge function falha |
-| `src/hooks/__tests__/useContactInsights.coverage.test.tsx` | 4 | useContactInsights · returns empty metrics with no contacts · computes distributions across varied personality profiles · handles fetch error gracefully |
-| `src/hooks/__tests__/useDeals.test.ts` | 4 | useDeals · loads deals · createDeal returns true on success · computeHealth invokes edge function |
-| … +107 linhas — lista completa em `context.json` | | |
+| … +109 linhas — lista completa em `context.json` | | |
 
 ## L. Eventos de webhook tratados (contratos com sistemas externos)
 
