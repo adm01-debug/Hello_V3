@@ -16,11 +16,14 @@ begin
   for r in
     select jobname,
            (command like '%eyJhbGciOi%') as tem_jwt,
-           (command ~ 'https://[a-z0-9]+\.supabase\.co/functions/v1') as tem_host
+           (command ~ 'https://[a-z0-9]+\.supabase\.co/functions/v1') as tem_host,
+           replace(regexp_replace(command, '\s+', ' ', 'g'), 'Bearer ' || chr(39) || ' || ', 'Bearer <vault> ')
+             as resumo
     from cron.job
     order by jobname
   loop
     raise notice 'job: % jwt=% host=%', r.jobname, r.tem_jwt, r.tem_host;
+    raise notice 'comando: %', left(r.resumo, 240);
   end loop;
 end $$;
 
