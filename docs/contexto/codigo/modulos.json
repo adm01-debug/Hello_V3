@@ -536,8 +536,8 @@
   {
    "modulo": "components/call-library",
    "arquivos": 2,
-   "testes": 0,
-   "linhas": 192,
+   "testes": 1,
+   "linhas": 289,
    "itens_menu": [],
    "telas": [],
    "rotas_http": [],
@@ -545,6 +545,7 @@
    "hooks_locais": [
     "useCallPlaylists",
     "usePlaylistItems",
+    "useSurveyDefinitions",
     "useSurveys"
    ],
    "hooks_definidos": [],
@@ -554,7 +555,8 @@
    "tabelas": [
     "call_playlists",
     "playlist_items",
-    "survey_responses"
+    "survey_responses",
+    "surveys"
    ],
    "rpcs": [],
    "buckets": [],
@@ -579,7 +581,8 @@
     "lib"
    ],
    "pacotes_externos": [
-    "lucide-react"
+    "lucide-react",
+    "sonner"
    ]
   },
   {
@@ -1744,6 +1747,7 @@
     "useSlaPolicies",
     "useSuccessPlans",
     "useSupervisorPanel",
+    "useSurveyDefinitions",
     "useSurveys",
     "useSyncHistory",
     "useTalkRatio",
@@ -1988,6 +1992,7 @@
     "success_plan_milestones",
     "success_plans",
     "survey_responses",
+    "surveys",
     "system_settings",
     "time_off_requests",
     "toll_free_numbers",
@@ -3447,7 +3452,7 @@
    "modulo": "hooks",
    "arquivos": 170,
    "testes": 0,
-   "linhas": 21918,
+   "linhas": 21981,
    "itens_menu": [],
    "telas": [],
    "rotas_http": [],
@@ -3612,6 +3617,7 @@
     "useSlaPolicies",
     "useSuccessPlans",
     "useSupervisorPanel",
+    "useSurveyDefinitions",
     "useSurveys",
     "useSyncHistory",
     "useTalkRatio",
@@ -3820,6 +3826,7 @@
     "useUpsertSlaPolicy",
     "useSuccessPlans",
     "useSupervisorPanel",
+    "useSurveyDefinitions",
     "useSurveys",
     "useSyncHistory",
     "useTalkRatio",
@@ -4038,6 +4045,7 @@
     "success_plan_milestones",
     "success_plans",
     "survey_responses",
+    "surveys",
     "time_off_requests",
     "tracker_matches",
     "trackers",
@@ -4298,6 +4306,7 @@
      "success_plan_milestones",
      "success_plans",
      "survey_responses",
+     "surveys",
      "time_off_requests",
      "tracker_matches",
      "trackers",
@@ -5936,6 +5945,7 @@
     "useSlaPolicies",
     "useSuccessPlans",
     "useSupervisorPanel",
+    "useSurveyDefinitions",
     "useSurveys",
     "useSyncHistory",
     "useTalkRatio",
@@ -6161,6 +6171,7 @@
     "success_plan_milestones",
     "success_plans",
     "survey_responses",
+    "surveys",
     "system_settings",
     "time_off_requests",
     "toll_free_numbers",
@@ -6934,6 +6945,7 @@
     "useSlaPolicies",
     "useSuccessPlans",
     "useSupervisorPanel",
+    "useSurveyDefinitions",
     "useSurveys",
     "useSyncHistory",
     "useTalkRatio",
@@ -7174,6 +7186,7 @@
     "success_plan_milestones",
     "success_plans",
     "survey_responses",
+    "surveys",
     "system_settings",
     "time_off_requests",
     "toll_free_numbers",

@@ -1081,6 +1081,7 @@
     "usePageTitle",
     "usePlaylistItems",
     "useState",
+    "useSurveyDefinitions",
     "useSurveys"
    ],
    "hooks_locais": [
@@ -1088,12 +1089,14 @@
     "useCallSearch",
     "usePageTitle",
     "usePlaylistItems",
+    "useSurveyDefinitions",
     "useSurveys"
    ],
    "tabelas": [
     "call_playlists",
     "playlist_items",
-    "survey_responses"
+    "survey_responses",
+    "surveys"
    ],
    "rpcs": [],
    "edges": [

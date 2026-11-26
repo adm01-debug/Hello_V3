@@ -4072,12 +4072,14 @@
   {
    "arquivo": "src/hooks/useSurveys.ts",
    "hooks_exportados": [
+    "useSurveyDefinitions",
     "useSurveys"
    ],
-   "linhas": 67,
+   "linhas": 130,
    "dominio": "hooks",
    "tabelas": [
-    "survey_responses"
+    "survey_responses",
+    "surveys"
    ],
    "rpcs": [],
    "edges": [

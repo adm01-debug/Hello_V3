@@ -17986,7 +17986,7 @@
    "indices": [],
    "fks": [],
    "criada_em": "20260416235642_e9fe6fa3-4307-49a3-9253-09718c07703d.sql",
-   "usada_no_front": 0,
+   "usada_no_front": 1,
    "usada_em_edges": [
     "send-survey"
    ],

@@ -1,6 +1,6 @@
 # 07 · REGRAS DE NEGÓCIO
 
-> Gerado automaticamente por AI Context Sync v1.3.2 · commit `305ee9e5c4` · branch `main` · 2026-11-26 01:02 UTC
+> Gerado automaticamente por AI Context Sync v1.3.2 · commit `bd1b19ca9b` · branch `main` · 2026-11-26 10:35 UTC
 > Não edite à mão — regras humanas vão em `manual/`.
 
 ## A. Regras escritas por humanos (`manual/` — prioridade máxima, nunca sobrescrito)
@@ -1918,6 +1918,7 @@ _nenhum item encontrado_
 | `PAGE_SIZE` | `50` | `src/hooks/useSecurityAlertNotifications.ts` |
 | `SESSION_DURATION_HOURS` | `24` | `src/hooks/useSessionManager.ts` |
 | `REFRESH_THRESHOLD_MINUTES` | `30` | `src/hooks/useSessionManager.ts` |
+| `SURVEY_COLUMNS` | `'id, name, survey_type, description, questions, is_active'` | `src/hooks/useSurveys.ts` |
 | `COLLECT_INTERVAL_MS` | `2000` | `src/hooks/useVoipQualityMonitor.ts` |
 | `MAX_DEVICE_LABEL_LENGTH` | `60` | `src/lib/device-identity.ts` |
 | `FALLBACK_DEVICE_LABEL` | `'Dispositivo desconhecido'` | `src/lib/device-identity.ts` |
@@ -2354,6 +2355,8 @@ _nenhum item encontrado_
 | Transcrição vazia | `src/components/ai/AICallAnalysis.tsx` |
 | ; import {   Dialog,   DialogContent,   DialogDescription,   DialogFooter,   DialogHeader,   DialogTitle,   DialogTrigger, } from  | `src/components/auth/PasskeyManager.tsx` |
 | Senha comprometida detectada | `src/components/auth/PasswordStrength.tsx` |
+| Cadastre e selecione uma pesquisa antes de enviar | `src/components/call-library/SurveysPanel.tsx` |
+| Informe o nome da pesquisa | `src/components/call-library/SurveysPanel.tsx` |
 | Callback em ${minutesUntil} minutos! | `src/components/callbacks/ScheduledCallbacksList.tsx` |
 | A chamada foi encerrada, mas não foi possível salvar o histórico | `src/components/calls/ActiveCallBar.tsx` |
 | Erro ao gerar resumo, salvando sem resumo | `src/components/calls/ActiveCallBar.tsx` |
@@ -2596,9 +2599,7 @@ _nenhum item encontrado_
 | Permissão negada | `src/hooks/useRealtimeHoldAlerts.ts` |
 | ⚠️ Alerta de Tempo em Espera | `src/hooks/useRealtimeHoldAlerts.ts` |
 | Erro ao analisar sentimento | `src/hooks/useRecordings.ts` |
-| Erro ao baixar gravação | `src/hooks/useRecordings.ts` |
-| Erro ao carregar gravações | `src/hooks/useRecordings.ts` |
-| … +287 linhas — lista completa em `context.json` | |
+| … +292 linhas — lista completa em `context.json` | |
 
 ## J. Controle de acesso no código (checagens de perfil/permissão)
 
@@ -2649,7 +2650,7 @@ _nenhum item encontrado_
 | `admin` | `supabase/functions/data-lake-flush/index.ts` |
 | `admin` | `supabase/migrations/20261123000200_fix_has_role_oracle_and_debug_tables.sql` |
 
-## K. Testes como especificação (3654 testes em 404 arquivos — nomes completos em `context.json`)
+## K. Testes como especificação (3667 testes em 405 arquivos — nomes completos em `context.json`)
 
 | Arquivo | Testes | Exemplos do que o sistema DEVE fazer |
 |---|---|---|
@@ -2717,6 +2718,7 @@ _nenhum item encontrado_
 | `src/hooks/__tests__/useCallSession.coverage.test.tsx` | 13 | useCallSession · starts a session successfully · returns null on start error · addTranscript/addAnalysis no-op without session … |
 | `src/hooks/__tests__/useDashboardData.coverage.test.tsx` | 13 | useDashboardData · useDashboardStats success · useDashboardStats error · useAgentsListData success returns data … |
 | `src/hooks/__tests__/useGamification.coverage.test.tsx` | 13 | useGamification · loads data successfully and computes rankings · runs without agentId (skips agent-scoped fetches) · handles fetch errors on all tables … |
+| `src/hooks/__tests__/useSurveys.coverage.test.tsx` | 13 | useSurveys · carrega respostas e calcula nps · npsScore null quando sem scores válidos · trata erro de carregamento … |
 | `src/lib/__tests__/executive-dashboard-utils.test.ts` | 13 | getPeriodLabel · returns correct label for today · returns correct label for week · returns correct label for month … |
 | `src/lib/__tests__/voipRecommendationCoaching.coverage.test.ts` | 13 | voipRecommendationCoaching · schedules a coaching check with mosBefore captured · does not schedule duplicates for the same recommendation · captures null mosBefore when supabase returns empty data … |
 | `src/lib/__tests__/guard-edge-numeric.test.ts` | 12 | guard-edge-numeric — Regra 1 (z.number sem .finite) · detecta z.number() em qualquer disposição de whitespace · aceita z.number().finite() com whitespace variável · ignora z.number() dentro de comentários e strings … |
@@ -2851,6 +2853,7 @@ _nenhum item encontrado_
 | `src/__tests__/rls/learning-completions.test.ts` | 6 | RLS — learning_completions · agente só vê próprias conclusões · supervisor vê todas · agente NÃO pode inserir conclusão de outro agente … |
 | `src/__tests__/rls/storage-recordings.test.ts` | 6 | Storage — call-recordings (ownership por path) · bucket é privado: anônimo é bloqueado · agente lê apenas próprias gravações · agente faz upload apenas no próprio prefixo … |
 | `src/components/auth/__tests__/PermissionGate.test.tsx` | 6 | PermissionGate · nao renderiza nada enquanto as permissoes carregam · mostra o estado padrao de sem permissao quando nao ha fallback · respeita fallback explicito, inclusive null … |
+| `src/components/call-library/__tests__/SurveysPanel.test.tsx` | 6 | SurveysPanel · envia a pesquisa escolhida pelo id real (nao um valor fixo) · sem pesquisa cadastrada bloqueia o envio e explica o motivo · cria pesquisa com o nome informado … |
 | `src/hooks/__tests__/useAudioOutputDevices.test.tsx` | 6 | useAudioOutputDevices · reporta não suportado quando setSinkId ausente · enumera dispositivos de saída e ignora inputs · persiste a preferência ao chamar setSinkId com sucesso … |
 | `src/hooks/__tests__/useBattleCardDetection.test.ts` | 6 | useBattleCardDetection · does nothing when inactive · matches contains keyword · matches exact keyword as a whole word … |
 | `src/hooks/__tests__/useBitrixAndWebAuthn.test.ts` | 6 | useBitrix · gets contacts from Bitrix · handles unconfigured service · useWebAuthn … |
@@ -2866,7 +2869,6 @@ _nenhum item encontrado_
 | `src/hooks/__tests__/useMultiChannelCall.compliance.test.tsx` | 6 | useMultiChannelCall — barreira de compliance (etapa 034) · bloqueia a discagem quando o pre-dial check reprova · libera a discagem quando ha mais de um motivo aprovado · chamada recebida ignora a barreira (skipComplianceCheck) … |
 | `src/hooks/__tests__/useNetworkMonitor.coverage.test.tsx` | 6 | useNetworkMonitor (coverage) · pings /favicon.ico and classifies as online on success · reports offline when navigator is offline · handles ping error -> unstable then offline after repeated failures … |
 | `src/hooks/__tests__/useRateLimitData.writeResult.test.tsx` | 6 | useRateLimitData — resultado real das escritas · pede a contagem ao banco nas duas escritas · unblockIP nao anuncia sucesso quando 0 linhas foram alteradas · unblockIP anuncia sucesso quando a linha foi alterada … |
-| `src/hooks/__tests__/useSurveys.coverage.test.tsx` | 6 | useSurveys · carrega respostas e calcula nps · npsScore null quando sem scores válidos · trata erro de carregamento … |
 | `src/hooks/__tests__/useTrunkHealth.coverage.test.tsx` | 6 | useTrunkHealth (coverage) · loads health history for a trunk · is disabled without trunkId · history fetch error throws … |
 | `src/hooks/__tests__/useVoiceCommand.coverage.test.tsx` | 6 | useVoiceCommand (coverage) · processes audio successfully via start/stop · handles transcribe error · handles command error but keeps transcription … |
 | `src/hooks/__tests__/useVoipAutoRemediation.coverage.test.tsx` | 6 | useVoipAutoRemediation · sugere remediação e dispara toast de erro · throttle impede segunda sugestão dentro de 30s · ação reconectar chama reconnect e toast de sucesso … |
@@ -2952,8 +2954,7 @@ _nenhum item encontrado_
 | `src/hooks/__tests__/useDeals.test.ts` | 4 | useDeals · loads deals · createDeal returns true on success · computeHealth invokes edge function |
 | `src/hooks/__tests__/useHoldMetrics.coverage.test.tsx` | 4 | useHoldMetrics · aggregates 7d metrics · handles 30d and 90d ranges with empty data · handles 90d range |
 | `src/hooks/__tests__/useIPValidation.coverage.test.tsx` | 4 | useIPValidation · returns data on success · handles supabase error branch · handles thrown exception branch |
-| `src/hooks/__tests__/useLockedWrite.test.ts` | 4 | useLockedWrite · ignora o segundo clique enquanto a gravacao da mesma linha esta em voo · libera a trava mesmo quando a gravacao falha · nao bloqueia linhas diferentes |
-| … +104 linhas — lista completa em `context.json` | | |
+| … +105 linhas — lista completa em `context.json` | | |
 
 ## L. Eventos de webhook tratados (contratos com sistemas externos)
 

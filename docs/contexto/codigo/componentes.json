@@ -787,9 +787,10 @@
     "SurveysPanel"
    ],
    "export_default": null,
-   "linhas": 96,
+   "linhas": 193,
    "dominio": "components/call-library",
    "hooks_locais": [
+    "useSurveyDefinitions",
     "useSurveys"
    ],
    "tabelas": [],

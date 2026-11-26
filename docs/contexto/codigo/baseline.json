@@ -2,11 +2,16 @@
  "aviso": "GERADO AUTOMATICAMENTE por scripts/ai-context/gerar.mjs — não editar à mão; será sobrescrito.",
  "format_version": 2,
  "git": {
-  "commit": "305ee9e5c4796bdb525eabfd2608d9a2332b4e29",
+  "commit": "bd1b19ca9b712dd8bf0d532f82e4096e8da342f8",
   "branch": "main",
-  "data_commit": "2026-11-25T21:59:26-03:00",
+  "data_commit": "2026-11-26T07:35:04-03:00",
   "remote": "https://github.com/adm01-debug/Hello_V3",
   "ultimos_commits": [
+   {
+    "sha": "bd1b19c",
+    "data": "2026-11-26",
+    "assunto": "fix: aba Pesquisas enviava um id fixo e nunca cadastrava pesquisa (#345)"
+   },
    {
     "sha": "305ee9e",
     "data": "2026-11-25",
@@ -126,21 +131,16 @@
     "sha": "227252f",
     "data": "2026-11-25",
     "assunto": "feat: alerta semanal da fila de migrations (#320)"
-   },
-   {
-    "sha": "6be5522",
-    "data": "2026-11-25",
-    "assunto": "fix: renumera e enxuga a migration de indices morta (#318)"
    }
   ],
-  "arquivos_mudados_7d": 1319,
+  "arquivos_mudados_7d": 1322,
   "pastas_mais_mudadas_30d": [
    {
-    "pasta": "covout/lcov-report/hooks",
-    "mudancas": 286
+    "pasta": "src/hooks/__tests__",
+    "mudancas": 287
    },
    {
-    "pasta": "src/hooks/__tests__",
+    "pasta": "covout/lcov-report/hooks",
     "mudancas": 286
    },
    {
@@ -310,9 +310,9 @@
   ]
  },
  "contagens": {
-  "arquivos_total": 1773,
-  "arquivos_codigo": 1355,
-  "linhas_codigo": 180205,
+  "arquivos_total": 1774,
+  "arquivos_codigo": 1356,
+  "linhas_codigo": 180574,
   "rotas": 106,
   "rotas_http_backend": 11,
   "vistas_por_id": 0,
@@ -324,7 +324,7 @@
   "tabelas": 170,
   "migrations": 250,
   "cron_jobs": 11,
-  "testes": 421,
+  "testes": 422,
   "workflows": 5,
   "scripts": 36,
   "docs_md": 121
@@ -479,8 +479,8 @@
    "linhas": 450
   },
   "src/components": {
-   "arquivos": 372,
-   "linhas": 43756
+   "arquivos": 373,
+   "linhas": 43963
   },
   "src/contexts": {
    "arquivos": 5,
@@ -492,7 +492,7 @@
   },
   "src/hooks": {
    "arquivos": 345,
-   "linhas": 43777
+   "linhas": 43939
   },
   "src/integrations": {
    "arquivos": 3,
