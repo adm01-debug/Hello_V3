@@ -2,6 +2,20 @@
 
 Diff semântico gerado a cada coleta em que algo mudou.
 
+## 2026-11-26 13:17 UTC
+
+- **colunas** adicionado (11): `public.client_errors.correlation_id`, `public.client_errors.error_type`, `public.client_errors.id`, `public.client_errors.message`, `public.client_errors.occurred_at`, `public.client_errors.resolved_at`, `public.client_errors.resolved_by`, `public.client_errors.route`, `public.client_errors.stack`, `public.client_errors.user_agent`, `public.client_errors.user_id`
+- **constraints** adicionado (9): `public.client_errors.client_errors_correlation_len`, `public.client_errors.client_errors_message_len`, `public.client_errors.client_errors_pkey`, `public.client_errors.client_errors_resolved_by_fkey`, `public.client_errors.client_errors_route_len`, `public.client_errors.client_errors_stack_len`, `public.client_errors.client_errors_type_chk`, `public.client_errors.client_errors_user_agent_len`, `public.client_errors.client_errors_user_id_fkey`
+- **cron jobs** adicionado (1): `58:cron-watchdog-hourly`
+- **functions** adicionado (3): `public.check_cron_health()`, `public.cron_health_rows()`, `public.get_cron_health()`
+- **functions** alterado (2): `public.dnc_track_removal()`, `public.is_admin()`
+- **grants** adicionado (3): `public.client_errors:anon`, `public.client_errors:authenticated`, `public.client_errors:service_role`
+- **indexes** adicionado (4): `public.client_errors_pkey`, `public.idx_client_errors_occurred_at`, `public.idx_client_errors_open`, `public.idx_client_errors_route`
+- **lints** adicionado (2): `fk_without_index:public.client_errors.client_errors_resolved_by_fkey`, `fk_without_index:public.client_errors.client_errors_user_id_fkey`
+- **migrations** adicionado (1): `20261126130000_dnc_removal_audit`
+- **policies (RLS)** adicionado (3): `public.client_errors.admins_supervisors_read_client_errors`, `public.client_errors.admins_supervisors_resolve_client_errors`, `public.client_errors.authenticated_insert_own_client_errors`
+- **tabelas** adicionado (1): `public.client_errors`
+
 ## 2026-11-26 12:19 UTC
 
 - **colunas** adicionado (9): `public.deal_pipeline_snapshots.created_at`, `public.deal_pipeline_snapshots.open_count`, `public.deal_pipeline_snapshots.snapshot_date`, `public.deal_pipeline_snapshots.total_value_cents`, `public.deal_pipeline_snapshots.updated_at`, `public.deal_pipeline_snapshots.weighted_value_cents`, `public.dnc_list.removal_reason`, `public.dnc_list.removed_at`, `public.dnc_list.removed_by`

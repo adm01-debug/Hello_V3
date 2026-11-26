@@ -135,6 +135,9 @@ Visão consolidada (inclui `storage.objects` e `realtime.messages`); detalhes po
 | public.churn_risk_signals | Admin/supervisor full access on churn signals | ALL | PERMISSIVE | authenticated | `is_admin_or_supervisor()` | `is_admin_or_supervisor()` |
 | public.churn_risk_signals | CSM can resolve signals for their accounts | UPDATE | PERMISSIVE | authenticated | `(EXISTS ( SELECT 1    FROM accounts a   WHERE ((a.id = churn_risk_signals.account_id) AND (a.csm_agent_name = get_user_agent_name()))))` |  |
 | public.churn_risk_signals | CSM can view signals for their accounts | SELECT | PERMISSIVE | authenticated | `(EXISTS ( SELECT 1    FROM accounts a   WHERE ((a.id = churn_risk_signals.account_id) AND (a.csm_agent_name = get_user_agent_name()))))` |  |
+| public.client_errors | admins_supervisors_read_client_errors | SELECT | PERMISSIVE | authenticated | `is_admin_or_supervisor()` |  |
+| public.client_errors | admins_supervisors_resolve_client_errors | UPDATE | PERMISSIVE | authenticated | `is_admin_or_supervisor()` | `is_admin_or_supervisor()` |
+| public.client_errors | authenticated_insert_own_client_errors | INSERT | PERMISSIVE | authenticated |  | `(( SELECT auth.uid() AS uid) = user_id)` |
 | public.coaching_assignments | Admin/supervisor create assignments | INSERT | PERMISSIVE | authenticated |  | `is_admin_or_supervisor()` |
 | public.coaching_assignments | Admin/supervisor delete assignments | DELETE | PERMISSIVE | authenticated | `is_admin_or_supervisor()` |  |
 | public.coaching_assignments | Agents update own assignments status | UPDATE | PERMISSIVE | authenticated | `(is_admin_or_supervisor() OR (get_user_agent_name() = agent_name))` | `(is_admin_or_supervisor() OR (get_user_agent_name() = agent_name))` |

@@ -164,6 +164,10 @@ Uso e tamanho em `stats.md`.
 | public.churn_risk_signals | churn_risk_signals_pkey | btree | id | sim | sim |  |
 | public.churn_risk_signals | idx_churn_risk_signals_account_id | btree | account_id | não | sim |  |
 | public.churn_risk_signals | idx_churn_signals_active | btree | is_active, severity | não | sim |  |
+| public.client_errors | client_errors_pkey | btree | id | sim | sim |  |
+| public.client_errors | idx_client_errors_occurred_at | btree | occurred_at | não | sim |  |
+| public.client_errors | idx_client_errors_open | btree | occurred_at | não | sim | `(resolved_at IS NULL)` |
+| public.client_errors | idx_client_errors_route | btree | route, occurred_at | não | sim |  |
 | public.coaching_assignments | coaching_assignments_pkey | btree | id | sim | sim |  |
 | public.coaching_assignments | idx_coaching_assignments_agent | btree | agent_name | não | sim |  |
 | public.coaching_assignments | idx_coaching_assignments_call_session_id | btree | call_session_id | não | sim |  |

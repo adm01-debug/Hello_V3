@@ -12,6 +12,8 @@ Verificações objetivas feitas no catálogo. Um agente deve ler isto antes de p
 | BAIXA | extension_in_public | pg_trgm | Extensão instalada no schema public (recomendado: schema extensions). |
 | BAIXA | extension_in_public | vector | Extensão instalada no schema public (recomendado: schema extensions). |
 | BAIXA | fk_without_index | public.call_park_orbits.call_park_orbits_moh_prompt_id_fkey | FK sem índice nas colunas ['moh_prompt_id']: joins e DELETE/UPDATE na tabela pai ficam lentos. |
+| BAIXA | fk_without_index | public.client_errors.client_errors_resolved_by_fkey | FK sem índice nas colunas ['resolved_by']: joins e DELETE/UPDATE na tabela pai ficam lentos. |
+| BAIXA | fk_without_index | public.client_errors.client_errors_user_id_fkey | FK sem índice nas colunas ['user_id']: joins e DELETE/UPDATE na tabela pai ficam lentos. |
 | BAIXA | fk_without_index | public.entity_versions.entity_versions_changed_by_fkey | FK sem índice nas colunas ['changed_by']: joins e DELETE/UPDATE na tabela pai ficam lentos. |
 | BAIXA | fk_without_index | public.parked_calls.parked_calls_retrieved_by_fkey | FK sem índice nas colunas ['retrieved_by']: joins e DELETE/UPDATE na tabela pai ficam lentos. |
 | BAIXA | policy_auth_fn_not_wrapped | public.user_preferences.Users can insert own preferences | Policy chama auth.uid()/jwt() sem `(select ...)`: é reavaliada por linha; envolva em subselect. |

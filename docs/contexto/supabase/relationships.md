@@ -45,6 +45,8 @@
 | public.call_translations | call_session_id | public.call_sessions | id | CASCADE | NO ACTION |
 | public.chat_sessions | conversation_id | public.conversations | id | SET NULL | NO ACTION |
 | public.churn_risk_signals | account_id | public.accounts | id | CASCADE | NO ACTION |
+| public.client_errors | resolved_by | auth.users | id | SET NULL | NO ACTION |
+| public.client_errors | user_id | auth.users | id | SET NULL | NO ACTION |
 | public.coaching_assignments | call_session_id | public.call_sessions | id | SET NULL | NO ACTION |
 | public.coaching_recommendations | agent_id | public.agents | id | CASCADE | NO ACTION |
 | public.coaching_timestamps | call_session_id | public.call_sessions | id | CASCADE | NO ACTION |

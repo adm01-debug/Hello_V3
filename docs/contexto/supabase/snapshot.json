@@ -6285,6 +6285,149 @@
         "nullable": false,
         "position": 1,
         "schema": "public",
+        "table": "client_errors",
+        "type": "uuid"
+      },
+      {
+        "comment": null,
+        "default": "now()",
+        "generated": null,
+        "identity": null,
+        "is_enum": false,
+        "name": "occurred_at",
+        "nullable": false,
+        "position": 2,
+        "schema": "public",
+        "table": "client_errors",
+        "type": "timestamp with time zone"
+      },
+      {
+        "comment": null,
+        "default": null,
+        "generated": null,
+        "identity": null,
+        "is_enum": false,
+        "name": "user_id",
+        "nullable": true,
+        "position": 3,
+        "schema": "public",
+        "table": "client_errors",
+        "type": "uuid"
+      },
+      {
+        "comment": "pathname da tela onde o erro ocorreu",
+        "default": null,
+        "generated": null,
+        "identity": null,
+        "is_enum": false,
+        "name": "route",
+        "nullable": false,
+        "position": 4,
+        "schema": "public",
+        "table": "client_errors",
+        "type": "text"
+      },
+      {
+        "comment": null,
+        "default": "'error'::text",
+        "generated": null,
+        "identity": null,
+        "is_enum": false,
+        "name": "error_type",
+        "nullable": false,
+        "position": 5,
+        "schema": "public",
+        "table": "client_errors",
+        "type": "text"
+      },
+      {
+        "comment": null,
+        "default": null,
+        "generated": null,
+        "identity": null,
+        "is_enum": false,
+        "name": "message",
+        "nullable": false,
+        "position": 6,
+        "schema": "public",
+        "table": "client_errors",
+        "type": "text"
+      },
+      {
+        "comment": null,
+        "default": null,
+        "generated": null,
+        "identity": null,
+        "is_enum": false,
+        "name": "stack",
+        "nullable": true,
+        "position": 7,
+        "schema": "public",
+        "table": "client_errors",
+        "type": "text"
+      },
+      {
+        "comment": null,
+        "default": null,
+        "generated": null,
+        "identity": null,
+        "is_enum": false,
+        "name": "user_agent",
+        "nullable": true,
+        "position": 8,
+        "schema": "public",
+        "table": "client_errors",
+        "type": "text"
+      },
+      {
+        "comment": "trace id do client (src/lib/tracing.ts) para cruzar com logs de edge function",
+        "default": null,
+        "generated": null,
+        "identity": null,
+        "is_enum": false,
+        "name": "correlation_id",
+        "nullable": true,
+        "position": 9,
+        "schema": "public",
+        "table": "client_errors",
+        "type": "text"
+      },
+      {
+        "comment": null,
+        "default": null,
+        "generated": null,
+        "identity": null,
+        "is_enum": false,
+        "name": "resolved_at",
+        "nullable": true,
+        "position": 10,
+        "schema": "public",
+        "table": "client_errors",
+        "type": "timestamp with time zone"
+      },
+      {
+        "comment": null,
+        "default": null,
+        "generated": null,
+        "identity": null,
+        "is_enum": false,
+        "name": "resolved_by",
+        "nullable": true,
+        "position": 11,
+        "schema": "public",
+        "table": "client_errors",
+        "type": "uuid"
+      },
+      {
+        "comment": null,
+        "default": "gen_random_uuid()",
+        "generated": null,
+        "identity": null,
+        "is_enum": false,
+        "name": "id",
+        "nullable": false,
+        "position": 1,
+        "schema": "public",
         "table": "coaching_assignments",
         "type": "uuid"
       },
@@ -26145,6 +26288,163 @@
       },
       {
         "columns": [
+          "correlation_id"
+        ],
+        "deferrable": false,
+        "definition": "CHECK (correlation_id IS NULL OR char_length(correlation_id) <= 100)",
+        "name": "client_errors_correlation_len",
+        "on_delete": null,
+        "on_update": null,
+        "ref_columns": [],
+        "ref_schema": null,
+        "ref_table": null,
+        "schema": "public",
+        "table": "client_errors",
+        "type": "CHECK",
+        "validated": true
+      },
+      {
+        "columns": [
+          "message"
+        ],
+        "deferrable": false,
+        "definition": "CHECK (char_length(message) >= 1 AND char_length(message) <= 1000)",
+        "name": "client_errors_message_len",
+        "on_delete": null,
+        "on_update": null,
+        "ref_columns": [],
+        "ref_schema": null,
+        "ref_table": null,
+        "schema": "public",
+        "table": "client_errors",
+        "type": "CHECK",
+        "validated": true
+      },
+      {
+        "columns": [
+          "id"
+        ],
+        "deferrable": false,
+        "definition": "PRIMARY KEY (id)",
+        "name": "client_errors_pkey",
+        "on_delete": null,
+        "on_update": null,
+        "ref_columns": [],
+        "ref_schema": null,
+        "ref_table": null,
+        "schema": "public",
+        "table": "client_errors",
+        "type": "PRIMARY KEY",
+        "validated": true
+      },
+      {
+        "columns": [
+          "resolved_by"
+        ],
+        "deferrable": false,
+        "definition": "FOREIGN KEY (resolved_by) REFERENCES auth.users(id) ON DELETE SET NULL",
+        "name": "client_errors_resolved_by_fkey",
+        "on_delete": "SET NULL",
+        "on_update": "NO ACTION",
+        "ref_columns": [
+          "id"
+        ],
+        "ref_schema": "auth",
+        "ref_table": "users",
+        "schema": "public",
+        "table": "client_errors",
+        "type": "FOREIGN KEY",
+        "validated": true
+      },
+      {
+        "columns": [
+          "route"
+        ],
+        "deferrable": false,
+        "definition": "CHECK (char_length(route) <= 500)",
+        "name": "client_errors_route_len",
+        "on_delete": null,
+        "on_update": null,
+        "ref_columns": [],
+        "ref_schema": null,
+        "ref_table": null,
+        "schema": "public",
+        "table": "client_errors",
+        "type": "CHECK",
+        "validated": true
+      },
+      {
+        "columns": [
+          "stack"
+        ],
+        "deferrable": false,
+        "definition": "CHECK (stack IS NULL OR char_length(stack) <= 4000)",
+        "name": "client_errors_stack_len",
+        "on_delete": null,
+        "on_update": null,
+        "ref_columns": [],
+        "ref_schema": null,
+        "ref_table": null,
+        "schema": "public",
+        "table": "client_errors",
+        "type": "CHECK",
+        "validated": true
+      },
+      {
+        "columns": [
+          "error_type"
+        ],
+        "deferrable": false,
+        "definition": "CHECK (error_type = ANY (ARRAY['error'::text, 'unhandled-rejection'::text, 'react-component'::text, 'network-error'::text]))",
+        "name": "client_errors_type_chk",
+        "on_delete": null,
+        "on_update": null,
+        "ref_columns": [],
+        "ref_schema": null,
+        "ref_table": null,
+        "schema": "public",
+        "table": "client_errors",
+        "type": "CHECK",
+        "validated": true
+      },
+      {
+        "columns": [
+          "user_agent"
+        ],
+        "deferrable": false,
+        "definition": "CHECK (user_agent IS NULL OR char_length(user_agent) <= 500)",
+        "name": "client_errors_user_agent_len",
+        "on_delete": null,
+        "on_update": null,
+        "ref_columns": [],
+        "ref_schema": null,
+        "ref_table": null,
+        "schema": "public",
+        "table": "client_errors",
+        "type": "CHECK",
+        "validated": true
+      },
+      {
+        "columns": [
+          "user_id"
+        ],
+        "deferrable": false,
+        "definition": "FOREIGN KEY (user_id) REFERENCES auth.users(id) ON DELETE SET NULL",
+        "name": "client_errors_user_id_fkey",
+        "on_delete": "SET NULL",
+        "on_update": "NO ACTION",
+        "ref_columns": [
+          "id"
+        ],
+        "ref_schema": "auth",
+        "ref_table": "users",
+        "schema": "public",
+        "table": "client_errors",
+        "type": "FOREIGN KEY",
+        "validated": true
+      },
+      {
+        "columns": [
           "call_session_id"
         ],
         "deferrable": false,
@@ -31805,6 +32105,15 @@
           "jobname": "deal-pipeline-snapshot-daily",
           "schedule": "5 3 * * *",
           "username": "postgres"
+        },
+        {
+          "active": true,
+          "command": " SELECT public.check_cron_health(); ",
+          "database": "postgres",
+          "jobid": 58,
+          "jobname": "cron-watchdog-hourly",
+          "schedule": "5 * * * *",
+          "username": "postgres"
         }
       ]
     },
@@ -32285,6 +32594,38 @@
         "language": "plpgsql",
         "leakproof": false,
         "name": "check_calling_hours",
+        "owner": "postgres",
+        "returns": "jsonb",
+        "schema": "public",
+        "security_definer": true,
+        "strict": false,
+        "volatility": "volatile"
+      },
+      {
+        "args": "",
+        "callers": {
+          "code": [],
+          "code_total_files": 0,
+          "cron": [
+            "58:cron-watchdog-hourly"
+          ],
+          "db": [],
+          "triggers": [],
+          "views": []
+        },
+        "comment": null,
+        "config": [
+          "search_path=public, cron"
+        ],
+        "definition": null,
+        "definition_sha": "97e076d19cc326c6",
+        "execute_api_roles": "service_role",
+        "execute_public": false,
+        "is_trigger_fn": false,
+        "kind": "function",
+        "language": "plpgsql",
+        "leakproof": false,
+        "name": "check_cron_health",
         "owner": "postgres",
         "returns": "jsonb",
         "schema": "public",
@@ -32785,6 +33126,44 @@
           "code": [],
           "code_total_files": 0,
           "cron": [],
+          "db": [
+            "public.check_cron_health",
+            "public.get_cron_health"
+          ],
+          "triggers": [],
+          "views": []
+        },
+        "comment": null,
+        "config": [
+          "search_path=public, cron"
+        ],
+        "definition": null,
+        "definition_sha": "1d753113607b736d",
+        "execute_api_roles": null,
+        "execute_public": false,
+        "is_trigger_fn": false,
+        "kind": "function",
+        "language": "sql",
+        "leakproof": false,
+        "name": "cron_health_rows",
+        "owner": "postgres",
+        "returns": "TABLE(jobname text, schedule text, active boolean, last_status text, last_start timestamp with time zone, last_end timestamp with time zone, last_duration_seconds numeric, runs_24h bigint, failures_24h bigint, hours_since_last numeric, expected_every_minutes numeric, state text)",
+        "schema": "public",
+        "security_definer": true,
+        "strict": false,
+        "volatility": "stable"
+      },
+      {
+        "args": "",
+        "callers": {
+          "code": [
+            {
+              "file": "supabase/migrations/20261126130000_dnc_removal_audit.sql",
+              "hits": 1
+            }
+          ],
+          "code_total_files": 1,
+          "cron": [],
           "db": [],
           "triggers": [
             "public.dnc_list.trg_dnc_track_removal"
@@ -33283,6 +33662,36 @@
         "security_definer": true,
         "strict": false,
         "volatility": "volatile"
+      },
+      {
+        "args": "",
+        "callers": {
+          "code": [],
+          "code_total_files": 0,
+          "cron": [],
+          "db": [],
+          "triggers": [],
+          "views": []
+        },
+        "comment": null,
+        "config": [
+          "search_path=public, cron"
+        ],
+        "definition": null,
+        "definition_sha": "91112250069b3f0c",
+        "execute_api_roles": "authenticated, service_role",
+        "execute_public": false,
+        "is_trigger_fn": false,
+        "kind": "function",
+        "language": "plpgsql",
+        "leakproof": false,
+        "name": "get_cron_health",
+        "owner": "postgres",
+        "returns": "TABLE(jobname text, schedule text, active boolean, last_status text, last_start timestamp with time zone, last_end timestamp with time zone, last_duration_seconds numeric, runs_24h bigint, failures_24h bigint, hours_since_last numeric, expected_every_minutes numeric, state text)",
+        "schema": "public",
+        "security_definer": true,
+        "strict": false,
+        "volatility": "stable"
       },
       {
         "args": "",
@@ -34150,6 +34559,7 @@
           "code_total_files": 11,
           "cron": [],
           "db": [
+            "public.get_cron_health",
             "public.get_database_health_snapshot",
             "public.get_top_slow_queries",
             "public.log_index_drop_copy"
@@ -37285,6 +37695,24 @@
           "privileges": "DELETE, INSERT, REFERENCES, SELECT, TRIGGER, TRUNCATE, UPDATE",
           "schema": "public",
           "table": "churn_risk_signals"
+        },
+        {
+          "grantee": "anon",
+          "privileges": "DELETE, INSERT, REFERENCES, SELECT, TRIGGER, TRUNCATE, UPDATE",
+          "schema": "public",
+          "table": "client_errors"
+        },
+        {
+          "grantee": "authenticated",
+          "privileges": "DELETE, INSERT, REFERENCES, SELECT, TRIGGER, TRUNCATE, UPDATE",
+          "schema": "public",
+          "table": "client_errors"
+        },
+        {
+          "grantee": "service_role",
+          "privileges": "DELETE, INSERT, REFERENCES, SELECT, TRIGGER, TRUNCATE, UPDATE",
+          "schema": "public",
+          "table": "client_errors"
         },
         {
           "grantee": "anon",
@@ -41876,6 +42304,63 @@
         "predicate": null,
         "schema": "public",
         "table": "churn_risk_signals"
+      },
+      {
+        "columns": [
+          "id"
+        ],
+        "definition": "CREATE UNIQUE INDEX client_errors_pkey ON public.client_errors USING btree (id)",
+        "is_primary": true,
+        "is_unique": true,
+        "is_valid": true,
+        "method": "btree",
+        "name": "client_errors_pkey",
+        "predicate": null,
+        "schema": "public",
+        "table": "client_errors"
+      },
+      {
+        "columns": [
+          "occurred_at"
+        ],
+        "definition": "CREATE INDEX idx_client_errors_occurred_at ON public.client_errors USING btree (occurred_at DESC)",
+        "is_primary": false,
+        "is_unique": false,
+        "is_valid": true,
+        "method": "btree",
+        "name": "idx_client_errors_occurred_at",
+        "predicate": null,
+        "schema": "public",
+        "table": "client_errors"
+      },
+      {
+        "columns": [
+          "occurred_at"
+        ],
+        "definition": "CREATE INDEX idx_client_errors_open ON public.client_errors USING btree (occurred_at DESC) WHERE (resolved_at IS NULL)",
+        "is_primary": false,
+        "is_unique": false,
+        "is_valid": true,
+        "method": "btree",
+        "name": "idx_client_errors_open",
+        "predicate": "(resolved_at IS NULL)",
+        "schema": "public",
+        "table": "client_errors"
+      },
+      {
+        "columns": [
+          "route",
+          "occurred_at"
+        ],
+        "definition": "CREATE INDEX idx_client_errors_route ON public.client_errors USING btree (route, occurred_at DESC)",
+        "is_primary": false,
+        "is_unique": false,
+        "is_valid": true,
+        "method": "btree",
+        "name": "idx_client_errors_route",
+        "predicate": null,
+        "schema": "public",
+        "table": "client_errors"
       },
       {
         "columns": [
@@ -47277,6 +47762,18 @@
       },
       {
         "code": "fk_without_index",
+        "detail": "FK sem índice nas colunas ['resolved_by']: joins e DELETE/UPDATE na tabela pai ficam lentos.",
+        "object": "public.client_errors.client_errors_resolved_by_fkey",
+        "severity": "BAIXA"
+      },
+      {
+        "code": "fk_without_index",
+        "detail": "FK sem índice nas colunas ['user_id']: joins e DELETE/UPDATE na tabela pai ficam lentos.",
+        "object": "public.client_errors.client_errors_user_id_fkey",
+        "severity": "BAIXA"
+      },
+      {
+        "code": "fk_without_index",
         "detail": "FK sem índice nas colunas ['changed_by']: joins e DELETE/UPDATE na tabela pai ficam lentos.",
         "object": "public.entity_versions.entity_versions_changed_by_fkey",
         "severity": "BAIXA"
@@ -48632,6 +49129,12 @@
         "statements": 12,
         "statements_sha": "fbb217eab26fbc61",
         "version": "20261126120000"
+      },
+      {
+        "name": "dnc_removal_audit",
+        "statements": 10,
+        "statements_sha": "ca4c010d3b9c85bd",
+        "version": "20261126130000"
       }
     ],
     "policies": [
@@ -50194,6 +50697,42 @@
         "table": "churn_risk_signals",
         "using": "(EXISTS ( SELECT 1\n   FROM accounts a\n  WHERE ((a.id = churn_risk_signals.account_id) AND (a.csm_agent_name = get_user_agent_name()))))",
         "with_check": null
+      },
+      {
+        "cmd": "SELECT",
+        "name": "admins_supervisors_read_client_errors",
+        "permissive": "PERMISSIVE",
+        "roles": [
+          "authenticated"
+        ],
+        "schema": "public",
+        "table": "client_errors",
+        "using": "is_admin_or_supervisor()",
+        "with_check": null
+      },
+      {
+        "cmd": "UPDATE",
+        "name": "admins_supervisors_resolve_client_errors",
+        "permissive": "PERMISSIVE",
+        "roles": [
+          "authenticated"
+        ],
+        "schema": "public",
+        "table": "client_errors",
+        "using": "is_admin_or_supervisor()",
+        "with_check": "is_admin_or_supervisor()"
+      },
+      {
+        "cmd": "INSERT",
+        "name": "authenticated_insert_own_client_errors",
+        "permissive": "PERMISSIVE",
+        "roles": [
+          "authenticated"
+        ],
+        "schema": "public",
+        "table": "client_errors",
+        "using": null,
+        "with_check": "(( SELECT auth.uid() AS uid) = user_id)"
       },
       {
         "cmd": "INSERT",
@@ -55301,6 +55840,21 @@
         "is_partition": false,
         "kind": "table",
         "name": "churn_risk_signals",
+        "owner": "postgres",
+        "parent": null,
+        "partition_bound": null,
+        "partition_key": null,
+        "replica_identity": "default",
+        "rls_enabled": true,
+        "rls_forced": false,
+        "schema": "public"
+      },
+      {
+        "comment": "Erros nao tratados do navegador (etapa 230 / A-097). Alimentada por src/lib/errorReporter.ts, lida em /admin/client-errors.",
+        "from_extension": false,
+        "is_partition": false,
+        "kind": "table",
+        "name": "client_errors",
         "owner": "postgres",
         "parent": null,
         "partition_bound": null,

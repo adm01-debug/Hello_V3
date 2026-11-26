@@ -50,6 +50,7 @@ Um arquivo por tabela em `tables/<schema>/<tabela>.md` (colunas, constraints, í
 | [public.calling_hours_config](tables/public/calling_hours_config.md) | table | sim | 2 | 15 | não |  |
 | [public.chat_sessions](tables/public/chat_sessions.md) | table | sim | 3 | 13 | não |  |
 | [public.churn_risk_signals](tables/public/churn_risk_signals.md) | table | sim | 3 | 13 | não |  |
+| [public.client_errors](tables/public/client_errors.md) | table | sim | 3 | 11 | não | Erros nao tratados do navegador (etapa 230 / A-097). Alimentada por src/lib/errorReporter.ts, lida em /admin/client-errors. |
 | [public.coaching_assignments](tables/public/coaching_assignments.md) | table | sim | 4 | 15 | não |  |
 | [public.coaching_recommendations](tables/public/coaching_recommendations.md) | table | sim | 4 | 12 | não |  |
 | [public.coaching_timestamps](tables/public/coaching_timestamps.md) | table | sim | 3 | 9 | não |  |
