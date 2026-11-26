@@ -5,6 +5,7 @@ import { toast } from 'sonner';
 import { logger } from '@/lib/logger';
 import { traceHeaders, withTrace } from '@/lib/tracing';
 import { captureVoiceSample, type ExtractedFeatures } from '@/lib/voice-biometrics';
+import { REDACTION_LOG_QUERY_KEY } from '@/hooks/useRedactionLog';
 
 const log = logger.create('VoiceBiometrics');
 
@@ -164,6 +165,7 @@ export function useFraudSignals(filters?: { severity?: string; status?: string; 
 }
 
 export function useRedactCall() {
+  const queryClient = useQueryClient();
   return useMutation({
     mutationFn: async (callSessionId: string) => {
       const { data, error } = await withTrace('voice.redact', () =>
@@ -177,6 +179,7 @@ export function useRedactCall() {
     },
     onSuccess: (data) => {
       toast.success(`Redação concluída — ${data.matches} matches encontrados`);
+      void queryClient.invalidateQueries({ queryKey: REDACTION_LOG_QUERY_KEY });
     },
     onError: (err) => {
       logger.error('redact failed', err);
