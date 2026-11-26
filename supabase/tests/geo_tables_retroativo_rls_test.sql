@@ -167,7 +167,7 @@ begin
       join pg_am am on am.oid = ic.relam
       where n.nspname = 'public' and c.relname = r.tab and ic.relname = r.idx
         and am.amname = r.metodo
-        and pg_get_indexdef(i.indexrelid, 0, true) = r.colunas
+        and pg_get_indexdef(i.indexrelid) like '%using ' || r.metodo || ' (' || r.colunas || ')'
         and case when r.relopts = '' then coalesce(array_to_string(ic.reloptions, ','), '') = ''
                  else coalesce(array_to_string(ic.reloptions, ','), '') like '%pages_per_range%32%' end
     ) then
