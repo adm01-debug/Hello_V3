@@ -80,8 +80,9 @@ begin
     end if;
   end if;
 
-  execute 'insert into public.user_roles (user_id, role, is_active) values ($1, ''admin'', true)
-           on conflict (user_id) do update set role = ''admin'', is_active = true'
+  -- user_roles nao tem UNIQUE(user_id) em producao: limpa e insere (a transacao e revertida).
+  execute 'delete from public.user_roles where user_id = $1' using v_user;
+  execute 'insert into public.user_roles (user_id, role, is_active) values ($1, ''admin'', true)'
     using v_user;
 
   perform set_config('request.jwt.claims', json_build_object('sub', v_user, 'role', 'authenticated')::text, true);
