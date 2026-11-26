@@ -55,6 +55,17 @@ export function detectReplay(
   return null;
 }
 
+/**
+ * Erro de gravação que significa "essa mensagem já existe".
+ *
+ * `23505` é a violação do índice único parcial `idx_conversation_messages_msgid`
+ * (etapa 017). É a barreira final: duas reentregas simultâneas passam as duas pela
+ * leitura de deduplicação e só a segunda bate no índice.
+ */
+export function isDuplicateMessageError(error: { code?: string } | null | undefined): boolean {
+  return error?.code === '23505';
+}
+
 /** Normaliza telefone para comparação (apenas dígitos). */
 export function normalizePhone(raw: string): string {
   return raw.replace(/[^0-9]/g, "");
