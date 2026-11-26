@@ -46,8 +46,19 @@ function makeBuilder(table: string) {
 
 const fromMock = vi.fn((table: string) => makeBuilder(table));
 
+/** Chamadas de RPC registradas, com os argumentos — é assim que a etapa 126 é observada. */
+const rpcCalls: { name: string; args: Record<string, unknown> }[] = [];
+
+const rpcMock = vi.fn((name: string, args?: Record<string, unknown>) => {
+  rpcCalls.push({ name, args: args ?? {} });
+  return Promise.resolve(nextResult(`rpc:${name}`));
+});
+
 vi.mock('@/integrations/supabase/client', () => ({
-  supabase: { from: (table: string) => fromMock(table) },
+  supabase: {
+    from: (table: string) => fromMock(table),
+    rpc: (name: string, args?: Record<string, unknown>) => rpcMock(name, args),
+  },
 }));
 vi.mock('sonner', () => ({ toast: { success: vi.fn(), error: vi.fn(), info: vi.fn(), warning: vi.fn() } }));
 vi.mock('@/lib/logger', () => ({
@@ -69,6 +80,7 @@ describe('useGamification', () => {
   beforeEach(() => {
     vi.clearAllMocks();
     writes.length = 0;
+    rpcCalls.length = 0;
     for (const k of Object.keys(tableResults)) delete tableResults[k];
   });
 
@@ -108,7 +120,7 @@ describe('useGamification', () => {
     await waitFor(() => expect(result.current.isLoading).toBe(false));
   });
 
-  it('awards a badge and updates weekly stats (existing row)', async () => {
+  it('awards a badge and soma os pontos pela RPC', async () => {
     setResults({
       badges: [{ data: [], error: null }],
       agent_badges: [{ data: [], error: null }],
@@ -124,6 +136,10 @@ describe('useGamification', () => {
       agents: [{ data: [], error: null }],
     });
     await act(async () => { await result.current.awardBadge('b9'); });
+
+    expect(rpcCalls).toEqual([
+      { name: 'increment_weekly_stats', args: expect.objectContaining({ p_agent_id: 'a1', p_badges: 1, p_points: 30 }) },
+    ]);
   });
 
   it('awardBadge handles duplicate (23505) and generic errors', async () => {
@@ -138,62 +154,55 @@ describe('useGamification', () => {
     await act(async () => { await result.current.awardBadge('err'); });
   });
 
-  it('updateWeeklyStats inserts when no existing row', async () => {
+  it('updateWeeklyStats grava em uma unica RPC, sem ler antes', async () => {
     setResults({ badges: [{ data: [], error: null }], agent_badges: [{ data: [], error: null }], agent_weekly_stats: [{ data: [], error: null }], agents: [{ data: [], error: null }] });
     const { result } = renderHook(() => useGamification('a1'));
     await waitFor(() => expect(result.current.isLoading).toBe(false));
+    writes.length = 0;
+    rpcCalls.length = 0;
 
-    setResults({
-      agent_weekly_stats: [{ data: null, error: null }, { data: null, error: null }, { data: [], error: null }],
-      agents: [{ data: [], error: null }],
-    });
     await act(async () => {
       await result.current.updateWeeklyStats({ total_calls: 2, total_duration_seconds: 30, badges_earned: 1, points_earned: 5, avg_satisfaction: 9, avg_performance: 7 });
     });
+
+    // O read-modify-write perdia pontos quando duas gravacoes coincidiam: agora e uma chamada so.
+    expect(writes).not.toContain('agent_weekly_stats');
+    expect(rpcCalls).toHaveLength(1);
+    expect(rpcCalls[0].name).toBe('increment_weekly_stats');
+    expect(rpcCalls[0].args).toMatchObject({
+      p_agent_id: 'a1',
+      p_calls: 2,
+      p_duration_seconds: 30,
+      p_badges: 1,
+      p_points: 5,
+      p_avg_satisfaction: 9,
+      p_avg_performance: 7,
+    });
+    expect(typeof rpcCalls[0].args.p_week_start).toBe('string');
   });
 
-  it('não regrava a semana quando a leitura das estatísticas falha', async () => {
+  it('media nao enviada vai como null para a RPC preservar o valor da semana', async () => {
+    setResults({ badges: [{ data: [], error: null }], agent_badges: [{ data: [], error: null }], agent_weekly_stats: [{ data: [], error: null }], agents: [{ data: [], error: null }] });
+    const { result } = renderHook(() => useGamification('a1'));
+    await waitFor(() => expect(result.current.isLoading).toBe(false));
+    rpcCalls.length = 0;
+
+    await act(async () => { await result.current.updateWeeklyStats({ total_calls: 1 }); });
+
+    expect(rpcCalls[0].args).toMatchObject({ p_calls: 1, p_avg_satisfaction: null, p_avg_performance: null });
+  });
+
+  it('avisa quando a RPC das estatísticas da semana falha', async () => {
     setResults({ badges: [{ data: [], error: null }], agent_badges: [{ data: [], error: null }], agent_weekly_stats: [{ data: [], error: null }], agents: [{ data: [], error: null }] });
     const { result } = renderHook(() => useGamification('a1'));
     await waitFor(() => expect(result.current.isLoading).toBe(false));
     writes.length = 0;
 
-    setResults({ agent_weekly_stats: [{ data: null, error: { message: 'permission denied' } }] });
+    setResults({ 'rpc:increment_weekly_stats': [{ data: null, error: { message: 'permission denied' } }] });
     await act(async () => { await result.current.updateWeeklyStats({ total_calls: 1 }); });
 
+    expect(toast.error).toHaveBeenCalledWith('Não foi possível salvar as estatísticas da semana');
     expect(writes).not.toContain('agent_weekly_stats');
-  });
-
-  it('avisa quando o update das estatísticas da semana falha', async () => {
-    setResults({ badges: [{ data: [], error: null }], agent_badges: [{ data: [], error: null }], agent_weekly_stats: [{ data: [], error: null }], agents: [{ data: [], error: null }] });
-    const { result } = renderHook(() => useGamification('a1'));
-    await waitFor(() => expect(result.current.isLoading).toBe(false));
-
-    setResults({
-      agent_weekly_stats: [
-        { data: { id: 's1', total_calls: 1, total_duration_seconds: 0, badges_earned: 0, points_earned: 0, avg_satisfaction: 0, avg_performance: 0 }, error: null },
-        { data: null, error: { message: 'permission denied' } },
-      ],
-    });
-    await act(async () => { await result.current.updateWeeklyStats({ total_calls: 1 }); });
-
-    expect(toast.error).toHaveBeenCalledWith('Não foi possível salvar as estatísticas da semana');
-  });
-
-  it('avisa quando o insert das estatísticas da semana falha', async () => {
-    setResults({ badges: [{ data: [], error: null }], agent_badges: [{ data: [], error: null }], agent_weekly_stats: [{ data: [], error: null }], agents: [{ data: [], error: null }] });
-    const { result } = renderHook(() => useGamification('a1'));
-    await waitFor(() => expect(result.current.isLoading).toBe(false));
-
-    setResults({
-      agent_weekly_stats: [
-        { data: null, error: null },
-        { data: null, error: { message: 'permission denied' } },
-      ],
-    });
-    await act(async () => { await result.current.updateWeeklyStats({ total_calls: 1 }); });
-
-    expect(toast.error).toHaveBeenCalledWith('Não foi possível salvar as estatísticas da semana');
   });
 
   it('updateWeeklyStats returns early without agentId', async () => {

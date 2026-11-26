@@ -8030,6 +8030,31 @@ export type Database = {
         }
         Returns: boolean
       }
+      increment_weekly_stats: {
+        Args: {
+          p_agent_id: string
+          p_avg_performance?: number | null
+          p_avg_satisfaction?: number | null
+          p_badges?: number
+          p_calls?: number
+          p_duration_seconds?: number
+          p_points?: number
+          p_week_start: string
+        }
+        Returns: {
+          agent_id: string
+          avg_performance: number
+          avg_satisfaction: number
+          badges_earned: number
+          created_at: string
+          id: string
+          points_earned: number
+          total_calls: number
+          total_duration_seconds: number
+          updated_at: string
+          week_start: string
+        }
+      }
       is_active_agent: { Args: { _agent_name: string }; Returns: boolean }
       is_admin: { Args: never; Returns: boolean }
       is_admin_or_supervisor: { Args: never; Returns: boolean }
