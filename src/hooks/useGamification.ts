@@ -205,52 +205,24 @@ export function useGamification(agentId?: string) {
 
     const weekStart = getWeekStart();
 
-    const { data: existing, error: existingError } = await supabase
-      .from('agent_weekly_stats')
-      .select('*')
-      .eq('agent_id', agentId)
-      .eq('week_start', weekStart)
-      .maybeSingle();
+    // A soma acontece no banco (etapa 126): ler-e-depois-gravar perdia pontos quando duas
+    // gravacoes da mesma semana coincidiam — a segunda caia no insert, batia no
+    // UNIQUE(agent_id, week_start) e o erro era descartado.
+    const { error: statsError } = await supabase.rpc('increment_weekly_stats', {
+      p_agent_id: agentId,
+      p_week_start: weekStart,
+      p_calls: updates.total_calls ?? 0,
+      p_duration_seconds: updates.total_duration_seconds ?? 0,
+      p_badges: updates.badges_earned ?? 0,
+      p_points: updates.points_earned ?? 0,
+      p_avg_satisfaction: updates.avg_satisfaction ?? null,
+      p_avg_performance: updates.avg_performance ?? null,
+    });
 
-    if (existingError) {
-      // Sem leitura confiável, o insert criaria uma segunda linha da semana e o
-      // update partiria de valores zerados: o acumulado se perderia.
-      logger.error('useGamification.updateWeeklyStats.read', { err: existingError, agentId });
-      toast.error('Não foi possível atualizar as estatísticas da semana');
+    if (statsError) {
+      logger.error('useGamification.updateWeeklyStats.rpc', { err: statsError, agentId });
+      toast.error('Não foi possível salvar as estatísticas da semana');
       return;
-    }
-
-    if (existing) {
-      const newValues: Record<string, number> = {};
-      if (updates.total_calls) newValues.total_calls = existing.total_calls + updates.total_calls;
-      if (updates.total_duration_seconds) newValues.total_duration_seconds = existing.total_duration_seconds + updates.total_duration_seconds;
-      if (updates.badges_earned) newValues.badges_earned = existing.badges_earned + updates.badges_earned;
-      if (updates.points_earned) newValues.points_earned = existing.points_earned + updates.points_earned;
-      if (updates.avg_satisfaction) newValues.avg_satisfaction = updates.avg_satisfaction;
-      if (updates.avg_performance) newValues.avg_performance = updates.avg_performance;
-
-      const { error: updateError } = await supabase
-        .from('agent_weekly_stats')
-        .update(newValues)
-        .eq('id', existing.id);
-      if (updateError) {
-        logger.error('useGamification.updateWeeklyStats.update', { err: updateError, agentId });
-        toast.error('Não foi possível salvar as estatísticas da semana');
-        return;
-      }
-    } else {
-      const { error: insertError } = await supabase
-        .from('agent_weekly_stats')
-        .insert({
-          agent_id: agentId,
-          week_start: weekStart,
-          ...updates
-        });
-      if (insertError) {
-        logger.error('useGamification.updateWeeklyStats.insert', { err: insertError, agentId });
-        toast.error('Não foi possível salvar as estatísticas da semana');
-        return;
-      }
     }
 
     fetchWeeklyStats();

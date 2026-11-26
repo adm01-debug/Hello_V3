@@ -152,3 +152,23 @@ Como a sonda roda em todo `modo=verificar`, essa condição vira regressão dete
 asserta que a matriz contém os próprios valores (`contacts.test.ts:11-36`, `rls-policies.test.ts:28-56`).
 Não podem detectar regressão de RLS. Teste de RLS que vale lê a migration ou roda contra Postgres
 descartável — ao mexer em RLS, não aceite essas suítes como evidência.
+
+## Placar semanal da gamificação — contrato medido em 2026-11-27
+
+O placar de `agent_weekly_stats` é escrito por **uma** RPC, `public.increment_weekly_stats(...)`
+(migration `20261127250000` + correção `20261127260000`), nunca por `insert`/`update` no cliente:
+duas gravações simultâneas da mesma semana colidiam no `UNIQUE(agent_id, week_start)`, o `23505` era
+descartado e os pontos da semana se perdiam.
+
+| Situação | Resultado |
+|---|---|
+| Primeira gravação da semana | 1 linha; médias ausentes viram **0** (mesmo contrato do DEFAULT) |
+| Gravação seguinte | mesmos contadores **somam** na linha existente (1 instrução, sem leitura antes) |
+| Média enviada | **substitui** o valor da linha |
+| Média ausente (`null`) | **preserva** o valor da linha — no ramo de update o que decide é o parâmetro, não o valor inserido |
+| Incremento negativo | erro `increment_weekly_stats: incremento negativo nao e aceito` |
+| `anon` | sem `EXECUTE` (só `authenticated` e `service_role`) |
+
+Gate: `supabase/tests/increment_weekly_stats_rpc_rls_test.sql` (6 passos) pelo `migrations.yml modo=verificar`.
+**Aberto:** as policies da tabela seguem `FOR INSERT/UPDATE USING (true)` — um autenticado ainda escreve
+a estatística de qualquer agente por fora da RPC.
