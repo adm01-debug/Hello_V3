@@ -2,6 +2,13 @@
 
 Diff semântico gerado a cada coleta em que algo mudou.
 
+## 2026-11-26 18:16 UTC
+
+- **colunas** alterado (7): `public.audit_logs.resource_id`, `public.audit_logs.resource_type`, `public.holidays.recurring`, `public.notifications.source_id`, `public.notifications.source_type`, `public.optimistic_lock_conflicts.record_id`, `public.optimistic_lock_conflicts.table_name`
+- **functions** adicionado (1): `public.increment_weekly_stats(p_agent_id uuid, p_week_start date, p_calls integer, p_duration_seconds integer, p_badges integer, p_points integer, p_avg_satisfaction numeric, p_avg_performance numeric)`
+- **functions** alterado (1): `public.check_calling_hours(p_region_code text)`
+- **indexes** adicionado (1): `public.idx_conversation_messages_msgid`
+
 ## 2026-11-26 17:15 UTC
 
 - **functions** alterado (8): `public.can_access_agent_data(target_agent_name text)`, `public.get_user_agent_id()`, `public.get_user_agent_name()`, `public.get_user_role()`, `public.is_active_agent(_agent_name text)`, `public.is_admin()`, `public.is_admin_or_supervisor()`, `public.is_supervisor()`

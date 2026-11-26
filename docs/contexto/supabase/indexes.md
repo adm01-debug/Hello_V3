@@ -214,6 +214,7 @@ Uso e tamanho em `stats.md`.
 | public.contacts | idx_contacts_phone | btree | phone | não | sim |  |
 | public.conversation_messages | conversation_messages_pkey | btree | id | sim | sim |  |
 | public.conversation_messages | idx_conversation_messages_conversation_id | btree | conversation_id | não | sim |  |
+| public.conversation_messages | idx_conversation_messages_msgid | btree |  | sim | sim | `((metadata ->> 'message_id'::text) IS NOT NULL)` |
 | public.conversation_messages | idx_messages_conversation | btree | conversation_id, created_at | não | sim |  |
 | public.conversation_messages | idx_messages_direction | btree | direction | não | sim |  |
 | public.conversations | conversations_pkey | btree | id | sim | sim |  |

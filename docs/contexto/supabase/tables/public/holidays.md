@@ -21,7 +21,7 @@
 | 3 | `date` | `date` | não |  |  |  |
 | 4 | `region_code` | `text` | sim |  |  |  |
 | 5 | `is_national` | `boolean` | não | `false` |  |  |
-| 6 | `recurring` | `boolean` | não | `false` |  |  |
+| 6 | `recurring` | `boolean` | não | `false` |  | Etapa 122: true faz check_calling_hours comparar mes e dia em qualquer ano (data exata tambem bate). Feriado movel (Carnaval, Pascoa) nao tem regra de calculo — cadastre a data do ano com recurring = false. |
 | 7 | `created_at` | `timestamp with time zone` | não | `now()` |  |  |
 
 

@@ -48,6 +48,7 @@
 |---|---|---|---|---|---|---|
 | conversation_messages_pkey | btree | id | sim | sim |  | `CREATE UNIQUE INDEX conversation_messages_pkey ON public.conversation_messages USING btree (id)` |
 | idx_conversation_messages_conversation_id | btree | conversation_id | não | sim |  | `CREATE INDEX idx_conversation_messages_conversation_id ON public.conversation_messages USING btree (conversation_id)` |
+| idx_conversation_messages_msgid | btree |  | sim | sim | `((metadata ->> 'message_id'::text) IS NOT NULL)` | `CREATE UNIQUE INDEX idx_conversation_messages_msgid ON public.conversation_messages USING btree (((metadata ->> 'message_id'::text))) WHERE ((metadata ->> 'message_id'::text) IS NOT NULL)` |
 | idx_messages_conversation | btree | conversation_id, created_at | não | sim |  | `CREATE INDEX idx_messages_conversation ON public.conversation_messages USING btree (conversation_id, created_at)` |
 | idx_messages_direction | btree | direction | não | sim |  | `CREATE INDEX idx_messages_direction ON public.conversation_messages USING btree (direction)` |
 

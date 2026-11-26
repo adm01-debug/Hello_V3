@@ -1752,7 +1752,7 @@
         "type": "text"
       },
       {
-        "comment": null,
+        "comment": "Tipo do recurso auditado: ou o nome da tabela de destino de resource_id, ou um marcador sintetico sem tabela. Valores medidos em producao em 2026-11-27: contacts (tabela public.contacts), contact (grafia antiga da MESMA tabela), user_profiles, agents, user_roles, consent_record (tabela public.consent_records), call_recordings, voip_trunks, call_transcription (tabela public.call_transcriptions), call_analysis (tabela public.call_analyses), webhook, edge_function, api_endpoint, system e SYSTEM (evento de sistema, sem tabela de destino). Mapa completo em docs/agentes/banco.md. CHECK previsto na etapa 139.",
         "default": null,
         "generated": null,
         "identity": null,
@@ -1765,7 +1765,7 @@
         "type": "text"
       },
       {
-        "comment": null,
+        "comment": "Id em texto da linha indicada por resource_type (nao ha FK: o tipo escolhe a tabela). NULL ou vazio nos tipos sinteticos (system/SYSTEM, edge_function, api_endpoint). A funcao public.log_audit_event(text,text,text,jsonb) grava o valor cru recebido; nenhuma validacao de existencia e feita aqui.",
         "default": null,
         "generated": null,
         "identity": null,
@@ -12334,7 +12334,7 @@
         "type": "boolean"
       },
       {
-        "comment": null,
+        "comment": "Etapa 122: true faz check_calling_hours comparar mes e dia em qualquer ano (data exata tambem bate). Feriado movel (Carnaval, Pascoa) nao tem regra de calculo — cadastre a data do ano com recurring = false.",
         "default": "false",
         "generated": null,
         "identity": null,
@@ -14908,7 +14908,7 @@
         "type": "jsonb"
       },
       {
-        "comment": null,
+        "comment": "Origem da notificacao. NAO e nome de tabela: e um marcador sintetico do produtor. Valores medidos em producao em 2026-11-27: cron_health (job monitorado), optimistic_lock_hotspot (tabela com conflito de versao), idle_index_hotspot (indice sem uso). CHECK previsto na etapa 139.",
         "default": null,
         "generated": null,
         "identity": null,
@@ -14921,7 +14921,7 @@
         "type": "text"
       },
       {
-        "comment": null,
+        "comment": "Identificador do objeto de origem; o significado depende de source_type: cron_health -> nome do job, optimistic_lock_hotspot -> tabela com conflito, idle_index_hotspot -> nome do indice. Sem FK de proposito.",
         "default": null,
         "generated": null,
         "identity": null,
@@ -15389,7 +15389,7 @@
         "type": "uuid"
       },
       {
-        "comment": null,
+        "comment": "Tabela em que o conflito de versao aconteceu. Valores medidos em producao em 2026-11-27: deals, contacts.",
         "default": null,
         "generated": null,
         "identity": null,
@@ -15402,7 +15402,7 @@
         "type": "text"
       },
       {
-        "comment": null,
+        "comment": "PK, em texto, da linha de optimistic_lock_conflicts.table_name que sofreu o conflito. Sem FK: a tabela e escolhida por table_name.",
         "default": null,
         "generated": null,
         "identity": null,
@@ -32638,7 +32638,7 @@
           "triggers": [],
           "views": []
         },
-        "comment": null,
+        "comment": "Etapa 035 + 122. Decide se a discagem e permitida agora. Fail-closed: sem calling_hours_config ativa para a regiao (nem BR como fallback) devolve can_call = false. Feriado: compara a data exata OU, quando holidays.recurring, mes e dia em qualquer ano; respeita calling_hours_config.holidays_allowed. Limitacao conhecida: feriado movel (Carnaval, Pascoa, Corpus Christi) nao e calculado — precisa ser cadastrado em holidays por ano, com recurring = false.",
         "config": [
           "search_path=public"
         ],
@@ -34508,6 +34508,36 @@
         "security_definer": true,
         "strict": false,
         "volatility": "stable"
+      },
+      {
+        "args": "p_agent_id uuid, p_week_start date, p_calls integer, p_duration_seconds integer, p_badges integer, p_points integer, p_avg_satisfaction numeric, p_avg_performance numeric",
+        "callers": {
+          "code": [],
+          "code_total_files": 0,
+          "cron": [],
+          "db": [],
+          "triggers": [],
+          "views": []
+        },
+        "comment": "Etapa 126: soma o placar semanal de um agente em uma unica instrucao (INSERT ... ON CONFLICT DO UPDATE). Substitui o read-modify-write de useGamification.ts, que perdia pontos quando duas gravacoes coincidiam (23505 descartado). Contadores SOMAM; medias SUBSTITUEM quando enviadas e sao PRESERVADAS quando vem null. Primeira linha da semana nasce com media 0.",
+        "config": [
+          "search_path=public"
+        ],
+        "definition": null,
+        "definition_sha": "8591a7b733f33e7d",
+        "execute_api_roles": "authenticated, service_role",
+        "execute_public": false,
+        "is_trigger_fn": false,
+        "kind": "function",
+        "language": "plpgsql",
+        "leakproof": false,
+        "name": "increment_weekly_stats",
+        "owner": "postgres",
+        "returns": "agent_weekly_stats",
+        "schema": "public",
+        "security_definer": true,
+        "strict": false,
+        "volatility": "volatile"
       },
       {
         "args": "_agent_name text",
@@ -43060,6 +43090,18 @@
         "method": "btree",
         "name": "idx_conversation_messages_conversation_id",
         "predicate": null,
+        "schema": "public",
+        "table": "conversation_messages"
+      },
+      {
+        "columns": [],
+        "definition": "CREATE UNIQUE INDEX idx_conversation_messages_msgid ON public.conversation_messages USING btree (((metadata ->> 'message_id'::text))) WHERE ((metadata ->> 'message_id'::text) IS NOT NULL)",
+        "is_primary": false,
+        "is_unique": true,
+        "is_valid": true,
+        "method": "btree",
+        "name": "idx_conversation_messages_msgid",
+        "predicate": "((metadata ->> 'message_id'::text) IS NOT NULL)",
         "schema": "public",
         "table": "conversation_messages"
       },

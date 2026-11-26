@@ -21,8 +21,8 @@
 | 3 | `user_email` | `text` | sim |  |  |  |
 | 4 | `user_role` | `text` | sim |  |  |  |
 | 5 | `action` | `text` | não |  |  |  |
-| 6 | `resource_type` | `text` | não |  |  |  |
-| 7 | `resource_id` | `text` | sim |  |  |  |
+| 6 | `resource_type` | `text` | não |  |  | Tipo do recurso auditado: ou o nome da tabela de destino de resource_id, ou um marcador sintetico sem tabela. Valores medidos em producao em 2026-11-27: contacts (tabela public.contacts), contact (grafia antiga da MESMA tabela), user_profiles, agents, user_roles, consent_record (tabela public.consent_records), call_recordings, voip_trunks, call_transcription (tabela public.call_transcriptions), call_analysis (tabela public.call_analyses), webhook, edge_function, api_endpoint, system e SYSTEM (evento de sistema, sem tabela de destino). Mapa completo em docs/agentes/banco.md. CHECK previsto na etapa 139. |
+| 7 | `resource_id` | `text` | sim |  |  | Id em texto da linha indicada por resource_type (nao ha FK: o tipo escolhe a tabela). NULL ou vazio nos tipos sinteticos (system/SYSTEM, edge_function, api_endpoint). A funcao public.log_audit_event(text,text,text,jsonb) grava o valor cru recebido; nenhuma validacao de existencia e feita aqui. |
 | 8 | `details` | `jsonb` | sim | `'{}'::jsonb` |  |  |
 | 9 | `ip_address` | `text` | sim |  |  |  |
 | 10 | `user_agent` | `text` | sim |  |  |  |

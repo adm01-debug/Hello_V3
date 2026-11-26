@@ -16,9 +16,9 @@
 
 | início (UTC) | status | duração (s) | mensagem |
 |---|---|---|---|
-| 2026-11-26 17:15:00 | succeeded | 0.02 | 1 row |
-| 2026-11-26 17:14:00 | succeeded | 0.01 | 1 row |
-| 2026-11-26 17:13:00 | succeeded | 0.01 | 1 row |
+| 2026-11-26 18:16:00 | succeeded | 0.02 | 1 row |
+| 2026-11-26 18:15:00 | succeeded | 0.04 | 1 row |
+| 2026-11-26 18:14:00 | succeeded | 0.02 | 1 row |
 
 
 ## 14 · cleanup-lock-conflicts-weekly
@@ -51,6 +51,6 @@ _nenhum_
 
 | início (UTC) | status | duração (s) | mensagem |
 |---|---|---|---|
+| 2026-11-26 18:05:00 | succeeded | 0.45 | 1 row |
 | 2026-11-26 17:05:00 | succeeded | 0.26 | 1 row |
 | 2026-11-26 16:05:00 | succeeded | 0.09 | 1 row |
-| 2026-11-26 15:05:00 | succeeded | 0.39 | 1 row |

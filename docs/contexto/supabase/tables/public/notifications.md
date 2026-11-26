@@ -28,8 +28,8 @@
 | 10 | `action_url` | `text` | sim |  |  |  |
 | 11 | `action_label` | `text` | sim |  |  |  |
 | 12 | `metadata` | `jsonb` | sim | `'{}'::jsonb` |  |  |
-| 13 | `source_type` | `text` | sim |  |  |  |
-| 14 | `source_id` | `text` | sim |  |  |  |
+| 13 | `source_type` | `text` | sim |  |  | Origem da notificacao. NAO e nome de tabela: e um marcador sintetico do produtor. Valores medidos em producao em 2026-11-27: cron_health (job monitorado), optimistic_lock_hotspot (tabela com conflito de versao), idle_index_hotspot (indice sem uso). CHECK previsto na etapa 139. |
+| 14 | `source_id` | `text` | sim |  |  | Identificador do objeto de origem; o significado depende de source_type: cron_health -> nome do job, optimistic_lock_hotspot -> tabela com conflito, idle_index_hotspot -> nome do indice. Sem FK de proposito. |
 | 15 | `expires_at` | `timestamp with time zone` | sim |  |  |  |
 | 16 | `read_at` | `timestamp with time zone` | sim |  |  |  |
 | 17 | `created_at` | `timestamp with time zone` | não | `now()` |  |  |

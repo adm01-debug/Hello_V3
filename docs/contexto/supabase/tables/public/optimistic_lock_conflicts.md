@@ -17,8 +17,8 @@
 | # | coluna | tipo | nullable | default | identity/generated | comentário |
 |---|---|---|---|---|---|---|
 | 1 | `id` | `uuid` | não | `gen_random_uuid()` |  |  |
-| 2 | `table_name` | `text` | não |  |  |  |
-| 3 | `record_id` | `text` | não |  |  |  |
+| 2 | `table_name` | `text` | não |  |  | Tabela em que o conflito de versao aconteceu. Valores medidos em producao em 2026-11-27: deals, contacts. |
+| 3 | `record_id` | `text` | não |  |  | PK, em texto, da linha de optimistic_lock_conflicts.table_name que sofreu o conflito. Sem FK: a tabela e escolhida por table_name. |
 | 4 | `user_id` | `uuid` | sim |  |  |  |
 | 5 | `client_version` | `integer` | sim |  |  |  |
 | 6 | `current_version` | `integer` | sim |  |  |  |
