@@ -189,7 +189,7 @@ do $$
 declare r record; falta text[] := '{}'; p record;
 begin
   for r in select * from esperado_pol loop
-    select p2.cmd, p2.roles::text, coalesce(p2.qual, ''), coalesce(p2.with_check, '') into p
+    select p2.cmd, p2.roles::text as roles, coalesce(p2.qual, '') as qual, coalesce(p2.with_check, '') as with_check into p
     from pg_policies p2
     where p2.schemaname = 'public' and p2.tablename = r.tab and p2.policyname = r.pol;
 
