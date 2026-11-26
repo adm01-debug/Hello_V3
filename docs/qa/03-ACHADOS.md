@@ -837,6 +837,8 @@ Somadas às 729 `CREATE POLICY` (que no Postgres não têm forma `IF NOT EXISTS`
 **Faltando** (10 são segredos): `ELEVENLABS_API_KEY`, `RESEND_API_KEY`, `SIP_PASSWORD`, `SIP_SERVER`, `SIP_USERNAME`, `MS_CLIENT_SECRET`, `MS_CLIENT_ID`, `MS_TENANT_ID`, `WAVOIP_TOKEN`, `CLEANUP_CRON_TOKEN`, `COACHING_CRON_TOKEN`, `DATA_LAKE_CRON_TOKEN`, `DIALER_CRON_TOKEN`, `RECORDINGS_CRON_TOKEN`, `BITRIX_WEBHOOK_URL`, `CORS_EXTRA_ORIGINS`, `WEBAUTHN_ALLOWED_ORIGINS`, `LDAP_ALLOW_SELF_SIGNED`, `ADMIN_EMAIL`, `FROM_EMAIL`, `ELEVENLABS_AGENT_ID`, `VITE_TURN_URL`, `VITE_TURN_USER`, `VITE_TURN_CRED`.
 **Sobrando** (stack que o projeto não é): `NEXT_PUBLIC_*` (`:3-4`, o projeto é Vite), `REDIS_*` (`:35-38`), `JWT_SECRET`/`JOB_ENCRYPTION_KEY` (`:40-42`), `CALLS_SERVICE_URL`/`CONTACTS_SERVICE_URL` (`:48-49`), `STORAGE_*` (`:52-55`), `SENTRY_DSN`/`DD_API_KEY` (`:57-60`), `FEATURE_*` (`:67-69`) — 14 verificadas com `git grep`: **0 ocorrências cada**.
 
+**Parcialmente fechado na etapa 230 (26/11/2026):** `SENTRY_DSN`/`DD_API_KEY` deixaram de ser promessa vazia — a captura de erro do navegador agora persiste em `public.client_errors` (`src/lib/errorReporter.ts` ligado em `src/main.tsx`, tela em `/admin/client-errors`), então essas duas linhas podem sair do `.env.example` sem perda de observabilidade. As outras 26 variáveis seguem como estavam.
+
 ### A-098 — Projeto Supabase e chave embutidos em 7 definições de cron/trigger
 **Severidade: Média · Confiança: CONFIRMADO · Marca: EXECUTADO**
 
