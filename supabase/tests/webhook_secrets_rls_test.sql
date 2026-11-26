@@ -62,32 +62,33 @@ do $$
 declare
   v_count bigint;
   v_negado boolean;
+  v_role text;
 begin
-  foreach_role: for i in 1..2 loop
+  for i in 1..2 loop
+    v_role := case when i = 1 then 'anon' else 'authenticated' end;
+    if not pg_has_role(current_user, v_role, 'member') then
+      raise notice 'OK 4 (%): pulado -- a conexao % nao tem o papel % para assumir', v_role, current_user, v_role;
+      continue;
+    end if;
     v_count := null;
     v_negado := false;
     begin
-      if i = 1 then
-        set local role anon;
-        perform set_config('request.jwt.claims', '{"sub":"00000000-0000-0000-0000-0000000000ff"}', true);
-      else
-        set local role authenticated;
-        perform set_config('request.jwt.claims', '{"sub":"00000000-0000-0000-0000-0000000000ff"}', true);
-      end if;
+      execute format('set local role %I', v_role);
+      perform set_config('request.jwt.claims', '{"sub":"00000000-0000-0000-0000-0000000000ff"}', true);
       select count(*) into v_count from public.webhook_secrets;
     exception
       when insufficient_privilege then
         v_negado := true;
       when others then
         reset role;
-        raise exception 'FALHA 4: papel % recebeu erro inesperado: %', (case when i = 1 then 'anon' else 'authenticated' end), sqlerrm;
+        raise exception 'FALHA 4: papel % recebeu erro inesperado: %', v_role, sqlerrm;
     end;
     reset role;
     if not v_negado and coalesce(v_count, 0) <> 0 then
-      raise exception 'FALHA 4: % leu % segredo(s) de webhook sem ser admin', (case when i = 1 then 'anon' else 'authenticated' end), v_count;
+      raise exception 'FALHA 4: % leu % segredo(s) de webhook sem ser admin', v_role, v_count;
     end if;
     raise notice 'OK 4: % sem acesso aos segredos (%)',
-      (case when i = 1 then 'anon' else 'authenticated' end),
+      v_role,
       (case when v_negado then 'permission denied' else 'zero linhas' end);
   end loop;
 end $$;
