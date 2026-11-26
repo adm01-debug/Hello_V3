@@ -11,17 +11,12 @@
 
 begin;
 
+-- 1 e 2: estrutura e policies
 do $$
 declare
   v_rls boolean;
   v_pol integer;
-  v_rows integer;
-  v_uid uuid;
-  v_admin uuid;
-  v_admin_email text;
-  v_id uuid;
 begin
-  -- 1. tabela + RLS
   select c.relrowsecurity into v_rls
     from pg_class c
    where c.oid = 'public.client_errors'::regclass;
@@ -30,7 +25,6 @@ begin
   end if;
   raise notice '1/8 ok: client_errors existe com RLS habilitada';
 
-  -- 2. policies
   select count(*) into v_pol
     from pg_policies
    where schemaname = 'public' and tablename = 'client_errors';
@@ -50,7 +44,43 @@ begin
     raise exception 'policy de resolucao de admin ausente';
   end if;
   raise notice '2/8 ok: policies de insert proprio, leitura e resolucao presentes';
+end $$;
 
+-- 3: anon nao escreve (sem GRANT, nem policy)
+do $$
+begin
+  if not pg_has_role(current_user, 'anon'::name, 'member') then
+    raise notice '3/8 pulado: anon nao e assumivel por %', current_user;
+    return;
+  end if;
+  begin
+    execute 'set local role anon';
+  exception when insufficient_privilege then
+    raise notice '3/8 pulado: sem privilegio para assumir anon';
+    return;
+  end;
+
+  begin
+    execute 'insert into public.client_errors (route, message) values (''/x'', ''anon'')';
+  exception when insufficient_privilege then
+    execute 'reset role';
+    raise notice '3/8 ok: anon sem privilegio de INSERT em client_errors';
+    return;
+  end;
+
+  execute 'reset role';
+  raise exception 'anon conseguiu inserir em client_errors';
+end $$;
+
+-- 4 a 8: fluxo do usuario, do admin e os CHECKs
+do $$
+declare
+  v_rows integer;
+  v_uid uuid;
+  v_admin uuid;
+  v_admin_email text;
+  v_id uuid;
+begin
   select ur.user_id into v_admin
     from public.user_roles ur
    where ur.role in ('admin', 'supervisor')
@@ -72,25 +102,6 @@ begin
   if v_admin is null or v_uid is null then
     raise notice '4/8 pulado: faltam papeis para simular (admin=%, comum=%)', v_admin, v_uid;
     return;
-  end if;
-
-  -- 3. anon sem INSERT
-  if pg_has_role(current_user, 'anon'::name, 'member') then
-    begin
-      execute 'set local role anon';
-      begin
-        execute 'insert into public.client_errors (route, message) values (''/x'', ''anon'')';
-      exception when insufficient_privilege then
-        execute 'reset role';
-        raise notice '3/8 ok: anon sem privilegio de INSERT em client_errors';
-      end;
-      execute 'reset role';
-      raise exception 'anon conseguiu inserir em client_errors';
-    exception when insufficient_privilege then
-      raise notice '3/8 pulado: runner nao assume o papel anon';
-    end;
-  else
-    raise notice '3/8 pulado: anon nao e assumivel por %', current_user;
   end if;
 
   begin
