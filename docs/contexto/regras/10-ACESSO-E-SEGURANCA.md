@@ -1,6 +1,6 @@
 # 10 · ACESSO E SEGURANÇA — quem pode o quê
 
-> Gerado automaticamente por AI Context Sync v1.3.2 · commit `f5d665dccf` · branch `main` · 2026-11-26 00:21 UTC
+> Gerado automaticamente por AI Context Sync v1.3.2 · commit `045b0fbdae` · branch `main` · 2026-11-26 00:34 UTC
 > Não edite à mão — regras humanas vão em `manual/`.
 
 ## Perfis / roles identificados
@@ -189,7 +189,7 @@
 
 > `—` com RLS ligado = ninguém além de service_role. `sem RLS` = qualquer chave anon lê/escreve tudo.
 
-## Onde o RLS é IGNORADO (service_role) — 129 arquivo(s)
+## Onde o RLS é IGNORADO (service_role) — 130 arquivo(s)
 
 - `scripts/ai-context/cenarios.mjs`
 - `scripts/ai-context/gerar.unit.mjs`
@@ -319,6 +319,7 @@
 - `supabase/migrations/20261123000100_fix_anon_rls_helper_exposure.sql`
 - `supabase/migrations/20261123000200_fix_has_role_oracle_and_debug_tables.sql`
 - `supabase/migrations/20261126090001_rate_limit_logs_revoke_anon_write.sql`
+- `supabase/migrations/20261126100000_edge_function_urls_from_vault.sql`
 - `supabase/tests/login_lockout_acl_rls_test.sql`
 
 ## Funções SQL `SECURITY DEFINER` (rodam com privilégio do dono, ignoram RLS)
@@ -344,6 +345,7 @@
 - `cleanup_expired_challenges`
 - `cleanup_old_data`
 - `cleanup_old_logs`
+- `edge_function_url`
 - `enforce_optimistic_lock`
 - `expire_parked_calls`
 - `get_agent_financial_leaderboard`
@@ -432,6 +434,7 @@ Middleware matcher (Next.js): nenhum
 | grant | authenticated, service_role | execute | `get_agent_financial_leaderboard`, `calculate_predictive_pace`, `recalc_deal_health`, `expire_parked_calls`, `calculate_predictive_pace`, `check_all_tables_rls_status`, `check_idle_indexes`, `expire_parked_calls`, `get_agent_financial_leaderboard`, `get_agent_performance`, `get_agents_with_active_calls`, `get_call_history_with_summaries`, `get_call_volume_stats`, `get_dashboard_stats`, `get_database_health_snapshot` … +17 |
 | grant | optimistic_lock_writer | insert | `optimistic_lock_conflicts` |
 | grant | postgres | all privileges | `cron` |
+| grant | postgres, service_role | execute | `edge_function_url` |
 | grant | service_role | all | `deal_revenue_snapshots`, `shift_swap_suggestions`, `data_lake_exports`, `index_drop_audit`, `webhook_flush_metrics`, `dialer_favorites`, `call_queues`, `call_queue_members`, `ring_groups`, `ring_group_members`, `queue_audio_prompts`, `call_park_orbits`, `parked_calls` |
 | grant | service_role | execute | `check_all_tables_rls_status`, `log_rls_event`, `apply_predictive_pacing`, `snapshot_deals_daily`, `trigger_auto_scorecard`, `apply_predictive_pacing`, `check_ip_in_cidr`, `check_rate_limit`, `check_rls_enabled`, `cleanup_expired_challenges` |
 | grant | service_role | select | `index_usage`, `unused_indexes`, `migration_status`, `schema_migrations`, `migration_rollbacks` |
@@ -439,7 +442,7 @@ Middleware matcher (Next.js): nenhum
 | revoke | PUBLIC | execute | `get_dashboard_stats`, `get_queue_stats`, `get_call_history_with_summaries`, `get_call_volume_stats`, `get_agents_with_active_calls`, `cleanup_old_logs`, `log_rls_event` |
 | revoke | PUBLIC, anon | all | `calculate_predictive_pace`, `recalc_deal_health` |
 | revoke | PUBLIC, anon | execute | `apply_migration`, `audit_role_change`, `audit_table_change`, `bridge_voip_alert_to_notification`, `check_suspicious_activity`, `check_table_bloat`, `cleanup_old_data`, `cleanup_old_logs`, `enforce_optimistic_lock`, `ensure_single_default_filter`, `get_call_queues_overview`, `handle_kb_article_change`, `handle_kb_article_history`, `handle_new_user`, `log_critical_rls_event` … +59 |
-| revoke | PUBLIC, anon, authenticated | all | `apply_predictive_pacing`, `snapshot_deals_daily` |
+| revoke | PUBLIC, anon, authenticated | all | `apply_predictive_pacing`, `snapshot_deals_daily`, `edge_function_url` |
 | revoke | PUBLIC, anon, authenticated | execute | `trigger_auto_scorecard` |
 | revoke | anon | all | `financial_impact_daily` |
 | revoke | anon | execute | `cleanup_old_logs` |

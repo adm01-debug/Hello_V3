@@ -2,11 +2,16 @@
  "aviso": "GERADO AUTOMATICAMENTE por scripts/ai-context/gerar.mjs — não editar à mão; será sobrescrito.",
  "format_version": 2,
  "git": {
-  "commit": "f5d665dccf6f076280cea618abc4f891fa981e19",
+  "commit": "045b0fbdae7a2989ac9052925d0f96f007bda706",
   "branch": "main",
-  "data_commit": "2026-11-25T21:20:35-03:00",
+  "data_commit": "2026-11-25T21:30:55-03:00",
   "remote": "https://github.com/adm01-debug/Hello_V3",
   "ultimos_commits": [
+   {
+    "sha": "045b0fb",
+    "data": "2026-11-25",
+    "assunto": "fix: tirar host fixo e chave anon do cron e do trigger de scorecard (etapa 040) (#340)"
+   },
    {
     "sha": "f5d665d",
     "data": "2026-11-25",
@@ -126,14 +131,9 @@
     "sha": "f95122a",
     "data": "2026-11-25",
     "assunto": "fix: colisao de versao nao impede o diagnostico da fila (#316)"
-   },
-   {
-    "sha": "5df6b47",
-    "data": "2026-11-25",
-    "assunto": "fix: comparar migration pelo slug do nome e permitir registrar sem executar (#315)"
    }
   ],
-  "arquivos_mudados_7d": 1315,
+  "arquivos_mudados_7d": 1318,
   "pastas_mais_mudadas_30d": [
    {
     "pasta": "covout/lcov-report/hooks",
@@ -145,7 +145,7 @@
    },
    {
     "pasta": "docs/qa/05-PROGRESSO.md",
-    "mudancas": 143
+    "mudancas": 144
    },
    {
     "pasta": "covout/lcov-report/lib",
@@ -180,16 +180,16 @@
     "mudancas": 32
    },
    {
-    "pasta": "docs/estado/funcionalidades-planejadas.md",
-    "mudancas": 31
-   },
-   {
     "pasta": "src/components/admin",
     "mudancas": 31
    },
    {
     "pasta": "src/pages/admin",
     "mudancas": 31
+   },
+   {
+    "pasta": "docs/estado/funcionalidades-planejadas.md",
+    "mudancas": 30
    },
    {
     "pasta": "src/components/dashboard",
@@ -199,11 +199,11 @@
   "arquivos_mais_mudados_90d": [
    {
     "arquivo": "docs/qa/05-PROGRESSO.md",
-    "mudancas": 143
+    "mudancas": 144
    },
    {
     "arquivo": "docs/estado/funcionalidades-planejadas.md",
-    "mudancas": 31
+    "mudancas": 30
    },
    {
     "arquivo": "src/components/calls/UnifiedSoftphone.tsx",
@@ -310,7 +310,7 @@
   ]
  },
  "contagens": {
-  "arquivos_total": 1769,
+  "arquivos_total": 1772,
   "arquivos_codigo": 1355,
   "linhas_codigo": 180183,
   "rotas": 106,
@@ -322,9 +322,9 @@
   "hooks": 196,
   "edge_functions": 99,
   "tabelas": 170,
-  "migrations": 247,
+  "migrations": 249,
   "cron_jobs": 11,
-  "testes": 420,
+  "testes": 421,
   "workflows": 5,
   "scripts": 36,
   "docs_md": 121

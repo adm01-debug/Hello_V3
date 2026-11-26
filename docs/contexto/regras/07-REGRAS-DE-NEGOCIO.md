@@ -1,6 +1,6 @@
 # 07 · REGRAS DE NEGÓCIO
 
-> Gerado automaticamente por AI Context Sync v1.3.2 · commit `f5d665dccf` · branch `main` · 2026-11-26 00:21 UTC
+> Gerado automaticamente por AI Context Sync v1.3.2 · commit `045b0fbdae` · branch `main` · 2026-11-26 00:34 UTC
 > Não edite à mão — regras humanas vão em `manual/`.
 
 ## A. Regras escritas por humanos (`manual/` — prioridade máxima, nunca sobrescrito)
@@ -777,6 +777,7 @@ Erros lançados por funções SQL (`RAISE EXCEPTION` = regra de negócio no banc
 | `validate_parked_call` | Não é possível estacionar em uma órbita desativada | `supabase/migrations/20260726202218_619850bb-a4f2-4112-96d7-872649f70b37.sql` |
 | `validate_parked_call` | Vaga % fora da faixa da órbita (%-%) | `supabase/migrations/20260726202218_619850bb-a4f2-4112-96d7-872649f70b37.sql` |
 | `enforce_optimistic_lock` | OPTIMISTIC_LOCK_CONFLICT | `supabase/migrations/20261122210000_optimistic_lock_audit_survives_rollback.sql` |
+| `edge_function_url` | segredo edge_functions_base_url ausente no Vault | `supabase/migrations/20261126100000_edge_function_urls_from_vault.sql` |
 
 ## E. Estados, máquinas de estado e transições
 

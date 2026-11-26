@@ -1,15 +1,15 @@
 {
  "meta": {
-  "sha": "f5d665dccf6f076280cea618abc4f891fa981e19",
+  "sha": "045b0fbdae7a2989ac9052925d0f96f007bda706",
   "branch": "main",
   "remote": "https://github.com/adm01-debug/Hello_V3",
-  "generated_at": "2026-11-26 00:21 UTC",
-  "files_total": 1816,
-  "code_files": 1612,
-  "code_lines": 196645
+  "generated_at": "2026-11-26 00:34 UTC",
+  "files_total": 1819,
+  "code_files": 1615,
+  "code_lines": 197043
  },
  "version": "1.3.2",
- "facts_hash": "4dfcfd552b7f77b7",
+ "facts_hash": "84aaafefce7d9b3b",
  "stack": {
   "frameworks": [
    "React + Vite",
@@ -170,7 +170,7 @@
   "languages": {
    ".ts": 662,
    ".tsx": 658,
-   ".sql": 256,
+   ".sql": 259,
    ".mjs": 29,
    ".py": 5,
    ".js": 2
@@ -22097,12 +22097,15 @@
     "args": "",
     "returns": "TRIGGER",
     "lang": "plpgsql",
-    "src": "supabase/migrations/20261114090557_03f46714-a672-4d6b-8aff-1092a99dfdd8.sql",
+    "src": "supabase/migrations/20261126100000_edge_function_urls_from_vault.sql",
     "security_definer": true,
     "search_path": true,
-    "body": "DECLARE v_url TEXT := 'https://cfmlmcdyjuotqobjapng.supabase.co/functions/v1/auto-scorecard'; v_key TEXT := '[REDACTED].3vn9Pm5G3kKPKJrDAjUVgh5gXhYgawgKiM3bFstFEAk'; BEGIN IF NEW.summary IS NULL OR length(NEW.summary) < 20 THEN RETURN NEW; END IF; PERFORM net.http_post( url := v_url, headers := jsonb_build_object('Content-Type', 'application/json', 'Authorization', 'Bearer ' || v_key), body := jsonb_build_object('call_session_id', NEW.call_session_id) ); RETURN NEW; EXCEPTION WHEN OTHERS THEN RAISE WARNING 'auto-scorecard enqueue failed: %', SQLERRM; RETURN NEW; END;",
+    "body": "DECLARE v_key text; BEGIN IF NEW.summary IS NULL OR length(NEW.summary) < 20 THEN RETURN NEW; END IF; SELECT decrypted_secret INTO v_key FROM vault.decrypted_secrets WHERE name = 'auto_scorecard_token'; IF v_key IS NULL OR v_key = '' THEN RAISE WARNING 'auto-scorecard: segredo auto_scorecard_token ausente, enfileiramento ignorado'; RETURN NEW; END IF; PERFORM net.http_post( url := public.edge_function_url('auto-scorecard'), headers := jsonb_build_object('Content-Type', 'application/json', 'Authorization', 'Bearer ' || v_key), body := jsonb_build_object('call_session_id', NEW.call_session_id) ); RETURN NEW; EXCEPTION WHEN OTHERS THEN RAISE WARNING 'auto-scorecard enqueue failed: %', SQLERRM; …",
     "raises": [],
-    "tables": []
+    "tables": [
+     "v_key",
+     "vault"
+    ]
    },
    "audit_role_change": {
     "args": "",
@@ -22263,6 +22266,22 @@
     "tables": [
      "call_sessions",
      "hold_events"
+    ]
+   },
+   "edge_function_url": {
+    "args": "p_slug text",
+    "returns": "text",
+    "lang": "plpgsql",
+    "src": "supabase/migrations/20261126100000_edge_function_urls_from_vault.sql",
+    "security_definer": true,
+    "search_path": true,
+    "body": "DECLARE v_base text; BEGIN SELECT decrypted_secret INTO v_base FROM vault.decrypted_secrets WHERE name = 'edge_functions_base_url'; IF v_base IS NULL OR v_base = '' THEN RAISE EXCEPTION 'segredo edge_functions_base_url ausente no Vault'; END IF; RETURN rtrim(v_base, '/') || '/' || ltrim(p_slug, '/'); END;",
+    "raises": [
+     "segredo edge_functions_base_url ausente no Vault"
+    ],
+    "tables": [
+     "v_base",
+     "vault"
     ]
    },
    "graphql": {
@@ -25969,7 +25988,10 @@
    "supabase/migrations/20261125220000_recordings_retention_cron.sql",
    "supabase/migrations/20261126090000_rate_limit_logs_write_policies.sql",
    "supabase/migrations/20261126090001_rate_limit_logs_revoke_anon_write.sql",
+   "supabase/migrations/20261126100000_edge_function_urls_from_vault.sql",
+   "supabase/migrations/20261126100100_fix_cron_urls_quoting.sql",
    "supabase/tests/calling_hours_fail_closed_rls_test.sql",
+   "supabase/tests/cron_credentials_rls_test.sql",
    "supabase/tests/geo_write_policies_rls_test.sql",
    "supabase/tests/internal_tables_rls_test.sql",
    "supabase/tests/login_lockout_acl_rls_test.sql",
@@ -28221,6 +28243,22 @@
     "objkind": "table",
     "roles": "anon",
     "src": "supabase/migrations/20261126090001_rate_limit_logs_revoke_anon_write.sql"
+   },
+   {
+    "kind": "revoke",
+    "privs": "all",
+    "object": "edge_function_url",
+    "objkind": "function",
+    "roles": "PUBLIC, anon, authenticated",
+    "src": "supabase/migrations/20261126100000_edge_function_urls_from_vault.sql"
+   },
+   {
+    "kind": "grant",
+    "privs": "execute",
+    "object": "edge_function_url",
+    "objkind": "function",
+    "roles": "postgres, service_role",
+    "src": "supabase/migrations/20261126100000_edge_function_urls_from_vault.sql"
    }
   ],
   "raises": [
@@ -28373,6 +28411,11 @@
     "function": "enforce_optimistic_lock",
     "msg": "OPTIMISTIC_LOCK_CONFLICT",
     "src": "supabase/migrations/20261122210000_optimistic_lock_audit_survives_rollback.sql"
+   },
+   {
+    "function": "edge_function_url",
+    "msg": "segredo edge_functions_base_url ausente no Vault",
+    "src": "supabase/migrations/20261126100000_edge_function_urls_from_vault.sql"
    }
   ],
   "seed": [
@@ -34987,8 +35030,8 @@
   },
   {
    "module": "supabase/migrations",
-   "files": 247,
-   "lines": 15704,
+   "files": 249,
+   "lines": 15937,
    "tables": [],
    "exports": [],
    "docs": [],
@@ -35079,8 +35122,8 @@
   },
   {
    "module": "supabase/tests",
-   "files": 7,
-   "lines": 547,
+   "files": 8,
+   "lines": 712,
    "tables": [],
    "exports": [],
    "docs": [],
@@ -35088,6 +35131,7 @@
    "imports_modules": [],
    "file_list": [
     "supabase/tests/calling_hours_fail_closed_rls_test.sql",
+    "supabase/tests/cron_credentials_rls_test.sql",
     "supabase/tests/geo_write_policies_rls_test.sql",
     "supabase/tests/internal_tables_rls_test.sql",
     "supabase/tests/login_lockout_acl_rls_test.sql",
@@ -80819,12 +80863,15 @@
     "args": "",
     "returns": "TRIGGER",
     "lang": "plpgsql",
-    "src": "supabase/migrations/20261114090557_03f46714-a672-4d6b-8aff-1092a99dfdd8.sql",
+    "src": "supabase/migrations/20261126100000_edge_function_urls_from_vault.sql",
     "security_definer": true,
     "search_path": true,
-    "body": "DECLARE v_url TEXT := 'https://cfmlmcdyjuotqobjapng.supabase.co/functions/v1/auto-scorecard'; v_key TEXT := '[REDACTED].3vn9Pm5G3kKPKJrDAjUVgh5gXhYgawgKiM3bFstFEAk'; BEGIN IF NEW.summary IS NULL OR length(NEW.summary) < 20 THEN RETURN NEW; END IF; PERFORM net.http_post( url := v_url, headers := jsonb_build_object('Content-Type', 'application/json', 'Authorization', 'Bearer ' || v_key), body := jsonb_build_object('call_session_id', NEW.call_session_id) ); RETURN NEW; EXCEPTION WHEN OTHERS THEN RAISE WARNING 'auto-scorecard enqueue failed: %', SQLERRM; RETURN NEW; END;",
+    "body": "DECLARE v_key text; BEGIN IF NEW.summary IS NULL OR length(NEW.summary) < 20 THEN RETURN NEW; END IF; SELECT decrypted_secret INTO v_key FROM vault.decrypted_secrets WHERE name = 'auto_scorecard_token'; IF v_key IS NULL OR v_key = '' THEN RAISE WARNING 'auto-scorecard: segredo auto_scorecard_token ausente, enfileiramento ignorado'; RETURN NEW; END IF; PERFORM net.http_post( url := public.edge_function_url('auto-scorecard'), headers := jsonb_build_object('Content-Type', 'application/json', 'Authorization', 'Bearer ' || v_key), body := jsonb_build_object('call_session_id', NEW.call_session_id) ); RETURN NEW; EXCEPTION WHEN OTHERS THEN RAISE WARNING 'auto-scorecard enqueue failed: %', SQLERRM; …",
     "raises": [],
-    "tables": []
+    "tables": [
+     "v_key",
+     "vault"
+    ]
    },
    "audit_role_change": {
     "args": "",
@@ -80985,6 +81032,22 @@
     "tables": [
      "call_sessions",
      "hold_events"
+    ]
+   },
+   "edge_function_url": {
+    "args": "p_slug text",
+    "returns": "text",
+    "lang": "plpgsql",
+    "src": "supabase/migrations/20261126100000_edge_function_urls_from_vault.sql",
+    "security_definer": true,
+    "search_path": true,
+    "body": "DECLARE v_base text; BEGIN SELECT decrypted_secret INTO v_base FROM vault.decrypted_secrets WHERE name = 'edge_functions_base_url'; IF v_base IS NULL OR v_base = '' THEN RAISE EXCEPTION 'segredo edge_functions_base_url ausente no Vault'; END IF; RETURN rtrim(v_base, '/') || '/' || ltrim(p_slug, '/'); END;",
+    "raises": [
+     "segredo edge_functions_base_url ausente no Vault"
+    ],
+    "tables": [
+     "v_base",
+     "vault"
     ]
    },
    "graphql": {
@@ -81161,6 +81224,11 @@
     "function": "enforce_optimistic_lock",
     "msg": "OPTIMISTIC_LOCK_CONFLICT",
     "src": "supabase/migrations/20261122210000_optimistic_lock_audit_survives_rollback.sql"
+   },
+   {
+    "function": "edge_function_url",
+    "msg": "segredo edge_functions_base_url ausente no Vault",
+    "src": "supabase/migrations/20261126100000_edge_function_urls_from_vault.sql"
    }
   ],
   "db_generated": [],
@@ -85953,6 +86021,7 @@
    "supabase/migrations/20261123000100_fix_anon_rls_helper_exposure.sql",
    "supabase/migrations/20261123000200_fix_has_role_oracle_and_debug_tables.sql",
    "supabase/migrations/20261126090001_rate_limit_logs_revoke_anon_write.sql",
+   "supabase/migrations/20261126100000_edge_function_urls_from_vault.sql",
    "supabase/tests/login_lockout_acl_rls_test.sql"
   ],
   "security_definer_fns": [
@@ -85977,6 +86046,7 @@
    "cleanup_expired_challenges",
    "cleanup_old_data",
    "cleanup_old_logs",
+   "edge_function_url",
    "enforce_optimistic_lock",
    "expire_parked_calls",
    "get_agent_financial_leaderboard",
@@ -88120,6 +88190,22 @@
     "objkind": "table",
     "roles": "anon",
     "src": "supabase/migrations/20261126090001_rate_limit_logs_revoke_anon_write.sql"
+   },
+   {
+    "kind": "revoke",
+    "privs": "all",
+    "object": "edge_function_url",
+    "objkind": "function",
+    "roles": "PUBLIC, anon, authenticated",
+    "src": "supabase/migrations/20261126100000_edge_function_urls_from_vault.sql"
+   },
+   {
+    "kind": "grant",
+    "privs": "execute",
+    "object": "edge_function_url",
+    "objkind": "function",
+    "roles": "postgres, service_role",
+    "src": "supabase/migrations/20261126100000_edge_function_urls_from_vault.sql"
    }
   ],
   "guards": [
@@ -124625,9 +124711,23 @@
    "lines": 11,
    "uses_service_role": true
   },
+  "supabase/migrations/20261126100000_edge_function_urls_from_vault.sql": {
+   "path": "supabase/migrations/20261126100000_edge_function_urls_from_vault.sql",
+   "lines": 172,
+   "uses_service_role": true
+  },
+  "supabase/migrations/20261126100100_fix_cron_urls_quoting.sql": {
+   "path": "supabase/migrations/20261126100100_fix_cron_urls_quoting.sql",
+   "lines": 61
+  },
   "supabase/tests/calling_hours_fail_closed_rls_test.sql": {
    "path": "supabase/tests/calling_hours_fail_closed_rls_test.sql",
    "lines": 50,
+   "is_test": true
+  },
+  "supabase/tests/cron_credentials_rls_test.sql": {
+   "path": "supabase/tests/cron_credentials_rls_test.sql",
+   "lines": 165,
    "is_test": true
   },
   "supabase/tests/geo_write_policies_rls_test.sql": {
@@ -124842,10 +124942,22 @@
   }
  },
  "git": {
-  "sha": "f5d665dccf6f076280cea618abc4f891fa981e19",
+  "sha": "045b0fbdae7a2989ac9052925d0f96f007bda706",
   "branch": "main",
   "remote": "https://github.com/adm01-debug/Hello_V3",
   "commits": [
+   {
+    "sha": "045b0fb",
+    "date": "2026-11-25",
+    "author": "adm01-debug",
+    "subject": "fix: tirar host fixo e chave anon do cron e do trigger de scorecard (etapa 040) (#340)",
+    "files": [
+     "docs/qa/05-PROGRESSO.md",
+     "supabase/migrations/20261126100000_edge_function_urls_from_vault.sql",
+     "supabase/migrations/20261126100100_fix_cron_urls_quoting.sql",
+     "supabase/tests/cron_credentials_rls_test.sql"
+    ]
+   },
    {
     "sha": "f5d665d",
     "date": "2026-11-25",
@@ -125205,25 +125317,16 @@
      "src/pages/Settings.tsx",
      "supabase/migrations/20261123120000_user_preferences.sql"
     ]
-   },
-   {
-    "sha": "db63479",
-    "date": "2026-11-25",
-    "author": "adm01-debug",
-    "subject": "infra: workflow manual para aplicar migration no banco oficial (#311)",
-    "files": [
-     ".github/workflows/migrations.yml"
-    ]
    }
   ],
   "hot_files": [
    [
     "docs/qa/05-PROGRESSO.md",
-    12
+    13
    ],
    [
     ".github/workflows/migrations.yml",
-    9
+    8
    ],
    [
     "src/components/calls/ActiveCallBar.tsx",
@@ -125270,6 +125373,18 @@
     2
    ],
    [
+    "supabase/migrations/20261126100000_edge_function_urls_from_vault.sql",
+    1
+   ],
+   [
+    "supabase/migrations/20261126100100_fix_cron_urls_quoting.sql",
+    1
+   ],
+   [
+    "supabase/tests/cron_credentials_rls_test.sql",
+    1
+   ],
+   [
     "supabase/tests/geo_write_policies_rls_test.sql",
     1
    ],
@@ -125283,18 +125398,6 @@
    ],
    [
     "supabase/functions/login-attempt/index.ts",
-    1
-   ],
-   [
-    "supabase/tests/login_lockout_acl_rls_test.sql",
-    1
-   ],
-   [
-    "src/hooks/__tests__/useRateLimitData.writeResult.test.tsx",
-    1
-   ],
-   [
-    "src/hooks/useRateLimitData.ts",
     1
    ]
   ]

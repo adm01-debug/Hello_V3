@@ -8,10 +8,10 @@
   "supabase/migrations",
   "typeorm"
  ],
- "migrations": 247,
+ "migrations": 249,
  "seeds": [],
  "avisos": [
-  "20 bloco(s) com DDL dinâmico (EXECUTE format/...) não modelado — policies/colunas criadas dinamicamente podem faltar; confira no banco vivo"
+  "21 bloco(s) com DDL dinâmico (EXECUTE format/...) não modelado — policies/colunas criadas dinamicamente podem faltar; confira no banco vivo"
  ],
  "extensoes": [
   "dblink",
@@ -70,6 +70,7 @@
   "cleanup_expired_challenges",
   "cleanup_old_data",
   "cleanup_old_logs",
+  "edge_function_url",
   "enforce_optimistic_lock",
   "ensure_single_default_filter",
   "expire_parked_calls",
