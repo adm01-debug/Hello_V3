@@ -1,6 +1,6 @@
 # 07 · REGRAS DE NEGÓCIO
 
-> Gerado automaticamente por AI Context Sync v1.3.2 · commit `31ef7782f6` · branch `main` · 2026-11-26 12:24 UTC
+> Gerado automaticamente por AI Context Sync v1.3.2 · commit `36baa4a5fa` · branch `main` · 2026-11-26 13:20 UTC
 > Não edite à mão — regras humanas vão em `manual/`.
 
 ## A. Regras escritas por humanos (`manual/` — prioridade máxima, nunca sobrescrito)
@@ -311,7 +311,7 @@ _Nenhum arquivo em `manual/`. Copie `manual/TEMPLATE-regras-de-negocio.md` para 
 | `playlist_items` | Manage items of own playlists | ALL | public | permissive | `EXISTS (SELECT 1 FROM public.call_playlists p WHERE p.id = playlist_id AND (p.owner_agent_name = get_user_agent_name() OR is_admin_or_supervisor()))` | `EXISTS (SELECT 1 FROM public.call_playlists p WHERE p.id = playlist_id AND (p.owner_agent_name = get_user_agent_name() OR is_admin_or_supervisor()))` |
 | `deals` | Authenticated create deals | INSERT | public | permissive |  | `auth.uid() IS NOT NULL AND ( is_admin_or_supervisor() OR owner_agent_name IS NULL OR owner_agent_name = get_user_agent_name() )` |
 | `cadence_enrollments` | Authenticated insert enrollments | INSERT | public | permissive |  | `auth.uid() IS NOT NULL AND (is_admin_or_supervisor() OR agent_name = get_user_agent_name())` |
-| … +235 linhas — lista completa em `context.json` | | | | | | |
+| … +238 linhas — lista completa em `context.json` | | | | | | |
 
 ## C. Restrições de dados (obrigatório / único / default / CHECK / FK / calculada)
 
@@ -617,7 +617,7 @@ _Nenhum arquivo em `manual/`. Copie `manual/TEMPLATE-regras-de-negocio.md` para 
 | `user_roles` | `is_active` | default true |
 | `user_roles` | `created_at` | default now() |
 | `permissions` | `id` | PK; default gen_random_uuid() |
-| … +1065 linhas — lista completa em `context.json` | | |
+| … +1078 linhas — lista completa em `context.json` | | |
 
 ## D. Automações no banco (triggers e funções — regras que rodam sozinhas)
 
@@ -1063,6 +1063,7 @@ _nenhum mapa explícito encontrado — transições só existem implicitamente n
 | DateRangePreset | all \| today \| week \| month \| custom | `src/hooks/useCallHistory.ts` |
 | SentimentFilter | all \| positive \| neutral \| negative | `src/hooks/useCallHistory.ts` |
 | DurationFilter | all \| short \| medium \| long | `src/hooks/useCallHistory.ts` |
+| CLIENT_ERRORS_QUERY_KEY | 'client-errors' | `src/hooks/useClientErrors.ts` |
 | ConsentChannel | voice \| sms \| whatsapp \| email | `src/hooks/useConsent.ts` |
 | ConsentType | marketing \| transactional \| recording \| data_processing | `src/hooks/useConsent.ts` |
 | ConversationChannel | voice \| whatsapp \| email \| chat \| sms | `src/hooks/useConversations.ts` |
@@ -1087,6 +1088,7 @@ _nenhum mapa explícito encontrado — transições só existem implicitamente n
 | ConflictPeriod | 24h \| 7d \| 30d | `src/hooks/useOptimisticLockConflicts.ts` |
 | RedactionStatusTone | success \| neutral \| danger | `src/hooks/useRedactionLog.ts` |
 | REDACTION_LOG_QUERY_KEY | 'redaction-log' | `src/hooks/useRedactionLog.ts` |
+| SlaBreachKind | first_response \| resolution \| unknown | `src/hooks/useSLA.ts` |
 | SipStatus | disconnected \| connecting \| registered \| calling \| ringing \| active \| error | `src/hooks/useSipCall.ts` |
 | AnomalyKind | spike \| drift \| outage | `src/hooks/useVoipAnomalies.ts` |
 | AnomalyMetric | mos \| jitter \| volume | `src/hooks/useVoipAnomalies.ts` |
@@ -1919,6 +1921,7 @@ _nenhum item encontrado_
 | `CADENCES_PAGE_SIZE` | `50` | `src/hooks/useCadences.ts` |
 | `PAGE_SIZE` | `50` | `src/hooks/useCallHistory.ts` |
 | `RECORDINGS_LIMIT` | `200` | `src/hooks/useCallRecording.ts` |
+| `CLIENT_ERRORS_PAGE_SIZE` | `25` | `src/hooks/useClientErrors.ts` |
 | `CONTACTS_PAGE_SIZE` | `50` | `src/hooks/useContacts.ts` |
 | `DEALS_PAGE_SIZE` | `50` | `src/hooks/useDeals.ts` |
 | `MAX_FAVORITES` | `12` | `src/hooks/useDialerFavorites.ts` |
@@ -1938,6 +1941,7 @@ _nenhum item encontrado_
 | `GOAL_NOTIFY_COOLDOWN_MS` | `15` | `src/hooks/useQueueMetrics.ts` |
 | `PAGE_SIZE` | `50` | `src/hooks/useRecordings.ts` |
 | `REDACTION_LOG_LIMIT` | `50` | `src/hooks/useRedactionLog.ts` |
+| `SLA_VIOLATIONS_PAGE_SIZE` | `20` | `src/hooks/useSLA.ts` |
 | `ALL_SOURCES` | `"__all__"` | `src/hooks/useSecurityAlertNotifications.ts` |
 | `PAGE_SIZE` | `50` | `src/hooks/useSecurityAlertNotifications.ts` |
 | `SESSION_DURATION_HOURS` | `24` | `src/hooks/useSessionManager.ts` |
@@ -1952,6 +1956,13 @@ _nenhum item encontrado_
 | `UNTAGGED_FILTER` | `'__untagged__'` | `src/lib/dialer-favorite-tags.ts` |
 | `ANONYMOUS_SCOPE` | `'anon'` | `src/lib/dialer-filter-storage.ts` |
 | `MAX_BUFFER` | `20` | `src/lib/error-tracking.ts` |
+| `CLIENT_ERROR_MESSAGE_MAX` | `1000` | `src/lib/errorReporter.ts` |
+| `CLIENT_ERROR_STACK_MAX` | `4000` | `src/lib/errorReporter.ts` |
+| `CLIENT_ERROR_USER_AGENT_MAX` | `500` | `src/lib/errorReporter.ts` |
+| `CLIENT_ERROR_CORRELATION_MAX` | `100` | `src/lib/errorReporter.ts` |
+| `DEDUPE_WINDOW_MS` | `60` | `src/lib/errorReporter.ts` |
+| `RATE_WINDOW_MS` | `60` | `src/lib/errorReporter.ts` |
+| `RATE_MAX_PER_WINDOW` | `10` | `src/lib/errorReporter.ts` |
 | `MASK_VISIBLE_DIGITS` | `4` | `src/lib/favorite-sync-labels.ts` |
 | `RING_ON_MS` | `1000` | `src/lib/incoming-call-alert.ts` |
 | `RING_CYCLE_MS` | `5000` | `src/lib/incoming-call-alert.ts` |
@@ -2086,6 +2097,7 @@ _nenhum item encontrado_
 | `staleTime: 5 * 60 * 1000,` | `src/hooks/useCallPark.ts` |
 | `gcTime: 30 * 60 * 1000,` | `src/hooks/useCallQueues.ts` |
 | `staleTime: 5 * 60 * 1000,` | `src/hooks/useCallQueues.ts` |
+| `const since = new Date(Date.now() - 24 * 60 * 60 * 1000).toISOString();` | `src/hooks/useClientErrors.ts` |
 | `if (alert.severity !== 'critical') setTimeout(() => notification.close(), 10000);` | `src/hooks/useCriticalAlertNotifications.ts` |
 | `const start = new Date(now.getTime() - Math.max(days - 1, 0) * 24 * 60 * 60 * 1000);` | `src/hooks/useDealPipelineTrend.ts` |
 | `staleTime: 5 * 60 * 1000,` | `src/hooks/useDealPipelineTrend.ts` |
@@ -2112,6 +2124,7 @@ _nenhum item encontrado_
 | `gcTime: 30 * 60 * 1000,` | `src/hooks/useRingGroups.ts` |
 | `staleTime: 5 * 60 * 1000,` | `src/hooks/useRingGroups.ts` |
 | `const since = new Date(Date.now() - 7 * 24 * 60 * 60 * 1000).toISOString();` | `src/hooks/useSLA.ts` |
+| `const since = new Date(Date.now() - days * 24 * 60 * 60 * 1000).toISOString();` | `src/hooks/useSLA.ts` |
 | `const nextHour = new Date(Date.now() + 60 * 60 * 1000).toISOString();` | `src/hooks/useScheduledCallbacks.ts` |
 | `() => new Date(Date.now() - 30 * 24 * 60 * 60 * 1000).toISOString(),` | `src/hooks/useSecurityAlertNotifications.ts` |
 | `const start = subDays(today, 29);` | `src/hooks/useSecurityAlertNotifications.ts` |
@@ -2517,6 +2530,7 @@ _nenhum item encontrado_
 | Falha ao consultar IA | `src/hooks/useChatbot.ts` |
 | Falha ao carregar sinais de churn | `src/hooks/useChurnRisk.ts` |
 | Falha ao resolver sinal | `src/hooks/useChurnRisk.ts` |
+| Nao foi possivel resolver: ${error.message} | `src/hooks/useClientErrors.ts` |
 | Erro ao atribuir coaching | `src/hooks/useCoachingAssignments.ts` |
 | Erro ao concluir | `src/hooks/useCoachingAssignments.ts` |
 | Erro ao gerar trilhas | `src/hooks/useCoachingTrack.ts` |
@@ -2624,8 +2638,7 @@ _nenhum item encontrado_
 | Erro ao resolver alerta | `src/hooks/useRateLimitData.ts` |
 | Nada foi alterado para ${ipAddress} | `src/hooks/useRateLimitData.ts` |
 | Novo alerta de rate limit! | `src/hooks/useRateLimitData.ts` |
-| Notificações não suportadas | `src/hooks/useRealtimeHoldAlerts.ts` |
-| … +297 linhas — lista completa em `context.json` | |
+| … +298 linhas — lista completa em `context.json` | |
 
 ## J. Controle de acesso no código (checagens de perfil/permissão)
 
@@ -2676,7 +2689,7 @@ _nenhum item encontrado_
 | `admin` | `supabase/functions/data-lake-flush/index.ts` |
 | `admin` | `supabase/migrations/20261123000200_fix_has_role_oracle_and_debug_tables.sql` |
 
-## K. Testes como especificação (3753 testes em 415 arquivos — nomes completos em `context.json`)
+## K. Testes como especificação (3783 testes em 419 arquivos — nomes completos em `context.json`)
 
 | Arquivo | Testes | Exemplos do que o sistema DEVE fazer |
 |---|---|---|
@@ -2813,6 +2826,7 @@ _nenhum item encontrado_
 | `src/hooks/__tests__/useSecurityDashboard.coverage.test.tsx` | 9 | useSecurityDashboard · returns early without userId · loads data and computes full score · computes lower score branches (no mfa, many sessions, ip off, no alerts) … |
 | `src/hooks/__tests__/useShifts.coverage.test.tsx` | 9 | useShifts coverage · loads shifts and templates without weekStart · loads shifts with weekStart (gte/lt branch) · exposes CRUD mutations and runs createShift success … |
 | `src/lib/__tests__/device-identity.test.ts` | 9 | device-identity · sanitize sempre respeita o CHECK do banco (trim + limite) · sanitize é idempotente · sanitize rejeita não-strings … |
+| `src/lib/__tests__/errorReporter.test.ts` | 9 | errorReporter · nao monta linha sem usuario autenticado · grava so o pathname da rota (query e hash ficam de fora) · trunca mensagem e stack nos limites da tabela … |
 | `src/lib/__tests__/voipProactiveSnapshot.coverage.test.ts` | 9 | voipProactiveSnapshot · isProactiveEnabled reflects localStorage pref · setProactiveEnabled writes the pref · shouldRunProactiveCheck false when disabled … |
 | `src/lib/security/__tests__/https-enforcer.coverage.test.ts` | 9 | https-enforcer · does not enforce on localhost · does not enforce on 127.0.0.1 · does not enforce when already https … |
 | `supabase/functions/__tests__/geo-decision.test.ts` | 9 | allowlist: pais listado e permitido · allowlist: pais fora da lista e bloqueado · blocklist: pais listado e bloqueado · blocklist: pais fora da lista e permitido … |
@@ -2825,6 +2839,7 @@ _nenhum item encontrado_
 | `src/components/executive/__tests__/DealPipelineTrendCard.test.tsx` | 8 | DealPipelineTrendCard · mostra carregamento enquanto a serie nao chega · explica quando ainda nao existe retrato no periodo · mostra erro com opcao de tentar de novo … |
 | `src/components/knowledge/__tests__/ArticleHistoryCard.test.tsx` | 8 | ArticleHistoryCard · mostra carregamento enquanto a leitura nao termina · explica o vazio em vez de deixar a area muda · mostra erro e permite tentar de novo … |
 | `src/hooks/__tests__/pageVisibility.gating.test.tsx` | 8 | etapa 253: poll de painel respeita a visibilidade da aba · ${file} usa usePageVisibility · ${file} nao tem refetchInterval sempre ligado · useQualityMetrics entrega refetchInterval falso com a aba oculta … |
+| `src/hooks/__tests__/slaBreach.test.ts` | 8 | describeSlaBreach · sem primeira resposta e prazo vencido: culpa a primeira resposta · primeira resposta dentro do prazo mas resolucao atrasada · resolucao ainda em aberto conta o atraso contra agora … |
 | `src/hooks/__tests__/useAchievementNotifications.coverage.test.tsx` | 8 | useAchievementNotifications (coverage) · não injeta badge inválida quando o enriquecimento falha · subscribes to channels and exposes initial state · handles a new badge award and shows a toast (no agent filter) … |
 | `src/hooks/__tests__/useAgentStatus.coverage.test.tsx` | 8 | useAgentStatus (coverage) · fetches agents on mount · setAgent selects and toasts; clearAgent clears · updateStatus returns false without selected agent … |
 | `src/hooks/__tests__/useCallHistory.coverage.test.tsx` | 8 | useCallHistory · fetches sessions on mount and maps summary · handles fetch error branch · exercises filters, setters, presets and clearFilters … |
@@ -2880,6 +2895,7 @@ _nenhum item encontrado_
 | `src/lib/mfa/__tests__/index.coverage.test.ts` | 7 | mfa (coverage) · returns disabled default when no settings row · maps existing settings row including backup codes · handles settings row with falsy/missing fields … |
 | `src/lib/security/__tests__/helmet-config.coverage.test.ts` | 7 | helmet-config (coverage) · DEFAULT_SECURITY_HEADERS has expected secure defaults · getSecurityHeaders returns defaults when no overrides · getSecurityHeaders merges overrides … |
 | `src/lib/session/__tests__/index.coverage.test.ts` | 7 | session/index · getActiveSessions maps rows · getActiveSessions handles null data and is_active falsy · terminateSession returns true when no error … |
+| `src/pages/__tests__/SlaViolations.test.tsx` | 7 | SlaViolations · mostra os indicadores do periodo · lista contato, motivo e atraso de cada violacao · mostra vazio quando nao ha violacao … |
 | `supabase/functions/cleanup-recordings/__tests__/retencao_test.ts` | 7 | corte de retencao fica exatamente 180 dias atras · gravacao com 179 dias ainda nao vence · gravacao com 181 dias vence · cron: aceita bearer exato do token configurado … |
 | `supabase/functions/score-call-attempt/__tests__/index.test.ts` | 7 | score-call-attempt: 401 sem Authorization · score-call-attempt: validação rejeita phone curto demais · score-call-attempt: DNC força score=0 e recommendation=block · score-call-attempt: fora de horário multiplica score por 0.1 … |
 | `supabase/functions/translate-utterance/__tests__/index.test.ts` | 7 | translate-utterance: 401 sem Authorization · translate-utterance: 400 com body inválido (sem callSessionId) · translate-utterance: rejeita idioma não suportado · translate-utterance: trata 429 (rate limit) sem expor stack … |
@@ -2914,6 +2930,7 @@ _nenhum item encontrado_
 | `src/lib/__tests__/webrtc-config.test.ts` | 6 | getIceServers · retorna STUN servers padrão sem TURN quando envs ausentes · inclui TURN quando todas as envs estão presentes · não inclui TURN quando falta uma das credenciais … |
 | `src/lib/audio/__tests__/deviceTest.test.ts` | 6 | deviceTest · explica a recusa de permissão e não vaza stream · mede o nível e libera o microfone ao parar · avisa quando não há microfone disponível … |
 | `src/lib/audit/__tests__/index.coverage.test.ts` | 6 | audit/index (coverage) · logAuditEvent returns id on success · logAuditEvent defaults details to empty object and resourceId undefined · logAuditEvent returns null on supabase error … |
+| `src/pages/admin/__tests__/ClientErrors.test.tsx` | 6 | pagina Erros do Cliente · mostra os KPIs e a tabela com rota, mensagem e trace · resolve o erro escolhido · estado vazio explica o filtro de nao resolvidos … |
 | `src/routes/__tests__/callHistoryAlias.test.tsx` | 6 | alias /call-history -> /history (etapa 266) · /call-history nao renderiza mais CallHistory, e sim o alias · /history continua entregando a pagina real · redireciona /call-history para /history … |
 | `supabase/functions/__tests__/optimistic-lock.test.ts` | 6 | optimistic-lock: migration canonica do trigger existe · optimistic-lock: detecta divergencia de versao e lanca OPTIMISTIC_LOCK_CONFLICT · optimistic-lock: incrementa a versao quando nao ha divergencia · optimistic-lock: conflito e auditado em optimistic_lock_conflicts … |
 | `supabase/functions/_shared/__tests__/allowed-hosts.test.ts` | 6 | aceita hosts públicos https · bloqueia loopback, metadata e esquemas perigosos · faixas privadas são liberáveis apenas com allowPrivate · metadata continua bloqueada mesmo com allowPrivate … |
@@ -2976,11 +2993,7 @@ _nenhum item encontrado_
 | `src/components/calls/__tests__/ActiveCallBar.verificacaoVoz.test.tsx` | 4 | ActiveCallBar: verificacao de voz ao vivo (etapa 155) · verifica a voz da sessao ativa e mostra o veredito na barra · avisa na barra quando a voz nao confere com o padrao cadastrado · nao deixa verificar sem sessao de banco gravada |
 | `src/components/calls/softphone/__tests__/ActiveCallDisplay.saidaAudio.test.tsx` | 4 | ActiveCallDisplay — saída de áudio da chamada · oferece a escolha de saída na chamada SIP e aplica o sink no áudio remoto · não mostra o seletor fora da chamada SIP · não mostra o seletor quando o navegador não suporta trocar a saída |
 | `src/components/calls/softphone/__tests__/DialpadTab.a11y.test.tsx` | 4 | DialpadTab - rótulo acessível no apagar (A-123) · expõe  · ConferenceSection - rótulo acessível ao remover participante (A-123) · identifica o participante que será removido |
-| `src/components/coaching/__tests__/CoachingAssignmentsPanel.rules.test.tsx` | 4 | CoachingAssignmentsPanel - regra do coaching automático (A-131) · explica a regra com os números que vieram da edge · mostra a contagem atual de cada agente que ficou de fora · sem regra conhecida, orienta a rodar a geração |
-| `src/components/compliance/dnc/__tests__/EditDNCDialog.test.tsx` | 4 | EditDNCDialog (etapa 175) · grava observacao e validade mantendo o motivo atual · validade em branco remove o prazo e observacao vazia vira nulo · explica que o autor da remocao e registrado automaticamente |
-| `src/components/compliance/dnc/__tests__/ReconcileDNCDialog.test.tsx` | 4 | ReconcileDNCDialog · aponta exatamente o numero ausente da lista · reenvia apenas os ausentes e recontabiliza · mostra o erro da consulta em vez de dizer que esta tudo certo |
-| `src/components/executive/__tests__/OmnichannelCard.test.tsx` | 4 | OmnichannelCard · renderiza KPIs principais (abertas, SLA, violações) · exibe badge de SLA quando há violações · lista todos os canais com contagem |
-| … +115 linhas — lista completa em `context.json` | | |
+| … +119 linhas — lista completa em `context.json` | | |
 
 ## L. Eventos de webhook tratados (contratos com sistemas externos)
 
@@ -3189,6 +3202,8 @@ _nenhum item encontrado_
 | ').order('created_at', { ascending: false }).limit(100), | `src/hooks/useRateLimitData.ts` |
 | ').order('created_at', { ascending: false }).limit(50), | `src/hooks/useRateLimitData.ts` |
 | Falhar aqui nao pode impedir o usuario de atender a chamada. | `src/hooks/useRingtoneSettings.ts` |
+| * Classifica o prazo estourado de uma conversa marcada como sla_breached. | `src/hooks/useSLA.ts` |
+| Marcada como violada mas sem prazo vencido calculável: mantém o rótulo genérico | `src/hooks/useSLA.ts` |
 | ').order('created_at', { ascending: false }).limit(5); | `src/hooks/useSecurityDashboard.ts` |
 | ').order('created_at', { ascending: false }).limit(50); | `src/hooks/useSecurityMonitoringData.ts` |
 | ').order('created_at', { ascending: false }).limit(20); | `src/hooks/useSecurityMonitoringData.ts` |
@@ -3222,6 +3237,8 @@ _nenhum item encontrado_
 | * Limite de caracteres imposto pelo CHECK da coluna `tag`. */ | `src/lib/dialer-favorite-tags.ts` |
 | - `UNTAGGED_FILTER` → apenas itens sem etiqueta válida; | `src/lib/dialer-favorite-tags.ts` |
 | * Retorna apenas os itens cuja posição mudou em relação ao valor original — | `src/lib/dialer-favorites-order.ts` |
+| * Só para testes: zera o estado de dedupe/limite. */ | `src/lib/errorReporter.ts` |
+| * `true` quando o relato deve ser gravado (fora da janela de dedupe e do teto). */ | `src/lib/errorReporter.ts` |
 | gravado por inteiro: apenas os últimos dígitos, o suficiente para o agente | `src/lib/favorite-sync-labels.ts` |
 | * Mascara um telefone preservando apenas os últimos dígitos. | `src/lib/favorite-sync-labels.ts` |
 | - trunkOnline: +20 (apenas se hasTrunk) | `src/lib/health-score.ts` |

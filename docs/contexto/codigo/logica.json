@@ -1,11 +1,11 @@
 {
  "aviso": "GERADO AUTOMATICAMENTE por scripts/ai-context/gerar.mjs — não editar à mão; será sobrescrito.",
  "format_version": 2,
- "total": 98,
+ "total": 99,
  "por_camada": {
   "data": 1,
   "integrations": 3,
-  "lib": 91,
+  "lib": 92,
   "python": 3
  },
  "arquivos": [
@@ -317,7 +317,7 @@
    "zod_schemas": 0,
    "flags": [],
    "papeis": [],
-   "usado_por": 240,
+   "usado_por": 242,
    "usado_por_modulos": [
     "components/admin",
     "components/agent",
@@ -370,7 +370,7 @@
     "TablesUpdate"
    ],
    "export_default": null,
-   "linhas": 8197,
+   "linhas": 8239,
    "tabelas": [],
    "rpcs": [],
    "edges": [],
@@ -957,9 +957,11 @@
    "arquivo": "src/lib/error-tracking.ts",
    "camada": "lib",
    "exports": [
+    "ErrorReport",
     "getErrorReports",
     "initErrorTracking",
-    "reportError"
+    "reportError",
+    "setErrorSink"
    ],
    "export_default": null,
    "linhas": 78,
@@ -971,13 +973,51 @@
    "zod_schemas": 0,
    "flags": [],
    "papeis": [],
-   "usado_por": 5,
+   "usado_por": 6,
    "usado_por_modulos": [
     "components/error-boundary",
     "components/observability",
     "hooks",
+    "lib",
     "pages"
    ],
+   "coberto_por_testes": 2,
+   "orfao": false
+  },
+  {
+   "arquivo": "src/lib/errorReporter.ts",
+   "camada": "lib",
+   "exports": [
+    "CLIENT_ERROR_CORRELATION_MAX",
+    "CLIENT_ERROR_MESSAGE_MAX",
+    "CLIENT_ERROR_ROUTE_MAX",
+    "CLIENT_ERROR_STACK_MAX",
+    "CLIENT_ERROR_USER_AGENT_MAX",
+    "ClientErrorInsert",
+    "DEDUPE_WINDOW_MS",
+    "RATE_MAX_PER_WINDOW",
+    "RATE_WINDOW_MS",
+    "buildClientErrorRow",
+    "installErrorReporter",
+    "resetErrorReporterState",
+    "routeFromUrl",
+    "shouldCapture",
+    "truncate"
+   ],
+   "export_default": null,
+   "linhas": 138,
+   "tabelas": [
+    "client_errors"
+   ],
+   "rpcs": [],
+   "edges": [],
+   "env": [],
+   "externos": [],
+   "zod_schemas": 0,
+   "flags": [],
+   "papeis": [],
+   "usado_por": 1,
+   "usado_por_modulos": [],
    "coberto_por_testes": 1,
    "orfao": false
   },
@@ -1727,7 +1767,7 @@
    "zod_schemas": 0,
    "flags": [],
    "papeis": [],
-   "usado_por": 105,
+   "usado_por": 106,
    "usado_por_modulos": [
     "components/accounts",
     "components/admin",
@@ -2670,9 +2710,10 @@
    "zod_schemas": 0,
    "flags": [],
    "papeis": [],
-   "usado_por": 22,
+   "usado_por": 23,
    "usado_por_modulos": [
-    "hooks"
+    "hooks",
+    "lib"
    ],
    "coberto_por_testes": 1,
    "orfao": false

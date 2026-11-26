@@ -2,11 +2,11 @@
  "aviso": "GERADO AUTOMATICAMENTE por scripts/ai-context/gerar.mjs — não editar à mão; será sobrescrito.",
  "format_version": 2,
  "resumo": {
-  "urls": 106,
+  "urls": 108,
   "rotas_http_backend": 11,
   "vistas_por_id": 0,
-  "itens_menu": 96,
-  "lazy": 107
+  "itens_menu": 98,
+  "lazy": 109
  },
  "urls": [
   {
@@ -205,6 +205,45 @@
    "flags": [],
    "papeis": [],
    "arquivos_puxados": 16
+  },
+  {
+   "protegida": false,
+   "wrappers": [],
+   "pai": null,
+   "indice": false,
+   "lazy": false,
+   "tipo": "tela",
+   "caminho": "/admin/client-errors",
+   "componente": "ClientErrors",
+   "arquivo": "src/pages/admin/ClientErrors.tsx",
+   "definida_em": "src/routes/protectedRoutes.tsx",
+   "hooks": [
+    "useClientErrorStats",
+    "useClientErrors",
+    "useEffect",
+    "useMemo",
+    "useMutation",
+    "usePageTitle",
+    "useQuery",
+    "useQueryClient",
+    "useResolveClientError",
+    "useState"
+   ],
+   "hooks_locais": [
+    "useClientErrorStats",
+    "useClientErrors",
+    "usePageTitle",
+    "useResolveClientError"
+   ],
+   "tabelas": [
+    "client_errors"
+   ],
+   "rpcs": [],
+   "edges": [],
+   "canais_realtime": [],
+   "flags": [],
+   "papeis": [],
+   "arquivos_puxados": 13
   },
   {
    "protegida": false,
@@ -1955,6 +1994,8 @@
     "useSendMessage",
     "useSlaCompliance",
     "useSlaPolicies",
+    "useSlaViolationStats",
+    "useSlaViolations",
     "useState",
     "useUpdateConversation",
     "useUpsertSlaPolicy"
@@ -1976,6 +2017,8 @@
     "useSendMessage",
     "useSlaCompliance",
     "useSlaPolicies",
+    "useSlaViolationStats",
+    "useSlaViolations",
     "useUpdateConversation",
     "useUpsertSlaPolicy"
    ],
@@ -4435,6 +4478,8 @@
     "useQueryClient",
     "useSlaCompliance",
     "useSlaPolicies",
+    "useSlaViolationStats",
+    "useSlaViolations",
     "useUpsertSlaPolicy"
    ],
    "hooks_locais": [
@@ -4442,6 +4487,58 @@
     "usePageTitle",
     "useSlaCompliance",
     "useSlaPolicies",
+    "useSlaViolationStats",
+    "useSlaViolations",
+    "useUpsertSlaPolicy"
+   ],
+   "tabelas": [
+    "conversations",
+    "sla_policies"
+   ],
+   "rpcs": [],
+   "edges": [
+    "enforce-sla"
+   ],
+   "canais_realtime": [],
+   "flags": [],
+   "papeis": [
+    "status"
+   ],
+   "arquivos_puxados": 18
+  },
+  {
+   "protegida": false,
+   "wrappers": [],
+   "pai": null,
+   "indice": false,
+   "lazy": false,
+   "tipo": "tela",
+   "caminho": "/sla-violations",
+   "componente": "SlaViolations",
+   "arquivo": "src/pages/SlaViolations.tsx",
+   "definida_em": "src/routes/protectedRoutes.tsx",
+   "hooks": [
+    "useEffect",
+    "useEnforceSla",
+    "useMemo",
+    "useMutation",
+    "usePageTitle",
+    "useQuery",
+    "useQueryClient",
+    "useSlaCompliance",
+    "useSlaPolicies",
+    "useSlaViolationStats",
+    "useSlaViolations",
+    "useState",
+    "useUpsertSlaPolicy"
+   ],
+   "hooks_locais": [
+    "useEnforceSla",
+    "usePageTitle",
+    "useSlaCompliance",
+    "useSlaPolicies",
+    "useSlaViolationStats",
+    "useSlaViolations",
     "useUpsertSlaPolicy"
    ],
    "tabelas": [
@@ -5460,6 +5557,15 @@
    "resolve_para": "src/pages/PredictiveDialer.tsx"
   },
   {
+   "rotulo": "Erros do Cliente",
+   "destino": "/admin/client-errors",
+   "grupo": null,
+   "papeis": [],
+   "papeis_nao_resolvidos": null,
+   "definido_em": "src/components/layout/AppSidebar.tsx",
+   "resolve_para": "src/pages/admin/ClientErrors.tsx"
+  },
+  {
    "rotulo": "Escala & Turnos",
    "destino": "/scheduling",
    "grupo": null,
@@ -5964,6 +6070,15 @@
    "resolve_para": "src/pages/VideoConference.tsx"
   },
   {
+   "rotulo": "Violações de SLA",
+   "destino": "/sla-violations",
+   "grupo": null,
+   "papeis": [],
+   "papeis_nao_resolvidos": null,
+   "definido_em": "src/components/layout/AppSidebar.tsx",
+   "resolve_para": "src/pages/SlaViolations.tsx"
+  },
+  {
    "rotulo": "Voice Security",
    "destino": "/voice-security",
    "grupo": null,
@@ -6002,6 +6117,7 @@
   "CallQueues": "src/pages/CallQueues.tsx",
   "Callbacks": "src/pages/Callbacks.tsx",
   "Calls": "src/pages/Calls.tsx",
+  "ClientErrors": "src/pages/admin/ClientErrors.tsx",
   "Coaching": "src/pages/Coaching.tsx",
   "Compliance": "src/pages/Compliance.tsx",
   "ConcurrencyConflicts": "src/pages/ConcurrencyConflicts.tsx",
@@ -6072,6 +6188,7 @@
   "Settings": "src/pages/Settings.tsx",
   "ShiftSwapSuggestions": "src/pages/ShiftSwapSuggestions.tsx",
   "Skills": "src/pages/Skills.tsx",
+  "SlaViolations": "src/pages/SlaViolations.tsx",
   "SloDashboard": "src/pages/admin/SloDashboard.tsx",
   "Status": "src/pages/Status.tsx",
   "SuccessPlans": "src/pages/SuccessPlans.tsx",

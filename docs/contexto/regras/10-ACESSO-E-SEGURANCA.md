@@ -1,6 +1,6 @@
 # 10 · ACESSO E SEGURANÇA — quem pode o quê
 
-> Gerado automaticamente por AI Context Sync v1.3.2 · commit `31ef7782f6` · branch `main` · 2026-11-26 12:24 UTC
+> Gerado automaticamente por AI Context Sync v1.3.2 · commit `36baa4a5fa` · branch `main` · 2026-11-26 13:20 UTC
 > Não edite à mão — regras humanas vão em `manual/`.
 
 ## Perfis / roles identificados
@@ -62,6 +62,7 @@
 | `calling_hours_config` | enabled | public: auth.uid() IS NOT NULL<br>public: is_admin_or_supervisor() | public: is_admin_or_supervisor() | public: is_admin_or_supervisor() | public: is_admin_or_supervisor() |
 | `chat_sessions` | enabled | public: is_admin_or_supervisor()<br>public: conversation_id IS NOT NULL AND EXISTS ( SELECT 1 FROM public.conversations c WHERE c.id = chat_sessions.conversation_id AND c.assig<br>public: is_admin_or_supervisor() | public: is_admin_or_supervisor() | public: is_admin_or_supervisor() | public: is_admin_or_supervisor() |
 | `churn_risk_signals` | enabled | authenticated: is_admin_or_supervisor()<br>authenticated: EXISTS ( SELECT 1 FROM public.accounts a WHERE a.id = churn_risk_signals.account_id AND a.csm_agent_name = get_user_agent_nam | authenticated: is_admin_or_supervisor() | authenticated: is_admin_or_supervisor()<br>authenticated: EXISTS ( SELECT 1 FROM public.accounts a WHERE a.id = churn_risk_signals.account_id AND a.csm_agent_name = get_user_agent_nam | authenticated: is_admin_or_supervisor() |
+| `client_errors` | enabled | authenticated: public.is_admin_or_supervisor() | authenticated: (SELECT auth.uid()) = user_id | authenticated: public.is_admin_or_supervisor() | — |
 | `coaching_assignments` | enabled | authenticated: is_admin_or_supervisor() OR get_user_agent_name() = agent_name | authenticated: is_admin_or_supervisor() | authenticated: is_admin_or_supervisor() OR get_user_agent_name() = agent_name | authenticated: is_admin_or_supervisor() |
 | `coaching_recommendations` | enabled | public: true<br>public: is_admin_or_supervisor() OR agent_id = get_user_agent_id() | public: true<br>public: public.is_admin_or_supervisor() | public: true<br>public: is_admin_or_supervisor() OR agent_id = get_user_agent_id() | public: true<br>public: public.is_admin_or_supervisor() |
 | `coaching_timestamps` | enabled | public: is_admin_or_supervisor() OR can_access_agent_data(agent_name) | authenticated: is_admin_or_supervisor() | — | public: is_admin_or_supervisor() |
@@ -190,7 +191,7 @@
 
 > `—` com RLS ligado = ninguém além de service_role. `sem RLS` = qualquer chave anon lê/escreve tudo.
 
-## Onde o RLS é IGNORADO (service_role) — 134 arquivo(s)
+## Onde o RLS é IGNORADO (service_role) — 135 arquivo(s)
 
 - `scripts/ai-context/cenarios.mjs`
 - `scripts/ai-context/gerar.unit.mjs`
@@ -323,6 +324,7 @@
 - `supabase/migrations/20261126100000_edge_function_urls_from_vault.sql`
 - `supabase/migrations/20261126101000_revoke_anon_login_rpcs.sql`
 - `supabase/migrations/20261126120000_deal_pipeline_snapshots.sql`
+- `supabase/migrations/20261126140000_client_errors.sql`
 - `supabase/tests/login_lockout_acl_rls_test.sql`
 - `supabase/tests/redaction_log_rls_test.sql`
 - `supabase/tests/webhook_secrets_rls_test.sql`
@@ -433,15 +435,17 @@ Middleware matcher (Next.js): nenhum
 |---|---|---|---|
 | grant | anon, authenticated | execute | `check_login_lockout`, `record_failed_login`, `record_successful_login`, `check_ip_allowed` |
 | grant | authenticated | execute | `log_audit_event`, `get_dashboard_stats`, `get_queue_stats`, `log_audit_event`, `get_agent_performance`, `get_call_history_with_summaries`, `get_call_volume_stats`, `get_agents_with_active_calls`, `check_all_tables_rls_status`, `has_role`, `has_permission`, `get_user_role`, `get_user_agent_name`, `get_auth_agent_id`, `get_user_agent_id` … +18 |
+| grant | authenticated | insert | `client_errors` |
 | grant | authenticated | select | `financial_impact_daily`, `index_drop_audit`, `deal_pipeline_snapshots` |
 | grant | authenticated | select, insert | `webhook_flush_metrics` |
 | grant | authenticated | select, insert, update, delete | `deal_revenue_snapshots`, `shift_swap_suggestions`, `data_lake_exports`, `dialer_favorites`, `call_queues`, `call_queue_members`, `ring_groups`, `ring_group_members`, `queue_audio_prompts`, `call_park_orbits`, `parked_calls`, `user_preferences` |
+| grant | authenticated | select, update | `client_errors` |
 | grant | authenticated | update, delete | `rate_limit_logs` |
 | grant | authenticated, service_role | execute | `get_agent_financial_leaderboard`, `calculate_predictive_pace`, `recalc_deal_health`, `expire_parked_calls`, `calculate_predictive_pace`, `check_all_tables_rls_status`, `check_idle_indexes`, `expire_parked_calls`, `get_agent_financial_leaderboard`, `get_agent_performance`, `get_agents_with_active_calls`, `get_call_history_with_summaries`, `get_call_volume_stats`, `get_dashboard_stats`, `get_database_health_snapshot` … +17 |
 | grant | optimistic_lock_writer | insert | `optimistic_lock_conflicts` |
 | grant | postgres | all privileges | `cron` |
 | grant | postgres, service_role | execute | `edge_function_url` |
-| grant | service_role | all | `deal_revenue_snapshots`, `shift_swap_suggestions`, `data_lake_exports`, `index_drop_audit`, `webhook_flush_metrics`, `dialer_favorites`, `call_queues`, `call_queue_members`, `ring_groups`, `ring_group_members`, `queue_audio_prompts`, `call_park_orbits`, `parked_calls`, `deal_pipeline_snapshots` |
+| grant | service_role | all | `deal_revenue_snapshots`, `shift_swap_suggestions`, `data_lake_exports`, `index_drop_audit`, `webhook_flush_metrics`, `dialer_favorites`, `call_queues`, `call_queue_members`, `ring_groups`, `ring_group_members`, `queue_audio_prompts`, `call_park_orbits`, `parked_calls`, `deal_pipeline_snapshots`, `client_errors` |
 | grant | service_role | execute | `check_all_tables_rls_status`, `log_rls_event`, `apply_predictive_pacing`, `snapshot_deals_daily`, `trigger_auto_scorecard`, `apply_predictive_pacing`, `check_ip_in_cidr`, `check_rate_limit`, `check_rls_enabled`, `cleanup_expired_challenges`, `snapshot_deals_daily` |
 | grant | service_role | select | `index_usage`, `unused_indexes`, `migration_status`, `schema_migrations`, `migration_rollbacks` |
 | revoke | PUBLIC | all | `log_index_drop_copy`, `expire_parked_calls` |

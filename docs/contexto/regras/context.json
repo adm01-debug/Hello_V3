@@ -1,15 +1,15 @@
 {
  "meta": {
-  "sha": "31ef7782f6fcd79bed1112c7e1ebdb721a161ee1",
+  "sha": "36baa4a5fa4a0324e71ab1cf022ade207bfe44b6",
   "branch": "main",
   "remote": "https://github.com/adm01-debug/Hello_V3",
-  "generated_at": "2026-11-26 12:24 UTC",
-  "files_total": 1847,
-  "code_files": 1643,
-  "code_lines": 201234
+  "generated_at": "2026-11-26 13:20 UTC",
+  "files_total": 1857,
+  "code_files": 1653,
+  "code_lines": 202892
  },
  "version": "1.3.2",
- "facts_hash": "d6b0cdde1fbc50b4",
+ "facts_hash": "1359768837c0275a",
  "stack": {
   "frameworks": [
    "React + Vite",
@@ -168,9 +168,9 @@
   ],
   "package_manager": "bun",
   "languages": {
-   ".tsx": 674,
-   ".ts": 666,
-   ".sql": 267,
+   ".tsx": 678,
+   ".ts": 670,
+   ".sql": 269,
    ".mjs": 29,
    ".py": 5,
    ".js": 2
@@ -14118,6 +14118,98 @@
     "comment": "",
     "origin": "migration"
    },
+   "client_errors": {
+    "columns": [
+     {
+      "name": "id",
+      "type": "uuid NOT NULL DEFAULT gen_random_uuid() PRIMARY KEY",
+      "fk": "",
+      "generated": "",
+      "src": "supabase/migrations/20261126140000_client_errors.sql"
+     },
+     {
+      "name": "occurred_at",
+      "type": "timestamptz NOT NULL DEFAULT now()",
+      "fk": "",
+      "generated": "",
+      "src": "supabase/migrations/20261126140000_client_errors.sql"
+     },
+     {
+      "name": "user_id",
+      "type": "uuid REFERENCES auth.users(id) ON DELETE SET NULL",
+      "fk": "users.id ON DELETE SET NULL",
+      "generated": "",
+      "src": "supabase/migrations/20261126140000_client_errors.sql"
+     },
+     {
+      "name": "route",
+      "type": "text NOT NULL",
+      "fk": "",
+      "generated": "",
+      "src": "supabase/migrations/20261126140000_client_errors.sql"
+     },
+     {
+      "name": "error_type",
+      "type": "text NOT NULL DEFAULT 'error'",
+      "fk": "",
+      "generated": "",
+      "src": "supabase/migrations/20261126140000_client_errors.sql"
+     },
+     {
+      "name": "message",
+      "type": "text NOT NULL",
+      "fk": "",
+      "generated": "",
+      "src": "supabase/migrations/20261126140000_client_errors.sql"
+     },
+     {
+      "name": "stack",
+      "type": "text",
+      "fk": "",
+      "generated": "",
+      "src": "supabase/migrations/20261126140000_client_errors.sql"
+     },
+     {
+      "name": "user_agent",
+      "type": "text",
+      "fk": "",
+      "generated": "",
+      "src": "supabase/migrations/20261126140000_client_errors.sql"
+     },
+     {
+      "name": "correlation_id",
+      "type": "text",
+      "fk": "",
+      "generated": "",
+      "src": "supabase/migrations/20261126140000_client_errors.sql"
+     },
+     {
+      "name": "resolved_at",
+      "type": "timestamptz",
+      "fk": "",
+      "generated": "",
+      "src": "supabase/migrations/20261126140000_client_errors.sql"
+     },
+     {
+      "name": "resolved_by",
+      "type": "uuid REFERENCES auth.users(id) ON DELETE SET NULL",
+      "fk": "users.id ON DELETE SET NULL",
+      "generated": "",
+      "src": "supabase/migrations/20261126140000_client_errors.sql"
+     }
+    ],
+    "constraints": [
+     "CONSTRAINT client_errors_route_len CHECK (char_length(route) <= 500)",
+     "CONSTRAINT client_errors_message_len CHECK (char_length(message) BETWEEN 1 AND 1000)",
+     "CONSTRAINT client_errors_stack_len CHECK (stack IS NULL OR char_length(stack) <= 4000)",
+     "CONSTRAINT client_errors_user_agent_len CHECK (user_agent IS NULL OR char_length(user_agent) <= 500)",
+     "CONSTRAINT client_errors_correlation_len CHECK (correlation_id IS NULL OR char_length(correlation_id) <= 100)",
+     "CONSTRAINT client_errors_type_chk CHECK (error_type IN ('error', 'unhandled-rejection', 'react-component', 'network-error'))"
+    ],
+    "src": "supabase/migrations/20261126140000_client_errors.sql",
+    "comment": "Erros nao tratados do navegador (etapa 230 / A-097). Alimentada por src/lib/errorReporter.ts, lida em /admin/client-errors.",
+    "origin": "migration"
+   },
    "geo_access_logs": {
     "columns": [
      {
@@ -19896,6 +19988,36 @@
     "using": "public.is_admin_or_supervisor()",
     "check": "",
     "src": "supabase/migrations/20261126120000_deal_pipeline_snapshots.sql"
+   },
+   {
+    "name": "admins_supervisors_read_client_errors",
+    "table": "client_errors",
+    "cmd": "SELECT",
+    "roles": "authenticated",
+    "mode": "permissive",
+    "using": "public.is_admin_or_supervisor()",
+    "check": "",
+    "src": "supabase/migrations/20261126140000_client_errors.sql"
+   },
+   {
+    "name": "authenticated_insert_own_client_errors",
+    "table": "client_errors",
+    "cmd": "INSERT",
+    "roles": "authenticated",
+    "mode": "permissive",
+    "using": "",
+    "check": "(SELECT auth.uid()) = user_id",
+    "src": "supabase/migrations/20261126140000_client_errors.sql"
+   },
+   {
+    "name": "admins_supervisors_resolve_client_errors",
+    "table": "client_errors",
+    "cmd": "UPDATE",
+    "roles": "authenticated",
+    "mode": "permissive",
+    "using": "public.is_admin_or_supervisor()",
+    "check": "public.is_admin_or_supervisor()",
+    "src": "supabase/migrations/20261126140000_client_errors.sql"
    }
   ],
   "triggers": [
@@ -25764,6 +25886,30 @@
     "unique": false,
     "where": "",
     "src": "supabase/migrations/20260726202218_619850bb-a4f2-4112-96d7-872649f70b37.sql"
+   },
+   {
+    "name": "idx_client_errors_occurred_at",
+    "table": "client_errors",
+    "columns": "occurred_at DESC",
+    "unique": false,
+    "where": "",
+    "src": "supabase/migrations/20261126140000_client_errors.sql"
+   },
+   {
+    "name": "idx_client_errors_open",
+    "table": "client_errors",
+    "columns": "occurred_at DESC",
+    "unique": false,
+    "where": "WHERE resolved_at IS NULL",
+    "src": "supabase/migrations/20261126140000_client_errors.sql"
+   },
+   {
+    "name": "idx_client_errors_route",
+    "table": "client_errors",
+    "columns": "route, occurred_at DESC",
+    "unique": false,
+    "where": "",
+    "src": "supabase/migrations/20261126140000_client_errors.sql"
    }
   ],
   "cron_jobs": [
@@ -26097,7 +26243,9 @@
    "supabase/migrations/20261126101000_revoke_anon_login_rpcs.sql",
    "supabase/migrations/20261126120000_deal_pipeline_snapshots.sql",
    "supabase/migrations/20261126130000_dnc_removal_audit.sql",
+   "supabase/migrations/20261126140000_client_errors.sql",
    "supabase/tests/calling_hours_fail_closed_rls_test.sql",
+   "supabase/tests/client_errors_rls_test.sql",
    "supabase/tests/cron_credentials_rls_test.sql",
    "supabase/tests/deal_pipeline_snapshots_rls_test.sql",
    "supabase/tests/dnc_removal_audit_rls_test.sql",
@@ -26274,7 +26422,8 @@
    "call_park_orbits": "enabled",
    "parked_calls": "enabled",
    "user_preferences": "enabled",
-   "deal_pipeline_snapshots": "enabled"
+   "deal_pipeline_snapshots": "enabled",
+   "client_errors": "enabled"
   },
   "grants": [
    {
@@ -28412,6 +28561,30 @@
     "objkind": "function",
     "roles": "public, anon, authenticated",
     "src": "supabase/migrations/20261126130000_dnc_removal_audit.sql"
+   },
+   {
+    "kind": "grant",
+    "privs": "select, update",
+    "object": "client_errors",
+    "objkind": "table",
+    "roles": "authenticated",
+    "src": "supabase/migrations/20261126140000_client_errors.sql"
+   },
+   {
+    "kind": "grant",
+    "privs": "insert",
+    "object": "client_errors",
+    "objkind": "table",
+    "roles": "authenticated",
+    "src": "supabase/migrations/20261126140000_client_errors.sql"
+   },
+   {
+    "kind": "grant",
+    "privs": "all",
+    "object": "client_errors",
+    "objkind": "table",
+    "roles": "service_role",
+    "src": "supabase/migrations/20261126140000_client_errors.sql"
    }
   ],
   "raises": [
@@ -28607,7 +28780,10 @@
    "table:user_preferences": "Preferências de notificação e áudio por usuário (E076/E077)",
    "column:dnc_list.removed_by": "E-mail de quem desativou a entrada. Gravado pelo gatilho trg_dnc_track_removal, nunca pelo cliente.",
    "column:dnc_list.removed_at": "Momento da desativacao (soft delete). Gravado pelo gatilho; volta a NULL se a entrada for reativada.",
-   "column:dnc_list.removal_reason": "Motivo textual da desativacao, quando informado na tela. Gatilho preenche um padrao se vier vazio."
+   "column:dnc_list.removal_reason": "Motivo textual da desativacao, quando informado na tela. Gatilho preenche um padrao se vier vazio.",
+   "table:client_errors": "Erros nao tratados do navegador (etapa 230 / A-097). Alimentada por src/lib/errorReporter.ts, lida em /admin/client-errors.",
+   "column:client_errors.route": "pathname da tela onde o erro ocorreu",
+   "column:client_errors.correlation_id": "trace id do client (src/lib/tracing.ts) para cruzar com logs de edge function"
   },
   "types_file": "src/integrations/supabase/types.ts"
  },
@@ -29809,6 +29985,21 @@
     "invokes_transitive": [],
     "rpc_transitive": [],
     "deps_count": 15
+   },
+   {
+    "path": "",
+    "file": "src/pages/SlaViolations.tsx",
+    "component": "SlaViolations",
+    "tables_transitive": [
+     "conversations",
+     "sla_policies"
+    ],
+    "invokes_transitive": [
+     "charge",
+     "enforce-sla"
+    ],
+    "rpc_transitive": [],
+    "deps_count": 18
    },
    {
     "path": "",
@@ -33054,6 +33245,18 @@
     "file": "src/hooks/useChurnRisk.ts"
    },
    {
+    "name": "useClientErrors",
+    "file": "src/hooks/useClientErrors.ts"
+   },
+   {
+    "name": "useClientErrorStats",
+    "file": "src/hooks/useClientErrors.ts"
+   },
+   {
+    "name": "useResolveClientError",
+    "file": "src/hooks/useClientErrors.ts"
+   },
+   {
     "name": "useCoaching",
     "file": "src/hooks/useCoaching.ts"
    },
@@ -33439,6 +33642,14 @@
    },
    {
     "name": "useUpsertSlaPolicy",
+    "file": "src/hooks/useSLA.ts"
+   },
+   {
+    "name": "useSlaViolations",
+    "file": "src/hooks/useSLA.ts"
+   },
+   {
+    "name": "useSlaViolationStats",
     "file": "src/hooks/useSLA.ts"
    },
    {
@@ -33938,7 +34149,7 @@
   {
    "module": "src",
    "files": 3,
-   "lines": 185,
+   "lines": 188,
    "tables": [
     "webhook_flush_metrics"
    ],
@@ -34000,7 +34211,7 @@
   {
    "module": "src/components",
    "files": 384,
-   "lines": 45488,
+   "lines": 45492,
    "tables": [
     "accounts",
     "agent_goals",
@@ -34260,8 +34471,8 @@
   },
   {
    "module": "src/hooks",
-   "files": 353,
-   "lines": 44984,
+   "files": 355,
+   "lines": 45345,
    "tables": [
     "accounts",
     "active_sessions",
@@ -34302,6 +34513,7 @@
     "call_transcripts_searchable",
     "calling_hours_config",
     "churn_risk_signals",
+    "client_errors",
     "coaching_assignments",
     "coaching_recommendations",
     "compliance_rules",
@@ -34433,8 +34645,8 @@
     "useCallTransfer.ts: useCallTransfer",
     "useChatbot.ts: ChatbotResponse, useChatbot",
     "useChurnRisk.ts: ChurnSignal, useChurnRisk",
-    "useCoaching.ts: CoachingRecommendation, useCoaching",
-    "useCoachingAssignments.ts: CoachingAssignment, useCoachingAssignments"
+    "useClientErrors.ts: CLIENT_ERRORS_QUERY_KEY, CLIENT_ERRORS_COLUMNS, CLIENT_ERRORS_PAGE_SIZE, ClientErrorEntry, CLIENT_ERROR_TYPE_LABEL, clientErrorTypeLabel",
+    "useCoaching.ts: CoachingRecommendation, useCoaching"
    ],
    "docs": [
     "usePageVisibility.ts: usePageVisibility — retorna `true` quando a aba está visível. Fonte: Page Visibility API (document.visibilityState). Uso típico: const isVisible = usePageVisibility(); useEffect(() => { if (!isVisible) return; // subscribe... }, [isVisible]); SSR-safe: assume visível quando `document` não existe.",
@@ -34503,6 +34715,7 @@
     "src/hooks/useCallTransfer.ts",
     "src/hooks/useChatbot.ts",
     "src/hooks/useChurnRisk.ts",
+    "src/hooks/useClientErrors.ts",
     "src/hooks/useCoaching.ts",
     "src/hooks/useCoachingAssignments.ts",
     "src/hooks/useCoachingTrack.ts",
@@ -34543,14 +34756,13 @@
     "src/hooks/useHoldReminder.ts",
     "src/hooks/useHoldSoundAlert.ts",
     "src/hooks/useIPValidation.ts",
-    "src/hooks/useIPWhitelist.ts",
-    "src/hooks/useKbArticleHistory.ts"
+    "src/hooks/useIPWhitelist.ts"
    ]
   },
   {
    "module": "src/integrations",
    "files": 3,
-   "lines": 8260,
+   "lines": 8302,
    "tables": [],
    "exports": [
     "index.ts: lovable",
@@ -34574,11 +34786,12 @@
   },
   {
    "module": "src/lib",
-   "files": 182,
-   "lines": 21930,
+   "files": 184,
+   "lines": 22179,
    "tables": [
     "active_sessions",
     "call_quality_metrics",
+    "client_errors",
     "crm_sync_queue",
     "user_mfa_settings"
    ],
@@ -34595,7 +34808,8 @@
     "dialerLink.ts: dialerUrl",
     "elevenlabs-stub.ts: useConversation",
     "error-message.ts: mensagemDeErro",
-    "error-tracking.ts: reportError, initErrorTracking, getErrorReports",
+    "error-tracking.ts: ErrorReport, setErrorSink, reportError, initErrorTracking, getErrorReports",
+    "errorReporter.ts: CLIENT_ERROR_MESSAGE_MAX, CLIENT_ERROR_STACK_MAX, CLIENT_ERROR_ROUTE_MAX, CLIENT_ERROR_USER_AGENT_MAX, CLIENT_ERROR_CORRELATION_MAX, DEDUPE_WINDOW_MS",
     "favorite-sync-labels.ts: MASK_VISIBLE_DIGITS, maskPhone, describeFavorite",
     "geo-countries.ts: COUNTRIES",
     "health-score.ts: HealthInputs, HealthResult, computeHealth, healthTier",
@@ -34621,8 +34835,7 @@
     "security-alerts-webhook-queue.ts: QueuedWebhook, loadWebhookQueue, clearWebhookQueue, removeFromWebhookQueue, subscribeWebhookQueue, enqueueWebhook",
     "security-alerts-webhook-validation.ts: WEBHOOK_URL_MAX_LENGTH, WEBHOOK_SECRET_MIN_LENGTH, WEBHOOK_SECRET_MAX_LENGTH, WebhookDraft, WebhookField, WebhookValidationResult",
     "security-alerts-webhook.ts: WEBHOOK_MAX_ATTEMPTS_MIN, WEBHOOK_MAX_ATTEMPTS_MAX, WEBHOOK_MAX_ATTEMPTS_DEFAULT, WEBHOOK_BASE_DELAY_MIN, WEBHOOK_BASE_DELAY_MAX, WEBHOOK_BASE_DELAY_DEFAULT",
-    "security-report-data.ts: SecurityFeature, SecurityDecision, securityFeatures, securityDecisions",
-    "session-expiry.ts: SESSION_EXPIRED_EVENT, isSessionExpiredError, notifySessionExpired"
+    "security-report-data.ts: SecurityFeature, SecurityDecision, securityFeatures, securityDecisions"
    ],
    "docs": [
     "agent-assist-utils.ts: Utilitários puros para Real-Time Agent Assist. Sem efeitos colaterais — fáceis de testar.",
@@ -34674,6 +34887,7 @@
     "src/lib/elevenlabs-stub.ts",
     "src/lib/error-message.ts",
     "src/lib/error-tracking.ts",
+    "src/lib/errorReporter.ts",
     "src/lib/favorite-sync-labels.ts",
     "src/lib/geo-countries.ts",
     "src/lib/health-score.ts",
@@ -34735,18 +34949,17 @@
     "src/lib/__tests__/error-boundaries.test.tsx",
     "src/lib/__tests__/error-message.test.ts",
     "src/lib/__tests__/error-tracking.test.ts",
+    "src/lib/__tests__/errorReporter.test.ts",
     "src/lib/__tests__/executive-dashboard-utils.test.ts",
     "src/lib/__tests__/export-audit-notifications.test.ts",
     "src/lib/__tests__/favorite-sync-labels.test.ts",
-    "src/lib/__tests__/fixes-exhaustive.test.ts",
-    "src/lib/__tests__/guard-edge-numeric.test.ts",
-    "src/lib/__tests__/hash-endpoint.test.ts"
+    "src/lib/__tests__/fixes-exhaustive.test.ts"
    ]
   },
   {
    "module": "src/pages",
-   "files": 155,
-   "lines": 23738,
+   "files": 159,
+   "lines": 24478,
    "tables": [
     "audit_logs",
     "battle_card_triggers",
@@ -34824,6 +35037,7 @@
     "LDAPSync.tsx: LDAPSync"
    ],
    "docs": [
+    "ClientErrors.test.tsx: Etapa 230 (A-097): a tela de erros do cliente lista, filtra e resolve.",
     "SloDashboard.meta.test.tsx: Etapa 170 - o painel admin nao declara meta propria: exibe a que a edge devolve."
    ],
    "deps": [
@@ -34935,7 +35149,7 @@
   {
    "module": "src/routes",
    "files": 4,
-   "lines": 333,
+   "lines": 337,
    "tables": [],
    "exports": [
     "CallHistoryAlias.tsx: CallHistoryAlias",
@@ -35211,8 +35425,8 @@
   },
   {
    "module": "supabase/migrations",
-   "files": 252,
-   "lines": 16104,
+   "files": 253,
+   "lines": 16183,
    "tables": [],
    "exports": [],
    "docs": [],
@@ -35303,8 +35517,8 @@
   },
   {
    "module": "supabase/tests",
-   "files": 13,
-   "lines": 1709,
+   "files": 14,
+   "lines": 1885,
    "tables": [],
    "exports": [],
    "docs": [],
@@ -35312,6 +35526,7 @@
    "imports_modules": [],
    "file_list": [
     "supabase/tests/calling_hours_fail_closed_rls_test.sql",
+    "supabase/tests/client_errors_rls_test.sql",
     "supabase/tests/cron_credentials_rls_test.sql",
     "supabase/tests/deal_pipeline_snapshots_rls_test.sql",
     "supabase/tests/dnc_removal_audit_rls_test.sql",
@@ -35975,6 +36190,17 @@
     ],
     "insert": [
      "supabase/functions/detect-churn-risk/index.ts"
+    ]
+   },
+   "client_errors": {
+    "select": [
+     "src/hooks/useClientErrors.ts"
+    ],
+    "update": [
+     "src/hooks/useClientErrors.ts"
+    ],
+    "insert": [
+     "src/lib/errorReporter.ts"
     ]
    },
    "coaching_assignments": {
@@ -37531,6 +37757,11 @@
     "score_delta",
     "signal_type"
    ],
+   "client_errors": [
+    "id",
+    "occurred_at",
+    "resolved_at"
+   ],
    "coaching_assignments": [
     "agent_name",
     "id",
@@ -37624,6 +37855,7 @@
     "handoff_threshold",
     "id",
     "priority",
+    "resolved_at",
     "sla_breached",
     "sla_first_response_due_at",
     "sla_resolution_due_at",
@@ -40592,6 +40824,11 @@
     "values": "all | short | medium | long"
    },
    {
+    "file": "src/hooks/useClientErrors.ts",
+    "name": "CLIENT_ERRORS_QUERY_KEY",
+    "values": "'client-errors'"
+   },
+   {
     "file": "src/hooks/useConsent.ts",
     "name": "ConsentChannel",
     "values": "voice | sms | whatsapp | email"
@@ -40710,6 +40947,11 @@
     "file": "src/hooks/useRedactionLog.ts",
     "name": "REDACTION_LOG_QUERY_KEY",
     "values": "'redaction-log'"
+   },
+   {
+    "file": "src/hooks/useSLA.ts",
+    "name": "SlaBreachKind",
+    "values": "first_response | resolution | unknown"
    },
    {
     "file": "src/hooks/useSipCall.ts",
@@ -41765,6 +42007,10 @@
    {
     "file": "src/hooks/useChurnRisk.ts",
     "msg": "Falha ao resolver sinal"
+   },
+   {
+    "file": "src/hooks/useClientErrors.ts",
+    "msg": "Nao foi possivel resolver: ${error.message}"
    },
    {
     "file": "src/hooks/useCoachingAssignments.ts",
@@ -43723,6 +43969,14 @@
     "text": "Falhar aqui nao pode impedir o usuario de atender a chamada."
    },
    {
+    "file": "src/hooks/useSLA.ts",
+    "text": "* Classifica o prazo estourado de uma conversa marcada como sla_breached."
+   },
+   {
+    "file": "src/hooks/useSLA.ts",
+    "text": "Marcada como violada mas sem prazo vencido calculável: mantém o rótulo genérico"
+   },
+   {
     "file": "src/hooks/useSecurityDashboard.ts",
     "text": "').order('created_at', { ascending: false }).limit(5);"
    },
@@ -43853,6 +44107,14 @@
    {
     "file": "src/lib/dialer-favorites-order.ts",
     "text": "* Retorna apenas os itens cuja posição mudou em relação ao valor original —"
+   },
+   {
+    "file": "src/lib/errorReporter.ts",
+    "text": "* Só para testes: zera o estado de dedupe/limite. */"
+   },
+   {
+    "file": "src/lib/errorReporter.ts",
+    "text": "* `true` quando o relato deve ser gravado (fora da janela de dedupe e do teto). */"
    },
    {
     "file": "src/lib/favorite-sync-labels.ts",
@@ -51047,6 +51309,71 @@
     "rule": "default now()"
    },
    {
+    "table": "client_errors",
+    "column": "id",
+    "rule": "PK; default gen_random_uuid()"
+   },
+   {
+    "table": "client_errors",
+    "column": "occurred_at",
+    "rule": "default now()"
+   },
+   {
+    "table": "client_errors",
+    "column": "user_id",
+    "rule": "FK → users.id ON DELETE SET NULL"
+   },
+   {
+    "table": "client_errors",
+    "column": "route",
+    "rule": "obrigatório"
+   },
+   {
+    "table": "client_errors",
+    "column": "error_type",
+    "rule": "default 'error'"
+   },
+   {
+    "table": "client_errors",
+    "column": "message",
+    "rule": "obrigatório"
+   },
+   {
+    "table": "client_errors",
+    "column": "resolved_by",
+    "rule": "FK → users.id ON DELETE SET NULL"
+   },
+   {
+    "table": "client_errors",
+    "column": "(tabela)",
+    "rule": "CONSTRAINT client_errors_route_len CHECK (char_length(route) <= 500)"
+   },
+   {
+    "table": "client_errors",
+    "column": "(tabela)",
+    "rule": "CONSTRAINT client_errors_message_len CHECK (char_length(message) BETWEEN 1 AND 1000)"
+   },
+   {
+    "table": "client_errors",
+    "column": "(tabela)",
+    "rule": "CONSTRAINT client_errors_stack_len CHECK (stack IS NULL OR char_length(stack) <= 4000)"
+   },
+   {
+    "table": "client_errors",
+    "column": "(tabela)",
+    "rule": "CONSTRAINT client_errors_user_agent_len CHECK (user_agent IS NULL OR char_length(user_agent) <= 500)"
+   },
+   {
+    "table": "client_errors",
+    "column": "(tabela)",
+    "rule": "CONSTRAINT client_errors_correlation_len CHECK (correlation_id IS NULL OR char_length(correlation_id) <= 100)"
+   },
+   {
+    "table": "client_errors",
+    "column": "(tabela)",
+    "rule": "CONSTRAINT client_errors_type_chk CHECK (error_type IN ('error', 'unhandled-rejection', 'react-component', 'network-error'))"
+   },
+   {
     "table": "geo_access_logs",
     "column": "action",
     "rule": "obrigatório"
@@ -51309,6 +51636,11 @@
     "value": "200"
    },
    {
+    "file": "src/hooks/useClientErrors.ts",
+    "name": "CLIENT_ERRORS_PAGE_SIZE",
+    "value": "25"
+   },
+   {
     "file": "src/hooks/useContacts.ts",
     "name": "CONTACTS_PAGE_SIZE",
     "value": "50"
@@ -51404,6 +51736,11 @@
     "value": "50"
    },
    {
+    "file": "src/hooks/useSLA.ts",
+    "name": "SLA_VIOLATIONS_PAGE_SIZE",
+    "value": "20"
+   },
+   {
     "file": "src/hooks/useSecurityAlertNotifications.ts",
     "name": "ALL_SOURCES",
     "value": "\"__all__\""
@@ -51472,6 +51809,41 @@
     "file": "src/lib/error-tracking.ts",
     "name": "MAX_BUFFER",
     "value": "20"
+   },
+   {
+    "file": "src/lib/errorReporter.ts",
+    "name": "CLIENT_ERROR_MESSAGE_MAX",
+    "value": "1000"
+   },
+   {
+    "file": "src/lib/errorReporter.ts",
+    "name": "CLIENT_ERROR_STACK_MAX",
+    "value": "4000"
+   },
+   {
+    "file": "src/lib/errorReporter.ts",
+    "name": "CLIENT_ERROR_USER_AGENT_MAX",
+    "value": "500"
+   },
+   {
+    "file": "src/lib/errorReporter.ts",
+    "name": "CLIENT_ERROR_CORRELATION_MAX",
+    "value": "100"
+   },
+   {
+    "file": "src/lib/errorReporter.ts",
+    "name": "DEDUPE_WINDOW_MS",
+    "value": "60"
+   },
+   {
+    "file": "src/lib/errorReporter.ts",
+    "name": "RATE_WINDOW_MS",
+    "value": "60"
+   },
+   {
+    "file": "src/lib/errorReporter.ts",
+    "name": "RATE_MAX_PER_WINDOW",
+    "value": "10"
    },
    {
     "file": "src/lib/favorite-sync-labels.ts",
@@ -57776,6 +58148,10 @@
     "line": "staleTime: 5 * 60 * 1000,"
    },
    {
+    "file": "src/hooks/useClientErrors.ts",
+    "line": "const since = new Date(Date.now() - 24 * 60 * 60 * 1000).toISOString();"
+   },
+   {
     "file": "src/hooks/useCriticalAlertNotifications.ts",
     "line": "if (alert.severity !== 'critical') setTimeout(() => notification.close(), 10000);"
    },
@@ -57878,6 +58254,10 @@
    {
     "file": "src/hooks/useSLA.ts",
     "line": "const since = new Date(Date.now() - 7 * 24 * 60 * 60 * 1000).toISOString();"
+   },
+   {
+    "file": "src/hooks/useSLA.ts",
+    "line": "const since = new Date(Date.now() - days * 24 * 60 * 60 * 1000).toISOString();"
    },
    {
     "file": "src/hooks/useScheduledCallbacks.ts",
@@ -59666,6 +60046,38 @@
    {
     "file": "src/hooks/__tests__/pageVisibility.gating.test.tsx",
     "name": "painel de qualidade nao pede select(*) — metrica operacional tem colunas fixas"
+   },
+   {
+    "file": "src/hooks/__tests__/slaBreach.test.ts",
+    "name": "describeSlaBreach"
+   },
+   {
+    "file": "src/hooks/__tests__/slaBreach.test.ts",
+    "name": "sem primeira resposta e prazo vencido: culpa a primeira resposta"
+   },
+   {
+    "file": "src/hooks/__tests__/slaBreach.test.ts",
+    "name": "primeira resposta dentro do prazo mas resolucao atrasada"
+   },
+   {
+    "file": "src/hooks/__tests__/slaBreach.test.ts",
+    "name": "resolucao ainda em aberto conta o atraso contra agora"
+   },
+   {
+    "file": "src/hooks/__tests__/slaBreach.test.ts",
+    "name": "marcada como violada mas sem prazo estourado calculavel nao inventa atraso"
+   },
+   {
+    "file": "src/hooks/__tests__/slaBreach.test.ts",
+    "name": "prazo exatamente cumprido nao conta como atraso"
+   },
+   {
+    "file": "src/hooks/__tests__/slaBreach.test.ts",
+    "name": "formatDelay"
+   },
+   {
+    "file": "src/hooks/__tests__/slaBreach.test.ts",
+    "name": "mostra minutos, horas e dias"
    },
    {
     "file": "src/hooks/__tests__/use-mobile.coverage.test.tsx",
@@ -67012,6 +67424,42 @@
     "name": "error-tracking.ts file exists and has proper exports"
    },
    {
+    "file": "src/lib/__tests__/errorReporter.test.ts",
+    "name": "errorReporter"
+   },
+   {
+    "file": "src/lib/__tests__/errorReporter.test.ts",
+    "name": "nao monta linha sem usuario autenticado"
+   },
+   {
+    "file": "src/lib/__tests__/errorReporter.test.ts",
+    "name": "grava so o pathname da rota (query e hash ficam de fora)"
+   },
+   {
+    "file": "src/lib/__tests__/errorReporter.test.ts",
+    "name": "trunca mensagem e stack nos limites da tabela"
+   },
+   {
+    "file": "src/lib/__tests__/errorReporter.test.ts",
+    "name": "descarta relato com mensagem vazia"
+   },
+   {
+    "file": "src/lib/__tests__/errorReporter.test.ts",
+    "name": "rota invalida cai para o pathname do texto"
+   },
+   {
+    "file": "src/lib/__tests__/errorReporter.test.ts",
+    "name": "dedupe de 60s e teto de 10 por minuto"
+   },
+   {
+    "file": "src/lib/__tests__/errorReporter.test.ts",
+    "name": "persiste o relato capturado pelo error-tracking"
+   },
+   {
+    "file": "src/lib/__tests__/errorReporter.test.ts",
+    "name": "nao persiste sem sessao (anon nao tem policy de insert)"
+   },
+   {
     "file": "src/lib/__tests__/executive-dashboard-utils.test.ts",
     "name": "getPeriodLabel"
    },
@@ -71836,6 +72284,34 @@
     "name": "protege tambem o botao da aba de audio"
    },
    {
+    "file": "src/pages/__tests__/SlaViolations.test.tsx",
+    "name": "SlaViolations"
+   },
+   {
+    "file": "src/pages/__tests__/SlaViolations.test.tsx",
+    "name": "mostra os indicadores do periodo"
+   },
+   {
+    "file": "src/pages/__tests__/SlaViolations.test.tsx",
+    "name": "lista contato, motivo e atraso de cada violacao"
+   },
+   {
+    "file": "src/pages/__tests__/SlaViolations.test.tsx",
+    "name": "mostra vazio quando nao ha violacao"
+   },
+   {
+    "file": "src/pages/__tests__/SlaViolations.test.tsx",
+    "name": "mostra erro com a mensagem real"
+   },
+   {
+    "file": "src/pages/__tests__/SlaViolations.test.tsx",
+    "name": "o botao atualizar refaz a consulta"
+   },
+   {
+    "file": "src/pages/__tests__/SlaViolations.test.tsx",
+    "name": "o filtro de abertas volta para a primeira pagina e pede so abertas"
+   },
+   {
     "file": "src/pages/__tests__/Status.test.tsx",
     "name": "Status — sem medição (E092)"
    },
@@ -71890,6 +72366,30 @@
    {
     "file": "src/pages/__tests__/VideoConference.duploClique.test.tsx",
     "name": "inicia uma unica vez quando o botao de iniciar e tocado duas vezes rapido"
+   },
+   {
+    "file": "src/pages/admin/__tests__/ClientErrors.test.tsx",
+    "name": "pagina Erros do Cliente"
+   },
+   {
+    "file": "src/pages/admin/__tests__/ClientErrors.test.tsx",
+    "name": "mostra os KPIs e a tabela com rota, mensagem e trace"
+   },
+   {
+    "file": "src/pages/admin/__tests__/ClientErrors.test.tsx",
+    "name": "resolve o erro escolhido"
+   },
+   {
+    "file": "src/pages/admin/__tests__/ClientErrors.test.tsx",
+    "name": "estado vazio explica o filtro de nao resolvidos"
+   },
+   {
+    "file": "src/pages/admin/__tests__/ClientErrors.test.tsx",
+    "name": "estado de erro mostra a mensagem e nao quebra a tela"
+   },
+   {
+    "file": "src/pages/admin/__tests__/ClientErrors.test.tsx",
+    "name": "filtro por rota e recarregar chamam o hook"
    },
    {
     "file": "src/pages/admin/__tests__/SloDashboard.meta.test.tsx",
@@ -79385,6 +79885,36 @@
     "using": "public.is_admin_or_supervisor()",
     "check": "",
     "src": "supabase/migrations/20261126120000_deal_pipeline_snapshots.sql"
+   },
+   {
+    "name": "admins_supervisors_read_client_errors",
+    "table": "client_errors",
+    "cmd": "SELECT",
+    "roles": "authenticated",
+    "mode": "permissive",
+    "using": "public.is_admin_or_supervisor()",
+    "check": "",
+    "src": "supabase/migrations/20261126140000_client_errors.sql"
+   },
+   {
+    "name": "authenticated_insert_own_client_errors",
+    "table": "client_errors",
+    "cmd": "INSERT",
+    "roles": "authenticated",
+    "mode": "permissive",
+    "using": "",
+    "check": "(SELECT auth.uid()) = user_id",
+    "src": "supabase/migrations/20261126140000_client_errors.sql"
+   },
+   {
+    "name": "admins_supervisors_resolve_client_errors",
+    "table": "client_errors",
+    "cmd": "UPDATE",
+    "roles": "authenticated",
+    "mode": "permissive",
+    "using": "public.is_admin_or_supervisor()",
+    "check": "public.is_admin_or_supervisor()",
+    "src": "supabase/migrations/20261126140000_client_errors.sql"
    }
   ],
   "db_triggers": [
@@ -84817,6 +85347,19 @@
      "authenticated: is_admin_or_supervisor()"
     ]
    },
+   "client_errors": {
+    "rls": "enabled",
+    "SELECT": [
+     "authenticated: public.is_admin_or_supervisor()"
+    ],
+    "INSERT": [
+     "authenticated: (SELECT auth.uid()) = user_id"
+    ],
+    "UPDATE": [
+     "authenticated: public.is_admin_or_supervisor()"
+    ],
+    "DELETE": []
+   },
    "coaching_assignments": {
     "rls": "enabled",
     "SELECT": [
@@ -86864,6 +87407,7 @@
    "supabase/migrations/20261126100000_edge_function_urls_from_vault.sql",
    "supabase/migrations/20261126101000_revoke_anon_login_rpcs.sql",
    "supabase/migrations/20261126120000_deal_pipeline_snapshots.sql",
+   "supabase/migrations/20261126140000_client_errors.sql",
    "supabase/tests/login_lockout_acl_rls_test.sql",
    "supabase/tests/redaction_log_rls_test.sql",
    "supabase/tests/webhook_secrets_rls_test.sql"
@@ -89091,6 +89635,30 @@
     "objkind": "function",
     "roles": "public, anon, authenticated",
     "src": "supabase/migrations/20261126130000_dnc_removal_audit.sql"
+   },
+   {
+    "kind": "grant",
+    "privs": "select, update",
+    "object": "client_errors",
+    "objkind": "table",
+    "roles": "authenticated",
+    "src": "supabase/migrations/20261126140000_client_errors.sql"
+   },
+   {
+    "kind": "grant",
+    "privs": "insert",
+    "object": "client_errors",
+    "objkind": "table",
+    "roles": "authenticated",
+    "src": "supabase/migrations/20261126140000_client_errors.sql"
+   },
+   {
+    "kind": "grant",
+    "privs": "all",
+    "object": "client_errors",
+    "objkind": "table",
+    "roles": "service_role",
+    "src": "supabase/migrations/20261126140000_client_errors.sql"
    }
   ],
   "guards": [
@@ -89869,6 +90437,7 @@
     "created_at",
     "updated_at"
    ],
+   "client_errors": [],
    "geo_access_logs": [
     "created_at"
    ],
@@ -90816,7 +91385,7 @@
    "`data_lake_exports.status` tem valores ['completed', 'failed', 'pending', 'processing'] mas nenhum mapa de transições foi encontrado no código — a ordem permitida (ex.: pago → cancelado?) não está declarada.",
    "`parked_calls.status` tem valores ['abandoned', 'expired', 'parked', 'retrieved'] mas nenhum mapa de transições foi encontrado no código — a ordem permitida (ex.: pago → cancelado?) não está declarada.",
    "`migration_status.status` é uma coluna de status sem enum/CHECK — os valores válidos e as transições permitidas não estão no banco.",
-   "168/171 tabelas sem `COMMENT ON TABLE` — o significado de negócio não está no schema: `entity_versions`, `schema_migrations`, `migration_rollbacks`, `contacts`, `call_records`, `queue_items`, `agents`, `call_sessions`, `call_transcriptions`, `call_analyses`, `call_summaries`, `call_alerts` …",
+   "168/172 tabelas sem `COMMENT ON TABLE` — o significado de negócio não está no schema: `entity_versions`, `schema_migrations`, `migration_rollbacks`, `contacts`, `call_records`, `queue_items`, `agents`, `call_sessions`, `call_transcriptions`, `call_analyses`, `call_summaries`, `call_alerts` …",
    "Há tabelas usadas no código sem migration no repo — o schema real pode ter sido alterado pelo painel."
   ]
  },
@@ -92319,7 +92888,7 @@
   },
   "src/main.tsx": {
    "path": "src/main.tsx",
-   "lines": 44,
+   "lines": 47,
    "tables": [
     {
      "table": "webhook_flush_metrics",
@@ -95924,7 +96493,7 @@
   },
   "src/components/layout/AppSidebar.tsx": {
    "path": "src/components/layout/AppSidebar.tsx",
-   "lines": 395,
+   "lines": 397,
    "exports": [
     "const sidebarNavItems",
     "function AppSidebar"
@@ -95952,7 +96521,7 @@
   },
   "src/components/layout/CommandPalette.tsx": {
    "path": "src/components/layout/CommandPalette.tsx",
-   "lines": 207,
+   "lines": 209,
    "exports": [
     "function CommandPalette"
    ],
@@ -99920,6 +100489,72 @@
     "useChurnRisk"
    ]
   },
+  "src/hooks/useClientErrors.ts": {
+   "path": "src/hooks/useClientErrors.ts",
+   "lines": 130,
+   "exports": [
+    "const CLIENT_ERRORS_QUERY_KEY",
+    "const CLIENT_ERRORS_COLUMNS",
+    "const CLIENT_ERRORS_PAGE_SIZE",
+    "interface ClientErrorEntry",
+    "const CLIENT_ERROR_TYPE_LABEL",
+    "function clientErrorTypeLabel",
+    "interface ClientErrorsFilter",
+    "interface ClientErrorsResult",
+    "function useClientErrors",
+    "interface ClientErrorStats",
+    "function useClientErrorStats",
+    "function useResolveClientError"
+   ],
+   "tables": [
+    {
+     "table": "client_errors",
+     "op": "select"
+    },
+    {
+     "table": "client_errors",
+     "op": "select"
+    },
+    {
+     "table": "client_errors",
+     "op": "select"
+    },
+    {
+     "table": "client_errors",
+     "op": "update"
+    }
+   ],
+   "table_cols": {
+    "client_errors": [
+     "id",
+     "occurred_at",
+     "resolved_at"
+    ]
+   },
+   "errors": [
+    "Nao foi possivel resolver: ${error.message}"
+   ],
+   "enums": [
+    {
+     "name": "CLIENT_ERRORS_QUERY_KEY",
+     "values": "'client-errors'"
+    }
+   ],
+   "params": [
+    {
+     "name": "CLIENT_ERRORS_PAGE_SIZE",
+     "value": "25"
+    }
+   ],
+   "hooks": [
+    "useClientErrors",
+    "useClientErrorStats",
+    "useResolveClientError"
+   ],
+   "temporal": [
+    "const since = new Date(Date.now() - 24 * 60 * 60 * 1000).toISOString();"
+   ]
+  },
   "src/hooks/useCoaching.ts": {
    "path": "src/hooks/useCoaching.ts",
    "lines": 152,
@@ -103743,13 +104378,22 @@
   },
   "src/hooks/useSLA.ts": {
    "path": "src/hooks/useSLA.ts",
-   "lines": 124,
+   "lines": 268,
    "exports": [
     "interface SlaPolicy",
     "interface SlaComplianceRow",
     "function useSlaPolicies",
     "function useSlaCompliance",
     "function useUpsertSlaPolicy",
+    "interface SlaViolationRow",
+    "interface SlaViolationFilters",
+    "const SLA_VIOLATIONS_PAGE_SIZE",
+    "const SLA_OPEN_STATUSES",
+    "type SlaBreachKind",
+    "function describeSlaBreach",
+    "function formatDelay",
+    "function useSlaViolations",
+    "function useSlaViolationStats",
     "function useEnforceSla"
    ],
    "tables": [
@@ -103764,14 +104408,26 @@
     {
      "table": "sla_policies",
      "op": "select,upsert"
+    },
+    {
+     "table": "conversations",
+     "op": "select"
+    },
+    {
+     "table": "conversations",
+     "op": "select"
     }
    ],
    "table_cols": {
     "conversations": [
      "channel",
      "created_at",
+     "first_response_at",
      "id",
+     "resolved_at",
      "sla_breached",
+     "sla_first_response_due_at",
+     "sla_resolution_due_at",
      "status"
     ]
    },
@@ -103782,14 +104438,33 @@
     "Falha ao executar enforcement de SLA",
     "Falha ao salvar política"
    ],
+   "enums": [
+    {
+     "name": "SlaBreachKind",
+     "values": "first_response | resolution | unknown"
+    }
+   ],
+   "params": [
+    {
+     "name": "SLA_VIOLATIONS_PAGE_SIZE",
+     "value": "20"
+    }
+   ],
+   "rule_comments": [
+    "* Classifica o prazo estourado de uma conversa marcada como sla_breached.",
+    "Marcada como violada mas sem prazo vencido calculável: mantém o rótulo genérico"
+   ],
    "hooks": [
     "useSlaPolicies",
     "useSlaCompliance",
     "useUpsertSlaPolicy",
+    "useSlaViolations",
+    "useSlaViolationStats",
     "useEnforceSla"
    ],
    "temporal": [
-    "const since = new Date(Date.now() - 7 * 24 * 60 * 60 * 1000).toISOString();"
+    "const since = new Date(Date.now() - 7 * 24 * 60 * 60 * 1000).toISOString();",
+    "const since = new Date(Date.now() - days * 24 * 60 * 60 * 1000).toISOString();"
    ],
    "side_effects": [
     "invoke("
@@ -106066,6 +106741,21 @@
     "useVoipAnomalies entrega refetchInterval falso com a aba oculta",
     "App monta GlobalServices dentro da area autenticada, nao acima do roteador",
     "painel de qualidade nao pede select(*) — metrica operacional tem colunas fixas"
+   ]
+  },
+  "src/hooks/__tests__/slaBreach.test.ts": {
+   "path": "src/hooks/__tests__/slaBreach.test.ts",
+   "lines": 87,
+   "is_test": true,
+   "tests": [
+    "describeSlaBreach",
+    "sem primeira resposta e prazo vencido: culpa a primeira resposta",
+    "primeira resposta dentro do prazo mas resolucao atrasada",
+    "resolucao ainda em aberto conta o atraso contra agora",
+    "marcada como violada mas sem prazo estourado calculavel nao inventa atraso",
+    "prazo exatamente cumprido nao conta como atraso",
+    "formatDelay",
+    "mostra minutos, horas e dias"
    ]
   },
   "src/hooks/__tests__/use-mobile.coverage.test.tsx": {
@@ -109209,7 +109899,7 @@
   },
   "src/integrations/supabase/types.ts": {
    "path": "src/integrations/supabase/types.ts",
-   "lines": 8197,
+   "lines": 8239,
    "exports": [
     "type Json",
     "type Database",
@@ -109579,6 +110269,8 @@
    "path": "src/lib/error-tracking.ts",
    "lines": 78,
    "exports": [
+    "interface ErrorReport",
+    "function setErrorSink",
     "function reportError",
     "function initErrorTracking",
     "function getErrorReports"
@@ -109606,7 +110298,68 @@
      "kind": "escreve"
     }
    ],
-   "doc": "Global error tracking — captures unhandled errors and promise rejections. Logs to console in dev; can be extended to forward to a logging endpoint."
+   "doc": "Captura erros não tratados e rejeições; um sink opcional os persiste (etapa 230)."
+  },
+  "src/lib/errorReporter.ts": {
+   "path": "src/lib/errorReporter.ts",
+   "lines": 138,
+   "exports": [
+    "const CLIENT_ERROR_MESSAGE_MAX",
+    "const CLIENT_ERROR_STACK_MAX",
+    "const CLIENT_ERROR_ROUTE_MAX",
+    "const CLIENT_ERROR_USER_AGENT_MAX",
+    "const CLIENT_ERROR_CORRELATION_MAX",
+    "const DEDUPE_WINDOW_MS",
+    "const RATE_WINDOW_MS",
+    "const RATE_MAX_PER_WINDOW",
+    "interface ClientErrorInsert",
+    "function resetErrorReporterState",
+    "function truncate",
+    "function shouldCapture",
+    "function routeFromUrl",
+    "function buildClientErrorRow",
+    "function installErrorReporter"
+   ],
+   "tables": [
+    {
+     "table": "client_errors",
+     "op": "insert"
+    }
+   ],
+   "params": [
+    {
+     "name": "CLIENT_ERROR_MESSAGE_MAX",
+     "value": "1000"
+    },
+    {
+     "name": "CLIENT_ERROR_STACK_MAX",
+     "value": "4000"
+    },
+    {
+     "name": "CLIENT_ERROR_USER_AGENT_MAX",
+     "value": "500"
+    },
+    {
+     "name": "CLIENT_ERROR_CORRELATION_MAX",
+     "value": "100"
+    },
+    {
+     "name": "DEDUPE_WINDOW_MS",
+     "value": "60"
+    },
+    {
+     "name": "RATE_WINDOW_MS",
+     "value": "60"
+    },
+    {
+     "name": "RATE_MAX_PER_WINDOW",
+     "value": "10"
+    }
+   ],
+   "rule_comments": [
+    "* Só para testes: zera o estado de dedupe/limite. */",
+    "* `true` quando o relato deve ser gravado (fora da janela de dedupe e do teto). */"
+   ]
   },
   "src/lib/favorite-sync-labels.ts": {
    "path": "src/lib/favorite-sync-labels.ts",
@@ -111341,6 +112094,23 @@
     "oldest errors are removed when buffer is full",
     "Error Tracking: File structure",
     "error-tracking.ts file exists and has proper exports"
+   ]
+  },
+  "src/lib/__tests__/errorReporter.test.ts": {
+   "path": "src/lib/__tests__/errorReporter.test.ts",
+   "lines": 111,
+   "is_test": true,
+   "doc": "Etapa 230 (A-097) - reporter de erros do navegador.",
+   "tests": [
+    "errorReporter",
+    "nao monta linha sem usuario autenticado",
+    "grava so o pathname da rota (query e hash ficam de fora)",
+    "trunca mensagem e stack nos limites da tabela",
+    "descarta relato com mensagem vazia",
+    "rota invalida cai para o pathname do texto",
+    "dedupe de 60s e teto de 10 por minuto",
+    "persiste o relato capturado pelo error-tracking",
+    "nao persiste sem sessao (anon nao tem policy de insert)"
    ]
   },
   "src/lib/__tests__/executive-dashboard-utils.test.ts": {
@@ -115759,6 +116529,13 @@
     "function Skills"
    ]
   },
+  "src/pages/SlaViolations.tsx": {
+   "path": "src/pages/SlaViolations.tsx",
+   "lines": 260,
+   "exports": [
+    "function SlaViolations"
+   ]
+  },
   "src/pages/Status.tsx": {
    "path": "src/pages/Status.tsx",
    "lines": 237,
@@ -116445,6 +117222,20 @@
     "protege tambem o botao da aba de audio"
    ]
   },
+  "src/pages/__tests__/SlaViolations.test.tsx": {
+   "path": "src/pages/__tests__/SlaViolations.test.tsx",
+   "lines": 140,
+   "is_test": true,
+   "tests": [
+    "SlaViolations",
+    "mostra os indicadores do periodo",
+    "lista contato, motivo e atraso de cada violacao",
+    "mostra vazio quando nao ha violacao",
+    "mostra erro com a mensagem real",
+    "o botao atualizar refaz a consulta",
+    "o filtro de abertas volta para a primeira pagina e pede so abertas"
+   ]
+  },
   "src/pages/__tests__/Status.test.tsx": {
    "path": "src/pages/__tests__/Status.test.tsx",
    "lines": 61,
@@ -116485,6 +117276,13 @@
     "VideoConference - duplo clique (etapa 218)",
     "cria uma unica reuniao quando o botao e clicado duas vezes rapido",
     "inicia uma unica vez quando o botao de iniciar e tocado duas vezes rapido"
+   ]
+  },
+  "src/pages/admin/ClientErrors.tsx": {
+   "path": "src/pages/admin/ClientErrors.tsx",
+   "lines": 218,
+   "exports": [
+    "function ClientErrors"
    ]
   },
   "src/pages/admin/DataExport.tsx": {
@@ -116723,6 +117521,20 @@
    "lines": 159,
    "exports": [
     "function WebhookHealth"
+   ]
+  },
+  "src/pages/admin/__tests__/ClientErrors.test.tsx": {
+   "path": "src/pages/admin/__tests__/ClientErrors.test.tsx",
+   "lines": 122,
+   "is_test": true,
+   "doc": "Etapa 230 (A-097): a tela de erros do cliente lista, filtra e resolve.",
+   "tests": [
+    "pagina Erros do Cliente",
+    "mostra os KPIs e a tabela com rota, mensagem e trace",
+    "resolve o erro escolhido",
+    "estado vazio explica o filtro de nao resolvidos",
+    "estado de erro mostra a mensagem e nao quebra a tela",
+    "filtro por rota e recarregar chamam o hook"
    ]
   },
   "src/pages/admin/__tests__/SloDashboard.meta.test.tsx": {
@@ -117112,7 +117924,7 @@
   },
   "src/routes/protectedRoutes.tsx": {
    "path": "src/routes/protectedRoutes.tsx",
-   "lines": 216,
+   "lines": 220,
    "exports": [
     "interface RouteConfig",
     "const protectedRoutes",
@@ -126122,9 +126934,19 @@
    "path": "supabase/migrations/20261126130000_dnc_removal_audit.sql",
    "lines": 52
   },
+  "supabase/migrations/20261126140000_client_errors.sql": {
+   "path": "supabase/migrations/20261126140000_client_errors.sql",
+   "lines": 79,
+   "uses_service_role": true
+  },
   "supabase/tests/calling_hours_fail_closed_rls_test.sql": {
    "path": "supabase/tests/calling_hours_fail_closed_rls_test.sql",
    "lines": 50,
+   "is_test": true
+  },
+  "supabase/tests/client_errors_rls_test.sql": {
+   "path": "supabase/tests/client_errors_rls_test.sql",
+   "lines": 176,
    "is_test": true
   },
   "supabase/tests/cron_credentials_rls_test.sql": {
@@ -126374,10 +127196,49 @@
   }
  },
  "git": {
-  "sha": "31ef7782f6fcd79bed1112c7e1ebdb721a161ee1",
+  "sha": "36baa4a5fa4a0324e71ab1cf022ade207bfe44b6",
   "branch": "main",
   "remote": "https://github.com/adm01-debug/Hello_V3",
   "commits": [
+   {
+    "sha": "36baa4a",
+    "date": "2026-11-26",
+    "author": "adm01-debug",
+    "subject": "feat: tela de violacoes de SLA com atraso e filtros (etapa 179) (#352)",
+    "files": [
+     "docs/qa/05-PROGRESSO.md",
+     "src/components/layout/AppSidebar.tsx",
+     "src/components/layout/CommandPalette.tsx",
+     "src/hooks/__tests__/slaBreach.test.ts",
+     "src/hooks/useSLA.ts",
+     "src/pages/SlaViolations.tsx",
+     "src/pages/__tests__/SlaViolations.test.tsx",
+     "src/routes/protectedRoutes.tsx"
+    ]
+   },
+   {
+    "sha": "5c4337b",
+    "date": "2026-11-26",
+    "author": "adm01-debug",
+    "subject": "feat: registra os erros do navegador em client_errors com tela admin (etapa 230) (#351)",
+    "files": [
+     "docs/qa/03-ACHADOS.md",
+     "docs/qa/05-PROGRESSO.md",
+     "src/components/layout/AppSidebar.tsx",
+     "src/components/layout/CommandPalette.tsx",
+     "src/hooks/useClientErrors.ts",
+     "src/integrations/supabase/types.ts",
+     "src/lib/__tests__/errorReporter.test.ts",
+     "src/lib/error-tracking.ts",
+     "src/lib/errorReporter.ts",
+     "src/main.tsx",
+     "src/pages/admin/ClientErrors.tsx",
+     "src/pages/admin/__tests__/ClientErrors.test.tsx",
+     "src/routes/protectedRoutes.tsx",
+     "supabase/migrations/20261126140000_client_errors.sql",
+     "supabase/tests/client_errors_rls_test.sql"
+    ]
+   },
    {
     "sha": "31ef778",
     "date": "2026-11-26",
@@ -126772,43 +127633,40 @@
      "src/components/calls/__tests__/ActiveCallBar.espera.test.tsx",
      "src/components/calls/__tests__/UnifiedSoftphone.falhas.test.tsx"
     ]
-   },
-   {
-    "sha": "ba31d8b",
-    "date": "2026-11-25",
-    "author": "adm01-debug",
-    "subject": "fix: espera da chamada agora grava hold_events (#321)",
-    "files": [
-     "src/components/calls/ActiveCallBar.tsx",
-     "src/components/calls/__tests__/ActiveCallBar.espera.test.tsx"
-    ]
-   },
-   {
-    "sha": "227252f",
-    "date": "2026-11-25",
-    "author": "adm01-debug",
-    "subject": "feat: alerta semanal da fila de migrations (#320)",
-    "files": [
-     ".github/workflows/migrations.yml"
-    ]
    }
   ],
   "hot_files": [
    [
     "docs/qa/05-PROGRESSO.md",
-    14
+    16
    ],
    [
     "docs/qa/03-ACHADOS.md",
-    6
+    7
+   ],
+   [
+    "src/integrations/supabase/types.ts",
+    3
    ],
    [
     "src/components/calls/ActiveCallBar.tsx",
-    4
+    3
    ],
    [
-    "src/components/calls/__tests__/ActiveCallBar.espera.test.tsx",
-    3
+    "src/components/layout/AppSidebar.tsx",
+    2
+   ],
+   [
+    "src/components/layout/CommandPalette.tsx",
+    2
+   ],
+   [
+    "src/hooks/useSLA.ts",
+    2
+   ],
+   [
+    "src/routes/protectedRoutes.tsx",
+    2
    ],
    [
     "src/hooks/__tests__/useDNCCompliance.coverage.test.tsx",
@@ -126816,10 +127674,6 @@
    ],
    [
     "src/hooks/useDNCCompliance.ts",
-    2
-   ],
-   [
-    "src/integrations/supabase/types.ts",
     2
    ],
    [
@@ -126855,24 +127709,12 @@
     2
    ],
    [
+    "src/components/calls/__tests__/ActiveCallBar.espera.test.tsx",
+    2
+   ],
+   [
     "src/hooks/__tests__/useCadences.crud.test.tsx",
     2
-   ],
-   [
-    "src/hooks/useCadences.ts",
-    2
-   ],
-   [
-    "src/pages/Cadences.tsx",
-    2
-   ],
-   [
-    "src/pages/__tests__/Cadences.crud.test.tsx",
-    2
-   ],
-   [
-    "src/components/compliance/DNCListManager.tsx",
-    1
    ]
   ]
  }

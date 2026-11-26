@@ -3,8 +3,8 @@
  "format_version": 2,
  "stack": {
   "linguagens": [
-   "TypeScript (1340)",
-   "SQL (267)",
+   "TypeScript (1348)",
+   "SQL (269)",
    "Markdown (121)",
    "JavaScript (31)",
    "JSON (16)",
@@ -717,6 +717,10 @@
     "arquivos": 1
    },
    {
+    "host": "x.test",
+    "arquivos": 1
+   },
+   {
     "host": "youtube.com",
     "arquivos": 1
    }
@@ -955,6 +959,7 @@
    "/",
    "/*",
    "/accounts",
+   "/admin/client-errors",
    "/admin/data-export",
    "/admin/database-health",
    "/admin/extensions",
@@ -1044,6 +1049,7 @@
    "/shift-swap-suggestions",
    "/skills",
    "/sla-policies",
+   "/sla-violations",
    "/status",
    "/success-plans",
    "/toll-free-numbers",

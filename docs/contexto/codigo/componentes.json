@@ -1,7 +1,7 @@
 {
  "aviso": "GERADO AUTOMATICAMENTE por scripts/ai-context/gerar.mjs — não editar à mão; será sobrescrito.",
  "format_version": 2,
- "total": 451,
+ "total": 453,
  "orfaos": 13,
  "nomes_duplicados": {
   "KpiCards": [
@@ -2651,7 +2651,7 @@
     "AppSidebar"
    ],
    "export_default": null,
-   "linhas": 395,
+   "linhas": 397,
    "dominio": "components/layout",
    "hooks_locais": [
     "useAuthContext",
@@ -2669,7 +2669,7 @@
     "CommandPalette"
    ],
    "export_default": null,
-   "linhas": 207,
+   "linhas": 209,
    "dominio": "components/layout",
    "hooks_locais": [
     "useTheme"
@@ -2704,7 +2704,7 @@
    "hooks_locais": [],
    "tabelas": [],
    "edges": [],
-   "usado_por": 18,
+   "usado_por": 19,
    "orfao": false
   },
   {
@@ -2718,7 +2718,7 @@
    "hooks_locais": [],
    "tabelas": [],
    "edges": [],
-   "usado_por": 23,
+   "usado_por": 24,
    "orfao": false
   },
   {
@@ -4107,7 +4107,7 @@
    "hooks_locais": [],
    "tabelas": [],
    "edges": [],
-   "usado_por": 202,
+   "usado_por": 204,
    "orfao": false
   },
   {
@@ -4157,7 +4157,7 @@
    "hooks_locais": [],
    "tabelas": [],
    "edges": [],
-   "usado_por": 248,
+   "usado_por": 250,
    "orfao": false
   },
   {
@@ -4192,7 +4192,7 @@
    "hooks_locais": [],
    "tabelas": [],
    "edges": [],
-   "usado_por": 236,
+   "usado_por": 238,
    "orfao": false
   },
   {
@@ -4390,7 +4390,7 @@
    "hooks_locais": [],
    "tabelas": [],
    "edges": [],
-   "usado_por": 23,
+   "usado_por": 24,
    "orfao": false
   },
   {
@@ -4460,7 +4460,7 @@
    "hooks_locais": [],
    "tabelas": [],
    "edges": [],
-   "usado_por": 96,
+   "usado_por": 97,
    "orfao": false
   },
   {
@@ -4493,7 +4493,7 @@
    "hooks_locais": [],
    "tabelas": [],
    "edges": [],
-   "usado_por": 71,
+   "usado_por": 73,
    "orfao": false
   },
   {
@@ -4677,7 +4677,7 @@
    "hooks_locais": [],
    "tabelas": [],
    "edges": [],
-   "usado_por": 71,
+   "usado_por": 72,
    "orfao": false
   },
   {
@@ -4793,7 +4793,7 @@
    "hooks_locais": [],
    "tabelas": [],
    "edges": [],
-   "usado_por": 61,
+   "usado_por": 62,
    "orfao": false
   },
   {
@@ -4835,7 +4835,7 @@
    "hooks_locais": [],
    "tabelas": [],
    "edges": [],
-   "usado_por": 29,
+   "usado_por": 31,
    "orfao": false
   },
   {
@@ -4856,7 +4856,7 @@
    "hooks_locais": [],
    "tabelas": [],
    "edges": [],
-   "usado_por": 29,
+   "usado_por": 31,
    "orfao": false
   },
   {
@@ -5207,6 +5207,25 @@
    "tabelas": [],
    "edges": [],
    "usado_por": 2,
+   "orfao": false
+  },
+  {
+   "arquivo": "src/pages/admin/ClientErrors.tsx",
+   "exports": [
+    "ClientErrors"
+   ],
+   "export_default": "ClientErrors",
+   "linhas": 218,
+   "dominio": "pages/admin",
+   "hooks_locais": [
+    "useClientErrorStats",
+    "useClientErrors",
+    "usePageTitle",
+    "useResolveClientError"
+   ],
+   "tabelas": [],
+   "edges": [],
+   "usado_por": 1,
    "orfao": false
   },
   {
@@ -7070,6 +7089,24 @@
     "useSlaCompliance",
     "useSlaPolicies",
     "useUpsertSlaPolicy"
+   ],
+   "tabelas": [],
+   "edges": [],
+   "usado_por": 1,
+   "orfao": false
+  },
+  {
+   "arquivo": "src/pages/SlaViolations.tsx",
+   "exports": [
+    "SlaViolations"
+   ],
+   "export_default": "SlaViolations",
+   "linhas": 260,
+   "dominio": "pages",
+   "hooks_locais": [
+    "usePageTitle",
+    "useSlaViolationStats",
+    "useSlaViolations"
    ],
    "tabelas": [],
    "edges": [],

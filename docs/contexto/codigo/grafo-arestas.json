@@ -2428,6 +2428,9 @@
    "src/integrations/supabase/client.ts",
    "src/lib/logger.ts"
   ],
+  "src/hooks/useClientErrors.ts": [
+   "src/integrations/supabase/client.ts"
+  ],
   "src/hooks/useCoaching.ts": [
    "src/integrations/supabase/client.ts",
    "src/lib/logger.ts"
@@ -3068,6 +3071,11 @@
   "src/lib/elevenlabs-stub.ts": [
    "src/lib/logger.ts"
   ],
+  "src/lib/errorReporter.ts": [
+   "src/integrations/supabase/client.ts",
+   "src/lib/error-tracking.ts",
+   "src/lib/tracing.ts"
+  ],
   "src/lib/holdReminderSounds.ts": [
    "src/lib/safe-number.ts"
   ],
@@ -3206,6 +3214,7 @@
    "src/index.css",
    "src/integrations/supabase/client.ts",
    "src/lib/error-tracking.ts",
+   "src/lib/errorReporter.ts",
    "src/lib/logger.ts",
    "src/lib/web-vitals.ts"
   ],
@@ -4219,6 +4228,21 @@
    "src/hooks/usePageTitle.ts",
    "src/hooks/useSkills.ts"
   ],
+  "src/pages/SlaViolations.tsx": [
+   "src/components/layout/NeonPageHeader.tsx",
+   "src/components/layout/NeonPageLayout.tsx",
+   "src/components/ui/badge.tsx",
+   "src/components/ui/button.tsx",
+   "src/components/ui/card.tsx",
+   "src/components/ui/empty-state.tsx",
+   "src/components/ui/label.tsx",
+   "src/components/ui/select.tsx",
+   "src/components/ui/switch.tsx",
+   "src/components/ui/table.tsx",
+   "src/hooks/usePageTitle.ts",
+   "src/hooks/useSLA.ts",
+   "src/lib/safe-date.ts"
+  ],
   "src/pages/Status.tsx": [
    "src/components/ui/badge.tsx",
    "src/components/ui/card.tsx",
@@ -4352,6 +4376,18 @@
    "src/integrations/supabase/client.ts",
    "src/lib/safe-date.ts",
    "src/lib/utils.ts"
+  ],
+  "src/pages/admin/ClientErrors.tsx": [
+   "src/components/ui/badge.tsx",
+   "src/components/ui/button.tsx",
+   "src/components/ui/card.tsx",
+   "src/components/ui/input.tsx",
+   "src/components/ui/label.tsx",
+   "src/components/ui/skeleton.tsx",
+   "src/components/ui/switch.tsx",
+   "src/components/ui/table.tsx",
+   "src/hooks/useClientErrors.ts",
+   "src/hooks/usePageTitle.ts"
   ],
   "src/pages/admin/DataExport.tsx": [
    "src/components/layout/NeonPageHeader.tsx",
@@ -4690,6 +4726,7 @@
    "src/pages/Settings.tsx",
    "src/pages/ShiftSwapSuggestions.tsx",
    "src/pages/Skills.tsx",
+   "src/pages/SlaViolations.tsx",
    "src/pages/SuccessPlans.tsx",
    "src/pages/TollFreeNumbers.tsx",
    "src/pages/TopicDetection.tsx",
@@ -4700,6 +4737,7 @@
    "src/pages/VirtualFax.tsx",
    "src/pages/VoiceSecurity.tsx",
    "src/pages/Voicemail.tsx",
+   "src/pages/admin/ClientErrors.tsx",
    "src/pages/admin/DataExport.tsx",
    "src/pages/admin/DatabaseHealth.tsx",
    "src/pages/admin/ExtensionsAdmin.tsx",

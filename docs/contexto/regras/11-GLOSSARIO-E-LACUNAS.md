@@ -1,6 +1,6 @@
 # 11 · GLOSSÁRIO, DADOS DE REFERÊNCIA E LACUNAS
 
-> Gerado automaticamente por AI Context Sync v1.3.2 · commit `31ef7782f6` · branch `main` · 2026-11-26 12:24 UTC
+> Gerado automaticamente por AI Context Sync v1.3.2 · commit `36baa4a5fa` · branch `main` · 2026-11-26 13:20 UTC
 > Não edite à mão — regras humanas vão em `manual/`.
 
 ## Glossário do domínio (entidades do sistema)
@@ -53,6 +53,7 @@
 | `calling_hours_config` | _(sem COMMENT ON TABLE — significado não documentado)_ | 15 colunas | migration |
 | `chat_sessions` | _(sem COMMENT ON TABLE — significado não documentado)_ | 13 colunas | migration |
 | `churn_risk_signals` | _(sem COMMENT ON TABLE — significado não documentado)_ | 13 colunas | migration |
+| `client_errors` | Erros nao tratados do navegador (etapa 230 / A-097). Alimentada por src/lib/errorReporter.ts, lida em /admin/client-errors. | 11 colunas | migration |
 | `coaching_assignments` | _(sem COMMENT ON TABLE — significado não documentado)_ | 15 colunas | migration |
 | `coaching_recommendations` | _(sem COMMENT ON TABLE — significado não documentado)_ | 12 colunas | migration |
 | `coaching_timestamps` | _(sem COMMENT ON TABLE — significado não documentado)_ | 9 colunas | migration |
@@ -201,6 +202,7 @@
 | `DateRangePreset` (TS) | all \| today \| week \| month \| custom |  | `src/hooks/useCallHistory.ts` |
 | `SentimentFilter` (TS) | all \| positive \| neutral \| negative |  | `src/hooks/useCallHistory.ts` |
 | `DurationFilter` (TS) | all \| short \| medium \| long |  | `src/hooks/useCallHistory.ts` |
+| `CLIENT_ERRORS_QUERY_KEY` (TS) | 'client-errors' |  | `src/hooks/useClientErrors.ts` |
 | `ConsentChannel` (TS) | voice \| sms \| whatsapp \| email |  | `src/hooks/useConsent.ts` |
 | `ConsentType` (TS) | marketing \| transactional \| recording \| data_processing |  | `src/hooks/useConsent.ts` |
 | `ConversationChannel` (TS) | voice \| whatsapp \| email \| chat \| sms |  | `src/hooks/useConversations.ts` |
@@ -225,6 +227,7 @@
 | `ConflictPeriod` (TS) | 24h \| 7d \| 30d |  | `src/hooks/useOptimisticLockConflicts.ts` |
 | `RedactionStatusTone` (TS) | success \| neutral \| danger |  | `src/hooks/useRedactionLog.ts` |
 | `REDACTION_LOG_QUERY_KEY` (TS) | 'redaction-log' |  | `src/hooks/useRedactionLog.ts` |
+| `SlaBreachKind` (TS) | first_response \| resolution \| unknown |  | `src/hooks/useSLA.ts` |
 | `SipStatus` (TS) | disconnected \| connecting \| registered \| calling \| ringing \| active \| error |  | `src/hooks/useSipCall.ts` |
 | `AnomalyKind` (TS) | spike \| drift \| outage |  | `src/hooks/useVoipAnomalies.ts` |
 | `AnomalyMetric` (TS) | mos \| jitter \| volume |  | `src/hooks/useVoipAnomalies.ts` |
@@ -443,7 +446,7 @@
 - `data_lake_exports.status` tem valores ['completed', 'failed', 'pending', 'processing'] mas nenhum mapa de transições foi encontrado no código — a ordem permitida (ex.: pago → cancelado?) não está declarada.
 - `parked_calls.status` tem valores ['abandoned', 'expired', 'parked', 'retrieved'] mas nenhum mapa de transições foi encontrado no código — a ordem permitida (ex.: pago → cancelado?) não está declarada.
 - `migration_status.status` é uma coluna de status sem enum/CHECK — os valores válidos e as transições permitidas não estão no banco.
-- 168/171 tabelas sem `COMMENT ON TABLE` — o significado de negócio não está no schema: `entity_versions`, `schema_migrations`, `migration_rollbacks`, `contacts`, `call_records`, `queue_items`, `agents`, `call_sessions`, `call_transcriptions`, `call_analyses`, `call_summaries`, `call_alerts` …
+- 168/172 tabelas sem `COMMENT ON TABLE` — o significado de negócio não está no schema: `entity_versions`, `schema_migrations`, `migration_rollbacks`, `contacts`, `call_records`, `queue_items`, `agents`, `call_sessions`, `call_transcriptions`, `call_analyses`, `call_summaries`, `call_alerts` …
 - Há tabelas usadas no código sem migration no repo — o schema real pode ter sido alterado pelo painel.
 
 ## Regras manuais presentes

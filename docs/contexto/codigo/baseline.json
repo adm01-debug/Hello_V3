@@ -2,11 +2,21 @@
  "aviso": "GERADO AUTOMATICAMENTE por scripts/ai-context/gerar.mjs — não editar à mão; será sobrescrito.",
  "format_version": 2,
  "git": {
-  "commit": "31ef7782f6fcd79bed1112c7e1ebdb721a161ee1",
+  "commit": "36baa4a5fa4a0324e71ab1cf022ade207bfe44b6",
   "branch": "main",
-  "data_commit": "2026-11-26T09:24:26-03:00",
+  "data_commit": "2026-11-26T10:18:35-03:00",
   "remote": "https://github.com/adm01-debug/Hello_V3",
   "ultimos_commits": [
+   {
+    "sha": "36baa4a",
+    "data": "2026-11-26",
+    "assunto": "feat: tela de violacoes de SLA com atraso e filtros (etapa 179) (#352)"
+   },
+   {
+    "sha": "5c4337b",
+    "data": "2026-11-26",
+    "assunto": "feat: registra os erros do navegador em client_errors com tela admin (etapa 230) (#351)"
+   },
    {
     "sha": "31ef778",
     "data": "2026-11-26",
@@ -121,19 +131,9 @@
     "sha": "f214b17",
     "data": "2026-11-25",
     "assunto": "feat: verifica voz ao vivo na chamada e remove resumo de reuniao duplicado (etapas 154,155) (#327)"
-   },
-   {
-    "sha": "0fc57cd",
-    "data": "2026-11-25",
-    "assunto": "feat: liga enforcement de SLA, violacoes e registro de leitura da base (#326)"
-   },
-   {
-    "sha": "abcba36",
-    "data": "2026-11-25",
-    "assunto": "feat: inscricao e acompanhamento de contatos na cadencia (#325)"
    }
   ],
-  "arquivos_mudados_7d": 2369,
+  "arquivos_mudados_7d": 2379,
   "pastas_mais_mudadas_30d": [
    {
     "pasta": "src/hooks/__tests__",
@@ -145,7 +145,7 @@
    },
    {
     "pasta": "docs/qa/05-PROGRESSO.md",
-    "mudancas": 146
+    "mudancas": 148
    },
    {
     "pasta": "covout/lcov-report/lib",
@@ -157,7 +157,7 @@
    },
    {
     "pasta": "src/lib/__tests__",
-    "mudancas": 96
+    "mudancas": 95
    },
    {
     "pasta": "src/components/ui",
@@ -172,23 +172,23 @@
     "mudancas": 37
    },
    {
+    "pasta": "src/components/layout",
+    "mudancas": 37
+   },
+   {
     "pasta": "covout/lib/security",
     "mudancas": 36
    },
    {
-    "pasta": "src/components/layout",
+    "pasta": "src/pages/admin",
+    "mudancas": 34
+   },
+   {
+    "pasta": "src/pages/__tests__",
     "mudancas": 33
    },
    {
     "pasta": "src/components/admin",
-    "mudancas": 32
-   },
-   {
-    "pasta": "src/pages/__tests__",
-    "mudancas": 32
-   },
-   {
-    "pasta": "src/pages/admin",
     "mudancas": 32
    },
    {
@@ -199,7 +199,7 @@
   "arquivos_mais_mudados_90d": [
    {
     "arquivo": "docs/qa/05-PROGRESSO.md",
-    "mudancas": 146
+    "mudancas": 148
    },
    {
     "arquivo": "docs/estado/funcionalidades-planejadas.md",
@@ -210,11 +210,15 @@
     "mudancas": 13
    },
    {
+    "arquivo": "src/components/layout/AppSidebar.tsx",
+    "mudancas": 13
+   },
+   {
     "arquivo": "src/hooks/useMultiChannelCall.ts",
     "mudancas": 12
    },
    {
-    "arquivo": "src/components/layout/AppSidebar.tsx",
+    "arquivo": "src/components/layout/CommandPalette.tsx",
     "mudancas": 11
    },
    {
@@ -230,7 +234,7 @@
     "mudancas": 9
    },
    {
-    "arquivo": "src/components/layout/CommandPalette.tsx",
+    "arquivo": "src/routes/protectedRoutes.tsx",
     "mudancas": 9
    },
    {
@@ -246,6 +250,10 @@
     "mudancas": 8
    },
    {
+    "arquivo": "docs/qa/03-ACHADOS.md",
+    "mudancas": 8
+   },
+   {
     "arquivo": "src/pages/PhoneDialer.tsx",
     "mudancas": 8
    },
@@ -255,10 +263,6 @@
    },
    {
     "arquivo": "docs/edge-functions/README.md",
-    "mudancas": 7
-   },
-   {
-    "arquivo": "docs/qa/03-ACHADOS.md",
     "mudancas": 7
    },
    {
@@ -275,10 +279,6 @@
    },
    {
     "arquivo": "src/pages/Calls.tsx",
-    "mudancas": 7
-   },
-   {
-    "arquivo": "src/routes/protectedRoutes.tsx",
     "mudancas": 7
    },
    {
@@ -310,21 +310,21 @@
   ]
  },
  "contagens": {
-  "arquivos_total": 1800,
-  "arquivos_codigo": 1375,
-  "linhas_codigo": 183210,
-  "rotas": 106,
+  "arquivos_total": 1810,
+  "arquivos_codigo": 1383,
+  "linhas_codigo": 184613,
+  "rotas": 108,
   "rotas_http_backend": 11,
   "vistas_por_id": 0,
-  "itens_menu": 96,
+  "itens_menu": 98,
   "modulos": 83,
-  "componentes": 451,
-  "hooks": 200,
+  "componentes": 453,
+  "hooks": 201,
   "edge_functions": 99,
-  "tabelas": 171,
-  "migrations": 252,
+  "tabelas": 172,
+  "migrations": 253,
   "cron_jobs": 12,
-  "testes": 437,
+  "testes": 442,
   "workflows": 5,
   "scripts": 36,
   "docs_md": 121
@@ -480,7 +480,7 @@
   },
   "src/components": {
    "arquivos": 384,
-   "linhas": 45488
+   "linhas": 45492
   },
   "src/contexts": {
    "arquivos": 5,
@@ -491,28 +491,28 @@
    "linhas": 312
   },
   "src/hooks": {
-   "arquivos": 353,
-   "linhas": 44984
+   "arquivos": 355,
+   "linhas": 45345
   },
   "src/integrations": {
    "arquivos": 3,
-   "linhas": 8260
+   "linhas": 8302
   },
   "src/lib": {
-   "arquivos": 182,
-   "linhas": 21930
+   "arquivos": 184,
+   "linhas": 22179
   },
   "src/main.tsx": {
    "arquivos": 1,
-   "linhas": 44
+   "linhas": 47
   },
   "src/pages": {
-   "arquivos": 155,
-   "linhas": 23738
+   "arquivos": 159,
+   "linhas": 24478
   },
   "src/routes": {
    "arquivos": 4,
-   "linhas": 333
+   "linhas": 337
   },
   "src/test": {
    "arquivos": 2,
@@ -542,7 +542,7 @@
  "maiores_arquivos": [
   {
    "arquivo": "src/integrations/supabase/types.ts",
-   "linhas": 8197
+   "linhas": 8239
   },
   {
    "arquivo": "scripts/regras_negocio/generate.py",
@@ -585,16 +585,16 @@
    "linhas": 398
   },
   {
+   "arquivo": "src/components/layout/AppSidebar.tsx",
+   "linhas": 397
+  },
+  {
    "arquivo": "src/components/queues/QueueFormDialog.tsx",
    "linhas": 396
   },
   {
    "arquivo": "src/hooks/usePredictiveDialer.ts",
    "linhas": 396
-  },
-  {
-   "arquivo": "src/components/layout/AppSidebar.tsx",
-   "linhas": 395
   },
   {
    "arquivo": "src/pages/marketing/Landing.tsx",

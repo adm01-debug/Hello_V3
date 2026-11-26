@@ -1,28 +1,28 @@
 {
  "aviso": "GERADO AUTOMATICAMENTE por scripts/ai-context/gerar.mjs — não editar à mão; será sobrescrito.",
  "format_version": 2,
- "nos": 951,
- "arestas": 3781,
+ "nos": 955,
+ "arestas": 3811,
  "hubs": [
   {
    "arquivo": "src/integrations/supabase/client.ts",
-   "importado_por": 275
+   "importado_por": 277
   },
   {
    "arquivo": "src/components/ui/button.tsx",
-   "importado_por": 248
+   "importado_por": 250
   },
   {
    "arquivo": "src/components/ui/card.tsx",
-   "importado_por": 236
+   "importado_por": 238
+  },
+  {
+   "arquivo": "src/components/ui/badge.tsx",
+   "importado_por": 204
   },
   {
    "arquivo": "src/lib/logger.ts",
    "importado_por": 203
-  },
-  {
-   "arquivo": "src/components/ui/badge.tsx",
-   "importado_por": 202
   },
   {
    "arquivo": "src/lib/utils.ts",
@@ -30,7 +30,7 @@
   },
   {
    "arquivo": "src/lib/safe-date.ts",
-   "importado_por": 108
+   "importado_por": 109
   },
   {
    "arquivo": "supabase/functions/_shared/cors.ts",
@@ -38,23 +38,23 @@
   },
   {
    "arquivo": "src/hooks/usePageTitle.ts",
-   "importado_por": 98
+   "importado_por": 100
   },
   {
    "arquivo": "src/components/ui/input.tsx",
-   "importado_por": 96
+   "importado_por": 97
   },
   {
    "arquivo": "src/components/ui/label.tsx",
-   "importado_por": 71
+   "importado_por": 73
   },
   {
    "arquivo": "src/components/ui/select.tsx",
-   "importado_por": 71
+   "importado_por": 72
   },
   {
    "arquivo": "src/components/ui/skeleton.tsx",
-   "importado_por": 61
+   "importado_por": 62
   },
   {
    "arquivo": "supabase/functions/_shared/errors.ts",
@@ -89,15 +89,15 @@
    "importado_por": 34
   },
   {
-   "arquivo": "src/components/ui/progress.tsx",
-   "importado_por": 29
-  },
-  {
    "arquivo": "src/components/ui/switch.tsx",
-   "importado_por": 29
+   "importado_por": 31
   },
   {
    "arquivo": "src/components/ui/table.tsx",
+   "importado_por": 31
+  },
+  {
+   "arquivo": "src/components/ui/progress.tsx",
    "importado_por": 29
   },
   {
@@ -109,7 +109,19 @@
    "importado_por": 25
   },
   {
+   "arquivo": "src/components/layout/NeonPageLayout.tsx",
+   "importado_por": 24
+  },
+  {
+   "arquivo": "src/components/ui/empty-state.tsx",
+   "importado_por": 24
+  },
+  {
    "arquivo": "src/components/ui/tooltip.tsx",
+   "importado_por": 24
+  },
+  {
+   "arquivo": "src/lib/tracing.ts",
    "importado_por": 24
   },
   {
@@ -117,20 +129,12 @@
    "importado_por": 24
   },
   {
-   "arquivo": "src/components/layout/NeonPageLayout.tsx",
-   "importado_por": 23
-  },
-  {
-   "arquivo": "src/components/ui/empty-state.tsx",
-   "importado_por": 23
-  },
-  {
-   "arquivo": "src/lib/tracing.ts",
-   "importado_por": 23
-  },
-  {
    "arquivo": "src/components/ui/alert.tsx",
    "importado_por": 22
+  },
+  {
+   "arquivo": "src/components/layout/NeonPageHeader.tsx",
+   "importado_por": 19
   },
   {
    "arquivo": "src/lib/safe-number.ts",
@@ -139,10 +143,6 @@
   {
    "arquivo": "supabase/functions/_shared/numeric-body-schemas.ts",
    "importado_por": 19
-  },
-  {
-   "arquivo": "src/components/layout/NeonPageHeader.tsx",
-   "importado_por": 18
   },
   {
    "arquivo": "src/integrations/supabase/types.ts",

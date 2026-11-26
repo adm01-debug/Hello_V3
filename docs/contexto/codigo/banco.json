@@ -8,7 +8,7 @@
   "supabase/migrations",
   "typeorm"
  ],
- "migrations": 252,
+ "migrations": 253,
  "seeds": [],
  "avisos": [
   "22 bloco(s) com DDL dinâmico (EXECUTE format/...) não modelado — policies/colunas criadas dinamicamente podem faltar; confira no banco vivo"
@@ -6759,6 +6759,135 @@
     "compute-account-health",
     "detect-churn-risk"
    ],
+   "triggers": [],
+   "sem_rls": false,
+   "nao_usada": false
+  },
+  "client_errors": {
+   "colunas": {
+    "correlation_id": {
+     "tipo": "text",
+     "nn": false,
+     "pk": false,
+     "default": null,
+     "ref": null
+    },
+    "error_type": {
+     "tipo": "text",
+     "nn": true,
+     "pk": false,
+     "default": "'error'",
+     "ref": null
+    },
+    "id": {
+     "tipo": "uuid",
+     "nn": true,
+     "pk": true,
+     "default": "gen_random_uuid()",
+     "ref": null
+    },
+    "message": {
+     "tipo": "text",
+     "nn": true,
+     "pk": false,
+     "default": null,
+     "ref": null
+    },
+    "occurred_at": {
+     "tipo": "timestamptz",
+     "nn": true,
+     "pk": false,
+     "default": "now()",
+     "ref": null
+    },
+    "resolved_at": {
+     "tipo": "timestamptz",
+     "nn": false,
+     "pk": false,
+     "default": null,
+     "ref": null
+    },
+    "resolved_by": {
+     "tipo": "uuid",
+     "nn": false,
+     "pk": false,
+     "default": null,
+     "ref": "auth"
+    },
+    "route": {
+     "tipo": "text",
+     "nn": true,
+     "pk": false,
+     "default": null,
+     "ref": null
+    },
+    "stack": {
+     "tipo": "text",
+     "nn": false,
+     "pk": false,
+     "default": null,
+     "ref": null
+    },
+    "user_agent": {
+     "tipo": "text",
+     "nn": false,
+     "pk": false,
+     "default": null,
+     "ref": null
+    },
+    "user_id": {
+     "tipo": "uuid",
+     "nn": false,
+     "pk": false,
+     "default": null,
+     "ref": "auth"
+    }
+   },
+   "rls": true,
+   "policies": [
+    {
+     "nome": "admins_supervisors_read_client_errors",
+     "comando": "select",
+     "para": "authenticated",
+     "tipo": "permissive"
+    },
+    {
+     "nome": "admins_supervisors_resolve_client_errors",
+     "comando": "update",
+     "para": "authenticated",
+     "tipo": "permissive"
+    },
+    {
+     "nome": "authenticated_insert_own_client_errors",
+     "comando": "insert",
+     "para": "authenticated",
+     "tipo": "permissive"
+    }
+   ],
+   "indices": [
+    {
+     "nome": "idx_client_errors_occurred_at",
+     "colunas": "occurred_at DESC",
+     "unico": false
+    },
+    {
+     "nome": "idx_client_errors_open",
+     "colunas": "occurred_at DESC",
+     "unico": false
+    },
+    {
+     "nome": "idx_client_errors_route",
+     "colunas": "route, occurred_at DESC",
+     "unico": false
+    }
+   ],
+   "fks": [
+    "resolved_by->auth",
+    "user_id->auth"
+   ],
+   "criada_em": "20261126140000_client_errors.sql",
+   "usada_no_front": 2,
+   "usada_em_edges": [],
    "triggers": [],
    "sem_rls": false,
    "nao_usada": false

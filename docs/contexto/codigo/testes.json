@@ -5,17 +5,17 @@
   "vitest",
   "playwright"
  ],
- "total": 437,
+ "total": 442,
  "por_tipo": {
   "contrato": 1,
   "e2e": 16,
   "pytest": 2,
-  "unit": 405
+  "unit": 409
  },
  "onde_ficam": [
   {
    "padrao": "co-localizado (__tests__)",
-   "arquivos": 398
+   "arquivos": 402
   },
   {
    "padrao": "tests/",
@@ -567,6 +567,15 @@
     "src/hooks/useVoipAnomalies.ts"
    ],
    "casos": 7
+  },
+  {
+   "arquivo": "src/hooks/__tests__/slaBreach.test.ts",
+   "tipo": "unit",
+   "linhas": 87,
+   "testa": [
+    "src/hooks/useSLA.ts"
+   ],
+   "casos": 6
   },
   {
    "arquivo": "src/hooks/__tests__/use-mobile.coverage.test.tsx",
@@ -2329,6 +2338,16 @@
    "casos": 14
   },
   {
+   "arquivo": "src/lib/__tests__/errorReporter.test.ts",
+   "tipo": "unit",
+   "linhas": 111,
+   "testa": [
+    "src/lib/error-tracking.ts",
+    "src/lib/errorReporter.ts"
+   ],
+   "casos": 8
+  },
+  {
    "arquivo": "src/lib/__tests__/executive-dashboard-utils.test.ts",
    "tipo": "unit",
    "linhas": 42,
@@ -3163,6 +3182,16 @@
    "casos": 4
   },
   {
+   "arquivo": "src/pages/__tests__/SlaViolations.test.tsx",
+   "tipo": "unit",
+   "linhas": 140,
+   "testa": [
+    "src/hooks/useSLA.ts",
+    "src/pages/SlaViolations.tsx"
+   ],
+   "casos": 6
+  },
+  {
    "arquivo": "src/pages/__tests__/Status.test.tsx",
    "tipo": "unit",
    "linhas": 61,
@@ -3199,6 +3228,16 @@
     "src/pages/VideoConference.tsx"
    ],
    "casos": 2
+  },
+  {
+   "arquivo": "src/pages/admin/__tests__/ClientErrors.test.tsx",
+   "tipo": "unit",
+   "linhas": 122,
+   "testa": [
+    "src/hooks/useClientErrors.ts",
+    "src/pages/admin/ClientErrors.tsx"
+   ],
+   "casos": 5
   },
   {
    "arquivo": "src/pages/admin/__tests__/SloDashboard.meta.test.tsx",
@@ -3888,6 +3927,7 @@
  ],
  "sql": [
   "supabase/tests/calling_hours_fail_closed_rls_test.sql",
+  "supabase/tests/client_errors_rls_test.sql",
   "supabase/tests/cron_credentials_rls_test.sql",
   "supabase/tests/deal_pipeline_snapshots_rls_test.sql",
   "supabase/tests/dnc_removal_audit_rls_test.sql",
@@ -3993,6 +4033,7 @@
   "src/hooks/useCallTransfer.ts": 1,
   "src/hooks/useChatbot.ts": 1,
   "src/hooks/useChurnRisk.ts": 1,
+  "src/hooks/useClientErrors.ts": 1,
   "src/hooks/useCoaching.ts": 1,
   "src/hooks/useCoachingAssignments.ts": 1,
   "src/hooks/useCoachingTrack.ts": 1,
@@ -4065,7 +4106,7 @@
   "src/hooks/useRedactionLog.ts": 2,
   "src/hooks/useRenewals.ts": 1,
   "src/hooks/useRoutingRules.ts": 1,
-  "src/hooks/useSLA.ts": 1,
+  "src/hooks/useSLA.ts": 3,
   "src/hooks/useScheduledCallbacks.ts": 1,
   "src/hooks/useScorecards.ts": 1,
   "src/hooks/useSecurityDashboard.ts": 1,
@@ -4125,7 +4166,8 @@
   "src/lib/dialerLink.ts": 1,
   "src/lib/dnc/reconcile.ts": 1,
   "src/lib/error-message.ts": 1,
-  "src/lib/error-tracking.ts": 1,
+  "src/lib/error-tracking.ts": 2,
+  "src/lib/errorReporter.ts": 1,
   "src/lib/export/callHistoryCsv.ts": 1,
   "src/lib/export/index.ts": 4,
   "src/lib/export/reportCsv.ts": 1,
@@ -4206,10 +4248,12 @@
   "src/pages/SecurityMonitoring.tsx": 1,
   "src/pages/SecurityReport.tsx": 1,
   "src/pages/Settings.tsx": 1,
+  "src/pages/SlaViolations.tsx": 1,
   "src/pages/Status.tsx": 1,
   "src/pages/SuccessPlans.tsx": 1,
   "src/pages/Trackers.tsx": 1,
   "src/pages/VideoConference.tsx": 1,
+  "src/pages/admin/ClientErrors.tsx": 1,
   "src/pages/admin/SloDashboard.tsx": 1,
   "src/pages/roles/useRoles.ts": 1,
   "src/routes/CallHistoryAlias.tsx": 1,
