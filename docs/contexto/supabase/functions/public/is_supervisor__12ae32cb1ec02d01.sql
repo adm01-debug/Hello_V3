@@ -1,7 +1,7 @@
 CREATE OR REPLACE FUNCTION public.is_supervisor()
  RETURNS boolean
  LANGUAGE plpgsql
- SECURITY DEFINER
+ STABLE SECURITY DEFINER
  SET search_path TO 'public'
 AS $function$
 BEGIN
