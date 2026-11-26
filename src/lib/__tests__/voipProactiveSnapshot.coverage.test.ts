@@ -66,6 +66,23 @@ describe('voipProactiveSnapshot', () => {
     expect(shouldRunProactiveCheck()).toBe(true);
   });
 
+  it('shouldRunProactiveCheck true when snapshot has no numeric takenAt', () => {
+    setProactiveEnabled(true);
+    localStorage.setItem(SNAPSHOT_KEY, JSON.stringify({ ids: [] }));
+    expect(shouldRunProactiveCheck()).toBe(true);
+
+    localStorage.setItem(SNAPSHOT_KEY, JSON.stringify({ ids: [], takenAt: 'yesterday' }));
+    expect(shouldRunProactiveCheck()).toBe(true);
+  });
+
+  it('compareSnapshotAndNotify tolerates snapshot with non-array ids', () => {
+    localStorage.setItem(SNAPSHOT_KEY, JSON.stringify({ ids: {}, takenAt: Date.now() }));
+    compareSnapshotAndNotify([{ id: '1', title: 'A', severity: 'critical' }]);
+    expect(toastWarning).toHaveBeenCalledTimes(1);
+    const stored = JSON.parse(localStorage.getItem(SNAPSHOT_KEY)!);
+    expect(stored.ids).toEqual(['1']);
+  });
+
   it('compareSnapshotAndNotify warns for new critical and writes snapshot', () => {
     compareSnapshotAndNotify([
       { id: '1', title: 'A', severity: 'critical' },

@@ -41,7 +41,8 @@ export function shouldRunProactiveCheck(): boolean {
   try {
     const raw = localStorage.getItem(SNAPSHOT_KEY);
     if (!raw) return true;
-    const snap = JSON.parse(raw) as Snapshot;
+    const snap = JSON.parse(raw) as Partial<Snapshot> | null;
+    if (typeof snap?.takenAt !== 'number' || !Number.isFinite(snap.takenAt)) return true;
     return Date.now() - snap.takenAt >= CHECK_INTERVAL_MS;
   } catch {
     return true;
@@ -51,7 +52,10 @@ export function shouldRunProactiveCheck(): boolean {
 export function compareSnapshotAndNotify(currentCritical: CriticalRec[]): void {
   try {
     const raw = localStorage.getItem(SNAPSHOT_KEY);
-    const previousIds = raw ? (JSON.parse(raw) as Snapshot).ids : [];
+    const parsed = raw ? (JSON.parse(raw) as Partial<Snapshot> | null) : null;
+    const previousIds = Array.isArray(parsed?.ids)
+      ? parsed.ids.filter((id): id is string => typeof id === 'string')
+      : [];
     const newCritical = currentCritical.filter(r => !previousIds.includes(r.id));
 
     if (newCritical.length > 0) {
