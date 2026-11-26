@@ -91,6 +91,11 @@ AS $$
 $$;
 
 REVOKE ALL ON FUNCTION public.cron_health_rows() FROM PUBLIC;
+-- O Supabase concede EXECUTE a anon/authenticated/service_role por ALTER DEFAULT
+-- PRIVILEGES: revogar de PUBLIC não basta. `cron_health_rows` e `check_cron_health`
+-- são internas — sem isto o anon poderia ler o histórico de cron e (pior) chamar o
+-- vigia, que apaga histórico de 30 dias rodando como o dono da função.
+REVOKE ALL ON FUNCTION public.cron_health_rows() FROM anon, authenticated, service_role;
 
 CREATE OR REPLACE FUNCTION public.get_cron_health()
 RETURNS TABLE (
@@ -120,7 +125,7 @@ BEGIN
 END;
 $$;
 
-REVOKE ALL ON FUNCTION public.get_cron_health() FROM PUBLIC;
+REVOKE ALL ON FUNCTION public.get_cron_health() FROM PUBLIC, anon;
 GRANT EXECUTE ON FUNCTION public.get_cron_health() TO authenticated;
 
 CREATE OR REPLACE FUNCTION public.check_cron_health()
@@ -230,7 +235,7 @@ BEGIN
 END;
 $$;
 
-REVOKE ALL ON FUNCTION public.check_cron_health() FROM PUBLIC;
+REVOKE ALL ON FUNCTION public.check_cron_health() FROM PUBLIC, anon, authenticated;
 GRANT EXECUTE ON FUNCTION public.check_cron_health() TO service_role;
 
 SELECT cron.unschedule('cron-watchdog-hourly')
