@@ -31,7 +31,9 @@ begin
     if v_txt is null then
       raise exception 'FALHA 1: public.%.% sem COMMENT', v_tab, v_colname;
     end if;
-    if position('2026-11-27' in v_txt) = 0 then
+    -- As colunas de tipo carregam o conjunto medido (e a data); as de id descrevem a semantica.
+    if v_colname in ('resource_type', 'source_type', 'table_name')
+       and position('2026-11-27' in v_txt) = 0 then
       raise exception 'FALHA 1: o comentario de public.%.% nao cita a data da medicao (etapa 129)', v_tab, v_colname;
     end if;
 
@@ -39,7 +41,7 @@ begin
     v_col := v_col || v_tab || '.' || v_colname || ' ';
   end loop;
 
-  raise notice '1/3 ok: % colunas comentadas com a medicao de 2026-11-27 (%)', v_ok, trim(v_col);
+  raise notice '1/3 ok: % colunas comentadas; as 3 de tipo citam a medicao de 2026-11-27 (%)', v_ok, trim(v_col);
 end $$;
 
 -- ---------------------------------------------------------------------------
