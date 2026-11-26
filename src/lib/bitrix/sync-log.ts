@@ -7,6 +7,27 @@ const log = logger.create('BitrixSync');
 /** Status possíveis de uma tentativa de sincronização. */
 export type SyncAttemptStatus = 'in_progress' | 'success' | 'failed' | 'pending';
 
+/**
+ * A tabela `crm_sync_queue` guarda DOIS vocabulários de status: a edge
+ * `sync-crm-queue` grava `processing`/`completed` (migration 20260507220616) e
+ * este módulo grava `in_progress`/`success`. Sem normalizar, toda linha que o
+ * cron processou aparecia como "Pendente" na tela de status.
+ */
+export const normalizarSyncStatus = (status: string | null | undefined): SyncAttemptStatus => {
+  switch (status) {
+    case 'in_progress':
+    case 'processing':
+      return 'in_progress';
+    case 'success':
+    case 'completed':
+      return 'success';
+    case 'failed':
+      return 'failed';
+    default:
+      return 'pending';
+  }
+};
+
 export interface SyncAttempt {
   id: string;
   action: string;

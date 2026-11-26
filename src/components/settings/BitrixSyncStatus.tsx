@@ -7,6 +7,7 @@ import {
   CheckCircle2,
   Clock,
   Loader2,
+  Play,
   RefreshCw,
   XCircle,
 } from 'lucide-react';
@@ -27,8 +28,10 @@ import {
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { supabase } from '@/integrations/supabase/client';
 import type { Database } from '@/integrations/supabase/types';
+import { toast } from 'sonner';
 import {
   actionLabel,
+  normalizarSyncStatus,
   type SyncAttempt,
   type SyncAttemptStatus,
 } from '@/lib/bitrix/sync-log';
@@ -39,7 +42,7 @@ type Row = Database['public']['Tables']['crm_sync_queue']['Row'];
 const toAttempt = (r: Row): SyncAttempt => ({
   id: r.id,
   action: r.action,
-  status: (r.status as SyncAttemptStatus) ?? 'pending',
+  status: normalizarSyncStatus(r.status),
   attempts: r.attempts ?? 0,
   last_error: r.last_error ?? null,
   created_at: r.created_at,
@@ -87,6 +90,7 @@ const summarize = (attempts: SyncAttempt[]) => ({
 
 export function BitrixSyncStatus() {
   const [openError, setOpenError] = useState<string | null>(null);
+  const [processando, setProcessando] = useState(false);
 
   const {
     data: attempts = [],
@@ -122,6 +126,32 @@ export function BitrixSyncStatus() {
     };
   }, [refetch]);
 
+  // A fila também é drenada pelo job de 5 min (migration 20261128110000); este
+  // botão força uma passada agora, útil quando o lead precisa ir para o Bitrix
+  // antes do próximo tick.
+  const processarFilaAgora = async () => {
+    setProcessando(true);
+    try {
+      const { data, error } = await supabase.functions.invoke('sync-crm-queue', {
+        body: { trigger: 'manual' },
+      });
+      if (error) throw error;
+      const results = (data as { results?: unknown[] } | null)?.results ?? [];
+      if (results.length > 0) {
+        toast.success(`Fila processada: ${results.length} item(ns)`);
+      } else {
+        toast.info('Nada pendente para sincronizar agora');
+      }
+      await refetch();
+    } catch (e) {
+      toast.error('Não foi possível processar a fila agora', {
+        description: e instanceof Error ? e.message : undefined,
+      });
+    } finally {
+      setProcessando(false);
+    }
+  };
+
   const summary = useMemo(() => summarize(attempts), [attempts]);
 
   return (
@@ -134,20 +164,34 @@ export function BitrixSyncStatus() {
               Status de sincronização Bitrix24
             </CardTitle>
             <CardDescription>
-              Últimas 30 tentativas — atualização em tempo real
+              Últimas 30 tentativas — o servidor processa a fila a cada 5 minutos
             </CardDescription>
           </div>
-          <Button
-            variant="outline"
-            size="sm"
-            onClick={() => refetch()}
-            disabled={isFetching}
-          >
-            <RefreshCw
-              className={`h-4 w-4 mr-2 ${isFetching ? 'animate-spin' : ''}`}
-            />
-            Atualizar
-          </Button>
+          <div className="flex flex-wrap gap-2">
+            <Button
+              size="sm"
+              onClick={processarFilaAgora}
+              disabled={processando}
+            >
+              {processando ? (
+                <Loader2 className="h-4 w-4 mr-2 animate-spin" />
+              ) : (
+                <Play className="h-4 w-4 mr-2" />
+              )}
+              Processar fila agora
+            </Button>
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={() => refetch()}
+              disabled={isFetching}
+            >
+              <RefreshCw
+                className={`h-4 w-4 mr-2 ${isFetching ? 'animate-spin' : ''}`}
+              />
+              Atualizar
+            </Button>
+          </div>
         </div>
 
         <div className="flex flex-wrap gap-2 pt-3">

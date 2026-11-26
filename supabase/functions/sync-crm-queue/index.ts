@@ -2,17 +2,32 @@ import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
 import { buildCorsHeaders } from "../_shared/cors.ts";
 import { GENERIC_INTERNAL_MESSAGE, getCorrelationId, internalErrorResponse } from '../_shared/errors.ts';
+import { tokenCronValido, tokenDoBearer } from '../_shared/cron-db-token.ts';
+
+// Teto por execucao (etapa 083): o job roda a cada 5 min e drena a fila em lotes.
+const ITENS_POR_EXECUCAO = 50;
 
 serve(async (req) => {
   const cors = buildCorsHeaders(req);
   if (req.method === "OPTIONS") return new Response(null, { headers: cors });
-  const negado = await exigirSessao(req, Deno.env.get("SUPABASE_URL")!, cors);
-  if (negado) return negado;
 
   const supabase = createClient(
     Deno.env.get("SUPABASE_URL")!,
     Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!,
   );
+
+  // Caminho do cron (migration 20261128110000): bearer opaco do Vault conferido
+  // no banco. Guardar o token tambem numa env var da edge e o modo de falha que
+  // deixou a purga de optimistic_lock_conflicts anos em 401 (config.toml:1-8).
+  // Sem o cron, nada consumia esta fila. Usuario logado cai na sessao abaixo.
+  const veioDoCron = await tokenCronValido(
+    supabase,
+    tokenDoBearer(req.headers.get("Authorization")),
+  );
+  if (!veioDoCron) {
+    const negado = await exigirSessao(req, Deno.env.get("SUPABASE_URL")!, cors);
+    if (negado) return negado;
+  }
 
   try {
     // 1. Buscar itens pendentes ou falhos na fila
@@ -23,7 +38,7 @@ serve(async (req) => {
       .lte("next_retry_at", new Date().toISOString())
       .lt("attempts", 5)
       .order("created_at", { ascending: true })
-      .limit(10);
+      .limit(ITENS_POR_EXECUCAO);
 
     if (fetchError) throw fetchError;
     if (!queueItems || queueItems.length === 0) {
