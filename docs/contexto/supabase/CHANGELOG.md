@@ -2,6 +2,13 @@
 
 Diff semântico gerado a cada coleta em que algo mudou.
 
+## 2026-11-26 20:23 UTC
+
+- **cron jobs** adicionado (1): `59:cron-watchdog-hourly`
+- **cron jobs** removido (1): `58:cron-watchdog-hourly`
+- **functions** alterado (13): `public.can_access_agent_data(target_agent_name text)`, `public.check_cron_health()`, `public.cron_health_rows()`, `public.get_cron_health()`, `public.get_user_agent_id()`, `public.get_user_agent_name()`, `public.get_user_role()`, `public.increment_weekly_stats(p_agent_id uuid, p_week_start date, p_calls integer, p_duration_seconds integer, p_badges integer, p_points integer, p_avg_satisfaction numeric, p_avg_performance numeric)`, `public.is_active_agent(_agent_name text)`, `public.is_admin()`, `public.is_admin_or_supervisor()`, `public.is_supervisor()`, `public.update_updated_at_column()`
+- **migrations** adicionado (15): `20260315143858_create_geo_tables_retroativo`, `20261126170000_cron_watchdog`, `20261126190000_cron_watchdog_privilegios`, `20261127130000_crm_sync_queue_update_policy`, `20261127150000_learning_completions_update_policy`, `20261127160000_policies_to_authenticated_lote1`, `20261127170000_add_missing_fks`, `20261127180000_policies_to_authenticated_restante`, `20261127200000_revoke_anon_role_helpers`, `20261127210000_role_helpers_stable`, `20261127220000_polymorphic_pointer_comments`, `20261127230000_unique_conversation_message_id`, `20261127250000_increment_weekly_stats_rpc`, `20261127260000_increment_weekly_stats_rpc_null_media_fix`, `20261127270000_geo_policies_idempotente`
+
 ## 2026-11-26 18:16 UTC
 
 - **colunas** alterado (7): `public.audit_logs.resource_id`, `public.audit_logs.resource_type`, `public.holidays.recurring`, `public.notifications.source_id`, `public.notifications.source_type`, `public.optimistic_lock_conflicts.record_id`, `public.optimistic_lock_conflicts.table_name`

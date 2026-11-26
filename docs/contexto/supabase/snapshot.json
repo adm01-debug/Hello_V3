@@ -32167,7 +32167,7 @@
           "active": true,
           "command": " SELECT public.check_cron_health(); ",
           "database": "postgres",
-          "jobid": 58,
+          "jobid": 59,
           "jobname": "cron-watchdog-hourly",
           "schedule": "5 * * * *",
           "username": "postgres"
@@ -32528,9 +32528,13 @@
             {
               "file": "supabase/migrations/20261123000100_fix_anon_rls_helper_exposure.sql",
               "hits": 1
+            },
+            {
+              "file": "supabase/migrations/20261127200000_revoke_anon_role_helpers.sql",
+              "hits": 1
             }
           ],
-          "code_total_files": 5,
+          "code_total_files": 6,
           "cron": [],
           "db": [],
           "triggers": [],
@@ -32661,10 +32665,19 @@
       {
         "args": "",
         "callers": {
-          "code": [],
-          "code_total_files": 0,
+          "code": [
+            {
+              "file": "supabase/migrations/20261126170000_cron_watchdog.sql",
+              "hits": 2
+            },
+            {
+              "file": "supabase/migrations/20261126190000_cron_watchdog_privilegios.sql",
+              "hits": 2
+            }
+          ],
+          "code_total_files": 2,
           "cron": [
-            "58:cron-watchdog-hourly"
+            "59:cron-watchdog-hourly"
           ],
           "db": [],
           "triggers": [],
@@ -33180,8 +33193,17 @@
       {
         "args": "",
         "callers": {
-          "code": [],
-          "code_total_files": 0,
+          "code": [
+            {
+              "file": "supabase/migrations/20261126170000_cron_watchdog.sql",
+              "hits": 3
+            },
+            {
+              "file": "supabase/migrations/20261126190000_cron_watchdog_privilegios.sql",
+              "hits": 1
+            }
+          ],
+          "code_total_files": 2,
           "cron": [],
           "db": [
             "public.check_cron_health",
@@ -33723,8 +33745,21 @@
       {
         "args": "",
         "callers": {
-          "code": [],
-          "code_total_files": 0,
+          "code": [
+            {
+              "file": "src/pages/admin/DatabaseHealth.tsx",
+              "hits": 1
+            },
+            {
+              "file": "supabase/migrations/20261126170000_cron_watchdog.sql",
+              "hits": 1
+            },
+            {
+              "file": "supabase/migrations/20261126190000_cron_watchdog_privilegios.sql",
+              "hits": 1
+            }
+          ],
+          "code_total_files": 3,
           "cron": [],
           "db": [],
           "triggers": [],
@@ -34000,9 +34035,13 @@
             {
               "file": "supabase/migrations/20261123000100_fix_anon_rls_helper_exposure.sql",
               "hits": 1
+            },
+            {
+              "file": "supabase/migrations/20261127200000_revoke_anon_role_helpers.sql",
+              "hits": 1
             }
           ],
-          "code_total_files": 7,
+          "code_total_files": 8,
           "cron": [],
           "db": [
             "public.record_trunk_usage"
@@ -34155,7 +34194,7 @@
               "hits": 2
             }
           ],
-          "code_total_files": 33,
+          "code_total_files": 36,
           "cron": [],
           "db": [
             "public.can_access_agent_data"
@@ -34234,9 +34273,13 @@
             {
               "file": "supabase/migrations/20261123000100_fix_anon_rls_helper_exposure.sql",
               "hits": 1
+            },
+            {
+              "file": "supabase/migrations/20261127200000_revoke_anon_role_helpers.sql",
+              "hits": 1
             }
           ],
-          "code_total_files": 12,
+          "code_total_files": 13,
           "cron": [],
           "db": [],
           "triggers": [],
@@ -34512,8 +34555,13 @@
       {
         "args": "p_agent_id uuid, p_week_start date, p_calls integer, p_duration_seconds integer, p_badges integer, p_points integer, p_avg_satisfaction numeric, p_avg_performance numeric",
         "callers": {
-          "code": [],
-          "code_total_files": 0,
+          "code": [
+            {
+              "file": "src/hooks/useGamification.ts",
+              "hits": 1
+            }
+          ],
+          "code_total_files": 1,
           "cron": [],
           "db": [],
           "triggers": [],
@@ -34566,9 +34614,13 @@
             {
               "file": "supabase/migrations/20261123000100_fix_anon_rls_helper_exposure.sql",
               "hits": 1
+            },
+            {
+              "file": "supabase/migrations/20261127200000_revoke_anon_role_helpers.sql",
+              "hits": 1
             }
           ],
-          "code_total_files": 6,
+          "code_total_files": 7,
           "cron": [],
           "db": [],
           "triggers": [],
@@ -34641,9 +34693,21 @@
             {
               "file": "supabase/migrations/20261126090000_rate_limit_logs_write_policies.sql",
               "hits": 4
+            },
+            {
+              "file": "supabase/migrations/20261126170000_cron_watchdog.sql",
+              "hits": 1
+            },
+            {
+              "file": "supabase/migrations/20261127200000_revoke_anon_role_helpers.sql",
+              "hits": 1
+            },
+            {
+              "file": "supabase/migrations/20261127210000_role_helpers_stable.sql",
+              "hits": 1
             }
           ],
-          "code_total_files": 11,
+          "code_total_files": 14,
           "cron": [],
           "db": [
             "public.get_cron_health",
@@ -34727,6 +34791,10 @@
               "hits": 2
             },
             {
+              "file": "supabase/migrations/20260315143858_create_geo_tables_retroativo.sql",
+              "hits": 6
+            },
+            {
               "file": "supabase/migrations/20260315194850_5c156b99-5d85-4b43-9e09-74edf363cd91.sql",
               "hits": 11
             },
@@ -34793,13 +34861,9 @@
             {
               "file": "supabase/migrations/20260404155727_801b1d27-2b56-4db6-acd1-cb754c060e69.sql",
               "hits": 2
-            },
-            {
-              "file": "supabase/migrations/20260404155927_caf70895-2bf1-4c92-88a3-e66e16e17e66.sql",
-              "hits": 1
             }
           ],
-          "code_total_files": 81,
+          "code_total_files": 86,
           "cron": [],
           "db": [
             "public.can_access_agent_data",
@@ -35008,9 +35072,17 @@
             {
               "file": "supabase/migrations/20261123000100_fix_anon_rls_helper_exposure.sql",
               "hits": 1
+            },
+            {
+              "file": "supabase/migrations/20261127200000_revoke_anon_role_helpers.sql",
+              "hits": 1
+            },
+            {
+              "file": "supabase/migrations/20261127210000_role_helpers_stable.sql",
+              "hits": 1
             }
           ],
-          "code_total_files": 6,
+          "code_total_files": 8,
           "cron": [],
           "db": [],
           "triggers": [],
@@ -36240,6 +36312,10 @@
               "hits": 3
             },
             {
+              "file": "supabase/migrations/20260315143858_create_geo_tables_retroativo.sql",
+              "hits": 3
+            },
+            {
               "file": "supabase/migrations/20260315144312_5b41e5e7-ff57-40a1-ad7e-68133720c86c.sql",
               "hits": 2
             },
@@ -36302,13 +36378,9 @@
             {
               "file": "supabase/migrations/20260712220202_52e516fc-3b1c-45ce-9c00-3dd4f6acb406.sql",
               "hits": 1
-            },
-            {
-              "file": "supabase/migrations/20260726160049_14fac8e9-52d1-4daf-b825-2005ac32e981.sql",
-              "hits": 1
             }
           ],
-          "code_total_files": 34,
+          "code_total_files": 35,
           "cron": [],
           "db": [],
           "triggers": [
@@ -48151,6 +48223,12 @@
         "version": "20260315143846"
       },
       {
+        "name": "create_geo_tables_retroativo",
+        "statements": 12,
+        "statements_sha": "079dc16294c7e8c5",
+        "version": "20260315143858"
+      },
+      {
         "name": "20260315143859_53accc1d-5241-481f-bb43-a20c0123dede",
         "statements": null,
         "version": "20260315143859"
@@ -49210,6 +49288,90 @@
         "statements": 17,
         "statements_sha": "6ec735a2a02f06cf",
         "version": "20261126140000"
+      },
+      {
+        "name": "cron_watchdog",
+        "statements": 11,
+        "statements_sha": "a27d509cb6a6fb0d",
+        "version": "20261126170000"
+      },
+      {
+        "name": "cron_watchdog_privilegios",
+        "statements": 5,
+        "statements_sha": "ebc6549a3d81b2f4",
+        "version": "20261126190000"
+      },
+      {
+        "name": "crm_sync_queue_update_policy",
+        "statements": 2,
+        "statements_sha": "214789e7db0a1b67",
+        "version": "20261127130000"
+      },
+      {
+        "name": "learning_completions_update_policy",
+        "statements": 2,
+        "statements_sha": "25d7c94c20c057ab",
+        "version": "20261127150000"
+      },
+      {
+        "name": "policies_to_authenticated_lote1",
+        "statements": 1,
+        "statements_sha": "d57ad1b1f5d31357",
+        "version": "20261127160000"
+      },
+      {
+        "name": "add_missing_fks",
+        "statements": 4,
+        "statements_sha": "f96641b20727fb59",
+        "version": "20261127170000"
+      },
+      {
+        "name": "policies_to_authenticated_restante",
+        "statements": 1,
+        "statements_sha": "c68d8abeeed64055",
+        "version": "20261127180000"
+      },
+      {
+        "name": "revoke_anon_role_helpers",
+        "statements": 1,
+        "statements_sha": "63b4326e7d951046",
+        "version": "20261127200000"
+      },
+      {
+        "name": "role_helpers_stable",
+        "statements": 3,
+        "statements_sha": "c9e245c16d2d9f55",
+        "version": "20261127210000"
+      },
+      {
+        "name": "polymorphic_pointer_comments",
+        "statements": 6,
+        "statements_sha": "4008c18fc2de0095",
+        "version": "20261127220000"
+      },
+      {
+        "name": "unique_conversation_message_id",
+        "statements": 3,
+        "statements_sha": "606c11bb8131ff3e",
+        "version": "20261127230000"
+      },
+      {
+        "name": "increment_weekly_stats_rpc",
+        "statements": 4,
+        "statements_sha": "f65554ad6dac9df5",
+        "version": "20261127250000"
+      },
+      {
+        "name": "increment_weekly_stats_rpc_null_media_fix",
+        "statements": 2,
+        "statements_sha": "872a92464c5d882c",
+        "version": "20261127260000"
+      },
+      {
+        "name": "geo_policies_idempotente",
+        "statements": 1,
+        "statements_sha": "51462b5193321eef",
+        "version": "20261127270000"
       }
     ],
     "policies": [
