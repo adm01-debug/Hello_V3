@@ -273,3 +273,34 @@ Gate: `supabase/tests/recurring_holidays_rls_test.sql` (prova os 4 primeiros cas
 escrito na função e na coluna). Não confunda com `calling_hours_fail_closed_rls_test.sql`, que prova o
 fail-closed da 035.
 
+
+## Fila do CRM — gatilho medido em 2026-11-26 (etapa 083)
+
+`public.crm_sync_queue` é a fila que a tela de integração do Bitrix alimenta (produtores: `useBitrix.ts`
+createLead e registerCall). A **única** processadora é a edge `sync-crm-queue`; até a etapa 083 nada a
+agendava, então o item ficava em `pending` para sempre.
+
+Contrato do job (migration `20261128123000_crm_sync_queue_cron_guard.sql`, ajuste da
+`20261128110000_crm_sync_queue_cron.sql`):
+
+| Peça | Valor |
+|---|---|
+| Job | `cron.schedule('crm-sync-queue', '*/5 * * * *', ...)` |
+| Condição | só faz `net.http_post` se existe linha com `status in ('pending','failed')` e `next_retry_at <= now()` e `attempts < 5` — mesma condição que a edge aplica |
+| URL | `public.edge_function_url('sync-crm-queue')` (host vem do Vault; nunca literal) |
+| Autorização | `Authorization: Bearer <crm_sync_cron_token do Vault>`; a edge confere com `public.token_cron_valido(text,text)` usando a service_role dela |
+| Verificação | `verify_jwt = false` em `supabase/config.toml` — o bearer do cron é opaco, o gateway recusaria antes da edge |
+| Rotação | `vault.update_secret(...)`; **não** existe cópia em env var da edge, então não há par fora de sincronia |
+
+Por que o token vive só no Vault: os 5 crons de 2026-11-22 guardam o mesmo segredo no Vault **e** numa env
+var da edge; um par desalinhado derruba o job em 401 silencioso (foi assim que a purga de
+`optimistic_lock_conflicts` ficou anos parada — `supabase/config.toml:1-8`). Aqui a edge pergunta ao banco,
+então rotacionar não exige redeploy.
+
+Gates: `supabase/tests/crm_sync_queue_cron_rls_test.sql` (segredo + função + grants + job + RLS da fila) e
+`supabase/tests/cron_credentials_rls_test.sql`, que passa a listar `job: crm-sync-queue jwt=f host=f`.
+
+Estado em produção em 2026-11-26: os dois jobs estão aplicados e o tick roda (`cron.job_run_details`,
+`succeeded`), mas a versão da edge em produção ainda é a anterior (exige sessão de usuário) — o deploy
+depende de `SUPABASE_ACCESS_TOKEN` válido, que estava inválido ("Invalid access token"). Até esse deploy,
+item vencido na fila resulta em 401, não em sincronização.
