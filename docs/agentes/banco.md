@@ -122,7 +122,7 @@ versão, não o conteúdo:
 - `20260404151943_4d4acd99-….sql:87-90` — quatro `ALTER POLICY` em `geo_*`. Na sequência atual os alvos
   existem (`20260315143858` cria três delas, `20260315143859:8` cria a quarta e `20260404153313:22` a
   remove depois), então a ordem de timestamp resolve; a guarda idempotente é
-  `20261127150000_geo_policies_idempotente.sql`, que passa também em banco sem as tabelas. A lista
+  `20261127270000_geo_policies_idempotente.sql`, que passa também em banco sem as tabelas. A lista
   completa e o harness de banco descartável são as etapas 134 e 053.
 - `ALTER POLICY` **não** tem `IF EXISTS`; `DROP POLICY`, `CREATE TABLE` e `CREATE INDEX` têm — usar
   sempre, e nunca escrever DDL contra o estado de produção como se ele fosse a sequência versionada.
