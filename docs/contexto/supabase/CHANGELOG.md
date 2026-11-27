@@ -2,6 +2,11 @@
 
 Diff semântico gerado a cada coleta em que algo mudou.
 
+## 2026-11-27 00:37 UTC
+
+- **realtime** adicionado (1): `supabase_realtime_messages_publication:realtime.messages_2026_11_30`
+- **realtime** removido (1): `supabase_realtime_messages_publication:realtime.messages_2026_11_23`
+
 ## 2026-11-26 23:15 UTC
 
 - **colunas** adicionado (2): `public.call_sessions.bitrix_call_id`, `public.crm_sync_queue.requested_by`
