@@ -54,7 +54,7 @@ begin
   for i in 1 .. array_length(v_esperado, 1) loop
     v_cmd := v_esperado[i][1];
     v_nome := v_esperado[i][2];
-    select p.qual || ' ' || coalesce(p.with_check, ''), p.roles
+    select coalesce(p.qual, '') || ' ' || coalesce(p.with_check, ''), p.roles
       into v_qual, v_roles
       from pg_policies p
      where p.schemaname = 'public'
@@ -197,7 +197,7 @@ end $$;
 
 -- 7: anon nao grava
 reset role;
-select set_config('request.jwt.claims', '', true);
+select set_config('request.jwt.claims', '{"role":"anon"}', true);
 do $$
 declare
   v_sessao uuid := current_setting('teste.sessao')::uuid;
