@@ -2,6 +2,11 @@
 
 Diff semântico gerado a cada coleta em que algo mudou.
 
+## 2026-11-27 02:18 UTC
+
+- **functions** alterado (2): `public.check_calling_hours(p_region_code text)`, `public.is_own_call_session(_call_session_id uuid)`
+- **lints** removido (1): `rpc_anon_executable:public.is_own_call_session(_call_session_id uuid)`
+
 ## 2026-11-27 01:14 UTC
 
 - **functions** adicionado (1): `public.is_own_call_session(_call_session_id uuid)`

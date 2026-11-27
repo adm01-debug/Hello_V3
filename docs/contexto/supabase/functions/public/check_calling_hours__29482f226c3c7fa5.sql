@@ -37,7 +37,10 @@ BEGIN
 
   SELECT EXISTS (
     SELECT 1 FROM public.holidays h
-    WHERE (h.is_national = true OR h.region_code = p_region_code)
+    WHERE (
+        h.region_code = v_config.region_code
+        OR (h.region_code IS NULL AND h.is_national)
+      )
       AND (
         h.date = v_current_date
         OR (h.recurring AND EXTRACT(MONTH FROM h.date) = EXTRACT(MONTH FROM v_current_date)

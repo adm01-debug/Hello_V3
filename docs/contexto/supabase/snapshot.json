@@ -32926,12 +32926,12 @@
           "triggers": [],
           "views": []
         },
-        "comment": "Etapa 035 + 122. Decide se a discagem e permitida agora. Fail-closed: sem calling_hours_config ativa para a regiao (nem BR como fallback) devolve can_call = false. Feriado: compara a data exata OU, quando holidays.recurring, mes e dia em qualquer ano; respeita calling_hours_config.holidays_allowed. Limitacao conhecida: feriado movel (Carnaval, Pascoa, Corpus Christi) nao e calculado — precisa ser cadastrado em holidays por ano, com recurring = false.",
+        "comment": "Etapa 035 + 122 + 126. Decide se a discagem e permitida agora. Fail-closed: sem calling_hours_config ativa para a regiao (nem BR como fallback) devolve can_call = false. Feriado: so conta feriado da regiao consultada (holidays.region_code) ou nacional sem regiao (region_code IS NULL e is_national); compara a data exata OU, quando holidays.recurring, mes e dia em qualquer ano; respeita calling_hours_config.holidays_allowed. Limitacao conhecida: feriado movel (Carnaval, Pascoa, Corpus Christi) nao e calculado — precisa ser cadastrado em holidays por ano, com recurring = false.",
         "config": [
           "search_path=public"
         ],
         "definition": null,
-        "definition_sha": "b7b939f530d79261",
+        "definition_sha": "6415142e2f0801d4",
         "execute_api_roles": "authenticated, service_role",
         "execute_public": false,
         "is_trigger_fn": false,
@@ -35378,7 +35378,7 @@
         ],
         "definition": null,
         "definition_sha": "614acae55c77f88a",
-        "execute_api_roles": "anon, authenticated, service_role",
+        "execute_api_roles": "authenticated, service_role",
         "execute_public": false,
         "is_trigger_fn": false,
         "kind": "function",
@@ -48450,12 +48450,6 @@
         "detail": "Policy chama auth.uid()/jwt() sem `(select ...)`: é reavaliada por linha; envolva em subselect.",
         "object": "public.user_preferences.Users can view own preferences",
         "severity": "BAIXA"
-      },
-      {
-        "code": "rpc_anon_executable",
-        "detail": "SECURITY DEFINER chamável via RPC por anon (sem login): roda com privilégios do owner. Confirme que é intencional (Supabase dá EXECUTE a anon por padrão; revogue se não for API pública).",
-        "object": "public.is_own_call_session(_call_session_id uuid)",
-        "severity": "INFO"
       }
     ],
     "migrations": [
