@@ -34512,7 +34512,8 @@
           "code_total_files": 36,
           "cron": [],
           "db": [
-            "public.can_access_agent_data"
+            "public.can_access_agent_data",
+            "public.is_own_call_session"
           ],
           "triggers": [],
           "views": []
@@ -35182,7 +35183,8 @@
           "cron": [],
           "db": [
             "public.can_access_agent_data",
-            "public.get_agent_financial_leaderboard"
+            "public.get_agent_financial_leaderboard",
+            "public.is_own_call_session"
           ],
           "triggers": [],
           "views": []
@@ -35353,6 +35355,36 @@
         "language": "sql",
         "leakproof": false,
         "name": "is_admin_user",
+        "owner": "postgres",
+        "returns": "boolean",
+        "schema": "public",
+        "security_definer": true,
+        "strict": false,
+        "volatility": "stable"
+      },
+      {
+        "args": "_call_session_id uuid",
+        "callers": {
+          "code": [],
+          "code_total_files": 0,
+          "cron": [],
+          "db": [],
+          "triggers": [],
+          "views": []
+        },
+        "comment": "Verdadeiro quando a call_session pertence ao usuario logado (admin/supervisor sempre). Base das policies de hold_events.",
+        "config": [
+          "search_path=public"
+        ],
+        "definition": null,
+        "definition_sha": "614acae55c77f88a",
+        "execute_api_roles": "anon, authenticated, service_role",
+        "execute_public": false,
+        "is_trigger_fn": false,
+        "kind": "function",
+        "language": "sql",
+        "leakproof": false,
+        "name": "is_own_call_session",
         "owner": "postgres",
         "returns": "boolean",
         "schema": "public",
@@ -48418,6 +48450,12 @@
         "detail": "Policy chama auth.uid()/jwt() sem `(select ...)`: é reavaliada por linha; envolva em subselect.",
         "object": "public.user_preferences.Users can view own preferences",
         "severity": "BAIXA"
+      },
+      {
+        "code": "rpc_anon_executable",
+        "detail": "SECURITY DEFINER chamável via RPC por anon (sem login): roda com privilégios do owner. Confirme que é intencional (Supabase dá EXECUTE a anon por padrão; revogue se não for API pública).",
+        "object": "public.is_own_call_session(_call_session_id uuid)",
+        "severity": "INFO"
       }
     ],
     "migrations": [
@@ -52681,6 +52719,42 @@
         "schema": "public",
         "table": "hold_events",
         "using": "(is_admin_or_supervisor() OR (agent_name = get_user_agent_name()))",
+        "with_check": null
+      },
+      {
+        "cmd": "INSERT",
+        "name": "Owners can insert hold_events",
+        "permissive": "PERMISSIVE",
+        "roles": [
+          "authenticated"
+        ],
+        "schema": "public",
+        "table": "hold_events",
+        "using": null,
+        "with_check": "is_own_call_session(call_session_id)"
+      },
+      {
+        "cmd": "UPDATE",
+        "name": "Owners can update hold_events",
+        "permissive": "PERMISSIVE",
+        "roles": [
+          "authenticated"
+        ],
+        "schema": "public",
+        "table": "hold_events",
+        "using": "is_own_call_session(call_session_id)",
+        "with_check": "is_own_call_session(call_session_id)"
+      },
+      {
+        "cmd": "SELECT",
+        "name": "Owners can view hold_events",
+        "permissive": "PERMISSIVE",
+        "roles": [
+          "authenticated"
+        ],
+        "schema": "public",
+        "table": "hold_events",
+        "using": "(is_own_call_session(call_session_id) OR is_admin_or_supervisor() OR (agent_name = get_user_agent_name()))",
         "with_check": null
       },
       {

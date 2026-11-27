@@ -88,7 +88,7 @@ Um arquivo por tabela em `tables/<schema>/<tabela>.md` (colunas, constraints, í
 | [public.geo_settings](tables/public/geo_settings.md) | table | sim | 2 | 7 | não |  |
 | [public.goal_violations](tables/public/goal_violations.md) | table | sim | 3 | 9 | não |  |
 | [public.hold_alert_settings](tables/public/hold_alert_settings.md) | table | sim | 2 | 8 | não |  |
-| [public.hold_events](tables/public/hold_events.md) | table | sim | 5 | 7 | não |  |
+| [public.hold_events](tables/public/hold_events.md) | table | sim | 8 | 7 | não |  |
 | [public.holidays](tables/public/holidays.md) | table | sim | 2 | 7 | não |  |
 | [public.hot_desking_stations](tables/public/hot_desking_stations.md) | table | sim | 3 | 11 | não |  |
 | [public.index_drop_audit](tables/public/index_drop_audit.md) | table | sim | 1 | 8 | não |  |

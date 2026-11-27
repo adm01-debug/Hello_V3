@@ -6,7 +6,7 @@
 | owner | postgres |
 | RLS habilitado | sim |
 | RLS forçado (owner) | não |
-| policies | 5 |
+| policies | 8 |
 | realtime (publication) | não |
 | replica identity | default |
 | vem de extensão | não |
@@ -93,6 +93,36 @@
 | tipo | PERMISSIVE |
 | roles | authenticated |
 | USING | `(is_admin_or_supervisor() OR (agent_name = get_user_agent_name()))` |
+| WITH CHECK |  |
+
+### `Owners can insert hold_events`
+
+| campo | valor |
+|---|---|
+| comando | INSERT |
+| tipo | PERMISSIVE |
+| roles | authenticated |
+| USING |  |
+| WITH CHECK | `is_own_call_session(call_session_id)` |
+
+### `Owners can update hold_events`
+
+| campo | valor |
+|---|---|
+| comando | UPDATE |
+| tipo | PERMISSIVE |
+| roles | authenticated |
+| USING | `is_own_call_session(call_session_id)` |
+| WITH CHECK | `is_own_call_session(call_session_id)` |
+
+### `Owners can view hold_events`
+
+| campo | valor |
+|---|---|
+| comando | SELECT |
+| tipo | PERMISSIVE |
+| roles | authenticated |
+| USING | `(is_own_call_session(call_session_id) OR is_admin_or_supervisor() OR (agent_name = get_user_agent_name()))` |
 | WITH CHECK |  |
 
 

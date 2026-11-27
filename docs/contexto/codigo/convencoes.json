@@ -59,11 +59,11 @@
  "commits": {
   "convencao": "conventional commits (observado)",
   "exemplos": [
+   "chore: registrar varredura final de cobertura backend -> tela (#381)",
    "feat: dar tela a jornada do cliente (etapas da conta e historico de transicoes) (#380)",
    "feat: barra de filtros salvos na tela de contatos (#379)",
    "fix: valida forma do snapshot e da fila de coaching VoIP no localStorage (#378)",
-   "docs: reaudita o que foi descartado, arquivo por arquivo (nenhuma perda) (#377)",
-   "chore: registrar a varredura de branches e PRs (nenhum trabalho perdido) (#376)"
+   "docs: reaudita o que foi descartado, arquivo por arquivo (nenhuma perda) (#377)"
   ]
  },
  "pr_template": null,

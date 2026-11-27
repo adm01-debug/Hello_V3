@@ -61,7 +61,7 @@
       "section": "api.health"
     }
   ],
-  "gerado_em": "2026-11-27T00:37:25Z",
+  "gerado_em": "2026-11-27T01:14:32Z",
   "gerador": "scripts/supabase_snapshot/snapshot.py",
   "produtor": "supabase-snapshot"
 }

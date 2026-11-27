@@ -1,9 +1,9 @@
 {
  "meta": {
-  "sha": "77bac0459ad3c433c577beec23139aed69cab264",
+  "sha": "2e9fb8798a10ba72502c4229ccd3705acaf30cbe",
   "branch": "main",
   "remote": "https://github.com/adm01-debug/Hello_V3",
-  "generated_at": "2026-11-27 00:34 UTC",
+  "generated_at": "2026-11-27 01:14 UTC",
   "files_total": 1904,
   "code_files": 1699,
   "code_lines": 208749
@@ -128783,10 +128783,20 @@
   }
  },
  "git": {
-  "sha": "77bac0459ad3c433c577beec23139aed69cab264",
+  "sha": "2e9fb8798a10ba72502c4229ccd3705acaf30cbe",
   "branch": "main",
   "remote": "https://github.com/adm01-debug/Hello_V3",
   "commits": [
+   {
+    "sha": "2e9fb87",
+    "date": "2026-11-26",
+    "author": "adm01-debug",
+    "subject": "chore: registrar varredura final de cobertura backend -> tela (#381)",
+    "files": [
+     "docs/qa/01-INVENTARIO.md",
+     "docs/qa/05-PROGRESSO.md"
+    ]
+   },
    {
     "sha": "77bac04",
     "date": "2026-11-26",
@@ -129175,31 +129185,16 @@
      "src/pages/VoiceSecurity.tsx",
      "supabase/tests/redaction_log_rls_test.sql"
     ]
-   },
-   {
-    "sha": "fbfb916",
-    "date": "2026-11-26",
-    "author": "adm01-debug",
-    "subject": "feat: tela para cadastrar e rotacionar o segredo HMAC do webhook de entrada (#346)",
-    "files": [
-     "docs/qa/03-ACHADOS.md",
-     "src/components/admin/webhook-health/WebhookSecretsCard.tsx",
-     "src/components/admin/webhook-health/__tests__/WebhookSecretsCard.test.tsx",
-     "src/hooks/__tests__/useWebhookSecrets.test.tsx",
-     "src/hooks/useWebhookSecrets.ts",
-     "src/pages/admin/WebhookHealth.tsx",
-     "supabase/tests/webhook_secrets_rls_test.sql"
-    ]
    }
   ],
   "hot_files": [
    [
     "docs/qa/05-PROGRESSO.md",
-    22
+    23
    ],
    [
     "docs/qa/03-ACHADOS.md",
-    7
+    6
    ],
    [
     "docs/agentes/banco.md",
@@ -129224,6 +129219,10 @@
    [
     "src/routes/protectedRoutes.tsx",
     2
+   ],
+   [
+    "docs/qa/01-INVENTARIO.md",
+    1
    ],
    [
     "src/components/accounts/AccountJourneyControl.tsx",
@@ -129267,10 +129266,6 @@
    ],
    [
     "src/lib/__tests__/voipProactiveSnapshot.coverage.test.ts",
-    1
-   ],
-   [
-    "src/lib/__tests__/voipRecommendationCoaching.coverage.test.ts",
     1
    ]
   ]

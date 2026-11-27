@@ -244,6 +244,9 @@ Visão consolidada (inclui `storage.objects` e `realtime.messages`); detalhes po
 | public.hold_events | Admins or linked agents can insert hold events | INSERT | PERMISSIVE | authenticated |  | `is_admin_or_supervisor()` |
 | public.hold_events | Admins or linked agents can update hold events | UPDATE | PERMISSIVE | authenticated | `is_admin_or_supervisor()` |  |
 | public.hold_events | Admins supervisors and own agent can view hold_events | SELECT | PERMISSIVE | authenticated | `(is_admin_or_supervisor() OR (agent_name = get_user_agent_name()))` |  |
+| public.hold_events | Owners can insert hold_events | INSERT | PERMISSIVE | authenticated |  | `is_own_call_session(call_session_id)` |
+| public.hold_events | Owners can update hold_events | UPDATE | PERMISSIVE | authenticated | `is_own_call_session(call_session_id)` | `is_own_call_session(call_session_id)` |
+| public.hold_events | Owners can view hold_events | SELECT | PERMISSIVE | authenticated | `(is_own_call_session(call_session_id) OR is_admin_or_supervisor() OR (agent_name = get_user_agent_name()))` |  |
 | public.holidays | Admins can manage holidays | ALL | PERMISSIVE | authenticated | `is_admin_or_supervisor()` |  |
 | public.holidays | Authenticated can view holidays | SELECT | PERMISSIVE | authenticated | `(( SELECT auth.uid() AS uid) IS NOT NULL)` |  |
 | public.hot_desking_stations | Admins can manage stations | ALL | PERMISSIVE | authenticated | `is_admin_or_supervisor()` |  |

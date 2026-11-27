@@ -16,9 +16,9 @@
 
 | início (UTC) | status | duração (s) | mensagem |
 |---|---|---|---|
-| 2026-11-27 00:37:00 | succeeded | 0.02 | 1 row |
-| 2026-11-27 00:36:00 | succeeded | 0.02 | 1 row |
-| 2026-11-27 00:35:00 | succeeded | 0.02 | 1 row |
+| 2026-11-27 01:14:00 | succeeded | 0.01 | 1 row |
+| 2026-11-27 01:13:00 | succeeded | 0.03 | 1 row |
+| 2026-11-27 01:12:00 | succeeded | 0.01 | 1 row |
 
 
 ## 14 · cleanup-lock-conflicts-weekly
@@ -51,24 +51,24 @@ _nenhum_
 
 | início (UTC) | status | duração (s) | mensagem |
 |---|---|---|---|
+| 2026-11-27 01:05:00 | succeeded | 0.39 | 1 row |
 | 2026-11-27 00:05:00 | succeeded | 0.36 | 1 row |
 | 2026-11-26 23:05:00 | succeeded | 0.44 | 1 row |
-| 2026-11-26 22:05:00 | succeeded | 0.06 | 1 row |
 
 
 ## 61 · cadence-tick
 
 | início (UTC) | status | duração (s) | mensagem |
 |---|---|---|---|
+| 2026-11-27 01:00:00 | succeeded | 0.03 | 1 row |
+| 2026-11-27 00:45:00 | succeeded | 0.06 | 1 row |
 | 2026-11-27 00:30:00 | succeeded | 0.03 | 1 row |
-| 2026-11-27 00:15:00 | succeeded | 0.08 | 1 row |
-| 2026-11-27 00:00:00 | succeeded | 0.05 | 1 row |
 
 
 ## 65 · crm-sync-queue
 
 | início (UTC) | status | duração (s) | mensagem |
 |---|---|---|---|
-| 2026-11-27 00:35:00 | succeeded | 0.02 | 0 rows |
-| 2026-11-27 00:30:00 | succeeded | 0.01 | 0 rows |
-| 2026-11-27 00:25:00 | succeeded | 0.03 | 0 rows |
+| 2026-11-27 01:10:00 | succeeded | 0.00 | 0 rows |
+| 2026-11-27 01:05:00 | succeeded | 0.02 | 0 rows |
+| 2026-11-27 01:00:00 | succeeded | 0.02 | 0 rows |

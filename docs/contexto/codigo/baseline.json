@@ -2,11 +2,16 @@
  "aviso": "GERADO AUTOMATICAMENTE por scripts/ai-context/gerar.mjs — não editar à mão; será sobrescrito.",
  "format_version": 2,
  "git": {
-  "commit": "77bac0459ad3c433c577beec23139aed69cab264",
+  "commit": "2e9fb8798a10ba72502c4229ccd3705acaf30cbe",
   "branch": "main",
-  "data_commit": "2026-11-26T21:32:53-03:00",
+  "data_commit": "2026-11-26T21:53:27-03:00",
   "remote": "https://github.com/adm01-debug/Hello_V3",
   "ultimos_commits": [
+   {
+    "sha": "2e9fb87",
+    "data": "2026-11-26",
+    "assunto": "chore: registrar varredura final de cobertura backend -> tela (#381)"
+   },
    {
     "sha": "77bac04",
     "data": "2026-11-26",
@@ -126,11 +131,6 @@
     "sha": "36baa4a",
     "data": "2026-11-26",
     "assunto": "feat: tela de violacoes de SLA com atraso e filtros (etapa 179) (#352)"
-   },
-   {
-    "sha": "5c4337b",
-    "data": "2026-11-26",
-    "assunto": "feat: registra os erros do navegador em client_errors com tela admin (etapa 230) (#351)"
    }
   ],
   "arquivos_mudados_7d": 1949,
@@ -141,7 +141,7 @@
    },
    {
     "pasta": "docs/qa/05-PROGRESSO.md",
-    "mudancas": 167
+    "mudancas": 168
    },
    {
     "pasta": "src/components/calls",
@@ -199,7 +199,7 @@
   "arquivos_mais_mudados_90d": [
    {
     "arquivo": "docs/qa/05-PROGRESSO.md",
-    "mudancas": 167
+    "mudancas": 168
    },
    {
     "arquivo": "docs/estado/funcionalidades-planejadas.md",

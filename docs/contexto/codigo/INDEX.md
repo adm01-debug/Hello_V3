@@ -1,7 +1,7 @@
 # Contexto do projeto para agentes de IA
 
 GERADO AUTOMATICAMENTE por scripts/ai-context/gerar.mjs — não editar à mão; será sobrescrito.
-Publicado em `docs/contexto/codigo/` na branch `contexto` (gerada, nunca abra PR dela) a cada push em `main` e a cada 10 minutos pelo workflow `contexto.yml`; índice único das três fontes em `docs/contexto/00-INDEX.md`. Gere local com `node scripts/ai-context/gerar.mjs`. Commit-base: `77bac0459ad3c433c577beec23139aed69cab264` (2026-11-26T21:32:53-03:00).
+Publicado em `docs/contexto/codigo/` na branch `contexto` (gerada, nunca abra PR dela) a cada push em `main` e a cada 10 minutos pelo workflow `contexto.yml`; índice único das três fontes em `docs/contexto/00-INDEX.md`. Gere local com `node scripts/ai-context/gerar.mjs`. Commit-base: `2e9fb8798a10ba72502c4229ccd3705acaf30cbe` (2026-11-26T21:53:27-03:00).
 
 ## Como usar (leia antes de planejar ou executar qualquer tarefa)
 1. **Tela/rota/menu** → `rotas.json` (url/vista/menu → arquivo → hooks → tabelas → edges; `rotas_http_backend` para APIs) e `modulos.json` (módulo inteiro + dependências entre módulos).
@@ -375,13 +375,13 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 - possiveis_segredos_no_codigo: 3 — ex.: src/lib/__tests__/security-advanced.test.ts:203, src/lib/__tests__/security-advanced.test.ts:208, src/lib/__tests__/security-advanced.test.ts:213
 
 ## Grafo de código (graphify)
-- 10738 nós · 28254 arestas · 850 comunidades · grafo do commit `77bac045`
-- comunidades maiores: lucide-react (321), client.ts (269), react (226), vitest (221), button.tsx (180), 5. Em uso por rota (164), buildCorsHeaders (138), getCorrelationId (127), @tanstack/react-query (124), cn (113), badge.tsx (104), Tabela de funcionalidades (102)
+- 10739 nós · 28256 arestas · 855 comunidades · grafo do commit `2e9fb879`
+- comunidades maiores: lucide-react (318), client.ts (221), vitest (221), react (181), protectedRoutes.tsx (159), traceHeaders (143), safe-date.ts (137), buildCorsHeaders (136), react-router-dom (130), getCorrelationId (127), usePageTitle (125), cn (119)
 - símbolos mais chamados: cn() (src/lib/utils.ts), usePageTitle() (src/hooks/usePageTitle.ts), safeFormatDatePtBR() (src/lib/safe-date.ts), useAuthContext() (src/contexts/AuthContext.tsx), q() (scripts/supabase_snapshot/snapshot.py), safeFormatDistanceToNow() (src/lib/safe-date.ts), traceHeaders() (src/lib/tracing.ts), withTrace() (src/lib/tracing.ts), safeToLocaleString() (src/lib/safe-date.ts), buildCorsHeaders() (supabase/functions/_shared/cors.ts), .collect() (scripts/supabase_snapshot/test_snapshot.py), formatDuration() (src/lib/utils.ts)
 - consulta local: `graphify query "<pergunta>"`, `graphify path "<A>" "<B>"`, `graphify explain "<X>"`
 
 ## Hotspots (arquivos mais alterados, 90 dias)
-- docs/qa/05-PROGRESSO.md (167)
+- docs/qa/05-PROGRESSO.md (168)
 - docs/estado/funcionalidades-planejadas.md (28)
 - src/components/calls/UnifiedSoftphone.tsx (13)
 - src/hooks/useMultiChannelCall.ts (12)
@@ -436,6 +436,7 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 
 
 ## Últimos commits
+- 2026-11-26 `2e9fb87` chore: registrar varredura final de cobertura backend -> tela (#381)
 - 2026-11-26 `77bac04` feat: dar tela a jornada do cliente (etapas da conta e historico de transicoes) (#380)
 - 2026-11-26 `0448f16` feat: barra de filtros salvos na tela de contatos (#379)
 - 2026-11-26 `0a4fed0` fix: valida forma do snapshot e da fila de coaching VoIP no localStorage (#378)
@@ -450,7 +451,6 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 - 2026-11-26 `83219b7` fix: índice único parcial do message_id de WhatsApp e reentrega como 200 (etapa 017) (#364)
 - 2026-11-26 `91bfc8a` fix(db): helpers de papel como STABLE (etapa 101) para as 274 policies (#362)
 - 2026-11-26 `082fc13` fix: revogar de anon o EXECUTE dos helpers de papel (etapa 146) (#361)
-- 2026-11-26 `077071b` fix: restringir a authenticated as policies de public com predicado de usuario (etapas 143 e 144) (#359)
 
 ## Arquivos deste diretório
 - `docs/contexto/codigo/rotas.json`

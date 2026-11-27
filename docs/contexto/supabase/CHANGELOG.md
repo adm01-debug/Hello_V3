@@ -2,6 +2,13 @@
 
 Diff semântico gerado a cada coleta em que algo mudou.
 
+## 2026-11-27 01:14 UTC
+
+- **functions** adicionado (1): `public.is_own_call_session(_call_session_id uuid)`
+- **functions** alterado (2): `public.get_user_agent_name()`, `public.is_admin_or_supervisor()`
+- **lints** adicionado (1): `rpc_anon_executable:public.is_own_call_session(_call_session_id uuid)`
+- **policies (RLS)** adicionado (3): `public.hold_events.Owners can insert hold_events`, `public.hold_events.Owners can update hold_events`, `public.hold_events.Owners can view hold_events`
+
 ## 2026-11-27 00:37 UTC
 
 - **realtime** adicionado (1): `supabase_realtime_messages_publication:realtime.messages_2026_11_30`
