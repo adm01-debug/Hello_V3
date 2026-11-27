@@ -4,13 +4,7 @@
 begin;
 
 -- Isola o dia de hoje: nenhum feriado real hoje e BR nao aceita feriado.
-select set_config('teste.hoje', (
-  (now() AT TIME ZONE coalesce(
-     (select c.timezone from public.calling_hours_config c
-       where c.region_code = 'BR' and c.is_active limit 1), 'America/Sao_Paulo')
-  )::date::text), true);
-
-delete from public.holidays where date = current_setting('teste.hoje')::date;
+delete from public.holidays where date = current_date;
 update public.calling_hours_config set holidays_allowed = false where region_code = 'BR';
 
 -- ---------------------------------------------------------------------------
@@ -40,7 +34,7 @@ declare
   v_res jsonb;
 begin
   insert into public.holidays (name, date, is_national, recurring)
-  values ('gate-122 recorrente', (current_setting('teste.hoje')::date - interval '1 year')::date, true, true);
+  values ('gate-122 recorrente', (current_date - interval '1 year')::date, true, true);
 
   v_res := public.check_calling_hours('BR');
 
@@ -51,7 +45,7 @@ begin
     raise exception 'FALHA 2: bloqueou pelo motivo errado (%): %', v_res->>'reason', v_res;
   end if;
 
-  raise notice '2/5 ok: feriado recorrente de % bloqueou o dia de hoje (%)', (current_setting('teste.hoje')::date - interval '1 year')::date, v_res->>'reason';
+  raise notice '2/5 ok: feriado recorrente de % bloqueou o dia de hoje (%)', (current_date - interval '1 year')::date, v_res->>'reason';
 end $$;
 
 -- ---------------------------------------------------------------------------
@@ -64,7 +58,7 @@ begin
   delete from public.holidays where name = 'gate-122 recorrente';
 
   insert into public.holidays (name, date, is_national, recurring)
-  values ('gate-122 antigo', (current_setting('teste.hoje')::date - interval '1 year')::date, true, false);
+  values ('gate-122 antigo', (current_date - interval '1 year')::date, true, false);
 
   v_res := public.check_calling_hours('BR');
 
@@ -85,7 +79,7 @@ begin
   delete from public.holidays where name = 'gate-122 antigo';
 
   insert into public.holidays (name, date, is_national, recurring)
-  values ('gate-122 hoje', current_setting('teste.hoje')::date, true, false);
+  values ('gate-122 hoje', current_date, true, false);
 
   v_res := public.check_calling_hours('BR');
 
