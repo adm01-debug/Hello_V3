@@ -96,6 +96,8 @@ Três desses têm gatilho fora do código (cron ou webhook de terceiro) e não s
 Fonte: `inventario/estado/banco.json` → `tabelas_orfas` (critério: 0 linhas + não citada em função/view do banco + nenhum `.from()` no código):
 `account_journey_history`, `customer_journey_stages`, `email_verification_tokens`, `password_reset_tokens`, `entity_versions`, `queue_skill_requirements`.
 
+**Veredito atualizado em 2026-11-26 (A-221, A-222 e varredura final):** `customer_journey_stages` e `account_journey_history` **não** são órfãs de produto — faltava a tela, entregue em `src/hooks/useAccountJourney.ts` + `src/components/accounts/AccountJourneyControl.tsx` (a etapa da conta aparece pelo nome cadastrado e passa a ser movida pela UI, gravando a transição). As quatro restantes seguem sem escritor vivo e **não** ganham tela: `password_reset_tokens` e `email_verification_tokens` são duplicatas abandonadas do fluxo que roda em `password_reset_requests` + Supabase Auth; `entity_versions` não tem tipo de entidade definido no app; `queue_skill_requirements` é configuração de roteamento que nenhum roteador consome. A lista completa com o veredito de cada objeto (9 tabelas, 3 views, 13 funções) está em `05-PROGRESSO.md`, seção "Cobertura backend → tela: varredura final".
+
 ---
 
 ## 3. Atores, papéis e jornadas

@@ -406,6 +406,32 @@ Prova: o teste novo "ignorar nao registra a sugestao como usada (A-212)" falha s
 
 ---
 
+## Cobertura backend → tela: varredura final (2026-11-26, depois de A-222)
+
+Critério: todo objeto do banco que carrega informação de produto para o usuário precisa de um leitor na UI (`src/`). Varredura programática de `src/integrations/supabase/types.ts` (168 tabelas em `Tables`, 4 em `Views`, 28 em `Functions`) cruzada com todo `.from('x')` / `.rpc('x')` em `src/`, `supabase/functions/`, `scripts/`, `e2e/` e `.github/`.
+
+**Fechados nesta frente:** `saved_filters` (A-221), `customer_journey_stages` + `account_journey_history` (A-222), `deal_pipeline_snapshots` (etapa A-143, lido por `src/hooks/useDealPipelineTrend.ts:44` e exibido em `src/components/executive/DealPipelineTrendCard.tsx:37`, montado em `src/pages/ExecutiveDashboard.tsx:102`) e `webhook_secrets` / `redaction_log` / `kb_article_history` (A-140 a A-142).
+
+**Sobram 9 tabelas sem nenhum `.from()` — nenhuma é lacuna de tela:**
+
+| Objeto | Veredito | Evidência |
+| --- | --- | --- |
+| `call_records` | duplicata legada de `call_sessions` (que tem tela no histórico de chamadas) | criada em `20250102000000_hello_production.sql:20`; `20261121125200_fix_rls_allow_all.sql:5` registra "NO replacement policy and are unreferenced by any edge/function" e deixa só policy admin/supervisor (`:14-21`) |
+| `queue_items` | duplicata legada da fila real (`call_sessions` + `hold_events` + `crm_sync_queue`) | `20250102000000_hello_production.sql:37`; mesmo veredito e mesma policy admin-only em `20261121125200_fix_rls_allow_all.sql:5,23` |
+| `queue_skill_requirements` | configuração de roteamento por skill sem escritor e sem roteador que a consuma | `20260417000338_...:101` (unique `queue_name, skill_id`, RLS admin/supervisor); nenhum `INSERT`/`UPDATE` em migration, edge ou `src/` |
+| `deal_revenue_snapshots` | tabela de colunas por deal abandonada quando o retrato diário mudou de lugar | `20260711153050_...:5`; a etapa A-143 (`20261126120000_deal_pipeline_snapshots.sql:3-9`) explica que as colunas que a função antiga escrevia nunca existiram e moveu o agregado para `deal_pipeline_snapshots` |
+| `password_reset_tokens` | estrutura paralela abandonada da recuperação de senha | a usada é `password_reset_requests` + Supabase Auth (`docs/qa/03-ACHADOS.md:1019`, `docs/qa/04-PLANO.md:3053`) |
+| `email_verification_tokens` | idem, para verificação de e-mail | `docs/qa/03-ACHADOS.md:1019` |
+| `entity_versions` | versionamento genérico sem nenhum tipo de entidade definido no app | `20241231000001_entity_versions.sql` (só tabela, índices e policies); nenhum trigger e nenhum `.from()` |
+| `schema_migrations` | infraestrutura do pipeline de migrations | usada por SQL dentro de `.github/workflows/migrations.yml`, não pela UI |
+| `migration_rollbacks` | idem | `20261121125200` emite alerta `rls_sem_policy` para ela (`docs/qa/01-INVENTARIO.md:86`) — é tabela de job, não de produto |
+
+**Views (3 sem `.from()`):** `index_usage`, `unused_indexes` e `migration_status` são objetos de DBA e tiveram o acesso **revogado de propósito**: `20261122183000_hardening_revoke_internal_functions.sql:133-141` marcou as três como `security_invoker = true`, tirou `anon`/`authenticated` e deixou `SELECT` só para `service_role` (antes vazavam para `anon`). Dar tela a elas exigiria desfazer um hardening de segurança.
+
+**Funções (13 sem `.rpc()`):** `has_role`, `get_user_roles`, `has_permission`, `can_access_agent_data`, `check_ip_allowed`, `check_ip_in_cidr` e `log_rls_event` são auxiliares chamadas dentro de policies (`USING (public.has_role(...))`), não endpoints de cliente; `apply_migration` e `rollback_migration` são do pipeline; `check_table_bloat` está com `EXECUTE` revogado de `authenticated` (`20261122183000_...:78`) e é usada pelo alerta semanal de bloat (`20260712110237_...:46`); `dblink_fdw_validator`, `dblink_get_pkey` e `dblink_get_result` são internas da extensão `dblink`.
+
+**Conclusão:** com A-221 e A-222, todo objeto de banco que carrega informação de produto tem leitor na UI. O que resta é (a) infraestrutura acessada por cron/workflow com `service_role`, (b) objetos revogados de propósito por hardening e (c) estruturas duplicadas/abandonadas que exigem decisão do dono — apagar ou ligar a uma funcionalidade — conforme a regra 8.
+
 ## Etapas em que o código já não correspondia à evidência
 
 Quando a etapa descrever algo que o código atual não tem mais (porque alguém corrigiu, ou porque o arquivo mudou), marque `[-]` acima e registre aqui. Isso é informação valiosa: significa que o plano envelheceu naquele ponto.
