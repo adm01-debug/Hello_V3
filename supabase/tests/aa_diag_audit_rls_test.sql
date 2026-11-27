@@ -2,31 +2,27 @@ begin;
 do $$
 declare
   v_cols text;
-  v_pol text;
-  v_checks text;
-  v_total bigint;
+  v_trg text;
+  v_holds bigint;
+  v_sessoes bigint;
+  v_holds_nome bigint;
 begin
-  select string_agg(column_name || ' ' || data_type, ', ' order by ordinal_position)
-    into v_cols
+  select string_agg(column_name, ', ' order by ordinal_position) into v_cols
     from information_schema.columns
-   where table_schema = 'public' and table_name = 'call_control_audit_logs';
+   where table_schema = 'public' and table_name = 'call_sessions'
+     and column_name in ('hold_time_seconds', 'wait_time_seconds', 'agent_name');
 
-  select string_agg(policyname || ' [' || cmd || '] roles=' || array_to_string(roles, ',') ||
-                    ' qual=' || coalesce(qual, '-') || ' check=' || coalesce(with_check, '-'), E'\n  ')
-    into v_pol
-    from pg_policies
-   where schemaname = 'public' and tablename = 'call_control_audit_logs';
+  select string_agg(t.tgname || ' on ' || c.relname, ' ; ') into v_trg
+    from pg_trigger t join pg_class c on c.oid = t.tgrelid
+   where not t.tgisinternal and c.relname in ('hold_events', 'call_sessions');
 
-  select string_agg(conname || ' => ' || pg_get_constraintdef(oid), ' ; ')
-    into v_checks
-    from pg_constraint
-   where conrelid = 'public.call_control_audit_logs'::regclass;
+  select count(*) into v_holds from public.hold_events;
+  select count(*) into v_holds_nome from public.hold_events where agent_name is not null;
+  select count(*) into v_sessoes from public.call_sessions where coalesce(hold_time_seconds, 0) > 0;
 
-  execute 'select count(*) from public.call_control_audit_logs' into v_total;
-
-  raise notice 'DIAG COLS: %', v_cols;
-  raise notice 'DIAG POLICIES: %', v_pol;
-  raise notice 'DIAG CONSTRAINTS: %', v_checks;
-  raise notice 'DIAG ROWS: %', v_total;
+  raise notice 'DIAG SESSOES COLS: %', v_cols;
+  raise notice 'DIAG TRIGGERS: %', v_trg;
+  raise notice 'DIAG HOLDS: % (com agent_name: %)', v_holds, v_holds_nome;
+  raise notice 'DIAG SESSOES COM hold_time>0: %', v_sessoes;
 end $$;
 rollback;
