@@ -3,7 +3,7 @@
  "format_version": 2,
  "stack": {
   "linguagens": [
-   "TypeScript (1355)",
+   "TypeScript (1359)",
    "SQL (304)",
    "Markdown (122)",
    "JavaScript (31)",
@@ -828,12 +828,12 @@
     "ocorrencias": 17
    },
    {
-    "papel": "button",
+    "papel": "alert",
     "ocorrencias": 14
    },
    {
-    "papel": "alert",
-    "ocorrencias": 13
+    "papel": "button",
+    "ocorrencias": 14
    },
    {
     "papel": "supervisor",
@@ -841,7 +841,7 @@
    },
    {
     "papel": "group",
-    "ocorrencias": 6
+    "ocorrencias": 7
    },
    {
     "papel": "status",
@@ -880,6 +880,10 @@
     "ocorrencias": 2
    },
    {
+    "papel": "region",
+    "ocorrencias": 2
+   },
+   {
     "papel": "string",
     "ocorrencias": 2
    },
@@ -913,10 +917,6 @@
    },
    {
     "papel": "radio",
-    "ocorrencias": 1
-   },
-   {
-    "papel": "region",
     "ocorrencias": 1
    },
    {

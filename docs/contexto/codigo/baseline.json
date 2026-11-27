@@ -2,11 +2,16 @@
  "aviso": "GERADO AUTOMATICAMENTE por scripts/ai-context/gerar.mjs — não editar à mão; será sobrescrito.",
  "format_version": 2,
  "git": {
-  "commit": "0448f160a0636272cca7e06fc4e923196508abf6",
+  "commit": "77bac0459ad3c433c577beec23139aed69cab264",
   "branch": "main",
-  "data_commit": "2026-11-26T21:07:54-03:00",
+  "data_commit": "2026-11-26T21:32:53-03:00",
   "remote": "https://github.com/adm01-debug/Hello_V3",
   "ultimos_commits": [
+   {
+    "sha": "77bac04",
+    "data": "2026-11-26",
+    "assunto": "feat: dar tela a jornada do cliente (etapas da conta e historico de transicoes) (#380)"
+   },
    {
     "sha": "0448f16",
     "data": "2026-11-26",
@@ -126,22 +131,17 @@
     "sha": "5c4337b",
     "data": "2026-11-26",
     "assunto": "feat: registra os erros do navegador em client_errors com tela admin (etapa 230) (#351)"
-   },
-   {
-    "sha": "31ef778",
-    "data": "2026-11-26",
-    "assunto": "feat: edicao e trilha de auditoria na lista DNC (etapa 175) (#350)"
    }
   ],
-  "arquivos_mudados_7d": 1945,
+  "arquivos_mudados_7d": 1949,
   "pastas_mais_mudadas_30d": [
    {
     "pasta": "src/hooks/__tests__",
-    "mudancas": 297
+    "mudancas": 298
    },
    {
     "pasta": "docs/qa/05-PROGRESSO.md",
-    "mudancas": 166
+    "mudancas": 167
    },
    {
     "pasta": "src/components/calls",
@@ -192,18 +192,18 @@
     "mudancas": 30
    },
    {
-    "pasta": "docs/estado/funcionalidades-planejadas.md",
+    "pasta": "src/components/dialer",
     "mudancas": 29
    }
   ],
   "arquivos_mais_mudados_90d": [
    {
     "arquivo": "docs/qa/05-PROGRESSO.md",
-    "mudancas": 166
+    "mudancas": 167
    },
    {
     "arquivo": "docs/estado/funcionalidades-planejadas.md",
-    "mudancas": 29
+    "mudancas": 28
    },
    {
     "arquivo": "src/components/calls/UnifiedSoftphone.tsx",
@@ -234,15 +234,15 @@
     "mudancas": 9
    },
    {
+    "arquivo": "docs/qa/03-ACHADOS.md",
+    "mudancas": 9
+   },
+   {
     "arquivo": "supabase/functions/data-lake-flush/index.ts",
     "mudancas": 9
    },
    {
     "arquivo": "docs/agentes/mapa-repo.md",
-    "mudancas": 8
-   },
-   {
-    "arquivo": "docs/qa/03-ACHADOS.md",
     "mudancas": 8
    },
    {
@@ -306,21 +306,21 @@
   ]
  },
  "contagens": {
-  "arquivos_total": 1854,
-  "arquivos_codigo": 1390,
-  "linhas_codigo": 185674,
+  "arquivos_total": 1858,
+  "arquivos_codigo": 1394,
+  "linhas_codigo": 186346,
   "rotas": 108,
   "rotas_http_backend": 11,
   "vistas_por_id": 0,
   "itens_menu": 98,
   "modulos": 83,
-  "componentes": 455,
-  "hooks": 202,
+  "componentes": 456,
+  "hooks": 203,
   "edge_functions": 99,
   "tabelas": 172,
   "migrations": 270,
   "cron_jobs": 13,
-  "testes": 464,
+  "testes": 466,
   "workflows": 5,
   "scripts": 36,
   "docs_md": 122
@@ -475,8 +475,8 @@
    "linhas": 450
   },
   "src/components": {
-   "arquivos": 386,
-   "linhas": 45753
+   "arquivos": 388,
+   "linhas": 46016
   },
   "src/contexts": {
    "arquivos": 5,
@@ -487,8 +487,8 @@
    "linhas": 312
   },
   "src/hooks": {
-   "arquivos": 357,
-   "linhas": 45747
+   "arquivos": 359,
+   "linhas": 46149
   },
   "src/integrations": {
    "arquivos": 3,
@@ -504,7 +504,7 @@
   },
   "src/pages": {
    "arquivos": 161,
-   "linhas": 24700
+   "linhas": 24707
   },
   "src/routes": {
    "arquivos": 4,

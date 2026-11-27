@@ -1,15 +1,15 @@
 {
  "meta": {
-  "sha": "0448f160a0636272cca7e06fc4e923196508abf6",
+  "sha": "77bac0459ad3c433c577beec23139aed69cab264",
   "branch": "main",
   "remote": "https://github.com/adm01-debug/Hello_V3",
-  "generated_at": "2026-11-27 00:09 UTC",
-  "files_total": 1900,
-  "code_files": 1695,
-  "code_lines": 208077
+  "generated_at": "2026-11-27 00:34 UTC",
+  "files_total": 1904,
+  "code_files": 1699,
+  "code_lines": 208749
  },
  "version": "1.3.2",
- "facts_hash": "eda31003c54b7186",
+ "facts_hash": "c768ae467812f750",
  "stack": {
   "frameworks": [
    "React + Vite",
@@ -168,8 +168,8 @@
   ],
   "package_manager": "bun",
   "languages": {
-   ".tsx": 683,
-   ".ts": 672,
+   ".tsx": 686,
+   ".ts": 673,
    ".sql": 304,
    ".mjs": 29,
    ".py": 5,
@@ -29269,15 +29269,17 @@
     "file": "src/pages/Accounts.tsx",
     "component": "Accounts",
     "tables_transitive": [
+     "account_journey_history",
      "accounts",
-     "churn_risk_signals"
+     "churn_risk_signals",
+     "customer_journey_stages"
     ],
     "invokes_transitive": [
      "compute-account-health",
      "detect-churn-risk"
     ],
     "rpc_transitive": [],
-    "deps_count": 16
+    "deps_count": 18
    },
    {
     "path": "",
@@ -33476,7 +33478,7 @@
     "file": ".github/workflows/migrations.yml"
    }
   ],
-  "components_count": 386,
+  "components_count": 388,
   "hooks": [
    {
     "name": "useContacts",
@@ -33565,6 +33567,10 @@
    {
     "name": "useIsMobile",
     "file": "src/hooks/use-mobile.tsx"
+   },
+   {
+    "name": "useAccountJourney",
+    "file": "src/hooks/useAccountJourney.ts"
    },
    {
     "name": "useAccounts",
@@ -34688,8 +34694,8 @@
   },
   {
    "module": "src/components",
-   "files": 386,
-   "lines": 45753,
+   "files": 388,
+   "lines": 46016,
    "tables": [
     "accounts",
     "agent_goals",
@@ -34731,6 +34737,7 @@
    ],
    "exports": [
     "SearchInput.tsx: SearchInput",
+    "AccountJourneyControl.tsx: JourneyAccount, AccountJourneyControl",
     "ChurnSignalsPanel.tsx: ChurnSignalsPanel",
     "EndpointSparkline.tsx: EndpointSparkline",
     "BulkActionsBar.tsx: BulkActionsBarProps, BulkActionsBar",
@@ -34768,8 +34775,7 @@
     "AlertStatsCards.tsx: AlertStatsCards",
     "AlertsTrendChart.tsx: AlertsTrendChart",
     "CallAlertsList.tsx: CallAlertsList",
-    "ContactAlertsList.tsx: ContactAlertsList",
-    "LoginBranding.tsx: LoginBranding"
+    "ContactAlertsList.tsx: ContactAlertsList"
    ],
    "docs": [
     "SearchInput.tsx: Componente de Input de Busca @module components/SearchInput",
@@ -34815,7 +34821,9 @@
    ],
    "file_list": [
     "src/components/SearchInput.tsx",
+    "src/components/accounts/AccountJourneyControl.tsx",
     "src/components/accounts/ChurnSignalsPanel.tsx",
+    "src/components/accounts/__tests__/AccountJourneyControl.test.tsx",
     "src/components/admin/EndpointSparkline.tsx",
     "src/components/admin/extensions/BulkActionsBar.tsx",
     "src/components/admin/extensions/BulkAssignTrunkDialog.tsx",
@@ -34891,9 +34899,7 @@
     "src/components/calls/TransferCallDialog.tsx",
     "src/components/calls/UnifiedSoftphone.tsx",
     "src/components/calls/VoipQualityIndicator.tsx",
-    "src/components/calls/__tests__/ActiveCallBar.espera.test.tsx",
-    "src/components/calls/__tests__/ActiveCallBar.verificacaoVoz.test.tsx",
-    "src/components/calls/__tests__/AudioOutputSelector.test.tsx"
+    "src/components/calls/__tests__/ActiveCallBar.espera.test.tsx"
    ]
   },
   {
@@ -34949,9 +34955,10 @@
   },
   {
    "module": "src/hooks",
-   "files": 357,
-   "lines": 45747,
+   "files": 359,
+   "lines": 46149,
    "tables": [
+    "account_journey_history",
     "accounts",
     "active_sessions",
     "agent_badges",
@@ -35006,6 +35013,7 @@
     "crm_field_suggestions",
     "crm_sync_queue",
     "cultural_hints",
+    "customer_journey_stages",
     "dashboard_goals",
     "data_lake_exports",
     "deal_pipeline_snapshots",
@@ -35088,6 +35096,7 @@
    "exports": [
     "use-mobile.tsx: useIsMobile",
     "use-toast.ts: reducer",
+    "useAccountJourney.ts: JourneyStage, JourneyHistoryEntry, StageChangeInput, useAccountJourney",
     "useAccounts.ts: Account, useAccounts",
     "useAchievementNotifications.ts: useAchievementNotifications",
     "useActiveCallsRealtime.ts: useActiveCallsRealtime",
@@ -35124,8 +35133,7 @@
     "useCallTransfer.ts: useCallTransfer",
     "useChatbot.ts: ChatbotResponse, useChatbot",
     "useChurnRisk.ts: ChurnSignal, useChurnRisk",
-    "useClientErrors.ts: CLIENT_ERRORS_QUERY_KEY, CLIENT_ERRORS_COLUMNS, CLIENT_ERRORS_PAGE_SIZE, ClientErrorEntry, CLIENT_ERROR_TYPE_LABEL, clientErrorTypeLabel",
-    "useCoaching.ts: CoachingRecommendation, useCoaching"
+    "useClientErrors.ts: CLIENT_ERRORS_QUERY_KEY, CLIENT_ERRORS_COLUMNS, CLIENT_ERRORS_PAGE_SIZE, ClientErrorEntry, CLIENT_ERROR_TYPE_LABEL, clientErrorTypeLabel"
    ],
    "docs": [
     "usePageVisibility.ts: usePageVisibility — retorna `true` quando a aba está visível. Fonte: Page Visibility API (document.visibilityState). Uso típico: const isVisible = usePageVisibility(); useEffect(() => { if (!isVisible) return; // subscribe... }, [isVisible]); SSR-safe: assume visível quando `document` não existe.",
@@ -35158,6 +35166,7 @@
    "file_list": [
     "src/hooks/use-mobile.tsx",
     "src/hooks/use-toast.ts",
+    "src/hooks/useAccountJourney.ts",
     "src/hooks/useAccounts.ts",
     "src/hooks/useAchievementNotifications.ts",
     "src/hooks/useActiveCallsRealtime.ts",
@@ -35234,8 +35243,7 @@
     "src/hooks/useHoldMetrics.ts",
     "src/hooks/useHoldReminder.ts",
     "src/hooks/useHoldSoundAlert.ts",
-    "src/hooks/useIPValidation.ts",
-    "src/hooks/useIPWhitelist.ts"
+    "src/hooks/useIPValidation.ts"
    ]
   },
   {
@@ -35438,7 +35446,7 @@
   {
    "module": "src/pages",
    "files": 161,
-   "lines": 24700,
+   "lines": 24707,
    "tables": [
     "audit_logs",
     "battle_card_triggers",
@@ -36075,6 +36083,14 @@
      "scripts/ai-context/cenarios.mjs"
     ]
    },
+   "account_journey_history": {
+    "select": [
+     "src/hooks/useAccountJourney.ts"
+    ],
+    "insert": [
+     "src/hooks/useAccountJourney.ts"
+    ]
+   },
    "account_lockouts": {
     "delete": [
      "supabase/functions/database-cleanup/index.ts"
@@ -36086,13 +36102,14 @@
      "src/hooks/useAccounts.ts",
      "supabase/functions/compute-account-health/index.ts"
     ],
-    "insert": [
-     "src/hooks/useAccounts.ts"
-    ],
     "update": [
+     "src/hooks/useAccountJourney.ts",
      "src/hooks/useAccounts.ts",
      "supabase/functions/compute-account-health/index.ts",
      "supabase/functions/detect-churn-risk/index.ts"
+    ],
+    "insert": [
+     "src/hooks/useAccounts.ts"
     ]
    },
    "active_sessions": {
@@ -36904,6 +36921,11 @@
     "select": [
      "src/hooks/useCulturalHints.ts",
      "src/pages/TranslationCenter.tsx"
+    ]
+   },
+   "customer_journey_stages": {
+    "select": [
+     "src/hooks/useAccountJourney.ts"
     ]
    },
    "dashboard_goals": {
@@ -38032,6 +38054,15 @@
    }
   },
   "table_cols": {
+   "account_journey_history": [
+    "account_id",
+    "created_at",
+    "from_stage",
+    "id",
+    "reason",
+    "to_stage",
+    "triggered_by"
+   ],
    "account_lockouts": [
     "locked_until"
    ],
@@ -38380,6 +38411,15 @@
    "cultural_hints": [
     "is_active",
     "locale"
+   ],
+   "customer_journey_stages": [
+    "color",
+    "description",
+    "display_order",
+    "id",
+    "is_active",
+    "stage_key",
+    "stage_name"
    ],
    "dashboard_goals": [
     "id",
@@ -40271,9 +40311,7 @@
    "tx"
   ],
   "tables_only_in_schema": [
-   "account_journey_history",
    "call_records",
-   "customer_journey_stages",
    "deal_revenue_snapshots",
    "email_verification_tokens",
    "entity_versions",
@@ -41959,6 +41997,10 @@
     "msg": "view sem permissão na fixture"
    },
    {
+    "file": "src/components/accounts/AccountJourneyControl.tsx",
+    "msg": ">{stagesError}</span>}\n\n      {pendingStage && (\n        <div\n          className="
+   },
+   {
     "file": "src/components/admin/extensions/BulkAssignTrunkDialog.tsx",
     "msg": "Erro ao carregar trunks"
    },
@@ -42313,6 +42355,22 @@
    {
     "file": "src/contexts/ThemeContext.tsx",
     "msg": "useTheme must be used within ThemeProvider"
+   },
+   {
+    "file": "src/hooks/useAccountJourney.ts",
+    "msg": "Esta conta foi alterada por outro usuario. Recarregue antes de salvar."
+   },
+   {
+    "file": "src/hooks/useAccountJourney.ts",
+    "msg": "Etapa alterada, mas o historico nao foi registrado"
+   },
+   {
+    "file": "src/hooks/useAccountJourney.ts",
+    "msg": "Falha ao alterar a etapa da conta"
+   },
+   {
+    "file": "src/hooks/useAccountJourney.ts",
+    "msg": "Falha ao carregar o historico da jornada"
    },
    {
     "file": "src/hooks/useAccounts.ts",
@@ -52138,6 +52196,11 @@
     "value": "1000000"
    },
    {
+    "file": "src/hooks/useAccountJourney.ts",
+    "name": "HISTORY_LIMIT",
+    "value": "20"
+   },
+   {
     "file": "src/hooks/useAccounts.ts",
     "name": "ACCOUNTS_PAGE_SIZE",
     "value": "50"
@@ -59757,6 +59820,34 @@
     "name": "apenas admin pode deletar gravações"
    },
    {
+    "file": "src/components/accounts/__tests__/AccountJourneyControl.test.tsx",
+    "name": "AccountJourneyControl"
+   },
+   {
+    "file": "src/components/accounts/__tests__/AccountJourneyControl.test.tsx",
+    "name": "mostra o nome da etapa, nao a chave crua"
+   },
+   {
+    "file": "src/components/accounts/__tests__/AccountJourneyControl.test.tsx",
+    "name": "mantem a chave visivel quando a etapa nao esta cadastrada"
+   },
+   {
+    "file": "src/components/accounts/__tests__/AccountJourneyControl.test.tsx",
+    "name": "confirma a troca com motivo e recarrega a lista"
+   },
+   {
+    "file": "src/components/accounts/__tests__/AccountJourneyControl.test.tsx",
+    "name": "cancelar nao grava a troca"
+   },
+   {
+    "file": "src/components/accounts/__tests__/AccountJourneyControl.test.tsx",
+    "name": "abre o historico da conta e lista as transicoes"
+   },
+   {
+    "file": "src/components/accounts/__tests__/AccountJourneyControl.test.tsx",
+    "name": "explica o historico vazio e o erro de etapas"
+   },
+   {
     "file": "src/components/admin/extensions/__tests__/HealthScoreBadge.test.tsx",
     "name": "HealthScoreBadge — 100+ cenários"
    },
@@ -60739,6 +60830,46 @@
    {
     "file": "src/hooks/__tests__/use-toast.coverage.test.tsx",
     "name": "triggers onOpenChange callback -> dismiss"
+   },
+   {
+    "file": "src/hooks/__tests__/useAccountJourney.coverage.test.tsx",
+    "name": "useAccountJourney"
+   },
+   {
+    "file": "src/hooks/__tests__/useAccountJourney.coverage.test.tsx",
+    "name": "carrega as etapas ativas e traduz a chave para o nome"
+   },
+   {
+    "file": "src/hooks/__tests__/useAccountJourney.coverage.test.tsx",
+    "name": "mantem a chave visivel quando a etapa nao esta cadastrada"
+   },
+   {
+    "file": "src/hooks/__tests__/useAccountJourney.coverage.test.tsx",
+    "name": "expoe erro na tela quando a leitura das etapas falha"
+   },
+   {
+    "file": "src/hooks/__tests__/useAccountJourney.coverage.test.tsx",
+    "name": "grava a etapa nova com lock otimista e registra a transicao"
+   },
+   {
+    "file": "src/hooks/__tests__/useAccountJourney.coverage.test.tsx",
+    "name": "nao faz nada quando a etapa escolhida e a atual"
+   },
+   {
+    "file": "src/hooks/__tests__/useAccountJourney.coverage.test.tsx",
+    "name": "avisa que a etapa mudou sem historico quando a insercao falha"
+   },
+   {
+    "file": "src/hooks/__tests__/useAccountJourney.coverage.test.tsx",
+    "name": "explica o conflito de lock otimista e nao grava historico"
+   },
+   {
+    "file": "src/hooks/__tests__/useAccountJourney.coverage.test.tsx",
+    "name": "usa o erro generico quando a gravacao falha por outro motivo"
+   },
+   {
+    "file": "src/hooks/__tests__/useAccountJourney.coverage.test.tsx",
+    "name": "registra system quando nao ha sessao e avisa quando o historico nao carrega"
    },
    {
     "file": "src/hooks/__tests__/useAccounts.coverage.test.tsx",
@@ -94087,11 +94218,39 @@
    ],
    "doc": "Componente de Input de Busca @module components/SearchInput"
   },
+  "src/components/accounts/AccountJourneyControl.tsx": {
+   "path": "src/components/accounts/AccountJourneyControl.tsx",
+   "lines": 140,
+   "exports": [
+    "interface JourneyAccount",
+    "function AccountJourneyControl"
+   ],
+   "errors": [
+    ">{stagesError}</span>}\n\n      {pendingStage && (\n        <div\n          className="
+   ]
+  },
   "src/components/accounts/ChurnSignalsPanel.tsx": {
    "path": "src/components/accounts/ChurnSignalsPanel.tsx",
    "lines": 72,
    "exports": [
     "function ChurnSignalsPanel"
+   ]
+  },
+  "src/components/accounts/__tests__/AccountJourneyControl.test.tsx": {
+   "path": "src/components/accounts/__tests__/AccountJourneyControl.test.tsx",
+   "lines": 123,
+   "is_test": true,
+   "errors": [
+    ")).toHaveTextContent("
+   ],
+   "tests": [
+    "AccountJourneyControl",
+    "mostra o nome da etapa, nao a chave crua",
+    "mantem a chave visivel quando a etapa nao esta cadastrada",
+    "confirma a troca com motivo e recarrega a lista",
+    "cancelar nao grava a troca",
+    "abre o historico da conta e lista as transicoes",
+    "explica o historico vazio e o erro de etapas"
    ]
   },
   "src/components/admin/EndpointSparkline.tsx": {
@@ -99967,6 +100126,72 @@
      "value": "REMOVE_TOAST",
      "kind": "compara"
     }
+   ]
+  },
+  "src/hooks/useAccountJourney.ts": {
+   "path": "src/hooks/useAccountJourney.ts",
+   "lines": 156,
+   "exports": [
+    "interface JourneyStage",
+    "interface JourneyHistoryEntry",
+    "interface StageChangeInput",
+    "function useAccountJourney"
+   ],
+   "tables": [
+    {
+     "table": "customer_journey_stages",
+     "op": "select"
+    },
+    {
+     "table": "account_journey_history",
+     "op": "select"
+    },
+    {
+     "table": "accounts",
+     "op": "update"
+    },
+    {
+     "table": "account_journey_history",
+     "op": "insert"
+    }
+   ],
+   "table_cols": {
+    "customer_journey_stages": [
+     "color",
+     "description",
+     "display_order",
+     "id",
+     "is_active",
+     "stage_key",
+     "stage_name"
+    ],
+    "account_journey_history": [
+     "account_id",
+     "created_at",
+     "from_stage",
+     "id",
+     "reason",
+     "to_stage",
+     "triggered_by"
+    ],
+    "accounts": [
+     "id"
+    ]
+   },
+   "errors": [
+    "Esta conta foi alterada por outro usuario. Recarregue antes de salvar.",
+    "Etapa alterada, mas o historico nao foi registrado",
+    "Falha ao alterar a etapa da conta",
+    "Falha ao carregar o historico da jornada"
+   ],
+   "params": [
+    {
+     "name": "HISTORY_LIMIT",
+     "value": "20"
+    }
+   ],
+   "hooks": [
+    "useAccountJourney"
    ]
   },
   "src/hooks/useAccounts.ts": {
@@ -107847,6 +108072,23 @@
     "dismiss() with no id dismisses all",
     "reducer handles ADD/UPDATE/DISMISS/REMOVE",
     "triggers onOpenChange callback -> dismiss"
+   ]
+  },
+  "src/hooks/__tests__/useAccountJourney.coverage.test.tsx": {
+   "path": "src/hooks/__tests__/useAccountJourney.coverage.test.tsx",
+   "lines": 246,
+   "is_test": true,
+   "tests": [
+    "useAccountJourney",
+    "carrega as etapas ativas e traduz a chave para o nome",
+    "mantem a chave visivel quando a etapa nao esta cadastrada",
+    "expoe erro na tela quando a leitura das etapas falha",
+    "grava a etapa nova com lock otimista e registra a transicao",
+    "nao faz nada quando a etapa escolhida e a atual",
+    "avisa que a etapa mudou sem historico quando a insercao falha",
+    "explica o conflito de lock otimista e nao grava historico",
+    "usa o erro generico quando a gravacao falha por outro motivo",
+    "registra system quando nao ha sessao e avisa quando o historico nao carrega"
    ]
   },
   "src/hooks/__tests__/useAccounts.coverage.test.tsx": {
@@ -116023,7 +116265,7 @@
   },
   "src/pages/Accounts.tsx": {
    "path": "src/pages/Accounts.tsx",
-   "lines": 149,
+   "lines": 156,
    "exports": [
     "function Accounts"
    ]
@@ -128541,10 +128783,25 @@
   }
  },
  "git": {
-  "sha": "0448f160a0636272cca7e06fc4e923196508abf6",
+  "sha": "77bac0459ad3c433c577beec23139aed69cab264",
   "branch": "main",
   "remote": "https://github.com/adm01-debug/Hello_V3",
   "commits": [
+   {
+    "sha": "77bac04",
+    "date": "2026-11-26",
+    "author": "adm01-debug",
+    "subject": "feat: dar tela a jornada do cliente (etapas da conta e historico de transicoes) (#380)",
+    "files": [
+     "docs/qa/03-ACHADOS.md",
+     "docs/qa/05-PROGRESSO.md",
+     "src/components/accounts/AccountJourneyControl.tsx",
+     "src/components/accounts/__tests__/AccountJourneyControl.test.tsx",
+     "src/hooks/__tests__/useAccountJourney.coverage.test.tsx",
+     "src/hooks/useAccountJourney.ts",
+     "src/pages/Accounts.tsx"
+    ]
+   },
    {
     "sha": "0448f16",
     "date": "2026-11-26",
@@ -128933,25 +129190,12 @@
      "src/pages/admin/WebhookHealth.tsx",
      "supabase/tests/webhook_secrets_rls_test.sql"
     ]
-   },
-   {
-    "sha": "bd1b19c",
-    "date": "2026-11-26",
-    "author": "adm01-debug",
-    "subject": "fix: aba Pesquisas enviava um id fixo e nunca cadastrava pesquisa (#345)",
-    "files": [
-     "docs/qa/03-ACHADOS.md",
-     "src/components/call-library/SurveysPanel.tsx",
-     "src/components/call-library/__tests__/SurveysPanel.test.tsx",
-     "src/hooks/__tests__/useSurveys.coverage.test.tsx",
-     "src/hooks/useSurveys.ts"
-    ]
    }
   ],
   "hot_files": [
    [
     "docs/qa/05-PROGRESSO.md",
-    21
+    22
    ],
    [
     "docs/qa/03-ACHADOS.md",
@@ -128982,6 +129226,26 @@
     2
    ],
    [
+    "src/components/accounts/AccountJourneyControl.tsx",
+    1
+   ],
+   [
+    "src/components/accounts/__tests__/AccountJourneyControl.test.tsx",
+    1
+   ],
+   [
+    "src/hooks/__tests__/useAccountJourney.coverage.test.tsx",
+    1
+   ],
+   [
+    "src/hooks/useAccountJourney.ts",
+    1
+   ],
+   [
+    "src/pages/Accounts.tsx",
+    1
+   ],
+   [
     "src/components/contacts/SavedFiltersBar.tsx",
     1
    ],
@@ -129007,26 +129271,6 @@
    ],
    [
     "src/lib/__tests__/voipRecommendationCoaching.coverage.test.ts",
-    1
-   ],
-   [
-    "src/lib/voipProactiveSnapshot.ts",
-    1
-   ],
-   [
-    "src/lib/voipRecommendationCoaching.ts",
-    1
-   ],
-   [
-    "supabase/functions/_shared/__tests__/client-ip.test.ts",
-    1
-   ],
-   [
-    "supabase/migrations/20261127240000_calling_hours_recurring_comment.sql",
-    1
-   ],
-   [
-    "supabase/tests/recurring_holidays_rls_test.sql",
     1
    ]
   ]

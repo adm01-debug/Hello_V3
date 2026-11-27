@@ -1,7 +1,7 @@
 {
  "aviso": "GERADO AUTOMATICAMENTE por scripts/ai-context/gerar.mjs — não editar à mão; será sobrescrito.",
  "format_version": 2,
- "total": 455,
+ "total": 456,
  "orfaos": 13,
  "nomes_duplicados": {
   "KpiCards": [
@@ -30,6 +30,21 @@
    "export_default": "App",
    "linhas": 139,
    "dominio": null,
+   "hooks_locais": [],
+   "tabelas": [],
+   "edges": [],
+   "usado_por": 1,
+   "orfao": false
+  },
+  {
+   "arquivo": "src/components/accounts/AccountJourneyControl.tsx",
+   "exports": [
+    "AccountJourneyControl",
+    "JourneyAccount"
+   ],
+   "export_default": null,
+   "linhas": 140,
+   "dominio": "components/accounts",
    "hooks_locais": [],
    "tabelas": [],
    "edges": [],
@@ -4121,7 +4136,7 @@
    "hooks_locais": [],
    "tabelas": [],
    "edges": [],
-   "usado_por": 205,
+   "usado_por": 206,
    "orfao": false
   },
   {
@@ -4171,7 +4186,7 @@
    "hooks_locais": [],
    "tabelas": [],
    "edges": [],
-   "usado_por": 251,
+   "usado_por": 252,
    "orfao": false
   },
   {
@@ -4474,7 +4489,7 @@
    "hooks_locais": [],
    "tabelas": [],
    "edges": [],
-   "usado_por": 98,
+   "usado_por": 99,
    "orfao": false
   },
   {
@@ -4691,7 +4706,7 @@
    "hooks_locais": [],
    "tabelas": [],
    "edges": [],
-   "usado_por": 72,
+   "usado_por": 73,
    "orfao": false
   },
   {
@@ -5212,9 +5227,10 @@
     "Accounts"
    ],
    "export_default": "Accounts",
-   "linhas": 149,
+   "linhas": 156,
    "dominio": "pages",
    "hooks_locais": [
+    "useAccountJourney",
     "useAccounts",
     "usePageTitle"
    ],

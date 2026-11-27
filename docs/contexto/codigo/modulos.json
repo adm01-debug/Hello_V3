@@ -66,20 +66,24 @@
   },
   {
    "modulo": "components/accounts",
-   "arquivos": 1,
-   "testes": 0,
-   "linhas": 72,
+   "arquivos": 2,
+   "testes": 1,
+   "linhas": 212,
    "itens_menu": [],
    "telas": [],
    "rotas_http": [],
-   "componentes": 1,
+   "componentes": 2,
    "hooks_locais": [
+    "useAccountJourney",
     "useChurnRisk"
    ],
    "hooks_definidos": [],
    "edges": [],
    "tabelas": [
-    "churn_risk_signals"
+    "account_journey_history",
+    "accounts",
+    "churn_risk_signals",
+    "customer_journey_stages"
    ],
    "rpcs": [],
    "buckets": [],
@@ -89,7 +93,11 @@
     "VITE_SUPABASE_URL"
    ],
    "flags": [],
-   "papeis": [],
+   "papeis": [
+    "alert",
+    "group",
+    "region"
+   ],
    "diretos": {
     "edges": [],
     "tabelas": [],
@@ -1629,6 +1637,7 @@
    "rotas_http": [],
    "componentes": 8,
    "hooks_locais": [
+    "useAccountJourney",
     "useAccounts",
     "useActiveCallsRealtime",
     "useAdherence",
@@ -1939,6 +1948,7 @@
     "webauthn-challenge"
    ],
    "tabelas": [
+    "account_journey_history",
     "accounts",
     "active_sessions",
     "agent_badges",
@@ -1997,6 +2007,7 @@
     "crm_field_suggestions",
     "crm_sync_queue",
     "cultural_hints",
+    "customer_journey_stages",
     "dashboard_goals",
     "data_lake_exports",
     "deal_pipeline_snapshots",
@@ -2185,6 +2196,7 @@
     "img",
     "navigation",
     "progressbar",
+    "region",
     "searchbox",
     "status",
     "string",
@@ -3570,14 +3582,15 @@
   },
   {
    "modulo": "hooks",
-   "arquivos": 176,
+   "arquivos": 177,
    "testes": 0,
-   "linhas": 22803,
+   "linhas": 22959,
    "itens_menu": [],
    "telas": [],
    "rotas_http": [],
    "componentes": 0,
    "hooks_locais": [
+    "useAccountJourney",
     "useAccounts",
     "useAchievementNotifications",
     "useActiveCallsRealtime",
@@ -3801,6 +3814,7 @@
    "hooks_definidos": [
     "useIsMobile",
     "useToast",
+    "useAccountJourney",
     "useAccounts",
     "useAchievementNotifications",
     "useActiveCallsRealtime",
@@ -4080,6 +4094,7 @@
     "webauthn-challenge"
    ],
    "tabelas": [
+    "account_journey_history",
     "accounts",
     "active_sessions",
     "agent_badges",
@@ -4134,6 +4149,7 @@
     "crm_field_suggestions",
     "crm_sync_queue",
     "cultural_hints",
+    "customer_journey_stages",
     "dashboard_goals",
     "data_lake_exports",
     "deal_pipeline_snapshots",
@@ -4350,6 +4366,7 @@
      "webauthn-challenge"
     ],
     "tabelas": [
+     "account_journey_history",
      "accounts",
      "active_sessions",
      "agent_badges",
@@ -4404,6 +4421,7 @@
      "crm_field_suggestions",
      "crm_sync_queue",
      "cultural_hints",
+     "customer_journey_stages",
      "dashboard_goals",
      "data_lake_exports",
      "deal_pipeline_snapshots",
@@ -4569,7 +4587,7 @@
   {
    "modulo": "hooks/__tests__",
    "arquivos": 0,
-   "testes": 169,
+   "testes": 170,
    "linhas": 0,
    "itens_menu": [],
    "telas": [],
@@ -4863,6 +4881,7 @@
    "rotas_http": [],
    "componentes": 0,
    "hooks_locais": [
+    "useAccountJourney",
     "useAccounts",
     "useActiveCallsRealtime",
     "useAgentAssistHistory",
@@ -5022,6 +5041,7 @@
     "wavoip-call"
    ],
    "tabelas": [
+    "account_journey_history",
     "accounts",
     "agent_badges",
     "agent_goals",
@@ -5062,6 +5082,7 @@
     "conversations",
     "crm_sync_queue",
     "cultural_hints",
+    "customer_journey_stages",
     "dashboard_goals",
     "deal_pipeline_snapshots",
     "deals",
@@ -5166,6 +5187,7 @@
     "dialog",
     "group",
     "img",
+    "region",
     "searchbox",
     "status",
     "supervisor",
@@ -5768,7 +5790,7 @@
    "modulo": "pages",
    "arquivos": 94,
    "testes": 0,
-   "linhas": 17853,
+   "linhas": 17860,
    "itens_menu": [
     "Acessos Bloqueados",
     "Agent Assist",
@@ -5958,6 +5980,7 @@
    "rotas_http": [],
    "componentes": 94,
    "hooks_locais": [
+    "useAccountJourney",
     "useAccounts",
     "useActiveCallsRealtime",
     "useAdherence",
@@ -6232,6 +6255,7 @@
     "webauthn-challenge"
    ],
    "tabelas": [
+    "account_journey_history",
     "accounts",
     "active_sessions",
     "agent_badges",
@@ -6287,6 +6311,7 @@
     "conversations",
     "crm_sync_queue",
     "cultural_hints",
+    "customer_journey_stages",
     "dashboard_goals",
     "deal_pipeline_snapshots",
     "deals",
@@ -6452,6 +6477,7 @@
     "dialog",
     "group",
     "img",
+    "region",
     "searchbox",
     "status",
     "string",
@@ -6970,6 +6996,7 @@
    "rotas_http": [],
    "componentes": 1,
    "hooks_locais": [
+    "useAccountJourney",
     "useAccounts",
     "useActiveCallsRealtime",
     "useAdherence",
@@ -7269,6 +7296,7 @@
     "webauthn-challenge"
    ],
    "tabelas": [
+    "account_journey_history",
     "accounts",
     "active_sessions",
     "agent_badges",
@@ -7326,6 +7354,7 @@
     "conversations",
     "crm_sync_queue",
     "cultural_hints",
+    "customer_journey_stages",
     "dashboard_goals",
     "data_lake_exports",
     "deal_pipeline_snapshots",
@@ -7506,6 +7535,7 @@
     "dialog",
     "group",
     "img",
+    "region",
     "searchbox",
     "status",
     "string",

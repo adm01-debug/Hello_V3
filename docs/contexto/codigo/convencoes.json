@@ -7,12 +7,12 @@
    "src/routes (1)"
   ],
   "componentes": [
-   "src/components (319)",
+   "src/components (320)",
    "src/pages (129)",
    "src/contexts (5)"
   ],
   "hooks": [
-   "src/hooks (182)",
+   "src/hooks (183)",
    "src/components (12)",
    "src/contexts (5)"
   ],
@@ -22,7 +22,7 @@
    "scripts/regras_negocio (2)"
   ],
   "testes": [
-   "co-localizado (__tests__) (406)",
+   "co-localizado (__tests__) (408)",
    "tests/ (9)",
    "e2e/ (7)"
   ],
@@ -48,7 +48,7 @@
  },
  "barrels_index": 17,
  "extensao_componentes": [
-  ".tsx (455)"
+  ".tsx (456)"
  ],
  "alias_imports": {
   "(raiz)": {
@@ -59,11 +59,11 @@
  "commits": {
   "convencao": "conventional commits (observado)",
   "exemplos": [
+   "feat: dar tela a jornada do cliente (etapas da conta e historico de transicoes) (#380)",
    "feat: barra de filtros salvos na tela de contatos (#379)",
    "fix: valida forma do snapshot e da fila de coaching VoIP no localStorage (#378)",
    "docs: reaudita o que foi descartado, arquivo por arquivo (nenhuma perda) (#377)",
-   "chore: registrar a varredura de branches e PRs (nenhum trabalho perdido) (#376)",
-   "test: recuperar o teste do IP literal que ficou fora da main (resgate da PR 309) (#374)"
+   "chore: registrar a varredura de branches e PRs (nenhum trabalho perdido) (#376)"
   ]
  },
  "pr_template": null,

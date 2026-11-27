@@ -1,7 +1,7 @@
 {
  "aviso": "GERADO AUTOMATICAMENTE por scripts/ai-context/gerar.mjs — não editar à mão; será sobrescrito.",
  "format_version": 2,
- "total": 202,
+ "total": 203,
  "hooks": [
   {
    "arquivo": "scripts/ai-context/cenarios.mjs",
@@ -640,6 +640,34 @@
     "src/components/ui/use-toast.ts"
    ],
    "coberto_por_testes": 1
+  },
+  {
+   "arquivo": "src/hooks/useAccountJourney.ts",
+   "hooks_exportados": [
+    "useAccountJourney"
+   ],
+   "linhas": 156,
+   "dominio": "hooks",
+   "tabelas": [
+    "account_journey_history",
+    "accounts",
+    "customer_journey_stages"
+   ],
+   "rpcs": [],
+   "edges": [],
+   "hooks_internos": [
+    "useCallback",
+    "useEffect",
+    "useMemo",
+    "useState"
+   ],
+   "canais_realtime": [],
+   "usado_por": 2,
+   "usado_por_arquivos": [
+    "src/components/accounts/AccountJourneyControl.tsx",
+    "src/pages/Accounts.tsx"
+   ],
+   "coberto_por_testes": 2
   },
   {
    "arquivo": "src/hooks/useAccounts.ts",

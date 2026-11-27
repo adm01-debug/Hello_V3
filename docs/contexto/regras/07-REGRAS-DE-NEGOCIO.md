@@ -1,6 +1,6 @@
 # 07 · REGRAS DE NEGÓCIO
 
-> Gerado automaticamente por AI Context Sync v1.3.2 · commit `0448f160a0` · branch `main` · 2026-11-27 00:09 UTC
+> Gerado automaticamente por AI Context Sync v1.3.2 · commit `77bac0459a` · branch `main` · 2026-11-27 00:34 UTC
 > Não edite à mão — regras humanas vão em `manual/`.
 
 ## A. Regras escritas por humanos (`manual/` — prioridade máxima, nunca sobrescrito)
@@ -1916,6 +1916,7 @@ _nenhum item encontrado_
 | `MOBILE_BREAKPOINT` | `768` | `src/hooks/use-mobile.tsx` |
 | `TOAST_LIMIT` | `1` | `src/hooks/use-toast.ts` |
 | `TOAST_REMOVE_DELAY` | `1000000` | `src/hooks/use-toast.ts` |
+| `HISTORY_LIMIT` | `20` | `src/hooks/useAccountJourney.ts` |
 | `ACCOUNTS_PAGE_SIZE` | `50` | `src/hooks/useAccounts.ts` |
 | `ACTIVE_ROWS_LIMIT` | `200` | `src/hooks/useActiveCallsRealtime.ts` |
 | `ALL_SOURCES` | `"__all__"` | `src/hooks/useAlertPresets.ts` |
@@ -2399,6 +2400,7 @@ _nenhum item encontrado_
 | statement timeout simulado | `scripts/supabase_snapshot/test_snapshot.py` |
 | view removida depois da consulta ao catálogo | `scripts/supabase_snapshot/test_snapshot.py` |
 | view sem permissão na fixture | `scripts/supabase_snapshot/test_snapshot.py` |
+| >{stagesError}</span>}        {pendingStage && (         <div           className= | `src/components/accounts/AccountJourneyControl.tsx` |
 | Erro ao carregar trunks | `src/components/admin/extensions/BulkAssignTrunkDialog.tsx` |
 | Falha ao atribuir trunk | `src/components/admin/extensions/BulkAssignTrunkDialog.tsx` |
 | ; import { Badge } from  | `src/components/admin/webhook-health/WebhookSecretsCard.tsx` |
@@ -2488,6 +2490,10 @@ _nenhum item encontrado_
 | useCallContext must be used within CallProvider | `src/contexts/CallContext.tsx` |
 | useReauthContext must be used within a ReauthProvider | `src/contexts/ReauthContext.tsx` |
 | useTheme must be used within ThemeProvider | `src/contexts/ThemeContext.tsx` |
+| Esta conta foi alterada por outro usuario. Recarregue antes de salvar. | `src/hooks/useAccountJourney.ts` |
+| Etapa alterada, mas o historico nao foi registrado | `src/hooks/useAccountJourney.ts` |
+| Falha ao alterar a etapa da conta | `src/hooks/useAccountJourney.ts` |
+| Falha ao carregar o historico da jornada | `src/hooks/useAccountJourney.ts` |
 | Esta conta foi alterada por outro usuário. Recarregando... | `src/hooks/useAccounts.ts` |
 | Falha ao atualizar conta | `src/hooks/useAccounts.ts` |
 | Falha ao carregar contas | `src/hooks/useAccounts.ts` |
@@ -2644,12 +2650,7 @@ _nenhum item encontrado_
 | Erro ao verificar metas | `src/hooks/useQueueMetrics.ts` |
 | Meta Crítica: ${goal.name} | `src/hooks/useQueueMetrics.ts` |
 | Meta em Aviso: ${goal.name} | `src/hooks/useQueueMetrics.ts` |
-| Erro ao carregar dados | `src/hooks/useRateLimitData.ts` |
-| Erro ao desbloquear IP | `src/hooks/useRateLimitData.ts` |
-| Erro ao limpar logs | `src/hooks/useRateLimitData.ts` |
-| Erro ao resolver alerta | `src/hooks/useRateLimitData.ts` |
-| Nada foi alterado para ${ipAddress} | `src/hooks/useRateLimitData.ts` |
-| … +299 linhas — lista completa em `context.json` | |
+| … +304 linhas — lista completa em `context.json` | |
 
 ## J. Controle de acesso no código (checagens de perfil/permissão)
 
@@ -2700,7 +2701,7 @@ _nenhum item encontrado_
 | `admin` | `supabase/functions/data-lake-flush/index.ts` |
 | `admin` | `supabase/migrations/20261123000200_fix_has_role_oracle_and_debug_tables.sql` |
 
-## K. Testes como especificação (3815 testes em 423 arquivos — nomes completos em `context.json`)
+## K. Testes como especificação (3832 testes em 425 arquivos — nomes completos em `context.json`)
 
 | Arquivo | Testes | Exemplos do que o sistema DEVE fazer |
 |---|---|---|
@@ -2798,6 +2799,7 @@ _nenhum item encontrado_
 | `src/components/admin/webhook-health/__tests__/WebhookSecretsCard.test.tsx` | 10 | WebhookSecretsCard · mostra estado vazio com chamada para cadastrar quando nao ha segredo · nunca renderiza o segredo completo antes de revelar · revela e copia o valor completo quando o admin pede … |
 | `src/components/dialer/phone/__tests__/phone-dialer.test.ts` | 10 | phone-utils · sanitiza entrada removendo caracteres inválidos · formata número BR no display · valida se o número é discável … |
 | `src/components/layout/__tests__/AppSidebar.test.tsx` | 10 | routeRoles (E088) · declara papéis para rota admin e undefined para rota aberta · AppSidebar — filtro por papel (E089) · agente não vê itens de rota com roles (Executivo, Logs de Auditoria) … |
+| `src/hooks/__tests__/useAccountJourney.coverage.test.tsx` | 10 | useAccountJourney · carrega as etapas ativas e traduz a chave para o nome · mantem a chave visivel quando a etapa nao esta cadastrada · expoe erro na tela quando a leitura das etapas falha … |
 | `src/hooks/__tests__/useAlerts.coverage.test.tsx` | 10 | useAlerts · loads alerts and computes counts · applies filters · checks for new alerts (success and none) … |
 | `src/hooks/__tests__/useAnomalyRemediation.coverage.test.tsx` | 10 | useAnomalyRemediation · applied success · idempotent_skip → info · dryRun → info … |
 | `src/hooks/__tests__/useDashboardGoals.coverage.test.tsx` | 10 | useDashboardGoals · fetches goals on mount · handles fetch error · opens dialog for new and for editing … |
@@ -2875,6 +2877,7 @@ _nenhum item encontrado_
 | `e2e/sip-flow.spec.ts` | 7 | Fluxo SIP end-to-end · carrega softphone e exibe badge de status SIP · permite digitar número no dialpad e limpar via backspace · inicia tentativa de chamada SIP e atualiza UI … |
 | `src/__tests__/rls/deals.test.ts` | 7 | RLS — deals · agent enxerga apenas próprias deals · supervisor enxerga todas · admin enxerga todas … |
 | `src/__tests__/rls/rate-limit-logs.test.ts` | 7 | RLS — rate_limit_logs (admin-only forensics) · admin pode ler logs de rate limit · supervisor não pode ler · agent não pode ler … |
+| `src/components/accounts/__tests__/AccountJourneyControl.test.tsx` | 7 | AccountJourneyControl · mostra o nome da etapa, nao a chave crua · mantem a chave visivel quando a etapa nao esta cadastrada · confirma a troca com motivo e recarrega a lista … |
 | `src/components/admin/extensions/__tests__/HealthScoreBadge.test.tsx` | 7 | HealthScoreBadge — 100+ cenários · exibe ícone good (ShieldCheck) quando score >= 80 · exibe ícone warn (AlertTriangle) quando 50-79 · exibe ícone bad (Heart) quando < 50 … |
 | `src/components/calls/__tests__/ActiveCallBar.espera.test.tsx` | 7 | ActiveCallBar: botao de espera · pede a espera ao contexto da chamada, que e quem grava o hold_event · mostra o estado de espera vindo do contexto, nao de um estado local · ActiveCallBar: botao de microfone … |
 | `src/components/calls/__tests__/UnifiedSoftphone.falhas.test.tsx` | 7 | UnifiedSoftphone — estados de falha (etapa 233) · mostra o estado do registro SIP da propria linha no cabecalho · mostra o motivo da falha e tenta de novo quando o operador clica em Tentar agora · repete o registro automaticamente com espera crescente … |
@@ -3002,9 +3005,7 @@ _nenhum item encontrado_
 | `supabase/functions/voip-recommendation-simulate/__tests__/index.test.ts` | 5 | rejeita requisição sem JWT · rejeita corpo sem recommendationId · projectImpact retorna baseline nulo sem dados · projectImpact projeta melhoria de MOS positiva … |
 | `supabase/functions/webauthn-challenge/__tests__/index.test.ts` | 5 | webauthn-challenge: OPTIONS devolve preflight CORS vazio · webauthn-challenge: sem e-mail responde 400 · webauthn-challenge: e-mail vazio responde 400 · webauthn-challenge: payload invalido responde 400, nunca 500 … |
 | `tests/e2e/auth.spec.ts` | 5 | Authentication Flow · should redirect to login when not authenticated · should show login form elements · Dashboard and Critical Lists … |
-| `src/components/auth/__tests__/SessionExpiredDialog.test.tsx` | 4 | sessão expirada · mantém o formulário preenchido e reautentica sem sair da tela · mostra o erro de credencial e mantém o diálogo aberto · renova sozinho quando o refresh token ainda vale |
-| `src/components/call-history/__tests__/CallSessionsList.test.tsx` | 4 | CallSessionsList · avisa que a leitura falhou em vez de dizer que nao ha chamada · explica o vazio quando a leitura funcionou · com filtros aplicados, diz que o filtro esconde resultados e oferece limpar |
-| … +123 linhas — lista completa em `context.json` | | |
+| … +125 linhas — lista completa em `context.json` | | |
 
 ## L. Eventos de webhook tratados (contratos com sistemas externos)
 

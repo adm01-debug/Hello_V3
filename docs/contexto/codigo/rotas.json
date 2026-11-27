@@ -178,6 +178,7 @@
    "arquivo": "src/pages/Accounts.tsx",
    "definida_em": "src/routes/protectedRoutes.tsx",
    "hooks": [
+    "useAccountJourney",
     "useAccounts",
     "useCallback",
     "useChurnRisk",
@@ -188,13 +189,16 @@
     "useState"
    ],
    "hooks_locais": [
+    "useAccountJourney",
     "useAccounts",
     "useChurnRisk",
     "usePageTitle"
    ],
    "tabelas": [
+    "account_journey_history",
     "accounts",
-    "churn_risk_signals"
+    "churn_risk_signals",
+    "customer_journey_stages"
    ],
    "rpcs": [],
    "edges": [
@@ -203,8 +207,12 @@
    ],
    "canais_realtime": [],
    "flags": [],
-   "papeis": [],
-   "arquivos_puxados": 16
+   "papeis": [
+    "alert",
+    "group",
+    "region"
+   ],
+   "arquivos_puxados": 18
   },
   {
    "protegida": false,

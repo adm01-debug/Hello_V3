@@ -1,16 +1,16 @@
 {
  "aviso": "GERADO AUTOMATICAMENTE por scripts/ai-context/gerar.mjs — não editar à mão; será sobrescrito.",
  "format_version": 2,
- "nos": 958,
- "arestas": 3826,
+ "nos": 960,
+ "arestas": 3836,
  "hubs": [
   {
    "arquivo": "src/integrations/supabase/client.ts",
-   "importado_por": 278
+   "importado_por": 279
   },
   {
    "arquivo": "src/components/ui/button.tsx",
-   "importado_por": 251
+   "importado_por": 252
   },
   {
    "arquivo": "src/components/ui/card.tsx",
@@ -18,11 +18,11 @@
   },
   {
    "arquivo": "src/components/ui/badge.tsx",
-   "importado_por": 205
+   "importado_por": 206
   },
   {
    "arquivo": "src/lib/logger.ts",
-   "importado_por": 205
+   "importado_por": 206
   },
   {
    "arquivo": "src/lib/utils.ts",
@@ -30,7 +30,7 @@
   },
   {
    "arquivo": "src/lib/safe-date.ts",
-   "importado_por": 109
+   "importado_por": 110
   },
   {
    "arquivo": "supabase/functions/_shared/cors.ts",
@@ -42,7 +42,7 @@
   },
   {
    "arquivo": "src/components/ui/input.tsx",
-   "importado_por": 98
+   "importado_por": 99
   },
   {
    "arquivo": "src/components/ui/label.tsx",
@@ -50,7 +50,7 @@
   },
   {
    "arquivo": "src/components/ui/select.tsx",
-   "importado_por": 72
+   "importado_por": 73
   },
   {
    "arquivo": "src/components/ui/skeleton.tsx",

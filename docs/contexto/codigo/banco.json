@@ -1196,11 +1196,11 @@
     "account_id->accounts"
    ],
    "criada_em": "20260416235642_e9fe6fa3-4307-49a3-9253-09718c07703d.sql",
-   "usada_no_front": 0,
+   "usada_no_front": 1,
    "usada_em_edges": [],
    "triggers": [],
    "sem_rls": false,
-   "nao_usada": true
+   "nao_usada": false
   },
   "account_lockouts": {
    "colunas": {
@@ -1507,7 +1507,7 @@
    ],
    "fks": [],
    "criada_em": "20260416235642_e9fe6fa3-4307-49a3-9253-09718c07703d.sql",
-   "usada_no_front": 2,
+   "usada_no_front": 3,
    "usada_em_edges": [
     "compute-account-health",
     "detect-churn-risk"
@@ -9381,13 +9381,13 @@
    "indices": [],
    "fks": [],
    "criada_em": "20260416235642_e9fe6fa3-4307-49a3-9253-09718c07703d.sql",
-   "usada_no_front": 0,
+   "usada_no_front": 1,
    "usada_em_edges": [],
    "triggers": [
     "update_journey_stages_updated_at"
    ],
    "sem_rls": false,
-   "nao_usada": true
+   "nao_usada": false
   },
   "dashboard_goals": {
    "colunas": {
