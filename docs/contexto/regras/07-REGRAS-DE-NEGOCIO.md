@@ -1,6 +1,6 @@
 # 07 · REGRAS DE NEGÓCIO
 
-> Gerado automaticamente por AI Context Sync v1.3.2 · commit `0a4fed06c1` · branch `main` · 2026-11-26 23:50 UTC
+> Gerado automaticamente por AI Context Sync v1.3.2 · commit `0448f160a0` · branch `main` · 2026-11-27 00:09 UTC
 > Não edite à mão — regras humanas vão em `manual/`.
 
 ## A. Regras escritas por humanos (`manual/` — prioridade máxima, nunca sobrescrito)
@@ -2435,6 +2435,7 @@ _nenhum item encontrado_
 | Você não tem permissão para criar regiões | `src/components/compliance/calling-hours/useCallingHoursManager.ts` |
 |  className= | `src/components/compliance/dnc/ReconcileDNCDialog.tsx` |
 | Erro ao analisar perfil | `src/components/contacts/ContactDetailSheet.tsx` |
+|  className= | `src/components/contacts/SavedFiltersBar.tsx` |
 | Bitrix24 não configurado | `src/components/contacts/useBitrixSync.ts` |
 | Erro ao sincronizar com Bitrix24 | `src/components/contacts/useBitrixSync.ts` |
 | Não foi possível registrar uso | `src/components/conversation-intelligence/BattleCardAlert.tsx` |
@@ -2648,8 +2649,7 @@ _nenhum item encontrado_
 | Erro ao limpar logs | `src/hooks/useRateLimitData.ts` |
 | Erro ao resolver alerta | `src/hooks/useRateLimitData.ts` |
 | Nada foi alterado para ${ipAddress} | `src/hooks/useRateLimitData.ts` |
-| Novo alerta de rate limit! | `src/hooks/useRateLimitData.ts` |
-| … +298 linhas — lista completa em `context.json` | |
+| … +299 linhas — lista completa em `context.json` | |
 
 ## J. Controle de acesso no código (checagens de perfil/permissão)
 
@@ -2700,7 +2700,7 @@ _nenhum item encontrado_
 | `admin` | `supabase/functions/data-lake-flush/index.ts` |
 | `admin` | `supabase/migrations/20261123000200_fix_has_role_oracle_and_debug_tables.sql` |
 
-## K. Testes como especificação (3801 testes em 421 arquivos — nomes completos em `context.json`)
+## K. Testes como especificação (3815 testes em 423 arquivos — nomes completos em `context.json`)
 
 | Arquivo | Testes | Exemplos do que o sistema DEVE fazer |
 |---|---|---|
@@ -2856,6 +2856,7 @@ _nenhum item encontrado_
 | `src/hooks/__tests__/useCallHistory.coverage.test.tsx` | 8 | useCallHistory · fetches sessions on mount and maps summary · handles fetch error branch · exercises filters, setters, presets and clearFilters … |
 | `src/hooks/__tests__/useCallRecording.coverage.test.tsx` | 8 | useCallRecording · starts recording successfully · handles start recording failure · stopAndSaveRecording returns null when no recorder … |
 | `src/hooks/__tests__/useExecutiveDashboard.coverage.test.tsx` | 8 | useExecutiveDashboard helpers · getPeriodLabel covers all periods and fallback · formatDuration formats minutes and seconds · useExecutiveDashboardData … |
+| `src/hooks/__tests__/useSavedFilters.coverage.test.tsx` | 8 | useSavedFilters · carrega os filtros salvos da entidade · expõe mensagem e lista vazia quando a leitura falha · salva o filtro com o usuário autenticado … |
 | `src/hooks/__tests__/useSecurityMonitoringData.coverage.test.tsx` | 8 | useSecurityMonitoringData · fetches logs, alerts and computes stats · erro de leitura vira alarme, nao tranquilidade · limpa o erro na leitura seguinte bem-sucedida … |
 | `src/hooks/__tests__/useSecurityNotifications.coverage.test.tsx` | 8 | useSecurityNotifications · detects support and initial permission · requestPermission granted path · requestPermission denied path … |
 | `src/hooks/__tests__/useVoipQualityMonitor.coverage.test.tsx` | 8 | useVoipQualityMonitor · returns unknown state when no peer connection · collects stats and computes MOS for a good connection · uses candidate-pair RTT fallback and tolerates packet loss … |
@@ -2917,6 +2918,7 @@ _nenhum item encontrado_
 | `src/components/auth/__tests__/PermissionGate.test.tsx` | 6 | PermissionGate · nao renderiza nada enquanto as permissoes carregam · mostra o estado padrao de sem permissao quando nao ha fallback · respeita fallback explicito, inclusive null … |
 | `src/components/call-library/__tests__/SurveysPanel.test.tsx` | 6 | SurveysPanel · envia a pesquisa escolhida pelo id real (nao um valor fixo) · sem pesquisa cadastrada bloqueia o envio e explica o motivo · cria pesquisa com o nome informado … |
 | `src/components/compliance/dnc/__tests__/DNCTable.test.tsx` | 6 | DNCTable — rastreabilidade e edicao (etapa 175) · tem rotulo acessivel para editar e para remover, com o telefone · pede confirmacao mostrando o numero antes de remover · mostra autor e data quando a entrada foi removida … |
+| `src/components/contacts/__tests__/SavedFiltersBar.test.tsx` | 6 | SavedFiltersBar · avisa quando o usuário ainda não salvou nenhum filtro · aplica o preset clicado · aplica o filtro padrão uma única vez, mesmo com onApply trocando de identidade … |
 | `src/hooks/__tests__/useAudioOutputDevices.test.tsx` | 6 | useAudioOutputDevices · reporta não suportado quando setSinkId ausente · enumera dispositivos de saída e ignora inputs · persiste a preferência ao chamar setSinkId com sucesso … |
 | `src/hooks/__tests__/useBattleCardDetection.test.ts` | 6 | useBattleCardDetection · does nothing when inactive · matches contains keyword · matches exact keyword as a whole word … |
 | `src/hooks/__tests__/useBitrixAndWebAuthn.test.ts` | 6 | useBitrix · gets contacts from Bitrix · handles unconfigured service · useWebAuthn … |
@@ -3002,9 +3004,7 @@ _nenhum item encontrado_
 | `tests/e2e/auth.spec.ts` | 5 | Authentication Flow · should redirect to login when not authenticated · should show login form elements · Dashboard and Critical Lists … |
 | `src/components/auth/__tests__/SessionExpiredDialog.test.tsx` | 4 | sessão expirada · mantém o formulário preenchido e reautentica sem sair da tela · mostra o erro de credencial e mantém o diálogo aberto · renova sozinho quando o refresh token ainda vale |
 | `src/components/call-history/__tests__/CallSessionsList.test.tsx` | 4 | CallSessionsList · avisa que a leitura falhou em vez de dizer que nao ha chamada · explica o vazio quando a leitura funcionou · com filtros aplicados, diz que o filtro esconde resultados e oferece limpar |
-| `src/components/calls/__tests__/ActiveCallBar.verificacaoVoz.test.tsx` | 4 | ActiveCallBar: verificacao de voz ao vivo (etapa 155) · verifica a voz da sessao ativa e mostra o veredito na barra · avisa na barra quando a voz nao confere com o padrao cadastrado · nao deixa verificar sem sessao de banco gravada |
-| `src/components/calls/softphone/__tests__/ActiveCallDisplay.saidaAudio.test.tsx` | 4 | ActiveCallDisplay — saída de áudio da chamada · oferece a escolha de saída na chamada SIP e aplica o sink no áudio remoto · não mostra o seletor fora da chamada SIP · não mostra o seletor quando o navegador não suporta trocar a saída |
-| … +121 linhas — lista completa em `context.json` | | |
+| … +123 linhas — lista completa em `context.json` | | |
 
 ## L. Eventos de webhook tratados (contratos com sistemas externos)
 

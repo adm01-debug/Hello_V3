@@ -858,6 +858,14 @@
    "src/lib/safe-date.ts",
    "src/lib/utils.ts"
   ],
+  "src/components/contacts/SavedFiltersBar.tsx": [
+   "src/components/ui/button.tsx",
+   "src/components/ui/checkbox.tsx",
+   "src/components/ui/dialog.tsx",
+   "src/components/ui/input.tsx",
+   "src/components/ui/label.tsx",
+   "src/hooks/useSavedFilters.ts"
+  ],
   "src/components/contacts/useBitrixSync.ts": [
    "src/hooks/useBitrix.ts",
    "src/hooks/useContacts.ts",
@@ -2798,6 +2806,11 @@
    "src/lib/logger.ts",
    "src/lib/tracing.ts"
   ],
+  "src/hooks/useSavedFilters.ts": [
+   "src/integrations/supabase/client.ts",
+   "src/integrations/supabase/types.ts",
+   "src/lib/logger.ts"
+  ],
   "src/hooks/useScheduledCallbacks.ts": [
    "src/integrations/supabase/client.ts",
    "src/lib/logger.ts"
@@ -3499,6 +3512,7 @@
    "src/components/contacts/ContactGrid.tsx",
    "src/components/contacts/ContactPagination.tsx",
    "src/components/contacts/CreateContactDialog.tsx",
+   "src/components/contacts/SavedFiltersBar.tsx",
    "src/components/contacts/contactFiltersState.ts",
    "src/components/contacts/pagination.ts",
    "src/components/contacts/useBitrixSync.ts",

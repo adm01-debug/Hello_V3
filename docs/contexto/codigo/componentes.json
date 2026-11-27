@@ -1,7 +1,7 @@
 {
  "aviso": "GERADO AUTOMATICAMENTE por scripts/ai-context/gerar.mjs — não editar à mão; será sobrescrito.",
  "format_version": 2,
- "total": 454,
+ "total": 455,
  "orfaos": 13,
  "nomes_duplicados": {
   "KpiCards": [
@@ -1600,6 +1600,20 @@
    ],
    "export_default": null,
    "linhas": 92,
+   "dominio": "components/contacts",
+   "hooks_locais": [],
+   "tabelas": [],
+   "edges": [],
+   "usado_por": 1,
+   "orfao": false
+  },
+  {
+   "arquivo": "src/components/contacts/SavedFiltersBar.tsx",
+   "exports": [
+    "SavedFiltersBar"
+   ],
+   "export_default": null,
+   "linhas": 161,
    "dominio": "components/contacts",
    "hooks_locais": [],
    "tabelas": [],
@@ -4157,7 +4171,7 @@
    "hooks_locais": [],
    "tabelas": [],
    "edges": [],
-   "usado_por": 250,
+   "usado_por": 251,
    "orfao": false
   },
   {
@@ -4244,7 +4258,7 @@
    "hooks_locais": [],
    "tabelas": [],
    "edges": [],
-   "usado_por": 7,
+   "usado_por": 8,
    "orfao": false
   },
   {
@@ -4317,7 +4331,7 @@
    "hooks_locais": [],
    "tabelas": [],
    "edges": [],
-   "usado_por": 50,
+   "usado_por": 51,
    "orfao": false
   },
   {
@@ -4460,7 +4474,7 @@
    "hooks_locais": [],
    "tabelas": [],
    "edges": [],
-   "usado_por": 97,
+   "usado_por": 98,
    "orfao": false
   },
   {
@@ -4493,7 +4507,7 @@
    "hooks_locais": [],
    "tabelas": [],
    "edges": [],
-   "usado_por": 73,
+   "usado_por": 74,
    "orfao": false
   },
   {
@@ -5970,7 +5984,7 @@
     "Contacts"
    ],
    "export_default": "Contacts",
-   "linhas": 372,
+   "linhas": 393,
    "dominio": "pages",
    "hooks_locais": [
     "useBitrixSync",

@@ -2,11 +2,16 @@
  "aviso": "GERADO AUTOMATICAMENTE por scripts/ai-context/gerar.mjs — não editar à mão; será sobrescrito.",
  "format_version": 2,
  "git": {
-  "commit": "0a4fed06c136924806e920024f34da23e1b4f009",
+  "commit": "0448f160a0636272cca7e06fc4e923196508abf6",
   "branch": "main",
-  "data_commit": "2026-11-26T20:48:31-03:00",
+  "data_commit": "2026-11-26T21:07:54-03:00",
   "remote": "https://github.com/adm01-debug/Hello_V3",
   "ultimos_commits": [
+   {
+    "sha": "0448f16",
+    "data": "2026-11-26",
+    "assunto": "feat: barra de filtros salvos na tela de contatos (#379)"
+   },
    {
     "sha": "0a4fed0",
     "data": "2026-11-26",
@@ -126,22 +131,17 @@
     "sha": "31ef778",
     "data": "2026-11-26",
     "assunto": "feat: edicao e trilha de auditoria na lista DNC (etapa 175) (#350)"
-   },
-   {
-    "sha": "11e8d43",
-    "data": "2026-11-26",
-    "assunto": "feat: serie historica do pipeline aberto com tela e job diario (#349)"
    }
   ],
-  "arquivos_mudados_7d": 1941,
+  "arquivos_mudados_7d": 1945,
   "pastas_mais_mudadas_30d": [
    {
     "pasta": "src/hooks/__tests__",
-    "mudancas": 296
+    "mudancas": 297
    },
    {
     "pasta": "docs/qa/05-PROGRESSO.md",
-    "mudancas": 165
+    "mudancas": 166
    },
    {
     "pasta": "src/components/calls",
@@ -180,6 +180,10 @@
     "mudancas": 32
    },
    {
+    "pasta": "src/components/contacts",
+    "mudancas": 30
+   },
+   {
     "pasta": "src/components/dashboard",
     "mudancas": 30
    },
@@ -190,16 +194,12 @@
    {
     "pasta": "docs/estado/funcionalidades-planejadas.md",
     "mudancas": 29
-   },
-   {
-    "pasta": "src/components/dialer",
-    "mudancas": 29
    }
   ],
   "arquivos_mais_mudados_90d": [
    {
     "arquivo": "docs/qa/05-PROGRESSO.md",
-    "mudancas": 165
+    "mudancas": 166
    },
    {
     "arquivo": "docs/estado/funcionalidades-planejadas.md",
@@ -278,6 +278,10 @@
     "mudancas": 7
    },
    {
+    "arquivo": "src/pages/Contacts.tsx",
+    "mudancas": 7
+   },
+   {
     "arquivo": "src/routes/protectedRoutes.tsx",
     "mudancas": 7
    },
@@ -292,10 +296,6 @@
    {
     "arquivo": "supabase/functions/voip-load-test/index.ts",
     "mudancas": 7
-   },
-   {
-    "arquivo": ".github/workflows/ci.yml",
-    "mudancas": 6
    }
   ],
   "autores_30d": [
@@ -306,21 +306,21 @@
   ]
  },
  "contagens": {
-  "arquivos_total": 1850,
-  "arquivos_codigo": 1386,
-  "linhas_codigo": 185039,
+  "arquivos_total": 1854,
+  "arquivos_codigo": 1390,
+  "linhas_codigo": 185674,
   "rotas": 108,
   "rotas_http_backend": 11,
   "vistas_por_id": 0,
   "itens_menu": 98,
   "modulos": 83,
-  "componentes": 454,
-  "hooks": 201,
+  "componentes": 455,
+  "hooks": 202,
   "edge_functions": 99,
   "tabelas": 172,
   "migrations": 270,
   "cron_jobs": 13,
-  "testes": 462,
+  "testes": 464,
   "workflows": 5,
   "scripts": 36,
   "docs_md": 122
@@ -475,8 +475,8 @@
    "linhas": 450
   },
   "src/components": {
-   "arquivos": 384,
-   "linhas": 45492
+   "arquivos": 386,
+   "linhas": 45753
   },
   "src/contexts": {
    "arquivos": 5,
@@ -487,8 +487,8 @@
    "linhas": 312
   },
   "src/hooks": {
-   "arquivos": 355,
-   "linhas": 45394
+   "arquivos": 357,
+   "linhas": 45747
   },
   "src/integrations": {
    "arquivos": 3,
@@ -504,7 +504,7 @@
   },
   "src/pages": {
    "arquivos": 161,
-   "linhas": 24679
+   "linhas": 24700
   },
   "src/routes": {
    "arquivos": 4,
@@ -593,6 +593,10 @@
    "linhas": 396
   },
   {
+   "arquivo": "src/pages/Contacts.tsx",
+   "linhas": 393
+  },
+  {
    "arquivo": "src/pages/marketing/Landing.tsx",
    "linhas": 383
   },
@@ -611,10 +615,6 @@
   {
    "arquivo": "src/components/ai/AICallAnalysis.tsx",
    "linhas": 373
-  },
-  {
-   "arquivo": "src/pages/Contacts.tsx",
-   "linhas": 372
   },
   {
    "arquivo": "supabase/functions/ldap-sync/index.ts",

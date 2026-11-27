@@ -1,7 +1,7 @@
 {
  "aviso": "GERADO AUTOMATICAMENTE por scripts/ai-context/gerar.mjs — não editar à mão; será sobrescrito.",
  "format_version": 2,
- "total": 201,
+ "total": 202,
  "hooks": [
   {
    "arquivo": "scripts/ai-context/cenarios.mjs",
@@ -3769,6 +3769,30 @@
    "usado_por": 1,
    "usado_por_arquivos": [
     "src/pages/RoutingRules.tsx"
+   ],
+   "coberto_por_testes": 1
+  },
+  {
+   "arquivo": "src/hooks/useSavedFilters.ts",
+   "hooks_exportados": [
+    "useSavedFilters"
+   ],
+   "linhas": 159,
+   "dominio": "hooks",
+   "tabelas": [
+    "saved_filters"
+   ],
+   "rpcs": [],
+   "edges": [],
+   "hooks_internos": [
+    "useCallback",
+    "useEffect",
+    "useState"
+   ],
+   "canais_realtime": [],
+   "usado_por": 1,
+   "usado_por_arquivos": [
+    "src/components/contacts/SavedFiltersBar.tsx"
    ],
    "coberto_por_testes": 1
   },

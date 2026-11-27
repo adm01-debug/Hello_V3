@@ -1642,7 +1642,8 @@
     "bitrix_users",
     "contact_interactions",
     "contacts",
-    "crm_sync_queue"
+    "crm_sync_queue",
+    "saved_filters"
    ],
    "rpcs": [
     "log_audit_event"
@@ -1654,10 +1655,12 @@
    "canais_realtime": [],
    "flags": [],
    "papeis": [
+    "alert",
+    "group",
     "searchbox",
     "status"
    ],
-   "arquivos_puxados": 47
+   "arquivos_puxados": 49
   },
   {
    "protegida": false,

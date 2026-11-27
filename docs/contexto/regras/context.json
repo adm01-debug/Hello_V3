@@ -1,15 +1,15 @@
 {
  "meta": {
-  "sha": "0a4fed06c136924806e920024f34da23e1b4f009",
+  "sha": "0448f160a0636272cca7e06fc4e923196508abf6",
   "branch": "main",
   "remote": "https://github.com/adm01-debug/Hello_V3",
-  "generated_at": "2026-11-26 23:50 UTC",
-  "files_total": 1896,
-  "code_files": 1691,
-  "code_lines": 207442
+  "generated_at": "2026-11-27 00:09 UTC",
+  "files_total": 1900,
+  "code_files": 1695,
+  "code_lines": 208077
  },
  "version": "1.3.2",
- "facts_hash": "7548fae2f6bee236",
+ "facts_hash": "eda31003c54b7186",
  "stack": {
   "frameworks": [
    "React + Vite",
@@ -168,8 +168,8 @@
   ],
   "package_manager": "bun",
   "languages": {
-   ".tsx": 680,
-   ".ts": 671,
+   ".tsx": 683,
+   ".ts": 672,
    ".sql": 304,
    ".mjs": 29,
    ".py": 5,
@@ -29619,7 +29619,8 @@
      "bitrix_users",
      "contact_interactions",
      "contacts",
-     "crm_sync_queue"
+     "crm_sync_queue",
+     "saved_filters"
     ],
     "invokes_transitive": [
      "analyze-contact-profile",
@@ -29628,7 +29629,7 @@
     "rpc_transitive": [
      "log_audit_event"
     ],
-    "deps_count": 47
+    "deps_count": 49
    },
    {
     "path": "",
@@ -33475,7 +33476,7 @@
     "file": ".github/workflows/migrations.yml"
    }
   ],
-  "components_count": 384,
+  "components_count": 386,
   "hooks": [
    {
     "name": "useContacts",
@@ -34130,6 +34131,10 @@
     "file": "src/hooks/useSLA.ts"
    },
    {
+    "name": "useSavedFilters",
+    "file": "src/hooks/useSavedFilters.ts"
+   },
+   {
     "name": "useScheduledCallbacks",
     "file": "src/hooks/useScheduledCallbacks.ts"
    },
@@ -34683,8 +34688,8 @@
   },
   {
    "module": "src/components",
-   "files": 384,
-   "lines": 45492,
+   "files": 386,
+   "lines": 45753,
    "tables": [
     "accounts",
     "agent_goals",
@@ -34944,8 +34949,8 @@
   },
   {
    "module": "src/hooks",
-   "files": 355,
-   "lines": 45394,
+   "files": 357,
+   "lines": 45747,
    "tables": [
     "accounts",
     "active_sessions",
@@ -35044,6 +35049,7 @@
     "ring_groups",
     "role_permissions",
     "routing_rules",
+    "saved_filters",
     "scheduled_callbacks",
     "scorecard_criteria",
     "scorecard_responses",
@@ -35432,7 +35438,7 @@
   {
    "module": "src/pages",
    "files": 161,
-   "lines": 24679,
+   "lines": 24700,
    "tables": [
     "audit_logs",
     "battle_card_triggers",
@@ -37511,6 +37517,20 @@
      "scripts/ai-context/gerar.unit.mjs"
     ]
    },
+   "saved_filters": {
+    "select": [
+     "src/hooks/useSavedFilters.ts"
+    ],
+    "upsert": [
+     "src/hooks/useSavedFilters.ts"
+    ],
+    "delete": [
+     "src/hooks/useSavedFilters.ts"
+    ],
+    "update": [
+     "src/hooks/useSavedFilters.ts"
+    ]
+   },
    "scheduled_callbacks": {
     "select": [
      "src/components/executive/PendingFollowupsCard.tsx",
@@ -38605,6 +38625,10 @@
     "role"
    ],
    "routing_rules": [
+    "id"
+   ],
+   "saved_filters": [
+    "entity_type",
     "id"
    ],
    "scheduled_callbacks": [
@@ -40263,7 +40287,6 @@
    "password_reset_tokens",
    "queue_items",
    "queue_skill_requirements",
-   "saved_filters",
    "schema_migrations",
    "unused_indexes"
   ],
@@ -42078,6 +42101,10 @@
    {
     "file": "src/components/contacts/ContactDetailSheet.tsx",
     "msg": "Erro ao analisar perfil"
+   },
+   {
+    "file": "src/components/contacts/SavedFiltersBar.tsx",
+    "msg": " className="
    },
    {
     "file": "src/components/contacts/useBitrixSync.ts",
@@ -60214,6 +60241,30 @@
     "name": "inverte o rótulo e o aria-pressed quando já é favorito"
    },
    {
+    "file": "src/components/contacts/__tests__/SavedFiltersBar.test.tsx",
+    "name": "SavedFiltersBar"
+   },
+   {
+    "file": "src/components/contacts/__tests__/SavedFiltersBar.test.tsx",
+    "name": "avisa quando o usuário ainda não salvou nenhum filtro"
+   },
+   {
+    "file": "src/components/contacts/__tests__/SavedFiltersBar.test.tsx",
+    "name": "aplica o preset clicado"
+   },
+   {
+    "file": "src/components/contacts/__tests__/SavedFiltersBar.test.tsx",
+    "name": "aplica o filtro padrão uma única vez, mesmo com onApply trocando de identidade"
+   },
+   {
+    "file": "src/components/contacts/__tests__/SavedFiltersBar.test.tsx",
+    "name": "remove e promove um preset a padrão pelos botões da linha"
+   },
+   {
+    "file": "src/components/contacts/__tests__/SavedFiltersBar.test.tsx",
+    "name": "mostra o erro do hook em role=alert"
+   },
+   {
     "file": "src/components/conversation-intelligence/__tests__/BattleCardAlert.doubleClick.test.tsx",
     "name": "BattleCardAlert - duplo clique (etapa 218)"
    },
@@ -64456,6 +64507,38 @@
    {
     "file": "src/hooks/__tests__/useSLA.coverage.test.tsx",
     "name": "useEnforceSla error"
+   },
+   {
+    "file": "src/hooks/__tests__/useSavedFilters.coverage.test.tsx",
+    "name": "useSavedFilters"
+   },
+   {
+    "file": "src/hooks/__tests__/useSavedFilters.coverage.test.tsx",
+    "name": "carrega os filtros salvos da entidade"
+   },
+   {
+    "file": "src/hooks/__tests__/useSavedFilters.coverage.test.tsx",
+    "name": "expõe mensagem e lista vazia quando a leitura falha"
+   },
+   {
+    "file": "src/hooks/__tests__/useSavedFilters.coverage.test.tsx",
+    "name": "salva o filtro com o usuário autenticado"
+   },
+   {
+    "file": "src/hooks/__tests__/useSavedFilters.coverage.test.tsx",
+    "name": "não tenta gravar quando não há usuário autenticado"
+   },
+   {
+    "file": "src/hooks/__tests__/useSavedFilters.coverage.test.tsx",
+    "name": "recusa nome vazio sem chamar o banco"
+   },
+   {
+    "file": "src/hooks/__tests__/useSavedFilters.coverage.test.tsx",
+    "name": "remove um filtro pelo id"
+   },
+   {
+    "file": "src/hooks/__tests__/useSavedFilters.coverage.test.tsx",
+    "name": "marca um filtro como padrão"
    },
    {
     "file": "src/hooks/__tests__/useScheduledCallbacks.coverage.test.tsx",
@@ -96154,6 +96237,16 @@
     "function CustomerJourneyTimeline"
    ]
   },
+  "src/components/contacts/SavedFiltersBar.tsx": {
+   "path": "src/components/contacts/SavedFiltersBar.tsx",
+   "lines": 161,
+   "exports": [
+    "const SavedFiltersBar"
+   ],
+   "errors": [
+    " className="
+   ]
+  },
   "src/components/contacts/contactFiltersState.ts": {
    "path": "src/components/contacts/contactFiltersState.ts",
    "lines": 21,
@@ -96214,6 +96307,23 @@
     "ContactCard - favoritar com nome acessível (A-123)",
     "anuncia a ação e o estado do botão de favoritos",
     "inverte o rótulo e o aria-pressed quando já é favorito"
+   ]
+  },
+  "src/components/contacts/__tests__/SavedFiltersBar.test.tsx": {
+   "path": "src/components/contacts/__tests__/SavedFiltersBar.test.tsx",
+   "lines": 100,
+   "is_test": true,
+   "errors": [
+    ").textContent).toContain(",
+    ", () => {\n    hookState.error = "
+   ],
+   "tests": [
+    "SavedFiltersBar",
+    "avisa quando o usuário ainda não salvou nenhum filtro",
+    "aplica o preset clicado",
+    "aplica o filtro padrão uma única vez, mesmo com onApply trocando de identidade",
+    "remove e promove um preset a padrão pelos botões da linha",
+    "mostra o erro do hook em role=alert"
    ]
   },
   "src/components/conversation-intelligence/BattleCardAlert.tsx": {
@@ -105393,6 +105503,42 @@
     "2000"
    ]
   },
+  "src/hooks/useSavedFilters.ts": {
+   "path": "src/hooks/useSavedFilters.ts",
+   "lines": 159,
+   "exports": [
+    "interface SavedFilter",
+    "interface SaveFilterInput",
+    "const useSavedFilters"
+   ],
+   "tables": [
+    {
+     "table": "saved_filters",
+     "op": "select"
+    },
+    {
+     "table": "saved_filters",
+     "op": "upsert"
+    },
+    {
+     "table": "saved_filters",
+     "op": "delete"
+    },
+    {
+     "table": "saved_filters",
+     "op": "update"
+    }
+   ],
+   "table_cols": {
+    "saved_filters": [
+     "entity_type",
+     "id"
+    ]
+   },
+   "hooks": [
+    "useSavedFilters"
+   ]
+  },
   "src/hooks/useScheduledCallbacks.ts": {
    "path": "src/hooks/useScheduledCallbacks.ts",
    "lines": 258,
@@ -109560,6 +109706,21 @@
     "useUpsertSlaPolicy error",
     "useEnforceSla success",
     "useEnforceSla error"
+   ]
+  },
+  "src/hooks/__tests__/useSavedFilters.coverage.test.tsx": {
+   "path": "src/hooks/__tests__/useSavedFilters.coverage.test.tsx",
+   "lines": 194,
+   "is_test": true,
+   "tests": [
+    "useSavedFilters",
+    "carrega os filtros salvos da entidade",
+    "expõe mensagem e lista vazia quando a leitura falha",
+    "salva o filtro com o usuário autenticado",
+    "não tenta gravar quando não há usuário autenticado",
+    "recusa nome vazio sem chamar o banco",
+    "remove um filtro pelo id",
+    "marca um filtro como padrão"
    ]
   },
   "src/hooks/__tests__/useScheduledCallbacks.coverage.test.tsx": {
@@ -116243,7 +116404,7 @@
   },
   "src/pages/Contacts.tsx": {
    "path": "src/pages/Contacts.tsx",
-   "lines": 372,
+   "lines": 393,
    "exports": [
     "default Contacts"
    ],
@@ -128380,10 +128541,24 @@
   }
  },
  "git": {
-  "sha": "0a4fed06c136924806e920024f34da23e1b4f009",
+  "sha": "0448f160a0636272cca7e06fc4e923196508abf6",
   "branch": "main",
   "remote": "https://github.com/adm01-debug/Hello_V3",
   "commits": [
+   {
+    "sha": "0448f16",
+    "date": "2026-11-26",
+    "author": "adm01-debug",
+    "subject": "feat: barra de filtros salvos na tela de contatos (#379)",
+    "files": [
+     "docs/qa/05-PROGRESSO.md",
+     "src/components/contacts/SavedFiltersBar.tsx",
+     "src/components/contacts/__tests__/SavedFiltersBar.test.tsx",
+     "src/hooks/__tests__/useSavedFilters.coverage.test.tsx",
+     "src/hooks/useSavedFilters.ts",
+     "src/pages/Contacts.tsx"
+    ]
+   },
    {
     "sha": "0a4fed0",
     "date": "2026-11-26",
@@ -128771,21 +128946,12 @@
      "src/hooks/__tests__/useSurveys.coverage.test.tsx",
      "src/hooks/useSurveys.ts"
     ]
-   },
-   {
-    "sha": "305ee9e",
-    "date": "2026-11-25",
-    "author": "adm01-debug",
-    "subject": "fix: gate do cron lia coluna que nao existe e derrubava o CI de main (#343)",
-    "files": [
-     "supabase/tests/cron_credentials_rls_test.sql"
-    ]
    }
   ],
   "hot_files": [
    [
     "docs/qa/05-PROGRESSO.md",
-    20
+    21
    ],
    [
     "docs/qa/03-ACHADOS.md",
@@ -128816,6 +128982,26 @@
     2
    ],
    [
+    "src/components/contacts/SavedFiltersBar.tsx",
+    1
+   ],
+   [
+    "src/components/contacts/__tests__/SavedFiltersBar.test.tsx",
+    1
+   ],
+   [
+    "src/hooks/__tests__/useSavedFilters.coverage.test.tsx",
+    1
+   ],
+   [
+    "src/hooks/useSavedFilters.ts",
+    1
+   ],
+   [
+    "src/pages/Contacts.tsx",
+    1
+   ],
+   [
     "src/lib/__tests__/voipProactiveSnapshot.coverage.test.ts",
     1
    ],
@@ -128841,26 +129027,6 @@
    ],
    [
     "supabase/tests/recurring_holidays_rls_test.sql",
-    1
-   ],
-   [
-    "supabase/migrations/20261127190000_policies_to_authenticated_lote4.sql",
-    1
-   ],
-   [
-    "supabase/tests/storage_objects_policies_rls_test.sql",
-    1
-   ],
-   [
-    "supabase/migrations/20261127270000_geo_policies_idempotente.sql",
-    1
-   ],
-   [
-    "supabase/migrations/20261127220000_polymorphic_pointer_comments.sql",
-    1
-   ],
-   [
-    "supabase/tests/polymorphic_pointer_comments_rls_test.sql",
     1
    ]
   ]

@@ -951,13 +951,13 @@
   },
   {
    "modulo": "components/contacts",
-   "arquivos": 13,
-   "testes": 1,
-   "linhas": 1540,
+   "arquivos": 14,
+   "testes": 2,
+   "linhas": 1701,
    "itens_menu": [],
    "telas": [],
    "rotas_http": [],
-   "componentes": 10,
+   "componentes": 11,
    "hooks_locais": [
     "useAuditLog",
     "useBitrix",
@@ -980,7 +980,8 @@
     "contact_alerts",
     "contact_interactions",
     "contacts",
-    "crm_sync_queue"
+    "crm_sync_queue",
+    "saved_filters"
    ],
    "rpcs": [
     "log_audit_event"
@@ -995,7 +996,9 @@
    ],
    "flags": [],
    "papeis": [
-    "button"
+    "alert",
+    "button",
+    "group"
    ],
    "diretos": {
     "edges": [
@@ -2048,6 +2051,7 @@
     "rls_audit_logs",
     "role_permissions",
     "routing_rules",
+    "saved_filters",
     "scheduled_callbacks",
     "scorecard_criteria",
     "scorecard_responses",
@@ -3566,9 +3570,9 @@
   },
   {
    "modulo": "hooks",
-   "arquivos": 175,
+   "arquivos": 176,
    "testes": 0,
-   "linhas": 22644,
+   "linhas": 22803,
    "itens_menu": [],
    "telas": [],
    "rotas_http": [],
@@ -3938,6 +3942,7 @@
     "useDeleteRoutingRule",
     "useRoutingRules",
     "useUpsertRoutingRule",
+    "useSavedFilters",
     "useScheduledCallbacks",
     "useScorecards",
     "useSecurityAlertNotifications",
@@ -4171,6 +4176,7 @@
     "ring_groups",
     "role_permissions",
     "routing_rules",
+    "saved_filters",
     "scheduled_callbacks",
     "scorecard_criteria",
     "scorecard_responses",
@@ -4438,6 +4444,7 @@
      "ring_groups",
      "role_permissions",
      "routing_rules",
+     "saved_filters",
      "scheduled_callbacks",
      "scorecard_criteria",
      "scorecard_responses",
@@ -4562,7 +4569,7 @@
   {
    "modulo": "hooks/__tests__",
    "arquivos": 0,
-   "testes": 168,
+   "testes": 169,
    "linhas": 0,
    "itens_menu": [],
    "telas": [],
@@ -5080,6 +5087,7 @@
     "ring_group_members",
     "ring_groups",
     "role_permissions",
+    "saved_filters",
     "scheduled_callbacks",
     "sla_policies",
     "system_settings",
@@ -5760,7 +5768,7 @@
    "modulo": "pages",
    "arquivos": 94,
    "testes": 0,
-   "linhas": 17832,
+   "linhas": 17853,
    "itens_menu": [
     "Acessos Bloqueados",
     "Agent Assist",
@@ -6329,6 +6337,7 @@
     "ring_groups",
     "role_permissions",
     "routing_rules",
+    "saved_filters",
     "scheduled_callbacks",
     "scorecard_criteria",
     "scorecard_responses",
@@ -7370,6 +7379,7 @@
     "rls_audit_logs",
     "role_permissions",
     "routing_rules",
+    "saved_filters",
     "scheduled_callbacks",
     "scorecard_criteria",
     "scorecard_responses",

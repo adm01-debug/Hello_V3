@@ -1,16 +1,16 @@
 {
  "aviso": "GERADO AUTOMATICAMENTE por scripts/ai-context/gerar.mjs — não editar à mão; será sobrescrito.",
  "format_version": 2,
- "nos": 956,
- "arestas": 3816,
+ "nos": 958,
+ "arestas": 3826,
  "hubs": [
   {
    "arquivo": "src/integrations/supabase/client.ts",
-   "importado_por": 277
+   "importado_por": 278
   },
   {
    "arquivo": "src/components/ui/button.tsx",
-   "importado_por": 250
+   "importado_por": 251
   },
   {
    "arquivo": "src/components/ui/card.tsx",
@@ -22,7 +22,7 @@
   },
   {
    "arquivo": "src/lib/logger.ts",
-   "importado_por": 204
+   "importado_por": 205
   },
   {
    "arquivo": "src/lib/utils.ts",
@@ -42,11 +42,11 @@
   },
   {
    "arquivo": "src/components/ui/input.tsx",
-   "importado_por": 97
+   "importado_por": 98
   },
   {
    "arquivo": "src/components/ui/label.tsx",
-   "importado_por": 73
+   "importado_por": 74
   },
   {
    "arquivo": "src/components/ui/select.tsx",
@@ -62,7 +62,7 @@
   },
   {
    "arquivo": "src/components/ui/dialog.tsx",
-   "importado_por": 50
+   "importado_por": 51
   },
   {
    "arquivo": "src/components/ui/scroll-area.tsx",
@@ -137,16 +137,16 @@
    "importado_por": 19
   },
   {
+   "arquivo": "src/integrations/supabase/types.ts",
+   "importado_por": 19
+  },
+  {
    "arquivo": "src/lib/safe-number.ts",
    "importado_por": 19
   },
   {
    "arquivo": "supabase/functions/_shared/numeric-body-schemas.ts",
    "importado_por": 19
-  },
-  {
-   "arquivo": "src/integrations/supabase/types.ts",
-   "importado_por": 18
   },
   {
    "arquivo": "src/hooks/useContacts.ts",
