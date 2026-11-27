@@ -94,19 +94,24 @@ select ur.user_id as admin_id
    and (ur.expires_at is null or ur.expires_at > now())
  limit 1 \gset
 
-select up.id as dono_id, a.name as dono_agent, a.id as dono_agent_id
+-- O front grava hold_events.agent_name a partir de user_profiles.full_name
+-- (src/hooks/useMultiChannelCall.ts:168), entao a sonda usa o mesmo valor.
+select up.id as dono_id, coalesce(nullif(up.full_name, ''), 'Agente Teste A-223') as dono_agent
   from public.user_profiles up
-  join public.agents a on a.id = up.agent_id
- where coalesce(a.status, 'active') <> 'inactive'
  order by up.id
  limit 1 \gset
 
+-- Contraste: outro usuario que nao seja admin/supervisor (esses tem policy propria).
 select up.id as outro_id
   from public.user_profiles up
-  join public.agents a on a.id = up.agent_id
  where up.id <> :'dono_id'
-   and a.id <> :'dono_agent_id'
-   and coalesce(a.status, 'active') <> 'inactive'
+   and not exists (
+     select 1 from public.user_roles ur
+      where ur.user_id = up.id
+        and ur.role in ('admin', 'supervisor')
+        and coalesce(ur.is_active, true)
+        and (ur.expires_at is null or ur.expires_at > now())
+   )
  order by up.id
  limit 1 \gset
 
@@ -118,7 +123,7 @@ select up.id as outro_id
 \endif
 \if :{?dono_id}
 \else
-  \echo 'PULADO 3-7: nenhum usuario vinculado a agente ativo'
+  \echo 'PULADO 3-7: nenhum usuario em user_profiles'
   rollback;
   \quit
 \endif
