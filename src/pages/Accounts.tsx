@@ -8,6 +8,8 @@ import { Heart, AlertTriangle, RefreshCcw, ShieldAlert, Search } from 'lucide-re
 import { useAccounts } from '@/hooks/useAccounts';
 import { usePageTitle } from '@/hooks/usePageTitle';
 import { ChurnSignalsPanel } from '@/components/accounts/ChurnSignalsPanel';
+import { AccountJourneyControl } from '@/components/accounts/AccountJourneyControl';
+import { useAccountJourney } from '@/hooks/useAccountJourney';
 import { NeonPageLayout } from '@/components/layout/NeonPageLayout';
 
 function healthVariant(score: number): 'default' | 'secondary' | 'destructive' {
@@ -18,7 +20,8 @@ function healthVariant(score: number): 'default' | 'secondary' | 'destructive' {
 
 export default function Accounts() {
   usePageTitle('Customer Success — Contas');
-  const { accounts, loading, totalCount, hasMore, loadingMore, loadMore, recomputeHealth, detectChurn } = useAccounts();
+  const { accounts, loading, totalCount, hasMore, loadingMore, loadMore, recomputeHealth, detectChurn, refresh } = useAccounts();
+  const journey = useAccountJourney();
   const [filter, setFilter] = useState('');
   const [statusFilter, setStatusFilter] = useState<string>('all');
 
@@ -120,7 +123,11 @@ export default function Accounts() {
                       <ShieldAlert className="h-3 w-3" /> Risco {a.churn_risk_score}
                     </Badge>
                   )}
-                  <Badge variant="outline">{a.current_stage}</Badge>
+                  <AccountJourneyControl
+                    account={{ id: a.id, name: a.name, current_stage: a.current_stage, version: a.version }}
+                    journey={journey}
+                    onSaved={refresh}
+                  />
                   <Button size="sm" variant="ghost" onClick={() => recomputeHealth(a.id)} title="Recalcular health">
                     <RefreshCcw className="h-4 w-4" />
                   </Button>
