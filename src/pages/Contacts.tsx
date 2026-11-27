@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import {
   CloudDownload,
   Loader2,
@@ -20,6 +20,7 @@ import { ContactDetailSheet } from '@/components/contacts/ContactDetailSheet';
 import { CreateContactDialog } from '@/components/contacts/CreateContactDialog';
 import { ContactGrid } from '@/components/contacts/ContactGrid';
 import { ContactFilters } from '@/components/contacts/ContactFilters';
+import { SavedFiltersBar } from '@/components/contacts/SavedFiltersBar';
 import {
   defaultContactFilters,
   type ContactFiltersState,
@@ -32,6 +33,11 @@ import { useDebouncedSearchParam } from '@/hooks/useDebouncedSearchParam';
 import { dialerUrl } from '@/lib/dialerLink';
 
 const DEFAULT_PAGE_SIZE: PageSize = 24;
+
+interface ContactsSavedFilter {
+  search: string;
+  filters: ContactFiltersState;
+}
 
 const Contacts = () => {
   usePageTitle('Contatos');
@@ -52,6 +58,15 @@ const Contacts = () => {
 
   const { contacts, isLoading, totalCount, hasMore, loadingMore, loadMore, fetchContacts, deleteContact, createContact } = useContacts();
   const navigate = useNavigate();
+  const applySavedFilter = useCallback(
+    (preset: ContactsSavedFilter) => {
+      setSearch(preset.search);
+      setFilters(preset.filters);
+      setPage(1);
+    },
+    [setSearch],
+  );
+
   const { syncWithBitrix, isSyncing, bitrixLoading } = useBitrixSync({
     contacts,
     createContact,
@@ -237,6 +252,12 @@ const Contacts = () => {
         />
         <ContactFilters contacts={contacts} value={filters} onChange={setFilters} />
       </div>
+
+      <SavedFiltersBar<ContactsSavedFilter>
+        entityType="contacts"
+        current={{ search, filters }}
+        onApply={applySavedFilter}
+      />
 
       <Tabs
         value={tab}
