@@ -102,18 +102,20 @@ select up.id as dono_id, coalesce(nullif(up.full_name, ''), 'Agente Teste A-223'
  limit 1 \gset
 
 -- Contraste: outro usuario que nao seja admin/supervisor (esses tem policy propria).
-select up.id as outro_id
-  from public.user_profiles up
- where up.id <> :'dono_id'
-   and not exists (
-     select 1 from public.user_roles ur
-      where ur.user_id = up.id
-        and ur.role in ('admin', 'supervisor')
-        and coalesce(ur.is_active, true)
-        and (ur.expires_at is null or ur.expires_at > now())
-   )
- order by up.id
- limit 1 \gset
+-- exists() sempre devolve uma linha, entao serve de booleano para o \if sem
+-- depender de haver candidato.
+select exists (
+  select 1
+    from public.user_profiles up
+   where up.id <> :'dono_id'
+     and not exists (
+       select 1 from public.user_roles ur
+        where ur.user_id = up.id
+          and ur.role in ('admin', 'supervisor')
+          and coalesce(ur.is_active, true)
+          and (ur.expires_at is null or ur.expires_at > now())
+     )
+) as tem_outro \gset
 
 \if :{?admin_id}
 \else
@@ -168,7 +170,20 @@ begin
 end $$;
 
 -- 5: outro agente nao grava na sessao alheia
-\if :{?outro_id}
+\if :tem_outro
+select up.id as outro_id
+  from public.user_profiles up
+ where up.id <> :'dono_id'
+   and not exists (
+     select 1 from public.user_roles ur
+      where ur.user_id = up.id
+        and ur.role in ('admin', 'supervisor')
+        and coalesce(ur.is_active, true)
+        and (ur.expires_at is null or ur.expires_at > now())
+   )
+ order by up.id
+ limit 1 \gset
+
 select set_config('request.jwt.claims', json_build_object('sub', :'outro_id')::text, true);
 do $$
 declare
