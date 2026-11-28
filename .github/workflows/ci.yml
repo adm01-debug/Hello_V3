@@ -134,3 +134,7 @@ jobs:
           bun-version: latest
       - name: Audit dependencies
         run: bun audit || true
+      # Etapa 041: o passo acima so imprime. Este reprova quando a contagem de
+      # vulnerabilidades sobe em relacao a scripts/audit-baseline.json.
+      - name: Guard • Vulnerabilidades nao aumentaram
+        run: node scripts/check-audit-baseline.mjs
