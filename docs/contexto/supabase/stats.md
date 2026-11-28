@@ -6,7 +6,7 @@ Valores aproximados de propósito, para não gerar commits a cada coleta. Fora d
 
 | métrica | valor |
 |---|---|
-| tamanho | 52.4 MB |
+| tamanho | 52.5 MB |
 | schema public | 24.4 MB |
 
 
@@ -19,7 +19,7 @@ Valores aproximados de propósito, para não gerar commits a cada coleta. Fora d
 | public.audit_logs | ~340 | 640.0 KB | 336.0 KB | 264.0 KB | ~100 | ~560 | ~1k | 2026-11-27 |
 | public.call_control_audit_logs | ~100 | 360.0 KB | 224.0 KB | 96.0 KB | ~70 | ~20 | 1 | 2026-11-27 |
 | public.call_sessions | ~100 | 328.0 KB | 16.0 KB | 280.0 KB | ~10 | ~4.5k | ~21.8k |  |
-| public.notifications | ~60 | 240.0 KB | 88.0 KB | 112.0 KB | ~20 | ~5.2k | ~2.1k | 2026-11-27 |
+| public.notifications | ~110 | 248.0 KB | 96.0 KB | 112.0 KB | ~20 | ~5.2k | ~2.1k | 2026-11-27 |
 | public.contacts | ~100 | 192.0 KB | 24.0 KB | 136.0 KB | 5 | ~12k | ~110 |  |
 | public.kb_articles | 0 | 192.0 KB | 8.0 KB | 160.0 KB | ~30 | ~150 | ~90 | 2026-11-26 |
 | public.voip_trunk_usage_metrics | 3 | 160.0 KB | 8.0 KB | 144.0 KB | 0 | ~90 | 0 |  |
@@ -52,7 +52,7 @@ Valores aproximados de propósito, para não gerar commits a cada coleta. Fora d
 | public.agents | 1 | 80.0 KB | 8.0 KB | 32.0 KB | ~20 | ~389.7k | 0 | 2026-11-27 |
 | public.call_scorecards | 0 | 80.0 KB | 8.0 KB | 64.0 KB | 3 | ~60 | ~40 |  |
 | public.crm_field_suggestions | 0 | 80.0 KB | 8.0 KB | 64.0 KB | 0 | ~20 | 6 |  |
-| public.crm_sync_queue | 0 | 80.0 KB | 8.0 KB | 48.0 KB | ~10 | ~450 | ~160 | 2026-11-27 |
+| public.crm_sync_queue | 0 | 80.0 KB | 8.0 KB | 48.0 KB | ~10 | ~470 | ~160 | 2026-11-27 |
 | public.data_lake_exports | ~50 | 80.0 KB | 8.0 KB | 32.0 KB | 3 | ~220 | 0 | 2026-11-27 |
 | public.entity_versions | 0 | 80.0 KB | 8.0 KB | 64.0 KB | 2 | ~30 | 4 |  |
 | public.geo_restrictions | 0 | 80.0 KB | 8.0 KB | 48.0 KB | ~40 | ~40 | ~80 | 2026-11-26 |
@@ -216,7 +216,7 @@ Valores aproximados de propósito, para não gerar commits a cada coleta. Fora d
 ## Consultas mais custosas (pg_stat_statements, desde o último reset)
 | role | chamadas (~) | total ms (~) | média ms | query |
 |---|---|---|---|---|
-| postgres | ~280 | ~1.6M | 5674.55 | `SELECT schema, "table", column_name, grantee, string_agg(privilege_type, $1 ORDER BY privilege_type) AS privileges FROM ( SELECT n.nspname AS schema, c.relname AS "table", a.attname AS column_name, COALESCE(g.rolname, $2` |
+| postgres | ~280 | ~1.6M | 5675.87 | `SELECT schema, "table", column_name, grantee, string_agg(privilege_type, $1 ORDER BY privilege_type) AS privileges FROM ( SELECT n.nspname AS schema, c.relname AS "table", a.attname AS column_name, COALESCE(g.rolname, $2` |
 | authenticator | ~640 | ~496.8k | 779.83 | `SELECT name FROM pg_timezone_names` |
 | postgres | 2 | ~264.9k | 132452.35 | `SELECT count(*) FROM information_schema.column_privileges cp WHERE grantee NOT IN ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15) AND NOT EXISTS (SELECT $16 FROM information_schema.role_table_grants g WHERE g.table_` |
 | postgres | 2 | ~263k | 131503.84 | `SELECT table_schema, table_name, column_name, grantee, privilege_type FROM information_schema.column_privileges cp WHERE grantee NOT IN ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15) AND NOT EXISTS (SELECT $16 FROM` |
@@ -226,10 +226,10 @@ Valores aproximados de propósito, para não gerar commits a cada coleta. Fora d
 | authenticated | ~29k | ~111.3k | 3.84 | `WITH pgrst_source AS (INSERT INTO "public"."performance_metrics"("metric_name", "metric_value", "navigation_type", "rating", "url", "user_agent", "user_id") SELECT "pgrst_body"."metric_name", "pgrst_body"."metric_value",` |
 | postgres | ~5.7k | ~88.6k | 15.49 | `SELECT net.http_post( url := $1, headers := jsonb_build_object( $2, $3, $4, $5 \|\| ( SELECT decrypted_secret FROM vault.decrypted_secrets WHERE name = $6 ) ), body := jsonb_build_object($7, $8) )` |
 | authenticated | ~5.1k | ~85.1k | 16.80 | `WITH pgrst_source AS ( SELECT "public"."contacts".* FROM "public"."contacts" ORDER BY "public"."contacts"."updated_at" DESC , "public"."contacts"."id" DESC LIMIT $1 OFFSET $2 ) , pgrst_source_count AS (SELECT $3 FROM "pu` |
-| postgres | ~290 | ~72.5k | 253.35 | `SELECT e.extname AS name, e.extversion AS version, n.nspname AS schema, (SELECT default_version FROM pg_available_extensions a WHERE a.name = e.extname) AS available_version FROM pg_extension e JOIN pg_namespace n ON n.o` |
-| postgres | ~290 | ~57.4k | 200.83 | `SELECT n.nspname AS schema, c.relname AS "table", a.attnum AS position, a.attname AS name, format_type(a.atttypid, a.atttypmod) AS type, NOT a.attnotnull AS nullable, pg_get_expr(d.adbin, d.adrelid) AS "default", NULLIF(` |
+| postgres | ~290 | ~72.8k | 253.51 | `SELECT e.extname AS name, e.extversion AS version, n.nspname AS schema, (SELECT default_version FROM pg_available_extensions a WHERE a.name = e.extname) AS available_version FROM pg_extension e JOIN pg_namespace n ON n.o` |
+| postgres | ~290 | ~57.8k | 201.31 | `SELECT n.nspname AS schema, c.relname AS "table", a.attnum AS position, a.attname AS name, format_type(a.atttypid, a.atttypmod) AS type, NOT a.attnotnull AS nullable, pg_get_expr(d.adbin, d.adrelid) AS "default", NULLIF(` |
 | authenticator | ~630 | ~49.6k | 78.42 | `WITH -- Recursively get the base types of domains base_types AS ( WITH RECURSIVE recurse AS ( SELECT oid, typbasetype, typnamespace AS base_namespace, COALESCE(NULLIF(typbasetype, $3), oid) AS base_type FROM pg_type UNIO` |
-| postgres | ~3.5k | ~46.2k | 13.06 | `SELECT net.http_post( url := public.edge_function_url($1), headers := jsonb_build_object( $2, $3, $4, $5 \|\| ( SELECT decrypted_secret FROM vault.decrypted_secrets WHERE name = $6 ) ), body := jsonb_build_object($7, $8) )` |
+| postgres | ~3.6k | ~46.9k | 13.02 | `SELECT net.http_post( url := public.edge_function_url($1), headers := jsonb_build_object( $2, $3, $4, $5 \|\| ( SELECT decrypted_secret FROM vault.decrypted_secrets WHERE name = $6 ) ), body := jsonb_build_object($7, $8) )` |
 | authenticated | ~2k | ~36.1k | 18.45 | `WITH pgrst_source AS (SELECT pgrst_call.pgrst_scalar FROM (SELECT "public"."get_call_volume_stats"() pgrst_scalar) pgrst_call) SELECT $3::bigint AS total_result_set, $4 AS page_total, coalesce(json_agg(_postgrest_t.pgrst` |
 
 
