@@ -5,7 +5,7 @@
   "vitest",
   "playwright"
  ],
- "total": 466,
+ "total": 467,
  "por_tipo": {
   "contrato": 1,
   "e2e": 16,
@@ -3994,6 +3994,7 @@
   "supabase/tests/geo_tables_retroativo_rls_test.sql",
   "supabase/tests/geo_write_policies_rls_test.sql",
   "supabase/tests/goals_achieved_notification_rls_test.sql",
+  "supabase/tests/holiday_region_leak_rls_test.sql",
   "supabase/tests/increment_weekly_stats_rpc_rls_test.sql",
   "supabase/tests/internal_tables_rls_test.sql",
   "supabase/tests/kb_article_history_rls_test.sql",

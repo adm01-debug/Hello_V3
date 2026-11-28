@@ -2,11 +2,16 @@
  "aviso": "GERADO AUTOMATICAMENTE por scripts/ai-context/gerar.mjs — não editar à mão; será sobrescrito.",
  "format_version": 2,
  "git": {
-  "commit": "2e9fb8798a10ba72502c4229ccd3705acaf30cbe",
+  "commit": "40b31fd17c6cffff138a505c2be6a986ce55bdb7",
   "branch": "main",
-  "data_commit": "2026-11-26T21:53:27-03:00",
+  "data_commit": "2026-11-28T12:22:18-03:00",
   "remote": "https://github.com/adm01-debug/Hello_V3",
   "ultimos_commits": [
+   {
+    "sha": "40b31fd",
+    "data": "2026-11-28",
+    "assunto": "fix: feriado de outro pais nao bloqueia mais a discagem (#383)"
+   },
    {
     "sha": "2e9fb87",
     "data": "2026-11-26",
@@ -126,14 +131,9 @@
     "sha": "0ecc7a7",
     "data": "2026-11-26",
     "assunto": "fix: meta atingida vira notificacao do usuario, nao alerta de chamada (etapa 127) (#367)"
-   },
-   {
-    "sha": "36baa4a",
-    "data": "2026-11-26",
-    "assunto": "feat: tela de violacoes de SLA com atraso e filtros (etapa 179) (#352)"
    }
   ],
-  "arquivos_mudados_7d": 1949,
+  "arquivos_mudados_7d": 1951,
   "pastas_mais_mudadas_30d": [
    {
     "pasta": "src/hooks/__tests__",
@@ -141,7 +141,7 @@
    },
    {
     "pasta": "docs/qa/05-PROGRESSO.md",
-    "mudancas": 168
+    "mudancas": 169
    },
    {
     "pasta": "src/components/calls",
@@ -199,11 +199,11 @@
   "arquivos_mais_mudados_90d": [
    {
     "arquivo": "docs/qa/05-PROGRESSO.md",
-    "mudancas": 168
+    "mudancas": 169
    },
    {
     "arquivo": "docs/estado/funcionalidades-planejadas.md",
-    "mudancas": 28
+    "mudancas": 27
    },
    {
     "arquivo": "src/components/calls/UnifiedSoftphone.tsx",
@@ -306,7 +306,7 @@
   ]
  },
  "contagens": {
-  "arquivos_total": 1858,
+  "arquivos_total": 1860,
   "arquivos_codigo": 1394,
   "linhas_codigo": 186346,
   "rotas": 108,
@@ -318,9 +318,9 @@
   "hooks": 203,
   "edge_functions": 99,
   "tabelas": 172,
-  "migrations": 270,
+  "migrations": 271,
   "cron_jobs": 13,
-  "testes": 466,
+  "testes": 467,
   "workflows": 5,
   "scripts": 36,
   "docs_md": 122
