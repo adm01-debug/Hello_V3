@@ -45,6 +45,7 @@ vi.mock('@/integrations/supabase/client', () => ({
     from: (...a: unknown[]) => fromMock(...(a as [string])),
     channel: vi.fn(() => makeChannel()),
     removeChannel: vi.fn(),
+    auth: { getUser: vi.fn(() => Promise.resolve({ data: { user: { id: 'u1' } }, error: null })) },
   },
 }));
 
@@ -295,5 +296,34 @@ describe('useSupervisorPanel (coverage)', () => {
     setTable('call_control_audit_logs', null, { message: 'denied' });
     await act(async () => { await result.current.stopListening(); });
     expect(toast.warning).toHaveBeenCalledWith('Ação concluída, mas não foi registrada na auditoria');
+  });
+
+  it('escuta e auditoria saem no nome do supervisor logado, nao no literal "Supervisor"', async () => {
+    setSingle('user_profiles', { full_name: 'Maria Souza' });
+    setSingle('barge_in_sessions', {
+      id: 'bi-4', call_session_id: 'call-1', supervisor_name: 'Maria Souza',
+      agent_name: 'Agent A', status: 'listening', started_at: new Date().toISOString(),
+    });
+    const { result } = renderHook(() => useSupervisorPanel());
+    await waitFor(() => expect(result.current.loading).toBe(false));
+    act(() => result.current.setSelectedCall(activeCall));
+    await waitFor(() => expect(result.current.selectedCall).not.toBeNull());
+    await act(async () => { await result.current.startListening(); });
+
+    const builders = fromMock.mock.results.map((r) => r.value as Record<string, unknown>);
+    const insertCom = (campo: string) =>
+      builders
+        .map((b) => (b?.insert as { mock?: { calls: unknown[][] } })?.mock?.calls ?? [])
+        .flat()
+        .map((c) => c[0] as Record<string, unknown>)
+        .filter((linha) => linha && campo in linha);
+
+    const sessoes = insertCom('supervisor_name');
+    expect(sessoes.length).toBeGreaterThan(0);
+    expect(sessoes.every((linha) => linha.supervisor_name === 'Maria Souza')).toBe(true);
+
+    const auditorias = insertCom('event_type').filter((linha) => linha.event_type === 'listen_start');
+    expect(auditorias).toHaveLength(1);
+    expect((auditorias[0].details as { supervisor: string }).supervisor).toBe('Maria Souza');
   });
 });
