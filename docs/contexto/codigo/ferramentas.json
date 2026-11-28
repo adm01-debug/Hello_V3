@@ -265,6 +265,7 @@
    "arquivo": ".github/workflows/migrations.yml",
    "nome": "Aplicar migration (manual)",
    "gatilhos": [
+    "pull_request",
     "schedule",
     "workflow_dispatch"
    ],

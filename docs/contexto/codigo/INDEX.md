@@ -1,7 +1,7 @@
 # Contexto do projeto para agentes de IA
 
 GERADO AUTOMATICAMENTE por scripts/ai-context/gerar.mjs — não editar à mão; será sobrescrito.
-Publicado em `docs/contexto/codigo/` na branch `contexto` (gerada, nunca abra PR dela) a cada push em `main` e a cada 10 minutos pelo workflow `contexto.yml`; índice único das três fontes em `docs/contexto/00-INDEX.md`. Gere local com `node scripts/ai-context/gerar.mjs`. Commit-base: `c8a2dcbd21c71171d43aeaed280e8e6e34d135e6` (2026-11-28T13:17:17-03:00).
+Publicado em `docs/contexto/codigo/` na branch `contexto` (gerada, nunca abra PR dela) a cada push em `main` e a cada 10 minutos pelo workflow `contexto.yml`; índice único das três fontes em `docs/contexto/00-INDEX.md`. Gere local com `node scripts/ai-context/gerar.mjs`. Commit-base: `a3c8c8d8a8c0e6eb728ec23a8d45f3e4a0ac854d` (2026-11-28T13:20:21-03:00).
 
 ## Como usar (leia antes de planejar ou executar qualquer tarefa)
 1. **Tela/rota/menu** → `rotas.json` (url/vista/menu → arquivo → hooks → tabelas → edges; `rotas_http_backend` para APIs) e `modulos.json` (módulo inteiro + dependências entre módulos).
@@ -377,21 +377,21 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 - possiveis_segredos_no_codigo: 3 — ex.: src/lib/__tests__/security-advanced.test.ts:203, src/lib/__tests__/security-advanced.test.ts:208, src/lib/__tests__/security-advanced.test.ts:213
 
 ## Grafo de código (graphify)
-- 10800 nós · 28315 arestas · 867 comunidades · grafo do commit `c8a2dcbd`
+- 10800 nós · 28315 arestas · 867 comunidades · grafo do commit `a3c8c8d8`
 - comunidades maiores: card.tsx (278), client.ts (242), vitest (208), react (188), lucide-react (177), usePageTitle (169), getCorrelationId (148), traceHeaders (146), @tanstack/react-query (141), ref_https (128), react-router-dom (125), cn (117)
 - símbolos mais chamados: cn() (src/lib/utils.ts), usePageTitle() (src/hooks/usePageTitle.ts), safeFormatDatePtBR() (src/lib/safe-date.ts), useAuthContext() (src/contexts/AuthContext.tsx), q() (scripts/supabase_snapshot/snapshot.py), safeFormatDistanceToNow() (src/lib/safe-date.ts), traceHeaders() (src/lib/tracing.ts), withTrace() (src/lib/tracing.ts), safeToLocaleString() (src/lib/safe-date.ts), buildCorsHeaders() (supabase/functions/_shared/cors.ts), .collect() (scripts/supabase_snapshot/test_snapshot.py), formatDuration() (src/lib/utils.ts)
 - consulta local: `graphify query "<pergunta>"`, `graphify path "<A>" "<B>"`, `graphify explain "<X>"`
 
 ## Hotspots (arquivos mais alterados, 90 dias)
 - docs/qa/05-PROGRESSO.md (175)
-- docs/estado/funcionalidades-planejadas.md (23)
+- docs/estado/funcionalidades-planejadas.md (22)
 - src/hooks/useMultiChannelCall.ts (13)
 - src/components/calls/UnifiedSoftphone.tsx (12)
-- docs/audits/pendencias-2026-07.md (10)
+- .github/workflows/migrations.yml (10)
 - src/components/calls/ActiveCallBar.tsx (10)
 - src/integrations/supabase/types.ts (10)
-- .github/workflows/migrations.yml (9)
 - docs/agentes/banco.md (9)
+- docs/audits/pendencias-2026-07.md (9)
 - docs/qa/03-ACHADOS.md (9)
 - supabase/functions/data-lake-flush/index.ts (9)
 - docs/agentes/mapa-repo.md (8)
@@ -404,7 +404,7 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 - `contexto.yml` — Contexto para agentes de IA (10 min) (push, schedule, workflow_dispatch; cron 3 * * * *)
 - `deploy-edge-functions.yml` — Deploy edge function (workflow_dispatch)
 - `inventario-estado-semanal.yml` — Inventário do estado real (semanal) (schedule, workflow_dispatch; cron 23 10 * * 1)
-- `migrations.yml` — Aplicar migration (manual) (schedule, workflow_dispatch; cron 0 12 * * 1)
+- `migrations.yml` — Aplicar migration (manual) (pull_request, schedule, workflow_dispatch; cron 0 12 * * 1)
 
 ## Scripts npm
 - `dev`: `vite`
@@ -438,6 +438,7 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 
 
 ## Últimos commits
+- 2026-11-28 `a3c8c8d` ci: sondas de RLS rodam sozinhas em PR de banco e toda segunda (#384)
 - 2026-11-28 `c8a2dcb` feat: motor das cadencias (etapa 085) - inscricao deixa de ficar parada na etapa 1 (#370)
 - 2026-11-28 `e7f0148` feat: dar gatilho a fila do CRM (job de 5 min) e corrigir status na tela (etapa 083) (#371)
 - 2026-11-28 `c443721` fix: nao perder lead em silencio quando o Bitrix esta fora (etapa 084) (#372)
@@ -452,7 +453,6 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 - 2026-11-26 `0a4fed0` fix: valida forma do snapshot e da fila de coaching VoIP no localStorage (#378)
 - 2026-11-26 `bdbd99f` docs: reaudita o que foi descartado, arquivo por arquivo (nenhuma perda) (#377)
 - 2026-11-26 `80b9200` chore: registrar a varredura de branches e PRs (nenhum trabalho perdido) (#376)
-- 2026-11-26 `dc142b6` test: recuperar o teste do IP literal que ficou fora da main (resgate da PR 309) (#374)
 
 ## Arquivos deste diretório
 - `docs/contexto/codigo/rotas.json`
