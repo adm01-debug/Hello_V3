@@ -26,3 +26,10 @@ verify_jwt = false
 # roda com service role e limita por IP; o gateway nao pode exigir JWT aqui.
 [functions.login-attempt]
 verify_jwt = false
+
+# Fila do CRM: o job de 5 min (migration 20261128110000) manda como Bearer o
+# token opaco 'crm_sync_cron_token' lido do Vault, e a edge confere esse valor no
+# banco via public.token_cron_valido(). Sem esta linha o gateway recusa o bearer
+# antes da edge rodar e a fila volta a encher sem consumo.
+[functions.sync-crm-queue]
+verify_jwt = false
