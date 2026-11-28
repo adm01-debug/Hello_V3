@@ -43,6 +43,9 @@ jobs:
       - name: Guard • Gravações cegas no cliente Supabase
         run: node scripts/guard-supabase-error.mjs --check
 
+      - name: Guard • verify_jwt declarado em toda edge function (etapa 054)
+        run: node scripts/ci/check-verify-jwt.mjs
+
       - name: Guard • Auditoria estática das Edge Functions
         run: bun scripts/audit-edge-functions.ts
 
