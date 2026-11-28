@@ -1,6 +1,6 @@
 # 10 · ACESSO E SEGURANÇA — quem pode o quê
 
-> Gerado automaticamente por AI Context Sync v1.3.2 · commit `40b31fd17c` · branch `main` · 2026-11-28 15:22 UTC
+> Gerado automaticamente por AI Context Sync v1.3.2 · commit `324a522775` · branch `main` · 2026-11-28 15:24 UTC
 > Não edite à mão — regras humanas vão em `manual/`.
 
 ## Perfis / roles identificados
@@ -10,7 +10,7 @@
 - Tabelas de perfil/permissão: `user_roles`, `permissions`, `role_permissions`, `call_queue_members`, `ring_group_members`
 - Colunas de perfil: `user_profiles.role` (string not null), `user_roles.role` (public.app_role NOT NULL DEFAULT 'agent'), `role_permissions.role` (app_role NOT NULL)
 - Claims do JWT usados em políticas/funções: `email`, `role`
-- Funções usadas dentro de políticas RLS (a regra real está no corpo delas — veja `06`): `can_access_agent_data`, `get_user_agent_id`, `get_user_agent_name`, `get_user_role`, `has_role`, `is_active_agent`, `is_admin`, `is_admin_or_supervisor`, `is_admin_user`, `is_supervisor`
+- Funções usadas dentro de políticas RLS (a regra real está no corpo delas — veja `06`): `can_access_agent_data`, `get_user_agent_id`, `get_user_agent_name`, `get_user_role`, `has_role`, `is_active_agent`, `is_admin`, `is_admin_or_supervisor`, `is_admin_user`, `is_own_call_session`, `is_supervisor`
 
 ## Matriz tabela × operação → quem pode (derivada das políticas RLS)
 
@@ -104,7 +104,7 @@
 | `geo_settings` | enabled | authenticated: is_admin_or_supervisor() | — | — | — |
 | `goal_violations` | enabled | public: auth.uid() IS NOT NULL<br>public: is_admin_or_supervisor() | public: is_admin_or_supervisor()<br>authenticated: is_admin_or_supervisor() | public: is_admin_or_supervisor() | public: is_admin_or_supervisor() |
 | `hold_alert_settings` | enabled | public: true<br>public: auth.uid() IS NOT NULL<br>public: public.is_admin_or_supervisor() | public: true<br>public: public.is_admin_or_supervisor() | public: true<br>public: public.is_admin_or_supervisor() | public: public.is_admin_or_supervisor() |
-| `hold_events` | enabled | public: true<br>authenticated: is_admin_or_supervisor() OR agent_name = get_user_agent_name()<br>authenticated: public.is_admin() | public: true<br>authenticated: is_admin_or_supervisor()<br>authenticated: public.is_admin() | public: true<br>authenticated: is_admin_or_supervisor()<br>authenticated: public.is_admin() | public: public.is_admin_or_supervisor()<br>authenticated: public.is_admin() |
+| `hold_events` | enabled | public: true<br>authenticated: is_admin_or_supervisor() OR agent_name = get_user_agent_name()<br>authenticated: public.is_admin()<br>authenticated: public.is_own_call_session(call_session_id) OR public.is_admin_or_supervisor() OR agent_name = public.get_user_agent_name() | public: true<br>authenticated: is_admin_or_supervisor()<br>authenticated: public.is_admin()<br>authenticated: public.is_own_call_session(call_session_id) | public: true<br>authenticated: is_admin_or_supervisor()<br>authenticated: public.is_admin()<br>authenticated: public.is_own_call_session(call_session_id) | public: public.is_admin_or_supervisor()<br>authenticated: public.is_admin() |
 | `holidays` | enabled | public: auth.uid() IS NOT NULL<br>public: is_admin_or_supervisor() | public: is_admin_or_supervisor() | public: is_admin_or_supervisor() | public: is_admin_or_supervisor() |
 | `hot_desking_stations` | enabled | public: is_admin_or_supervisor()<br>public: auth.uid() IS NOT NULL | public: is_admin_or_supervisor() | public: is_admin_or_supervisor()<br>public: is_admin_or_supervisor() OR current_user_name = (SELECT full_name FROM public.user_profiles WHERE id = auth.uid()) | public: is_admin_or_supervisor() |
 | `index_drop_audit` | enabled | authenticated: public.is_admin() | — | — | — |
@@ -195,7 +195,7 @@
 
 > `—` com RLS ligado = ninguém além de service_role. `sem RLS` = qualquer chave anon lê/escreve tudo.
 
-## Onde o RLS é IGNORADO (service_role) — 143 arquivo(s)
+## Onde o RLS é IGNORADO (service_role) — 144 arquivo(s)
 
 - `scripts/ai-context/cenarios.mjs`
 - `scripts/ai-context/gerar.unit.mjs`
@@ -334,6 +334,7 @@
 - `supabase/migrations/20261126190000_cron_watchdog_privilegios.sql`
 - `supabase/migrations/20261127200000_revoke_anon_role_helpers.sql`
 - `supabase/migrations/20261127250000_increment_weekly_stats_rpc.sql`
+- `supabase/migrations/20261127280000_is_own_call_session_grants.sql`
 - `supabase/tests/increment_weekly_stats_rpc_rls_test.sql`
 - `supabase/tests/login_lockout_acl_rls_test.sql`
 - `supabase/tests/redaction_log_rls_test.sql`
@@ -396,6 +397,7 @@
 - `is_admin`
 - `is_admin_or_supervisor`
 - `is_admin_user`
+- `is_own_call_session`
 - `is_supervisor`
 - `log_audit_event`
 - `log_critical_rls_event`
@@ -450,21 +452,21 @@ Middleware matcher (Next.js): nenhum
 | Ação | Para/De | Privilégios | Objetos |
 |---|---|---|---|
 | grant | anon, authenticated | execute | `check_login_lockout`, `record_failed_login`, `record_successful_login`, `check_ip_allowed` |
-| grant | authenticated | execute | `log_audit_event`, `get_dashboard_stats`, `get_queue_stats`, `log_audit_event`, `get_agent_performance`, `get_call_history_with_summaries`, `get_call_volume_stats`, `get_agents_with_active_calls`, `check_all_tables_rls_status`, `has_role`, `has_permission`, `get_user_role`, `get_user_agent_name`, `get_auth_agent_id`, `get_user_agent_id` … +20 |
+| grant | authenticated | execute | `log_audit_event`, `get_dashboard_stats`, `get_queue_stats`, `log_audit_event`, `get_agent_performance`, `get_call_history_with_summaries`, `get_call_volume_stats`, `get_agents_with_active_calls`, `check_all_tables_rls_status`, `has_role`, `has_permission`, `get_user_role`, `get_user_agent_name`, `get_auth_agent_id`, `get_user_agent_id` … +21 |
 | grant | authenticated | insert | `client_errors` |
 | grant | authenticated | select | `financial_impact_daily`, `index_drop_audit`, `deal_pipeline_snapshots` |
 | grant | authenticated | select, insert | `webhook_flush_metrics` |
 | grant | authenticated | select, insert, update, delete | `deal_revenue_snapshots`, `shift_swap_suggestions`, `data_lake_exports`, `dialer_favorites`, `call_queues`, `call_queue_members`, `ring_groups`, `ring_group_members`, `queue_audio_prompts`, `call_park_orbits`, `parked_calls`, `user_preferences` |
 | grant | authenticated | select, update | `client_errors` |
 | grant | authenticated | update, delete | `rate_limit_logs` |
-| grant | authenticated, service_role | execute | `get_agent_financial_leaderboard`, `calculate_predictive_pace`, `recalc_deal_health`, `expire_parked_calls`, `calculate_predictive_pace`, `check_all_tables_rls_status`, `check_idle_indexes`, `expire_parked_calls`, `get_agent_financial_leaderboard`, `get_agent_performance`, `get_agents_with_active_calls`, `get_call_history_with_summaries`, `get_call_volume_stats`, `get_dashboard_stats`, `get_database_health_snapshot` … +18 |
+| grant | authenticated, service_role | execute | `get_agent_financial_leaderboard`, `calculate_predictive_pace`, `recalc_deal_health`, `expire_parked_calls`, `calculate_predictive_pace`, `check_all_tables_rls_status`, `check_idle_indexes`, `expire_parked_calls`, `get_agent_financial_leaderboard`, `get_agent_performance`, `get_agents_with_active_calls`, `get_call_history_with_summaries`, `get_call_volume_stats`, `get_dashboard_stats`, `get_database_health_snapshot` … +19 |
 | grant | optimistic_lock_writer | insert | `optimistic_lock_conflicts` |
 | grant | postgres | all privileges | `cron` |
 | grant | postgres, service_role | execute | `edge_function_url` |
 | grant | service_role | all | `deal_revenue_snapshots`, `shift_swap_suggestions`, `data_lake_exports`, `index_drop_audit`, `webhook_flush_metrics`, `dialer_favorites`, `call_queues`, `call_queue_members`, `ring_groups`, `ring_group_members`, `queue_audio_prompts`, `call_park_orbits`, `parked_calls`, `deal_pipeline_snapshots`, `client_errors` |
 | grant | service_role | execute | `check_all_tables_rls_status`, `log_rls_event`, `apply_predictive_pacing`, `snapshot_deals_daily`, `trigger_auto_scorecard`, `apply_predictive_pacing`, `check_ip_in_cidr`, `check_rate_limit`, `check_rls_enabled`, `cleanup_expired_challenges`, `snapshot_deals_daily`, `check_cron_health`, `check_cron_health` |
 | grant | service_role | select | `index_usage`, `unused_indexes`, `migration_status`, `schema_migrations`, `migration_rollbacks` |
-| revoke | PUBLIC | all | `log_index_drop_copy`, `expire_parked_calls`, `cron_health_rows` |
+| revoke | PUBLIC | all | `log_index_drop_copy`, `expire_parked_calls`, `cron_health_rows`, `is_own_call_session` |
 | revoke | PUBLIC | execute | `get_dashboard_stats`, `get_queue_stats`, `get_call_history_with_summaries`, `get_call_volume_stats`, `get_agents_with_active_calls`, `cleanup_old_logs`, `log_rls_event` |
 | revoke | PUBLIC, anon | all | `calculate_predictive_pace`, `recalc_deal_health`, `get_cron_health`, `get_cron_health` |
 | revoke | PUBLIC, anon | execute | `apply_migration`, `audit_role_change`, `audit_table_change`, `bridge_voip_alert_to_notification`, `check_suspicious_activity`, `check_table_bloat`, `cleanup_old_data`, `cleanup_old_logs`, `enforce_optimistic_lock`, `ensure_single_default_filter`, `get_call_queues_overview`, `handle_kb_article_change`, `handle_kb_article_history`, `handle_new_user`, `log_critical_rls_event` … +59 |
@@ -480,7 +482,7 @@ Middleware matcher (Next.js): nenhum
 | revoke | anon, authenticated, service_role | all | `cron_health_rows` |
 | revoke | authenticated | execute | `apply_migration`, `audit_role_change`, `audit_table_change`, `bridge_voip_alert_to_notification`, `check_suspicious_activity`, `check_table_bloat`, `cleanup_old_data`, `cleanup_old_logs`, `enforce_optimistic_lock`, `ensure_single_default_filter`, `handle_kb_article_change`, `handle_kb_article_history`, `handle_new_user`, `log_critical_rls_event`, `notify_bloat_hotspots` … +24 |
 | revoke | public | all | `get_agent_financial_leaderboard` |
-| revoke | public, anon | execute | `increment_weekly_stats` |
+| revoke | public, anon | execute | `increment_weekly_stats`, `is_own_call_session` |
 | revoke | public, anon, authenticated | execute | `dnc_track_removal` |
 
 ## Riscos de acesso detectados

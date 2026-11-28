@@ -59,11 +59,11 @@
  "commits": {
   "convencao": "conventional commits (observado)",
   "exemplos": [
+   "fix: liberar escrita de hold_events para o agente da chamada (tempo de espera) (#382)",
    "fix: feriado de outro pais nao bloqueia mais a discagem (#383)",
    "chore: registrar varredura final de cobertura backend -> tela (#381)",
    "feat: dar tela a jornada do cliente (etapas da conta e historico de transicoes) (#380)",
-   "feat: barra de filtros salvos na tela de contatos (#379)",
-   "fix: valida forma do snapshot e da fila de coaching VoIP no localStorage (#378)"
+   "feat: barra de filtros salvos na tela de contatos (#379)"
   ]
  },
  "pr_template": null,

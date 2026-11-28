@@ -1,15 +1,15 @@
 {
  "meta": {
-  "sha": "40b31fd17c6cffff138a505c2be6a986ce55bdb7",
+  "sha": "324a522775cc62678c4ddfb5eddf8a9100bc2024",
   "branch": "main",
   "remote": "https://github.com/adm01-debug/Hello_V3",
-  "generated_at": "2026-11-28 15:22 UTC",
-  "files_total": 1906,
-  "code_files": 1701,
-  "code_lines": 209016
+  "generated_at": "2026-11-28 15:24 UTC",
+  "files_total": 1909,
+  "code_files": 1704,
+  "code_lines": 209332
  },
  "version": "1.3.2",
- "facts_hash": "5ec1de6a21b9f866",
+ "facts_hash": "21ee31c2a713c001",
  "stack": {
   "frameworks": [
    "React + Vite",
@@ -170,7 +170,7 @@
   "languages": {
    ".tsx": 686,
    ".ts": 673,
-   ".sql": 306,
+   ".sql": 309,
    ".mjs": 29,
    ".py": 5,
    ".js": 2
@@ -20199,6 +20199,36 @@
     "using": "public.get_user_agent_name() = agent_name",
     "check": "public.get_user_agent_name() = agent_name",
     "src": "supabase/migrations/20261127150000_learning_completions_update_policy.sql"
+   },
+   {
+    "name": "Owners can insert hold_events",
+    "table": "hold_events",
+    "cmd": "INSERT",
+    "roles": "authenticated",
+    "mode": "permissive",
+    "using": "",
+    "check": "public.is_own_call_session(call_session_id)",
+    "src": "supabase/migrations/20261127223000_hold_events_agent_writable.sql"
+   },
+   {
+    "name": "Owners can update hold_events",
+    "table": "hold_events",
+    "cmd": "UPDATE",
+    "roles": "authenticated",
+    "mode": "permissive",
+    "using": "public.is_own_call_session(call_session_id)",
+    "check": "public.is_own_call_session(call_session_id)",
+    "src": "supabase/migrations/20261127223000_hold_events_agent_writable.sql"
+   },
+   {
+    "name": "Owners can view hold_events",
+    "table": "hold_events",
+    "cmd": "SELECT",
+    "roles": "authenticated",
+    "mode": "permissive",
+    "using": "public.is_own_call_session(call_session_id) OR public.is_admin_or_supervisor() OR agent_name = public.get_user_agent_name()",
+    "check": "",
+    "src": "supabase/migrations/20261127223000_hold_events_agent_writable.sql"
    }
   ],
   "triggers": [
@@ -22738,6 +22768,20 @@
      "notifications",
      "user_profiles",
      "user_roles"
+    ]
+   },
+   "is_own_call_session": {
+    "args": "_call_session_id uuid",
+    "returns": "boolean",
+    "lang": "sql",
+    "src": "supabase/migrations/20261127223000_hold_events_agent_writable.sql",
+    "security_definer": true,
+    "search_path": true,
+    "body": "SELECT EXISTS ( SELECT 1 FROM public.call_sessions cs JOIN public.user_profiles up ON up.id = auth.uid() WHERE cs.id = _call_session_id AND ( public.is_admin_or_supervisor() OR cs.agent_name = up.full_name OR cs.agent_name = public.get_user_agent_name() ) );",
+    "raises": [],
+    "tables": [
+     "call_sessions",
+     "user_profiles"
     ]
    },
    "increment_weekly_stats": {
@@ -26551,12 +26595,14 @@
    "supabase/migrations/20261127200000_revoke_anon_role_helpers.sql",
    "supabase/migrations/20261127210000_role_helpers_stable.sql",
    "supabase/migrations/20261127220000_polymorphic_pointer_comments.sql",
+   "supabase/migrations/20261127223000_hold_events_agent_writable.sql",
    "supabase/migrations/20261127230000_unique_conversation_message_id.sql",
    "supabase/migrations/20261127233000_calling_hours_holiday_region_fix.sql",
    "supabase/migrations/20261127240000_calling_hours_recurring_comment.sql",
    "supabase/migrations/20261127250000_increment_weekly_stats_rpc.sql",
    "supabase/migrations/20261127260000_increment_weekly_stats_rpc_null_media_fix.sql",
    "supabase/migrations/20261127270000_geo_policies_idempotente.sql",
+   "supabase/migrations/20261127280000_is_own_call_session_grants.sql",
    "supabase/tests/add_missing_fks_rls_test.sql",
    "supabase/tests/calling_hours_fail_closed_rls_test.sql",
    "supabase/tests/client_errors_rls_test.sql",
@@ -26568,6 +26614,7 @@
    "supabase/tests/geo_tables_retroativo_rls_test.sql",
    "supabase/tests/geo_write_policies_rls_test.sql",
    "supabase/tests/goals_achieved_notification_rls_test.sql",
+   "supabase/tests/hold_events_write_rls_test.sql",
    "supabase/tests/holiday_region_leak_rls_test.sql",
    "supabase/tests/increment_weekly_stats_rpc_rls_test.sql",
    "supabase/tests/internal_tables_rls_test.sql",
@@ -29011,6 +29058,22 @@
    },
    {
     "kind": "revoke",
+    "privs": "all",
+    "object": "is_own_call_session",
+    "objkind": "function",
+    "roles": "PUBLIC",
+    "src": "supabase/migrations/20261127223000_hold_events_agent_writable.sql"
+   },
+   {
+    "kind": "grant",
+    "privs": "execute",
+    "object": "is_own_call_session",
+    "objkind": "function",
+    "roles": "authenticated",
+    "src": "supabase/migrations/20261127223000_hold_events_agent_writable.sql"
+   },
+   {
+    "kind": "revoke",
     "privs": "execute",
     "object": "increment_weekly_stats",
     "objkind": "function",
@@ -29024,6 +29087,22 @@
     "objkind": "function",
     "roles": "authenticated, service_role",
     "src": "supabase/migrations/20261127250000_increment_weekly_stats_rpc.sql"
+   },
+   {
+    "kind": "revoke",
+    "privs": "execute",
+    "object": "is_own_call_session",
+    "objkind": "function",
+    "roles": "public, anon",
+    "src": "supabase/migrations/20261127280000_is_own_call_session_grants.sql"
+   },
+   {
+    "kind": "grant",
+    "privs": "execute",
+    "object": "is_own_call_session",
+    "objkind": "function",
+    "roles": "authenticated, service_role",
+    "src": "supabase/migrations/20261127280000_is_own_call_session_grants.sql"
    }
   ],
   "raises": [
@@ -35915,8 +35994,8 @@
   },
   {
    "module": "supabase/migrations",
-   "files": 271,
-   "lines": 17376,
+   "files": 273,
+   "lines": 17455,
    "tables": [],
    "exports": [],
    "docs": [],
@@ -36007,8 +36086,8 @@
   },
   {
    "module": "supabase/tests",
-   "files": 33,
-   "lines": 5083,
+   "files": 34,
+   "lines": 5320,
    "tables": [],
    "exports": [],
    "docs": [],
@@ -36026,6 +36105,7 @@
     "supabase/tests/geo_tables_retroativo_rls_test.sql",
     "supabase/tests/geo_write_policies_rls_test.sql",
     "supabase/tests/goals_achieved_notification_rls_test.sql",
+    "supabase/tests/hold_events_write_rls_test.sql",
     "supabase/tests/holiday_region_leak_rls_test.sql",
     "supabase/tests/increment_weekly_stats_rpc_rls_test.sql",
     "supabase/tests/internal_tables_rls_test.sql",
@@ -80798,6 +80878,36 @@
     "using": "public.get_user_agent_name() = agent_name",
     "check": "public.get_user_agent_name() = agent_name",
     "src": "supabase/migrations/20261127150000_learning_completions_update_policy.sql"
+   },
+   {
+    "name": "Owners can insert hold_events",
+    "table": "hold_events",
+    "cmd": "INSERT",
+    "roles": "authenticated",
+    "mode": "permissive",
+    "using": "",
+    "check": "public.is_own_call_session(call_session_id)",
+    "src": "supabase/migrations/20261127223000_hold_events_agent_writable.sql"
+   },
+   {
+    "name": "Owners can update hold_events",
+    "table": "hold_events",
+    "cmd": "UPDATE",
+    "roles": "authenticated",
+    "mode": "permissive",
+    "using": "public.is_own_call_session(call_session_id)",
+    "check": "public.is_own_call_session(call_session_id)",
+    "src": "supabase/migrations/20261127223000_hold_events_agent_writable.sql"
+   },
+   {
+    "name": "Owners can view hold_events",
+    "table": "hold_events",
+    "cmd": "SELECT",
+    "roles": "authenticated",
+    "mode": "permissive",
+    "using": "public.is_own_call_session(call_session_id) OR public.is_admin_or_supervisor() OR agent_name = public.get_user_agent_name()",
+    "check": "",
+    "src": "supabase/migrations/20261127223000_hold_events_agent_writable.sql"
    }
   ],
   "db_triggers": [
@@ -83339,6 +83449,20 @@
      "user_roles"
     ]
    },
+   "is_own_call_session": {
+    "args": "_call_session_id uuid",
+    "returns": "boolean",
+    "lang": "sql",
+    "src": "supabase/migrations/20261127223000_hold_events_agent_writable.sql",
+    "security_definer": true,
+    "search_path": true,
+    "body": "SELECT EXISTS ( SELECT 1 FROM public.call_sessions cs JOIN public.user_profiles up ON up.id = auth.uid() WHERE cs.id = _call_session_id AND ( public.is_admin_or_supervisor() OR cs.agent_name = up.full_name OR cs.agent_name = public.get_user_agent_name() ) );",
+    "raises": [],
+    "tables": [
+     "call_sessions",
+     "user_profiles"
+    ]
+   },
    "increment_weekly_stats": {
     "args": "p_agent_id uuid, p_week_start date, p_calls integer default 0, p_duration_seconds integer default 0, p_badges integer default 0, p_points integer default 0, p_avg_satisfaction numeric default null, p_ …",
     "returns": "public.agent_weekly_stats",
@@ -85562,6 +85686,7 @@
    "is_admin",
    "is_admin_or_supervisor",
    "is_admin_user",
+   "is_own_call_session",
    "is_supervisor"
   ],
   "matrix": {
@@ -86931,17 +87056,20 @@
     "SELECT": [
      "public: true",
      "authenticated: is_admin_or_supervisor() OR agent_name = get_user_agent_name()",
-     "authenticated: public.is_admin()"
+     "authenticated: public.is_admin()",
+     "authenticated: public.is_own_call_session(call_session_id) OR public.is_admin_or_supervisor() OR agent_name = public.get_user_agent_name()"
     ],
     "INSERT": [
      "public: true",
      "authenticated: is_admin_or_supervisor()",
-     "authenticated: public.is_admin()"
+     "authenticated: public.is_admin()",
+     "authenticated: public.is_own_call_session(call_session_id)"
     ],
     "UPDATE": [
      "public: true",
      "authenticated: is_admin_or_supervisor()",
-     "authenticated: public.is_admin()"
+     "authenticated: public.is_admin()",
+     "authenticated: public.is_own_call_session(call_session_id)"
     ],
     "DELETE": [
      "public: public.is_admin_or_supervisor()",
@@ -88425,6 +88553,7 @@
    "supabase/migrations/20261126190000_cron_watchdog_privilegios.sql",
    "supabase/migrations/20261127200000_revoke_anon_role_helpers.sql",
    "supabase/migrations/20261127250000_increment_weekly_stats_rpc.sql",
+   "supabase/migrations/20261127280000_is_own_call_session_grants.sql",
    "supabase/tests/increment_weekly_stats_rpc_rls_test.sql",
    "supabase/tests/login_lockout_acl_rls_test.sql",
    "supabase/tests/redaction_log_rls_test.sql",
@@ -88486,6 +88615,7 @@
    "is_admin",
    "is_admin_or_supervisor",
    "is_admin_user",
+   "is_own_call_session",
    "is_supervisor",
    "log_audit_event",
    "log_critical_rls_event",
@@ -90774,6 +90904,22 @@
    },
    {
     "kind": "revoke",
+    "privs": "all",
+    "object": "is_own_call_session",
+    "objkind": "function",
+    "roles": "PUBLIC",
+    "src": "supabase/migrations/20261127223000_hold_events_agent_writable.sql"
+   },
+   {
+    "kind": "grant",
+    "privs": "execute",
+    "object": "is_own_call_session",
+    "objkind": "function",
+    "roles": "authenticated",
+    "src": "supabase/migrations/20261127223000_hold_events_agent_writable.sql"
+   },
+   {
+    "kind": "revoke",
     "privs": "execute",
     "object": "increment_weekly_stats",
     "objkind": "function",
@@ -90787,6 +90933,22 @@
     "objkind": "function",
     "roles": "authenticated, service_role",
     "src": "supabase/migrations/20261127250000_increment_weekly_stats_rpc.sql"
+   },
+   {
+    "kind": "revoke",
+    "privs": "execute",
+    "object": "is_own_call_session",
+    "objkind": "function",
+    "roles": "public, anon",
+    "src": "supabase/migrations/20261127280000_is_own_call_session_grants.sql"
+   },
+   {
+    "kind": "grant",
+    "privs": "execute",
+    "object": "is_own_call_session",
+    "objkind": "function",
+    "roles": "authenticated, service_role",
+    "src": "supabase/migrations/20261127280000_is_own_call_session_grants.sql"
    }
   ],
   "guards": [
@@ -128392,6 +128554,10 @@
    "path": "supabase/migrations/20261127220000_polymorphic_pointer_comments.sql",
    "lines": 32
   },
+  "supabase/migrations/20261127223000_hold_events_agent_writable.sql": {
+   "path": "supabase/migrations/20261127223000_hold_events_agent_writable.sql",
+   "lines": 64
+  },
   "supabase/migrations/20261127230000_unique_conversation_message_id.sql": {
    "path": "supabase/migrations/20261127230000_unique_conversation_message_id.sql",
    "lines": 42
@@ -128416,6 +128582,11 @@
   "supabase/migrations/20261127270000_geo_policies_idempotente.sql": {
    "path": "supabase/migrations/20261127270000_geo_policies_idempotente.sql",
    "lines": 47
+  },
+  "supabase/migrations/20261127280000_is_own_call_session_grants.sql": {
+   "path": "supabase/migrations/20261127280000_is_own_call_session_grants.sql",
+   "lines": 15,
+   "uses_service_role": true
   },
   "supabase/tests/add_missing_fks_rls_test.sql": {
    "path": "supabase/tests/add_missing_fks_rls_test.sql",
@@ -128487,6 +128658,11 @@
    "temporal": [
     "and created_at > now() - interval '1 hour';"
    ]
+  },
+  "supabase/tests/hold_events_write_rls_test.sql": {
+   "path": "supabase/tests/hold_events_write_rls_test.sql",
+   "lines": 237,
+   "is_test": true
   },
   "supabase/tests/holiday_region_leak_rls_test.sql": {
    "path": "supabase/tests/holiday_region_leak_rls_test.sql",
@@ -128795,10 +128971,22 @@
   }
  },
  "git": {
-  "sha": "40b31fd17c6cffff138a505c2be6a986ce55bdb7",
+  "sha": "324a522775cc62678c4ddfb5eddf8a9100bc2024",
   "branch": "main",
   "remote": "https://github.com/adm01-debug/Hello_V3",
   "commits": [
+   {
+    "sha": "324a522",
+    "date": "2026-11-28",
+    "author": "adm01-debug",
+    "subject": "fix: liberar escrita de hold_events para o agente da chamada (tempo de espera) (#382)",
+    "files": [
+     "docs/qa/05-PROGRESSO.md",
+     "supabase/migrations/20261127223000_hold_events_agent_writable.sql",
+     "supabase/migrations/20261127280000_is_own_call_session_grants.sql",
+     "supabase/tests/hold_events_write_rls_test.sql"
+    ]
+   },
    {
     "sha": "40b31fd",
     "date": "2026-11-28",
@@ -129173,35 +129361,12 @@
      "supabase/migrations/20261126120000_deal_pipeline_snapshots.sql",
      "supabase/tests/deal_pipeline_snapshots_rls_test.sql"
     ]
-   },
-   {
-    "sha": "a1725d6",
-    "date": "2026-11-26",
-    "author": "adm01-debug",
-    "subject": "feat: historico de versoes dos artigos da base de conhecimento (#348)",
-    "files": [
-     "docs/qa/03-ACHADOS.md",
-     "src/components/knowledge/ArticleHistoryCard.tsx",
-     "src/components/knowledge/__tests__/ArticleHistoryCard.test.tsx",
-     "src/hooks/__tests__/useKbArticleHistory.test.tsx",
-     "src/hooks/__tests__/useKnowledgeBase.coverage.test.tsx",
-     "src/hooks/useKbArticleHistory.ts",
-     "src/hooks/useKnowledgeBase.ts",
-     "src/pages/Knowledge.tsx",
-     "src/pages/__tests__/Knowledge.reader.test.tsx",
-     "src/pages/__tests__/Knowledge.viewTracking.test.tsx",
-     "supabase/tests/kb_article_history_rls_test.sql"
-    ]
    }
   ],
   "hot_files": [
    [
     "docs/qa/05-PROGRESSO.md",
-    24
-   ],
-   [
-    "docs/qa/03-ACHADOS.md",
-    5
+    25
    ],
    [
     "docs/agentes/banco.md",
@@ -129210,6 +129375,10 @@
    [
     "src/integrations/supabase/types.ts",
     5
+   ],
+   [
+    "docs/qa/03-ACHADOS.md",
+    4
    ],
    [
     "supabase/tests/recurring_holidays_rls_test.sql",
@@ -129230,6 +129399,18 @@
    [
     "src/routes/protectedRoutes.tsx",
     2
+   ],
+   [
+    "supabase/migrations/20261127223000_hold_events_agent_writable.sql",
+    1
+   ],
+   [
+    "supabase/migrations/20261127280000_is_own_call_session_grants.sql",
+    1
+   ],
+   [
+    "supabase/tests/hold_events_write_rls_test.sql",
+    1
    ],
    [
     "supabase/migrations/20261127233000_calling_hours_holiday_region_fix.sql",
@@ -129261,18 +129442,6 @@
    ],
    [
     "src/pages/Accounts.tsx",
-    1
-   ],
-   [
-    "src/components/contacts/SavedFiltersBar.tsx",
-    1
-   ],
-   [
-    "src/components/contacts/__tests__/SavedFiltersBar.test.tsx",
-    1
-   ],
-   [
-    "src/hooks/__tests__/useSavedFilters.coverage.test.tsx",
     1
    ]
   ]

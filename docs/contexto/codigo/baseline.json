@@ -2,11 +2,16 @@
  "aviso": "GERADO AUTOMATICAMENTE por scripts/ai-context/gerar.mjs — não editar à mão; será sobrescrito.",
  "format_version": 2,
  "git": {
-  "commit": "40b31fd17c6cffff138a505c2be6a986ce55bdb7",
+  "commit": "324a522775cc62678c4ddfb5eddf8a9100bc2024",
   "branch": "main",
-  "data_commit": "2026-11-28T12:22:18-03:00",
+  "data_commit": "2026-11-28T12:22:31-03:00",
   "remote": "https://github.com/adm01-debug/Hello_V3",
   "ultimos_commits": [
+   {
+    "sha": "324a522",
+    "data": "2026-11-28",
+    "assunto": "fix: liberar escrita de hold_events para o agente da chamada (tempo de espera) (#382)"
+   },
    {
     "sha": "40b31fd",
     "data": "2026-11-28",
@@ -126,14 +131,9 @@
     "sha": "6b5425c",
     "data": "2026-11-26",
     "assunto": "test: sonda permanente da apuracao da LGPD e do ledger (etapa 132) (#369)"
-   },
-   {
-    "sha": "0ecc7a7",
-    "data": "2026-11-26",
-    "assunto": "fix: meta atingida vira notificacao do usuario, nao alerta de chamada (etapa 127) (#367)"
    }
   ],
-  "arquivos_mudados_7d": 1951,
+  "arquivos_mudados_7d": 1954,
   "pastas_mais_mudadas_30d": [
    {
     "pasta": "src/hooks/__tests__",
@@ -141,7 +141,7 @@
    },
    {
     "pasta": "docs/qa/05-PROGRESSO.md",
-    "mudancas": 169
+    "mudancas": 170
    },
    {
     "pasta": "src/components/calls",
@@ -199,7 +199,7 @@
   "arquivos_mais_mudados_90d": [
    {
     "arquivo": "docs/qa/05-PROGRESSO.md",
-    "mudancas": 169
+    "mudancas": 170
    },
    {
     "arquivo": "docs/estado/funcionalidades-planejadas.md",
@@ -306,7 +306,7 @@
   ]
  },
  "contagens": {
-  "arquivos_total": 1860,
+  "arquivos_total": 1863,
   "arquivos_codigo": 1394,
   "linhas_codigo": 186346,
   "rotas": 108,
@@ -318,9 +318,9 @@
   "hooks": 203,
   "edge_functions": 99,
   "tabelas": 172,
-  "migrations": 271,
+  "migrations": 273,
   "cron_jobs": 13,
-  "testes": 467,
+  "testes": 468,
   "workflows": 5,
   "scripts": 36,
   "docs_md": 122

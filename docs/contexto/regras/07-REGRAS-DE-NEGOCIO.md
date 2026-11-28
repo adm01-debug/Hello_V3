@@ -1,6 +1,6 @@
 # 07 · REGRAS DE NEGÓCIO
 
-> Gerado automaticamente por AI Context Sync v1.3.2 · commit `40b31fd17c` · branch `main` · 2026-11-28 15:22 UTC
+> Gerado automaticamente por AI Context Sync v1.3.2 · commit `324a522775` · branch `main` · 2026-11-28 15:24 UTC
 > Não edite à mão — regras humanas vão em `manual/`.
 
 ## A. Regras escritas por humanos (`manual/` — prioridade máxima, nunca sobrescrito)
@@ -311,7 +311,7 @@ _Nenhum arquivo em `manual/`. Copie `manual/TEMPLATE-regras-de-negocio.md` para 
 | `playlist_items` | Manage items of own playlists | ALL | public | permissive | `EXISTS (SELECT 1 FROM public.call_playlists p WHERE p.id = playlist_id AND (p.owner_agent_name = get_user_agent_name() OR is_admin_or_supervisor()))` | `EXISTS (SELECT 1 FROM public.call_playlists p WHERE p.id = playlist_id AND (p.owner_agent_name = get_user_agent_name() OR is_admin_or_supervisor()))` |
 | `deals` | Authenticated create deals | INSERT | public | permissive |  | `auth.uid() IS NOT NULL AND ( is_admin_or_supervisor() OR owner_agent_name IS NULL OR owner_agent_name = get_user_agent_name() )` |
 | `cadence_enrollments` | Authenticated insert enrollments | INSERT | public | permissive |  | `auth.uid() IS NOT NULL AND (is_admin_or_supervisor() OR agent_name = get_user_agent_name())` |
-| … +240 linhas — lista completa em `context.json` | | | | | | |
+| … +243 linhas — lista completa em `context.json` | | | | | | |
 
 ## C. Restrições de dados (obrigatório / único / default / CHECK / FK / calculada)
 

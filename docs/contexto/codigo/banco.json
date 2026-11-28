@@ -8,7 +8,7 @@
   "supabase/migrations",
   "typeorm"
  ],
- "migrations": 271,
+ "migrations": 273,
  "seeds": [],
  "avisos": [
   "29 bloco(s) com DDL dinâmico (EXECUTE format/...) não modelado — policies/colunas criadas dinamicamente podem faltar; confira no banco vivo"
@@ -104,6 +104,7 @@
   "is_admin",
   "is_admin_or_supervisor",
   "is_admin_user",
+  "is_own_call_session",
   "is_supervisor",
   "log_audit_event",
   "log_critical_rls_event",
@@ -11759,6 +11760,24 @@
     },
     {
      "nome": "Admins supervisors and own agent can view hold_events",
+     "comando": "select",
+     "para": "authenticated",
+     "tipo": "permissive"
+    },
+    {
+     "nome": "Owners can insert hold_events",
+     "comando": "insert",
+     "para": "authenticated",
+     "tipo": "permissive"
+    },
+    {
+     "nome": "Owners can update hold_events",
+     "comando": "update",
+     "para": "authenticated",
+     "tipo": "permissive"
+    },
+    {
+     "nome": "Owners can view hold_events",
      "comando": "select",
      "para": "authenticated",
      "tipo": "permissive"
