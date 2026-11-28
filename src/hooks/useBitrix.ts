@@ -253,7 +253,12 @@ export const useBitrix = () => {
        return { queued: true };
      }
  
-     return null;
+     // Sem a fila o lead nao existe em lugar nenhum: avisar em vez de sumir calado.
+     logger.error('Falha ao enfileirar lead para o Bitrix:', queueError);
+     toast.error('Lead não salvo', {
+       description: 'O Bitrix24 está fora do ar e a fila de sincronização recusou o registro. Cadastre o lead novamente em instantes.',
+     });
+     return { error: queueError.message };
    }, [callBitrixApi]);
 
   const getDeals = useCallback(async (filter?: Record<string, unknown>) => {
@@ -283,9 +288,16 @@ export const useBitrix = () => {
      if (queueError) {
        // Sem a fila, o registro da chamada se perde: o chamador recebe null como falha.
        logger.error('Falha ao enfileirar registro de chamada:', queueError);
+       toast.error('Chamada não registrada no Bitrix24', {
+         description: 'O Bitrix24 está fora do ar e a fila de sincronização recusou o registro.',
+       });
+       return { error: queueError.message };
      }
- 
-     return null;
+
+     toast.info('Chamada agendada para sincronização', {
+       description: 'O Bitrix24 está temporariamente instável. Registraremos a chamada em breve.',
+     });
+     return { queued: true };
    }, [callBitrixApi]);
 
   const finishCall = useCallback(async (callId: string, duration: number, statusCode: string = '200') => {
