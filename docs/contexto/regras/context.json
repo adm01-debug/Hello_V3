@@ -1,15 +1,15 @@
 {
  "meta": {
-  "sha": "a3c8c8d8a8c0e6eb728ec23a8d45f3e4a0ac854d",
+  "sha": "b900b700fa61baea702e908d60a96ad8c8804157",
   "branch": "main",
   "remote": "https://github.com/adm01-debug/Hello_V3",
-  "generated_at": "2026-11-28 16:20 UTC",
-  "files_total": 1927,
-  "code_files": 1722,
-  "code_lines": 211351
+  "generated_at": "2026-11-28 16:26 UTC",
+  "files_total": 1929,
+  "code_files": 1723,
+  "code_lines": 211357
  },
  "version": "1.3.2",
- "facts_hash": "d76746e6ba2e1b79",
+ "facts_hash": "75883957aa78f41a",
  "stack": {
   "frameworks": [
    "React + Vite",
@@ -150,6 +150,13 @@
     ]
    },
    {
+    "file": ".github/workflows/deploy-edge.yml",
+    "name": "Deploy edge functions",
+    "triggers": [
+     "workflow_dispatch"
+    ]
+   },
+   {
     "file": ".github/workflows/inventario-estado-semanal.yml",
     "name": "Inventário do estado real (semanal)",
     "triggers": [
@@ -170,7 +177,7 @@
   "package_manager": "bun",
   "languages": {
    ".tsx": 687,
-   ".ts": 676,
+   ".ts": 677,
    ".sql": 323,
    ".mjs": 29,
    ".py": 5,
@@ -36047,8 +36054,8 @@
   },
   {
    "module": "supabase/functions",
-   "files": 223,
-   "lines": 24789,
+   "files": 224,
+   "lines": 24795,
    "tables": [
     "account_lockouts",
     "accounts",
@@ -36181,12 +36188,12 @@
     "track-engine.ts: CallSummary, CallSession, AgentStat, Weakness, TrackCandidate, Skipped"
    ],
    "docs": [
+    "index.ts: Sonda de deploy: se esta resposta chega, o caminho de publicacao de edge function do repositorio funciona. Removida logo apos a medicao.",
     "geo-decision.test.ts: Etapa 141: as quatro combinacoes modo x pais + os casos de borda que nao podem ficar silenciosos (modo desconhecido, lista vazia, pais ausente).",
     "optimistic-lock.test.ts: Guarda de contrato do trigger enforce_optimistic_lock. O trigger vive em SQL e e aplicado pelo banco, nao por codigo TypeScript, entao nao ha como exercita-lo sem uma conexao Postgres real. A versao anterior deste arquivo simulava o teste (runSql devolvia `{ sql }` e a assercao era `typeof result == …",
     "allowed-hosts.ts: Guarda contra SSRF para chamadas de saída feitas por Edge Functions. Regra: nenhum `fetch` com URL derivada de dado do usuário ou de configuração deve sair sem passar por `assertSafeOutboundUrl`. Bloqueios sempre ativos: esquemas não HTTP(S), loopback, link-local (inclui 169.254.169.254 - metadata d …",
     "auth.ts: Autenticacao compartilhada das edge functions. Antes desta etapa cada funcao que verificava o chamador reimplementava a checagem — e seis nao verificavam nada (achados A-013 a A-017). Aqui ficam os tres casos que as funcoes realmente precisam: usuario logado, usuario logado com papel especifico e ch …",
-    "business-hours.ts: Cálculo de prazo em minutos úteis, respeitando o horário comercial da operação (tabela `calling_hours_config` + `holidays`). Fuso: o runtime roda em UTC, então nada aqui usa `getHours()` — todo cálculo de parede passa por `Intl.DateTimeFormat` com o `timeZone` da configuração (A-033).",
-    "client-ip.ts: O IP do cliente so pode vir de header HTTP, e header e controlado por quem chama. Antes de usar o valor em URL, log ou decisao de autorizacao, ele precisa ser um IP literal — nunca hostname, porta, path ou query."
+    "business-hours.ts: Cálculo de prazo em minutos úteis, respeitando o horário comercial da operação (tabela `calling_hours_config` + `holidays`). Fuso: o runtime roda em UTC, então nada aqui usa `getHours()` — todo cálculo de parede passa por `Intl.DateTimeFormat` com o `timeZone` da configuração (A-033)."
    ],
    "deps": [
     "https:",
@@ -36194,6 +36201,7 @@
    ],
    "imports_modules": [],
    "file_list": [
+    "supabase/functions/__ping-deploy/index.ts",
     "supabase/functions/__tests__/geo-decision.test.ts",
     "supabase/functions/__tests__/optimistic-lock.test.ts",
     "supabase/functions/_shared/ai-body-schemas.ts",
@@ -36272,8 +36280,7 @@
     "supabase/functions/chatbot-respond/__tests__/index.test.ts",
     "supabase/functions/chatbot-respond/__tests__/upstream-falha.test.ts",
     "supabase/functions/check-alerts/index.ts",
-    "supabase/functions/check-calling-hours/index.ts",
-    "supabase/functions/check-calling-hours/__tests__/index.test.ts"
+    "supabase/functions/check-calling-hours/index.ts"
    ]
   },
   {
@@ -120259,6 +120266,11 @@
     "const mockSupabase"
    ]
   },
+  "supabase/functions/__ping-deploy/index.ts": {
+   "path": "supabase/functions/__ping-deploy/index.ts",
+   "lines": 6,
+   "doc": "Sonda de deploy: se esta resposta chega, o caminho de publicacao de edge function do repositorio funciona. Removida logo apos a medicao."
+  },
   "supabase/functions/__tests__/geo-decision.test.ts": {
    "path": "supabase/functions/__tests__/geo-decision.test.ts",
    "lines": 66,
@@ -129845,10 +129857,20 @@
   }
  },
  "git": {
-  "sha": "a3c8c8d8a8c0e6eb728ec23a8d45f3e4a0ac854d",
+  "sha": "b900b700fa61baea702e908d60a96ad8c8804157",
   "branch": "main",
   "remote": "https://github.com/adm01-debug/Hello_V3",
   "commits": [
+   {
+    "sha": "b900b70",
+    "date": "2026-11-28",
+    "author": "adm01-debug",
+    "subject": "chore: publicar edge functions pela Management API (destrava o deploy bloqueado) (#386)",
+    "files": [
+     ".github/workflows/deploy-edge.yml",
+     "supabase/functions/__ping-deploy/index.ts"
+    ]
+   },
    {
     "sha": "a3c8c8d",
     "date": "2026-11-28",
@@ -130207,23 +130229,12 @@
      "supabase/migrations/20260315143858_create_geo_tables_retroativo.sql",
      "supabase/tests/geo_tables_retroativo_rls_test.sql"
     ]
-   },
-   {
-    "sha": "f430ead",
-    "date": "2026-11-26",
-    "author": "adm01-debug",
-    "subject": "fix: policy de UPDATE na fila de sincronizacao do CRM (etapa 082) (#354)",
-    "files": [
-     "docs/qa/05-PROGRESSO.md",
-     "supabase/migrations/20261127130000_crm_sync_queue_update_policy.sql",
-     "supabase/tests/crm_sync_queue_update_rls_test.sql"
-    ]
    }
   ],
   "hot_files": [
    [
     "docs/qa/05-PROGRESSO.md",
-    24
+    23
    ],
    [
     "docs/agentes/banco.md",
@@ -130240,6 +130251,14 @@
    [
     "docs/qa/onda-39-varredura-branches-e-prs.md",
     2
+   ],
+   [
+    ".github/workflows/deploy-edge.yml",
+    1
+   ],
+   [
+    "supabase/functions/__ping-deploy/index.ts",
+    1
    ],
    [
     ".github/workflows/migrations.yml",
@@ -130291,14 +130310,6 @@
    ],
    [
     "supabase/functions/_shared/__tests__/cron-db-token_test.ts",
-    1
-   ],
-   [
-    "supabase/functions/_shared/cron-db-token.ts",
-    1
-   ],
-   [
-    "supabase/functions/sync-crm-queue/index.ts",
     1
    ]
   ]

@@ -3,13 +3,13 @@
  "format_version": 2,
  "stack": {
   "linguagens": [
-   "TypeScript (1363)",
+   "TypeScript (1364)",
    "SQL (323)",
    "Markdown (122)",
    "JavaScript (31)",
    "JSON (16)",
+   "YAML (6)",
    "Python (5)",
-   "YAML (5)",
    "Shell (2)"
   ],
   "linguagem_principal": "TypeScript",
@@ -224,6 +224,30 @@
    "actions": [
     "actions/checkout",
     "supabase/setup-cli"
+   ]
+  },
+  {
+   "arquivo": ".github/workflows/deploy-edge.yml",
+   "nome": "Deploy edge functions",
+   "gatilhos": [
+    "workflow_dispatch"
+   ],
+   "crons": [],
+   "branches": [],
+   "jobs": [
+    "publicar"
+   ],
+   "permissoes": [
+    "contents: read"
+   ],
+   "scripts_usados": [],
+   "npm_scripts": [],
+   "secrets": [
+    "SUPABASE_ACCESS_TOKEN",
+    "VITE_SUPABASE_PROJECT_ID"
+   ],
+   "actions": [
+    "actions/checkout"
    ]
   },
   {
@@ -518,6 +542,7 @@
    "GITHUB_TOKEN",
    "SUPABASE_ACCESS_TOKEN",
    "SUPABASE_DB_URL",
+   "VITE_SUPABASE_PROJECT_ID",
    "VITE_SUPABASE_PUBLISHABLE_KEY",
    "VITE_SUPABASE_URL"
   ]

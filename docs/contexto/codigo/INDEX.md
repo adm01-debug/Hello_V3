@@ -1,7 +1,7 @@
 # Contexto do projeto para agentes de IA
 
 GERADO AUTOMATICAMENTE por scripts/ai-context/gerar.mjs — não editar à mão; será sobrescrito.
-Publicado em `docs/contexto/codigo/` na branch `contexto` (gerada, nunca abra PR dela) a cada push em `main` e a cada 10 minutos pelo workflow `contexto.yml`; índice único das três fontes em `docs/contexto/00-INDEX.md`. Gere local com `node scripts/ai-context/gerar.mjs`. Commit-base: `a3c8c8d8a8c0e6eb728ec23a8d45f3e4a0ac854d` (2026-11-28T13:20:21-03:00).
+Publicado em `docs/contexto/codigo/` na branch `contexto` (gerada, nunca abra PR dela) a cada push em `main` e a cada 10 minutos pelo workflow `contexto.yml`; índice único das três fontes em `docs/contexto/00-INDEX.md`. Gere local com `node scripts/ai-context/gerar.mjs`. Commit-base: `b900b700fa61baea702e908d60a96ad8c8804157` (2026-11-28T13:26:00-03:00).
 
 ## Como usar (leia antes de planejar ou executar qualquer tarefa)
 1. **Tela/rota/menu** → `rotas.json` (url/vista/menu → arquivo → hooks → tabelas → edges; `rotas_http_backend` para APIs) e `modulos.json` (módulo inteiro + dependências entre módulos).
@@ -14,7 +14,7 @@ Publicado em `docs/contexto/codigo/` na branch `contexto` (gerada, nunca abra PR
 Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua tarefa; não carregue tudo.
 
 ## Stack
-- linguagens: TypeScript (1363), SQL (323), Markdown (122), JavaScript (31), JSON (16), Python (5), YAML (5), Shell (2)
+- linguagens: TypeScript (1364), SQL (323), Markdown (122), JavaScript (31), JSON (16), YAML (6), Python (5), Shell (2)
 - linguagem_principal: TypeScript
 - framework: React
 - backend_http: n/d
@@ -34,9 +34,9 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 ## Números
 | item | qtd |
 |---|---|
-| arquivos_total | 1881 |
-| arquivos_codigo | 1398 |
-| linhas_codigo | 186880 |
+| arquivos_total | 1883 |
+| arquivos_codigo | 1399 |
+| linhas_codigo | 186886 |
 | rotas | 108 |
 | rotas_http_backend | 11 |
 | vistas_por_id | 0 |
@@ -49,7 +49,7 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 | migrations | 279 |
 | cron_jobs | 15 |
 | testes | 479 |
-| workflows | 5 |
+| workflows | 6 |
 | scripts | 36 |
 | docs_md | 122 |
 
@@ -377,24 +377,24 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 - possiveis_segredos_no_codigo: 3 — ex.: src/lib/__tests__/security-advanced.test.ts:203, src/lib/__tests__/security-advanced.test.ts:208, src/lib/__tests__/security-advanced.test.ts:213
 
 ## Grafo de código (graphify)
-- 10800 nós · 28315 arestas · 867 comunidades · grafo do commit `a3c8c8d8`
+- 10801 nós · 28315 arestas · 868 comunidades · grafo do commit `b900b700`
 - comunidades maiores: card.tsx (278), client.ts (242), vitest (208), react (188), lucide-react (177), usePageTitle (169), getCorrelationId (148), traceHeaders (146), @tanstack/react-query (141), ref_https (128), react-router-dom (125), cn (117)
 - símbolos mais chamados: cn() (src/lib/utils.ts), usePageTitle() (src/hooks/usePageTitle.ts), safeFormatDatePtBR() (src/lib/safe-date.ts), useAuthContext() (src/contexts/AuthContext.tsx), q() (scripts/supabase_snapshot/snapshot.py), safeFormatDistanceToNow() (src/lib/safe-date.ts), traceHeaders() (src/lib/tracing.ts), withTrace() (src/lib/tracing.ts), safeToLocaleString() (src/lib/safe-date.ts), buildCorsHeaders() (supabase/functions/_shared/cors.ts), .collect() (scripts/supabase_snapshot/test_snapshot.py), formatDuration() (src/lib/utils.ts)
 - consulta local: `graphify query "<pergunta>"`, `graphify path "<A>" "<B>"`, `graphify explain "<X>"`
 
 ## Hotspots (arquivos mais alterados, 90 dias)
 - docs/qa/05-PROGRESSO.md (175)
-- docs/estado/funcionalidades-planejadas.md (22)
+- docs/estado/funcionalidades-planejadas.md (21)
 - src/hooks/useMultiChannelCall.ts (13)
 - src/components/calls/UnifiedSoftphone.tsx (12)
 - .github/workflows/migrations.yml (10)
 - src/components/calls/ActiveCallBar.tsx (10)
 - src/integrations/supabase/types.ts (10)
 - docs/agentes/banco.md (9)
-- docs/audits/pendencias-2026-07.md (9)
 - docs/qa/03-ACHADOS.md (9)
 - supabase/functions/data-lake-flush/index.ts (9)
 - docs/agentes/mapa-repo.md (8)
+- docs/audits/pendencias-2026-07.md (8)
 - src/components/layout/AppSidebar.tsx (8)
 - src/components/layout/CommandPalette.tsx (8)
 - src/hooks/useAgentRanking.ts (8)
@@ -403,6 +403,7 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 - `ci.yml` — CI (pull_request, push)
 - `contexto.yml` — Contexto para agentes de IA (10 min) (push, schedule, workflow_dispatch; cron 3 * * * *)
 - `deploy-edge-functions.yml` — Deploy edge function (workflow_dispatch)
+- `deploy-edge.yml` — Deploy edge functions (workflow_dispatch)
 - `inventario-estado-semanal.yml` — Inventário do estado real (semanal) (schedule, workflow_dispatch; cron 23 10 * * 1)
 - `migrations.yml` — Aplicar migration (manual) (pull_request, schedule, workflow_dispatch; cron 0 12 * * 1)
 
@@ -438,6 +439,7 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 
 
 ## Últimos commits
+- 2026-11-28 `b900b70` chore: publicar edge functions pela Management API (destrava o deploy bloqueado) (#386)
 - 2026-11-28 `a3c8c8d` ci: sondas de RLS rodam sozinhas em PR de banco e toda segunda (#384)
 - 2026-11-28 `c8a2dcb` feat: motor das cadencias (etapa 085) - inscricao deixa de ficar parada na etapa 1 (#370)
 - 2026-11-28 `e7f0148` feat: dar gatilho a fila do CRM (job de 5 min) e corrigir status na tela (etapa 083) (#371)
@@ -452,7 +454,6 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 - 2026-11-26 `0448f16` feat: barra de filtros salvos na tela de contatos (#379)
 - 2026-11-26 `0a4fed0` fix: valida forma do snapshot e da fila de coaching VoIP no localStorage (#378)
 - 2026-11-26 `bdbd99f` docs: reaudita o que foi descartado, arquivo por arquivo (nenhuma perda) (#377)
-- 2026-11-26 `80b9200` chore: registrar a varredura de branches e PRs (nenhum trabalho perdido) (#376)
 
 ## Arquivos deste diretório
 - `docs/contexto/codigo/rotas.json`

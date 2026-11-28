@@ -2,11 +2,16 @@
  "aviso": "GERADO AUTOMATICAMENTE por scripts/ai-context/gerar.mjs — não editar à mão; será sobrescrito.",
  "format_version": 2,
  "git": {
-  "commit": "a3c8c8d8a8c0e6eb728ec23a8d45f3e4a0ac854d",
+  "commit": "b900b700fa61baea702e908d60a96ad8c8804157",
   "branch": "main",
-  "data_commit": "2026-11-28T13:20:21-03:00",
+  "data_commit": "2026-11-28T13:26:00-03:00",
   "remote": "https://github.com/adm01-debug/Hello_V3",
   "ultimos_commits": [
+   {
+    "sha": "b900b70",
+    "data": "2026-11-28",
+    "assunto": "chore: publicar edge functions pela Management API (destrava o deploy bloqueado) (#386)"
+   },
    {
     "sha": "a3c8c8d",
     "data": "2026-11-28",
@@ -126,14 +131,9 @@
     "sha": "082fc13",
     "data": "2026-11-26",
     "assunto": "fix: revogar de anon o EXECUTE dos helpers de papel (etapa 146) (#361)"
-   },
-   {
-    "sha": "077071b",
-    "data": "2026-11-26",
-    "assunto": "fix: restringir a authenticated as policies de public com predicado de usuario (etapas 143 e 144) (#359)"
    }
   ],
-  "arquivos_mudados_7d": 1972,
+  "arquivos_mudados_7d": 1974,
   "pastas_mais_mudadas_30d": [
    {
     "pasta": "src/hooks/__tests__",
@@ -165,7 +165,7 @@
    },
    {
     "pasta": "src/pages/admin",
-    "mudancas": 35
+    "mudancas": 34
    },
    {
     "pasta": "src/pages/__tests__",
@@ -203,7 +203,7 @@
    },
    {
     "arquivo": "docs/estado/funcionalidades-planejadas.md",
-    "mudancas": 22
+    "mudancas": 21
    },
    {
     "arquivo": "src/hooks/useMultiChannelCall.ts",
@@ -230,10 +230,6 @@
     "mudancas": 9
    },
    {
-    "arquivo": "docs/audits/pendencias-2026-07.md",
-    "mudancas": 9
-   },
-   {
     "arquivo": "docs/qa/03-ACHADOS.md",
     "mudancas": 9
    },
@@ -243,6 +239,10 @@
    },
    {
     "arquivo": "docs/agentes/mapa-repo.md",
+    "mudancas": 8
+   },
+   {
+    "arquivo": "docs/audits/pendencias-2026-07.md",
     "mudancas": 8
    },
    {
@@ -306,9 +306,9 @@
   ]
  },
  "contagens": {
-  "arquivos_total": 1881,
-  "arquivos_codigo": 1398,
-  "linhas_codigo": 186880,
+  "arquivos_total": 1883,
+  "arquivos_codigo": 1399,
+  "linhas_codigo": 186886,
   "rotas": 108,
   "rotas_http_backend": 11,
   "vistas_por_id": 0,
@@ -321,7 +321,7 @@
   "migrations": 279,
   "cron_jobs": 15,
   "testes": 479,
-  "workflows": 5,
+  "workflows": 6,
   "scripts": 36,
   "docs_md": 122
  },
@@ -515,8 +515,8 @@
    "linhas": 170
   },
   "supabase/functions": {
-   "arquivos": 223,
-   "linhas": 24789
+   "arquivos": 224,
+   "linhas": 24795
   },
   "tailwind.config.ts": {
    "arquivos": 1,
