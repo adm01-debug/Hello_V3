@@ -7,6 +7,29 @@ import { logger } from '@/lib/logger';
 import type { Json } from '@/integrations/supabase/types';
 
 import { safeToLocaleTimeString } from "@/lib/safe-date";
+/** Nome do usuário logado para atribuir a sessão de escuta; cai no e-mail e depois em 'Supervisor'. */
+function useSupervisorName(): string {
+  const [nome, setNome] = useState('Supervisor');
+  useEffect(() => {
+    let cancelado = false;
+    void (async () => {
+      const { data: auth } = await supabase.auth.getUser();
+      const usuario = auth?.user;
+      if (!usuario || cancelado) return;
+      const { data, error } = await supabase
+        .from('user_profiles')
+        .select('full_name')
+        .eq('id', usuario.id)
+        .maybeSingle();
+      if (error || cancelado) return;
+      const resolvido = data?.full_name?.trim() || usuario.email || 'Supervisor';
+      if (!cancelado) setNome(resolvido);
+    })();
+    return () => { cancelado = true; };
+  }, []);
+  return nome;
+}
+
 export interface ActiveCall {
   id: string;
   caller_name: string | null;
@@ -83,7 +106,7 @@ export function useSupervisorPanel() {
     avgWaitTime: 0, abandonmentRate: 0, totalCompleted: 0,
     totalAbandoned: 0, longestWait: 0, serviceLevelPercent: 0,
   });
-  const supervisorName = 'Supervisor';
+  const supervisorName = useSupervisorName();
 
   const { requestNotificationPermission, initAudioContext, playAlertSound } =
     useCriticalAlertNotifications({
