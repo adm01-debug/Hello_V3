@@ -2,11 +2,21 @@
  "aviso": "GERADO AUTOMATICAMENTE por scripts/ai-context/gerar.mjs — não editar à mão; será sobrescrito.",
  "format_version": 2,
  "git": {
-  "commit": "38ec1e81b3e5dc45e288ab2f36fc07bc3546e2b6",
+  "commit": "c3ccf7f682ede3fb2ca5887cc1b54f753289eb89",
   "branch": "main",
-  "data_commit": "2026-11-28T13:33:20-03:00",
+  "data_commit": "2026-11-28T14:35:45-03:00",
   "remote": "https://github.com/adm01-debug/Hello_V3",
   "ultimos_commits": [
+   {
+    "sha": "c3ccf7f",
+    "data": "2026-11-28",
+    "assunto": "chore(deps): bump zod from 3.25.76 to 4.6.6 (#393)"
+   },
+   {
+    "sha": "d2943ac",
+    "data": "2026-11-28",
+    "assunto": "chore(deps-dev): bump brace-expansion from 2.1.2 to 2.1.8 (#395)"
+   },
    {
     "sha": "38ec1e8",
     "data": "2026-11-28",
@@ -121,16 +131,6 @@
     "sha": "b85ce49",
     "data": "2026-11-26",
     "assunto": "feat: somar o placar semanal da gamificacao no banco (etapa 126) (#366)"
-   },
-   {
-    "sha": "83219b7",
-    "data": "2026-11-26",
-    "assunto": "fix: índice único parcial do message_id de WhatsApp e reentrega como 200 (etapa 017) (#364)"
-   },
-   {
-    "sha": "91bfc8a",
-    "data": "2026-11-26",
-    "assunto": "fix(db): helpers de papel como STABLE (etapa 101) para as 274 policies (#362)"
    }
   ],
   "arquivos_mudados_7d": 1974,
@@ -301,7 +301,11 @@
   "autores_30d": [
    {
     "autor": "adm01-debug",
-    "commits": 300
+    "commits": 298
+   },
+   {
+    "autor": "dependabot[bot]",
+    "commits": 2
    }
   ]
  },

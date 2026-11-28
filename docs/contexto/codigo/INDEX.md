@@ -1,7 +1,7 @@
 # Contexto do projeto para agentes de IA
 
 GERADO AUTOMATICAMENTE por scripts/ai-context/gerar.mjs — não editar à mão; será sobrescrito.
-Publicado em `docs/contexto/codigo/` na branch `contexto` (gerada, nunca abra PR dela) a cada push em `main` e a cada 10 minutos pelo workflow `contexto.yml`; índice único das três fontes em `docs/contexto/00-INDEX.md`. Gere local com `node scripts/ai-context/gerar.mjs`. Commit-base: `38ec1e81b3e5dc45e288ab2f36fc07bc3546e2b6` (2026-11-28T13:33:20-03:00).
+Publicado em `docs/contexto/codigo/` na branch `contexto` (gerada, nunca abra PR dela) a cada push em `main` e a cada 10 minutos pelo workflow `contexto.yml`; índice único das três fontes em `docs/contexto/00-INDEX.md`. Gere local com `node scripts/ai-context/gerar.mjs`. Commit-base: `c3ccf7f682ede3fb2ca5887cc1b54f753289eb89` (2026-11-28T14:35:45-03:00).
 
 ## Como usar (leia antes de planejar ou executar qualquer tarefa)
 1. **Tela/rota/menu** → `rotas.json` (url/vista/menu → arquivo → hooks → tabelas → edges; `rotas_http_backend` para APIs) e `modulos.json` (módulo inteiro + dependências entre módulos).
@@ -377,7 +377,7 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 - possiveis_segredos_no_codigo: 3 — ex.: src/lib/__tests__/security-advanced.test.ts:203, src/lib/__tests__/security-advanced.test.ts:208, src/lib/__tests__/security-advanced.test.ts:213
 
 ## Grafo de código (graphify)
-- 10800 nós · 28315 arestas · 867 comunidades · grafo do commit `38ec1e81`
+- 10800 nós · 28315 arestas · 867 comunidades · grafo do commit `c3ccf7f6`
 - comunidades maiores: card.tsx (278), client.ts (242), vitest (208), react (188), lucide-react (177), usePageTitle (169), getCorrelationId (148), traceHeaders (146), @tanstack/react-query (141), ref_https (128), react-router-dom (125), cn (117)
 - símbolos mais chamados: cn() (src/lib/utils.ts), usePageTitle() (src/hooks/usePageTitle.ts), safeFormatDatePtBR() (src/lib/safe-date.ts), useAuthContext() (src/contexts/AuthContext.tsx), q() (scripts/supabase_snapshot/snapshot.py), safeFormatDistanceToNow() (src/lib/safe-date.ts), traceHeaders() (src/lib/tracing.ts), withTrace() (src/lib/tracing.ts), safeToLocaleString() (src/lib/safe-date.ts), buildCorsHeaders() (supabase/functions/_shared/cors.ts), .collect() (scripts/supabase_snapshot/test_snapshot.py), formatDuration() (src/lib/utils.ts)
 - consulta local: `graphify query "<pergunta>"`, `graphify path "<A>" "<B>"`, `graphify explain "<X>"`
@@ -439,6 +439,8 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 
 
 ## Últimos commits
+- 2026-11-28 `c3ccf7f` chore(deps): bump zod from 3.25.76 to 4.6.6 (#393)
+- 2026-11-28 `d2943ac` chore(deps-dev): bump brace-expansion from 2.1.2 to 2.1.8 (#395)
 - 2026-11-28 `38ec1e8` chore: remover a sonda __ping-deploy (#387)
 - 2026-11-28 `b900b70` chore: publicar edge functions pela Management API (destrava o deploy bloqueado) (#386)
 - 2026-11-28 `a3c8c8d` ci: sondas de RLS rodam sozinhas em PR de banco e toda segunda (#384)
@@ -452,8 +454,6 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 - 2026-11-28 `40b31fd` fix: feriado de outro pais nao bloqueia mais a discagem (#383)
 - 2026-11-26 `2e9fb87` chore: registrar varredura final de cobertura backend -> tela (#381)
 - 2026-11-26 `77bac04` feat: dar tela a jornada do cliente (etapas da conta e historico de transicoes) (#380)
-- 2026-11-26 `0448f16` feat: barra de filtros salvos na tela de contatos (#379)
-- 2026-11-26 `0a4fed0` fix: valida forma do snapshot e da fila de coaching VoIP no localStorage (#378)
 
 ## Arquivos deste diretório
 - `docs/contexto/codigo/rotas.json`

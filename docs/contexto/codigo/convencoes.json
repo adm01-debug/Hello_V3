@@ -59,11 +59,11 @@
  "commits": {
   "convencao": "conventional commits (observado)",
   "exemplos": [
+   "chore(deps): bump zod from 3.25.76 to 4.6.6 (#393)",
+   "chore(deps-dev): bump brace-expansion from 2.1.2 to 2.1.8 (#395)",
    "chore: remover a sonda __ping-deploy (#387)",
    "chore: publicar edge functions pela Management API (destrava o deploy bloqueado) (#386)",
-   "ci: sondas de RLS rodam sozinhas em PR de banco e toda segunda (#384)",
-   "feat: motor das cadencias (etapa 085) - inscricao deixa de ficar parada na etapa 1 (#370)",
-   "feat: dar gatilho a fila do CRM (job de 5 min) e corrigir status na tela (etapa 083) (#371)"
+   "ci: sondas de RLS rodam sozinhas em PR de banco e toda segunda (#384)"
   ]
  },
  "pr_template": null,
