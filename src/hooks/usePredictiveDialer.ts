@@ -1,7 +1,10 @@
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { toast } from 'sonner';
 import { supabase } from '@/integrations/supabase/client';
 import { logger } from '@/lib/logger';
+import type { InitiateCallOptions } from '@/hooks/useMultiChannelCall';
+import { useSipCall } from '@/hooks/useSipCall';
+import { useCallContext } from '@/contexts/CallContext';
 import {
   apiAddToQueue,
   apiClaimNextContact,
@@ -54,15 +57,32 @@ export type PreDialCheck = (
   regionCode?: string,
 ) => Promise<{ canDial: boolean; reasons: string[] }>;
 
-export const usePredictiveDialer = (preDialCheck?: PreDialCheck) => {
+/**
+ * Etapa 078: a telefonia e injetada. O discador decide *quem* ligar; quem
+ * disca de verdade e o `initiateCall` de `useMultiChannelCall` (o mesmo que o
+ * softphone usa). Injetar em vez de montar o hook aqui evita uma segunda pilha
+ * de chamadas no mesmo navegador e mantem os testes sem SIP/Wavoip reais.
+ * Devolve `null` quando a discagem foi bloqueada (compliance, limite de
+ * simultaneas) — nesse caso o contato volta para a fila.
+ */
+export type DialCall = (
+  phone: string,
+  contactName?: string | null,
+  options?: InitiateCallOptions,
+) => Promise<{ id: string } | null>;
+
+export const usePredictiveDialer = (preDialCheck?: PreDialCheck, dialCall?: DialCall) => {
   const [campaigns, setCampaigns] = useState<DialerCampaign[]>([]);
   const [queue, setQueue] = useState<DialerQueueItem[]>([]);
   const [activeCampaign, setActiveCampaign] = useState<DialerCampaign | null>(null);
   const [isDialing, setIsDialing] = useState(false);
   const [currentCall, setCurrentCall] = useState<DialerQueueItem | null>(null);
+  // Id da chamada de telefonia em curso (etapa 078). Fica fora de
+  // `DialerQueueItem` para nao misturar a linha da fila com a chamada.
+  const [activeCallId, setActiveCallId] = useState<string | null>(null);
+  const [loopTick, setLoopTick] = useState(0);
   // Incrementado quando um contato e pulado, para o laco automatico buscar o
   // proximo em vez de ficar parado esperando currentCall mudar.
-  const [loopTick, setLoopTick] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
   const dialerIntervalRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
@@ -156,6 +176,44 @@ export const usePredictiveDialer = (preDialCheck?: PreDialCheck) => {
     [fetchCampaigns],
   );
 
+  // Etapa 078: o contato ja foi reservado no banco como `dialing`. Quando a
+  // discagem nao acontece, a linha precisa voltar para `pending` — senao o
+  // laco automatico nunca mais a pega.
+  const devolverParaFila = useCallback(async (queueItem: DialerQueueItem, motivo: string) => {
+    try {
+      await apiUpdateQueueItem(queueItem.id, { status: 'pending' });
+    } catch (err) {
+      log.error('Falha ao devolver o contato para a fila:', err);
+    }
+    log.warn(`Discagem não iniciada para ${queueItem.phone}: ${motivo}`);
+    toast.warning(`Discagem não iniciada para ${queueItem.name || queueItem.phone}`, {
+      description: `${motivo}. O contato voltou para a fila.`,
+    });
+    setLoopTick((tick) => tick + 1);
+  }, [setLoopTick]);
+
+  // Discagem SIP real do discador: a sessao multicanal (compliance, limite e
+  // estado da tela de chamada) e o startCall do JsSIP, o mesmo par que o
+  // PhoneDialer usa. Se o PABX recusar, a sessao e encerrada e o contato volta
+  // para a fila em vez de ficar em `dialing`.
+  const sip = useSipCall();
+  const call = useCallContext();
+  const dialSip = useCallback(async (
+    phone: string,
+    contactName?: string | null,
+  ): Promise<{ id: string } | null> => {
+    const sessao = await call.initiateCall('sip', phone, contactName ?? undefined);
+    if (!sessao) return null;
+    call.updateCallStatus('ringing', sessao.id);
+    const ok = await sip.startCall(phone);
+    if (!ok) {
+      call.endCall(sessao.id);
+      return null;
+    }
+    return { id: sessao.id };
+  }, [call, sip]);
+  const dial = useMemo<DialCall>(() => dialCall ?? dialSip, [dialCall, dialSip]);
+
   const dialContact = useCallback(async (queueItem: DialerQueueItem): Promise<void> => {
     // Barreira de compliance: o discador tambem e caminho de discagem, entao
     // passa pela mesma checagem do softphone antes de marcar como `dialing`.
@@ -188,14 +246,60 @@ export const usePredictiveDialer = (preDialCheck?: PreDialCheck) => {
       }
     }
 
-    // Etapa 079: a reserva ja aconteceu no banco (claim_next_dialer_contact)
-    // antes da checagem de compliance. Aqui so sobra apresentar o contato; um
-    // contato pulado sai como `skipped` e libera a vez.
+    let iniciada: { id: string } | null = null;
+    try {
+      iniciada = await dial(
+        queueItem.phone,
+        queueItem.name,
+        // Etapa 078: quem ja checou DNC/horario foi o bloco acima, pelo
+        // `preDialCheck` injetado — repetir abriria uma janela entre as duas
+        // checagens.
+        { skipComplianceCheck: true },
+      );
+    } catch (err) {
+      // Etapa 078: falha ao discar nao pode deixar o contato preso em
+      // `dialing` — sem isto a fila pararia nele para sempre.
+      log.error('Erro ao discar o contato reservado:', err);
+      await devolverParaFila(queueItem, 'falha ao discar');
+      return;
+    }
+
+    if (!iniciada) {
+      await devolverParaFila(
+        queueItem,
+        'não foi possível iniciar a chamada (linha ocupada ou telefonia indisponível)',
+      );
+      return;
+    }
+
     setCurrentCall(queueItem);
+    setActiveCallId(iniciada.id);
     toast.info(`Discando para ${queueItem.name || queueItem.phone}...`, {
       description: queueItem.phone,
     });
-  }, [preDialCheck]);
+  }, [preDialCheck, devolverParaFila, dial]);
+
+  // Encerra a chamada de telefonia do contato em curso (etapa 078). Sem isto o
+  // operador registrava o desfecho e a linha seguia ocupada, contando no limite
+  // de simultaneas e travando a proxima discagem.
+  // `finalizar` devolve o contato para a fila (pausa no meio); ao registrar o
+  // desfecho (`completeCall`) o contato ja tem destino, so a linha e liberada.
+  const endActiveCall = useCallback((finalizar = false) => {
+    if (activeCallId) {
+      sip.endCall();
+      call.endCall(activeCallId);
+    }
+    setCurrentCall(null);
+    setActiveCallId(null);
+    // A fila tem o contato reservado como `dialing`: parar a campanha sem
+    // devolve-lo deixaria a linha presa e o contato fora de qualquer lista.
+    const contato = finalizar ? null : currentCall;
+    if (contato) {
+      void apiUpdateQueueItem(contato.id, { status: 'pending' }).catch((err) =>
+        log.error('Falha ao devolver o contato para a fila:', err),
+      );
+    }
+  }, [activeCallId, call, sip, currentCall]);
 
   const completeCall = useCallback(
     async (
@@ -245,14 +349,16 @@ export const usePredictiveDialer = (preDialCheck?: PreDialCheck) => {
           );
         }
 
-        setCurrentCall(null);
+        // Etapa 078: registra o desfecho e devolve a linha -- a chamada de
+        // telefonia nao termina sozinha quando o operador conclui.
+        endActiveCall();
         await fetchCampaigns();
         if (activeCampaign) await fetchQueue(activeCampaign.id);
       } catch (err) {
         log.error('Error completing call:', err);
       }
     },
-    [queue, activeCampaign, campaigns, fetchCampaigns, fetchQueue],
+    [queue, activeCampaign, campaigns, fetchCampaigns, fetchQueue, endActiveCall],
   );
 
   const deleteCampaign = useCallback(
@@ -373,6 +479,8 @@ export const usePredictiveDialer = (preDialCheck?: PreDialCheck) => {
     activeCampaign,
     isDialing,
     currentCall,
+    activeCallId,
+    endActiveCall,
     isLoading,
     fetchCampaigns,
     fetchQueue,

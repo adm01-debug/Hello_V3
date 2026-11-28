@@ -78,7 +78,20 @@ vi.mock('@/integrations/supabase/client', () => ({
   supabase: mockSupabase,
 }));
 
-import { usePredictiveDialer } from '@/hooks/usePredictiveDialer';
+// Etapa 078: o hook passou a usar o contexto multicanal e o JsSIP na discagem.
+// O teste injeta uma sonda de discagem, entao os dois viram dublês vazios.
+vi.mock('@/contexts/CallContext', () => ({
+  useCallContext: () => ({
+    initiateCall: vi.fn(() => Promise.resolve({ id: 'call-1' })),
+    updateCallStatus: vi.fn(),
+    endCall: vi.fn(),
+  }),
+}));
+vi.mock('@/hooks/useSipCall', () => ({
+  useSipCall: () => ({ startCall: vi.fn(() => Promise.resolve(true)), endCall: vi.fn() }),
+}));
+
+import { usePredictiveDialer, type DialCall } from '@/hooks/usePredictiveDialer';
 
 const sampleCampaign = {
   id: 'c1',
@@ -146,8 +159,18 @@ afterEach(() => {
 });
 
 describe('usePredictiveDialer', () => {
+  // Etapa 078: o discador agora dispara a chamada de telefonia. A sonda padrao
+  // nunca liga de verdade; os testes da etapa trocam por uma propria.
+  let dialCall: DialCall & { mockResolvedValueOnce: (v: unknown) => void; mockRejectedValueOnce: (e: unknown) => void; mock: { calls: unknown[][] } };
+  beforeEach(() => {
+    dialCall = vi.fn(() => Promise.resolve({ id: 'call-1' })) as never;
+  });
+  const preDialCheckAprova = () => vi.fn().mockResolvedValue({ canDial: true, reasons: [] });
+  const renderDialer = (preDialCheck?: Parameters<typeof usePredictiveDialer>[0]) =>
+    renderHook(() => usePredictiveDialer(preDialCheck, dialCall));
+
   it('fetches campaigns on mount and exposes API', async () => {
-    const { result } = renderHook(() => usePredictiveDialer());
+    const { result } = renderDialer();
     await waitFor(() => expect(result.current.campaigns.length).toBeGreaterThan(0));
     expect(typeof result.current.createCampaign).toBe('function');
     expect(result.current.isLoading).toBe(false);
@@ -155,7 +178,7 @@ describe('usePredictiveDialer', () => {
 
   it('handles fetchCampaigns error branch', async () => {
     selectResult = { data: null, error: new Error('boom') };
-    const { result } = renderHook(() => usePredictiveDialer());
+    const { result } = renderHook(() => usePredictiveDialer(undefined, dialCall));
     await act(async () => {
       await result.current.fetchCampaigns();
     });
@@ -163,7 +186,7 @@ describe('usePredictiveDialer', () => {
   });
 
   it('fetchQueue success and error branches', async () => {
-    const { result } = renderHook(() => usePredictiveDialer());
+    const { result } = renderHook(() => usePredictiveDialer(undefined, dialCall));
     await waitFor(() => expect(result.current.campaigns.length).toBeGreaterThan(0));
 
     selectResult = { data: [sampleQueueItem], error: null };
@@ -180,7 +203,7 @@ describe('usePredictiveDialer', () => {
   });
 
   it('createCampaign success and error branches', async () => {
-    const { result } = renderHook(() => usePredictiveDialer());
+    const { result } = renderHook(() => usePredictiveDialer(undefined, dialCall));
     await waitFor(() => expect(result.current.campaigns.length).toBeGreaterThan(0));
 
     await act(async () => {
@@ -215,7 +238,7 @@ describe('usePredictiveDialer', () => {
   });
 
   it('addToQueue success and error branches', async () => {
-    const { result } = renderHook(() => usePredictiveDialer());
+    const { result } = renderHook(() => usePredictiveDialer(undefined, dialCall));
     await waitFor(() => expect(result.current.campaigns.length).toBeGreaterThan(0));
 
     await act(async () => {
@@ -236,7 +259,7 @@ describe('usePredictiveDialer', () => {
   });
 
   it('startCampaign success and error branches', async () => {
-    const { result } = renderHook(() => usePredictiveDialer());
+    const { result } = renderHook(() => usePredictiveDialer(undefined, dialCall));
     await waitFor(() => expect(result.current.campaigns.length).toBeGreaterThan(0));
 
     await act(async () => {
@@ -259,7 +282,7 @@ describe('usePredictiveDialer', () => {
   });
 
   it('pauseCampaign success and error branches', async () => {
-    const { result } = renderHook(() => usePredictiveDialer());
+    const { result } = renderHook(() => usePredictiveDialer(undefined, dialCall));
     await waitFor(() => expect(result.current.campaigns.length).toBeGreaterThan(0));
 
     await act(async () => {
@@ -275,7 +298,7 @@ describe('usePredictiveDialer', () => {
   });
 
   it('completeCall handles retry, callback, answered, and missing item branches', async () => {
-    const { result } = renderHook(() => usePredictiveDialer());
+    const { result } = renderHook(() => usePredictiveDialer(undefined, dialCall));
     await waitFor(() => expect(result.current.campaigns.length).toBeGreaterThan(0));
 
     // Seed queue + activeCampaign through fetch
@@ -316,7 +339,7 @@ describe('usePredictiveDialer', () => {
 
   it('completeCall uses campaigns lookup when no active campaign and handles errors', async () => {
     selectResult = { data: [{ ...sampleCampaign, id: 'c1' }], error: null };
-    const { result } = renderHook(() => usePredictiveDialer());
+    const { result } = renderHook(() => usePredictiveDialer(undefined, dialCall));
     await waitFor(() => expect(result.current.campaigns.length).toBeGreaterThan(0));
 
     selectResult = { data: [{ ...sampleQueueItem, attempts: 5 }], error: null };
@@ -341,7 +364,7 @@ describe('usePredictiveDialer', () => {
   });
 
   it('deleteCampaign success and error branches', async () => {
-    const { result } = renderHook(() => usePredictiveDialer());
+    const { result } = renderHook(() => usePredictiveDialer(undefined, dialCall));
     await waitFor(() => expect(result.current.campaigns.length).toBeGreaterThan(0));
 
     await act(async () => {
@@ -359,7 +382,7 @@ describe('usePredictiveDialer', () => {
   });
 
   it('removeFromQueue success and error branches', async () => {
-    const { result } = renderHook(() => usePredictiveDialer());
+    const { result } = renderHook(() => usePredictiveDialer(undefined, dialCall));
     await waitFor(() => expect(result.current.campaigns.length).toBeGreaterThan(0));
 
     selectResult = { data: [sampleQueueItem], error: null };
@@ -381,7 +404,7 @@ describe('usePredictiveDialer', () => {
   });
 
   it('setPriority grava a prioridade e reflete na fila (A-084)', async () => {
-    const { result } = renderHook(() => usePredictiveDialer());
+    const { result } = renderHook(() => usePredictiveDialer(undefined, dialCall));
     await waitFor(() => expect(result.current.campaigns.length).toBeGreaterThan(0));
 
     selectResult = { data: [sampleQueueItem], error: null };
@@ -405,7 +428,7 @@ describe('usePredictiveDialer', () => {
   });
 
   it('dialContact apresenta o contato ja reservado pelo banco', async () => {
-    const { result } = renderHook(() => usePredictiveDialer());
+    const { result } = renderHook(() => usePredictiveDialer(undefined, dialCall));
     await waitFor(() => expect(result.current.campaigns.length).toBeGreaterThan(0));
 
     // Etapa 079: a reserva acontece no banco (claim_next_dialer_contact), nao
@@ -423,7 +446,7 @@ describe('usePredictiveDialer', () => {
     vi.useFakeTimers();
     // Etapa 079: a reserva devolve o contato.
     rpcResult = { data: [sampleQueueItem], error: null };
-    const { result } = renderHook(() => usePredictiveDialer());
+    const { result } = renderHook(() => usePredictiveDialer(undefined, dialCall));
 
     await act(async () => {
       await Promise.resolve();
@@ -451,7 +474,7 @@ describe('usePredictiveDialer', () => {
   it('auto-dial loop with empty queue pauses campaign', async () => {
     vi.useFakeTimers();
     rpcResult = { data: [], error: null };
-    const { result } = renderHook(() => usePredictiveDialer());
+    const { result } = renderHook(() => usePredictiveDialer(undefined, dialCall));
 
     await act(async () => {
       await result.current.startCampaign('c1');
@@ -467,7 +490,7 @@ describe('usePredictiveDialer', () => {
 
   it('realtime subscription callbacks fire fetchers', async () => {
     selectResult = { data: [sampleCampaign], error: null };
-    const { unmount } = renderHook(() => usePredictiveDialer());
+    const { unmount } = renderHook(() => usePredictiveDialer(undefined, dialCall));
     await waitFor(() => expect(mockSupabase.channel).toHaveBeenCalled());
 
     // Find the .on handlers registered and invoke them
@@ -487,7 +510,7 @@ describe('usePredictiveDialer', () => {
   // E244: uma rajada de eventos da mesma tabela virava uma leitura por evento.
   it('agrupa rajada de eventos de realtime numa unica leitura', async () => {
     selectResult = { data: [sampleCampaign], error: null };
-    const { unmount } = renderHook(() => usePredictiveDialer());
+    const { unmount } = renderHook(() => usePredictiveDialer(undefined, dialCall));
     await waitFor(() => expect(mockSupabase.channel).toHaveBeenCalled());
 
     const handlerCampanhas = channelObj.on.mock.calls
@@ -521,7 +544,7 @@ describe('usePredictiveDialer', () => {
       reasons: ['Numero na lista DNC', 'Fora do horario legal'],
     });
 
-    const { result } = renderHook(() => usePredictiveDialer(preDialCheck));
+    const { result } = renderHook(() => usePredictiveDialer(preDialCheck, dialCall));
     await waitFor(() => expect(result.current.campaigns.length).toBeGreaterThan(0));
 
     await act(async () => {
@@ -550,7 +573,7 @@ describe('usePredictiveDialer', () => {
     });
     const preDialCheck = vi.fn().mockResolvedValue({ canDial: true, reasons: [] });
 
-    const { result } = renderHook(() => usePredictiveDialer(preDialCheck));
+    const { result } = renderHook(() => usePredictiveDialer(preDialCheck, dialCall));
     await waitFor(() => expect(result.current.campaigns.length).toBeGreaterThan(0));
 
     await act(async () => {
@@ -561,8 +584,60 @@ describe('usePredictiveDialer', () => {
     // Etapa 079: `status = dialing` e `attempts + 1` sao gravados pela reserva
     // no banco (claim_next_dialer_contact) antes de chegar aqui.
     expect(updates).toEqual([]);
+    // Etapa 078: aprovado o compliance, a chamada de telefonia e disparada.
+    expect(dialCall).toHaveBeenCalledWith('5511999999999', 'John', { skipComplianceCheck: true });
     expect(result.current.currentCall).toBeTruthy();
+    expect(result.current.activeCallId).toBe('call-1');
     expect(mockToast.warning).not.toHaveBeenCalled();
+  });
+
+  it('devolve o contato para a fila quando a telefonia recusa a chamada (etapa 078)', async () => {
+    const updates: Array<Record<string, unknown>> = [];
+    mockSupabase.from.mockImplementation(() => {
+      const b = makeFrom();
+      b.update = vi.fn((patch: Record<string, unknown>) => {
+        updates.push(patch);
+        return { eq: vi.fn(() => Promise.resolve({ error: null })) };
+      });
+      return b;
+    });
+    dialCall.mockResolvedValueOnce(null);
+
+    const { result } = renderHook(() => usePredictiveDialer(undefined, dialCall));
+    await waitFor(() => expect(result.current.campaigns.length).toBeGreaterThan(0));
+
+    await act(async () => {
+      await result.current.dialContact(sampleQueueItem as never);
+    });
+
+    // Sem a devolucao o contato ficaria em `dialing` para sempre e a fila pararia.
+    expect(updates).toEqual([{ status: 'pending' }]);
+    expect(result.current.currentCall).toBeNull();
+    expect(result.current.activeCallId).toBeNull();
+    expect(mockToast.info).not.toHaveBeenCalled();
+    expect(mockToast.warning).toHaveBeenCalled();
+  });
+
+  it('devolve o contato para a fila quando a telefonia lanca erro (etapa 078)', async () => {
+    const updates: Array<Record<string, unknown>> = [];
+    mockSupabase.from.mockImplementation(() => {
+      const b = makeFrom();
+      b.update = vi.fn((patch: Record<string, unknown>) => {
+        updates.push(patch);
+        return { eq: vi.fn(() => Promise.resolve({ error: null })) };
+      });
+      return b;
+    });
+    dialCall.mockRejectedValueOnce(new Error('jsSIP indisponivel'));
+
+    const { result } = renderHook(() => usePredictiveDialer(preDialCheckAprova(), dialCall));
+    await waitFor(() => expect(result.current.campaigns.length).toBeGreaterThan(0));
+    await act(async () => {
+      await result.current.dialContact(sampleQueueItem as never);
+    });
+
+    expect(updates).toEqual([{ status: 'pending' }]);
+    expect(result.current.currentCall).toBeNull();
   });
 
   it('falha do preDialCheck pula o contato (fail-closed, etapa 035)', async () => {
@@ -577,7 +652,7 @@ describe('usePredictiveDialer', () => {
     });
     const preDialCheck = vi.fn().mockRejectedValue(new Error('rpc indisponivel'));
 
-    const { result } = renderHook(() => usePredictiveDialer(preDialCheck));
+    const { result } = renderHook(() => usePredictiveDialer(preDialCheck, dialCall));
     await waitFor(() => expect(result.current.campaigns.length).toBeGreaterThan(0));
 
     await act(async () => {
@@ -600,7 +675,7 @@ describe('usePredictiveDialer', () => {
       Promise.resolve({ data: null, error: { message: 'claim falhou' } }),
     );
 
-    const { result } = renderHook(() => usePredictiveDialer());
+    const { result } = renderHook(() => usePredictiveDialer(undefined, dialCall));
     await waitFor(() => expect(result.current.campaigns.length).toBeGreaterThan(0));
 
     vi.useFakeTimers();

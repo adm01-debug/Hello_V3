@@ -92,7 +92,7 @@ export function PredictiveDialerPanel() {
   // A barreira de DNC/horario e injetada no discador: sem isto o laco
   // automatico discaria para a fila inteira sem nenhuma checagem.
   const { preDialCheck } = useDNCCompliance();
-  const { campaigns, queue, isDialing, currentCall, isLoading, fetchQueue, startCampaign, pauseCampaign, completeCall, deleteCampaign, removeFromQueue, setPriority, setActiveCampaign } = usePredictiveDialer(preDialCheck);
+  const { campaigns, queue, isDialing, currentCall, endActiveCall, isLoading, fetchQueue, startCampaign, pauseCampaign, completeCall, deleteCampaign, removeFromQueue, setPriority, setActiveCampaign } = usePredictiveDialer(preDialCheck);
   const [selectedCampaignId, setSelectedCampaignId] = useState<string>('');
   const [callTimer, setCallTimer] = useState(0);
 
@@ -116,7 +116,10 @@ export function PredictiveDialerPanel() {
 
    const handleCompleteCall = async (result: 'answered' | 'no_answer' | 'busy' | 'voicemail' | 'wrong_number' | 'callback', notes?: string) => {
     if (!currentCall) return;
-     await completeCall(currentCall.id, result, notes, callTimer);
+    // Etapa 078: a chamada de telefonia e encerrada depois que o desfecho e
+    // gravado (completeCall faz isso); aqui fica o caminho de pausar a
+    // campanha no meio da chamada.
+    await completeCall(currentCall.id, result, notes, callTimer);
     toast.success('Chamada registrada');
   };
 
@@ -159,7 +162,7 @@ export function PredictiveDialerPanel() {
           <DialerControlPanel
             currentCall={currentCall} isDialing={isDialing} callTimer={callTimer}
             campaignId={selectedCampaign.id} pendingCount={pendingQueue.length}
-            onStartCampaign={startCampaign} onPauseCampaign={pauseCampaign} onCompleteCall={handleCompleteCall}
+            onStartCampaign={startCampaign} onPauseCampaign={(id) => { void pauseCampaign(id).then(() => endActiveCall(true)); }} onCompleteCall={handleCompleteCall}
           />
 
           <Card className="lg:col-span-2">
