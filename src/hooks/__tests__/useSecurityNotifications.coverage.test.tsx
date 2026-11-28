@@ -7,7 +7,7 @@ vi.mock('@/contexts/AuthContext', () => ({ useAuthContext: () => ({ user: mockUs
 const channelHandlers: Array<(payload: unknown) => void> = [];
 const channelObj = {
   on: vi.fn((_evt: string, _cfg: unknown, cb: (p: unknown) => void) => { channelHandlers.push(cb); return channelObj; }),
-  subscribe: vi.fn((cb?: (s: string) => void) => { cb && cb('SUBSCRIBED'); return channelObj; }),
+  subscribe: vi.fn((cb?: (s: string) => void) => { cb?.('SUBSCRIBED'); return channelObj; }),
 };
 vi.mock('@/integrations/supabase/client', () => ({
   supabase: { channel: vi.fn(() => channelObj), removeChannel: vi.fn() },

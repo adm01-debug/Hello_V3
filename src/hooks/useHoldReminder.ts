@@ -51,7 +51,8 @@ export function useHoldReminder(activeCalls: CallSession[]) {
       const permission = await Notification.requestPermission();
       const granted = permission === 'granted';
       setBrowserNotificationsEnabled(granted);
-      granted ? toast.success("Notificações ativadas") : toast.error("Permissão negada");
+      if (granted) toast.success("Notificações ativadas");
+      else toast.error("Permissão negada");
       return granted;
     } catch { return false; }
   }, []);

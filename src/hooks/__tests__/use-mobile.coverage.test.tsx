@@ -34,7 +34,7 @@ describe('useIsMobile', () => {
     expect(result.current).toBe(true);
 
     Object.defineProperty(window, 'innerWidth', { writable: true, configurable: true, value: 1200 });
-    act(() => { changeHandler && changeHandler(); });
+    act(() => { changeHandler?.(); });
     expect(result.current).toBe(false);
   });
 

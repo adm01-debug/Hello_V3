@@ -88,7 +88,7 @@ describe('useQueueMetrics', () => {
   it('checkGoalStatus handles gte and lte operators', async () => {
     const { result } = renderHook(() => useQueueMetrics());
     await waitFor(() => expect(result.current.loading).toBe(false));
-    const gteCritical = result.current as unknown as { /* placeholder */ };
+    const gteCritical = result.current as unknown as Record<string, unknown>;
     void gteCritical;
     // exercise via exposed checkGoalStatus is not returned; instead test formatters
     expect(result.current.formatTime(125)).toBe('2:05');
