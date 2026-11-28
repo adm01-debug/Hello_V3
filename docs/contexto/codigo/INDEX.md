@@ -1,7 +1,7 @@
 # Contexto do projeto para agentes de IA
 
 GERADO AUTOMATICAMENTE por scripts/ai-context/gerar.mjs — não editar à mão; será sobrescrito.
-Publicado em `docs/contexto/codigo/` na branch `contexto` (gerada, nunca abra PR dela) a cada push em `main` e a cada 10 minutos pelo workflow `contexto.yml`; índice único das três fontes em `docs/contexto/00-INDEX.md`. Gere local com `node scripts/ai-context/gerar.mjs`. Commit-base: `c8eedfd212b13e55258bb881f8684ff9d5ac4a55` (2026-11-28T14:49:45-03:00).
+Publicado em `docs/contexto/codigo/` na branch `contexto` (gerada, nunca abra PR dela) a cada push em `main` e a cada 10 minutos pelo workflow `contexto.yml`; índice único das três fontes em `docs/contexto/00-INDEX.md`. Gere local com `node scripts/ai-context/gerar.mjs`. Commit-base: `94dbc8de786e9147f8aa33c6746f5cb86892dd55` (2026-11-28T15:14:55-03:00).
 
 ## Como usar (leia antes de planejar ou executar qualquer tarefa)
 1. **Tela/rota/menu** → `rotas.json` (url/vista/menu → arquivo → hooks → tabelas → edges; `rotas_http_backend` para APIs) e `modulos.json` (módulo inteiro + dependências entre módulos).
@@ -377,27 +377,27 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 - possiveis_segredos_no_codigo: 3 — ex.: src/lib/__tests__/security-advanced.test.ts:203, src/lib/__tests__/security-advanced.test.ts:208, src/lib/__tests__/security-advanced.test.ts:213
 
 ## Grafo de código (graphify)
-- 10810 nós · 28328 arestas · 874 comunidades · grafo do commit `c8eedfd2`
+- 10810 nós · 28328 arestas · 874 comunidades · grafo do commit `94dbc8de`
 - comunidades maiores: client.ts (335), vitest (279), card.tsx (265), react (205), @tanstack/react-query (187), 5. Em uso por rota (181), buildCorsHeaders (155), CardContent (152), usePageTitle.ts (135), cn (118), protectedRoutes.tsx (109), Onda 4 — Funcionalidades incompletas (151–180, 30 etapas) (107)
 - símbolos mais chamados: cn() (src/lib/utils.ts), usePageTitle() (src/hooks/usePageTitle.ts), safeFormatDatePtBR() (src/lib/safe-date.ts), useAuthContext() (src/contexts/AuthContext.tsx), q() (scripts/supabase_snapshot/snapshot.py), safeFormatDistanceToNow() (src/lib/safe-date.ts), traceHeaders() (src/lib/tracing.ts), withTrace() (src/lib/tracing.ts), safeToLocaleString() (src/lib/safe-date.ts), buildCorsHeaders() (supabase/functions/_shared/cors.ts), .collect() (scripts/supabase_snapshot/test_snapshot.py), formatDuration() (src/lib/utils.ts)
 - consulta local: `graphify query "<pergunta>"`, `graphify path "<A>" "<B>"`, `graphify explain "<X>"`
 
 ## Hotspots (arquivos mais alterados, 90 dias)
 - docs/qa/05-PROGRESSO.md (175)
-- docs/estado/funcionalidades-planejadas.md (20)
+- docs/estado/funcionalidades-planejadas.md (19)
+- package-lock.json (13)
 - src/hooks/useMultiChannelCall.ts (13)
-- package-lock.json (12)
 - src/components/calls/UnifiedSoftphone.tsx (12)
 - .github/workflows/migrations.yml (10)
 - src/components/calls/ActiveCallBar.tsx (10)
 - src/integrations/supabase/types.ts (10)
 - docs/agentes/banco.md (9)
 - docs/qa/03-ACHADOS.md (9)
-- supabase/functions/data-lake-flush/index.ts (9)
 - docs/agentes/mapa-repo.md (8)
 - src/components/layout/AppSidebar.tsx (8)
 - src/components/layout/CommandPalette.tsx (8)
 - src/hooks/useAgentRanking.ts (8)
+- src/pages/PhoneDialer.tsx (8)
 
 ## Workflows
 - `ci.yml` — CI (pull_request, push)
@@ -439,6 +439,7 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 
 
 ## Últimos commits
+- 2026-11-28 `94dbc8d` fix: reverter zod para 3.x, o major 4 quebrou o type-check (13 erros) e o CI da main (#417)
 - 2026-11-28 `c8eedfd` feat: auditoria de dependencias reprova quando a contagem de vulnerabilidades sobe (etapa 041) (#400)
 - 2026-11-28 `7bc82cd` chore: configurar Dependabot para npm e github-actions (etapa 001) (#391)
 - 2026-11-28 `0c95deb` chore(deps): bump ws from 8.19.0 to 8.23.1 (#402)
@@ -453,7 +454,6 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 - 2026-11-28 `38ec1e8` chore: remover a sonda __ping-deploy (#387)
 - 2026-11-28 `b900b70` chore: publicar edge functions pela Management API (destrava o deploy bloqueado) (#386)
 - 2026-11-28 `a3c8c8d` ci: sondas de RLS rodam sozinhas em PR de banco e toda segunda (#384)
-- 2026-11-28 `c8a2dcb` feat: motor das cadencias (etapa 085) - inscricao deixa de ficar parada na etapa 1 (#370)
 
 ## Arquivos deste diretório
 - `docs/contexto/codigo/rotas.json`

@@ -84,7 +84,7 @@
    "typescript": "^5.3.3",
    "vite": "^7.3.8",
    "vitest": "^4.1.0",
-   "zod": "^4.6.6"
+   "zod": "^3.22.4"
   },
   "engines": {
    "node": ">=20.0.0",
@@ -580,7 +580,7 @@
    {
     "pacote": "zod",
     "servico": "zod",
-    "versao": "^4.6.6"
+    "versao": "^3.22.4"
    }
   ],
   "hosts_externos": [
