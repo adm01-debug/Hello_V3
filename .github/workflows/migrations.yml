@@ -1,5 +1,7 @@
 # docs:
-#   gatilho: dispatch manual (nenhum push aplica DDL em producao)
+#   gatilho: dispatch manual (nenhum push aplica DDL em producao). Pull request que toque
+#     supabase/migrations/ ou supabase/tests/ roda SO os testes de RLS (read-only, tudo
+#     revertido no fim) -- e o que impede um bug ja corrigido de voltar sem ninguem ver
 #   prova: dry-run executa o arquivo e reverte; APLICAR grava e registra em public.schema_migrations
 #   transacao: linhas BEGIN;/COMMIT;/ROLLBACK; do proprio arquivo sao neutralizadas antes de
 #     executar -- o COMMIT do arquivo encerraria a transacao externa e o dry-run gravaria de
@@ -12,6 +14,7 @@
 #   falha: nome fora do padrao, arquivo inexistente, versao ja aplicada, erro de SQL, secret ausente
 #   alerta: toda segunda 12:00 UTC o levantamento da fila roda sozinho e abre uma issue quando ha
 #     pendencia (fecha sozinho quando a fila zera). O agendamento NUNCA aplica nada: so lista.
+#   sondas: toda segunda 12:00 UTC os testes de RLS rodam tambem (mesmo cron, mesmo job, read-only).
 name: Aplicar migration (manual)
 
 on:
@@ -44,6 +47,11 @@ on:
         type: string
   schedule:
     - cron: '0 12 * * 1'
+  pull_request:
+    paths:
+      - 'supabase/migrations/**'
+      - 'supabase/tests/**'
+      - '.github/workflows/migrations.yml'
 
 permissions:
   contents: read
@@ -253,7 +261,7 @@ jobs:
           done
 
       - name: Testes de RLS (transacao revertida em cada arquivo)
-        if: inputs.modo == 'verificar'
+        if: inputs.modo == 'verificar' || github.event_name == 'pull_request' || github.event_name == 'schedule'
         env:
           SUPABASE_DB_URL: ${{ secrets.SUPABASE_DB_URL }}
         run: |
