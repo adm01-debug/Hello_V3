@@ -1,7 +1,7 @@
 # Contexto do projeto para agentes de IA
 
 GERADO AUTOMATICAMENTE por scripts/ai-context/gerar.mjs — não editar à mão; será sobrescrito.
-Publicado em `docs/contexto/codigo/` na branch `contexto` (gerada, nunca abra PR dela) a cada push em `main` e a cada 10 minutos pelo workflow `contexto.yml`; índice único das três fontes em `docs/contexto/00-INDEX.md`. Gere local com `node scripts/ai-context/gerar.mjs`. Commit-base: `d8aa79f84e12c0cb1bd5193f7ed199cc9d271956` (2026-11-28T15:31:32-03:00).
+Publicado em `docs/contexto/codigo/` na branch `contexto` (gerada, nunca abra PR dela) a cada push em `main` e a cada 10 minutos pelo workflow `contexto.yml`; índice único das três fontes em `docs/contexto/00-INDEX.md`. Gere local com `node scripts/ai-context/gerar.mjs`. Commit-base: `8cc251a5e3c67fb660424bf7876862827bdd29f3` (2026-11-28T15:35:33-03:00).
 
 ## Como usar (leia antes de planejar ou executar qualquer tarefa)
 1. **Tela/rota/menu** → `rotas.json` (url/vista/menu → arquivo → hooks → tabelas → edges; `rotas_http_backend` para APIs) e `modulos.json` (módulo inteiro + dependências entre módulos).
@@ -377,24 +377,24 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 - possiveis_segredos_no_codigo: 3 — ex.: src/lib/__tests__/security-advanced.test.ts:203, src/lib/__tests__/security-advanced.test.ts:208, src/lib/__tests__/security-advanced.test.ts:213
 
 ## Grafo de código (graphify)
-- 10810 nós · 28329 arestas · 874 comunidades · grafo do commit `d8aa79f8`
+- 10810 nós · 28329 arestas · 874 comunidades · grafo do commit `8cc251a5`
 - comunidades maiores: client.ts (335), vitest (279), card.tsx (265), react (205), @tanstack/react-query (187), 5. Em uso por rota (181), buildCorsHeaders (155), CardContent (152), usePageTitle.ts (135), cn (118), protectedRoutes.tsx (109), Onda 4 — Funcionalidades incompletas (151–180, 30 etapas) (107)
 - símbolos mais chamados: cn() (src/lib/utils.ts), usePageTitle() (src/hooks/usePageTitle.ts), safeFormatDatePtBR() (src/lib/safe-date.ts), useAuthContext() (src/contexts/AuthContext.tsx), q() (scripts/supabase_snapshot/snapshot.py), safeFormatDistanceToNow() (src/lib/safe-date.ts), traceHeaders() (src/lib/tracing.ts), withTrace() (src/lib/tracing.ts), safeToLocaleString() (src/lib/safe-date.ts), buildCorsHeaders() (supabase/functions/_shared/cors.ts), .collect() (scripts/supabase_snapshot/test_snapshot.py), formatDuration() (src/lib/utils.ts)
 - consulta local: `graphify query "<pergunta>"`, `graphify path "<A>" "<B>"`, `graphify explain "<X>"`
 
 ## Hotspots (arquivos mais alterados, 90 dias)
 - docs/qa/05-PROGRESSO.md (176)
-- docs/estado/funcionalidades-planejadas.md (19)
-- package-lock.json (16)
+- package-lock.json (22)
+- docs/estado/funcionalidades-planejadas.md (17)
 - src/components/calls/UnifiedSoftphone.tsx (12)
 - src/hooks/useMultiChannelCall.ts (12)
 - .github/workflows/migrations.yml (10)
+- package.json (10)
 - src/integrations/supabase/types.ts (10)
 - docs/agentes/banco.md (9)
 - docs/qa/03-ACHADOS.md (9)
 - src/components/calls/ActiveCallBar.tsx (9)
 - docs/agentes/mapa-repo.md (8)
-- package.json (8)
 - src/hooks/useAgentRanking.ts (8)
 - src/pages/PhoneDialer.tsx (8)
 - supabase/functions/data-lake-flush/index.ts (8)
@@ -439,6 +439,12 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 
 
 ## Últimos commits
+- 2026-11-28 `8cc251a` chore(deps): bump minimatch, sucrase, @typescript-eslint/eslint-plugin, @typescript-eslint/parser and typescript-eslint 
+- 2026-11-28 `75dedd1` chore(deps): bump vitest from 4.1.10 to 4.1.11 (#414)
+- 2026-11-28 `043d9cb` chore(deps): bump yaml from 2.6.0 to 2.9.1 (#413)
+- 2026-11-28 `b96c3d1` chore(deps): bump @tootallnate/once from 2.0.0 to 2.0.1 (#412)
+- 2026-11-28 `1427ff6` chore(deps): bump form-data from 4.0.5 to 4.0.6 (#411)
+- 2026-11-28 `73b4a99` chore(deps): bump browserslist from 4.25.1 to 4.29.6 (#410)
 - 2026-11-28 `d8aa79f` chore(deps): bump postcss from 8.5.6 to 8.5.34 (#409)
 - 2026-11-28 `a733faf` chore(deps): bump nanoid from 3.3.11 to 3.3.20 (#404)
 - 2026-11-28 `6005ae4` chore(deps-dev): bump js-yaml from 4.1.1 to 4.3.2 (#403)
@@ -448,12 +454,6 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 - 2026-11-28 `7bc82cd` chore: configurar Dependabot para npm e github-actions (etapa 001) (#391)
 - 2026-11-28 `0c95deb` chore(deps): bump ws from 8.19.0 to 8.23.1 (#402)
 - 2026-11-28 `9895b42` chore(deps): bump source-map-js from 1.2.1 to 1.2.4 (#401)
-- 2026-11-28 `3d12f4c` chore(deps): bump vite from 7.3.1 to 7.3.8 (#392)
-- 2026-11-28 `c78143e` chore(deps): bump postcss-selector-parser from 6.1.2 to 6.1.6 (#399)
-- 2026-11-28 `fb21015` chore(deps): bump undici from 7.24.4 to 7.30.2 (#398)
-- 2026-11-28 `7f5bdd4` chore(deps): bump dompurify from 3.3.3 to 3.5.0 (#397)
-- 2026-11-28 `fe25399` chore(deps): bump glob from 10.4.5 to 10.5.0 (#394)
-- 2026-11-28 `c3ccf7f` chore(deps): bump zod from 3.25.76 to 4.6.6 (#393)
 
 ## Arquivos deste diretório
 - `docs/contexto/codigo/rotas.json`

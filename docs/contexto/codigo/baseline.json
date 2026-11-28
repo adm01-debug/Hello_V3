@@ -2,11 +2,41 @@
  "aviso": "GERADO AUTOMATICAMENTE por scripts/ai-context/gerar.mjs — não editar à mão; será sobrescrito.",
  "format_version": 2,
  "git": {
-  "commit": "d8aa79f84e12c0cb1bd5193f7ed199cc9d271956",
+  "commit": "8cc251a5e3c67fb660424bf7876862827bdd29f3",
   "branch": "main",
-  "data_commit": "2026-11-28T15:31:32-03:00",
+  "data_commit": "2026-11-28T15:35:33-03:00",
   "remote": "https://github.com/adm01-debug/Hello_V3",
   "ultimos_commits": [
+   {
+    "sha": "8cc251a",
+    "data": "2026-11-28",
+    "assunto": "chore(deps): bump minimatch, sucrase, @typescript-eslint/eslint-plugin, @typescript-eslint/parser and typescript-eslint "
+   },
+   {
+    "sha": "75dedd1",
+    "data": "2026-11-28",
+    "assunto": "chore(deps): bump vitest from 4.1.10 to 4.1.11 (#414)"
+   },
+   {
+    "sha": "043d9cb",
+    "data": "2026-11-28",
+    "assunto": "chore(deps): bump yaml from 2.6.0 to 2.9.1 (#413)"
+   },
+   {
+    "sha": "b96c3d1",
+    "data": "2026-11-28",
+    "assunto": "chore(deps): bump @tootallnate/once from 2.0.0 to 2.0.1 (#412)"
+   },
+   {
+    "sha": "1427ff6",
+    "data": "2026-11-28",
+    "assunto": "chore(deps): bump form-data from 4.0.5 to 4.0.6 (#411)"
+   },
+   {
+    "sha": "73b4a99",
+    "data": "2026-11-28",
+    "assunto": "chore(deps): bump browserslist from 4.25.1 to 4.29.6 (#410)"
+   },
    {
     "sha": "d8aa79f",
     "data": "2026-11-28",
@@ -101,39 +131,9 @@
     "sha": "a3c8c8d",
     "data": "2026-11-28",
     "assunto": "ci: sondas de RLS rodam sozinhas em PR de banco e toda segunda (#384)"
-   },
-   {
-    "sha": "c8a2dcb",
-    "data": "2026-11-28",
-    "assunto": "feat: motor das cadencias (etapa 085) - inscricao deixa de ficar parada na etapa 1 (#370)"
-   },
-   {
-    "sha": "e7f0148",
-    "data": "2026-11-28",
-    "assunto": "feat: dar gatilho a fila do CRM (job de 5 min) e corrigir status na tela (etapa 083) (#371)"
-   },
-   {
-    "sha": "c443721",
-    "data": "2026-11-28",
-    "assunto": "fix: nao perder lead em silencio quando o Bitrix esta fora (etapa 084) (#372)"
-   },
-   {
-    "sha": "ca3591a",
-    "data": "2026-11-28",
-    "assunto": "feat: registra a chamada atendida no Bitrix24 (etapa 081) (#373)"
-   },
-   {
-    "sha": "3e08f34",
-    "data": "2026-11-28",
-    "assunto": "fix: reservar o contato do discador em uma unica operacao (etapa 079) (#375)"
-   },
-   {
-    "sha": "ff1ffe6",
-    "data": "2026-11-28",
-    "assunto": "fix: escuta do supervisor sai no nome de quem entrou, nao no literal Supervisor (#385)"
    }
   ],
-  "arquivos_mudados_7d": 1977,
+  "arquivos_mudados_7d": 1976,
   "pastas_mais_mudadas_30d": [
    {
     "pasta": "src/hooks/__tests__",
@@ -145,7 +145,7 @@
    },
    {
     "pasta": "src/components/calls",
-    "mudancas": 90
+    "mudancas": 89
    },
    {
     "pasta": "src/lib/__tests__",
@@ -177,11 +177,11 @@
    },
    {
     "pasta": "src/components/contacts",
-    "mudancas": 28
+    "mudancas": 27
    },
    {
     "pasta": "src/components/dialer",
-    "mudancas": 28
+    "mudancas": 27
    },
    {
     "pasta": "src/components/layout",
@@ -202,12 +202,12 @@
     "mudancas": 176
    },
    {
-    "arquivo": "docs/estado/funcionalidades-planejadas.md",
-    "mudancas": 19
+    "arquivo": "package-lock.json",
+    "mudancas": 22
    },
    {
-    "arquivo": "package-lock.json",
-    "mudancas": 16
+    "arquivo": "docs/estado/funcionalidades-planejadas.md",
+    "mudancas": 17
    },
    {
     "arquivo": "src/components/calls/UnifiedSoftphone.tsx",
@@ -219,6 +219,10 @@
    },
    {
     "arquivo": ".github/workflows/migrations.yml",
+    "mudancas": 10
+   },
+   {
+    "arquivo": "package.json",
     "mudancas": 10
    },
    {
@@ -242,10 +246,6 @@
     "mudancas": 8
    },
    {
-    "arquivo": "package.json",
-    "mudancas": 8
-   },
-   {
     "arquivo": "src/hooks/useAgentRanking.ts",
     "mudancas": 8
    },
@@ -255,10 +255,6 @@
    },
    {
     "arquivo": "supabase/functions/data-lake-flush/index.ts",
-    "mudancas": 8
-   },
-   {
-    "arquivo": "supabase/functions/validate-geo/index.ts",
     "mudancas": 8
    },
    {
@@ -294,18 +290,22 @@
     "mudancas": 7
    },
    {
-    "arquivo": ".github/workflows/ci.yml",
+    "arquivo": "src/hooks/useContacts.ts",
+    "mudancas": 6
+   },
+   {
+    "arquivo": "src/pages/Cadences.tsx",
     "mudancas": 6
    }
   ],
   "autores_30d": [
    {
     "autor": "adm01-debug",
-    "commits": 288
+    "commits": 282
    },
    {
     "autor": "dependabot[bot]",
-    "commits": 12
+    "commits": 18
    }
   ]
  },
