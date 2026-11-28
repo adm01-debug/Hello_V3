@@ -2688,6 +2688,7 @@
   ],
   "src/hooks/useMultiChannelCall.ts": [
    "src/contexts/AuthContext.tsx",
+   "src/hooks/useBitrix.ts",
    "src/hooks/useCallSession.ts",
    "src/hooks/useCallTimers.ts",
    "src/hooks/useCallTransfer.ts",

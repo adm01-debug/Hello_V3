@@ -2,7 +2,7 @@
  "aviso": "GERADO AUTOMATICAMENTE por scripts/ai-context/gerar.mjs — não editar à mão; será sobrescrito.",
  "format_version": 2,
  "nos": 960,
- "arestas": 3836,
+ "arestas": 3837,
  "hubs": [
   {
    "arquivo": "src/integrations/supabase/client.ts",
@@ -102,7 +102,7 @@
   },
   {
    "arquivo": "src/hooks/useMultiChannelCall.ts",
-   "importado_por": 26
+   "importado_por": 27
   },
   {
    "arquivo": "src/components/ui/textarea.tsx",

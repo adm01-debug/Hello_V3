@@ -5,17 +5,17 @@
   "vitest",
   "playwright"
  ],
- "total": 469,
+ "total": 472,
  "por_tipo": {
   "contrato": 1,
   "e2e": 16,
   "pytest": 2,
-  "unit": 415
+  "unit": 416
  },
  "onde_ficam": [
   {
    "padrao": "co-localizado (__tests__)",
-   "arquivos": 408
+   "arquivos": 409
   },
   {
    "padrao": "tests/",
@@ -793,11 +793,11 @@
   {
    "arquivo": "src/hooks/__tests__/useBitrix.coverage.test.tsx",
    "tipo": "unit",
-   "linhas": 261,
+   "linhas": 276,
    "testa": [
     "src/hooks/useBitrix.ts"
    ],
-   "casos": 17
+   "casos": 18
   },
   {
    "arquivo": "src/hooks/__tests__/useBitrixAndWebAuthn.test.ts",
@@ -1456,6 +1456,15 @@
     "src/hooks/useMFA.ts"
    ],
    "casos": 8
+  },
+  {
+   "arquivo": "src/hooks/__tests__/useMultiChannelCall.bitrixBridge.test.tsx",
+   "tipo": "unit",
+   "linhas": 146,
+   "testa": [
+    "src/hooks/useMultiChannelCall.ts"
+   ],
+   "casos": 3
   },
   {
    "arquivo": "src/hooks/__tests__/useMultiChannelCall.compliance.test.tsx",
@@ -3984,9 +3993,11 @@
  ],
  "sql": [
   "supabase/tests/add_missing_fks_rls_test.sql",
+  "supabase/tests/call_sessions_bitrix_call_id_rls_test.sql",
   "supabase/tests/calling_hours_fail_closed_rls_test.sql",
   "supabase/tests/claim_next_dialer_contact_rls_test.sql",
   "supabase/tests/client_errors_rls_test.sql",
+  "supabase/tests/crm_sync_queue_enqueue_rls_test.sql",
   "supabase/tests/crm_sync_queue_update_rls_test.sql",
   "supabase/tests/cron_credentials_rls_test.sql",
   "supabase/tests/cron_watchdog_rls_test.sql",
@@ -4164,7 +4175,7 @@
   "src/hooks/useLoginLockout.ts": 1,
   "src/hooks/useMFA.ts": 1,
   "src/hooks/useMeetingSummary.ts": 3,
-  "src/hooks/useMultiChannelCall.ts": 10,
+  "src/hooks/useMultiChannelCall.ts": 11,
   "src/hooks/useMultiDeviceRing.ts": 1,
   "src/hooks/useNetworkMonitor.ts": 1,
   "src/hooks/useNotificationPreferences.ts": 1,

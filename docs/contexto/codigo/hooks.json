@@ -1163,7 +1163,7 @@
    "hooks_exportados": [
     "useBitrix"
    ],
-   "linhas": 332,
+   "linhas": 344,
    "dominio": "hooks",
    "tabelas": [
     "bitrix_departments",
@@ -1179,10 +1179,11 @@
     "useState"
    ],
    "canais_realtime": [],
-   "usado_por": 2,
+   "usado_por": 3,
    "usado_por_arquivos": [
     "src/components/contacts/useBitrixSync.ts",
-    "src/components/settings/BitrixIntegration.tsx"
+    "src/components/settings/BitrixIntegration.tsx",
+    "src/hooks/useMultiChannelCall.ts"
    ],
    "coberto_por_testes": 2
   },
@@ -3041,15 +3042,17 @@
    "hooks_exportados": [
     "useMultiChannelCall"
    ],
-   "linhas": 351,
+   "linhas": 416,
    "dominio": "hooks",
    "tabelas": [
+    "call_sessions",
     "hold_events"
    ],
    "rpcs": [],
    "edges": [],
    "hooks_internos": [
     "useAuthContext",
+    "useBitrix",
     "useCallSession",
     "useCallTimers",
     "useCallTransfer",
@@ -3076,7 +3079,7 @@
     "src/hooks/useHoldReminder.ts",
     "src/pages/PhoneDialer.tsx"
    ],
-   "coberto_por_testes": 10
+   "coberto_por_testes": 11
   },
   {
    "arquivo": "src/hooks/useMultiDeviceRing.ts",

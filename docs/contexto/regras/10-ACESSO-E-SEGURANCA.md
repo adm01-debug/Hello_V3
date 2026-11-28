@@ -1,6 +1,6 @@
 # 10 · ACESSO E SEGURANÇA — quem pode o quê
 
-> Gerado automaticamente por AI Context Sync v1.3.2 · commit `3e08f346df` · branch `main` · 2026-11-28 16:10 UTC
+> Gerado automaticamente por AI Context Sync v1.3.2 · commit `c443721c4b` · branch `main` · 2026-11-28 16:11 UTC
 > Não edite à mão — regras humanas vão em `manual/`.
 
 ## Perfis / roles identificados
@@ -77,7 +77,7 @@
 | `conversation_messages` | enabled | public: is_admin_or_supervisor()<br>public: EXISTS ( SELECT 1 FROM public.conversations c WHERE c.id = conversation_messages.conversation_id AND c.assigned_agent_name = get_use<br>public: is_admin_or_supervisor()<br>public: EXISTS ( SELECT 1 FROM public.conversations c WHERE c.id = conversation_id AND c.assigned_agent_name = ( SELECT full_name FROM publi | public: is_admin_or_supervisor()<br>public: is_admin_or_supervisor() OR EXISTS ( SELECT 1 FROM public.conversations c WHERE c.id = conversation_messages.conversation_id AND c.a | public: is_admin_or_supervisor() | public: is_admin_or_supervisor() |
 | `conversations` | enabled | public: is_admin_or_supervisor()<br>public: assigned_agent_name = get_user_agent_name()<br>public: is_admin_or_supervisor()<br>public: auth.uid() = id OR EXISTS ( SELECT 1 FROM public.user_profiles WHERE id = auth.uid() AND role IN ('admin', 'supervisor') ) | public: is_admin_or_supervisor() | public: is_admin_or_supervisor()<br>public: assigned_agent_name = get_user_agent_name() | public: is_admin_or_supervisor() |
 | `crm_field_suggestions` | enabled | authenticated: public.is_admin_or_supervisor() | authenticated: is_admin_or_supervisor() | authenticated: is_admin_or_supervisor() | authenticated: is_admin_or_supervisor() |
-| `crm_sync_queue` | enabled | public: is_admin_or_supervisor() | authenticated: public.is_admin_or_supervisor() | authenticated: public.is_admin_or_supervisor() | — |
+| `crm_sync_queue` | enabled | public: is_admin_or_supervisor()<br>authenticated: requested_by = auth.uid() | authenticated: public.is_admin_or_supervisor()<br>authenticated: requested_by = auth.uid() | authenticated: public.is_admin_or_supervisor() | — |
 | `cultural_hints` | enabled | public: auth.uid() IS NOT NULL<br>public: is_admin_user(auth.uid()) | public: is_admin_user(auth.uid()) | public: is_admin_user(auth.uid()) | public: is_admin_user(auth.uid()) |
 | `customer_journey_stages` | enabled | authenticated: is_admin_or_supervisor()<br>authenticated: auth.uid() IS NOT NULL | authenticated: is_admin_or_supervisor() | authenticated: is_admin_or_supervisor() | authenticated: is_admin_or_supervisor() |
 | `dashboard_goals` | enabled | public: auth.uid() IS NOT NULL<br>public: is_admin_or_supervisor() | public: is_admin_or_supervisor() | public: is_admin_or_supervisor() | public: is_admin_or_supervisor() |
@@ -195,7 +195,7 @@
 
 > `—` com RLS ligado = ninguém além de service_role. `sem RLS` = qualquer chave anon lê/escreve tudo.
 
-## Onde o RLS é IGNORADO (service_role) — 144 arquivo(s)
+## Onde o RLS é IGNORADO (service_role) — 145 arquivo(s)
 
 - `scripts/ai-context/cenarios.mjs`
 - `scripts/ai-context/gerar.unit.mjs`
@@ -335,6 +335,7 @@
 - `supabase/migrations/20261127200000_revoke_anon_role_helpers.sql`
 - `supabase/migrations/20261127250000_increment_weekly_stats_rpc.sql`
 - `supabase/migrations/20261127280000_is_own_call_session_grants.sql`
+- `supabase/migrations/20261128130000_crm_sync_queue_enqueue_author.sql`
 - `supabase/tests/increment_weekly_stats_rpc_rls_test.sql`
 - `supabase/tests/login_lockout_acl_rls_test.sql`
 - `supabase/tests/redaction_log_rls_test.sql`

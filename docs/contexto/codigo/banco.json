@@ -8,7 +8,7 @@
   "supabase/migrations",
   "typeorm"
  ],
- "migrations": 274,
+ "migrations": 276,
  "seeds": [],
  "avisos": [
   "29 bloco(s) com DDL dinâmico (EXECUTE format/...) não modelado — policies/colunas criadas dinamicamente podem faltar; confira no banco vivo"
@@ -5651,6 +5651,13 @@
      "default": null,
      "ref": null
     },
+    "bitrix_call_id": {
+     "tipo": "text",
+     "nn": false,
+     "pk": false,
+     "default": null,
+     "ref": null
+    },
     "caller_name": {
      "tipo": "text",
      "nn": false,
@@ -5863,7 +5870,7 @@
     "trunk_id->voip_trunks"
    ],
    "criada_em": "20251222153717_0868819c-c2a1-4f51-abcd-34ae49b599ed.sql",
-   "usada_no_front": 16,
+   "usada_no_front": 17,
    "usada_em_edges": [
     "auto-scorecard",
     "check-goals",
@@ -9139,6 +9146,13 @@
      "default": null,
      "ref": null
     },
+    "requested_by": {
+     "tipo": "uuid",
+     "nn": false,
+     "pk": false,
+     "default": "auth.uid()",
+     "ref": null
+    },
     "status": {
      "tipo": "text",
      "nn": true,
@@ -9173,9 +9187,26 @@
      "comando": "select",
      "para": "public",
      "tipo": "permissive"
+    },
+    {
+     "nome": "Agente enfileira a propria acao",
+     "comando": "insert",
+     "para": "authenticated",
+     "tipo": "permissive"
+    },
+    {
+     "nome": "Agente le a propria acao",
+     "comando": "select",
+     "para": "authenticated",
+     "tipo": "permissive"
     }
    ],
    "indices": [
+    {
+     "nome": "idx_crm_sync_queue_requested_by",
+     "colunas": "requested_by",
+     "unico": false
+    },
     {
      "nome": "idx_crm_sync_queue_status_retry",
      "colunas": "status, next_retry_at",

@@ -1,15 +1,15 @@
 {
  "meta": {
-  "sha": "3e08f346dfbce40216dca40bd26ef3f72aaf8de1",
+  "sha": "c443721c4b2f0f97b7fdb807e4933948c5cce9c6",
   "branch": "main",
   "remote": "https://github.com/adm01-debug/Hello_V3",
-  "generated_at": "2026-11-28 16:10 UTC",
-  "files_total": 1911,
-  "code_files": 1706,
-  "code_lines": 209559
+  "generated_at": "2026-11-28 16:11 UTC",
+  "files_total": 1916,
+  "code_files": 1711,
+  "code_lines": 210193
  },
  "version": "1.3.2",
- "facts_hash": "3af38ecc4897f649",
+ "facts_hash": "d78794871a6921c4",
  "stack": {
   "frameworks": [
    "React + Vite",
@@ -168,9 +168,9 @@
   ],
   "package_manager": "bun",
   "languages": {
-   ".tsx": 686,
+   ".tsx": 687,
    ".ts": 673,
-   ".sql": 311,
+   ".sql": 315,
    ".mjs": 29,
    ".py": 5,
    ".js": 2
@@ -900,6 +900,13 @@
       "fk": "",
       "generated": "",
       "src": "supabase/migrations/20260515170309_98507006-514f-467b-b3e7-a1f30f5377d4.sql"
+     },
+     {
+      "name": "bitrix_call_id",
+      "type": "text",
+      "fk": "",
+      "generated": "",
+      "src": "supabase/migrations/20261128140000_call_sessions_bitrix_call_id.sql"
      },
      {
       "name": "agent_name",
@@ -12520,6 +12527,13 @@
       "fk": "",
       "generated": "",
       "src": "supabase/migrations/20260507220616_3feba3f7-8e03-47ff-b2a3-b4e860beb5e0.sql"
+     },
+     {
+      "name": "requested_by",
+      "type": "uuid DEFAULT auth.uid()",
+      "fk": "",
+      "generated": "",
+      "src": "supabase/migrations/20261128130000_crm_sync_queue_enqueue_author.sql"
      }
     ],
     "constraints": [],
@@ -20229,6 +20243,26 @@
     "using": "public.is_own_call_session(call_session_id) OR public.is_admin_or_supervisor() OR agent_name = public.get_user_agent_name()",
     "check": "",
     "src": "supabase/migrations/20261127223000_hold_events_agent_writable.sql"
+   },
+   {
+    "name": "Agente enfileira a propria acao",
+    "table": "crm_sync_queue",
+    "cmd": "INSERT",
+    "roles": "authenticated",
+    "mode": "permissive",
+    "using": "",
+    "check": "requested_by = auth.uid()",
+    "src": "supabase/migrations/20261128130000_crm_sync_queue_enqueue_author.sql"
+   },
+   {
+    "name": "Agente le a propria acao",
+    "table": "crm_sync_queue",
+    "cmd": "SELECT",
+    "roles": "authenticated",
+    "mode": "permissive",
+    "using": "requested_by = auth.uid()",
+    "check": "",
+    "src": "supabase/migrations/20261128130000_crm_sync_queue_enqueue_author.sql"
    }
   ],
   "triggers": [
@@ -26257,6 +26291,14 @@
     "unique": true,
     "where": "",
     "src": "supabase/migrations/20261127230000_unique_conversation_message_id.sql"
+   },
+   {
+    "name": "idx_crm_sync_queue_requested_by",
+    "table": "crm_sync_queue",
+    "columns": "requested_by",
+    "unique": false,
+    "where": "",
+    "src": "supabase/migrations/20261128130000_crm_sync_queue_enqueue_author.sql"
    }
   ],
   "cron_jobs": [
@@ -26617,11 +26659,15 @@
    "supabase/migrations/20261127260000_increment_weekly_stats_rpc_null_media_fix.sql",
    "supabase/migrations/20261127270000_geo_policies_idempotente.sql",
    "supabase/migrations/20261127280000_is_own_call_session_grants.sql",
+   "supabase/migrations/20261128130000_crm_sync_queue_enqueue_author.sql",
+   "supabase/migrations/20261128140000_call_sessions_bitrix_call_id.sql",
    "supabase/migrations/20261128150000_claim_next_dialer_contact.sql",
    "supabase/tests/add_missing_fks_rls_test.sql",
+   "supabase/tests/call_sessions_bitrix_call_id_rls_test.sql",
    "supabase/tests/calling_hours_fail_closed_rls_test.sql",
    "supabase/tests/claim_next_dialer_contact_rls_test.sql",
    "supabase/tests/client_errors_rls_test.sql",
+   "supabase/tests/crm_sync_queue_enqueue_rls_test.sql",
    "supabase/tests/crm_sync_queue_update_rls_test.sql",
    "supabase/tests/cron_credentials_rls_test.sql",
    "supabase/tests/cron_watchdog_rls_test.sql",
@@ -29360,7 +29406,9 @@
    "column:notifications.source_id": "Identificador do objeto de origem; o significado depende de source_type: cron_health -> nome do job, optimistic_lock_hotspot -> tabela com conflito, idle_index_hotspot -> nome do indice. Sem FK de proposito.",
    "column:optimistic_lock_conflicts.table_name": "Tabela em que o conflito de versao aconteceu. Valores medidos em producao em 2026-11-27: deals, contacts.",
    "column:optimistic_lock_conflicts.record_id": "PK, em texto, da linha de optimistic_lock_conflicts.table_name que sofreu o conflito. Sem FK: a tabela e escolhida por table_name.",
-   "column:holidays.recurring": "Etapa 122: true faz check_calling_hours comparar mes e dia em qualquer ano (data exata tambem bate). Feriado movel (Carnaval, Pascoa) nao tem regra de calculo — cadastre a data do ano com recurring = false."
+   "column:holidays.recurring": "Etapa 122: true faz check_calling_hours comparar mes e dia em qualquer ano (data exata tambem bate). Feriado movel (Carnaval, Pascoa) nao tem regra de calculo — cadastre a data do ano com recurring = false.",
+   "column:crm_sync_queue.requested_by": "Autor do item da fila. DEFAULT auth.uid(): quem insere pela sessao fica amarrado automaticamente (etapa 084). NULL quando a origem e service_role/cron.",
+   "column:call_sessions.bitrix_call_id": "CALL_ID devolvido por telephony.externalcall.register no Bitrix24; usado no telephony.externalcall.finish. NULL = chamada nao registrada no CRM (Bitrix fora do ar ou canal sem numero) - etapa 081."
   },
   "types_file": "src/integrations/supabase/types.ts"
  },
@@ -29628,6 +29676,8 @@
     "component": "Calls",
     "tables_transitive": [
      "agents",
+     "bitrix_departments",
+     "bitrix_users",
      "call_analyses",
      "call_quality_metrics",
      "call_recordings",
@@ -29637,6 +29687,7 @@
      "call_transcripts_searchable",
      "calling_hours_config",
      "compliance_settings",
+     "crm_sync_queue",
      "dnc_list",
      "hold_events",
      "live_sentiment_snapshots",
@@ -29644,6 +29695,7 @@
     ],
     "invokes_transitive": [
      "analyze-talk-ratio",
+     "bitrix-api",
      "detect-key-moments",
      "elevenlabs-conversation-token",
      "generate-meeting-summary",
@@ -29658,7 +29710,7 @@
      "check_dnc",
      "record_trunk_usage"
     ],
-    "deps_count": 62
+    "deps_count": 65
    },
    {
     "path": "",
@@ -30217,6 +30269,8 @@
     "file": "src/pages/PhoneDialer.tsx",
     "component": "PhoneDialer",
     "tables_transitive": [
+     "bitrix_departments",
+     "bitrix_users",
      "call_analyses",
      "call_quality_metrics",
      "call_sessions",
@@ -30225,6 +30279,7 @@
      "call_transcripts_searchable",
      "calling_hours_config",
      "compliance_settings",
+     "crm_sync_queue",
      "dialer_favorites",
      "dnc_list",
      "hold_events",
@@ -30234,6 +30289,7 @@
     ],
     "invokes_transitive": [
      "analyze-talk-ratio",
+     "bitrix-api",
      "detect-key-moments",
      "generate-meeting-summary",
      "sip-config",
@@ -30248,7 +30304,7 @@
      "log_audit_event",
      "record_trunk_usage"
     ],
-    "deps_count": 73
+    "deps_count": 76
    },
    {
     "path": "",
@@ -35069,8 +35125,8 @@
   },
   {
    "module": "src/hooks",
-   "files": 359,
-   "lines": 46177,
+   "files": 360,
+   "lines": 46415,
    "tables": [
     "account_journey_history",
     "accounts",
@@ -35363,7 +35419,7 @@
   {
    "module": "src/integrations",
    "files": 3,
-   "lines": 8348,
+   "lines": 8351,
    "tables": [],
    "exports": [
     "index.ts: lovable",
@@ -36027,8 +36083,8 @@
   },
   {
    "module": "supabase/migrations",
-   "files": 274,
-   "lines": 17504,
+   "files": 276,
+   "lines": 17558,
    "tables": [],
    "exports": [],
    "docs": [],
@@ -36119,8 +36175,8 @@
   },
   {
    "module": "supabase/tests",
-   "files": 35,
-   "lines": 5466,
+   "files": 37,
+   "lines": 5805,
    "tables": [],
    "exports": [],
    "docs": [],
@@ -36128,9 +36184,11 @@
    "imports_modules": [],
    "file_list": [
     "supabase/tests/add_missing_fks_rls_test.sql",
+    "supabase/tests/call_sessions_bitrix_call_id_rls_test.sql",
     "supabase/tests/calling_hours_fail_closed_rls_test.sql",
     "supabase/tests/claim_next_dialer_contact_rls_test.sql",
     "supabase/tests/client_errors_rls_test.sql",
+    "supabase/tests/crm_sync_queue_enqueue_rls_test.sql",
     "supabase/tests/crm_sync_queue_update_rls_test.sql",
     "supabase/tests/cron_credentials_rls_test.sql",
     "supabase/tests/cron_watchdog_rls_test.sql",
@@ -36713,7 +36771,8 @@
      "supabase/functions/check-goals/index.ts"
     ],
     "update": [
-     "src/hooks/useCallSession.ts"
+     "src/hooks/useCallSession.ts",
+     "src/hooks/useMultiChannelCall.ts"
     ]
    },
    "call_summaries": {
@@ -42614,6 +42673,10 @@
    },
    {
     "file": "src/hooks/useBitrix.ts",
+    "msg": "Chamada não registrada no Bitrix24"
+   },
+   {
+    "file": "src/hooks/useBitrix.ts",
     "msg": "Erro ao sincronizar agentes"
    },
    {
@@ -44639,6 +44702,10 @@
    {
     "file": "src/hooks/useLoginLockout.ts",
     "text": "rate limit por IP (lido do request, não do corpo) e chama as RPCs com"
+   },
+   {
+    "file": "src/hooks/useMultiChannelCall.ts",
+    "text": "Fire-and-forget de proposito: CRM fora do ar nao pode derrubar a ligacao, e"
    },
    {
     "file": "src/hooks/useNotifications.ts",
@@ -51097,6 +51164,11 @@
     "table": "crm_sync_queue",
     "column": "updated_at",
     "rule": "default now()"
+   },
+   {
+    "table": "crm_sync_queue",
+    "column": "requested_by",
+    "rule": "default auth.uid()"
    },
    {
     "table": "performance_metrics",
@@ -61597,11 +61669,15 @@
    },
    {
     "file": "src/hooks/__tests__/useBitrix.coverage.test.tsx",
-    "name": "createLead returns null when queue also fails"
+    "name": "createLead returns the error when queue also fails"
    },
    {
     "file": "src/hooks/__tests__/useBitrix.coverage.test.tsx",
     "name": "registerCall success and enqueue paths"
+   },
+   {
+    "file": "src/hooks/__tests__/useBitrix.coverage.test.tsx",
+    "name": "registerCall avisa quando a fila tambem falha (etapa 084)"
    },
    {
     "file": "src/hooks/__tests__/useBitrix.coverage.test.tsx",
@@ -63906,6 +63982,22 @@
    {
     "file": "src/hooks/__tests__/useMeetingSummary.test.ts",
     "name": "erro → toast.error"
+   },
+   {
+    "file": "src/hooks/__tests__/useMultiChannelCall.bitrixBridge.test.tsx",
+    "name": "etapa 081 - ponte de chamada com o Bitrix"
+   },
+   {
+    "file": "src/hooks/__tests__/useMultiChannelCall.bitrixBridge.test.tsx",
+    "name": "extrai o CALL_ID das duas formas que o Bitrix devolve e recusa o vazio"
+   },
+   {
+    "file": "src/hooks/__tests__/useMultiChannelCall.bitrixBridge.test.tsx",
+    "name": "registra ao atender, guarda o CALL_ID e fecha a chamada com duracao e desfecho"
+   },
+   {
+    "file": "src/hooks/__tests__/useMultiChannelCall.bitrixBridge.test.tsx",
+    "name": "sem CALL_ID do Bitrix nao fecha nada e nao quebra a chamada"
    },
    {
     "file": "src/hooks/__tests__/useMultiChannelCall.compliance.test.tsx",
@@ -80933,6 +81025,26 @@
     "using": "public.is_own_call_session(call_session_id) OR public.is_admin_or_supervisor() OR agent_name = public.get_user_agent_name()",
     "check": "",
     "src": "supabase/migrations/20261127223000_hold_events_agent_writable.sql"
+   },
+   {
+    "name": "Agente enfileira a propria acao",
+    "table": "crm_sync_queue",
+    "cmd": "INSERT",
+    "roles": "authenticated",
+    "mode": "permissive",
+    "using": "",
+    "check": "requested_by = auth.uid()",
+    "src": "supabase/migrations/20261128130000_crm_sync_queue_enqueue_author.sql"
+   },
+   {
+    "name": "Agente le a propria acao",
+    "table": "crm_sync_queue",
+    "cmd": "SELECT",
+    "roles": "authenticated",
+    "mode": "permissive",
+    "using": "requested_by = auth.uid()",
+    "check": "",
+    "src": "supabase/migrations/20261128130000_crm_sync_queue_enqueue_author.sql"
    }
   ],
   "db_triggers": [
@@ -86726,10 +86838,12 @@
    "crm_sync_queue": {
     "rls": "enabled",
     "SELECT": [
-     "public: is_admin_or_supervisor()"
+     "public: is_admin_or_supervisor()",
+     "authenticated: requested_by = auth.uid()"
     ],
     "INSERT": [
-     "authenticated: public.is_admin_or_supervisor()"
+     "authenticated: public.is_admin_or_supervisor()",
+     "authenticated: requested_by = auth.uid()"
     ],
     "UPDATE": [
      "authenticated: public.is_admin_or_supervisor()"
@@ -88587,6 +88701,7 @@
    "supabase/migrations/20261127200000_revoke_anon_role_helpers.sql",
    "supabase/migrations/20261127250000_increment_weekly_stats_rpc.sql",
    "supabase/migrations/20261127280000_is_own_call_session_grants.sql",
+   "supabase/migrations/20261128130000_crm_sync_queue_enqueue_author.sql",
    "supabase/tests/increment_weekly_stats_rpc_rls_test.sql",
    "supabase/tests/login_lockout_acl_rls_test.sql",
    "supabase/tests/redaction_log_rls_test.sql",
@@ -101141,7 +101256,7 @@
   },
   "src/hooks/useBitrix.ts": {
    "path": "src/hooks/useBitrix.ts",
-   "lines": 332,
+   "lines": 344,
    "exports": [
     "interface BitrixContact",
     "interface BitrixLead",
@@ -101174,6 +101289,7 @@
     "Bitrix24 indisponível",
     "Bitrix24 não retornou dados de usuários",
     "Bitrix24 não retornou departamentos",
+    "Chamada não registrada no Bitrix24",
     "Erro ao sincronizar agentes",
     "Erro ao sincronizar departamentos"
    ],
@@ -104491,7 +104607,7 @@
   },
   "src/hooks/useMultiChannelCall.ts": {
    "path": "src/hooks/useMultiChannelCall.ts",
-   "lines": 351,
+   "lines": 416,
    "exports": [
     "type CallChannel",
     "type CallStatus",
@@ -104503,9 +104619,14 @@
     "interface ChannelConfig",
     "type PreDialCheck",
     "interface InitiateCallOptions",
+    "function extrairCallIdBitrix",
     "function useMultiChannelCall"
    ],
    "tables": [
+    {
+     "table": "call_sessions",
+     "op": "update"
+    },
     {
      "table": "hold_events",
      "op": "insert"
@@ -104520,6 +104641,9 @@
     }
    ],
    "table_cols": {
+    "call_sessions": [
+     "id"
+    ],
     "hold_events": [
      "call_session_id",
      "ended_at",
@@ -104669,6 +104793,9 @@
      "value": "on-hold",
      "kind": "compara"
     }
+   ],
+   "rule_comments": [
+    "Fire-and-forget de proposito: CRM fora do ar nao pode derrubar a ligacao, e"
    ],
    "hooks": [
     "useMultiChannelCall"
@@ -108594,7 +108721,7 @@
   },
   "src/hooks/__tests__/useBitrix.coverage.test.tsx": {
    "path": "src/hooks/__tests__/useBitrix.coverage.test.tsx",
-   "lines": 261,
+   "lines": 276,
    "is_test": true,
    "rule_comments": [
     "insertMock must be both directly awaitable (createLead uses `await insert(...)`)"
@@ -108607,8 +108734,9 @@
     "getContacts returns [] when no data",
     "createLead success path",
     "createLead enqueues when api fails and queue succeeds",
-    "createLead returns null when queue also fails",
+    "createLead returns the error when queue also fails",
     "registerCall success and enqueue paths",
+    "registerCall avisa quando a fila tambem falha (etapa 084)",
     "finishCall success and failure",
     "findContactByPhone normalizes phone and returns first match",
     "syncAgents upserts users and toasts",
@@ -109749,6 +109877,17 @@
     "sucesso → toast.success",
     "skipped → toast.info",
     "erro → toast.error"
+   ]
+  },
+  "src/hooks/__tests__/useMultiChannelCall.bitrixBridge.test.tsx": {
+   "path": "src/hooks/__tests__/useMultiChannelCall.bitrixBridge.test.tsx",
+   "lines": 146,
+   "is_test": true,
+   "tests": [
+    "etapa 081 - ponte de chamada com o Bitrix",
+    "extrai o CALL_ID das duas formas que o Bitrix devolve e recusa o vazio",
+    "registra ao atender, guarda o CALL_ID e fecha a chamada com duracao e desfecho",
+    "sem CALL_ID do Bitrix nao fecha nada e nao quebra a chamada"
    ]
   },
   "src/hooks/__tests__/useMultiChannelCall.compliance.test.tsx": {
@@ -111428,7 +111567,7 @@
   },
   "src/integrations/supabase/types.ts": {
    "path": "src/integrations/supabase/types.ts",
-   "lines": 8285,
+   "lines": 8288,
    "exports": [
     "type Json",
     "type Database",
@@ -128627,6 +128766,15 @@
    "lines": 15,
    "uses_service_role": true
   },
+  "supabase/migrations/20261128130000_crm_sync_queue_enqueue_author.sql": {
+   "path": "supabase/migrations/20261128130000_crm_sync_queue_enqueue_author.sql",
+   "lines": 37,
+   "uses_service_role": true
+  },
+  "supabase/migrations/20261128140000_call_sessions_bitrix_call_id.sql": {
+   "path": "supabase/migrations/20261128140000_call_sessions_bitrix_call_id.sql",
+   "lines": 17
+  },
   "supabase/migrations/20261128150000_claim_next_dialer_contact.sql": {
    "path": "supabase/migrations/20261128150000_claim_next_dialer_contact.sql",
    "lines": 49
@@ -128634,6 +128782,11 @@
   "supabase/tests/add_missing_fks_rls_test.sql": {
    "path": "supabase/tests/add_missing_fks_rls_test.sql",
    "lines": 144,
+   "is_test": true
+  },
+  "supabase/tests/call_sessions_bitrix_call_id_rls_test.sql": {
+   "path": "supabase/tests/call_sessions_bitrix_call_id_rls_test.sql",
+   "lines": 162,
    "is_test": true
   },
   "supabase/tests/calling_hours_fail_closed_rls_test.sql": {
@@ -128652,6 +128805,11 @@
   "supabase/tests/client_errors_rls_test.sql": {
    "path": "supabase/tests/client_errors_rls_test.sql",
    "lines": 176,
+   "is_test": true
+  },
+  "supabase/tests/crm_sync_queue_enqueue_rls_test.sql": {
+   "path": "supabase/tests/crm_sync_queue_enqueue_rls_test.sql",
+   "lines": 177,
    "is_test": true
   },
   "supabase/tests/crm_sync_queue_update_rls_test.sql": {
@@ -129022,10 +129180,37 @@
   }
  },
  "git": {
-  "sha": "3e08f346dfbce40216dca40bd26ef3f72aaf8de1",
+  "sha": "c443721c4b2f0f97b7fdb807e4933948c5cce9c6",
   "branch": "main",
   "remote": "https://github.com/adm01-debug/Hello_V3",
   "commits": [
+   {
+    "sha": "c443721",
+    "date": "2026-11-28",
+    "author": "adm01-debug",
+    "subject": "fix: nao perder lead em silencio quando o Bitrix esta fora (etapa 084) (#372)",
+    "files": [
+     "docs/qa/05-PROGRESSO.md",
+     "src/hooks/__tests__/useBitrix.coverage.test.tsx",
+     "src/hooks/useBitrix.ts",
+     "supabase/migrations/20261128130000_crm_sync_queue_enqueue_author.sql",
+     "supabase/tests/crm_sync_queue_enqueue_rls_test.sql"
+    ]
+   },
+   {
+    "sha": "ca3591a",
+    "date": "2026-11-28",
+    "author": "adm01-debug",
+    "subject": "feat: registra a chamada atendida no Bitrix24 (etapa 081) (#373)",
+    "files": [
+     "docs/qa/05-PROGRESSO.md",
+     "src/hooks/__tests__/useMultiChannelCall.bitrixBridge.test.tsx",
+     "src/hooks/useMultiChannelCall.ts",
+     "src/integrations/supabase/types.ts",
+     "supabase/migrations/20261128140000_call_sessions_bitrix_call_id.sql",
+     "supabase/tests/call_sessions_bitrix_call_id_rls_test.sql"
+    ]
+   },
    {
     "sha": "3e08f34",
     "date": "2026-11-28",
@@ -129360,45 +129545,6 @@
      "src/hooks/useAgentRanking.ts",
      "supabase/tests/goals_achieved_notification_rls_test.sql"
     ]
-   },
-   {
-    "sha": "36baa4a",
-    "date": "2026-11-26",
-    "author": "adm01-debug",
-    "subject": "feat: tela de violacoes de SLA com atraso e filtros (etapa 179) (#352)",
-    "files": [
-     "docs/qa/05-PROGRESSO.md",
-     "src/components/layout/AppSidebar.tsx",
-     "src/components/layout/CommandPalette.tsx",
-     "src/hooks/__tests__/slaBreach.test.ts",
-     "src/hooks/useSLA.ts",
-     "src/pages/SlaViolations.tsx",
-     "src/pages/__tests__/SlaViolations.test.tsx",
-     "src/routes/protectedRoutes.tsx"
-    ]
-   },
-   {
-    "sha": "5c4337b",
-    "date": "2026-11-26",
-    "author": "adm01-debug",
-    "subject": "feat: registra os erros do navegador em client_errors com tela admin (etapa 230) (#351)",
-    "files": [
-     "docs/qa/03-ACHADOS.md",
-     "docs/qa/05-PROGRESSO.md",
-     "src/components/layout/AppSidebar.tsx",
-     "src/components/layout/CommandPalette.tsx",
-     "src/hooks/useClientErrors.ts",
-     "src/integrations/supabase/types.ts",
-     "src/lib/__tests__/errorReporter.test.ts",
-     "src/lib/error-tracking.ts",
-     "src/lib/errorReporter.ts",
-     "src/main.tsx",
-     "src/pages/admin/ClientErrors.tsx",
-     "src/pages/admin/__tests__/ClientErrors.test.tsx",
-     "src/routes/protectedRoutes.tsx",
-     "supabase/migrations/20261126140000_client_errors.sql",
-     "supabase/tests/client_errors_rls_test.sql"
-    ]
    }
   ],
   "hot_files": [
@@ -129419,24 +129565,40 @@
     2
    ],
    [
-    "docs/qa/03-ACHADOS.md",
-    2
-   ],
-   [
     "docs/qa/onda-39-varredura-branches-e-prs.md",
     2
    ],
    [
-    "src/components/layout/AppSidebar.tsx",
-    2
+    "src/hooks/__tests__/useBitrix.coverage.test.tsx",
+    1
    ],
    [
-    "src/components/layout/CommandPalette.tsx",
-    2
+    "src/hooks/useBitrix.ts",
+    1
    ],
    [
-    "src/routes/protectedRoutes.tsx",
-    2
+    "supabase/migrations/20261128130000_crm_sync_queue_enqueue_author.sql",
+    1
+   ],
+   [
+    "supabase/tests/crm_sync_queue_enqueue_rls_test.sql",
+    1
+   ],
+   [
+    "src/hooks/__tests__/useMultiChannelCall.bitrixBridge.test.tsx",
+    1
+   ],
+   [
+    "src/hooks/useMultiChannelCall.ts",
+    1
+   ],
+   [
+    "supabase/migrations/20261128140000_call_sessions_bitrix_call_id.sql",
+    1
+   ],
+   [
+    "supabase/tests/call_sessions_bitrix_call_id_rls_test.sql",
+    1
    ],
    [
     "src/hooks/__tests__/usePredictiveDialer.coverage.test.tsx",
@@ -129464,22 +129626,6 @@
    ],
    [
     "src/hooks/useSupervisorPanel.ts",
-    1
-   ],
-   [
-    "supabase/migrations/20261127223000_hold_events_agent_writable.sql",
-    1
-   ],
-   [
-    "supabase/migrations/20261127280000_is_own_call_session_grants.sql",
-    1
-   ],
-   [
-    "supabase/tests/hold_events_write_rls_test.sql",
-    1
-   ],
-   [
-    "supabase/migrations/20261127233000_calling_hours_holiday_region_fix.sql",
     1
    ]
   ]

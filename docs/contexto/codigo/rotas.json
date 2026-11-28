@@ -28,6 +28,7 @@
     "useAuthProfile",
     "useAuthSession",
     "useAuthState",
+    "useBitrix",
     "useCallContext",
     "useCallHistory",
     "useCallSession",
@@ -70,6 +71,7 @@
     "useAuthProfile",
     "useAuthSession",
     "useAuthState",
+    "useBitrix",
     "useCallContext",
     "useCallHistory",
     "useCallSession",
@@ -93,6 +95,8 @@
     "useVoipQualityMonitor"
    ],
    "tabelas": [
+    "bitrix_departments",
+    "bitrix_users",
     "call_analyses",
     "call_quality_metrics",
     "call_sessions",
@@ -101,6 +105,7 @@
     "call_transcripts_searchable",
     "calling_hours_config",
     "compliance_settings",
+    "crm_sync_queue",
     "dialer_favorites",
     "dnc_list",
     "hold_events",
@@ -118,6 +123,7 @@
    ],
    "edges": [
     "analyze-talk-ratio",
+    "bitrix-api",
     "detect-key-moments",
     "generate-meeting-summary",
     "sip-config",
@@ -137,7 +143,7 @@
     "tab",
     "user"
    ],
-   "arquivos_puxados": 73
+   "arquivos_puxados": 76
   },
   {
    "protegida": false,
@@ -1333,6 +1339,7 @@
     "useAuthProfile",
     "useAuthSession",
     "useAuthState",
+    "useBitrix",
     "useCallContext",
     "useCallRecording",
     "useCallSession",
@@ -1375,6 +1382,7 @@
     "useAuthProfile",
     "useAuthSession",
     "useAuthState",
+    "useBitrix",
     "useCallContext",
     "useCallRecording",
     "useCallSession",
@@ -1400,6 +1408,8 @@
    ],
    "tabelas": [
     "agents",
+    "bitrix_departments",
+    "bitrix_users",
     "call_analyses",
     "call_quality_metrics",
     "call_recordings",
@@ -1409,6 +1419,7 @@
     "call_transcripts_searchable",
     "calling_hours_config",
     "compliance_settings",
+    "crm_sync_queue",
     "cultural_hints",
     "dnc_list",
     "hold_events",
@@ -1425,6 +1436,7 @@
    ],
    "edges": [
     "analyze-talk-ratio",
+    "bitrix-api",
     "detect-key-moments",
     "elevenlabs-conversation-token",
     "generate-meeting-summary",
@@ -1444,7 +1456,7 @@
     "button",
     "user"
    ],
-   "arquivos_puxados": 73
+   "arquivos_puxados": 76
   },
   {
    "protegida": false,

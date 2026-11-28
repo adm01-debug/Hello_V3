@@ -1,6 +1,6 @@
 # 11 · GLOSSÁRIO, DADOS DE REFERÊNCIA E LACUNAS
 
-> Gerado automaticamente por AI Context Sync v1.3.2 · commit `3e08f346df` · branch `main` · 2026-11-28 16:10 UTC
+> Gerado automaticamente por AI Context Sync v1.3.2 · commit `c443721c4b` · branch `main` · 2026-11-28 16:11 UTC
 > Não edite à mão — regras humanas vão em `manual/`.
 
 ## Glossário do domínio (entidades do sistema)
@@ -45,7 +45,7 @@
 | `call_recordings` | _(sem COMMENT ON TABLE — significado não documentado)_ | 10 colunas | migration |
 | `call_records` | _(sem COMMENT ON TABLE — significado não documentado)_ | 13 colunas | migration |
 | `call_scorecards` | _(sem COMMENT ON TABLE — significado não documentado)_ | 13 colunas | migration |
-| `call_sessions` | _(sem COMMENT ON TABLE — significado não documentado)_ | 19 colunas | migration |
+| `call_sessions` | _(sem COMMENT ON TABLE — significado não documentado)_ | 20 colunas | migration |
 | `call_summaries` | _(sem COMMENT ON TABLE — significado não documentado)_ | 10 colunas | migration |
 | `call_transcriptions` | _(sem COMMENT ON TABLE — significado não documentado)_ | 7 colunas | migration |
 | `call_transcripts_searchable` | _(sem COMMENT ON TABLE — significado não documentado)_ | 8 colunas | migration |
@@ -68,7 +68,7 @@
 | `conversation_messages` | _(sem COMMENT ON TABLE — significado não documentado)_ | 13 colunas | migration |
 | `conversations` | _(sem COMMENT ON TABLE — significado não documentado)_ | 21 colunas | migration |
 | `crm_field_suggestions` | _(sem COMMENT ON TABLE — significado não documentado)_ | 14 colunas | migration |
-| `crm_sync_queue` | _(sem COMMENT ON TABLE — significado não documentado)_ | 10 colunas | migration |
+| `crm_sync_queue` | _(sem COMMENT ON TABLE — significado não documentado)_ | 11 colunas | migration |
 | `cultural_hints` | _(sem COMMENT ON TABLE — significado não documentado)_ | 8 colunas | migration |
 | `customer_journey_stages` | _(sem COMMENT ON TABLE — significado não documentado)_ | 11 colunas | migration |
 | `dashboard_goals` | _(sem COMMENT ON TABLE — significado não documentado)_ | 12 colunas | migration |

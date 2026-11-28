@@ -22,7 +22,7 @@
    "scripts/regras_negocio (2)"
   ],
   "testes": [
-   "co-localizado (__tests__) (408)",
+   "co-localizado (__tests__) (409)",
    "tests/ (9)",
    "e2e/ (7)"
   ],
@@ -59,11 +59,11 @@
  "commits": {
   "convencao": "conventional commits (observado)",
   "exemplos": [
+   "fix: nao perder lead em silencio quando o Bitrix esta fora (etapa 084) (#372)",
+   "feat: registra a chamada atendida no Bitrix24 (etapa 081) (#373)",
    "fix: reservar o contato do discador em uma unica operacao (etapa 079) (#375)",
    "fix: escuta do supervisor sai no nome de quem entrou, nao no literal Supervisor (#385)",
-   "fix: liberar escrita de hold_events para o agente da chamada (tempo de espera) (#382)",
-   "fix: feriado de outro pais nao bloqueia mais a discagem (#383)",
-   "chore: registrar varredura final de cobertura backend -> tela (#381)"
+   "fix: liberar escrita de hold_events para o agente da chamada (tempo de espera) (#382)"
   ]
  },
  "pr_template": null,

@@ -1,6 +1,6 @@
 # 07 · REGRAS DE NEGÓCIO
 
-> Gerado automaticamente por AI Context Sync v1.3.2 · commit `3e08f346df` · branch `main` · 2026-11-28 16:10 UTC
+> Gerado automaticamente por AI Context Sync v1.3.2 · commit `c443721c4b` · branch `main` · 2026-11-28 16:11 UTC
 > Não edite à mão — regras humanas vão em `manual/`.
 
 ## A. Regras escritas por humanos (`manual/` — prioridade máxima, nunca sobrescrito)
@@ -311,7 +311,7 @@ _Nenhum arquivo em `manual/`. Copie `manual/TEMPLATE-regras-de-negocio.md` para 
 | `playlist_items` | Manage items of own playlists | ALL | public | permissive | `EXISTS (SELECT 1 FROM public.call_playlists p WHERE p.id = playlist_id AND (p.owner_agent_name = get_user_agent_name() OR is_admin_or_supervisor()))` | `EXISTS (SELECT 1 FROM public.call_playlists p WHERE p.id = playlist_id AND (p.owner_agent_name = get_user_agent_name() OR is_admin_or_supervisor()))` |
 | `deals` | Authenticated create deals | INSERT | public | permissive |  | `auth.uid() IS NOT NULL AND ( is_admin_or_supervisor() OR owner_agent_name IS NULL OR owner_agent_name = get_user_agent_name() )` |
 | `cadence_enrollments` | Authenticated insert enrollments | INSERT | public | permissive |  | `auth.uid() IS NOT NULL AND (is_admin_or_supervisor() OR agent_name = get_user_agent_name())` |
-| … +243 linhas — lista completa em `context.json` | | | | | | |
+| … +245 linhas — lista completa em `context.json` | | | | | | |
 
 ## C. Restrições de dados (obrigatório / único / default / CHECK / FK / calculada)
 
@@ -617,7 +617,7 @@ _Nenhum arquivo em `manual/`. Copie `manual/TEMPLATE-regras-de-negocio.md` para 
 | `user_roles` | `is_active` | default true |
 | `user_roles` | `created_at` | default now() |
 | `permissions` | `id` | PK; default gen_random_uuid() |
-| … +1085 linhas — lista completa em `context.json` | | |
+| … +1086 linhas — lista completa em `context.json` | | |
 
 ## D. Automações no banco (triggers e funções — regras que rodam sozinhas)
 
@@ -2523,6 +2523,7 @@ _nenhum item encontrado_
 | Bitrix24 indisponível | `src/hooks/useBitrix.ts` |
 | Bitrix24 não retornou dados de usuários | `src/hooks/useBitrix.ts` |
 | Bitrix24 não retornou departamentos | `src/hooks/useBitrix.ts` |
+| Chamada não registrada no Bitrix24 | `src/hooks/useBitrix.ts` |
 | Erro ao sincronizar agentes | `src/hooks/useBitrix.ts` |
 | Erro ao sincronizar departamentos | `src/hooks/useBitrix.ts` |
 | Erro ao carregar histórico de bloqueios | `src/hooks/useBlockedAccessLogs.ts` |
@@ -2648,8 +2649,7 @@ _nenhum item encontrado_
 | Não foi possível remover o áudio | `src/hooks/useQueueAudioPrompts.ts` |
 | Erro ao verificar metas | `src/hooks/useQueueMetrics.ts` |
 | Meta Crítica: ${goal.name} | `src/hooks/useQueueMetrics.ts` |
-| Meta em Aviso: ${goal.name} | `src/hooks/useQueueMetrics.ts` |
-| … +304 linhas — lista completa em `context.json` | |
+| … +305 linhas — lista completa em `context.json` | |
 
 ## J. Controle de acesso no código (checagens de perfil/permissão)
 
@@ -2700,7 +2700,7 @@ _nenhum item encontrado_
 | `admin` | `supabase/functions/data-lake-flush/index.ts` |
 | `admin` | `supabase/migrations/20261123000200_fix_has_role_oracle_and_debug_tables.sql` |
 
-## K. Testes como especificação (3832 testes em 425 arquivos — nomes completos em `context.json`)
+## K. Testes como especificação (3837 testes em 426 arquivos — nomes completos em `context.json`)
 
 | Arquivo | Testes | Exemplos do que o sistema DEVE fazer |
 |---|---|---|
@@ -2735,10 +2735,10 @@ _nenhum item encontrado_
 | `src/lib/__tests__/logger.test.ts` | 21 | Logger Module · Basic logging methods · logger.debug calls console.debug · logger.info calls console.info … |
 | `src/lib/__tests__/queue-metrics.test.ts` | 21 | serviceLevel · devolve null para lista vazia · conta atendida dentro do limiar como 100% · limiar e inclusivo … |
 | `src/__tests__/rls/rls-policies.test.ts` | 19 | RLS — call_sessions · agent vê apenas as próprias sessões · supervisor lê todas as sessões da equipe · admin tem acesso total (delete incluído) … |
+| `src/hooks/__tests__/useBitrix.coverage.test.tsx` | 19 | useBitrix · checkConfiguration returns true when configured · callBitrixApi returns null when configured === false · getContacts / getLeads / getDeals populate state … |
 | `src/hooks/__tests__/useVoiceBiometrics.coverage.test.tsx` | 19 | useVoicePrints · loads voice prints list · enrolls successfully · enroll error path triggers toast.error … |
 | `src/lib/__tests__/dialer-favorites-and-alert.test.ts` | 19 | dialer-favorites-order — simulação de centenas de cenários · preserva o conjunto de itens em qualquer movimento (PBT) · sempre gera posições densas 0..n-1 (PBT) · é imutável: nunca altera o array original … |
 | `src/lib/webauthn/__tests__/webauthn-utils.coverage.test.ts` | 19 | webauthn-utils (coverage) · base64 helpers · round-trips a buffer through base64url · accepts a plain ArrayBuffer input … |
-| `src/hooks/__tests__/useBitrix.coverage.test.tsx` | 18 | useBitrix · checkConfiguration returns true when configured · callBitrixApi returns null when configured === false · getContacts / getLeads / getDeals populate state … |
 | `src/hooks/__tests__/useContactAlerts.coverage.test.tsx` | 18 | useContactAlerts · fetches alerts on mount and computes unread count · fetchAlerts with unreadOnly applies eq filter · fetchAlerts handles error and returns empty … |
 | `src/hooks/__tests__/useQueueMetrics.coverage.test.tsx` | 18 | useQueueMetrics · fetches metrics and computes values · conta em espera apenas chamadas on_hold, nunca um status inventado · checkGoalStatus handles gte and lte operators … |
 | `src/hooks/__tests__/useSecurityHooks.test.ts` | 18 | usePermissions · Permission checking logic · hasPermission returns true for existing permission · hasPermission returns false for missing permission … |
@@ -3004,7 +3004,7 @@ _nenhum item encontrado_
 | `supabase/functions/voip-recommendation-simulate/__tests__/index.test.ts` | 5 | rejeita requisição sem JWT · rejeita corpo sem recommendationId · projectImpact retorna baseline nulo sem dados · projectImpact projeta melhoria de MOS positiva … |
 | `supabase/functions/webauthn-challenge/__tests__/index.test.ts` | 5 | webauthn-challenge: OPTIONS devolve preflight CORS vazio · webauthn-challenge: sem e-mail responde 400 · webauthn-challenge: e-mail vazio responde 400 · webauthn-challenge: payload invalido responde 400, nunca 500 … |
 | `tests/e2e/auth.spec.ts` | 5 | Authentication Flow · should redirect to login when not authenticated · should show login form elements · Dashboard and Critical Lists … |
-| … +125 linhas — lista completa em `context.json` | | |
+| … +126 linhas — lista completa em `context.json` | | |
 
 ## L. Eventos de webhook tratados (contratos com sistemas externos)
 
@@ -3208,6 +3208,7 @@ _nenhum item encontrado_
 | * mínimo de palavras para disparar tradução */ | `src/hooks/useLiveTranslation.ts` |
 | * A RPC falhou: não sabemos se a conta está bloqueada. Quem consome deve recusar a tentativa. */ | `src/hooks/useLoginLockout.ts` |
 | rate limit por IP (lido do request, não do corpo) e chama as RPCs com | `src/hooks/useLoginLockout.ts` |
+| Fire-and-forget de proposito: CRM fora do ar nao pode derrubar a ligacao, e | `src/hooks/useMultiChannelCall.ts` |
 | Autoplay bloqueado pelo navegador nao pode quebrar o painel: o som e acessorio. | `src/hooks/useNotifications.ts` |
 | critica nao repetimos o toast. O intervalo minimo existe para o caso de a | `src/hooks/useQueueMetrics.ts` |
 | pelo intervalo minimo, ele nao pode reaparecer no ciclo seguinte. | `src/hooks/useQueueMetrics.ts` |

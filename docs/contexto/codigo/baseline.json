@@ -2,11 +2,21 @@
  "aviso": "GERADO AUTOMATICAMENTE por scripts/ai-context/gerar.mjs — não editar à mão; será sobrescrito.",
  "format_version": 2,
  "git": {
-  "commit": "3e08f346dfbce40216dca40bd26ef3f72aaf8de1",
+  "commit": "c443721c4b2f0f97b7fdb807e4933948c5cce9c6",
   "branch": "main",
-  "data_commit": "2026-11-28T13:09:59-03:00",
+  "data_commit": "2026-11-28T13:10:24-03:00",
   "remote": "https://github.com/adm01-debug/Hello_V3",
   "ultimos_commits": [
+   {
+    "sha": "c443721",
+    "data": "2026-11-28",
+    "assunto": "fix: nao perder lead em silencio quando o Bitrix esta fora (etapa 084) (#372)"
+   },
+   {
+    "sha": "ca3591a",
+    "data": "2026-11-28",
+    "assunto": "feat: registra a chamada atendida no Bitrix24 (etapa 081) (#373)"
+   },
    {
     "sha": "3e08f34",
     "data": "2026-11-28",
@@ -121,27 +131,17 @@
     "sha": "7f4740d",
     "data": "2026-11-26",
     "assunto": "fix: policy de UPDATE em learning_completions (upsert do modulo nao atualizava a nota) (#356)"
-   },
-   {
-    "sha": "2769d5d",
-    "data": "2026-11-26",
-    "assunto": "feat: CREATE TABLE retroativo das tabelas geo_* (etapa 130) (#355)"
-   },
-   {
-    "sha": "f430ead",
-    "data": "2026-11-26",
-    "assunto": "fix: policy de UPDATE na fila de sincronizacao do CRM (etapa 082) (#354)"
    }
   ],
-  "arquivos_mudados_7d": 1956,
+  "arquivos_mudados_7d": 1961,
   "pastas_mais_mudadas_30d": [
    {
     "pasta": "src/hooks/__tests__",
-    "mudancas": 300
+    "mudancas": 302
    },
    {
     "pasta": "docs/qa/05-PROGRESSO.md",
-    "mudancas": 171
+    "mudancas": 173
    },
    {
     "pasta": "src/components/calls",
@@ -164,10 +164,6 @@
     "mudancas": 37
    },
    {
-    "pasta": "src/components/layout",
-    "mudancas": 35
-   },
-   {
     "pasta": "src/pages/admin",
     "mudancas": 35
    },
@@ -178,6 +174,10 @@
    {
     "pasta": "src/components/admin",
     "mudancas": 32
+   },
+   {
+    "pasta": "src/components/layout",
+    "mudancas": 31
    },
    {
     "pasta": "src/components/contacts",
@@ -199,7 +199,7 @@
   "arquivos_mais_mudados_90d": [
    {
     "arquivo": "docs/qa/05-PROGRESSO.md",
-    "mudancas": 171
+    "mudancas": 173
    },
    {
     "arquivo": "docs/estado/funcionalidades-planejadas.md",
@@ -211,15 +211,7 @@
    },
    {
     "arquivo": "src/hooks/useMultiChannelCall.ts",
-    "mudancas": 12
-   },
-   {
-    "arquivo": "src/components/layout/AppSidebar.tsx",
-    "mudancas": 11
-   },
-   {
-    "arquivo": "src/components/layout/CommandPalette.tsx",
-    "mudancas": 11
+    "mudancas": 13
    },
    {
     "arquivo": "docs/audits/pendencias-2026-07.md",
@@ -227,6 +219,10 @@
    },
    {
     "arquivo": "src/components/calls/ActiveCallBar.tsx",
+    "mudancas": 10
+   },
+   {
+    "arquivo": "src/integrations/supabase/types.ts",
     "mudancas": 10
    },
    {
@@ -238,7 +234,11 @@
     "mudancas": 9
    },
    {
-    "arquivo": "src/integrations/supabase/types.ts",
+    "arquivo": "src/components/layout/AppSidebar.tsx",
+    "mudancas": 9
+   },
+   {
+    "arquivo": "src/components/layout/CommandPalette.tsx",
     "mudancas": 9
    },
    {
@@ -306,9 +306,9 @@
   ]
  },
  "contagens": {
-  "arquivos_total": 1865,
-  "arquivos_codigo": 1394,
-  "linhas_codigo": 186378,
+  "arquivos_total": 1870,
+  "arquivos_codigo": 1395,
+  "linhas_codigo": 186619,
   "rotas": 108,
   "rotas_http_backend": 11,
   "vistas_por_id": 0,
@@ -318,9 +318,9 @@
   "hooks": 203,
   "edge_functions": 99,
   "tabelas": 172,
-  "migrations": 274,
+  "migrations": 276,
   "cron_jobs": 13,
-  "testes": 469,
+  "testes": 472,
   "workflows": 5,
   "scripts": 36,
   "docs_md": 122
@@ -487,12 +487,12 @@
    "linhas": 312
   },
   "src/hooks": {
-   "arquivos": 359,
-   "linhas": 46177
+   "arquivos": 360,
+   "linhas": 46415
   },
   "src/integrations": {
    "arquivos": 3,
-   "linhas": 8348
+   "linhas": 8351
   },
   "src/lib": {
    "arquivos": 184,
@@ -538,7 +538,7 @@
  "maiores_arquivos": [
   {
    "arquivo": "src/integrations/supabase/types.ts",
-   "linhas": 8285
+   "linhas": 8288
   },
   {
    "arquivo": "scripts/regras_negocio/generate.py",
@@ -571,6 +571,10 @@
   {
    "arquivo": "src/hooks/useContacts.ts",
    "linhas": 417
+  },
+  {
+   "arquivo": "src/hooks/useMultiChannelCall.ts",
+   "linhas": 416
   },
   {
    "arquivo": "src/pages/Settings.tsx",
@@ -631,10 +635,6 @@
   {
    "arquivo": "src/pages/TopicDetection.tsx",
    "linhas": 370
-  },
-  {
-   "arquivo": "src/components/callbacks/ScheduledCallbacksList.tsx",
-   "linhas": 363
   }
  ],
  "qualidade": {
