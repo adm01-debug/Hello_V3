@@ -2,11 +2,31 @@
  "aviso": "GERADO AUTOMATICAMENTE por scripts/ai-context/gerar.mjs — não editar à mão; será sobrescrito.",
  "format_version": 2,
  "git": {
-  "commit": "94dbc8de786e9147f8aa33c6746f5cb86892dd55",
+  "commit": "d8aa79f84e12c0cb1bd5193f7ed199cc9d271956",
   "branch": "main",
-  "data_commit": "2026-11-28T15:14:55-03:00",
+  "data_commit": "2026-11-28T15:31:32-03:00",
   "remote": "https://github.com/adm01-debug/Hello_V3",
   "ultimos_commits": [
+   {
+    "sha": "d8aa79f",
+    "data": "2026-11-28",
+    "assunto": "chore(deps): bump postcss from 8.5.6 to 8.5.34 (#409)"
+   },
+   {
+    "sha": "a733faf",
+    "data": "2026-11-28",
+    "assunto": "chore(deps): bump nanoid from 3.3.11 to 3.3.20 (#404)"
+   },
+   {
+    "sha": "6005ae4",
+    "data": "2026-11-28",
+    "assunto": "chore(deps-dev): bump js-yaml from 4.1.1 to 4.3.2 (#403)"
+   },
+   {
+    "sha": "2826071",
+    "data": "2026-11-28",
+    "assunto": "docs: etapas 001, 041 e 054 concluidas e 053 registrada como parcial (evidencia real) (#416)"
+   },
    {
     "sha": "94dbc8d",
     "data": "2026-11-28",
@@ -111,45 +131,25 @@
     "sha": "ff1ffe6",
     "data": "2026-11-28",
     "assunto": "fix: escuta do supervisor sai no nome de quem entrou, nao no literal Supervisor (#385)"
-   },
-   {
-    "sha": "324a522",
-    "data": "2026-11-28",
-    "assunto": "fix: liberar escrita de hold_events para o agente da chamada (tempo de espera) (#382)"
-   },
-   {
-    "sha": "40b31fd",
-    "data": "2026-11-28",
-    "assunto": "fix: feriado de outro pais nao bloqueia mais a discagem (#383)"
-   },
-   {
-    "sha": "2e9fb87",
-    "data": "2026-11-26",
-    "assunto": "chore: registrar varredura final de cobertura backend -> tela (#381)"
-   },
-   {
-    "sha": "77bac04",
-    "data": "2026-11-26",
-    "assunto": "feat: dar tela a jornada do cliente (etapas da conta e historico de transicoes) (#380)"
    }
   ],
   "arquivos_mudados_7d": 1977,
   "pastas_mais_mudadas_30d": [
    {
     "pasta": "src/hooks/__tests__",
-    "mudancas": 301
+    "mudancas": 290
    },
    {
     "pasta": "docs/qa/05-PROGRESSO.md",
-    "mudancas": 175
+    "mudancas": 176
    },
    {
     "pasta": "src/components/calls",
-    "mudancas": 98
+    "mudancas": 90
    },
    {
     "pasta": "src/lib/__tests__",
-    "mudancas": 98
+    "mudancas": 86
    },
    {
     "pasta": "src/components/ui",
@@ -160,46 +160,46 @@
     "mudancas": 56
    },
    {
-    "pasta": "src/components/compliance",
-    "mudancas": 37
-   },
-   {
     "pasta": "src/pages/__tests__",
     "mudancas": 33
    },
    {
+    "pasta": "src/components/compliance",
+    "mudancas": 32
+   },
+   {
     "pasta": "src/pages/admin",
-    "mudancas": 33
-   },
-   {
-    "pasta": "src/components/contacts",
-    "mudancas": 30
-   },
-   {
-    "pasta": "src/components/dashboard",
-    "mudancas": 30
-   },
-   {
-    "pasta": "src/components/network",
-    "mudancas": 30
+    "mudancas": 32
    },
    {
     "pasta": "src/components/admin",
     "mudancas": 29
    },
    {
+    "pasta": "src/components/contacts",
+    "mudancas": 28
+   },
+   {
     "pasta": "src/components/dialer",
-    "mudancas": 29
+    "mudancas": 28
+   },
+   {
+    "pasta": "src/components/layout",
+    "mudancas": 27
    },
    {
     "pasta": "src/components/executive",
-    "mudancas": 29
+    "mudancas": 26
+   },
+   {
+    "pasta": "src/components/network",
+    "mudancas": 26
    }
   ],
   "arquivos_mais_mudados_90d": [
    {
     "arquivo": "docs/qa/05-PROGRESSO.md",
-    "mudancas": 175
+    "mudancas": 176
    },
    {
     "arquivo": "docs/estado/funcionalidades-planejadas.md",
@@ -207,22 +207,18 @@
    },
    {
     "arquivo": "package-lock.json",
-    "mudancas": 13
-   },
-   {
-    "arquivo": "src/hooks/useMultiChannelCall.ts",
-    "mudancas": 13
+    "mudancas": 16
    },
    {
     "arquivo": "src/components/calls/UnifiedSoftphone.tsx",
     "mudancas": 12
    },
    {
-    "arquivo": ".github/workflows/migrations.yml",
-    "mudancas": 10
+    "arquivo": "src/hooks/useMultiChannelCall.ts",
+    "mudancas": 12
    },
    {
-    "arquivo": "src/components/calls/ActiveCallBar.tsx",
+    "arquivo": ".github/workflows/migrations.yml",
     "mudancas": 10
    },
    {
@@ -238,15 +234,15 @@
     "mudancas": 9
    },
    {
+    "arquivo": "src/components/calls/ActiveCallBar.tsx",
+    "mudancas": 9
+   },
+   {
     "arquivo": "docs/agentes/mapa-repo.md",
     "mudancas": 8
    },
    {
-    "arquivo": "src/components/layout/AppSidebar.tsx",
-    "mudancas": 8
-   },
-   {
-    "arquivo": "src/components/layout/CommandPalette.tsx",
+    "arquivo": "package.json",
     "mudancas": 8
    },
    {
@@ -270,7 +266,11 @@
     "mudancas": 7
    },
    {
-    "arquivo": "package.json",
+    "arquivo": "src/components/layout/AppSidebar.tsx",
+    "mudancas": 7
+   },
+   {
+    "arquivo": "src/components/layout/CommandPalette.tsx",
     "mudancas": 7
    },
    {
@@ -301,11 +301,11 @@
   "autores_30d": [
    {
     "autor": "adm01-debug",
-    "commits": 291
+    "commits": 288
    },
    {
     "autor": "dependabot[bot]",
-    "commits": 9
+    "commits": 12
    }
   ]
  },

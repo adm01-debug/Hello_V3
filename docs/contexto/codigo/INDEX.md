@@ -1,7 +1,7 @@
 # Contexto do projeto para agentes de IA
 
 GERADO AUTOMATICAMENTE por scripts/ai-context/gerar.mjs — não editar à mão; será sobrescrito.
-Publicado em `docs/contexto/codigo/` na branch `contexto` (gerada, nunca abra PR dela) a cada push em `main` e a cada 10 minutos pelo workflow `contexto.yml`; índice único das três fontes em `docs/contexto/00-INDEX.md`. Gere local com `node scripts/ai-context/gerar.mjs`. Commit-base: `94dbc8de786e9147f8aa33c6746f5cb86892dd55` (2026-11-28T15:14:55-03:00).
+Publicado em `docs/contexto/codigo/` na branch `contexto` (gerada, nunca abra PR dela) a cada push em `main` e a cada 10 minutos pelo workflow `contexto.yml`; índice único das três fontes em `docs/contexto/00-INDEX.md`. Gere local com `node scripts/ai-context/gerar.mjs`. Commit-base: `d8aa79f84e12c0cb1bd5193f7ed199cc9d271956` (2026-11-28T15:31:32-03:00).
 
 ## Como usar (leia antes de planejar ou executar qualquer tarefa)
 1. **Tela/rota/menu** → `rotas.json` (url/vista/menu → arquivo → hooks → tabelas → edges; `rotas_http_backend` para APIs) e `modulos.json` (módulo inteiro + dependências entre módulos).
@@ -377,27 +377,27 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 - possiveis_segredos_no_codigo: 3 — ex.: src/lib/__tests__/security-advanced.test.ts:203, src/lib/__tests__/security-advanced.test.ts:208, src/lib/__tests__/security-advanced.test.ts:213
 
 ## Grafo de código (graphify)
-- 10810 nós · 28328 arestas · 874 comunidades · grafo do commit `94dbc8de`
+- 10810 nós · 28329 arestas · 874 comunidades · grafo do commit `d8aa79f8`
 - comunidades maiores: client.ts (335), vitest (279), card.tsx (265), react (205), @tanstack/react-query (187), 5. Em uso por rota (181), buildCorsHeaders (155), CardContent (152), usePageTitle.ts (135), cn (118), protectedRoutes.tsx (109), Onda 4 — Funcionalidades incompletas (151–180, 30 etapas) (107)
 - símbolos mais chamados: cn() (src/lib/utils.ts), usePageTitle() (src/hooks/usePageTitle.ts), safeFormatDatePtBR() (src/lib/safe-date.ts), useAuthContext() (src/contexts/AuthContext.tsx), q() (scripts/supabase_snapshot/snapshot.py), safeFormatDistanceToNow() (src/lib/safe-date.ts), traceHeaders() (src/lib/tracing.ts), withTrace() (src/lib/tracing.ts), safeToLocaleString() (src/lib/safe-date.ts), buildCorsHeaders() (supabase/functions/_shared/cors.ts), .collect() (scripts/supabase_snapshot/test_snapshot.py), formatDuration() (src/lib/utils.ts)
 - consulta local: `graphify query "<pergunta>"`, `graphify path "<A>" "<B>"`, `graphify explain "<X>"`
 
 ## Hotspots (arquivos mais alterados, 90 dias)
-- docs/qa/05-PROGRESSO.md (175)
+- docs/qa/05-PROGRESSO.md (176)
 - docs/estado/funcionalidades-planejadas.md (19)
-- package-lock.json (13)
-- src/hooks/useMultiChannelCall.ts (13)
+- package-lock.json (16)
 - src/components/calls/UnifiedSoftphone.tsx (12)
+- src/hooks/useMultiChannelCall.ts (12)
 - .github/workflows/migrations.yml (10)
-- src/components/calls/ActiveCallBar.tsx (10)
 - src/integrations/supabase/types.ts (10)
 - docs/agentes/banco.md (9)
 - docs/qa/03-ACHADOS.md (9)
+- src/components/calls/ActiveCallBar.tsx (9)
 - docs/agentes/mapa-repo.md (8)
-- src/components/layout/AppSidebar.tsx (8)
-- src/components/layout/CommandPalette.tsx (8)
+- package.json (8)
 - src/hooks/useAgentRanking.ts (8)
 - src/pages/PhoneDialer.tsx (8)
+- supabase/functions/data-lake-flush/index.ts (8)
 
 ## Workflows
 - `ci.yml` — CI (pull_request, push)
@@ -439,6 +439,10 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 
 
 ## Últimos commits
+- 2026-11-28 `d8aa79f` chore(deps): bump postcss from 8.5.6 to 8.5.34 (#409)
+- 2026-11-28 `a733faf` chore(deps): bump nanoid from 3.3.11 to 3.3.20 (#404)
+- 2026-11-28 `6005ae4` chore(deps-dev): bump js-yaml from 4.1.1 to 4.3.2 (#403)
+- 2026-11-28 `2826071` docs: etapas 001, 041 e 054 concluidas e 053 registrada como parcial (evidencia real) (#416)
 - 2026-11-28 `94dbc8d` fix: reverter zod para 3.x, o major 4 quebrou o type-check (13 erros) e o CI da main (#417)
 - 2026-11-28 `c8eedfd` feat: auditoria de dependencias reprova quando a contagem de vulnerabilidades sobe (etapa 041) (#400)
 - 2026-11-28 `7bc82cd` chore: configurar Dependabot para npm e github-actions (etapa 001) (#391)
@@ -450,10 +454,6 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 - 2026-11-28 `7f5bdd4` chore(deps): bump dompurify from 3.3.3 to 3.5.0 (#397)
 - 2026-11-28 `fe25399` chore(deps): bump glob from 10.4.5 to 10.5.0 (#394)
 - 2026-11-28 `c3ccf7f` chore(deps): bump zod from 3.25.76 to 4.6.6 (#393)
-- 2026-11-28 `d2943ac` chore(deps-dev): bump brace-expansion from 2.1.2 to 2.1.8 (#395)
-- 2026-11-28 `38ec1e8` chore: remover a sonda __ping-deploy (#387)
-- 2026-11-28 `b900b70` chore: publicar edge functions pela Management API (destrava o deploy bloqueado) (#386)
-- 2026-11-28 `a3c8c8d` ci: sondas de RLS rodam sozinhas em PR de banco e toda segunda (#384)
 
 ## Arquivos deste diretório
 - `docs/contexto/codigo/rotas.json`

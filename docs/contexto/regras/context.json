@@ -1,9 +1,9 @@
 {
  "meta": {
-  "sha": "94dbc8de786e9147f8aa33c6746f5cb86892dd55",
+  "sha": "d8aa79f84e12c0cb1bd5193f7ed199cc9d271956",
   "branch": "main",
   "remote": "https://github.com/adm01-debug/Hello_V3",
-  "generated_at": "2026-11-28 18:21 UTC",
+  "generated_at": "2026-11-28 18:32 UTC",
   "files_total": 1931,
   "code_files": 1723,
   "code_lines": 211425
@@ -129858,10 +129858,47 @@
   }
  },
  "git": {
-  "sha": "94dbc8de786e9147f8aa33c6746f5cb86892dd55",
+  "sha": "d8aa79f84e12c0cb1bd5193f7ed199cc9d271956",
   "branch": "main",
   "remote": "https://github.com/adm01-debug/Hello_V3",
   "commits": [
+   {
+    "sha": "d8aa79f",
+    "date": "2026-11-28",
+    "author": "dependabot[bot]",
+    "subject": "chore(deps): bump postcss from 8.5.6 to 8.5.34 (#409)",
+    "files": [
+     "package-lock.json",
+     "package.json"
+    ]
+   },
+   {
+    "sha": "a733faf",
+    "date": "2026-11-28",
+    "author": "dependabot[bot]",
+    "subject": "chore(deps): bump nanoid from 3.3.11 to 3.3.20 (#404)",
+    "files": [
+     "package-lock.json"
+    ]
+   },
+   {
+    "sha": "6005ae4",
+    "date": "2026-11-28",
+    "author": "dependabot[bot]",
+    "subject": "chore(deps-dev): bump js-yaml from 4.1.1 to 4.3.2 (#403)",
+    "files": [
+     "package-lock.json"
+    ]
+   },
+   {
+    "sha": "2826071",
+    "date": "2026-11-28",
+    "author": "adm01-debug",
+    "subject": "docs: etapas 001, 041 e 054 concluidas e 053 registrada como parcial (evidencia real) (#416)",
+    "files": [
+     "docs/qa/05-PROGRESSO.md"
+    ]
+   },
    {
     "sha": "94dbc8d",
     "date": "2026-11-28",
@@ -130157,59 +130194,20 @@
      "src/hooks/useSavedFilters.ts",
      "src/pages/Contacts.tsx"
     ]
-   },
-   {
-    "sha": "0a4fed0",
-    "date": "2026-11-26",
-    "author": "adm01-debug",
-    "subject": "fix: valida forma do snapshot e da fila de coaching VoIP no localStorage (#378)",
-    "files": [
-     "src/lib/__tests__/voipProactiveSnapshot.coverage.test.ts",
-     "src/lib/__tests__/voipRecommendationCoaching.coverage.test.ts",
-     "src/lib/voipProactiveSnapshot.ts",
-     "src/lib/voipRecommendationCoaching.ts"
-    ]
-   },
-   {
-    "sha": "bdbd99f",
-    "date": "2026-11-26",
-    "author": "adm01-debug",
-    "subject": "docs: reaudita o que foi descartado, arquivo por arquivo (nenhuma perda) (#377)",
-    "files": [
-     "docs/qa/onda-39-varredura-branches-e-prs.md"
-    ]
-   },
-   {
-    "sha": "80b9200",
-    "date": "2026-11-26",
-    "author": "adm01-debug",
-    "subject": "chore: registrar a varredura de branches e PRs (nenhum trabalho perdido) (#376)",
-    "files": [
-     "docs/qa/onda-39-varredura-branches-e-prs.md"
-    ]
-   },
-   {
-    "sha": "dc142b6",
-    "date": "2026-11-26",
-    "author": "adm01-debug",
-    "subject": "test: recuperar o teste do IP literal que ficou fora da main (resgate da PR 309) (#374)",
-    "files": [
-     "supabase/functions/_shared/__tests__/client-ip.test.ts"
-    ]
    }
   ],
   "hot_files": [
    [
     "package-lock.json",
-    10
+    13
    ],
    [
     "docs/qa/05-PROGRESSO.md",
-    10
+    11
    ],
    [
     "package.json",
-    3
+    4
    ],
    [
     "supabase/functions/__ping-deploy/index.ts",
@@ -130221,10 +130219,6 @@
    ],
    [
     "src/integrations/supabase/types.ts",
-    2
-   ],
-   [
-    "docs/qa/onda-39-varredura-branches-e-prs.md",
     2
    ],
    [
@@ -130277,6 +130271,10 @@
    ],
    [
     "supabase/tests/cadence_tick_rls_test.sql",
+    1
+   ],
+   [
+    "supabase/tests/probe_085_cadence_motor_rls_test.sql",
     1
    ]
   ]

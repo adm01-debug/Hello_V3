@@ -59,11 +59,11 @@
  "commits": {
   "convencao": "conventional commits (observado)",
   "exemplos": [
-   "fix: reverter zod para 3.x, o major 4 quebrou o type-check (13 erros) e o CI da main (#417)",
-   "feat: auditoria de dependencias reprova quando a contagem de vulnerabilidades sobe (etapa 041) (#400)",
-   "chore: configurar Dependabot para npm e github-actions (etapa 001) (#391)",
-   "chore(deps): bump ws from 8.19.0 to 8.23.1 (#402)",
-   "chore(deps): bump source-map-js from 1.2.1 to 1.2.4 (#401)"
+   "chore(deps): bump postcss from 8.5.6 to 8.5.34 (#409)",
+   "chore(deps): bump nanoid from 3.3.11 to 3.3.20 (#404)",
+   "chore(deps-dev): bump js-yaml from 4.1.1 to 4.3.2 (#403)",
+   "docs: etapas 001, 041 e 054 concluidas e 053 registrada como parcial (evidencia real) (#416)",
+   "fix: reverter zod para 3.x, o major 4 quebrou o type-check (13 erros) e o CI da main (#417)"
   ]
  },
  "pr_template": null,
