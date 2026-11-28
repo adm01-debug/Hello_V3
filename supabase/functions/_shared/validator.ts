@@ -66,10 +66,11 @@ export const validateBody = async <T>(
   req: Request,
   schema: z.ZodSchema<T>,
   corsHeaders: Record<string, string> = {},
-  options: { endpoint?: string; userId?: string; audit?: boolean } = {}
+  options: { endpoint?: string; userId?: string; audit?: boolean; rawBody?: string } = {}
 ): Promise<{ data?: T; errorResponse?: Response }> => {
   try {
-    const body = await req.json();
+    // rawBody permite validar HMAC sobre o corpo cru: req.json() ja consumiu o stream.
+    const body = options.rawBody === undefined ? await req.json() : JSON.parse(options.rawBody);
     const result = schema.safeParse(body);
 
     if (!result.success) {

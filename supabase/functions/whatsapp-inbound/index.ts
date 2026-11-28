@@ -1,13 +1,16 @@
-// edge-public-ok — webhook do provedor de WhatsApp; autenticidade garantida pelo
-// contrato de payload versionado (v1/v2), não por JWT de usuário.
+// edge-public-ok — webhook do provedor de WhatsApp; autenticidade provada por HMAC
+// (etapa 013), não por JWT de usuário.
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.45.0';
 import { buildCorsHeaders } from '../_shared/cors.ts';
 import { validateBody, createErrorResponse } from '../_shared/validator.ts';
+import { verifyHmac } from '../_shared/webhook-signature.ts';
+
+const assinaturaObrigatoria = () => Deno.env.get('WEBHOOK_ENFORCE_WAVOIP_SIGNATURE') === 'true';
 import { WhatsAppInboundV1Schema, WhatsAppInboundV2Schema } from './schema.ts';
 import { detectReplay, normalizePhone, isDuplicateMessageError } from './idempotency.ts';
 import { GENERIC_INTERNAL_MESSAGE, getCorrelationId } from '../_shared/errors.ts';
 
-Deno.serve(async (req) => {
+export async function handler(req: Request): Promise<Response> {
   const cors = buildCorsHeaders(req);
   if (req.method === 'OPTIONS') return new Response(null, { headers: cors });
 
@@ -19,11 +22,18 @@ Deno.serve(async (req) => {
     const url = new URL(req.url);
     const version = url.searchParams.get('v') || 'v1';
 
+    // Corpo cru lido uma vez: HMAC do provedor so bate sobre os bytes originais.
+    const rawBody = await req.text();
+    const assinatura = await verifyHmac(req, rawBody, 'WAVOIP_WEBHOOK_SECRET');
+    if (assinaturaObrigatoria() && assinatura !== 'valid' && assinatura !== 'not_configured') {
+      return createErrorResponse('Assinatura do webhook inválida', 'invalid_signature', undefined, 401, cors);
+    }
+
     let validationResult;
     if (version === 'v2') {
-      validationResult = await validateBody(req, WhatsAppInboundV2Schema, cors);
+      validationResult = await validateBody(req, WhatsAppInboundV2Schema, cors, { rawBody });
     } else {
-      validationResult = await validateBody(req, WhatsAppInboundV1Schema, cors);
+      validationResult = await validateBody(req, WhatsAppInboundV1Schema, cors, { rawBody });
     }
 
     if (validationResult.errorResponse) return validationResult.errorResponse;
@@ -202,5 +212,9 @@ Deno.serve(async (req) => {
     console.error('[whatsapp-inbound] erro interno', { correlation_id: correlationId, error });
     return createErrorResponse(GENERIC_INTERNAL_MESSAGE, 'INTERNAL_ERROR', undefined, 500, cors);
   }
-});
+}
 
+
+
+// Deno.serve so quando executado como funcao (os testes importam o handler).
+if (import.meta.main) Deno.serve(handler);
