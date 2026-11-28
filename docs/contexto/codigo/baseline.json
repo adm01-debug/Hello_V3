@@ -2,11 +2,16 @@
  "aviso": "GERADO AUTOMATICAMENTE por scripts/ai-context/gerar.mjs — não editar à mão; será sobrescrito.",
  "format_version": 2,
  "git": {
-  "commit": "b900b700fa61baea702e908d60a96ad8c8804157",
+  "commit": "38ec1e81b3e5dc45e288ab2f36fc07bc3546e2b6",
   "branch": "main",
-  "data_commit": "2026-11-28T13:26:00-03:00",
+  "data_commit": "2026-11-28T13:33:20-03:00",
   "remote": "https://github.com/adm01-debug/Hello_V3",
   "ultimos_commits": [
+   {
+    "sha": "38ec1e8",
+    "data": "2026-11-28",
+    "assunto": "chore: remover a sonda __ping-deploy (#387)"
+   },
    {
     "sha": "b900b70",
     "data": "2026-11-28",
@@ -126,11 +131,6 @@
     "sha": "91bfc8a",
     "data": "2026-11-26",
     "assunto": "fix(db): helpers de papel como STABLE (etapa 101) para as 274 policies (#362)"
-   },
-   {
-    "sha": "082fc13",
-    "data": "2026-11-26",
-    "assunto": "fix: revogar de anon o EXECUTE dos helpers de papel (etapa 146) (#361)"
    }
   ],
   "arquivos_mudados_7d": 1974,
@@ -164,11 +164,11 @@
     "mudancas": 37
    },
    {
-    "pasta": "src/pages/admin",
-    "mudancas": 34
+    "pasta": "src/pages/__tests__",
+    "mudancas": 33
    },
    {
-    "pasta": "src/pages/__tests__",
+    "pasta": "src/pages/admin",
     "mudancas": 33
    },
    {
@@ -306,9 +306,9 @@
   ]
  },
  "contagens": {
-  "arquivos_total": 1883,
-  "arquivos_codigo": 1399,
-  "linhas_codigo": 186886,
+  "arquivos_total": 1882,
+  "arquivos_codigo": 1398,
+  "linhas_codigo": 186880,
   "rotas": 108,
   "rotas_http_backend": 11,
   "vistas_por_id": 0,
@@ -515,8 +515,8 @@
    "linhas": 170
   },
   "supabase/functions": {
-   "arquivos": 224,
-   "linhas": 24795
+   "arquivos": 223,
+   "linhas": 24789
   },
   "tailwind.config.ts": {
    "arquivos": 1,

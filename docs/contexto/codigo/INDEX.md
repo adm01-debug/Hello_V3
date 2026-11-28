@@ -1,7 +1,7 @@
 # Contexto do projeto para agentes de IA
 
 GERADO AUTOMATICAMENTE por scripts/ai-context/gerar.mjs — não editar à mão; será sobrescrito.
-Publicado em `docs/contexto/codigo/` na branch `contexto` (gerada, nunca abra PR dela) a cada push em `main` e a cada 10 minutos pelo workflow `contexto.yml`; índice único das três fontes em `docs/contexto/00-INDEX.md`. Gere local com `node scripts/ai-context/gerar.mjs`. Commit-base: `b900b700fa61baea702e908d60a96ad8c8804157` (2026-11-28T13:26:00-03:00).
+Publicado em `docs/contexto/codigo/` na branch `contexto` (gerada, nunca abra PR dela) a cada push em `main` e a cada 10 minutos pelo workflow `contexto.yml`; índice único das três fontes em `docs/contexto/00-INDEX.md`. Gere local com `node scripts/ai-context/gerar.mjs`. Commit-base: `38ec1e81b3e5dc45e288ab2f36fc07bc3546e2b6` (2026-11-28T13:33:20-03:00).
 
 ## Como usar (leia antes de planejar ou executar qualquer tarefa)
 1. **Tela/rota/menu** → `rotas.json` (url/vista/menu → arquivo → hooks → tabelas → edges; `rotas_http_backend` para APIs) e `modulos.json` (módulo inteiro + dependências entre módulos).
@@ -14,7 +14,7 @@ Publicado em `docs/contexto/codigo/` na branch `contexto` (gerada, nunca abra PR
 Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua tarefa; não carregue tudo.
 
 ## Stack
-- linguagens: TypeScript (1364), SQL (323), Markdown (122), JavaScript (31), JSON (16), YAML (6), Python (5), Shell (2)
+- linguagens: TypeScript (1363), SQL (323), Markdown (122), JavaScript (31), JSON (16), YAML (6), Python (5), Shell (2)
 - linguagem_principal: TypeScript
 - framework: React
 - backend_http: n/d
@@ -34,9 +34,9 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 ## Números
 | item | qtd |
 |---|---|
-| arquivos_total | 1883 |
-| arquivos_codigo | 1399 |
-| linhas_codigo | 186886 |
+| arquivos_total | 1882 |
+| arquivos_codigo | 1398 |
+| linhas_codigo | 186880 |
 | rotas | 108 |
 | rotas_http_backend | 11 |
 | vistas_por_id | 0 |
@@ -377,7 +377,7 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 - possiveis_segredos_no_codigo: 3 — ex.: src/lib/__tests__/security-advanced.test.ts:203, src/lib/__tests__/security-advanced.test.ts:208, src/lib/__tests__/security-advanced.test.ts:213
 
 ## Grafo de código (graphify)
-- 10801 nós · 28315 arestas · 868 comunidades · grafo do commit `b900b700`
+- 10800 nós · 28315 arestas · 867 comunidades · grafo do commit `38ec1e81`
 - comunidades maiores: card.tsx (278), client.ts (242), vitest (208), react (188), lucide-react (177), usePageTitle (169), getCorrelationId (148), traceHeaders (146), @tanstack/react-query (141), ref_https (128), react-router-dom (125), cn (117)
 - símbolos mais chamados: cn() (src/lib/utils.ts), usePageTitle() (src/hooks/usePageTitle.ts), safeFormatDatePtBR() (src/lib/safe-date.ts), useAuthContext() (src/contexts/AuthContext.tsx), q() (scripts/supabase_snapshot/snapshot.py), safeFormatDistanceToNow() (src/lib/safe-date.ts), traceHeaders() (src/lib/tracing.ts), withTrace() (src/lib/tracing.ts), safeToLocaleString() (src/lib/safe-date.ts), buildCorsHeaders() (supabase/functions/_shared/cors.ts), .collect() (scripts/supabase_snapshot/test_snapshot.py), formatDuration() (src/lib/utils.ts)
 - consulta local: `graphify query "<pergunta>"`, `graphify path "<A>" "<B>"`, `graphify explain "<X>"`
@@ -439,6 +439,7 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 
 
 ## Últimos commits
+- 2026-11-28 `38ec1e8` chore: remover a sonda __ping-deploy (#387)
 - 2026-11-28 `b900b70` chore: publicar edge functions pela Management API (destrava o deploy bloqueado) (#386)
 - 2026-11-28 `a3c8c8d` ci: sondas de RLS rodam sozinhas em PR de banco e toda segunda (#384)
 - 2026-11-28 `c8a2dcb` feat: motor das cadencias (etapa 085) - inscricao deixa de ficar parada na etapa 1 (#370)
@@ -453,7 +454,6 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 - 2026-11-26 `77bac04` feat: dar tela a jornada do cliente (etapas da conta e historico de transicoes) (#380)
 - 2026-11-26 `0448f16` feat: barra de filtros salvos na tela de contatos (#379)
 - 2026-11-26 `0a4fed0` fix: valida forma do snapshot e da fila de coaching VoIP no localStorage (#378)
-- 2026-11-26 `bdbd99f` docs: reaudita o que foi descartado, arquivo por arquivo (nenhuma perda) (#377)
 
 ## Arquivos deste diretório
 - `docs/contexto/codigo/rotas.json`
