@@ -24,6 +24,9 @@ let singleResult: { data: unknown; error: unknown } = { data: { id: 'new-campaig
 let insertResult: { error: unknown } = { error: null };
 let updateResult: { error: unknown } = { error: null };
 let deleteResult: { error: unknown } = { error: null };
+// Etapa 079: a reserva do proximo contato passou a ser a RPC
+// claim_next_dialer_contact (uma unica operacao no banco).
+let rpcResult: { data: unknown; error: unknown } = { data: [], error: null };
 
 // channelObj / makeFrom / mockSupabase are wrapped in vi.hoisted so the hoisted
 // vi.mock factory can reference mockSupabase. makeFrom reads the mutable holders
@@ -66,6 +69,7 @@ function makeFrom() {
 
 const mockSupabase = vi.hoisted(() => ({
   from: vi.fn(),
+  rpc: vi.fn(() => Promise.resolve(rpcResult)),
   channel: vi.fn(),
   removeChannel: vi.fn(),
 }));
@@ -122,6 +126,7 @@ function resetResults() {
   insertResult = { error: null };
   updateResult = { error: null };
   deleteResult = { error: null };
+  rpcResult = { data: [], error: null };
 }
 
 beforeEach(() => {
@@ -131,6 +136,8 @@ beforeEach(() => {
   mockToast.info.mockReset();
   mockToast.warning.mockReset();
   mockSupabase.from.mockImplementation(() => makeFrom());
+  mockSupabase.rpc.mockReset();
+  mockSupabase.rpc.mockImplementation(() => Promise.resolve(rpcResult));
   mockSupabase.channel.mockImplementation(() => channelObj);
 });
 
@@ -397,29 +404,25 @@ describe('usePredictiveDialer', () => {
     expect(result.current.queue.find((q) => q.id === 'q1')?.priority).toBe(7);
   });
 
-  it('dialContact updates state and handles error', async () => {
+  it('dialContact apresenta o contato ja reservado pelo banco', async () => {
     const { result } = renderHook(() => usePredictiveDialer());
     await waitFor(() => expect(result.current.campaigns.length).toBeGreaterThan(0));
 
+    // Etapa 079: a reserva acontece no banco (claim_next_dialer_contact), nao
+    // aqui — dialContact nao escreve mais em `dialer_queue`.
+    mockSupabase.from.mockClear();
     await act(async () => {
       await result.current.dialContact(sampleQueueItem as never);
     });
     expect(result.current.currentCall).toBeTruthy();
     expect(mockToast.info).toHaveBeenCalled();
-
-    // error branch: make update throw
-    mockSupabase.from.mockImplementationOnce(() => ({
-      update: vi.fn(() => ({ eq: vi.fn(() => Promise.reject(new Error('dial fail'))) })),
-    }));
-    await act(async () => {
-      await result.current.dialContact({ ...sampleQueueItem, name: null } as never);
-    });
+    expect(mockSupabase.from).not.toHaveBeenCalled();
   });
 
   it('auto-dial loop dials next contact then finishes queue', async () => {
     vi.useFakeTimers();
-    // next contact available
-    maybeSingleResult = { data: sampleQueueItem, error: null };
+    // Etapa 079: a reserva devolve o contato.
+    rpcResult = { data: [sampleQueueItem], error: null };
     const { result } = renderHook(() => usePredictiveDialer());
 
     await act(async () => {
@@ -439,11 +442,15 @@ describe('usePredictiveDialer', () => {
     vi.useRealTimers();
     // currentCall should be set after dialing the next contact
     expect(result.current.currentCall).toBeTruthy();
+    // `startCampaign` adota a campanha devolvida pelo insert (`singleResult`).
+    expect(mockSupabase.rpc).toHaveBeenCalledWith('claim_next_dialer_contact', {
+      p_campaign_id: 'new-campaign',
+    });
   });
 
   it('auto-dial loop with empty queue pauses campaign', async () => {
     vi.useFakeTimers();
-    maybeSingleResult = { data: null, error: null };
+    rpcResult = { data: [], error: null };
     const { result } = renderHook(() => usePredictiveDialer());
 
     await act(async () => {
@@ -456,21 +463,6 @@ describe('usePredictiveDialer', () => {
 
     vi.useRealTimers();
     await waitFor(() => expect(mockToast.info).toHaveBeenCalledWith('Fila de discagem concluída')).catch(() => {});
-  });
-
-  it('getNextContact error branch returns null', async () => {
-    const { result } = renderHook(() => usePredictiveDialer());
-    await waitFor(() => expect(result.current.campaigns.length).toBeGreaterThan(0));
-
-    // Make the maybeSingle path throw via from()
-    mockSupabase.from.mockImplementationOnce(() => {
-      const b = makeFrom();
-      b.maybeSingle = vi.fn(() => Promise.resolve({ data: null, error: new Error('next err') }));
-      return b;
-    });
-    // getNextContact isn't directly exported; exercise indirectly is not possible,
-    // but the realtime subscribe + unmount still runs cleanup.
-    expect(mockSupabase.channel).toHaveBeenCalled();
   });
 
   it('realtime subscription callbacks fire fetchers', async () => {
@@ -546,7 +538,7 @@ describe('usePredictiveDialer', () => {
     expect(mockToast.warning).toHaveBeenCalled();
   });
 
-  it('disca normalmente quando o compliance aprova e mantem a tentativa', async () => {
+  it('disca normalmente quando o compliance aprova; a tentativa ja foi contada no banco', async () => {
     const updates: Array<Record<string, unknown>> = [];
     mockSupabase.from.mockImplementation(() => {
       const b = makeFrom();
@@ -566,7 +558,9 @@ describe('usePredictiveDialer', () => {
     });
 
     expect(preDialCheck).toHaveBeenCalledTimes(1);
-    expect(updates[0]).toMatchObject({ status: 'dialing', attempts: 1 });
+    // Etapa 079: `status = dialing` e `attempts + 1` sao gravados pela reserva
+    // no banco (claim_next_dialer_contact) antes de chegar aqui.
+    expect(updates).toEqual([]);
     expect(result.current.currentCall).toBeTruthy();
     expect(mockToast.warning).not.toHaveBeenCalled();
   });
@@ -600,20 +594,16 @@ describe('usePredictiveDialer', () => {
   });
 
   it('para a campanha quando o claim da fila falha (A-057)', async () => {
-    // Qualquer update em `dialer_queue` falha: o claim de apiMarkDialing.
-    mockSupabase.from.mockImplementation((table: string) => {
-      const builder = makeFrom();
-      if (table === 'dialer_queue') {
-        builder.update = vi.fn(() => ({
-          eq: vi.fn(() => Promise.resolve({ error: new Error('claim falhou') })),
-        }));
-      }
-      return builder;
-    });
+    // Etapa 079: a reserva agora e uma unica RPC; o erro dela nao pode ser
+    // confundido com "fila vazia" nem deixar a linha em estado desconhecido.
+    mockSupabase.rpc.mockImplementation(() =>
+      Promise.resolve({ data: null, error: { message: 'claim falhou' } }),
+    );
 
     const { result } = renderHook(() => usePredictiveDialer());
     await waitFor(() => expect(result.current.campaigns.length).toBeGreaterThan(0));
 
+    vi.useFakeTimers();
     await act(async () => {
       await result.current.startCampaign('c1');
     });
@@ -621,8 +611,9 @@ describe('usePredictiveDialer', () => {
     expect(result.current.activeCampaign).toBeTruthy();
 
     await act(async () => {
-      await result.current.dialContact(sampleQueueItem as never);
+      await vi.advanceTimersByTimeAsync(2100);
     });
+    vi.useRealTimers();
 
     expect(result.current.currentCall).toBeNull();
     expect(result.current.activeCampaign).toBeNull();
@@ -631,5 +622,7 @@ describe('usePredictiveDialer', () => {
       expect.stringContaining('Campanha pausada'),
       expect.anything()
     );
+    // O erro nao pode ser confundido com fila vazia.
+    expect(mockToast.info).not.toHaveBeenCalledWith('Fila de discagem concluída');
   });
 });
