@@ -1786,6 +1786,7 @@ export type Database = {
       call_sessions: {
         Row: {
           agent_name: string | null
+          bitrix_call_id: string | null
           caller_name: string | null
           caller_phone: string | null
           contact_id: string | null
@@ -1802,6 +1803,7 @@ export type Database = {
         }
         Insert: {
           agent_name?: string | null
+          bitrix_call_id?: string | null
           caller_name?: string | null
           caller_phone?: string | null
           contact_id?: string | null
@@ -1818,6 +1820,7 @@ export type Database = {
         }
         Update: {
           agent_name?: string | null
+          bitrix_call_id?: string | null
           caller_name?: string | null
           caller_phone?: string | null
           contact_id?: string | null
@@ -7921,6 +7924,10 @@ export type Database = {
           relname: string
           schemaname: string
         }[]
+      }
+      claim_next_dialer_contact: {
+        Args: { p_campaign_id: string }
+        Returns: Json[]
       }
       cleanup_expired_challenges: { Args: never; Returns: undefined }
       cleanup_old_data: { Args: never; Returns: undefined }

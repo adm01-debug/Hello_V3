@@ -2,6 +2,12 @@
 
 Diff semântico gerado a cada coleta em que algo mudou.
 
+## 2026-11-28 16:13 UTC
+
+- **functions** alterado (6): `public.check_calling_hours(p_region_code text)`, `public.claim_next_dialer_contact(p_campaign_id uuid)`, `public.get_user_agent_name()`, `public.is_admin()`, `public.is_admin_or_supervisor()`, `public.is_own_call_session(_call_session_id uuid)`
+- **migrations** adicionado (6): `20261127223000_hold_events_agent_writable`, `20261127233000_calling_hours_holiday_region_fix`, `20261127280000_is_own_call_session_grants`, `20261128130000_crm_sync_queue_enqueue_author`, `20261128140000_call_sessions_bitrix_call_id`, `20261128150000_claim_next_dialer_contact`
+- **realtime** adicionado (1): `supabase_realtime_messages_publication:realtime.messages_2026_12_01`
+
 ## 2026-11-27 02:18 UTC
 
 - **functions** alterado (2): `public.check_calling_hours(p_region_code text)`, `public.is_own_call_session(_call_session_id uuid)`

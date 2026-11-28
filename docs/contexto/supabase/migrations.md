@@ -269,8 +269,14 @@ SQL em `migrations/<versao>_<nome>.sql`. Mudanças feitas pelo Dashboard/SQL Edi
 | 20261127200000 | [revoke_anon_role_helpers](migrations/20261127200000_revoke_anon_role_helpers.sql) | 1 |
 | 20261127210000 | [role_helpers_stable](migrations/20261127210000_role_helpers_stable.sql) | 3 |
 | 20261127220000 | [polymorphic_pointer_comments](migrations/20261127220000_polymorphic_pointer_comments.sql) | 6 |
+| 20261127223000 | [hold_events_agent_writable](migrations/20261127223000_hold_events_agent_writable.sql) | 10 |
 | 20261127230000 | [unique_conversation_message_id](migrations/20261127230000_unique_conversation_message_id.sql) | 3 |
+| 20261127233000 | [calling_hours_holiday_region_fix](migrations/20261127233000_calling_hours_holiday_region_fix.sql) | 2 |
 | 20261127240000 | [calling_hours_recurring_comment](migrations/20261127240000_calling_hours_recurring_comment.sql) | 2 |
 | 20261127250000 | [increment_weekly_stats_rpc](migrations/20261127250000_increment_weekly_stats_rpc.sql) | 4 |
 | 20261127260000 | [increment_weekly_stats_rpc_null_media_fix](migrations/20261127260000_increment_weekly_stats_rpc_null_media_fix.sql) | 2 |
 | 20261127270000 | [geo_policies_idempotente](migrations/20261127270000_geo_policies_idempotente.sql) | 1 |
+| 20261127280000 | [is_own_call_session_grants](migrations/20261127280000_is_own_call_session_grants.sql) | 2 |
+| 20261128130000 | [crm_sync_queue_enqueue_author](migrations/20261128130000_crm_sync_queue_enqueue_author.sql) | 8 |
+| 20261128140000 | [call_sessions_bitrix_call_id](migrations/20261128140000_call_sessions_bitrix_call_id.sql) | 2 |
+| 20261128150000 | [claim_next_dialer_contact](migrations/20261128150000_claim_next_dialer_contact.sql) | 4 |
