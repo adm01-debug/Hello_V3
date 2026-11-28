@@ -29,7 +29,7 @@ Valores aproximados de propósito, para não gerar commits a cada coleta. Fora d
 | public.deals | ~100 | 128.0 KB | 16.0 KB | 80.0 KB | 3 | ~920 | ~20 |  |
 | public.user_roles | 5 | 120.0 KB | 8.0 KB | 80.0 KB | ~30 | ~1.6M | 8 | 2026-11-26 |
 | public.account_lockouts | 1 | 112.0 KB | 8.0 KB | 64.0 KB | ~30 | ~330 | ~380 | 2026-11-27 |
-| public.cadence_enrollments | 0 | 112.0 KB | 8.0 KB | 96.0 KB | ~10 | ~20 | ~190 |  |
+| public.cadence_enrollments | 0 | 112.0 KB | 8.0 KB | 96.0 KB | ~10 | ~20 | ~200 |  |
 | public.conversation_messages | 0 | 112.0 KB | 8.0 KB | 80.0 KB | 5 | ~80 | 7 | 2026-11-26 |
 | public.dialer_queue | 0 | 112.0 KB | 8.0 KB | 96.0 KB | 6 | ~20 | 8 |  |
 | public.geo_access_logs | 0 | 112.0 KB | 8.0 KB | 96.0 KB | 6 | ~20 | 6 |  |
@@ -52,7 +52,7 @@ Valores aproximados de propósito, para não gerar commits a cada coleta. Fora d
 | public.agents | 1 | 80.0 KB | 8.0 KB | 32.0 KB | ~20 | ~389.7k | 0 | 2026-11-27 |
 | public.call_scorecards | 0 | 80.0 KB | 8.0 KB | 64.0 KB | 3 | ~60 | ~40 |  |
 | public.crm_field_suggestions | 0 | 80.0 KB | 8.0 KB | 64.0 KB | 0 | ~20 | 6 |  |
-| public.crm_sync_queue | 0 | 80.0 KB | 8.0 KB | 48.0 KB | ~10 | ~490 | ~160 | 2026-11-27 |
+| public.crm_sync_queue | 0 | 80.0 KB | 8.0 KB | 48.0 KB | ~10 | ~500 | ~160 | 2026-11-27 |
 | public.data_lake_exports | ~50 | 80.0 KB | 8.0 KB | 32.0 KB | 3 | ~220 | 0 | 2026-11-27 |
 | public.entity_versions | 0 | 80.0 KB | 8.0 KB | 64.0 KB | 2 | ~30 | 4 |  |
 | public.geo_restrictions | 0 | 80.0 KB | 8.0 KB | 48.0 KB | ~40 | ~40 | ~80 | 2026-11-26 |
@@ -93,7 +93,7 @@ Valores aproximados de propósito, para não gerar commits a cada coleta. Fora d
 | public.compliance_settings | 0 | 48.0 KB | 8.0 KB | 32.0 KB | 0 | ~20 | ~6.2k |  |
 | public.contact_alerts | 0 | 48.0 KB | 0 B | 40.0 KB | 0 | ~20 | ~9.9k |  |
 | public.contact_interactions | 0 | 48.0 KB | 0 B | 40.0 KB | 0 | ~400 | ~10 |  |
-| public.dialer_campaigns | 0 | 48.0 KB | 8.0 KB | 32.0 KB | 5 | ~40 | ~9.4k |  |
+| public.dialer_campaigns | 0 | 48.0 KB | 8.0 KB | 32.0 KB | 5 | ~40 | ~9.5k |  |
 | public.scheduled_callbacks | 0 | 48.0 KB | 0 B | 40.0 KB | 0 | ~20 | ~12.3k |  |
 | public.scorecard_criteria | 0 | 48.0 KB | 8.0 KB | 32.0 KB | 3 | ~20 | 6 |  |
 | public.agent_skills | 0 | 40.0 KB | 0 B | 32.0 KB | 0 | ~20 | 0 |  |
@@ -216,7 +216,7 @@ Valores aproximados de propósito, para não gerar commits a cada coleta. Fora d
 ## Consultas mais custosas (pg_stat_statements, desde o último reset)
 | role | chamadas (~) | total ms (~) | média ms | query |
 |---|---|---|---|---|
-| postgres | ~280 | ~1.6M | 5678.56 | `SELECT schema, "table", column_name, grantee, string_agg(privilege_type, $1 ORDER BY privilege_type) AS privileges FROM ( SELECT n.nspname AS schema, c.relname AS "table", a.attname AS column_name, COALESCE(g.rolname, $2` |
+| postgres | ~290 | ~1.6M | 5679.95 | `SELECT schema, "table", column_name, grantee, string_agg(privilege_type, $1 ORDER BY privilege_type) AS privileges FROM ( SELECT n.nspname AS schema, c.relname AS "table", a.attname AS column_name, COALESCE(g.rolname, $2` |
 | authenticator | ~640 | ~496.8k | 779.83 | `SELECT name FROM pg_timezone_names` |
 | postgres | 2 | ~264.9k | 132452.35 | `SELECT count(*) FROM information_schema.column_privileges cp WHERE grantee NOT IN ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15) AND NOT EXISTS (SELECT $16 FROM information_schema.role_table_grants g WHERE g.table_` |
 | postgres | 2 | ~263k | 131503.84 | `SELECT table_schema, table_name, column_name, grantee, privilege_type FROM information_schema.column_privileges cp WHERE grantee NOT IN ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15) AND NOT EXISTS (SELECT $16 FROM` |
@@ -226,19 +226,19 @@ Valores aproximados de propósito, para não gerar commits a cada coleta. Fora d
 | authenticated | ~29k | ~111.3k | 3.84 | `WITH pgrst_source AS (INSERT INTO "public"."performance_metrics"("metric_name", "metric_value", "navigation_type", "rating", "url", "user_agent", "user_id") SELECT "pgrst_body"."metric_name", "pgrst_body"."metric_value",` |
 | postgres | ~5.7k | ~88.6k | 15.49 | `SELECT net.http_post( url := $1, headers := jsonb_build_object( $2, $3, $4, $5 \|\| ( SELECT decrypted_secret FROM vault.decrypted_secrets WHERE name = $6 ) ), body := jsonb_build_object($7, $8) )` |
 | authenticated | ~5.1k | ~85.1k | 16.80 | `WITH pgrst_source AS ( SELECT "public"."contacts".* FROM "public"."contacts" ORDER BY "public"."contacts"."updated_at" DESC , "public"."contacts"."id" DESC LIMIT $1 OFFSET $2 ) , pgrst_source_count AS (SELECT $3 FROM "pu` |
-| postgres | ~290 | ~73.3k | 253.81 | `SELECT e.extname AS name, e.extversion AS version, n.nspname AS schema, (SELECT default_version FROM pg_available_extensions a WHERE a.name = e.extname) AS available_version FROM pg_extension e JOIN pg_namespace n ON n.o` |
-| postgres | ~290 | ~58.5k | 202.28 | `SELECT n.nspname AS schema, c.relname AS "table", a.attnum AS position, a.attname AS name, format_type(a.atttypid, a.atttypmod) AS type, NOT a.attnotnull AS nullable, pg_get_expr(d.adbin, d.adrelid) AS "default", NULLIF(` |
+| postgres | ~290 | ~73.7k | 253.97 | `SELECT e.extname AS name, e.extversion AS version, n.nspname AS schema, (SELECT default_version FROM pg_available_extensions a WHERE a.name = e.extname) AS available_version FROM pg_extension e JOIN pg_namespace n ON n.o` |
+| postgres | ~290 | ~58.8k | 202.71 | `SELECT n.nspname AS schema, c.relname AS "table", a.attnum AS position, a.attname AS name, format_type(a.atttypid, a.atttypmod) AS type, NOT a.attnotnull AS nullable, pg_get_expr(d.adbin, d.adrelid) AS "default", NULLIF(` |
 | authenticator | ~630 | ~49.6k | 78.42 | `WITH -- Recursively get the base types of domains base_types AS ( WITH RECURSIVE recurse AS ( SELECT oid, typbasetype, typnamespace AS base_namespace, COALESCE(NULLIF(typbasetype, $3), oid) AS base_type FROM pg_type UNIO` |
-| postgres | ~3.7k | ~48.3k | 12.99 | `SELECT net.http_post( url := public.edge_function_url($1), headers := jsonb_build_object( $2, $3, $4, $5 \|\| ( SELECT decrypted_secret FROM vault.decrypted_secrets WHERE name = $6 ) ), body := jsonb_build_object($7, $8) )` |
+| postgres | ~3.8k | ~49k | 12.97 | `SELECT net.http_post( url := public.edge_function_url($1), headers := jsonb_build_object( $2, $3, $4, $5 \|\| ( SELECT decrypted_secret FROM vault.decrypted_secrets WHERE name = $6 ) ), body := jsonb_build_object($7, $8) )` |
 | authenticated | ~2k | ~36.1k | 18.45 | `WITH pgrst_source AS (SELECT pgrst_call.pgrst_scalar FROM (SELECT "public"."get_call_volume_stats"() pgrst_scalar) pgrst_call) SELECT $3::bigint AS total_result_set, $4 AS page_total, coalesce(json_agg(_postgrest_t.pgrst` |
 
 
 ## Conexões
 | usuário | estado | n |
 |---|---|---|
-| authenticator | idle | 11 |
+| authenticator | idle | 10 |
+| authenticator | idle in transaction | 1 |
 | pgbouncer | idle | 1 |
-| postgres | active | 1 |
-| postgres | idle | 1 |
+| postgres | active | 2 |
 | supabase_admin | idle | 2 |
 | supabase_admin |  | 1 |
