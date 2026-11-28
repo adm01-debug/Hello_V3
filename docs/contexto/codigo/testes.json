@@ -1843,11 +1843,11 @@
   {
    "arquivo": "src/hooks/__tests__/useSupervisorPanel.coverage.test.tsx",
    "tipo": "unit",
-   "linhas": 300,
+   "linhas": 330,
    "testa": [
     "src/hooks/useSupervisorPanel.ts"
    ],
-   "casos": 16
+   "casos": 17
   },
   {
    "arquivo": "src/hooks/__tests__/useSurveys.coverage.test.tsx",

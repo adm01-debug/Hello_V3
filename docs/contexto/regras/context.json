@@ -1,15 +1,15 @@
 {
  "meta": {
-  "sha": "324a522775cc62678c4ddfb5eddf8a9100bc2024",
+  "sha": "ff1ffe61ce6849f0eab44206e923cf1c57c427d2",
   "branch": "main",
   "remote": "https://github.com/adm01-debug/Hello_V3",
-  "generated_at": "2026-11-28 15:24 UTC",
+  "generated_at": "2026-11-28 15:36 UTC",
   "files_total": 1909,
   "code_files": 1704,
-  "code_lines": 209332
+  "code_lines": 209385
  },
  "version": "1.3.2",
- "facts_hash": "21ee31c2a713c001",
+ "facts_hash": "e11c6f3233b9afe0",
  "stack": {
   "frameworks": [
    "React + Vite",
@@ -35037,7 +35037,7 @@
   {
    "module": "src/hooks",
    "files": 359,
-   "lines": 46149,
+   "lines": 46202,
    "tables": [
     "account_journey_history",
     "accounts",
@@ -37923,6 +37923,7 @@
      "src/hooks/usePersistedTagFilter.ts",
      "src/hooks/useProfile.ts",
      "src/hooks/useRingtoneSettings.ts",
+     "src/hooks/useSupervisorPanel.ts",
      "src/hooks/useVoicePreferences.ts",
      "src/pages/roles/useRoles.ts",
      "supabase/functions/cleanup-lock-conflicts/index.ts",
@@ -65593,6 +65594,10 @@
    {
     "file": "src/hooks/__tests__/useSupervisorPanel.coverage.test.tsx",
     "name": "stopListening avisa quando a auditoria falha"
+   },
+   {
+    "file": "src/hooks/__tests__/useSupervisorPanel.coverage.test.tsx",
+    "name": "escuta e auditoria saem no nome do supervisor logado, nao no literal "
    },
    {
     "file": "src/hooks/__tests__/useSurveys.coverage.test.tsx",
@@ -106678,7 +106683,7 @@
   },
   "src/hooks/useSupervisorPanel.ts": {
    "path": "src/hooks/useSupervisorPanel.ts",
-   "lines": 280,
+   "lines": 303,
    "exports": [
     "interface ActiveCall",
     "interface WhisperMessage",
@@ -106687,6 +106692,10 @@
     "function useSupervisorPanel"
    ],
    "tables": [
+    {
+     "table": "user_profiles",
+     "op": "select"
+    },
     {
      "table": "call_sessions",
      "op": "select"
@@ -106733,6 +106742,10 @@
     }
    ],
    "table_cols": {
+    "user_profiles": [
+     "full_name",
+     "id"
+    ],
     "call_sessions": [
      "created_at",
      "duration_seconds",
@@ -110571,7 +110584,7 @@
   },
   "src/hooks/__tests__/useSupervisorPanel.coverage.test.tsx": {
    "path": "src/hooks/__tests__/useSupervisorPanel.coverage.test.tsx",
-   "lines": 300,
+   "lines": 330,
    "is_test": true,
    "tests": [
     "useSupervisorPanel (coverage)",
@@ -110590,7 +110603,8 @@
     "handles queue metrics fetch error gracefully",
     "startListening avisa quando a auditoria falha",
     "startListening confirma sucesso quando a auditoria grava",
-    "stopListening avisa quando a auditoria falha"
+    "stopListening avisa quando a auditoria falha",
+    "escuta e auditoria saem no nome do supervisor logado, nao no literal "
    ]
   },
   "src/hooks/__tests__/useSurveys.coverage.test.tsx": {
@@ -128971,10 +128985,20 @@
   }
  },
  "git": {
-  "sha": "324a522775cc62678c4ddfb5eddf8a9100bc2024",
+  "sha": "ff1ffe61ce6849f0eab44206e923cf1c57c427d2",
   "branch": "main",
   "remote": "https://github.com/adm01-debug/Hello_V3",
   "commits": [
+   {
+    "sha": "ff1ffe6",
+    "date": "2026-11-28",
+    "author": "adm01-debug",
+    "subject": "fix: escuta do supervisor sai no nome de quem entrou, nao no literal Supervisor (#385)",
+    "files": [
+     "src/hooks/__tests__/useSupervisorPanel.coverage.test.tsx",
+     "src/hooks/useSupervisorPanel.ts"
+    ]
+   },
    {
     "sha": "324a522",
     "date": "2026-11-28",
@@ -129343,24 +129367,6 @@
      "supabase/migrations/20261126130000_dnc_removal_audit.sql",
      "supabase/tests/dnc_removal_audit_rls_test.sql"
     ]
-   },
-   {
-    "sha": "11e8d43",
-    "date": "2026-11-26",
-    "author": "adm01-debug",
-    "subject": "feat: serie historica do pipeline aberto com tela e job diario (#349)",
-    "files": [
-     "docs/qa/03-ACHADOS.md",
-     "src/components/executive/DealPipelineTrendCard.tsx",
-     "src/components/executive/__tests__/DealPipelineTrendCard.test.tsx",
-     "src/hooks/__tests__/useDealPipelineTrend.test.tsx",
-     "src/hooks/useDealPipelineTrend.ts",
-     "src/integrations/supabase/types.ts",
-     "src/pages/ExecutiveDashboard.tsx",
-     "src/pages/__tests__/ExecutiveDashboard.test.tsx",
-     "supabase/migrations/20261126120000_deal_pipeline_snapshots.sql",
-     "supabase/tests/deal_pipeline_snapshots_rls_test.sql"
-    ]
    }
   ],
   "hot_files": [
@@ -129374,11 +129380,11 @@
    ],
    [
     "src/integrations/supabase/types.ts",
-    5
+    4
    ],
    [
     "docs/qa/03-ACHADOS.md",
-    4
+    3
    ],
    [
     "supabase/tests/recurring_holidays_rls_test.sql",
@@ -129399,6 +129405,14 @@
    [
     "src/routes/protectedRoutes.tsx",
     2
+   ],
+   [
+    "src/hooks/__tests__/useSupervisorPanel.coverage.test.tsx",
+    1
+   ],
+   [
+    "src/hooks/useSupervisorPanel.ts",
+    1
    ],
    [
     "supabase/migrations/20261127223000_hold_events_agent_writable.sql",
@@ -129434,14 +129448,6 @@
    ],
    [
     "src/hooks/__tests__/useAccountJourney.coverage.test.tsx",
-    1
-   ],
-   [
-    "src/hooks/useAccountJourney.ts",
-    1
-   ],
-   [
-    "src/pages/Accounts.tsx",
     1
    ]
   ]

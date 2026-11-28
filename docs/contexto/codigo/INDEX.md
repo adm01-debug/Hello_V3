@@ -1,7 +1,7 @@
 # Contexto do projeto para agentes de IA
 
 GERADO AUTOMATICAMENTE por scripts/ai-context/gerar.mjs — não editar à mão; será sobrescrito.
-Publicado em `docs/contexto/codigo/` na branch `contexto` (gerada, nunca abra PR dela) a cada push em `main` e a cada 10 minutos pelo workflow `contexto.yml`; índice único das três fontes em `docs/contexto/00-INDEX.md`. Gere local com `node scripts/ai-context/gerar.mjs`. Commit-base: `324a522775cc62678c4ddfb5eddf8a9100bc2024` (2026-11-28T12:22:31-03:00).
+Publicado em `docs/contexto/codigo/` na branch `contexto` (gerada, nunca abra PR dela) a cada push em `main` e a cada 10 minutos pelo workflow `contexto.yml`; índice único das três fontes em `docs/contexto/00-INDEX.md`. Gere local com `node scripts/ai-context/gerar.mjs`. Commit-base: `ff1ffe61ce6849f0eab44206e923cf1c57c427d2` (2026-11-28T12:36:00-03:00).
 
 ## Como usar (leia antes de planejar ou executar qualquer tarefa)
 1. **Tela/rota/menu** → `rotas.json` (url/vista/menu → arquivo → hooks → tabelas → edges; `rotas_http_backend` para APIs) e `modulos.json` (módulo inteiro + dependências entre módulos).
@@ -36,7 +36,7 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 |---|---|
 | arquivos_total | 1863 |
 | arquivos_codigo | 1394 |
-| linhas_codigo | 186346 |
+| linhas_codigo | 186399 |
 | rotas | 108 |
 | rotas_http_backend | 11 |
 | vistas_por_id | 0 |
@@ -87,7 +87,7 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 | components/ranking | 0 | 0 | 6 | 1 | 0 | 5 |
 | components/security-alerts | 0 | 0 | 11 | 0 | 0 | 0 |
 | components/settings | 0 | 0 | 6 | 9 | 1 | 7 |
-| components/supervisor | 0 | 0 | 11 | 5 | 1 | 6 |
+| components/supervisor | 0 | 0 | 11 | 5 | 1 | 7 |
 | components/ui | 0 | 0 | 56 | 7 | 0 | 0 |
 | components/voice | 0 | 0 | 7 | 4 | 2 | 1 |
 | contexts | 0 | 0 | 5 | 15 | 3 | 11 |
@@ -375,14 +375,14 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 - possiveis_segredos_no_codigo: 3 — ex.: src/lib/__tests__/security-advanced.test.ts:203, src/lib/__tests__/security-advanced.test.ts:208, src/lib/__tests__/security-advanced.test.ts:213
 
 ## Grafo de código (graphify)
-- 10750 nós · 28263 arestas · 849 comunidades · grafo do commit `324a5227`
-- comunidades maiores: card.tsx (305), cn (255), client.ts (235), vitest (233), protectedRoutes.tsx (208), react (202), traceHeaders (164), @tanstack/react-query (146), react-router-dom (132), CallDetailDialog.tsx (130), ONDA 2 — Fluxos principais quebrados (056–100) (116), buildCorsHeaders (114)
+- 10751 nós · 28265 arestas · 855 comunidades · grafo do commit `ff1ffe61`
+- comunidades maiores: card.tsx (285), client.ts (257), react (198), vitest (188), protectedRoutes.tsx (169), CallDetailDialog.tsx (163), lucide-react (163), traceHeaders (162), ref_https (157), @tanstack/react-query (118), cn (116), 5. Em uso por rota (102)
 - símbolos mais chamados: cn() (src/lib/utils.ts), usePageTitle() (src/hooks/usePageTitle.ts), safeFormatDatePtBR() (src/lib/safe-date.ts), useAuthContext() (src/contexts/AuthContext.tsx), q() (scripts/supabase_snapshot/snapshot.py), safeFormatDistanceToNow() (src/lib/safe-date.ts), traceHeaders() (src/lib/tracing.ts), withTrace() (src/lib/tracing.ts), safeToLocaleString() (src/lib/safe-date.ts), buildCorsHeaders() (supabase/functions/_shared/cors.ts), .collect() (scripts/supabase_snapshot/test_snapshot.py), formatDuration() (src/lib/utils.ts)
 - consulta local: `graphify query "<pergunta>"`, `graphify path "<A>" "<B>"`, `graphify explain "<X>"`
 
 ## Hotspots (arquivos mais alterados, 90 dias)
 - docs/qa/05-PROGRESSO.md (170)
-- docs/estado/funcionalidades-planejadas.md (27)
+- docs/estado/funcionalidades-planejadas.md (26)
 - src/components/calls/UnifiedSoftphone.tsx (13)
 - src/hooks/useMultiChannelCall.ts (12)
 - src/components/layout/AppSidebar.tsx (11)
@@ -436,6 +436,7 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 
 
 ## Últimos commits
+- 2026-11-28 `ff1ffe6` fix: escuta do supervisor sai no nome de quem entrou, nao no literal Supervisor (#385)
 - 2026-11-28 `324a522` fix: liberar escrita de hold_events para o agente da chamada (tempo de espera) (#382)
 - 2026-11-28 `40b31fd` fix: feriado de outro pais nao bloqueia mais a discagem (#383)
 - 2026-11-26 `2e9fb87` chore: registrar varredura final de cobertura backend -> tela (#381)
@@ -450,7 +451,6 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 - 2026-11-26 `957a283` fix: guarda idempotente nos ALTER POLICY das geo_ (etapa 131) (#368)
 - 2026-11-26 `c2181b6` docs(db): contrato dos ponteiros polimorficos (etapa 129) (#363)
 - 2026-11-26 `b85ce49` feat: somar o placar semanal da gamificacao no banco (etapa 126) (#366)
-- 2026-11-26 `83219b7` fix: índice único parcial do message_id de WhatsApp e reentrega como 200 (etapa 017) (#364)
 
 ## Arquivos deste diretório
 - `docs/contexto/codigo/rotas.json`

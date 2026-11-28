@@ -3090,6 +3090,7 @@
     "call_control_audit_logs",
     "call_sessions",
     "dashboard_goals",
+    "user_profiles",
     "whisper_messages"
    ],
    "rpcs": [],
@@ -3584,7 +3585,7 @@
    "modulo": "hooks",
    "arquivos": 177,
    "testes": 0,
-   "linhas": 22959,
+   "linhas": 22982,
    "itens_menu": [],
    "telas": [],
    "rotas_http": [],

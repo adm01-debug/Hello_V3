@@ -2,11 +2,16 @@
  "aviso": "GERADO AUTOMATICAMENTE por scripts/ai-context/gerar.mjs — não editar à mão; será sobrescrito.",
  "format_version": 2,
  "git": {
-  "commit": "324a522775cc62678c4ddfb5eddf8a9100bc2024",
+  "commit": "ff1ffe61ce6849f0eab44206e923cf1c57c427d2",
   "branch": "main",
-  "data_commit": "2026-11-28T12:22:31-03:00",
+  "data_commit": "2026-11-28T12:36:00-03:00",
   "remote": "https://github.com/adm01-debug/Hello_V3",
   "ultimos_commits": [
+   {
+    "sha": "ff1ffe6",
+    "data": "2026-11-28",
+    "assunto": "fix: escuta do supervisor sai no nome de quem entrou, nao no literal Supervisor (#385)"
+   },
    {
     "sha": "324a522",
     "data": "2026-11-28",
@@ -126,18 +131,13 @@
     "sha": "4e38957",
     "data": "2026-11-26",
     "assunto": "feat: vigia horario de cron com alerta no sino e card de saude (etapa 231) (#353)"
-   },
-   {
-    "sha": "6b5425c",
-    "data": "2026-11-26",
-    "assunto": "test: sonda permanente da apuracao da LGPD e do ledger (etapa 132) (#369)"
    }
   ],
   "arquivos_mudados_7d": 1954,
   "pastas_mais_mudadas_30d": [
    {
     "pasta": "src/hooks/__tests__",
-    "mudancas": 298
+    "mudancas": 299
    },
    {
     "pasta": "docs/qa/05-PROGRESSO.md",
@@ -203,7 +203,7 @@
    },
    {
     "arquivo": "docs/estado/funcionalidades-planejadas.md",
-    "mudancas": 27
+    "mudancas": 26
    },
    {
     "arquivo": "src/components/calls/UnifiedSoftphone.tsx",
@@ -286,16 +286,16 @@
     "mudancas": 7
    },
    {
-    "arquivo": "supabase/functions/generate-coaching-track/index.ts",
-    "mudancas": 7
-   },
-   {
     "arquivo": "supabase/functions/teams-fetch-recordings/index.ts",
     "mudancas": 7
    },
    {
     "arquivo": "supabase/functions/voip-load-test/index.ts",
     "mudancas": 7
+   },
+   {
+    "arquivo": ".github/workflows/ci.yml",
+    "mudancas": 6
    }
   ],
   "autores_30d": [
@@ -308,7 +308,7 @@
  "contagens": {
   "arquivos_total": 1863,
   "arquivos_codigo": 1394,
-  "linhas_codigo": 186346,
+  "linhas_codigo": 186399,
   "rotas": 108,
   "rotas_http_backend": 11,
   "vistas_por_id": 0,
@@ -488,7 +488,7 @@
   },
   "src/hooks": {
    "arquivos": 359,
-   "linhas": 46149
+   "linhas": 46202
   },
   "src/integrations": {
    "arquivos": 3,

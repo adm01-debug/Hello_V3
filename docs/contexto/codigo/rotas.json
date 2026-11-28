@@ -1752,6 +1752,7 @@
     "useSensors",
     "useSortable",
     "useState",
+    "useSupervisorName",
     "useSupervisorPanel"
    ],
    "hooks_locais": [

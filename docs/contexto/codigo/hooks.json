@@ -4191,12 +4191,13 @@
    "hooks_exportados": [
     "useSupervisorPanel"
    ],
-   "linhas": 280,
+   "linhas": 303,
    "dominio": "hooks",
    "tabelas": [
     "barge_in_sessions",
     "call_control_audit_logs",
     "call_sessions",
+    "user_profiles",
     "whisper_messages"
    ],
    "rpcs": [],
@@ -4204,7 +4205,8 @@
    "hooks_internos": [
     "useCriticalAlertNotifications",
     "useEffect",
-    "useState"
+    "useState",
+    "useSupervisorName"
    ],
    "canais_realtime": [
     "supervisor-panel-updates",
