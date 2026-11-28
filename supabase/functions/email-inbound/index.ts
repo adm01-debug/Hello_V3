@@ -3,6 +3,9 @@ import { buildCorsHeaders } from '../_shared/cors.ts';
 import { createErrorResponse } from '../_shared/validator.ts';
 import { getCorrelationId, internalErrorResponse } from '../_shared/errors.ts';
 import { EmailInboundSchema } from './schema.ts';
+import { verifyHmac } from '../_shared/webhook-signature.ts';
+
+const assinaturaObrigatoria = () => Deno.env.get('WEBHOOK_ENFORCE_EMAIL_INBOUND_SIGNATURE') === 'true';
 
 
 export async function handler(req: Request): Promise<Response> {
@@ -17,7 +20,26 @@ export async function handler(req: Request): Promise<Response> {
       });
     }
 
-    const raw = await req.json();
+    // Le o corpo cru uma unica vez: JSON.stringify(json) muda espacos e ordem
+    // de chaves e o HMAC do provedor nunca bateria.
+    const texto = await req.text();
+    let raw: any;
+    try {
+      raw = JSON.parse(texto);
+    } catch {
+      return new Response(JSON.stringify({ error: 'Corpo nao e JSON valido' }), {
+        status: 400,
+        headers: { ...cors, 'Content-Type': 'application/json' },
+      });
+    }
+
+    const assinatura = await verifyHmac(req, texto, 'EMAIL_WEBHOOK_SECRET');
+    if (assinaturaObrigatoria() && assinatura !== 'valid' && assinatura !== 'not_configured') {
+      return new Response(
+        JSON.stringify({ code: 'invalid_signature', error: 'Assinatura do webhook invalida' }),
+        { status: 401, headers: { ...cors, 'Content-Type': 'application/json' } }
+      );
+    }
 
     // Contrato historico desta edge (400/422), preservado para o provedor de e-mail.
     if (!raw?.from || !raw?.subject) {

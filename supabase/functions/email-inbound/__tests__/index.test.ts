@@ -144,3 +144,44 @@ Deno.test('email-inbound: preflight OPTIONS responde com CORS da origem permitid
 
   assertEquals(res.headers.get('Access-Control-Allow-Origin'), 'https://hello-v3.vercel.app');
 });
+
+Deno.test('email-inbound: assinatura errada devolve 401 invalid_signature quando exigida', async () => {
+  Deno.env.set('EMAIL_WEBHOOK_SECRET', 's3gr3do');
+  Deno.env.set('WEBHOOK_ENFORCE_EMAIL_INBOUND_SIGNATURE', 'true');
+  try {
+    const res = await handler(new Request(URL_, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'x-signature': 'deadbeef' },
+      body: JSON.stringify(payload),
+    }));
+
+    assertEquals(res.status, 401);
+    assertEquals((await res.json()).code, 'invalid_signature');
+  } finally {
+    Deno.env.delete('EMAIL_WEBHOOK_SECRET');
+    Deno.env.delete('WEBHOOK_ENFORCE_EMAIL_INBOUND_SIGNATURE');
+  }
+});
+
+Deno.test('email-inbound: sem o segredo configurado a entrega segue aceita (modo observacao)', async () => {
+  const server = Deno.serve({ port: 0, hostname: '127.0.0.1', onListen: () => {} }, () =>
+    new Response('[]', { headers: { 'Content-Type': 'application/json', 'Content-Range': '0-0/0' } }));
+  const port = (server.addr as Deno.NetAddr).port;
+  const antigoUrl = Deno.env.get('SUPABASE_URL');
+  const antigaKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY');
+  Deno.env.set('SUPABASE_URL', `http://127.0.0.1:${port}`);
+  Deno.env.set('SUPABASE_SERVICE_ROLE_KEY', 'chave-de-teste');
+  Deno.env.delete('EMAIL_WEBHOOK_SECRET');
+  Deno.env.delete('WEBHOOK_ENFORCE_EMAIL_INBOUND_SIGNATURE');
+
+  try {
+    const res = await handler(post({ ...payload, subject: 'x'.repeat(999) }));
+    assertEquals(res.status, 422);
+  } finally {
+    await server.shutdown();
+    if (antigoUrl === undefined) Deno.env.delete('SUPABASE_URL');
+    else Deno.env.set('SUPABASE_URL', antigoUrl);
+    if (antigaKey === undefined) Deno.env.delete('SUPABASE_SERVICE_ROLE_KEY');
+    else Deno.env.set('SUPABASE_SERVICE_ROLE_KEY', antigaKey);
+  }
+});
