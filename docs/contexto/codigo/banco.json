@@ -8,7 +8,7 @@
   "supabase/migrations",
   "typeorm"
  ],
- "migrations": 273,
+ "migrations": 274,
  "seeds": [],
  "avisos": [
   "29 bloco(s) com DDL dinâmico (EXECUTE format/...) não modelado — policies/colunas criadas dinamicamente podem faltar; confira no banco vivo"
@@ -68,6 +68,7 @@
   "check_rls_enabled",
   "check_suspicious_activity",
   "check_table_bloat",
+  "claim_next_dialer_contact",
   "cleanup_expired_challenges",
   "cleanup_old_data",
   "cleanup_old_logs",
@@ -21943,6 +21944,11 @@
   },
   {
    "nome": "check_rls_enabled",
+   "definida": true,
+   "usada_em": 1
+  },
+  {
+   "nome": "claim_next_dialer_contact",
    "definida": true,
    "usada_em": 1
   },

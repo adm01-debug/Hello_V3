@@ -1921,6 +1921,7 @@
     "add_to_dnc",
     "check_calling_hours",
     "check_dnc",
+    "claim_next_dialer_contact",
     "record_trunk_usage"
    ],
    "edges": [

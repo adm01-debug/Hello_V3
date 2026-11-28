@@ -2,11 +2,16 @@
  "aviso": "GERADO AUTOMATICAMENTE por scripts/ai-context/gerar.mjs — não editar à mão; será sobrescrito.",
  "format_version": 2,
  "git": {
-  "commit": "ff1ffe61ce6849f0eab44206e923cf1c57c427d2",
+  "commit": "3e08f346dfbce40216dca40bd26ef3f72aaf8de1",
   "branch": "main",
-  "data_commit": "2026-11-28T12:36:00-03:00",
+  "data_commit": "2026-11-28T13:09:59-03:00",
   "remote": "https://github.com/adm01-debug/Hello_V3",
   "ultimos_commits": [
+   {
+    "sha": "3e08f34",
+    "data": "2026-11-28",
+    "assunto": "fix: reservar o contato do discador em uma unica operacao (etapa 079) (#375)"
+   },
    {
     "sha": "ff1ffe6",
     "data": "2026-11-28",
@@ -126,22 +131,17 @@
     "sha": "f430ead",
     "data": "2026-11-26",
     "assunto": "fix: policy de UPDATE na fila de sincronizacao do CRM (etapa 082) (#354)"
-   },
-   {
-    "sha": "4e38957",
-    "data": "2026-11-26",
-    "assunto": "feat: vigia horario de cron com alerta no sino e card de saude (etapa 231) (#353)"
    }
   ],
-  "arquivos_mudados_7d": 1954,
+  "arquivos_mudados_7d": 1956,
   "pastas_mais_mudadas_30d": [
    {
     "pasta": "src/hooks/__tests__",
-    "mudancas": 299
+    "mudancas": 300
    },
    {
     "pasta": "docs/qa/05-PROGRESSO.md",
-    "mudancas": 170
+    "mudancas": 171
    },
    {
     "pasta": "src/components/calls",
@@ -199,11 +199,11 @@
   "arquivos_mais_mudados_90d": [
    {
     "arquivo": "docs/qa/05-PROGRESSO.md",
-    "mudancas": 170
+    "mudancas": 171
    },
    {
     "arquivo": "docs/estado/funcionalidades-planejadas.md",
-    "mudancas": 26
+    "mudancas": 25
    },
    {
     "arquivo": "src/components/calls/UnifiedSoftphone.tsx",
@@ -238,6 +238,10 @@
     "mudancas": 9
    },
    {
+    "arquivo": "src/integrations/supabase/types.ts",
+    "mudancas": 9
+   },
+   {
     "arquivo": "supabase/functions/data-lake-flush/index.ts",
     "mudancas": 9
    },
@@ -247,10 +251,6 @@
    },
    {
     "arquivo": "src/hooks/useAgentRanking.ts",
-    "mudancas": 8
-   },
-   {
-    "arquivo": "src/integrations/supabase/types.ts",
     "mudancas": 8
    },
    {
@@ -270,7 +270,15 @@
     "mudancas": 7
    },
    {
+    "arquivo": "src/hooks/__tests__/usePredictiveDialer.coverage.test.tsx",
+    "mudancas": 7
+   },
+   {
     "arquivo": "src/hooks/__tests__/useQueueMetrics.coverage.test.tsx",
+    "mudancas": 7
+   },
+   {
+    "arquivo": "src/hooks/usePredictiveDialer.ts",
     "mudancas": 7
    },
    {
@@ -288,14 +296,6 @@
    {
     "arquivo": "supabase/functions/teams-fetch-recordings/index.ts",
     "mudancas": 7
-   },
-   {
-    "arquivo": "supabase/functions/voip-load-test/index.ts",
-    "mudancas": 7
-   },
-   {
-    "arquivo": ".github/workflows/ci.yml",
-    "mudancas": 6
    }
   ],
   "autores_30d": [
@@ -306,9 +306,9 @@
   ]
  },
  "contagens": {
-  "arquivos_total": 1863,
+  "arquivos_total": 1865,
   "arquivos_codigo": 1394,
-  "linhas_codigo": 186399,
+  "linhas_codigo": 186378,
   "rotas": 108,
   "rotas_http_backend": 11,
   "vistas_por_id": 0,
@@ -318,9 +318,9 @@
   "hooks": 203,
   "edge_functions": 99,
   "tabelas": 172,
-  "migrations": 273,
+  "migrations": 274,
   "cron_jobs": 13,
-  "testes": 468,
+  "testes": 469,
   "workflows": 5,
   "scripts": 36,
   "docs_md": 122
@@ -488,11 +488,11 @@
   },
   "src/hooks": {
    "arquivos": 359,
-   "linhas": 46202
+   "linhas": 46177
   },
   "src/integrations": {
    "arquivos": 3,
-   "linhas": 8344
+   "linhas": 8348
   },
   "src/lib": {
    "arquivos": 184,
@@ -538,7 +538,7 @@
  "maiores_arquivos": [
   {
    "arquivo": "src/integrations/supabase/types.ts",
-   "linhas": 8281
+   "linhas": 8285
   },
   {
    "arquivo": "scripts/regras_negocio/generate.py",
@@ -589,12 +589,12 @@
    "linhas": 396
   },
   {
-   "arquivo": "src/hooks/usePredictiveDialer.ts",
-   "linhas": 396
-  },
-  {
    "arquivo": "src/pages/Contacts.tsx",
    "linhas": 393
+  },
+  {
+   "arquivo": "src/hooks/usePredictiveDialer.ts",
+   "linhas": 391
   },
   {
    "arquivo": "src/pages/marketing/Landing.tsx",

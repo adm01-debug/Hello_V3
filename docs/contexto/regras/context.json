@@ -1,15 +1,15 @@
 {
  "meta": {
-  "sha": "ff1ffe61ce6849f0eab44206e923cf1c57c427d2",
+  "sha": "3e08f346dfbce40216dca40bd26ef3f72aaf8de1",
   "branch": "main",
   "remote": "https://github.com/adm01-debug/Hello_V3",
-  "generated_at": "2026-11-28 15:36 UTC",
-  "files_total": 1909,
-  "code_files": 1704,
-  "code_lines": 209385
+  "generated_at": "2026-11-28 16:10 UTC",
+  "files_total": 1911,
+  "code_files": 1706,
+  "code_lines": 209559
  },
  "version": "1.3.2",
- "facts_hash": "e11c6f3233b9afe0",
+ "facts_hash": "3af38ecc4897f649",
  "stack": {
   "frameworks": [
    "React + Vite",
@@ -170,7 +170,7 @@
   "languages": {
    ".tsx": 686,
    ".ts": 673,
-   ".sql": 309,
+   ".sql": 311,
    ".mjs": 29,
    ".py": 5,
    ".js": 2
@@ -22803,6 +22803,20 @@
      "v_row"
     ]
    },
+   "claim_next_dialer_contact": {
+    "args": "p_campaign_id uuid",
+    "returns": "setof public.dialer_queue",
+    "lang": "sql",
+    "src": "supabase/migrations/20261128150000_claim_next_dialer_contact.sql",
+    "security_definer": true,
+    "search_path": true,
+    "body": "update public.dialer_queue q set status = 'dialing', attempts = q.attempts + 1, last_attempt_at = now() where q.id = ( select dq.id from public.dialer_queue dq where dq.campaign_id = p_campaign_id and dq.status = 'pending' and (dq.next_attempt_at is null or dq.next_attempt_at <= now()) and auth.uid() is not null order by dq.priority desc, dq.created_at asc for update skip locked limit 1 ) returning q.*;",
+    "raises": [],
+    "tables": [
+     "dialer_queue",
+     "skip"
+    ]
+   },
    "graphql": {
     "args": "",
     "returns": "?",
@@ -26603,8 +26617,10 @@
    "supabase/migrations/20261127260000_increment_weekly_stats_rpc_null_media_fix.sql",
    "supabase/migrations/20261127270000_geo_policies_idempotente.sql",
    "supabase/migrations/20261127280000_is_own_call_session_grants.sql",
+   "supabase/migrations/20261128150000_claim_next_dialer_contact.sql",
    "supabase/tests/add_missing_fks_rls_test.sql",
    "supabase/tests/calling_hours_fail_closed_rls_test.sql",
+   "supabase/tests/claim_next_dialer_contact_rls_test.sql",
    "supabase/tests/client_errors_rls_test.sql",
    "supabase/tests/crm_sync_queue_update_rls_test.sql",
    "supabase/tests/cron_credentials_rls_test.sql",
@@ -29103,6 +29119,22 @@
     "objkind": "function",
     "roles": "authenticated, service_role",
     "src": "supabase/migrations/20261127280000_is_own_call_session_grants.sql"
+   },
+   {
+    "kind": "revoke",
+    "privs": "all",
+    "object": "claim_next_dialer_contact",
+    "objkind": "function",
+    "roles": "public, anon",
+    "src": "supabase/migrations/20261128150000_claim_next_dialer_contact.sql"
+   },
+   {
+    "kind": "grant",
+    "privs": "execute",
+    "object": "claim_next_dialer_contact",
+    "objkind": "function",
+    "roles": "authenticated",
+    "src": "supabase/migrations/20261128150000_claim_next_dialer_contact.sql"
    }
   ],
   "raises": [
@@ -29750,6 +29782,7 @@
      "add_to_dnc",
      "check_calling_hours",
      "check_dnc",
+     "claim_next_dialer_contact",
      "record_trunk_usage"
     ],
     "deps_count": 38
@@ -35037,7 +35070,7 @@
   {
    "module": "src/hooks",
    "files": 359,
-   "lines": 46202,
+   "lines": 46177,
    "tables": [
     "account_journey_history",
     "accounts",
@@ -35330,7 +35363,7 @@
   {
    "module": "src/integrations",
    "files": 3,
-   "lines": 8344,
+   "lines": 8348,
    "tables": [],
    "exports": [
     "index.ts: lovable",
@@ -35994,8 +36027,8 @@
   },
   {
    "module": "supabase/migrations",
-   "files": 273,
-   "lines": 17455,
+   "files": 274,
+   "lines": 17504,
    "tables": [],
    "exports": [],
    "docs": [],
@@ -36086,8 +36119,8 @@
   },
   {
    "module": "supabase/tests",
-   "files": 34,
-   "lines": 5320,
+   "files": 35,
+   "lines": 5466,
    "tables": [],
    "exports": [],
    "docs": [],
@@ -36096,6 +36129,7 @@
    "file_list": [
     "supabase/tests/add_missing_fks_rls_test.sql",
     "supabase/tests/calling_hours_fail_closed_rls_test.sql",
+    "supabase/tests/claim_next_dialer_contact_rls_test.sql",
     "supabase/tests/client_errors_rls_test.sql",
     "supabase/tests/crm_sync_queue_update_rls_test.sql",
     "supabase/tests/cron_credentials_rls_test.sql",
@@ -38549,8 +38583,7 @@
    ],
    "dialer_queue": [
     "campaign_id",
-    "id",
-    "status"
+    "id"
    ],
    "dnc_list": [
     "id",
@@ -39660,6 +39693,9 @@
    ],
    "check_rls_enabled": [
     "supabase/functions/rls-audit/index.ts"
+   ],
+   "claim_next_dialer_contact": [
+    "src/hooks/predictive-dialer/api.ts"
    ],
    "cleanup_expired_challenges": [
     "supabase/functions/database-cleanup/index.ts"
@@ -55680,20 +55716,8 @@
    {
     "file": "src/hooks/predictive-dialer/api.ts",
     "field": "status",
-    "value": "dialing",
-    "kind": "escreve"
-   },
-   {
-    "file": "src/hooks/predictive-dialer/api.ts",
-    "field": "status",
     "value": "skipped",
     "kind": "escreve"
-   },
-   {
-    "file": "src/hooks/predictive-dialer/api.ts",
-    "field": "status",
-    "value": "pending",
-    "kind": "filtra"
    },
    {
     "file": "src/lib/a11y-clickable.ts",
@@ -64189,7 +64213,7 @@
    },
    {
     "file": "src/hooks/__tests__/usePredictiveDialer.coverage.test.tsx",
-    "name": "dialContact updates state and handles error"
+    "name": "dialContact apresenta o contato ja reservado pelo banco"
    },
    {
     "file": "src/hooks/__tests__/usePredictiveDialer.coverage.test.tsx",
@@ -64198,10 +64222,6 @@
    {
     "file": "src/hooks/__tests__/usePredictiveDialer.coverage.test.tsx",
     "name": "auto-dial loop with empty queue pauses campaign"
-   },
-   {
-    "file": "src/hooks/__tests__/usePredictiveDialer.coverage.test.tsx",
-    "name": "getNextContact error branch returns null"
    },
    {
     "file": "src/hooks/__tests__/usePredictiveDialer.coverage.test.tsx",
@@ -64217,7 +64237,7 @@
    },
    {
     "file": "src/hooks/__tests__/usePredictiveDialer.coverage.test.tsx",
-    "name": "disca normalmente quando o compliance aprova e mantem a tentativa"
+    "name": "disca normalmente quando o compliance aprova; a tentativa ja foi contada no banco"
    },
    {
     "file": "src/hooks/__tests__/usePredictiveDialer.coverage.test.tsx",
@@ -83487,6 +83507,20 @@
      "v_row"
     ]
    },
+   "claim_next_dialer_contact": {
+    "args": "p_campaign_id uuid",
+    "returns": "setof public.dialer_queue",
+    "lang": "sql",
+    "src": "supabase/migrations/20261128150000_claim_next_dialer_contact.sql",
+    "security_definer": true,
+    "search_path": true,
+    "body": "update public.dialer_queue q set status = 'dialing', attempts = q.attempts + 1, last_attempt_at = now() where q.id = ( select dq.id from public.dialer_queue dq where dq.campaign_id = p_campaign_id and dq.status = 'pending' and (dq.next_attempt_at is null or dq.next_attempt_at <= now()) and auth.uid() is not null order by dq.priority desc, dq.created_at asc for update skip locked limit 1 ) returning q.*;",
+    "raises": [],
+    "tables": [
+     "dialer_queue",
+     "skip"
+    ]
+   },
    "graphql": {
     "args": "",
     "returns": "?",
@@ -83895,10 +83929,6 @@
    {
     "file": "src/hooks/useWebhookHealthData.ts",
     "limit": "10000"
-   },
-   {
-    "file": "src/hooks/predictive-dialer/api.ts",
-    "limit": "1"
    },
    {
     "file": "src/lib/voipRecommendationCoaching.ts",
@@ -84824,7 +84854,6 @@
       "escreve:supabase/functions/generate-coaching/index.ts",
       "escreve:supabase/functions/request-password-reset/index.ts",
       "filtra:src/components/executive/PendingFollowupsCard.tsx",
-      "filtra:src/hooks/predictive-dialer/api.ts",
       "filtra:src/hooks/useScheduledCallbacks.ts",
       "filtra:supabase/functions/request-password-reset/index.ts",
       "filtra:supabase/functions/sync-crm-queue/index.ts"
@@ -84934,8 +84963,7 @@
       "compara:supabase/functions/health-check/index.ts"
      ],
      "dialing": [
-      "compara:src/components/dialer/PredictiveDialerPanel.tsx",
-      "escreve:src/hooks/predictive-dialer/api.ts"
+      "compara:src/components/dialer/PredictiveDialerPanel.tsx"
      ],
      "paused": [
       "compara:src/components/dialer/PredictiveDialerPanel.tsx",
@@ -88586,6 +88614,7 @@
    "check_rls_enabled",
    "check_suspicious_activity",
    "check_table_bloat",
+   "claim_next_dialer_contact",
    "cleanup_expired_challenges",
    "cleanup_old_data",
    "cleanup_old_logs",
@@ -90954,6 +90983,22 @@
     "objkind": "function",
     "roles": "authenticated, service_role",
     "src": "supabase/migrations/20261127280000_is_own_call_session_grants.sql"
+   },
+   {
+    "kind": "revoke",
+    "privs": "all",
+    "object": "claim_next_dialer_contact",
+    "objkind": "function",
+    "roles": "public, anon",
+    "src": "supabase/migrations/20261128150000_claim_next_dialer_contact.sql"
+   },
+   {
+    "kind": "grant",
+    "privs": "execute",
+    "object": "claim_next_dialer_contact",
+    "objkind": "function",
+    "roles": "authenticated",
+    "src": "supabase/migrations/20261128150000_claim_next_dialer_contact.sql"
    }
   ],
   "guards": [
@@ -92017,8 +92062,7 @@
     "kind": "status",
     "msg": "valor `dialing` para `status` usado no código não existe em nenhum enum do banco/TS",
     "where": [
-     "compara:src/components/dialer/PredictiveDialerPanel.tsx",
-     "escreve:src/hooks/predictive-dialer/api.ts"
+     "compara:src/components/dialer/PredictiveDialerPanel.tsx"
     ]
    },
    {
@@ -104964,7 +105008,7 @@
   },
   "src/hooks/usePredictiveDialer.ts": {
    "path": "src/hooks/usePredictiveDialer.ts",
-   "lines": 396,
+   "lines": 391,
    "exports": [
     "type PreDialCheck",
     "const usePredictiveDialer"
@@ -109854,10 +109898,12 @@
   },
   "src/hooks/__tests__/usePredictiveDialer.coverage.test.tsx": {
    "path": "src/hooks/__tests__/usePredictiveDialer.coverage.test.tsx",
-   "lines": 636,
+   "lines": 629,
    "is_test": true,
    "rule_comments": [
-    "Falha do update nao pode deixar a tela mostrando prioridade que o banco recusou."
+    "Falha do update nao pode deixar a tela mostrando prioridade que o banco recusou.",
+    "Etapa 079: a reserva agora e uma unica RPC; o erro dela nao pode ser",
+    "O erro nao pode ser confundido com fila vazia."
    ],
    "temporal": [
     "// Start dialing -> effect schedules setTimeout(dial, 2000)"
@@ -109876,14 +109922,13 @@
     "deleteCampaign success and error branches",
     "removeFromQueue success and error branches",
     "setPriority grava a prioridade e reflete na fila (A-084)",
-    "dialContact updates state and handles error",
+    "dialContact apresenta o contato ja reservado pelo banco",
     "auto-dial loop dials next contact then finishes queue",
     "auto-dial loop with empty queue pauses campaign",
-    "getNextContact error branch returns null",
     "realtime subscription callbacks fire fetchers",
     "agrupa rajada de eventos de realtime numa unica leitura",
     "pula o contato e grava o motivo quando o compliance bloqueia",
-    "disca normalmente quando o compliance aprova e mantem a tentativa",
+    "disca normalmente quando o compliance aprova; a tentativa ja foi contada no banco",
     "falha do preDialCheck pula o contato (fail-closed, etapa 035)",
     "para a campanha quando o claim da fila falha (A-057)"
    ]
@@ -111214,7 +111259,7 @@
   },
   "src/hooks/predictive-dialer/api.ts": {
    "path": "src/hooks/predictive-dialer/api.ts",
-   "lines": 167,
+   "lines": 154,
    "exports": [
     "function apiFetchCampaigns",
     "function apiFetchQueue",
@@ -111223,8 +111268,7 @@
     "function apiUpdateCampaignTotal",
     "function apiStartCampaign",
     "function apiPauseCampaign",
-    "function apiGetNextContact",
-    "function apiMarkDialing",
+    "function apiClaimNextContact",
     "function apiMarkSkipped",
     "function apiUpdateQueueItem",
     "function apiUpdateCampaignStats",
@@ -111262,14 +111306,6 @@
     },
     {
      "table": "dialer_queue",
-     "op": "select"
-    },
-    {
-     "table": "dialer_queue",
-     "op": "update"
-    },
-    {
-     "table": "dialer_queue",
      "op": "update"
     },
     {
@@ -111292,13 +111328,15 @@
    "table_cols": {
     "dialer_queue": [
      "campaign_id",
-     "id",
-     "status"
+     "id"
     ],
     "dialer_campaigns": [
      "id"
     ]
    },
+   "rpc": [
+    "claim_next_dialer_contact"
+   ],
    "status_values": [
     {
      "field": "status",
@@ -111317,22 +111355,9 @@
     },
     {
      "field": "status",
-     "value": "dialing",
-     "kind": "escreve"
-    },
-    {
-     "field": "status",
      "value": "skipped",
      "kind": "escreve"
-    },
-    {
-     "field": "status",
-     "value": "pending",
-     "kind": "filtra"
     }
-   ],
-   "pagination": [
-    "1"
    ]
   },
   "src/hooks/predictive-dialer/types.ts": {
@@ -111403,7 +111428,7 @@
   },
   "src/integrations/supabase/types.ts": {
    "path": "src/integrations/supabase/types.ts",
-   "lines": 8281,
+   "lines": 8285,
    "exports": [
     "type Json",
     "type Database",
@@ -128602,6 +128627,10 @@
    "lines": 15,
    "uses_service_role": true
   },
+  "supabase/migrations/20261128150000_claim_next_dialer_contact.sql": {
+   "path": "supabase/migrations/20261128150000_claim_next_dialer_contact.sql",
+   "lines": 49
+  },
   "supabase/tests/add_missing_fks_rls_test.sql": {
    "path": "supabase/tests/add_missing_fks_rls_test.sql",
    "lines": 144,
@@ -128611,6 +128640,14 @@
    "path": "supabase/tests/calling_hours_fail_closed_rls_test.sql",
    "lines": 50,
    "is_test": true
+  },
+  "supabase/tests/claim_next_dialer_contact_rls_test.sql": {
+   "path": "supabase/tests/claim_next_dialer_contact_rls_test.sql",
+   "lines": 146,
+   "is_test": true,
+   "temporal": [
+    "values (v_camp, '5511900000004', 99, 'pending', now() + interval '1 hour');"
+   ]
   },
   "supabase/tests/client_errors_rls_test.sql": {
    "path": "supabase/tests/client_errors_rls_test.sql",
@@ -128985,10 +129022,25 @@
   }
  },
  "git": {
-  "sha": "ff1ffe61ce6849f0eab44206e923cf1c57c427d2",
+  "sha": "3e08f346dfbce40216dca40bd26ef3f72aaf8de1",
   "branch": "main",
   "remote": "https://github.com/adm01-debug/Hello_V3",
   "commits": [
+   {
+    "sha": "3e08f34",
+    "date": "2026-11-28",
+    "author": "adm01-debug",
+    "subject": "fix: reservar o contato do discador em uma unica operacao (etapa 079) (#375)",
+    "files": [
+     "docs/qa/05-PROGRESSO.md",
+     "src/hooks/__tests__/usePredictiveDialer.coverage.test.tsx",
+     "src/hooks/predictive-dialer/api.ts",
+     "src/hooks/usePredictiveDialer.ts",
+     "src/integrations/supabase/types.ts",
+     "supabase/migrations/20261128150000_claim_next_dialer_contact.sql",
+     "supabase/tests/claim_next_dialer_contact_rls_test.sql"
+    ]
+   },
    {
     "sha": "ff1ffe6",
     "date": "2026-11-28",
@@ -129347,26 +129399,6 @@
      "supabase/migrations/20261126140000_client_errors.sql",
      "supabase/tests/client_errors_rls_test.sql"
     ]
-   },
-   {
-    "sha": "31ef778",
-    "date": "2026-11-26",
-    "author": "adm01-debug",
-    "subject": "feat: edicao e trilha de auditoria na lista DNC (etapa 175) (#350)",
-    "files": [
-     "docs/qa/03-ACHADOS.md",
-     "docs/qa/05-PROGRESSO.md",
-     "src/components/compliance/DNCListManager.tsx",
-     "src/components/compliance/dnc/DNCTable.tsx",
-     "src/components/compliance/dnc/EditDNCDialog.tsx",
-     "src/components/compliance/dnc/__tests__/DNCTable.test.tsx",
-     "src/components/compliance/dnc/__tests__/EditDNCDialog.test.tsx",
-     "src/hooks/__tests__/useDNCCompliance.coverage.test.tsx",
-     "src/hooks/useDNCCompliance.ts",
-     "src/integrations/supabase/types.ts",
-     "supabase/migrations/20261126130000_dnc_removal_audit.sql",
-     "supabase/tests/dnc_removal_audit_rls_test.sql"
-    ]
    }
   ],
   "hot_files": [
@@ -129383,11 +129415,11 @@
     4
    ],
    [
-    "docs/qa/03-ACHADOS.md",
-    3
+    "supabase/tests/recurring_holidays_rls_test.sql",
+    2
    ],
    [
-    "supabase/tests/recurring_holidays_rls_test.sql",
+    "docs/qa/03-ACHADOS.md",
     2
    ],
    [
@@ -129405,6 +129437,26 @@
    [
     "src/routes/protectedRoutes.tsx",
     2
+   ],
+   [
+    "src/hooks/__tests__/usePredictiveDialer.coverage.test.tsx",
+    1
+   ],
+   [
+    "src/hooks/predictive-dialer/api.ts",
+    1
+   ],
+   [
+    "src/hooks/usePredictiveDialer.ts",
+    1
+   ],
+   [
+    "supabase/migrations/20261128150000_claim_next_dialer_contact.sql",
+    1
+   ],
+   [
+    "supabase/tests/claim_next_dialer_contact_rls_test.sql",
+    1
    ],
    [
     "src/hooks/__tests__/useSupervisorPanel.coverage.test.tsx",
@@ -129428,26 +129480,6 @@
    ],
    [
     "supabase/migrations/20261127233000_calling_hours_holiday_region_fix.sql",
-    1
-   ],
-   [
-    "supabase/tests/holiday_region_leak_rls_test.sql",
-    1
-   ],
-   [
-    "docs/qa/01-INVENTARIO.md",
-    1
-   ],
-   [
-    "src/components/accounts/AccountJourneyControl.tsx",
-    1
-   ],
-   [
-    "src/components/accounts/__tests__/AccountJourneyControl.test.tsx",
-    1
-   ],
-   [
-    "src/hooks/__tests__/useAccountJourney.coverage.test.tsx",
     1
    ]
   ]

@@ -1,6 +1,6 @@
 # 07 · REGRAS DE NEGÓCIO
 
-> Gerado automaticamente por AI Context Sync v1.3.2 · commit `ff1ffe61ce` · branch `main` · 2026-11-28 15:36 UTC
+> Gerado automaticamente por AI Context Sync v1.3.2 · commit `3e08f346df` · branch `main` · 2026-11-28 16:10 UTC
 > Não edite à mão — regras humanas vão em `manual/`.
 
 ## A. Regras escritas por humanos (`manual/` — prioridade máxima, nunca sobrescrito)
@@ -872,7 +872,7 @@ _nenhum mapa explícito encontrado — transições só existem implicitamente n
 | `status` | `created` | escreve | `supabase/functions/auto-scorecard/index.ts` |
 | `status` | `critical` | compara | `src/hooks/useQueueMetrics.ts`<br>`src/pages/QueueMetricsDashboard.tsx`<br>`supabase/functions/check-goals/index.ts` |
 | `status` | `degraded` | compara | `src/components/dashboard/SystemIntegrityDashboard.tsx`<br>`src/components/executive/VoipInfrastructureTab.tsx`<br>`src/components/observability/HealthTab.tsx`<br>`src/pages/admin/SloDashboard.tsx`<br>`supabase/functions/health-check/index.ts` |
-| `status` | `dialing` | compara, escreve | `src/components/dialer/PredictiveDialerPanel.tsx`<br>`src/hooks/predictive-dialer/api.ts` |
+| `status` | `dialing` | compara | `src/components/dialer/PredictiveDialerPanel.tsx` |
 | `status` | `disconnected` | compara, escreve | `src/components/calls/UnifiedSoftphone.tsx`<br>`src/hooks/useSipCall.ts`<br>`src/hooks/useWavoipCall.ts`<br>`src/lib/elevenlabs-stub.ts` |
 | `status` | `disponivel` | escreve | `src/pages/Marketplace.tsx` |
 | `status` | `down` | compara, escreve | `src/components/observability/HealthTab.tsx`<br>`src/hooks/useHealthCheck.ts` |
@@ -2272,7 +2272,6 @@ _nenhum item encontrado_
 | 500 | `src/hooks/useTrackers.ts` |
 | 1 | `src/hooks/useVoipMonitoringSettings.ts` |
 | 10000 | `src/hooks/useWebhookHealthData.ts` |
-| 1 | `src/hooks/predictive-dialer/api.ts` |
 | 200 | `src/lib/voipRecommendationCoaching.ts` |
 | 500 | `src/pages/AuditLogs.tsx` |
 | 1 | `src/pages/HoldAlertSettings.tsx` |
@@ -2701,7 +2700,7 @@ _nenhum item encontrado_
 | `admin` | `supabase/functions/data-lake-flush/index.ts` |
 | `admin` | `supabase/migrations/20261123000200_fix_has_role_oracle_and_debug_tables.sql` |
 
-## K. Testes como especificação (3833 testes em 425 arquivos — nomes completos em `context.json`)
+## K. Testes como especificação (3832 testes em 425 arquivos — nomes completos em `context.json`)
 
 | Arquivo | Testes | Exemplos do que o sistema DEVE fazer |
 |---|---|---|
@@ -2725,10 +2724,10 @@ _nenhum item encontrado_
 | `src/lib/__tests__/agent-assist-utils.test.ts` | 26 | agent-assist-utils · rankSignals · ordena por prioridade × confiança · lida com array vazio … |
 | `src/lib/__tests__/webhook-health-and-export.simulation.test.ts` | 26 | webhook-health-utils · simulação massiva · ratioColor sempre retorna classe válida para qualquer entrada · aggregateEndpoints preserva invariante attempts = sent+failed acumulados · aggregateEndpoints: sortMode  … |
 | `src/lib/__tests__/call-park.test.ts` | 25 | call-park :: clampInt · nunca lança e respeita a faixa · tolera símbolos, objetos sem primitivo e NaN · call-park :: normalizeOrbitDraft … |
-| `src/hooks/__tests__/usePredictiveDialer.coverage.test.tsx` | 23 | usePredictiveDialer · fetches campaigns on mount and exposes API · handles fetchCampaigns error branch · fetchQueue success and error branches … |
 | `src/lib/__tests__/dialer-tags-and-ringtone.test.ts` | 23 | normalizeTag · sempre devolve null ou string válida para o CHECK do banco · é idempotente · rejeita entradas não textuais e vazias … |
 | `src/lib/__tests__/queue-audio.test.ts` | 23 | queue-audio :: clampNumber · nunca lança e respeita a faixa para qualquer entrada · tolera símbolos e objetos sem conversão primitiva · queue-audio :: sanitizeFileName … |
 | `src/hooks/__tests__/useKnowledgeBase.coverage.test.tsx` | 22 | useKbCategories · returns published categories · surfaces a query error · useKbArticles … |
+| `src/hooks/__tests__/usePredictiveDialer.coverage.test.tsx` | 22 | usePredictiveDialer · fetches campaigns on mount and exposes API · handles fetchCampaigns error branch · fetchQueue success and error branches … |
 | `src/lib/__tests__/performance-optimizations.test.ts` | 22 | Performance: React.memo wrapping · ${name} is wrapped with React.memo · ${name} imports memo from react · ${name} exports as named export with memo … |
 | `src/lib/__tests__/ring-group.test.ts` | 22 | sanitizeExtension · sempre produz null ou uma string aceita pelo CHECK do banco · descarta caracteres inválidos preservando os válidos · clampInt … |
 | `src/lib/__tests__/blf.test.ts` | 21 | blf: helpers puros · safeText normaliza tipos inesperados · agentKey ignora acentos, caixa e espaços múltiplos · maskPhone preserva no máximo os 4 últimos dígitos … |

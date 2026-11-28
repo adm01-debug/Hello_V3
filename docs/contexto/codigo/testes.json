@@ -5,7 +5,7 @@
   "vitest",
   "playwright"
  ],
- "total": 468,
+ "total": 469,
  "por_tipo": {
   "contrato": 1,
   "e2e": 16,
@@ -1550,11 +1550,11 @@
   {
    "arquivo": "src/hooks/__tests__/usePredictiveDialer.coverage.test.tsx",
    "tipo": "unit",
-   "linhas": 636,
+   "linhas": 629,
    "testa": [
     "src/hooks/usePredictiveDialer.ts"
    ],
-   "casos": 22
+   "casos": 21
   },
   {
    "arquivo": "src/hooks/__tests__/useProfile.coverage.test.tsx",
@@ -3985,6 +3985,7 @@
  "sql": [
   "supabase/tests/add_missing_fks_rls_test.sql",
   "supabase/tests/calling_hours_fail_closed_rls_test.sql",
+  "supabase/tests/claim_next_dialer_contact_rls_test.sql",
   "supabase/tests/client_errors_rls_test.sql",
   "supabase/tests/crm_sync_queue_update_rls_test.sql",
   "supabase/tests/cron_credentials_rls_test.sql",

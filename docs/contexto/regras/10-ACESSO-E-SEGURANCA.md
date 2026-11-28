@@ -1,6 +1,6 @@
 # 10 · ACESSO E SEGURANÇA — quem pode o quê
 
-> Gerado automaticamente por AI Context Sync v1.3.2 · commit `ff1ffe61ce` · branch `main` · 2026-11-28 15:36 UTC
+> Gerado automaticamente por AI Context Sync v1.3.2 · commit `3e08f346df` · branch `main` · 2026-11-28 16:10 UTC
 > Não edite à mão — regras humanas vão em `manual/`.
 
 ## Perfis / roles identificados
@@ -363,6 +363,7 @@
 - `check_rls_enabled`
 - `check_suspicious_activity`
 - `check_table_bloat`
+- `claim_next_dialer_contact`
 - `cleanup_expired_challenges`
 - `cleanup_old_data`
 - `cleanup_old_logs`
@@ -452,7 +453,7 @@ Middleware matcher (Next.js): nenhum
 | Ação | Para/De | Privilégios | Objetos |
 |---|---|---|---|
 | grant | anon, authenticated | execute | `check_login_lockout`, `record_failed_login`, `record_successful_login`, `check_ip_allowed` |
-| grant | authenticated | execute | `log_audit_event`, `get_dashboard_stats`, `get_queue_stats`, `log_audit_event`, `get_agent_performance`, `get_call_history_with_summaries`, `get_call_volume_stats`, `get_agents_with_active_calls`, `check_all_tables_rls_status`, `has_role`, `has_permission`, `get_user_role`, `get_user_agent_name`, `get_auth_agent_id`, `get_user_agent_id` … +21 |
+| grant | authenticated | execute | `log_audit_event`, `get_dashboard_stats`, `get_queue_stats`, `log_audit_event`, `get_agent_performance`, `get_call_history_with_summaries`, `get_call_volume_stats`, `get_agents_with_active_calls`, `check_all_tables_rls_status`, `has_role`, `has_permission`, `get_user_role`, `get_user_agent_name`, `get_auth_agent_id`, `get_user_agent_id` … +22 |
 | grant | authenticated | insert | `client_errors` |
 | grant | authenticated | select | `financial_impact_daily`, `index_drop_audit`, `deal_pipeline_snapshots` |
 | grant | authenticated | select, insert | `webhook_flush_metrics` |
@@ -482,6 +483,7 @@ Middleware matcher (Next.js): nenhum
 | revoke | anon, authenticated, service_role | all | `cron_health_rows` |
 | revoke | authenticated | execute | `apply_migration`, `audit_role_change`, `audit_table_change`, `bridge_voip_alert_to_notification`, `check_suspicious_activity`, `check_table_bloat`, `cleanup_old_data`, `cleanup_old_logs`, `enforce_optimistic_lock`, `ensure_single_default_filter`, `handle_kb_article_change`, `handle_kb_article_history`, `handle_new_user`, `log_critical_rls_event`, `notify_bloat_hotspots` … +24 |
 | revoke | public | all | `get_agent_financial_leaderboard` |
+| revoke | public, anon | all | `claim_next_dialer_contact` |
 | revoke | public, anon | execute | `increment_weekly_stats`, `is_own_call_session` |
 | revoke | public, anon, authenticated | execute | `dnc_track_removal` |
 

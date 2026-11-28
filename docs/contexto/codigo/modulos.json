@@ -1244,6 +1244,7 @@
     "add_to_dnc",
     "check_calling_hours",
     "check_dnc",
+    "claim_next_dialer_contact",
     "record_trunk_usage"
    ],
    "buckets": [],
@@ -2112,6 +2113,7 @@
     "check_calling_hours",
     "check_dnc",
     "check_idle_indexes",
+    "claim_next_dialer_contact",
     "expire_parked_calls",
     "get_agent_financial_leaderboard",
     "get_agent_performance",
@@ -3585,7 +3587,7 @@
    "modulo": "hooks",
    "arquivos": 177,
    "testes": 0,
-   "linhas": 22982,
+   "linhas": 22977,
    "itens_menu": [],
    "telas": [],
    "rotas_http": [],
@@ -4234,6 +4236,7 @@
     "calculate_predictive_pace",
     "check_calling_hours",
     "check_dnc",
+    "claim_next_dialer_contact",
     "expire_parked_calls",
     "get_agent_financial_leaderboard",
     "get_agents_with_active_calls",
@@ -4677,7 +4680,7 @@
    "modulo": "hooks/predictive-dialer",
    "arquivos": 2,
    "testes": 0,
-   "linhas": 236,
+   "linhas": 223,
    "itens_menu": [],
    "telas": [],
    "rotas_http": [],
@@ -4689,7 +4692,9 @@
     "dialer_campaigns",
     "dialer_queue"
    ],
-   "rpcs": [],
+   "rpcs": [
+    "claim_next_dialer_contact"
+   ],
    "buckets": [],
    "canais_realtime": [],
    "env": [
@@ -4704,7 +4709,9 @@
      "dialer_campaigns",
      "dialer_queue"
     ],
-    "rpcs": []
+    "rpcs": [
+     "claim_next_dialer_contact"
+    ]
    },
    "importado_por_outros_modulos": [
     "hooks"
@@ -4809,7 +4816,7 @@
    "modulo": "integrations/supabase",
    "arquivos": 2,
    "testes": 0,
-   "linhas": 8301,
+   "linhas": 8305,
    "itens_menu": [],
    "telas": [],
    "rotas_http": [],
@@ -5125,6 +5132,7 @@
     "add_to_dnc",
     "check_calling_hours",
     "check_dnc",
+    "claim_next_dialer_contact",
     "expire_parked_calls",
     "get_agent_financial_leaderboard",
     "get_agent_performance",
@@ -6409,6 +6417,7 @@
     "check_all_tables_rls_status",
     "check_calling_hours",
     "check_dnc",
+    "claim_next_dialer_contact",
     "expire_parked_calls",
     "get_agent_financial_leaderboard",
     "get_agent_performance",
@@ -7459,6 +7468,7 @@
     "check_calling_hours",
     "check_dnc",
     "check_idle_indexes",
+    "claim_next_dialer_contact",
     "expire_parked_calls",
     "get_agent_financial_leaderboard",
     "get_agent_performance",
