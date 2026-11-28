@@ -1,15 +1,15 @@
 {
  "meta": {
-  "sha": "c3ccf7f682ede3fb2ca5887cc1b54f753289eb89",
+  "sha": "3d12f4c263e35b204eb2d44bed3aedd7f6aa8651",
   "branch": "main",
   "remote": "https://github.com/adm01-debug/Hello_V3",
-  "generated_at": "2026-11-28 17:44 UTC",
+  "generated_at": "2026-11-28 17:48 UTC",
   "files_total": 1928,
   "code_files": 1722,
   "code_lines": 211351
  },
  "version": "1.3.2",
- "facts_hash": "287090d539b46eb2",
+ "facts_hash": "91515c390e75b563",
  "stack": {
   "frameworks": [
    "React + Vite",
@@ -72,7 +72,7 @@
     "in": "package.json"
    },
    "vite": {
-    "version": "^7.3.1",
+    "version": "^7.3.8",
     "role": "Bundler Vite",
     "in": "package.json"
    },
@@ -129852,10 +129852,56 @@
   }
  },
  "git": {
-  "sha": "c3ccf7f682ede3fb2ca5887cc1b54f753289eb89",
+  "sha": "3d12f4c263e35b204eb2d44bed3aedd7f6aa8651",
   "branch": "main",
   "remote": "https://github.com/adm01-debug/Hello_V3",
   "commits": [
+   {
+    "sha": "3d12f4c",
+    "date": "2026-11-28",
+    "author": "dependabot[bot]",
+    "subject": "chore(deps): bump vite from 7.3.1 to 7.3.8 (#392)",
+    "files": [
+     "package-lock.json",
+     "package.json"
+    ]
+   },
+   {
+    "sha": "c78143e",
+    "date": "2026-11-28",
+    "author": "dependabot[bot]",
+    "subject": "chore(deps): bump postcss-selector-parser from 6.1.2 to 6.1.6 (#399)",
+    "files": [
+     "package-lock.json"
+    ]
+   },
+   {
+    "sha": "fb21015",
+    "date": "2026-11-28",
+    "author": "dependabot[bot]",
+    "subject": "chore(deps): bump undici from 7.24.4 to 7.30.2 (#398)",
+    "files": [
+     "package-lock.json"
+    ]
+   },
+   {
+    "sha": "7f5bdd4",
+    "date": "2026-11-28",
+    "author": "dependabot[bot]",
+    "subject": "chore(deps): bump dompurify from 3.3.3 to 3.5.0 (#397)",
+    "files": [
+     "package-lock.json"
+    ]
+   },
+   {
+    "sha": "fe25399",
+    "date": "2026-11-28",
+    "author": "dependabot[bot]",
+    "subject": "chore(deps): bump glob from 10.4.5 to 10.5.0 (#394)",
+    "files": [
+     "package-lock.json"
+    ]
+   },
    {
     "sha": "c3ccf7f",
     "date": "2026-11-28",
@@ -130158,73 +130204,16 @@
      "supabase/migrations/20261127260000_increment_weekly_stats_rpc_null_media_fix.sql",
      "supabase/tests/increment_weekly_stats_rpc_rls_test.sql"
     ]
-   },
-   {
-    "sha": "83219b7",
-    "date": "2026-11-26",
-    "author": "adm01-debug",
-    "subject": "fix: índice único parcial do message_id de WhatsApp e reentrega como 200 (etapa 017) (#364)",
-    "files": [
-     "deno.lock",
-     "docs/qa/05-PROGRESSO.md",
-     "supabase/functions/whatsapp-inbound/deno.lock",
-     "supabase/functions/whatsapp-inbound/idempotency.ts",
-     "supabase/functions/whatsapp-inbound/idempotency_test.ts",
-     "supabase/functions/whatsapp-inbound/index.ts",
-     "supabase/migrations/20261127230000_unique_conversation_message_id.sql",
-     "supabase/tests/unique_conversation_message_id_rls_test.sql"
-    ]
-   },
-   {
-    "sha": "91bfc8a",
-    "date": "2026-11-26",
-    "author": "adm01-debug",
-    "subject": "fix(db): helpers de papel como STABLE (etapa 101) para as 274 policies (#362)",
-    "files": [
-     "docs/qa/05-PROGRESSO.md",
-     "supabase/migrations/20261127210000_role_helpers_stable.sql",
-     "supabase/tests/probe_065_101_rls_test.sql",
-     "supabase/tests/role_helpers_stable_rls_test.sql"
-    ]
-   },
-   {
-    "sha": "082fc13",
-    "date": "2026-11-26",
-    "author": "adm01-debug",
-    "subject": "fix: revogar de anon o EXECUTE dos helpers de papel (etapa 146) (#361)",
-    "files": [
-     "docs/qa/05-PROGRESSO.md",
-     "supabase/migrations/20261127200000_revoke_anon_role_helpers.sql",
-     "supabase/tests/revoke_anon_role_helpers_rls_test.sql"
-    ]
-   },
-   {
-    "sha": "077071b",
-    "date": "2026-11-26",
-    "author": "adm01-debug",
-    "subject": "fix: restringir a authenticated as policies de public com predicado de usuario (etapas 143 e 144) (#359)",
-    "files": [
-     "docs/qa/05-PROGRESSO.md",
-     "supabase/migrations/20261127180000_policies_to_authenticated_restante.sql",
-     "supabase/tests/policies_to_authenticated_restante_rls_test.sql"
-    ]
-   },
-   {
-    "sha": "8f07a35",
-    "date": "2026-11-26",
-    "author": "adm01-debug",
-    "subject": "fix: chaves estrangeiras nas colunas com destino unico (etapa 128) (#358)",
-    "files": [
-     "docs/qa/05-PROGRESSO.md",
-     "supabase/migrations/20261127170000_add_missing_fks.sql",
-     "supabase/tests/add_missing_fks_rls_test.sql"
-    ]
    }
   ],
   "hot_files": [
    [
     "docs/qa/05-PROGRESSO.md",
-    20
+    15
+   ],
+   [
+    "package-lock.json",
+    7
    ],
    [
     "docs/agentes/banco.md",
@@ -130235,7 +130224,7 @@
     3
    ],
    [
-    "package-lock.json",
+    "package.json",
     2
    ],
    [
@@ -130249,10 +130238,6 @@
    [
     "docs/qa/onda-39-varredura-branches-e-prs.md",
     2
-   ],
-   [
-    "package.json",
-    1
    ],
    [
     ".github/workflows/deploy-edge.yml",

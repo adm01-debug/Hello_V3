@@ -2,11 +2,36 @@
  "aviso": "GERADO AUTOMATICAMENTE por scripts/ai-context/gerar.mjs — não editar à mão; será sobrescrito.",
  "format_version": 2,
  "git": {
-  "commit": "c3ccf7f682ede3fb2ca5887cc1b54f753289eb89",
+  "commit": "3d12f4c263e35b204eb2d44bed3aedd7f6aa8651",
   "branch": "main",
-  "data_commit": "2026-11-28T14:35:45-03:00",
+  "data_commit": "2026-11-28T14:37:18-03:00",
   "remote": "https://github.com/adm01-debug/Hello_V3",
   "ultimos_commits": [
+   {
+    "sha": "3d12f4c",
+    "data": "2026-11-28",
+    "assunto": "chore(deps): bump vite from 7.3.1 to 7.3.8 (#392)"
+   },
+   {
+    "sha": "c78143e",
+    "data": "2026-11-28",
+    "assunto": "chore(deps): bump postcss-selector-parser from 6.1.2 to 6.1.6 (#399)"
+   },
+   {
+    "sha": "fb21015",
+    "data": "2026-11-28",
+    "assunto": "chore(deps): bump undici from 7.24.4 to 7.30.2 (#398)"
+   },
+   {
+    "sha": "7f5bdd4",
+    "data": "2026-11-28",
+    "assunto": "chore(deps): bump dompurify from 3.3.3 to 3.5.0 (#397)"
+   },
+   {
+    "sha": "fe25399",
+    "data": "2026-11-28",
+    "assunto": "chore(deps): bump glob from 10.4.5 to 10.5.0 (#394)"
+   },
    {
     "sha": "c3ccf7f",
     "data": "2026-11-28",
@@ -106,31 +131,6 @@
     "sha": "dc142b6",
     "data": "2026-11-26",
     "assunto": "test: recuperar o teste do IP literal que ficou fora da main (resgate da PR 309) (#374)"
-   },
-   {
-    "sha": "a745026",
-    "data": "2026-11-26",
-    "assunto": "docs: etapa 122 provada — feriado recorrente ja bloqueia; contrato escrito na funcao (#365)"
-   },
-   {
-    "sha": "8bed0e5",
-    "data": "2026-11-26",
-    "assunto": "fix: restringir a authenticated o restante de public e provar storage bucket por bucket (etapa 145) (#360)"
-   },
-   {
-    "sha": "957a283",
-    "data": "2026-11-26",
-    "assunto": "fix: guarda idempotente nos ALTER POLICY das geo_ (etapa 131) (#368)"
-   },
-   {
-    "sha": "c2181b6",
-    "data": "2026-11-26",
-    "assunto": "docs(db): contrato dos ponteiros polimorficos (etapa 129) (#363)"
-   },
-   {
-    "sha": "b85ce49",
-    "data": "2026-11-26",
-    "assunto": "feat: somar o placar semanal da gamificacao no banco (etapa 126) (#366)"
    }
   ],
   "arquivos_mudados_7d": 1974,
@@ -218,6 +218,10 @@
     "mudancas": 10
    },
    {
+    "arquivo": "package-lock.json",
+    "mudancas": 10
+   },
+   {
     "arquivo": "src/components/calls/ActiveCallBar.tsx",
     "mudancas": 10
    },
@@ -242,10 +246,6 @@
     "mudancas": 8
    },
    {
-    "arquivo": "docs/audits/pendencias-2026-07.md",
-    "mudancas": 8
-   },
-   {
     "arquivo": "src/components/layout/AppSidebar.tsx",
     "mudancas": 8
    },
@@ -266,7 +266,7 @@
     "mudancas": 8
    },
    {
-    "arquivo": "docs/edge-functions/README.md",
+    "arquivo": "docs/audits/pendencias-2026-07.md",
     "mudancas": 7
    },
    {
@@ -290,22 +290,22 @@
     "mudancas": 7
    },
    {
-    "arquivo": "supabase/functions/teams-fetch-recordings/index.ts",
-    "mudancas": 7
+    "arquivo": ".github/workflows/ci.yml",
+    "mudancas": 6
    },
    {
-    "arquivo": "supabase/functions/voip-load-test/index.ts",
-    "mudancas": 7
+    "arquivo": "package.json",
+    "mudancas": 6
    }
   ],
   "autores_30d": [
    {
     "autor": "adm01-debug",
-    "commits": 298
+    "commits": 293
    },
    {
     "autor": "dependabot[bot]",
-    "commits": 2
+    "commits": 7
    }
   ]
  },

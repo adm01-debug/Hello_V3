@@ -59,11 +59,11 @@
  "commits": {
   "convencao": "conventional commits (observado)",
   "exemplos": [
-   "chore(deps): bump zod from 3.25.76 to 4.6.6 (#393)",
-   "chore(deps-dev): bump brace-expansion from 2.1.2 to 2.1.8 (#395)",
-   "chore: remover a sonda __ping-deploy (#387)",
-   "chore: publicar edge functions pela Management API (destrava o deploy bloqueado) (#386)",
-   "ci: sondas de RLS rodam sozinhas em PR de banco e toda segunda (#384)"
+   "chore(deps): bump vite from 7.3.1 to 7.3.8 (#392)",
+   "chore(deps): bump postcss-selector-parser from 6.1.2 to 6.1.6 (#399)",
+   "chore(deps): bump undici from 7.24.4 to 7.30.2 (#398)",
+   "chore(deps): bump dompurify from 3.3.3 to 3.5.0 (#397)",
+   "chore(deps): bump glob from 10.4.5 to 10.5.0 (#394)"
   ]
  },
  "pr_template": null,

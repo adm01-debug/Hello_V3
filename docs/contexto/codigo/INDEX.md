@@ -1,7 +1,7 @@
 # Contexto do projeto para agentes de IA
 
 GERADO AUTOMATICAMENTE por scripts/ai-context/gerar.mjs — não editar à mão; será sobrescrito.
-Publicado em `docs/contexto/codigo/` na branch `contexto` (gerada, nunca abra PR dela) a cada push em `main` e a cada 10 minutos pelo workflow `contexto.yml`; índice único das três fontes em `docs/contexto/00-INDEX.md`. Gere local com `node scripts/ai-context/gerar.mjs`. Commit-base: `c3ccf7f682ede3fb2ca5887cc1b54f753289eb89` (2026-11-28T14:35:45-03:00).
+Publicado em `docs/contexto/codigo/` na branch `contexto` (gerada, nunca abra PR dela) a cada push em `main` e a cada 10 minutos pelo workflow `contexto.yml`; índice único das três fontes em `docs/contexto/00-INDEX.md`. Gere local com `node scripts/ai-context/gerar.mjs`. Commit-base: `3d12f4c263e35b204eb2d44bed3aedd7f6aa8651` (2026-11-28T14:37:18-03:00).
 
 ## Como usar (leia antes de planejar ou executar qualquer tarefa)
 1. **Tela/rota/menu** → `rotas.json` (url/vista/menu → arquivo → hooks → tabelas → edges; `rotas_http_backend` para APIs) e `modulos.json` (módulo inteiro + dependências entre módulos).
@@ -377,7 +377,7 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 - possiveis_segredos_no_codigo: 3 — ex.: src/lib/__tests__/security-advanced.test.ts:203, src/lib/__tests__/security-advanced.test.ts:208, src/lib/__tests__/security-advanced.test.ts:213
 
 ## Grafo de código (graphify)
-- 10800 nós · 28315 arestas · 867 comunidades · grafo do commit `c3ccf7f6`
+- 10800 nós · 28315 arestas · 867 comunidades · grafo do commit `3d12f4c2`
 - comunidades maiores: card.tsx (278), client.ts (242), vitest (208), react (188), lucide-react (177), usePageTitle (169), getCorrelationId (148), traceHeaders (146), @tanstack/react-query (141), ref_https (128), react-router-dom (125), cn (117)
 - símbolos mais chamados: cn() (src/lib/utils.ts), usePageTitle() (src/hooks/usePageTitle.ts), safeFormatDatePtBR() (src/lib/safe-date.ts), useAuthContext() (src/contexts/AuthContext.tsx), q() (scripts/supabase_snapshot/snapshot.py), safeFormatDistanceToNow() (src/lib/safe-date.ts), traceHeaders() (src/lib/tracing.ts), withTrace() (src/lib/tracing.ts), safeToLocaleString() (src/lib/safe-date.ts), buildCorsHeaders() (supabase/functions/_shared/cors.ts), .collect() (scripts/supabase_snapshot/test_snapshot.py), formatDuration() (src/lib/utils.ts)
 - consulta local: `graphify query "<pergunta>"`, `graphify path "<A>" "<B>"`, `graphify explain "<X>"`
@@ -388,13 +388,13 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 - src/hooks/useMultiChannelCall.ts (13)
 - src/components/calls/UnifiedSoftphone.tsx (12)
 - .github/workflows/migrations.yml (10)
+- package-lock.json (10)
 - src/components/calls/ActiveCallBar.tsx (10)
 - src/integrations/supabase/types.ts (10)
 - docs/agentes/banco.md (9)
 - docs/qa/03-ACHADOS.md (9)
 - supabase/functions/data-lake-flush/index.ts (9)
 - docs/agentes/mapa-repo.md (8)
-- docs/audits/pendencias-2026-07.md (8)
 - src/components/layout/AppSidebar.tsx (8)
 - src/components/layout/CommandPalette.tsx (8)
 - src/hooks/useAgentRanking.ts (8)
@@ -439,6 +439,11 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 
 
 ## Últimos commits
+- 2026-11-28 `3d12f4c` chore(deps): bump vite from 7.3.1 to 7.3.8 (#392)
+- 2026-11-28 `c78143e` chore(deps): bump postcss-selector-parser from 6.1.2 to 6.1.6 (#399)
+- 2026-11-28 `fb21015` chore(deps): bump undici from 7.24.4 to 7.30.2 (#398)
+- 2026-11-28 `7f5bdd4` chore(deps): bump dompurify from 3.3.3 to 3.5.0 (#397)
+- 2026-11-28 `fe25399` chore(deps): bump glob from 10.4.5 to 10.5.0 (#394)
 - 2026-11-28 `c3ccf7f` chore(deps): bump zod from 3.25.76 to 4.6.6 (#393)
 - 2026-11-28 `d2943ac` chore(deps-dev): bump brace-expansion from 2.1.2 to 2.1.8 (#395)
 - 2026-11-28 `38ec1e8` chore: remover a sonda __ping-deploy (#387)
@@ -449,11 +454,6 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 - 2026-11-28 `c443721` fix: nao perder lead em silencio quando o Bitrix esta fora (etapa 084) (#372)
 - 2026-11-28 `ca3591a` feat: registra a chamada atendida no Bitrix24 (etapa 081) (#373)
 - 2026-11-28 `3e08f34` fix: reservar o contato do discador em uma unica operacao (etapa 079) (#375)
-- 2026-11-28 `ff1ffe6` fix: escuta do supervisor sai no nome de quem entrou, nao no literal Supervisor (#385)
-- 2026-11-28 `324a522` fix: liberar escrita de hold_events para o agente da chamada (tempo de espera) (#382)
-- 2026-11-28 `40b31fd` fix: feriado de outro pais nao bloqueia mais a discagem (#383)
-- 2026-11-26 `2e9fb87` chore: registrar varredura final de cobertura backend -> tela (#381)
-- 2026-11-26 `77bac04` feat: dar tela a jornada do cliente (etapas da conta e historico de transicoes) (#380)
 
 ## Arquivos deste diretório
 - `docs/contexto/codigo/rotas.json`
