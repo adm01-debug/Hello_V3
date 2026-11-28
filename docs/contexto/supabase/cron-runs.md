@@ -7,18 +7,18 @@
 
 | início (UTC) | status | duração (s) | mensagem |
 |---|---|---|---|
+| 2026-11-28 03:15:00 | succeeded | 0.03 | 1 row |
 | 2026-11-27 03:15:00 | succeeded | 0.02 | 1 row |
 | 2026-11-26 03:15:00 | succeeded | 0.01 | 1 row |
-| 2026-11-25 03:15:00 | succeeded | 0.01 | 1 row |
 
 
 ## 12 · dialer-pacing-tick
 
 | início (UTC) | status | duração (s) | mensagem |
 |---|---|---|---|
-| 2026-11-28 02:18:00 | succeeded | 0.03 | 1 row |
-| 2026-11-28 02:17:00 | succeeded | 0.01 | 1 row |
-| 2026-11-28 02:16:00 | succeeded | 0.03 | 1 row |
+| 2026-11-28 04:14:00 | succeeded | 0.00 | 1 row |
+| 2026-11-28 04:13:00 | succeeded | 0.02 | 1 row |
+| 2026-11-28 04:12:00 | succeeded | 0.01 | 1 row |
 
 
 ## 14 · cleanup-lock-conflicts-weekly
@@ -30,15 +30,16 @@ _nenhum_
 
 | início (UTC) | status | duração (s) | mensagem |
 |---|---|---|---|
+| 2026-11-28 03:00:00 | succeeded | 0.03 | 1 row |
 | 2026-11-27 03:00:00 | succeeded | 0.01 | 1 row |
 | 2026-11-26 03:00:00 | succeeded | 0.02 | 1 row |
-| 2026-11-25 03:00:00 | succeeded | 0.02 | 1 row |
 
 
 ## 33 · cleanup-recordings-daily
 
 | início (UTC) | status | duração (s) | mensagem |
 |---|---|---|---|
+| 2026-11-28 03:45:00 | succeeded | 0.05 | 1 row |
 | 2026-11-27 03:45:00 | succeeded | 0.01 | 1 row |
 | 2026-11-26 03:45:00 | succeeded | 0.03 | 1 row |
 
@@ -47,6 +48,7 @@ _nenhum_
 
 | início (UTC) | status | duração (s) | mensagem |
 |---|---|---|---|
+| 2026-11-28 03:05:00 | succeeded | 0.05 | 1 row |
 | 2026-11-27 03:05:00 | succeeded | 0.05 | 1 row |
 
 
@@ -54,24 +56,24 @@ _nenhum_
 
 | início (UTC) | status | duração (s) | mensagem |
 |---|---|---|---|
+| 2026-11-28 04:05:00 | succeeded | 0.70 | 1 row |
+| 2026-11-28 03:05:00 | succeeded | 0.58 | 1 row |
 | 2026-11-28 02:05:00 | succeeded | 0.57 | 1 row |
-| 2026-11-28 01:05:00 | succeeded | 0.48 | 1 row |
-| 2026-11-28 00:05:00 | succeeded | 0.71 | 1 row |
 
 
 ## 61 · cadence-tick
 
 | início (UTC) | status | duração (s) | mensagem |
 |---|---|---|---|
-| 2026-11-28 02:15:00 | succeeded | 0.07 | 1 row |
-| 2026-11-28 02:00:00 | succeeded | 0.05 | 1 row |
-| 2026-11-28 01:45:00 | succeeded | 0.06 | 1 row |
+| 2026-11-28 04:00:00 | succeeded | 0.05 | 1 row |
+| 2026-11-28 03:45:00 | succeeded | 0.07 | 1 row |
+| 2026-11-28 03:30:00 | succeeded | 0.05 | 1 row |
 
 
 ## 65 · crm-sync-queue
 
 | início (UTC) | status | duração (s) | mensagem |
 |---|---|---|---|
-| 2026-11-28 02:15:00 | succeeded | 0.03 | 0 rows |
-| 2026-11-28 02:10:00 | succeeded | 0.01 | 0 rows |
-| 2026-11-28 02:05:00 | succeeded | 0.03 | 0 rows |
+| 2026-11-28 04:10:00 | succeeded | 0.01 | 0 rows |
+| 2026-11-28 04:05:00 | succeeded | 0.01 | 0 rows |
+| 2026-11-28 04:00:00 | succeeded | 0.01 | 0 rows |
