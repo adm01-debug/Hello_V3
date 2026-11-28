@@ -1,0 +1,100 @@
+# docs: Publica em producao as edge functions alteradas na main.
+# Ate 2026-11-28 nenhum workflow chamava a Management API de functions: o secret
+# SUPABASE_ACCESS_TOKEN existe desde 2026-11-13, mas o codigo de
+# supabase/functions/sync-crm-queue/index.ts (aceitar o bearer do cron, lote de
+# 50 por execucao) ficava so no repositorio. Producao continuava com a versao
+# anterior, que exige sessao de usuario, e o job `crm-sync-queue` respondia 401
+# {"error":"Nao autorizado"} a cada 5 min.
+# Usa o mesmo secret que migrations.yml ja usa (nenhuma credencial nova).
+# Reverter: apagar este arquivo; nenhum dado muda.
+name: Deploy edge functions
+
+on:
+  workflow_dispatch:
+    inputs:
+      funcao:
+        description: 'Função a publicar (com vazio, todas as que mudaram no último commit)'
+        required: false
+        default: ''
+        type: string
+      ref:
+        description: 'Branch de onde ler o código (vazio = branch do dispatch)'
+        required: false
+        default: ''
+        type: string
+
+permissions:
+  contents: read
+
+concurrency:
+  group: deploy-edge
+  cancel-in-progress: false
+
+jobs:
+  publicar:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          ref: ${{ inputs.ref || github.ref }}
+          fetch-depth: 0
+
+      - name: Descobrir o alvo
+        id: alvo
+        env:
+          ENTRADA: ${{ inputs.funcao }}
+        run: |
+          set -euo pipefail
+          if [ -n "${ENTRADA:-}" ]; then
+            lista="$(printf '%s' "$ENTRADA" | tr ',' ' ')"
+          else
+            lista="$(git diff --name-only HEAD~1 HEAD -- supabase/functions \
+              | sed -n 's#^supabase/functions/\([^/]*\)/index\.ts$#\1#p' | sort -u | tr '\n' ' ')"
+          fi
+          echo "alvos: ${lista:-<nenhum>}"
+          echo "lista=${lista}" >> "$GITHUB_OUTPUT"
+
+      - name: Publicar pela Management API
+        if: steps.alvo.outputs.lista != ''
+        env:
+          PROJECT_REF: ${{ secrets.VITE_SUPABASE_PROJECT_ID }}
+          SUPABASE_ACCESS_TOKEN: ${{ secrets.SUPABASE_ACCESS_TOKEN }}
+        run: |
+          set -euo pipefail
+          if [ -z "${PROJECT_REF:-}" ] || [ -z "${SUPABASE_ACCESS_TOKEN:-}" ]; then
+            echo "::error::VITE_SUPABASE_PROJECT_ID ou SUPABASE_ACCESS_TOKEN ausente"; exit 1
+          fi
+          corpo="$(mktemp)"
+          falhou=0
+          for nome in ${{ steps.alvo.outputs.lista }}; do
+            arquivo="supabase/functions/${nome}/index.ts"
+            if [ ! -f "$arquivo" ]; then
+              echo "::warning::${nome} sem index.ts, ignorada"; continue
+            fi
+            echo "== publicando ${nome}"
+            NOME="$nome" ARQUIVO="$arquivo" SAIDA="$corpo" node -e '
+              const fs = require("fs");
+              const cfg = fs.readFileSync("supabase/config.toml", "utf8");
+              const bloco = cfg.split("[functions." + process.env.NOME + "]")[1] || "";
+              const verifyJwt = !/^\s*verify_jwt\s*=\s*false/m.test(bloco.split("\n[")[0]);
+              fs.writeFileSync(process.env.SAIDA, JSON.stringify({
+                name: process.env.NOME,
+                entrypoint_path: "index.ts",
+                verify_jwt: verifyJwt,
+                files: [{ name: "index.ts", content: fs.readFileSync(process.env.ARQUIVO, "utf8") }],
+              }));
+              console.log("verify_jwt=" + verifyJwt);
+            '
+            codigo="$(curl -sS -X POST \
+              -H "Authorization: Bearer ${SUPABASE_ACCESS_TOKEN}" \
+              -H "Content-Type: application/json" \
+              --data @"$corpo" \
+              -o "${corpo}.res" -w '%{http_code}' \
+              "https://api.supabase.com/v1/projects/${PROJECT_REF}/functions/${nome}/body")" || falhou=1
+            echo "http=${codigo}"
+            head -c 600 "${corpo}.res" 2>/dev/null || true
+            echo
+            case "$codigo" in 2*) ;; *) falhou=1 ;; esac
+          done
+          exit "$falhou"
