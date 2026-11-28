@@ -1,7 +1,7 @@
 {
  "aviso": "GERADO AUTOMATICAMENTE por scripts/ai-context/gerar.mjs — não editar à mão; será sobrescrito.",
  "format_version": 2,
- "total": 36,
+ "total": 37,
  "scripts": [
   {
    "arquivo": "scripts/ai-context/cenarios.mjs",
@@ -60,6 +60,17 @@
    "arquivo": "scripts/audit-edge-functions.ts",
    "descricao": "* Auditoria estática das Edge Functions.",
    "linhas": 290,
+   "env": [],
+   "npm_scripts": [],
+   "workflows": [
+    "ci.yml"
+   ],
+   "orfao": false
+  },
+  {
+   "arquivo": "scripts/check-audit-baseline.mjs",
+   "descricao": "Etapa 041: `bun audit` imprimia 121 vulnerabilidades e o job concluia success (`|| true`). Aqui a contagem e comparada com um baseline versionado:",
+   "linhas": 74,
    "env": [],
    "npm_scripts": [],
    "workflows": [

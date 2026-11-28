@@ -2,11 +2,31 @@
  "aviso": "GERADO AUTOMATICAMENTE por scripts/ai-context/gerar.mjs — não editar à mão; será sobrescrito.",
  "format_version": 2,
  "git": {
-  "commit": "3d12f4c263e35b204eb2d44bed3aedd7f6aa8651",
+  "commit": "c8eedfd212b13e55258bb881f8684ff9d5ac4a55",
   "branch": "main",
-  "data_commit": "2026-11-28T14:37:18-03:00",
+  "data_commit": "2026-11-28T14:49:45-03:00",
   "remote": "https://github.com/adm01-debug/Hello_V3",
   "ultimos_commits": [
+   {
+    "sha": "c8eedfd",
+    "data": "2026-11-28",
+    "assunto": "feat: auditoria de dependencias reprova quando a contagem de vulnerabilidades sobe (etapa 041) (#400)"
+   },
+   {
+    "sha": "7bc82cd",
+    "data": "2026-11-28",
+    "assunto": "chore: configurar Dependabot para npm e github-actions (etapa 001) (#391)"
+   },
+   {
+    "sha": "0c95deb",
+    "data": "2026-11-28",
+    "assunto": "chore(deps): bump ws from 8.19.0 to 8.23.1 (#402)"
+   },
+   {
+    "sha": "9895b42",
+    "data": "2026-11-28",
+    "assunto": "chore(deps): bump source-map-js from 1.2.1 to 1.2.4 (#401)"
+   },
    {
     "sha": "3d12f4c",
     "data": "2026-11-28",
@@ -111,29 +131,9 @@
     "sha": "0448f16",
     "data": "2026-11-26",
     "assunto": "feat: barra de filtros salvos na tela de contatos (#379)"
-   },
-   {
-    "sha": "0a4fed0",
-    "data": "2026-11-26",
-    "assunto": "fix: valida forma do snapshot e da fila de coaching VoIP no localStorage (#378)"
-   },
-   {
-    "sha": "bdbd99f",
-    "data": "2026-11-26",
-    "assunto": "docs: reaudita o que foi descartado, arquivo por arquivo (nenhuma perda) (#377)"
-   },
-   {
-    "sha": "80b9200",
-    "data": "2026-11-26",
-    "assunto": "chore: registrar a varredura de branches e PRs (nenhum trabalho perdido) (#376)"
-   },
-   {
-    "sha": "dc142b6",
-    "data": "2026-11-26",
-    "assunto": "test: recuperar o teste do IP literal que ficou fora da main (resgate da PR 309) (#374)"
    }
   ],
-  "arquivos_mudados_7d": 1974,
+  "arquivos_mudados_7d": 1977,
   "pastas_mais_mudadas_30d": [
    {
     "pasta": "src/hooks/__tests__",
@@ -203,11 +203,15 @@
    },
    {
     "arquivo": "docs/estado/funcionalidades-planejadas.md",
-    "mudancas": 21
+    "mudancas": 20
    },
    {
     "arquivo": "src/hooks/useMultiChannelCall.ts",
     "mudancas": 13
+   },
+   {
+    "arquivo": "package-lock.json",
+    "mudancas": 12
    },
    {
     "arquivo": "src/components/calls/UnifiedSoftphone.tsx",
@@ -215,10 +219,6 @@
    },
    {
     "arquivo": ".github/workflows/migrations.yml",
-    "mudancas": 10
-   },
-   {
-    "arquivo": "package-lock.json",
     "mudancas": 10
    },
    {
@@ -266,6 +266,10 @@
     "mudancas": 8
    },
    {
+    "arquivo": ".github/workflows/ci.yml",
+    "mudancas": 7
+   },
+   {
     "arquivo": "docs/audits/pendencias-2026-07.md",
     "mudancas": 7
    },
@@ -290,10 +294,6 @@
     "mudancas": 7
    },
    {
-    "arquivo": ".github/workflows/ci.yml",
-    "mudancas": 6
-   },
-   {
     "arquivo": "package.json",
     "mudancas": 6
    }
@@ -301,18 +301,18 @@
   "autores_30d": [
    {
     "autor": "adm01-debug",
-    "commits": 293
+    "commits": 291
    },
    {
     "autor": "dependabot[bot]",
-    "commits": 7
+    "commits": 9
    }
   ]
  },
  "contagens": {
-  "arquivos_total": 1882,
-  "arquivos_codigo": 1398,
-  "linhas_codigo": 186880,
+  "arquivos_total": 1885,
+  "arquivos_codigo": 1399,
+  "linhas_codigo": 186954,
   "rotas": 108,
   "rotas_http_backend": 11,
   "vistas_por_id": 0,
@@ -326,7 +326,7 @@
   "cron_jobs": 15,
   "testes": 479,
   "workflows": 6,
-  "scripts": 36,
+  "scripts": 37,
   "docs_md": 122
  },
  "por_pasta": {
@@ -381,6 +381,10 @@
   "scripts/audit-edge-functions.ts": {
    "arquivos": 1,
    "linhas": 290
+  },
+  "scripts/check-audit-baseline.mjs": {
+   "arquivos": 1,
+   "linhas": 74
   },
   "scripts/check-bundle-budget.mjs": {
    "arquivos": 1,
@@ -643,7 +647,7 @@
  ],
  "qualidade": {
   "any": 12,
-  "console_log": 198,
+  "console_log": 203,
   "ts_ignore": 0,
   "eslint_disable": 1,
   "todos": 5,

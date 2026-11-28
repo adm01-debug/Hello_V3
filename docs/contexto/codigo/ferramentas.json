@@ -6,9 +6,9 @@
    "TypeScript (1363)",
    "SQL (323)",
    "Markdown (122)",
-   "JavaScript (31)",
-   "JSON (16)",
-   "YAML (6)",
+   "JavaScript (32)",
+   "JSON (17)",
+   "YAML (7)",
    "Python (5)",
    "Shell (2)"
   ],
@@ -99,6 +99,7 @@
  },
  "configs": [
   ".editorconfig",
+  ".github/dependabot.yml",
   ".prettierrc",
   "ai-context.config.json",
   "components.json",
@@ -135,6 +136,7 @@
    "permissoes": [],
    "scripts_usados": [
     "scripts/audit-edge-functions.ts",
+    "scripts/check-audit-baseline.mjs",
     "scripts/check-bundle-budget.mjs",
     "scripts/ci/check-claude-md-integrity.mjs",
     "scripts/codemod-safe-number.mjs",

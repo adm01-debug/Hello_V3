@@ -1,15 +1,15 @@
 {
  "meta": {
-  "sha": "3d12f4c263e35b204eb2d44bed3aedd7f6aa8651",
+  "sha": "c8eedfd212b13e55258bb881f8684ff9d5ac4a55",
   "branch": "main",
   "remote": "https://github.com/adm01-debug/Hello_V3",
-  "generated_at": "2026-11-28 17:48 UTC",
-  "files_total": 1928,
-  "code_files": 1722,
-  "code_lines": 211351
+  "generated_at": "2026-11-28 17:55 UTC",
+  "files_total": 1931,
+  "code_files": 1723,
+  "code_lines": 211425
  },
  "version": "1.3.2",
- "facts_hash": "91515c390e75b563",
+ "facts_hash": "31601371cb6c9376",
  "stack": {
   "frameworks": [
    "React + Vite",
@@ -179,7 +179,7 @@
    ".tsx": 687,
    ".ts": 676,
    ".sql": 323,
-   ".mjs": 29,
+   ".mjs": 30,
    ".py": 5,
    ".js": 2
   },
@@ -34889,8 +34889,8 @@
   },
   {
    "module": "scripts",
-   "files": 37,
-   "lines": 10443,
+   "files": 38,
+   "lines": 10517,
    "tables": [
     "a",
     "contacts",
@@ -34922,10 +34922,10 @@
    "docs": [
     "apply-call-volume-fix.mjs: ATENCAO: executa scripts/fix-get-call-volume-stats.sql (CREATE OR REPLACE FUNCTION) no banco apontado. Nao assume host de producao.",
     "audit-edge-functions.ts: !/usr/bin/env bun",
+    "check-audit-baseline.mjs: !/usr/bin/env node Etapa 041: `bun audit` imprimia 121 vulnerabilidades e o job concluia success (`|| true`). Aqui a contagem e comparada com um baseline versionado: subir o numero reprova, cair nao. O baseline e gerado pelo MESMO comando do CI (`bun audit --json`), senao os numeros nunca batem. nod …",
     "check-bundle-budget.mjs: !/usr/bin/env node",
     "clean-hold-events.mjs: ATENCAO: apaga TODOS os registros de public.hold_events do banco apontado. Nao assume host de producao.",
-    "cleanup-and-count.mjs: ATENCAO: apaga usuarios de teste em auth.users (email LIKE 'test%@gmail.com') e as identidades orfas em auth.identities do banco apontado. Nao assume host de producao.",
-    "codemod-safe-number.mjs: !/usr/bin/env node"
+    "cleanup-and-count.mjs: ATENCAO: apaga usuarios de teste em auth.users (email LIKE 'test%@gmail.com') e as identidades orfas em auth.identities do banco apontado. Nao assume host de producao."
    ],
    "deps": [
     "#",
@@ -34965,6 +34965,7 @@
    "file_list": [
     "scripts/apply-call-volume-fix.mjs",
     "scripts/audit-edge-functions.ts",
+    "scripts/check-audit-baseline.mjs",
     "scripts/check-bundle-budget.mjs",
     "scripts/check-cfmlmc-db.mjs",
     "scripts/check-data.mjs",
@@ -93607,6 +93608,11 @@
    "doc": "!/usr/bin/env bun",
    "uses_service_role": true
   },
+  "scripts/check-audit-baseline.mjs": {
+   "path": "scripts/check-audit-baseline.mjs",
+   "lines": 74,
+   "doc": "!/usr/bin/env node Etapa 041: `bun audit` imprimia 121 vulnerabilidades e o job concluia success (`|| true`). Aqui a contagem e comparada com um baseline versionado: subir o numero reprova, cair nao. O baseline e gerado pelo MESMO comando do CI (`bun audit --json`), senao os numeros nunca batem. nod …"
+  },
   "scripts/check-bundle-budget.mjs": {
    "path": "scripts/check-bundle-budget.mjs",
    "lines": 104,
@@ -129852,10 +129858,48 @@
   }
  },
  "git": {
-  "sha": "3d12f4c263e35b204eb2d44bed3aedd7f6aa8651",
+  "sha": "c8eedfd212b13e55258bb881f8684ff9d5ac4a55",
   "branch": "main",
   "remote": "https://github.com/adm01-debug/Hello_V3",
   "commits": [
+   {
+    "sha": "c8eedfd",
+    "date": "2026-11-28",
+    "author": "adm01-debug",
+    "subject": "feat: auditoria de dependencias reprova quando a contagem de vulnerabilidades sobe (etapa 041) (#400)",
+    "files": [
+     ".github/workflows/ci.yml",
+     "scripts/audit-baseline.json",
+     "scripts/check-audit-baseline.mjs"
+    ]
+   },
+   {
+    "sha": "7bc82cd",
+    "date": "2026-11-28",
+    "author": "adm01-debug",
+    "subject": "chore: configurar Dependabot para npm e github-actions (etapa 001) (#391)",
+    "files": [
+     ".github/dependabot.yml"
+    ]
+   },
+   {
+    "sha": "0c95deb",
+    "date": "2026-11-28",
+    "author": "dependabot[bot]",
+    "subject": "chore(deps): bump ws from 8.19.0 to 8.23.1 (#402)",
+    "files": [
+     "package-lock.json"
+    ]
+   },
+   {
+    "sha": "9895b42",
+    "date": "2026-11-28",
+    "author": "dependabot[bot]",
+    "subject": "chore(deps): bump source-map-js from 1.2.1 to 1.2.4 (#401)",
+    "files": [
+     "package-lock.json"
+    ]
+   },
    {
     "sha": "3d12f4c",
     "date": "2026-11-28",
@@ -130153,74 +130197,19 @@
      "supabase/migrations/20261127240000_calling_hours_recurring_comment.sql",
      "supabase/tests/recurring_holidays_rls_test.sql"
     ]
-   },
-   {
-    "sha": "8bed0e5",
-    "date": "2026-11-26",
-    "author": "adm01-debug",
-    "subject": "fix: restringir a authenticated o restante de public e provar storage bucket por bucket (etapa 145) (#360)",
-    "files": [
-     "docs/qa/05-PROGRESSO.md",
-     "supabase/migrations/20261127190000_policies_to_authenticated_lote4.sql",
-     "supabase/tests/storage_objects_policies_rls_test.sql"
-    ]
-   },
-   {
-    "sha": "957a283",
-    "date": "2026-11-26",
-    "author": "adm01-debug",
-    "subject": "fix: guarda idempotente nos ALTER POLICY das geo_ (etapa 131) (#368)",
-    "files": [
-     "docs/agentes/banco.md",
-     "docs/qa/05-PROGRESSO.md",
-     "supabase/migrations/20261127270000_geo_policies_idempotente.sql"
-    ]
-   },
-   {
-    "sha": "c2181b6",
-    "date": "2026-11-26",
-    "author": "adm01-debug",
-    "subject": "docs(db): contrato dos ponteiros polimorficos (etapa 129) (#363)",
-    "files": [
-     "docs/agentes/banco.md",
-     "docs/qa/05-PROGRESSO.md",
-     "supabase/migrations/20261127220000_polymorphic_pointer_comments.sql",
-     "supabase/tests/polymorphic_pointer_comments_rls_test.sql",
-     "supabase/tests/probe_129_polymorphic_rls_test.sql"
-    ]
-   },
-   {
-    "sha": "b85ce49",
-    "date": "2026-11-26",
-    "author": "adm01-debug",
-    "subject": "feat: somar o placar semanal da gamificacao no banco (etapa 126) (#366)",
-    "files": [
-     "docs/agentes/banco.md",
-     "docs/qa/05-PROGRESSO.md",
-     "src/hooks/__tests__/useGamification.coverage.test.tsx",
-     "src/hooks/useGamification.ts",
-     "src/integrations/supabase/types.ts",
-     "supabase/migrations/20261127250000_increment_weekly_stats_rpc.sql",
-     "supabase/migrations/20261127260000_increment_weekly_stats_rpc_null_media_fix.sql",
-     "supabase/tests/increment_weekly_stats_rpc_rls_test.sql"
-    ]
    }
   ],
   "hot_files": [
    [
     "docs/qa/05-PROGRESSO.md",
-    15
+    11
    ],
    [
     "package-lock.json",
-    7
+    9
    ],
    [
     "docs/agentes/banco.md",
-    6
-   ],
-   [
-    "src/integrations/supabase/types.ts",
     3
    ],
    [
@@ -130232,12 +130221,32 @@
     2
    ],
    [
+    "src/integrations/supabase/types.ts",
+    2
+   ],
+   [
     "supabase/tests/recurring_holidays_rls_test.sql",
     2
    ],
    [
     "docs/qa/onda-39-varredura-branches-e-prs.md",
     2
+   ],
+   [
+    ".github/workflows/ci.yml",
+    1
+   ],
+   [
+    "scripts/audit-baseline.json",
+    1
+   ],
+   [
+    "scripts/check-audit-baseline.mjs",
+    1
+   ],
+   [
+    ".github/dependabot.yml",
+    1
    ],
    [
     ".github/workflows/deploy-edge.yml",
@@ -130269,22 +130278,6 @@
    ],
    [
     "supabase/tests/cadence_tick_rls_test.sql",
-    1
-   ],
-   [
-    "supabase/tests/probe_085_cadence_motor_rls_test.sql",
-    1
-   ],
-   [
-    "src/components/settings/BitrixSyncStatus.tsx",
-    1
-   ],
-   [
-    "src/lib/__tests__/bitrix-sync-status.test.ts",
-    1
-   ],
-   [
-    "src/lib/bitrix/sync-log.ts",
     1
    ]
   ]
