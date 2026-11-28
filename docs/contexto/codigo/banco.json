@@ -8,7 +8,7 @@
   "supabase/migrations",
   "typeorm"
  ],
- "migrations": 276,
+ "migrations": 278,
  "seeds": [],
  "avisos": [
   "29 bloco(s) com DDL dinâmico (EXECUTE format/...) não modelado — policies/colunas criadas dinamicamente podem faltar; confira no banco vivo"
@@ -131,6 +131,7 @@
   "rollback_migration",
   "snapshot_deals_daily",
   "sync_profile_role_from_user_roles",
+  "token_cron_valido",
   "trg_recalc_deals_on_interaction",
   "trigger_auto_scorecard",
   "update_kb_article_search_vector",
@@ -1024,6 +1025,11 @@
    "agenda": "45 3 * * *",
    "migration": "20261125220000_recordings_retention_cron.sql",
    "chama_edge": "cleanup-recordings"
+  },
+  {
+   "nome": "crm-sync-queue",
+   "agenda": "*/5 * * * *",
+   "migration": "20261128123000_crm_sync_queue_cron_guard.sql"
   },
   {
    "nome": "cron-watchdog-hourly",
@@ -22075,6 +22081,11 @@
   },
   {
    "nome": "record_trunk_usage",
+   "definida": true,
+   "usada_em": 1
+  },
+  {
+   "nome": "token_cron_valido",
    "definida": true,
    "usada_em": 1
   }

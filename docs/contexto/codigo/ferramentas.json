@@ -3,8 +3,8 @@
  "format_version": 2,
  "stack": {
   "linguagens": [
-   "TypeScript (1360)",
-   "SQL (315)",
+   "TypeScript (1363)",
+   "SQL (320)",
    "Markdown (122)",
    "JavaScript (31)",
    "JSON (16)",
@@ -760,7 +760,8 @@
    "data-lake-flush",
    "dialer-pacing-tick",
    "generate-coaching-track",
-   "login-attempt"
+   "login-attempt",
+   "sync-crm-queue"
   ],
   "realtime": [
    "active-calls-realtime",

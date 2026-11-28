@@ -5,17 +5,17 @@
   "vitest",
   "playwright"
  ],
- "total": 472,
+ "total": 477,
  "por_tipo": {
   "contrato": 1,
   "e2e": 16,
   "pytest": 2,
-  "unit": 416
+  "unit": 418
  },
  "onde_ficam": [
   {
    "padrao": "co-localizado (__tests__)",
-   "arquivos": 409
+   "arquivos": 411
   },
   {
    "padrao": "tests/",
@@ -2221,6 +2221,15 @@
    "casos": 2
   },
   {
+   "arquivo": "src/lib/__tests__/bitrix-sync-status.test.ts",
+   "tipo": "unit",
+   "linhas": 48,
+   "testa": [
+    "src/lib/bitrix/sync-log.ts"
+   ],
+   "casos": 4
+  },
+  {
    "arquivo": "src/lib/__tests__/blf.test.ts",
    "tipo": "unit",
    "linhas": 306,
@@ -3399,6 +3408,15 @@
    "casos": 8
   },
   {
+   "arquivo": "supabase/functions/_shared/__tests__/cron-db-token_test.ts",
+   "tipo": "unit",
+   "linhas": 63,
+   "testa": [
+    "supabase/functions/_shared/cron-db-token.ts"
+   ],
+   "casos": 6
+  },
+  {
    "arquivo": "supabase/functions/_shared/__tests__/local-supabase.ts",
    "tipo": "unit",
    "linhas": 33,
@@ -3997,6 +4015,7 @@
   "supabase/tests/calling_hours_fail_closed_rls_test.sql",
   "supabase/tests/claim_next_dialer_contact_rls_test.sql",
   "supabase/tests/client_errors_rls_test.sql",
+  "supabase/tests/crm_sync_queue_cron_rls_test.sql",
   "supabase/tests/crm_sync_queue_enqueue_rls_test.sql",
   "supabase/tests/crm_sync_queue_update_rls_test.sql",
   "supabase/tests/cron_credentials_rls_test.sql",
@@ -4017,6 +4036,8 @@
   "supabase/tests/policies_to_authenticated_restante_rls_test.sql",
   "supabase/tests/polymorphic_pointer_comments_rls_test.sql",
   "supabase/tests/probe_065_101_rls_test.sql",
+  "supabase/tests/probe_083_crm_queue_rls_test.sql",
+  "supabase/tests/probe_083b_cron_tick_rls_test.sql",
   "supabase/tests/probe_129_polymorphic_rls_test.sql",
   "supabase/tests/probe_132_lgpd_entity_versions_rls_test.sql",
   "supabase/tests/rate_limit_logs_write_policies_rls_test.sql",
@@ -4248,6 +4269,7 @@
   "src/lib/agent-assist-utils.ts": 2,
   "src/lib/audio/deviceTest.ts": 1,
   "src/lib/audit/index.ts": 2,
+  "src/lib/bitrix/sync-log.ts": 1,
   "src/lib/blf.ts": 1,
   "src/lib/call-park.ts": 1,
   "src/lib/call-queue.ts": 1,
@@ -4358,6 +4380,7 @@
   "supabase/functions/_shared/client-ip.ts": 1,
   "supabase/functions/_shared/constant-time.ts": 2,
   "supabase/functions/_shared/cors.ts": 2,
+  "supabase/functions/_shared/cron-db-token.ts": 1,
   "supabase/functions/_shared/rate-limit.ts": 1,
   "supabase/functions/_shared/resilience.ts": 3,
   "supabase/functions/_shared/testing/backend-falso.ts": 6,

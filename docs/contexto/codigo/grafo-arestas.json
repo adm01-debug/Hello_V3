@@ -5237,6 +5237,7 @@
   ],
   "supabase/functions/sync-crm-queue/index.ts": [
    "supabase/functions/_shared/cors.ts",
+   "supabase/functions/_shared/cron-db-token.ts",
    "supabase/functions/_shared/errors.ts"
   ],
   "supabase/functions/teams-fetch-recordings/index.ts": [

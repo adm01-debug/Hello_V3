@@ -1,6 +1,6 @@
 # 07 · REGRAS DE NEGÓCIO
 
-> Gerado automaticamente por AI Context Sync v1.3.2 · commit `c443721c4b` · branch `main` · 2026-11-28 16:11 UTC
+> Gerado automaticamente por AI Context Sync v1.3.2 · commit `e7f0148f5f` · branch `main` · 2026-11-28 16:14 UTC
 > Não edite à mão — regras humanas vão em `manual/`.
 
 ## A. Regras escritas por humanos (`manual/` — prioridade máxima, nunca sobrescrito)
@@ -865,7 +865,7 @@ _nenhum mapa explícito encontrado — transições só existem implicitamente n
 | `status` | `calling` | compara, escreve | `src/components/calls/SipConnectionStatus.tsx`<br>`src/hooks/useSipCall.ts`<br>`src/hooks/useWavoipCall.ts` |
 | `status` | `cancelled` | escreve | `src/hooks/useScheduledCallbacks.ts` |
 | `status` | `checking` | compara, escreve | `src/components/network/NetworkStatusIndicator.tsx`<br>`src/components/observability/HealthTab.tsx`<br>`src/hooks/useHealthCheck.ts`<br>`src/hooks/useNetworkMonitor.ts` |
-| `status` | `completed` | compara, escreve, filtra | `src/components/call-history/CallSessionsList.tsx`<br>`src/components/callbacks/ScheduledCallbacksList.tsx`<br>`src/components/coaching/CoachingAssignmentsPanel.tsx`<br>`src/components/coaching/CoachingPanel.tsx`<br>`src/components/dashboard/RecentCalls.tsx`<br>… +31 |
+| `status` | `completed` | compara, escreve, filtra | `src/components/call-history/CallSessionsList.tsx`<br>`src/components/callbacks/ScheduledCallbacksList.tsx`<br>`src/components/coaching/CoachingAssignmentsPanel.tsx`<br>`src/components/coaching/CoachingPanel.tsx`<br>`src/components/dashboard/RecentCalls.tsx`<br>… +32 |
 | `status` | `conference` | compara, escreve | `src/hooks/useMultiChannelCall.ts` |
 | `status` | `connected` | escreve | `src/data/mockData.ts`<br>`src/hooks/useWavoipCall.ts` |
 | `status` | `connecting` | compara, escreve | `src/components/calls/SipConnectionStatus.tsx`<br>`src/components/calls/softphone/ActiveCallDisplay.tsx`<br>`src/hooks/useMultiChannelCall.ts`<br>`src/hooks/useSipCall.ts`<br>`src/hooks/useWavoipCall.ts`<br>… +2 |
@@ -911,7 +911,7 @@ _nenhum mapa explícito encontrado — transições só existem implicitamente n
 | `status` | `partial` | compara | `src/components/admin/ldap/LDAPLogsTab.tsx`<br>`src/pages/SecurityReport.tsx` |
 | `status` | `paused` | compara, escreve | `src/components/dialer/PredictiveDialerPanel.tsx`<br>`src/hooks/predictive-dialer/api.ts`<br>`src/pages/Cadences.tsx` |
 | `status` | `pending` | compara, escreve, filtra | `src/components/callbacks/ScheduledCallbacksList.tsx`<br>`src/components/coaching/CoachingPanel.tsx`<br>`src/components/dialer/PredictiveDialerPanel.tsx`<br>`src/components/executive/OmnichannelCard.tsx`<br>`src/components/executive/PendingFollowupsCard.tsx`<br>… +21 |
-| `status` | `processing` | compara, escreve | `src/hooks/useDataLakeExports.ts`<br>`supabase/functions/data-lake-flush/index.ts`<br>`supabase/functions/export-data-lake/index.ts`<br>`supabase/functions/sync-crm-queue/index.ts` |
+| `status` | `processing` | compara, escreve | `src/hooks/useDataLakeExports.ts`<br>`src/lib/bitrix/sync-log.ts`<br>`supabase/functions/data-lake-flush/index.ts`<br>`supabase/functions/export-data-lake/index.ts`<br>`supabase/functions/sync-crm-queue/index.ts` |
 | `status` | `published` | compara, filtra | `src/hooks/useKnowledgeBase.ts`<br>`src/pages/Knowledge.tsx`<br>`supabase/functions/chatbot-respond/index.ts` |
 | `status` | `ready` | escreve | `supabase/functions/wavoip-call/index.ts` |
 | `status` | `registered` | escreve | `src/hooks/useSipCall.ts` |
@@ -2024,6 +2024,7 @@ _nenhum item encontrado_
 | `ID_MAX` | `100` | `supabase/functions/_shared/ai-body-schemas.ts` |
 | `MINUTE_MS` | `60` | `supabase/functions/_shared/business-hours.ts` |
 | `MAX_ITERATIONS` | `400` | `supabase/functions/_shared/business-hours.ts` |
+| `SEGREDO_CRON_FILA_CRM` | `'crm_sync_cron_token'` | `supabase/functions/_shared/cron-db-token.ts` |
 | `TAMANHO_PAGINA` | `1000` | `supabase/functions/_shared/digest.ts` |
 | `LIMITE_POR_USUARIO` | `50` | `supabase/functions/_shared/digest.ts` |
 | `TAMANHO_LOTE` | `200` | `supabase/functions/_shared/digest.ts` |
@@ -2050,6 +2051,7 @@ _nenhum item encontrado_
 | `PRAZO_EMAIL_MS` | `8` | `supabase/functions/notify-blocked-ip/index.ts` |
 | `PRAZO_EMAIL_MS` | `8` | `supabase/functions/notify-new-device/index.ts` |
 | `MAX_FAX_BYTES` | `20` | `supabase/functions/ocr-virtual-fax/index.ts` |
+| `ITENS_POR_EXECUCAO` | `50` | `supabase/functions/sync-crm-queue/index.ts` |
 | `MAX_AUDIO_BYTES` | `25` | `supabase/functions/transcribe-recording/index.ts` |
 | `CONCURRENT_CAP` | `3` | `supabase/functions/voip-capacity-forecast/index.ts` |
 | `AI_GATEWAY` | `'https://openrouter.ai/api/v1/chat/completions'` | `supabase/functions/voip-diagnostic-voice-qa/index.ts` |
@@ -2318,7 +2320,6 @@ _nenhum item encontrado_
 | 1 | `supabase/functions/health-check/index.ts` |
 | 20 | `supabase/functions/ldap-sync/index.ts` |
 | 500 | `supabase/functions/suggest-shift-swaps/index.ts` |
-| 10 | `supabase/functions/sync-crm-queue/index.ts` |
 | 1 | `supabase/functions/validate-geo/index.ts` |
 | 10000 | `supabase/functions/voip-anomaly-detector/index.ts` |
 | 1 | `supabase/functions/voip-anomaly-remediation/index.ts` |
@@ -2477,6 +2478,7 @@ _nenhum item encontrado_
 | ; day: string; alert: SecurityNotification; key: string }   \| { kind:  | `src/components/security-alerts/VirtualTimeline.tsx` |
 |  className= | `src/components/security-alerts/WebhookConfigDialog.tsx` |
 | Não foi possível copiar | `src/components/security-alerts/WebhookHistoryEntryRow.tsx` |
+| Não foi possível processar a fila agora | `src/components/settings/BitrixSyncStatus.tsx` |
 | ${fnName} executado, mas a auditoria não registrou a ação | `src/components/settings/SystemMaintenancePanel.tsx` |
 | Erro ao executar ${fnName} | `src/components/settings/SystemMaintenancePanel.tsx` |
 | ; import { useLiveTranslation } from  | `src/components/translation/LiveTranslationPanel.tsx` |
@@ -2648,8 +2650,7 @@ _nenhum item encontrado_
 | Não foi possível atualizar o áudio | `src/hooks/useQueueAudioPrompts.ts` |
 | Não foi possível remover o áudio | `src/hooks/useQueueAudioPrompts.ts` |
 | Erro ao verificar metas | `src/hooks/useQueueMetrics.ts` |
-| Meta Crítica: ${goal.name} | `src/hooks/useQueueMetrics.ts` |
-| … +305 linhas — lista completa em `context.json` | |
+| … +306 linhas — lista completa em `context.json` | |
 
 ## J. Controle de acesso no código (checagens de perfil/permissão)
 
@@ -2700,7 +2701,7 @@ _nenhum item encontrado_
 | `admin` | `supabase/functions/data-lake-flush/index.ts` |
 | `admin` | `supabase/migrations/20261123000200_fix_has_role_oracle_and_debug_tables.sql` |
 
-## K. Testes como especificação (3837 testes em 426 arquivos — nomes completos em `context.json`)
+## K. Testes como especificação (3848 testes em 428 arquivos — nomes completos em `context.json`)
 
 | Arquivo | Testes | Exemplos do que o sistema DEVE fazer |
 |---|---|---|
@@ -2950,6 +2951,7 @@ _nenhum item encontrado_
 | `src/routes/__tests__/callHistoryAlias.test.tsx` | 6 | alias /call-history -> /history (etapa 266) · /call-history nao renderiza mais CallHistory, e sim o alias · /history continua entregando a pagina real · redireciona /call-history para /history … |
 | `supabase/functions/__tests__/optimistic-lock.test.ts` | 6 | optimistic-lock: migration canonica do trigger existe · optimistic-lock: detecta divergencia de versao e lanca OPTIMISTIC_LOCK_CONFLICT · optimistic-lock: incrementa a versao quando nao ha divergencia · optimistic-lock: conflito e auditado em optimistic_lock_conflicts … |
 | `supabase/functions/_shared/__tests__/allowed-hosts.test.ts` | 6 | aceita hosts públicos https · bloqueia loopback, metadata e esquemas perigosos · faixas privadas são liberáveis apenas com allowPrivate · metadata continua bloqueada mesmo com allowPrivate … |
+| `supabase/functions/_shared/__tests__/cron-db-token_test.ts` | 6 | tokenDoBearer: aceita o formato do cron · tokenDoBearer: recusa header ausente, sem prefixo ou vazio · tokenCronValido: true apenas quando o banco devolve true · tokenCronValido: false quando o banco nega ou erra … |
 | `supabase/functions/analyze-call/__tests__/schema_test.ts` | 6 | AnalyzeCallSchema - valid data · AnalyzeCallSchema - missing transcript · AnalyzeCallSchema - transcript too short · AnalyzeCallSchema - transcript too long … |
 | `supabase/functions/bitrix-api/__tests__/upstream-falha.test.ts` | 6 | bitrix-api: caminho feliz devolve os contatos · bitrix-api: 500 do Bitrix e reenviado 2x e termina em 502 · bitrix-api: 429 do Bitrix e tratado como indisponibilidade (502) · bitrix-api: timeout do Bitrix vira 504 … |
 | `supabase/functions/email-inbound/__tests__/index.test.ts` | 6 | email-inbound: sem message_id devolve 422 (sem chave nao ha idempotencia) · email-inbound: from/subject ausentes continuam devolvendo 400 · email-inbound: subject acima do teto devolve 422 com o campo apontado · email-inbound: ticket ja existente responde 200 idempotent_replay sem escrever … |
@@ -2983,6 +2985,7 @@ _nenhum item encontrado_
 | `src/hooks/__tests__/useVoipExecutiveNarrative.coverage.test.tsx` | 5 | useVoipExecutiveNarrative (coverage) · is disabled by default and does not fetch · fetches when enabled (week) · fetches with month period … |
 | `src/hooks/__tests__/useVoipMonitoringSettings.coverage.test.tsx` | 5 | useVoipMonitoringSettings (coverage) · loads settings successfully · updates existing settings (id present) · inserts when no existing settings … |
 | `src/hooks/__tests__/useVoipRecommendationHistory.coverage.test.tsx` | 5 | useVoipRecommendationHistory · returns data on success with default options · passes custom period and limit · errors when invoke returns error … |
+| `src/lib/__tests__/bitrix-sync-status.test.ts` | 5 | normalizarSyncStatus · traduz o vocabulario da edge · preserva o vocabulario do front · cai em pendente para nulo, vazio e valor desconhecido … |
 | `src/lib/__tests__/favorite-sync-labels.test.ts` | 5 | maskPhone · preserva apenas os últimos dígitos · nunca vaza mais de 4 dígitos (PBT) · describeFavorite … |
 | `src/lib/__tests__/navigation-progress-store.test.ts` | 5 | navigation-progress-store · starts idle · reports loading between start and finish and notifies subscribers · only stops loading when every concurrent navigation finished … |
 | `src/lib/__tests__/predictive-pace.property.test.ts` | 5 | calculatePredictivePace — property-based (1000 runs) · sugestão sempre dentro de [minPace, maxPace] · sem agentes livres → suggested = minPace · abandono acima do alvo → nunca sobe o pace … |
@@ -3002,9 +3005,7 @@ _nenhum item encontrado_
 | `supabase/functions/notify-new-device/__tests__/upstream-falha.test.ts` | 5 | notify-new-device: caminho feliz envia o e-mail e nao grava no banco · notify-new-device: timeout do Resend devolve 5xx sem gravar nada · notify-new-device: 429 do Resend devolve 5xx sem gravar nada · notify-new-device: 500 do Resend devolve 5xx sem gravar nada … |
 | `supabase/functions/score-call/index.test.ts` | 5 | computeWeightedTotal — limita a nota ao max_score do critério · computeWeightedTotal — nota negativa vira zero · computeWeightedTotal — soma ponderada normal · computeWeightedTotal — critério desconhecido é ignorado … |
 | `supabase/functions/voip-recommendation-simulate/__tests__/index.test.ts` | 5 | rejeita requisição sem JWT · rejeita corpo sem recommendationId · projectImpact retorna baseline nulo sem dados · projectImpact projeta melhoria de MOS positiva … |
-| `supabase/functions/webauthn-challenge/__tests__/index.test.ts` | 5 | webauthn-challenge: OPTIONS devolve preflight CORS vazio · webauthn-challenge: sem e-mail responde 400 · webauthn-challenge: e-mail vazio responde 400 · webauthn-challenge: payload invalido responde 400, nunca 500 … |
-| `tests/e2e/auth.spec.ts` | 5 | Authentication Flow · should redirect to login when not authenticated · should show login form elements · Dashboard and Critical Lists … |
-| … +126 linhas — lista completa em `context.json` | | |
+| … +128 linhas — lista completa em `context.json` | | |
 
 ## L. Eventos de webhook tratados (contratos com sistemas externos)
 
@@ -3026,6 +3027,7 @@ _nenhum item encontrado_
 | `invoke(` | `src/components/network/CapacityForecastChart.tsx` |
 | `invoke(` | `src/components/network/QualityHeatmap.tsx` |
 | `invoke(` | `src/components/network/SlaReportCards.tsx` |
+| `invoke(` | `src/components/settings/BitrixSyncStatus.tsx` |
 | `invoke(` | `src/components/settings/SystemMaintenancePanel.tsx` |
 | `.add('dark'` | `src/contexts/ThemeContext.tsx` |
 | `invoke(` | `src/hooks/useAccounts.ts` |
@@ -3302,6 +3304,7 @@ _nenhum item encontrado_
 | * Cálculo de prazo em minutos úteis, respeitando o horário comercial da | `supabase/functions/_shared/business-hours.ts` |
 | Agenda sem nenhuma janela utilizável não pode travar o job: cai no prazo | `supabase/functions/_shared/business-hours.ts` |
 | * Retorna o IP do cliente apenas quando ele e um literal valido; senao null. */ | `supabase/functions/_shared/client-ip.ts` |
+| SECURITY DEFINER, executavel apenas por postgres/service_role | `supabase/functions/_shared/cron-db-token.ts` |
 | Webhook também não deve lançar | `supabase/functions/_shared/external-payload-schemas_test.ts` |
 | `::` representa no minimo um grupo zerado. | `supabase/functions/_shared/ip-range.ts` |
 | da validacao de IP. `is_cidr` nao e consultado porque o prefixo diz tudo. | `supabase/functions/_shared/ip-range.ts` |

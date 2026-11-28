@@ -2,11 +2,16 @@
  "aviso": "GERADO AUTOMATICAMENTE por scripts/ai-context/gerar.mjs — não editar à mão; será sobrescrito.",
  "format_version": 2,
  "git": {
-  "commit": "c443721c4b2f0f97b7fdb807e4933948c5cce9c6",
+  "commit": "e7f0148f5fa3328dbda58947009e497f2acedba7",
   "branch": "main",
-  "data_commit": "2026-11-28T13:10:24-03:00",
+  "data_commit": "2026-11-28T13:14:08-03:00",
   "remote": "https://github.com/adm01-debug/Hello_V3",
   "ultimos_commits": [
+   {
+    "sha": "e7f0148",
+    "data": "2026-11-28",
+    "assunto": "feat: dar gatilho a fila do CRM (job de 5 min) e corrigir status na tela (etapa 083) (#371)"
+   },
    {
     "sha": "c443721",
     "data": "2026-11-28",
@@ -126,14 +131,9 @@
     "sha": "91a1fdc",
     "data": "2026-11-26",
     "assunto": "fix: policies de 5 tabelas sensiveis restritas a authenticated (etapa 052) (#357)"
-   },
-   {
-    "sha": "7f4740d",
-    "data": "2026-11-26",
-    "assunto": "fix: policy de UPDATE em learning_completions (upsert do modulo nao atualizava a nota) (#356)"
    }
   ],
-  "arquivos_mudados_7d": 1961,
+  "arquivos_mudados_7d": 1969,
   "pastas_mais_mudadas_30d": [
    {
     "pasta": "src/hooks/__tests__",
@@ -141,15 +141,15 @@
    },
    {
     "pasta": "docs/qa/05-PROGRESSO.md",
-    "mudancas": 173
+    "mudancas": 174
    },
    {
     "pasta": "src/components/calls",
-    "mudancas": 99
+    "mudancas": 98
    },
    {
     "pasta": "src/lib/__tests__",
-    "mudancas": 97
+    "mudancas": 98
    },
    {
     "pasta": "src/components/ui",
@@ -157,7 +157,7 @@
    },
    {
     "pasta": "supabase/functions/_shared",
-    "mudancas": 54
+    "mudancas": 56
    },
    {
     "pasta": "src/components/compliance",
@@ -170,10 +170,6 @@
    {
     "pasta": "src/pages/__tests__",
     "mudancas": 33
-   },
-   {
-    "pasta": "src/components/admin",
-    "mudancas": 32
    },
    {
     "pasta": "src/components/layout",
@@ -192,6 +188,10 @@
     "mudancas": 30
    },
    {
+    "pasta": "src/components/admin",
+    "mudancas": 29
+   },
+   {
     "pasta": "src/components/dialer",
     "mudancas": 29
    }
@@ -199,19 +199,19 @@
   "arquivos_mais_mudados_90d": [
    {
     "arquivo": "docs/qa/05-PROGRESSO.md",
-    "mudancas": 173
+    "mudancas": 174
    },
    {
     "arquivo": "docs/estado/funcionalidades-planejadas.md",
-    "mudancas": 25
-   },
-   {
-    "arquivo": "src/components/calls/UnifiedSoftphone.tsx",
-    "mudancas": 13
+    "mudancas": 24
    },
    {
     "arquivo": "src/hooks/useMultiChannelCall.ts",
     "mudancas": 13
+   },
+   {
+    "arquivo": "src/components/calls/UnifiedSoftphone.tsx",
+    "mudancas": 12
    },
    {
     "arquivo": "docs/audits/pendencias-2026-07.md",
@@ -246,6 +246,10 @@
     "mudancas": 9
    },
    {
+    "arquivo": "docs/agentes/banco.md",
+    "mudancas": 8
+   },
+   {
     "arquivo": "docs/agentes/mapa-repo.md",
     "mudancas": 8
    },
@@ -260,10 +264,6 @@
    {
     "arquivo": "supabase/functions/validate-geo/index.ts",
     "mudancas": 8
-   },
-   {
-    "arquivo": "docs/agentes/banco.md",
-    "mudancas": 7
    },
    {
     "arquivo": "docs/edge-functions/README.md",
@@ -306,9 +306,9 @@
   ]
  },
  "contagens": {
-  "arquivos_total": 1870,
-  "arquivos_codigo": 1395,
-  "linhas_codigo": 186619,
+  "arquivos_total": 1878,
+  "arquivos_codigo": 1398,
+  "linhas_codigo": 186864,
   "rotas": 108,
   "rotas_http_backend": 11,
   "vistas_por_id": 0,
@@ -318,9 +318,9 @@
   "hooks": 203,
   "edge_functions": 99,
   "tabelas": 172,
-  "migrations": 276,
-  "cron_jobs": 13,
-  "testes": 472,
+  "migrations": 278,
+  "cron_jobs": 14,
+  "testes": 477,
   "workflows": 5,
   "scripts": 36,
   "docs_md": 122
@@ -476,7 +476,7 @@
   },
   "src/components": {
    "arquivos": 388,
-   "linhas": 46016
+   "linhas": 46060
   },
   "src/contexts": {
    "arquivos": 5,
@@ -495,8 +495,8 @@
    "linhas": 8351
   },
   "src/lib": {
-   "arquivos": 184,
-   "linhas": 22232
+   "arquivos": 185,
+   "linhas": 22301
   },
   "src/main.tsx": {
    "arquivos": 1,
@@ -515,8 +515,8 @@
    "linhas": 170
   },
   "supabase/functions": {
-   "arquivos": 221,
-   "linhas": 24657
+   "arquivos": 223,
+   "linhas": 24789
   },
   "tailwind.config.ts": {
    "arquivos": 1,
@@ -695,7 +695,6 @@
    "global-load-test",
    "process-digest",
    "rls-audit",
-   "sync-crm-queue",
    "translate-summary",
    "voip-anomaly-detector",
    "voip-anomaly-remediation",

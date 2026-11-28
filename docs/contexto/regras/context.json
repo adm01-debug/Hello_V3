@@ -1,15 +1,15 @@
 {
  "meta": {
-  "sha": "c443721c4b2f0f97b7fdb807e4933948c5cce9c6",
+  "sha": "e7f0148f5fa3328dbda58947009e497f2acedba7",
   "branch": "main",
   "remote": "https://github.com/adm01-debug/Hello_V3",
-  "generated_at": "2026-11-28 16:11 UTC",
-  "files_total": 1916,
-  "code_files": 1711,
-  "code_lines": 210193
+  "generated_at": "2026-11-28 16:14 UTC",
+  "files_total": 1924,
+  "code_files": 1719,
+  "code_lines": 210766
  },
  "version": "1.3.2",
- "facts_hash": "d78794871a6921c4",
+ "facts_hash": "dda25334428ee32f",
  "stack": {
   "frameworks": [
    "React + Vite",
@@ -169,8 +169,8 @@
   "package_manager": "bun",
   "languages": {
    ".tsx": 687,
-   ".ts": 673,
-   ".sql": 315,
+   ".ts": 676,
+   ".sql": 320,
    ".mjs": 29,
    ".py": 5,
    ".js": 2
@@ -183,7 +183,8 @@
     "dialer-pacing-tick",
     "generate-coaching-track",
     "data-lake-flush",
-    "login-attempt"
+    "login-attempt",
+    "sync-crm-queue"
    ],
    "auth": {}
   },
@@ -22837,6 +22838,19 @@
      "v_row"
     ]
    },
+   "token_cron_valido": {
+    "args": "p_nome text, p_token text",
+    "returns": "boolean",
+    "lang": "sql",
+    "src": "supabase/migrations/20261128110000_crm_sync_queue_cron.sql",
+    "security_definer": true,
+    "search_path": true,
+    "body": "SELECT p_token IS NOT NULL AND length(p_token) >= 32 AND EXISTS ( SELECT 1 FROM vault.decrypted_secrets s WHERE s.name = p_nome AND s.decrypted_secret = p_token );",
+    "raises": [],
+    "tables": [
+     "vault"
+    ]
+   },
    "claim_next_dialer_contact": {
     "args": "p_campaign_id uuid",
     "returns": "setof public.dialer_queue",
@@ -26659,6 +26673,8 @@
    "supabase/migrations/20261127260000_increment_weekly_stats_rpc_null_media_fix.sql",
    "supabase/migrations/20261127270000_geo_policies_idempotente.sql",
    "supabase/migrations/20261127280000_is_own_call_session_grants.sql",
+   "supabase/migrations/20261128110000_crm_sync_queue_cron.sql",
+   "supabase/migrations/20261128123000_crm_sync_queue_cron_guard.sql",
    "supabase/migrations/20261128130000_crm_sync_queue_enqueue_author.sql",
    "supabase/migrations/20261128140000_call_sessions_bitrix_call_id.sql",
    "supabase/migrations/20261128150000_claim_next_dialer_contact.sql",
@@ -26667,6 +26683,7 @@
    "supabase/tests/calling_hours_fail_closed_rls_test.sql",
    "supabase/tests/claim_next_dialer_contact_rls_test.sql",
    "supabase/tests/client_errors_rls_test.sql",
+   "supabase/tests/crm_sync_queue_cron_rls_test.sql",
    "supabase/tests/crm_sync_queue_enqueue_rls_test.sql",
    "supabase/tests/crm_sync_queue_update_rls_test.sql",
    "supabase/tests/cron_credentials_rls_test.sql",
@@ -26687,6 +26704,8 @@
    "supabase/tests/policies_to_authenticated_restante_rls_test.sql",
    "supabase/tests/polymorphic_pointer_comments_rls_test.sql",
    "supabase/tests/probe_065_101_rls_test.sql",
+   "supabase/tests/probe_083_crm_queue_rls_test.sql",
+   "supabase/tests/probe_083b_cron_tick_rls_test.sql",
    "supabase/tests/probe_129_polymorphic_rls_test.sql",
    "supabase/tests/probe_132_lgpd_entity_versions_rls_test.sql",
    "supabase/tests/rate_limit_logs_write_policies_rls_test.sql",
@@ -29169,6 +29188,22 @@
    {
     "kind": "revoke",
     "privs": "all",
+    "object": "token_cron_valido",
+    "objkind": "function",
+    "roles": "PUBLIC, anon, authenticated",
+    "src": "supabase/migrations/20261128110000_crm_sync_queue_cron.sql"
+   },
+   {
+    "kind": "grant",
+    "privs": "execute",
+    "object": "token_cron_valido",
+    "objkind": "function",
+    "roles": "postgres, service_role",
+    "src": "supabase/migrations/20261128110000_crm_sync_queue_cron.sql"
+   },
+   {
+    "kind": "revoke",
+    "privs": "all",
     "object": "claim_next_dialer_contact",
     "objkind": "function",
     "roles": "public, anon",
@@ -30595,7 +30630,8 @@
      "user_roles"
     ],
     "invokes_transitive": [
-     "bitrix-api"
+     "bitrix-api",
+     "sync-crm-queue"
     ],
     "rpc_transitive": [
      "log_audit_event"
@@ -32457,7 +32493,7 @@
     "methods": [
      "OPTIONS"
     ],
-    "auth": "service_role (ignora RLS) + valida JWT do usuário",
+    "auth": "PÚBLICA (verify_jwt=false em config.toml)",
     "tables": [
      "crm_sync_queue"
     ],
@@ -34865,7 +34901,7 @@
   {
    "module": "src/components",
    "files": 388,
-   "lines": 46016,
+   "lines": 46060,
    "tables": [
     "accounts",
     "agent_goals",
@@ -35443,8 +35479,8 @@
   },
   {
    "module": "src/lib",
-   "files": 184,
-   "lines": 22232,
+   "files": 185,
+   "lines": 22301,
    "tables": [
     "active_sessions",
     "call_quality_metrics",
@@ -35589,6 +35625,7 @@
     "src/lib/__tests__/accessibility-improvements.test.ts",
     "src/lib/__tests__/agent-assist-utils.test.ts",
     "src/lib/__tests__/agent-assist.pbt.test.ts",
+    "src/lib/__tests__/bitrix-sync-status.test.ts",
     "src/lib/__tests__/blf.test.ts",
     "src/lib/__tests__/call-park.test.ts",
     "src/lib/__tests__/call-queue.test.ts",
@@ -35609,8 +35646,7 @@
     "src/lib/__tests__/errorReporter.test.ts",
     "src/lib/__tests__/executive-dashboard-utils.test.ts",
     "src/lib/__tests__/export-audit-notifications.test.ts",
-    "src/lib/__tests__/favorite-sync-labels.test.ts",
-    "src/lib/__tests__/fixes-exhaustive.test.ts"
+    "src/lib/__tests__/favorite-sync-labels.test.ts"
    ]
   },
   {
@@ -35852,8 +35888,8 @@
   },
   {
    "module": "supabase/functions",
-   "files": 221,
-   "lines": 24657,
+   "files": 223,
+   "lines": 24789,
    "tables": [
     "account_lockouts",
     "accounts",
@@ -35951,6 +35987,7 @@
     "client-ip.ts: isIpLiteral, clientIpFromHeaders",
     "constant-time.ts: mesmaString",
     "cors.ts: getCorsOrigin, buildCorsHeaders",
+    "cron-db-token.ts: SEGREDO_CRON_FILA_CRM, tokenDoBearer, tokenCronValido",
     "digest.ts: UsuarioDigest, NotificacaoResumo, LeitorNotificacoes, desdeDoUsuario, ResultadoLeitura, lerNotificacoesEmLote",
     "errors.ts: InternalErrorBody, GENERIC_INTERNAL_MESSAGE, getCorrelationId, internalError, internalErrorResponse",
     "external-payload-schemas.ts: BitrixActionSchema, BitrixAction, BitrixRequestSchema, BitrixRequest, paramsSchemaFor, WebhookEventSchema",
@@ -35982,8 +36019,7 @@
     "index.ts: recordKb, handler",
     "index.ts: pickPolicy",
     "csv.ts: toCsv",
-    "track-engine.ts: CallSummary, CallSession, AgentStat, Weakness, TrackCandidate, Skipped",
-    "index.ts: SLO_TARGETS, handler"
+    "track-engine.ts: CallSummary, CallSession, AgentStat, Weakness, TrackCandidate, Skipped"
    ],
    "docs": [
     "geo-decision.test.ts: Etapa 141: as quatro combinacoes modo x pais + os casos de borda que nao podem ficar silenciosos (modo desconhecido, lista vazia, pais ausente).",
@@ -36011,6 +36047,7 @@
     "supabase/functions/_shared/client-ip_test.ts",
     "supabase/functions/_shared/constant-time.ts",
     "supabase/functions/_shared/cors.ts",
+    "supabase/functions/_shared/cron-db-token.ts",
     "supabase/functions/_shared/digest.ts",
     "supabase/functions/_shared/digest_test.ts",
     "supabase/functions/_shared/errors.ts",
@@ -36041,6 +36078,7 @@
     "supabase/functions/_shared/__tests__/capture-handler.ts",
     "supabase/functions/_shared/__tests__/client-ip.test.ts",
     "supabase/functions/_shared/__tests__/cors.test.ts",
+    "supabase/functions/_shared/__tests__/cron-db-token_test.ts",
     "supabase/functions/_shared/__tests__/local-supabase.ts",
     "supabase/functions/_shared/__tests__/rate-limit.test.ts",
     "supabase/functions/_shared/__tests__/resilience.test.ts",
@@ -36076,15 +36114,13 @@
     "supabase/functions/chatbot-respond/__tests__/upstream-falha.test.ts",
     "supabase/functions/check-alerts/index.ts",
     "supabase/functions/check-calling-hours/index.ts",
-    "supabase/functions/check-calling-hours/__tests__/index.test.ts",
-    "supabase/functions/check-contact-alerts/index.ts",
-    "supabase/functions/check-dnc/index.ts"
+    "supabase/functions/check-calling-hours/__tests__/index.test.ts"
    ]
   },
   {
    "module": "supabase/migrations",
-   "files": 276,
-   "lines": 17558,
+   "files": 278,
+   "lines": 17690,
    "tables": [],
    "exports": [],
    "docs": [],
@@ -36175,8 +36211,8 @@
   },
   {
    "module": "supabase/tests",
-   "files": 37,
-   "lines": 5805,
+   "files": 40,
+   "lines": 6001,
    "tables": [],
    "exports": [],
    "docs": [],
@@ -36188,6 +36224,7 @@
     "supabase/tests/calling_hours_fail_closed_rls_test.sql",
     "supabase/tests/claim_next_dialer_contact_rls_test.sql",
     "supabase/tests/client_errors_rls_test.sql",
+    "supabase/tests/crm_sync_queue_cron_rls_test.sql",
     "supabase/tests/crm_sync_queue_enqueue_rls_test.sql",
     "supabase/tests/crm_sync_queue_update_rls_test.sql",
     "supabase/tests/cron_credentials_rls_test.sql",
@@ -36208,6 +36245,8 @@
     "supabase/tests/policies_to_authenticated_restante_rls_test.sql",
     "supabase/tests/polymorphic_pointer_comments_rls_test.sql",
     "supabase/tests/probe_065_101_rls_test.sql",
+    "supabase/tests/probe_083_crm_queue_rls_test.sql",
+    "supabase/tests/probe_083b_cron_tick_rls_test.sql",
     "supabase/tests/probe_129_polymorphic_rls_test.sql",
     "supabase/tests/probe_132_lgpd_entity_versions_rls_test.sql",
     "supabase/tests/rate_limit_logs_write_policies_rls_test.sql",
@@ -39861,6 +39900,9 @@
    "runtime_rpc": [
     "scripts/ai-context/gerar.unit.mjs"
    ],
+   "token_cron_valido": [
+    "supabase/functions/_shared/cron-db-token.ts"
+   ],
    "tools_rpc": [
     "scripts/ai-context/gerar.unit.mjs"
    ],
@@ -40041,6 +40083,9 @@
    ],
    "suggest-shift-swaps": [
     "src/hooks/useShiftSwapSuggestions.ts"
+   ],
+   "sync-crm-queue": [
+    "src/components/settings/BitrixSyncStatus.tsx"
    ],
    "teams-fetch-recordings": [
     "src/pages/ExternalRecordingsImport.tsx"
@@ -42486,6 +42531,10 @@
    {
     "file": "src/components/security-alerts/WebhookHistoryEntryRow.tsx",
     "msg": "Não foi possível copiar"
+   },
+   {
+    "file": "src/components/settings/BitrixSyncStatus.tsx",
+    "msg": "Não foi possível processar a fila agora"
    },
    {
     "file": "src/components/settings/SystemMaintenancePanel.tsx",
@@ -45078,6 +45127,10 @@
    {
     "file": "supabase/functions/_shared/client-ip.ts",
     "text": "* Retorna o IP do cliente apenas quando ele e um literal valido; senao null. */"
+   },
+   {
+    "file": "supabase/functions/_shared/cron-db-token.ts",
+    "text": "SECURITY DEFINER, executavel apenas por postgres/service_role"
    },
    {
     "file": "supabase/functions/_shared/external-payload-schemas_test.ts",
@@ -52928,6 +52981,11 @@
     "value": "400"
    },
    {
+    "file": "supabase/functions/_shared/cron-db-token.ts",
+    "name": "SEGREDO_CRON_FILA_CRM",
+    "value": "'crm_sync_cron_token'"
+   },
+   {
     "file": "supabase/functions/_shared/digest.ts",
     "name": "TAMANHO_PAGINA",
     "value": "1000"
@@ -53056,6 +53114,11 @@
     "file": "supabase/functions/ocr-virtual-fax/index.ts",
     "name": "MAX_FAX_BYTES",
     "value": "20"
+   },
+   {
+    "file": "supabase/functions/sync-crm-queue/index.ts",
+    "name": "ITENS_POR_EXECUCAO",
+    "value": "50"
    },
    {
     "file": "supabase/functions/transcribe-recording/index.ts",
@@ -56006,6 +56069,36 @@
     "field": "status",
     "value": "failed",
     "kind": "escreve"
+   },
+   {
+    "file": "src/lib/bitrix/sync-log.ts",
+    "field": "status",
+    "value": "in_progress",
+    "kind": "compara"
+   },
+   {
+    "file": "src/lib/bitrix/sync-log.ts",
+    "field": "status",
+    "value": "processing",
+    "kind": "compara"
+   },
+   {
+    "file": "src/lib/bitrix/sync-log.ts",
+    "field": "status",
+    "value": "success",
+    "kind": "compara"
+   },
+   {
+    "file": "src/lib/bitrix/sync-log.ts",
+    "field": "status",
+    "value": "completed",
+    "kind": "compara"
+   },
+   {
+    "file": "src/lib/bitrix/sync-log.ts",
+    "field": "status",
+    "value": "failed",
+    "kind": "compara"
    },
    {
     "file": "src/lib/security/penetration-test-reporter.ts",
@@ -67088,6 +67181,26 @@
     "name": "matchesKeywords: handles composite keywords regardless of order"
    },
    {
+    "file": "src/lib/__tests__/bitrix-sync-status.test.ts",
+    "name": "normalizarSyncStatus"
+   },
+   {
+    "file": "src/lib/__tests__/bitrix-sync-status.test.ts",
+    "name": "traduz o vocabulario da edge"
+   },
+   {
+    "file": "src/lib/__tests__/bitrix-sync-status.test.ts",
+    "name": "preserva o vocabulario do front"
+   },
+   {
+    "file": "src/lib/__tests__/bitrix-sync-status.test.ts",
+    "name": "cai em pendente para nulo, vazio e valor desconhecido"
+   },
+   {
+    "file": "src/lib/__tests__/bitrix-sync-status.test.ts",
+    "name": "nunca devolve status fora do contrato da UI"
+   },
+   {
     "file": "src/lib/__tests__/blf.test.ts",
     "name": "blf: helpers puros"
    },
@@ -73664,6 +73777,30 @@
     "name": "cors: preflight anuncia os headers usados pelo front"
    },
    {
+    "file": "supabase/functions/_shared/__tests__/cron-db-token_test.ts",
+    "name": "tokenDoBearer: aceita o formato do cron"
+   },
+   {
+    "file": "supabase/functions/_shared/__tests__/cron-db-token_test.ts",
+    "name": "tokenDoBearer: recusa header ausente, sem prefixo ou vazio"
+   },
+   {
+    "file": "supabase/functions/_shared/__tests__/cron-db-token_test.ts",
+    "name": "tokenCronValido: true apenas quando o banco devolve true"
+   },
+   {
+    "file": "supabase/functions/_shared/__tests__/cron-db-token_test.ts",
+    "name": "tokenCronValido: false quando o banco nega ou erra"
+   },
+   {
+    "file": "supabase/functions/_shared/__tests__/cron-db-token_test.ts",
+    "name": "tokenCronValido: nao chama o banco sem token"
+   },
+   {
+    "file": "supabase/functions/_shared/__tests__/cron-db-token_test.ts",
+    "name": "tokenCronValido: excecao do cliente vira false (cai no caminho de sessao)"
+   },
+   {
     "file": "supabase/functions/_shared/__tests__/rate-limit.test.ts",
     "name": "rate-limit: DB liberado devolve allowed"
    },
@@ -75012,6 +75149,10 @@
    },
    {
     "file": "src/components/network/SlaReportCards.tsx",
+    "call": "invoke("
+   },
+   {
+    "file": "src/components/settings/BitrixSyncStatus.tsx",
     "call": "invoke("
    },
    {
@@ -83619,6 +83760,19 @@
      "v_row"
     ]
    },
+   "token_cron_valido": {
+    "args": "p_nome text, p_token text",
+    "returns": "boolean",
+    "lang": "sql",
+    "src": "supabase/migrations/20261128110000_crm_sync_queue_cron.sql",
+    "security_definer": true,
+    "search_path": true,
+    "body": "SELECT p_token IS NOT NULL AND length(p_token) >= 32 AND EXISTS ( SELECT 1 FROM vault.decrypted_secrets s WHERE s.name = p_nome AND s.decrypted_secret = p_token );",
+    "raises": [],
+    "tables": [
+     "vault"
+    ]
+   },
    "claim_next_dialer_contact": {
     "args": "p_campaign_id uuid",
     "returns": "setof public.dialer_queue",
@@ -84227,10 +84381,6 @@
     "limit": "500"
    },
    {
-    "file": "supabase/functions/sync-crm-queue/index.ts",
-    "limit": "10"
-   },
-   {
     "file": "supabase/functions/validate-geo/index.ts",
     "limit": "1"
    },
@@ -84824,6 +84974,7 @@
      "success": [
       "compara:src/components/admin/ldap/LDAPLogsTab.tsx",
       "compara:src/components/settings/BitrixSyncStatus.tsx",
+      "compara:src/lib/bitrix/sync-log.ts",
       "compara:src/pages/VerifyEmail.tsx",
       "compara:supabase/functions/validate-geo/index.ts",
       "escreve:src/components/admin/ldap/types.ts",
@@ -84893,6 +85044,7 @@
       "compara:src/hooks/useQueueMetrics.ts",
       "compara:src/hooks/useRedactionLog.ts",
       "compara:src/hooks/useSuccessPlans.ts",
+      "compara:src/lib/bitrix/sync-log.ts",
       "compara:src/pages/CallHistory.tsx",
       "compara:src/pages/NumberPorting.tsx",
       "compara:src/pages/PasswordResetApproval.tsx",
@@ -84985,6 +85137,7 @@
      "failed": [
       "compara:src/components/calls/MeetingSummaryCard.tsx",
       "compara:src/components/settings/BitrixSyncStatus.tsx",
+      "compara:src/lib/bitrix/sync-log.ts",
       "compara:src/pages/VirtualFax.tsx",
       "compara:supabase/functions/compute-best-time/index.ts",
       "escreve:src/lib/bitrix/sync-log.ts",
@@ -85030,6 +85183,7 @@
       "compara:src/components/coaching/CoachingPanel.tsx",
       "compara:src/components/settings/BitrixSyncStatus.tsx",
       "compara:src/hooks/useCoaching.ts",
+      "compara:src/lib/bitrix/sync-log.ts",
       "escreve:src/lib/bitrix/sync-log.ts"
      ],
      "insufficient_data": [
@@ -85188,6 +85342,7 @@
      ],
      "processing": [
       "compara:src/hooks/useDataLakeExports.ts",
+      "compara:src/lib/bitrix/sync-log.ts",
       "escreve:supabase/functions/data-lake-flush/index.ts",
       "escreve:supabase/functions/export-data-lake/index.ts",
       "escreve:supabase/functions/sync-crm-queue/index.ts"
@@ -88580,6 +88735,7 @@
    "scripts/test-rls-access.mjs",
    "scripts/test-validate-ip.mjs",
    "supabase/functions/_shared/__tests__/rate-limit.test.ts",
+   "supabase/functions/_shared/cron-db-token.ts",
    "supabase/functions/_shared/hmac.ts",
    "supabase/functions/_shared/rate-limit.ts",
    "supabase/functions/_shared/validator.ts",
@@ -88701,7 +88857,9 @@
    "supabase/migrations/20261127200000_revoke_anon_role_helpers.sql",
    "supabase/migrations/20261127250000_increment_weekly_stats_rpc.sql",
    "supabase/migrations/20261127280000_is_own_call_session_grants.sql",
+   "supabase/migrations/20261128110000_crm_sync_queue_cron.sql",
    "supabase/migrations/20261128130000_crm_sync_queue_enqueue_author.sql",
+   "supabase/tests/crm_sync_queue_cron_rls_test.sql",
    "supabase/tests/increment_weekly_stats_rpc_rls_test.sql",
    "supabase/tests/login_lockout_acl_rls_test.sql",
    "supabase/tests/redaction_log_rls_test.sql",
@@ -88785,6 +88943,7 @@
    "reset_public_index_stats",
    "snapshot_deals_daily",
    "sync_profile_role_from_user_roles",
+   "token_cron_valido",
    "trg_recalc_deals_on_interaction",
    "trigger_auto_scorecard",
    "validate_audit_insert",
@@ -88799,7 +88958,8 @@
    "dialer-pacing-tick",
    "generate-coaching-track",
    "data-lake-flush",
-   "login-attempt"
+   "login-attempt",
+   "sync-crm-queue"
   ],
   "auth_config": {},
   "grants": [
@@ -91098,6 +91258,22 @@
     "objkind": "function",
     "roles": "authenticated, service_role",
     "src": "supabase/migrations/20261127280000_is_own_call_session_grants.sql"
+   },
+   {
+    "kind": "revoke",
+    "privs": "all",
+    "object": "token_cron_valido",
+    "objkind": "function",
+    "roles": "PUBLIC, anon, authenticated",
+    "src": "supabase/migrations/20261128110000_crm_sync_queue_cron.sql"
+   },
+   {
+    "kind": "grant",
+    "privs": "execute",
+    "object": "token_cron_valido",
+    "objkind": "function",
+    "roles": "postgres, service_role",
+    "src": "supabase/migrations/20261128110000_crm_sync_queue_cron.sql"
    },
    {
     "kind": "revoke",
@@ -99303,7 +99479,7 @@
   },
   "src/components/settings/BitrixSyncStatus.tsx": {
    "path": "src/components/settings/BitrixSyncStatus.tsx",
-   "lines": 255,
+   "lines": 299,
    "exports": [
     "function BitrixSyncStatus"
    ],
@@ -99313,8 +99489,14 @@
      "op": "select"
     }
    ],
+   "invokes": [
+    "sync-crm-queue"
+   ],
    "channels": [
     "crm-sync-queue-live"
+   ],
+   "errors": [
+    "Não foi possível processar a fila agora"
    ],
    "status_values": [
     {
@@ -99362,6 +99544,9 @@
      "value": "pending",
      "kind": "compara"
     }
+   ],
+   "side_effects": [
+    "invoke("
    ],
    "pagination": [
     "30"
@@ -113291,6 +113476,18 @@
     "matchesKeywords: handles composite keywords regardless of order"
    ]
   },
+  "src/lib/__tests__/bitrix-sync-status.test.ts": {
+   "path": "src/lib/__tests__/bitrix-sync-status.test.ts",
+   "lines": 48,
+   "is_test": true,
+   "tests": [
+    "normalizarSyncStatus",
+    "traduz o vocabulario da edge",
+    "preserva o vocabulario do front",
+    "cai em pendente para nulo, vazio e valor desconhecido",
+    "nunca devolve status fora do contrato da UI"
+   ]
+  },
   "src/lib/__tests__/blf.test.ts": {
    "path": "src/lib/__tests__/blf.test.ts",
    "lines": 306,
@@ -115481,9 +115678,10 @@
   },
   "src/lib/bitrix/sync-log.ts": {
    "path": "src/lib/bitrix/sync-log.ts",
-   "lines": 91,
+   "lines": 112,
    "exports": [
     "type SyncAttemptStatus",
+    "const normalizarSyncStatus",
     "interface SyncAttempt",
     "function startSyncAttempt",
     "function markSyncSuccess",
@@ -115530,6 +115728,31 @@
      "field": "status",
      "value": "failed",
      "kind": "escreve"
+    },
+    {
+     "field": "status",
+     "value": "in_progress",
+     "kind": "compara"
+    },
+    {
+     "field": "status",
+     "value": "processing",
+     "kind": "compara"
+    },
+    {
+     "field": "status",
+     "value": "success",
+     "kind": "compara"
+    },
+    {
+     "field": "status",
+     "value": "completed",
+     "kind": "compara"
+    },
+    {
+     "field": "status",
+     "value": "failed",
+     "kind": "compara"
     }
    ]
   },
@@ -119985,6 +120208,28 @@
    ],
    "doc": "Centralized CORS configuration for all Edge Functions Only known origins are echoed back; unknown origins get no CORS header"
   },
+  "supabase/functions/_shared/cron-db-token.ts": {
+   "path": "supabase/functions/_shared/cron-db-token.ts",
+   "lines": 54,
+   "exports": [
+    "const SEGREDO_CRON_FILA_CRM",
+    "function tokenDoBearer",
+    "function tokenCronValido"
+   ],
+   "rpc": [
+    "token_cron_valido"
+   ],
+   "params": [
+    {
+     "name": "SEGREDO_CRON_FILA_CRM",
+     "value": "'crm_sync_cron_token'"
+    }
+   ],
+   "rule_comments": [
+    "SECURITY DEFINER, executavel apenas por postgres/service_role"
+   ],
+   "uses_service_role": true
+  },
   "supabase/functions/_shared/digest.ts": {
    "path": "supabase/functions/_shared/digest.ts",
    "lines": 116,
@@ -120710,6 +120955,20 @@
     "cors: sem header Origin nao emite Access-Control-Allow-Origin",
     "cors: CORS_EXTRA_ORIGINS libera origem adicional",
     "cors: preflight anuncia os headers usados pelo front"
+   ]
+  },
+  "supabase/functions/_shared/__tests__/cron-db-token_test.ts": {
+   "path": "supabase/functions/_shared/__tests__/cron-db-token_test.ts",
+   "lines": 63,
+   "is_test": true,
+   "doc": "O cron da fila do CRM (migration 20261128110000) manda um bearer opaco lido do Vault e a edge confere no banco. Estes testes cobrem a decisao pura: o que e aceito como token e quando o banco autoriza.",
+   "tests": [
+    "tokenDoBearer: aceita o formato do cron",
+    "tokenDoBearer: recusa header ausente, sem prefixo ou vazio",
+    "tokenCronValido: true apenas quando o banco devolve true",
+    "tokenCronValido: false quando o banco nega ou erra",
+    "tokenCronValido: nao chama o banco sem token",
+    "tokenCronValido: excecao do cliente vira false (cai no caminho de sessao)"
    ]
   },
   "supabase/functions/_shared/__tests__/local-supabase.ts": {
@@ -125197,7 +125456,7 @@
   },
   "supabase/functions/sync-crm-queue/index.ts": {
    "path": "supabase/functions/sync-crm-queue/index.ts",
-   "lines": 129,
+   "lines": 144,
    "tables": [
     {
      "table": "crm_sync_queue",
@@ -125231,6 +125490,12 @@
     "SUPABASE_ANON_KEY",
     "SUPABASE_SERVICE_ROLE_KEY",
     "SUPABASE_URL"
+   ],
+   "params": [
+    {
+     "name": "ITENS_POR_EXECUCAO",
+     "value": "50"
+    }
    ],
    "status_values": [
     {
@@ -125269,9 +125534,6 @@
    ],
    "side_effects": [
     "invoke("
-   ],
-   "pagination": [
-    "10"
    ],
    "uses_service_role": true
   },
@@ -128766,6 +129028,15 @@
    "lines": 15,
    "uses_service_role": true
   },
+  "supabase/migrations/20261128110000_crm_sync_queue_cron.sql": {
+   "path": "supabase/migrations/20261128110000_crm_sync_queue_cron.sql",
+   "lines": 88,
+   "uses_service_role": true
+  },
+  "supabase/migrations/20261128123000_crm_sync_queue_cron_guard.sql": {
+   "path": "supabase/migrations/20261128123000_crm_sync_queue_cron_guard.sql",
+   "lines": 44
+  },
   "supabase/migrations/20261128130000_crm_sync_queue_enqueue_author.sql": {
    "path": "supabase/migrations/20261128130000_crm_sync_queue_enqueue_author.sql",
    "lines": 37,
@@ -128806,6 +129077,12 @@
    "path": "supabase/tests/client_errors_rls_test.sql",
    "lines": 176,
    "is_test": true
+  },
+  "supabase/tests/crm_sync_queue_cron_rls_test.sql": {
+   "path": "supabase/tests/crm_sync_queue_cron_rls_test.sql",
+   "lines": 98,
+   "is_test": true,
+   "uses_service_role": true
   },
   "supabase/tests/crm_sync_queue_enqueue_rls_test.sql": {
    "path": "supabase/tests/crm_sync_queue_enqueue_rls_test.sql",
@@ -128932,6 +129209,16 @@
     "into r from public.call_sessions where created_at > now() - interval '7 days';",
     "where created_at > now() - interval '7 days'"
    ]
+  },
+  "supabase/tests/probe_083_crm_queue_rls_test.sql": {
+   "path": "supabase/tests/probe_083_crm_queue_rls_test.sql",
+   "lines": 50,
+   "is_test": true
+  },
+  "supabase/tests/probe_083b_cron_tick_rls_test.sql": {
+   "path": "supabase/tests/probe_083b_cron_tick_rls_test.sql",
+   "lines": 48,
+   "is_test": true
   },
   "supabase/tests/probe_129_polymorphic_rls_test.sql": {
    "path": "supabase/tests/probe_129_polymorphic_rls_test.sql",
@@ -129180,10 +129467,32 @@
   }
  },
  "git": {
-  "sha": "c443721c4b2f0f97b7fdb807e4933948c5cce9c6",
+  "sha": "e7f0148f5fa3328dbda58947009e497f2acedba7",
   "branch": "main",
   "remote": "https://github.com/adm01-debug/Hello_V3",
   "commits": [
+   {
+    "sha": "e7f0148",
+    "date": "2026-11-28",
+    "author": "adm01-debug",
+    "subject": "feat: dar gatilho a fila do CRM (job de 5 min) e corrigir status na tela (etapa 083) (#371)",
+    "files": [
+     "docs/agentes/banco.md",
+     "docs/qa/05-PROGRESSO.md",
+     "src/components/settings/BitrixSyncStatus.tsx",
+     "src/lib/__tests__/bitrix-sync-status.test.ts",
+     "src/lib/bitrix/sync-log.ts",
+     "supabase/config.toml",
+     "supabase/functions/_shared/__tests__/cron-db-token_test.ts",
+     "supabase/functions/_shared/cron-db-token.ts",
+     "supabase/functions/sync-crm-queue/index.ts",
+     "supabase/migrations/20261128110000_crm_sync_queue_cron.sql",
+     "supabase/migrations/20261128123000_crm_sync_queue_cron_guard.sql",
+     "supabase/tests/crm_sync_queue_cron_rls_test.sql",
+     "supabase/tests/probe_083_crm_queue_rls_test.sql",
+     "supabase/tests/probe_083b_cron_tick_rls_test.sql"
+    ]
+   },
    {
     "sha": "c443721",
     "date": "2026-11-28",
@@ -129533,18 +129842,6 @@
      "docs/qa/05-PROGRESSO.md",
      "supabase/tests/probe_132_lgpd_entity_versions_rls_test.sql"
     ]
-   },
-   {
-    "sha": "0ecc7a7",
-    "date": "2026-11-26",
-    "author": "adm01-debug",
-    "subject": "fix: meta atingida vira notificacao do usuario, nao alerta de chamada (etapa 127) (#367)",
-    "files": [
-     "docs/qa/05-PROGRESSO.md",
-     "src/hooks/__tests__/useAgentRanking.coverage.test.tsx",
-     "src/hooks/useAgentRanking.ts",
-     "supabase/tests/goals_achieved_notification_rls_test.sql"
-    ]
    }
   ],
   "hot_files": [
@@ -129554,7 +129851,7 @@
    ],
    [
     "docs/agentes/banco.md",
-    5
+    6
    ],
    [
     "src/integrations/supabase/types.ts",
@@ -129569,6 +129866,54 @@
     2
    ],
    [
+    "src/components/settings/BitrixSyncStatus.tsx",
+    1
+   ],
+   [
+    "src/lib/__tests__/bitrix-sync-status.test.ts",
+    1
+   ],
+   [
+    "src/lib/bitrix/sync-log.ts",
+    1
+   ],
+   [
+    "supabase/config.toml",
+    1
+   ],
+   [
+    "supabase/functions/_shared/__tests__/cron-db-token_test.ts",
+    1
+   ],
+   [
+    "supabase/functions/_shared/cron-db-token.ts",
+    1
+   ],
+   [
+    "supabase/functions/sync-crm-queue/index.ts",
+    1
+   ],
+   [
+    "supabase/migrations/20261128110000_crm_sync_queue_cron.sql",
+    1
+   ],
+   [
+    "supabase/migrations/20261128123000_crm_sync_queue_cron_guard.sql",
+    1
+   ],
+   [
+    "supabase/tests/crm_sync_queue_cron_rls_test.sql",
+    1
+   ],
+   [
+    "supabase/tests/probe_083_crm_queue_rls_test.sql",
+    1
+   ],
+   [
+    "supabase/tests/probe_083b_cron_tick_rls_test.sql",
+    1
+   ],
+   [
     "src/hooks/__tests__/useBitrix.coverage.test.tsx",
     1
    ],
@@ -129578,54 +129923,6 @@
    ],
    [
     "supabase/migrations/20261128130000_crm_sync_queue_enqueue_author.sql",
-    1
-   ],
-   [
-    "supabase/tests/crm_sync_queue_enqueue_rls_test.sql",
-    1
-   ],
-   [
-    "src/hooks/__tests__/useMultiChannelCall.bitrixBridge.test.tsx",
-    1
-   ],
-   [
-    "src/hooks/useMultiChannelCall.ts",
-    1
-   ],
-   [
-    "supabase/migrations/20261128140000_call_sessions_bitrix_call_id.sql",
-    1
-   ],
-   [
-    "supabase/tests/call_sessions_bitrix_call_id_rls_test.sql",
-    1
-   ],
-   [
-    "src/hooks/__tests__/usePredictiveDialer.coverage.test.tsx",
-    1
-   ],
-   [
-    "src/hooks/predictive-dialer/api.ts",
-    1
-   ],
-   [
-    "src/hooks/usePredictiveDialer.ts",
-    1
-   ],
-   [
-    "supabase/migrations/20261128150000_claim_next_dialer_contact.sql",
-    1
-   ],
-   [
-    "supabase/tests/claim_next_dialer_contact_rls_test.sql",
-    1
-   ],
-   [
-    "src/hooks/__tests__/useSupervisorPanel.coverage.test.tsx",
-    1
-   ],
-   [
-    "src/hooks/useSupervisorPanel.ts",
     1
    ]
   ]

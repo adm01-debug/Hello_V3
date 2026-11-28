@@ -1927,6 +1927,7 @@
     "send-survey",
     "sip-config",
     "suggest-shift-swaps",
+    "sync-crm-queue",
     "teams-fetch-recordings",
     "transcribe-recording",
     "translate-utterance",
@@ -3000,7 +3001,7 @@
    "modulo": "components/settings",
    "arquivos": 6,
    "testes": 0,
-   "linhas": 767,
+   "linhas": 811,
    "itens_menu": [],
    "telas": [],
    "rotas_http": [],
@@ -3018,7 +3019,8 @@
    ],
    "hooks_definidos": [],
    "edges": [
-    "bitrix-api"
+    "bitrix-api",
+    "sync-crm-queue"
    ],
    "tabelas": [
     "audit_logs",
@@ -3043,7 +3045,9 @@
    "flags": [],
    "papeis": [],
    "diretos": {
-    "edges": [],
+    "edges": [
+     "sync-crm-queue"
+    ],
     "tabelas": [
      "audit_logs",
      "crm_sync_queue",
@@ -5052,6 +5056,7 @@
     "generate-meeting-summary",
     "realtime-analysis",
     "sip-config",
+    "sync-crm-queue",
     "transcribe-recording",
     "translate-utterance",
     "voice-command",
@@ -5298,7 +5303,7 @@
   {
    "modulo": "lib/__tests__",
    "arquivos": 0,
-   "testes": 78,
+   "testes": 79,
    "linhas": 0,
    "itens_menu": [],
    "telas": [],
@@ -5396,7 +5401,7 @@
    "modulo": "lib/bitrix",
    "arquivos": 2,
    "testes": 0,
-   "linhas": 191,
+   "linhas": 212,
    "itens_menu": [],
    "telas": [],
    "rotas_http": [],
@@ -6248,6 +6253,7 @@
     "send-survey",
     "sip-config",
     "suggest-shift-swaps",
+    "sync-crm-queue",
     "teams-fetch-recordings",
     "transcribe-recording",
     "translate-utterance",
@@ -7289,6 +7295,7 @@
     "send-survey",
     "sip-config",
     "suggest-shift-swaps",
+    "sync-crm-queue",
     "teams-fetch-recordings",
     "transcribe-recording",
     "translate-utterance",

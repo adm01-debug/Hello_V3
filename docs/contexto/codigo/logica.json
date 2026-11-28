@@ -555,10 +555,11 @@
     "actionLabel",
     "markSyncFailure",
     "markSyncSuccess",
+    "normalizarSyncStatus",
     "startSyncAttempt"
    ],
    "export_default": null,
-   "linhas": 91,
+   "linhas": 112,
    "tabelas": [
     "crm_sync_queue"
    ],
@@ -574,7 +575,7 @@
     "components/settings",
     "hooks"
    ],
-   "coberto_por_testes": 0,
+   "coberto_por_testes": 1,
    "orfao": false
   },
   {

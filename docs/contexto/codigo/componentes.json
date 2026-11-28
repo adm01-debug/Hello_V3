@@ -3805,13 +3805,15 @@
     "BitrixSyncStatus"
    ],
    "export_default": null,
-   "linhas": 255,
+   "linhas": 299,
    "dominio": "components/settings",
    "hooks_locais": [],
    "tabelas": [
     "crm_sync_queue"
    ],
-   "edges": [],
+   "edges": [
+    "sync-crm-queue"
+   ],
    "usado_por": 1,
    "orfao": false
   },

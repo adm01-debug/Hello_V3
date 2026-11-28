@@ -9,7 +9,8 @@
   "data-lake-flush",
   "dialer-pacing-tick",
   "generate-coaching-track",
-  "login-attempt"
+  "login-attempt",
+  "sync-crm-queue"
  ],
  "shared": [
   "supabase/functions/_shared/__tests__/allowed-hosts.test.ts",
@@ -17,6 +18,7 @@
   "supabase/functions/_shared/__tests__/capture-handler.ts",
   "supabase/functions/_shared/__tests__/client-ip.test.ts",
   "supabase/functions/_shared/__tests__/cors.test.ts",
+  "supabase/functions/_shared/__tests__/cron-db-token_test.ts",
   "supabase/functions/_shared/__tests__/local-supabase.ts",
   "supabase/functions/_shared/__tests__/rate-limit.test.ts",
   "supabase/functions/_shared/__tests__/resilience.test.ts",
@@ -32,6 +34,7 @@
   "supabase/functions/_shared/client-ip_test.ts",
   "supabase/functions/_shared/constant-time.ts",
   "supabase/functions/_shared/cors.ts",
+  "supabase/functions/_shared/cron-db-token.ts",
   "supabase/functions/_shared/digest.ts",
   "supabase/functions/_shared/digest_test.ts",
   "supabase/functions/_shared/errors.ts",
@@ -2389,8 +2392,8 @@
    "nome": "sync-crm-queue",
    "entrada": "supabase/functions/sync-crm-queue/index.ts",
    "arquivos": 1,
-   "linhas": 129,
-   "verify_jwt": true,
+   "linhas": 144,
+   "verify_jwt": false,
    "metodos": [
     "OPTIONS"
    ],
@@ -2410,12 +2413,15 @@
    "hosts_externos": [],
    "usa_shared": [
     "cors.ts",
+    "cron-db-token.ts",
     "errors.ts"
    ],
-   "chamada_pelo_front": [],
+   "chamada_pelo_front": [
+    "src/components/settings/BitrixSyncStatus.tsx"
+   ],
    "chamada_por_edges": [],
    "chamada_por_sql_ou_cron": false,
-   "orfa": true,
+   "orfa": false,
    "testes": 0
   },
   {
