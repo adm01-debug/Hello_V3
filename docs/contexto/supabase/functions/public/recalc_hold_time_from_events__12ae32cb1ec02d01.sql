@@ -6,7 +6,6 @@ AS $function$
 DECLARE
   v_session_id uuid;
 BEGIN
-  -- Descobre a sessao do evento alterado (novo ou antigo, caso call_session_id mude)
   v_session_id := COALESCE(NEW.call_session_id, OLD.call_session_id);
   IF v_session_id IS NULL THEN
     RETURN COALESCE(NEW, OLD);

@@ -2,6 +2,16 @@
 
 Diff semântico gerado a cada coleta em que algo mudou.
 
+## 2026-11-28 17:11 UTC
+
+- **cron jobs** adicionado (2): `67:crm-sync-queue`, `68:cadence-tick`
+- **cron jobs** removido (2): `61:cadence-tick`, `65:crm-sync-queue`
+- **functions** alterado (6): `public.cadence_tick(p_limit integer)`, `public.edge_function_url(p_slug text)`, `public.get_user_agent_name()`, `public.is_admin_or_supervisor()`, `public.recalc_hold_time_from_events()`, `public.token_cron_valido(p_nome text, p_token text)`
+- **migrations** adicionado (3): `20261128100000_cadence_tick_motor`, `20261128110000_crm_sync_queue_cron`, `20261128123000_crm_sync_queue_cron_guard`
+- **realtime** removido (1): `supabase_realtime_messages_publication:realtime.messages_2026_11_24`
+- **triggers** adicionado (2): `public.hold_events.trg_hold_events_recalc_hold_time_del`, `public.hold_events.trg_hold_events_recalc_hold_time_ins`
+- **triggers** alterado (1): `public.hold_events.trg_hold_events_recalc_hold_time`
+
 ## 2026-11-28 16:13 UTC
 
 - **functions** alterado (6): `public.check_calling_hours(p_region_code text)`, `public.claim_next_dialer_contact(p_campaign_id uuid)`, `public.get_user_agent_name()`, `public.is_admin()`, `public.is_admin_or_supervisor()`, `public.is_own_call_session(_call_session_id uuid)`

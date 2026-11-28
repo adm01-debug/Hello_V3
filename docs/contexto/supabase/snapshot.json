@@ -32408,20 +32408,20 @@
         },
         {
           "active": true,
-          "command": " select public.cadence_tick(200); ",
+          "command": "\n  SELECT net.http_post(\n    url := public.edge_function_url('sync-crm-queue'),\n    headers := jsonb_build_object(\n      'Content-Type', 'application/json',\n      'Authorization', 'Bearer ' || (\n        SELECT decrypted_secret FROM vault.decrypted_secrets WHERE name = 'crm_sync_cron_token'\n      )\n    ),\n    body := jsonb_build_object('trigger', 'cron', 'limit', 50)\n  )\n  WHERE EXISTS (\n    SELECT 1\n      FROM public.crm_sync_queue q\n     WHERE q.status IN ('pending', 'failed')\n       AND q.next_retry_at <= now()\n       AND coalesce(q.attempts, 0) < 5\n  );\n  ",
           "database": "postgres",
-          "jobid": 61,
-          "jobname": "cadence-tick",
-          "schedule": "*/15 * * * *",
+          "jobid": 67,
+          "jobname": "crm-sync-queue",
+          "schedule": "*/5 * * * *",
           "username": "postgres"
         },
         {
           "active": true,
-          "command": "\n  SELECT net.http_post(\n    url := public.edge_function_url('sync-crm-queue'),\n    headers := jsonb_build_object(\n      'Content-Type', 'application/json',\n      'Authorization', 'Bearer ' || (\n        SELECT decrypted_secret FROM vault.decrypted_secrets WHERE name = 'crm_sync_cron_token'\n      )\n    ),\n    body := jsonb_build_object('trigger', 'cron', 'limit', 50)\n  )\n  WHERE EXISTS (\n    SELECT 1\n      FROM public.crm_sync_queue q\n     WHERE q.status IN ('pending', 'failed')\n       AND q.next_retry_at <= now()\n       AND coalesce(q.attempts, 0) < 5\n  );\n  ",
+          "command": " select public.cadence_tick(200); ",
           "database": "postgres",
-          "jobid": 65,
-          "jobname": "crm-sync-queue",
-          "schedule": "*/5 * * * *",
+          "jobid": 68,
+          "jobname": "cadence-tick",
+          "schedule": "*/15 * * * *",
           "username": "postgres"
         }
       ]
@@ -32719,10 +32719,15 @@
       {
         "args": "p_limit integer",
         "callers": {
-          "code": [],
-          "code_total_files": 0,
+          "code": [
+            {
+              "file": "supabase/migrations/20261128100000_cadence_tick_motor.sql",
+              "hits": 1
+            }
+          ],
+          "code_total_files": 1,
           "cron": [
-            "61:cadence-tick"
+            "68:cadence-tick"
           ],
           "db": [],
           "triggers": [],
@@ -33603,16 +33608,24 @@
             {
               "file": "supabase/migrations/20261126100100_fix_cron_urls_quoting.sql",
               "hits": 6
+            },
+            {
+              "file": "supabase/migrations/20261128110000_crm_sync_queue_cron.sql",
+              "hits": 1
+            },
+            {
+              "file": "supabase/migrations/20261128123000_crm_sync_queue_cron_guard.sql",
+              "hits": 1
             }
           ],
-          "code_total_files": 2,
+          "code_total_files": 4,
           "cron": [
             "11:generate-coaching-tracks-daily",
             "12:dialer-pacing-tick",
             "14:cleanup-lock-conflicts-weekly",
             "16:data-lake-flush-daily",
             "33:cleanup-recordings-daily",
-            "65:crm-sync-queue"
+            "67:crm-sync-queue"
           ],
           "db": [
             "public.trigger_auto_scorecard"
@@ -34518,7 +34531,7 @@
               "hits": 2
             }
           ],
-          "code_total_files": 37,
+          "code_total_files": 38,
           "cron": [],
           "db": [
             "public.can_access_agent_data",
@@ -35192,7 +35205,7 @@
               "hits": 2
             }
           ],
-          "code_total_files": 88,
+          "code_total_files": 89,
           "cron": [],
           "db": [
             "public.can_access_agent_data",
@@ -36073,7 +36086,9 @@
           "cron": [],
           "db": [],
           "triggers": [
-            "public.hold_events.trg_hold_events_recalc_hold_time"
+            "public.hold_events.trg_hold_events_recalc_hold_time",
+            "public.hold_events.trg_hold_events_recalc_hold_time_del",
+            "public.hold_events.trg_hold_events_recalc_hold_time_ins"
           ],
           "views": []
         },
@@ -36082,7 +36097,7 @@
           "search_path=public"
         ],
         "definition": null,
-        "definition_sha": "7fa825032c496e5d",
+        "definition_sha": "4439c26a476f92d6",
         "execute_api_roles": "anon, authenticated, service_role",
         "execute_public": true,
         "is_trigger_fn": true,
@@ -36395,8 +36410,17 @@
       {
         "args": "p_nome text, p_token text",
         "callers": {
-          "code": [],
-          "code_total_files": 0,
+          "code": [
+            {
+              "file": "supabase/functions/_shared/cron-db-token.ts",
+              "hits": 3
+            },
+            {
+              "file": "supabase/migrations/20261128110000_crm_sync_queue_cron.sql",
+              "hits": 1
+            }
+          ],
+          "code_total_files": 2,
           "cron": [],
           "db": [],
           "triggers": [],
@@ -49886,6 +49910,24 @@
         "version": "20261127280000"
       },
       {
+        "name": "cadence_tick_motor",
+        "statements": 14,
+        "statements_sha": "0a39455fca9ef93e",
+        "version": "20261128100000"
+      },
+      {
+        "name": "crm_sync_queue_cron",
+        "statements": 6,
+        "statements_sha": "1058895b91d639d7",
+        "version": "20261128110000"
+      },
+      {
+        "name": "crm_sync_queue_cron_guard",
+        "statements": 2,
+        "statements_sha": "5a6575b33cdb3dd9",
+        "version": "20261128123000"
+      },
+      {
         "name": "crm_sync_queue_enqueue_author",
         "statements": 8,
         "statements_sha": "2c7d8b9a60e642f0",
@@ -55645,11 +55687,6 @@
         {
           "publication": "supabase_realtime_messages_publication",
           "schema": "realtime",
-          "table": "messages_2026_11_24"
-        },
-        {
-          "publication": "supabase_realtime_messages_publication",
-          "schema": "realtime",
           "table": "messages_2026_11_25"
         },
         {
@@ -59170,11 +59207,33 @@
         "timing": "BEFORE"
       },
       {
-        "definition": "CREATE TRIGGER trg_hold_events_recalc_hold_time AFTER UPDATE OF ended_at ON hold_events FOR EACH ROW WHEN (new.ended_at IS DISTINCT FROM old.ended_at) EXECUTE FUNCTION recalc_hold_time_from_events()",
+        "definition": "CREATE TRIGGER trg_hold_events_recalc_hold_time AFTER UPDATE OF ended_at, started_at, call_session_id ON hold_events FOR EACH ROW WHEN (new.ended_at IS DISTINCT FROM old.ended_at OR new.started_at IS DISTINCT FROM old.started_at OR new.call_session_id IS DISTINCT FROM old.call_session_id) EXECUTE FUNCTION recalc_hold_time_from_events()",
         "events": "UPDATE",
         "function": "public.recalc_hold_time_from_events",
         "level": "ROW",
         "name": "trg_hold_events_recalc_hold_time",
+        "schema": "public",
+        "status": "enabled",
+        "table": "hold_events",
+        "timing": "AFTER"
+      },
+      {
+        "definition": "CREATE TRIGGER trg_hold_events_recalc_hold_time_del AFTER DELETE ON hold_events FOR EACH ROW EXECUTE FUNCTION recalc_hold_time_from_events()",
+        "events": "DELETE",
+        "function": "public.recalc_hold_time_from_events",
+        "level": "ROW",
+        "name": "trg_hold_events_recalc_hold_time_del",
+        "schema": "public",
+        "status": "enabled",
+        "table": "hold_events",
+        "timing": "AFTER"
+      },
+      {
+        "definition": "CREATE TRIGGER trg_hold_events_recalc_hold_time_ins AFTER INSERT ON hold_events FOR EACH ROW WHEN (new.ended_at IS NOT NULL) EXECUTE FUNCTION recalc_hold_time_from_events()",
+        "events": "INSERT",
+        "function": "public.recalc_hold_time_from_events",
+        "level": "ROW",
+        "name": "trg_hold_events_recalc_hold_time_ins",
         "schema": "public",
         "status": "enabled",
         "table": "hold_events",

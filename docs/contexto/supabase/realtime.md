@@ -11,7 +11,6 @@
 
 | publication | tabela | replica identity |
 |---|---|---|
-| supabase_realtime_messages_publication | realtime.messages_2026_11_24 |  |
 | supabase_realtime_messages_publication | realtime.messages_2026_11_25 |  |
 | supabase_realtime_messages_publication | realtime.messages_2026_11_26 |  |
 | supabase_realtime_messages_publication | realtime.messages_2026_11_27 |  |
