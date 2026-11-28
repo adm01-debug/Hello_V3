@@ -1,4 +1,4 @@
-import { Bell, Phone, Shield, Bot, Trophy, Settings2 } from 'lucide-react';
+import { Bell, Phone, Shield, Bot, Trophy, Settings2, CalendarClock } from 'lucide-react';
 import type { ElementType } from 'react';
 
 export type NotificationRow = {
@@ -27,6 +27,7 @@ export const categoryIcons: Record<string, ElementType> = {
   security: Shield,
   coaching: Bot,
   gamification: Trophy,
+  cadence: CalendarClock,
 };
 
 export const categoryLabels: Record<string, string> = {
@@ -35,6 +36,7 @@ export const categoryLabels: Record<string, string> = {
   security: 'Segurança',
   coaching: 'Coaching',
   gamification: 'Gamificação',
+  cadence: 'Cadências',
 };
 
 export const severityColors: Record<string, string> = {

@@ -33,6 +33,7 @@ export interface CadenceEnrollment {
   current_step: number;
   status: "active" | "paused" | "completed" | "cancelled";
   next_action_at: string | null;
+  paused_reason: string | null;
 }
 
 const CADENCES_PAGE_SIZE = 50;
@@ -239,7 +240,10 @@ export function useCadenceEnrollments(agentName?: string) {
     id: string,
     status: CadenceEnrollment["status"],
   ) => {
-    const { error } = await supabase.from("cadence_enrollments").update({ status } as never).eq("id", id);
+    const patch: Record<string, unknown> = { status };
+    // Retomar limpa o motivo gravado pelo motor: a inscricao volta a andar.
+    if (status === "active") patch.paused_reason = null;
+    const { error } = await supabase.from("cadence_enrollments").update(patch as never).eq("id", id);
     if (error) { toast.error("Erro ao atualizar inscrição"); return false; }
     fetchEnrollments();
     return true;

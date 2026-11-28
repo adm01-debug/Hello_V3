@@ -44,7 +44,7 @@ const DEFAULT_PREFERENCES: NotificationPreferences = {
   quiet_hours_enabled: false,
   quiet_hours_start: '22:00',
   quiet_hours_end: '08:00',
-  categories: { system: true, call: true, security: true, coaching: true, gamification: true },
+  categories: { system: true, call: true, security: true, coaching: true, gamification: true, cadence: true },
 };
 
 // Use typed table references from generated types

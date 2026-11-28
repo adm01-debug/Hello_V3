@@ -304,3 +304,40 @@ Estado em produção em 2026-11-26: os dois jobs estão aplicados e o tick roda 
 `succeeded`), mas a versão da edge em produção ainda é a anterior (exige sessão de usuário) — o deploy
 depende de `SUPABASE_ACCESS_TOKEN` válido, que estava inválido ("Invalid access token"). Até esse deploy,
 item vencido na fila resulta em 401, não em sincronização.
+## Motor das cadências — contrato medido em 2026-11-27 (etapa 085)
+
+Antes da migration `20261128100000_cadence_tick_motor.sql`, nenhum objeto do banco nem edge function
+tocava `cadence_enrollments`: a inscrição nascia em `/cadences` com `next_action_at = now()` e ficava
+em "etapa 1" para sempre. O motor é **SQL puro**, não edge function.
+
+| Objeto | Papel |
+|---|---|
+| `public.cadence_tick(p_limit integer default 50) → jsonb` | Executa a fila. `SECURITY DEFINER`, `search_path = public`, lê as inscrições `status = 'active' and next_action_at <= now()` com `order by next_action_at, id ... for update of e skip locked` |
+| `public.cadence_step_runs` | Histórico por etapa: `status in ('done','skipped','failed')` + `detail`. Só o motor escreve |
+| `cron.job` → `cadence-tick` | `*/15 * * * *` chamando `select public.cadence_tick(200)` |
+
+Fluxo por inscrição: acha a próxima etapa (`step_order > current_step`); se não houver, conclui
+(`status = 'completed'`, `completed_at = now()`, `next_action_at = null`); resolve o destinatário em
+`user_profiles up join agents a on a.id = up.agent_id where a.name = cadence_enrollments.agent_name`.
+
+| Situação | Efeito medido no gate |
+|---|---|
+| Destinatário encontrado | Notificação (`category = 'cadence'`, `source_type = 'cadence'`, `action_url = '/cadences'`) + `current_step` avança + `next_action_at = now() + delay_days/delay_hours` da **próxima** etapa |
+| Agente sem usuário em `agents` | `status = 'paused'` + `paused_reason` escrito; `next_action_at` **não** muda, então retomar processa na hora |
+| `step_type` fora de call/whatsapp/task/email | `paused` com o tipo no motivo — a coluna é `text` sem CHECK (A-125); o motor não inventa canal |
+| Erro inesperado na etapa | `paused` + `failed` no histórico (sem retry infinito e sem notificar a cada tick) |
+| Cadência sem nenhuma etapa | `completed` na primeira varredura |
+
+Permissões: `anon` não lê a tabela nem executa a função; `authenticated` lê (dono da inscrição ou
+admin/supervisor) e **não** escreve; `cadence_tick` só para `postgres` e `service_role`.
+
+O motor só entrega notificação. Envio automático de e-mail/WhatsApp não entra aqui: exige provedor e
+consentimento.
+
+Por que SQL e não edge function: uma transação só (a edge precisaria de lease entre reivindicar e
+gravar), sem token no Vault nem env var para replicar — o modo de falha que deixou 7 crons sem rodar —
+e testável em transação revertida.
+
+Gates: `supabase/tests/cadence_tick_rls_test.sql` (S1–S8, `begin`/`rollback`) e
+`supabase/tests/probe_085_cadence_motor_rls_test.sql` (sonda read-only, não afirma nada).
+
