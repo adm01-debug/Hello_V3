@@ -1,9 +1,9 @@
 {
  "meta": {
-  "sha": "8cc251a5e3c67fb660424bf7876862827bdd29f3",
+  "sha": "5fbfe77ba353eb7e60353aaec1c45ff600e342c6",
   "branch": "main",
   "remote": "https://github.com/adm01-debug/Hello_V3",
-  "generated_at": "2026-11-28 18:41 UTC",
+  "generated_at": "2026-11-28 18:52 UTC",
   "files_total": 1931,
   "code_files": 1723,
   "code_lines": 211425
@@ -129858,10 +129858,28 @@
   }
  },
  "git": {
-  "sha": "8cc251a5e3c67fb660424bf7876862827bdd29f3",
+  "sha": "5fbfe77ba353eb7e60353aaec1c45ff600e342c6",
   "branch": "main",
   "remote": "https://github.com/adm01-debug/Hello_V3",
   "commits": [
+   {
+    "sha": "5fbfe77",
+    "date": "2026-11-28",
+    "author": "dependabot[bot]",
+    "subject": "chore(deps): bump actions/download-artifact from 7.0.0 to 8.0.2 (#405)",
+    "files": [
+     ".github/workflows/contexto.yml"
+    ]
+   },
+   {
+    "sha": "7584b14",
+    "date": "2026-11-28",
+    "author": "dependabot[bot]",
+    "subject": "chore(deps): bump peter-evans/create-pull-request from 8.1.1 to 8.1.3 (#407)",
+    "files": [
+     ".github/workflows/inventario-estado-semanal.yml"
+    ]
+   },
    {
     "sha": "8cc251a",
     "date": "2026-11-28",
@@ -130148,35 +130166,6 @@
      "supabase/migrations/20261128130000_crm_sync_queue_enqueue_author.sql",
      "supabase/tests/crm_sync_queue_enqueue_rls_test.sql"
     ]
-   },
-   {
-    "sha": "ca3591a",
-    "date": "2026-11-28",
-    "author": "adm01-debug",
-    "subject": "feat: registra a chamada atendida no Bitrix24 (etapa 081) (#373)",
-    "files": [
-     "docs/qa/05-PROGRESSO.md",
-     "src/hooks/__tests__/useMultiChannelCall.bitrixBridge.test.tsx",
-     "src/hooks/useMultiChannelCall.ts",
-     "src/integrations/supabase/types.ts",
-     "supabase/migrations/20261128140000_call_sessions_bitrix_call_id.sql",
-     "supabase/tests/call_sessions_bitrix_call_id_rls_test.sql"
-    ]
-   },
-   {
-    "sha": "3e08f34",
-    "date": "2026-11-28",
-    "author": "adm01-debug",
-    "subject": "fix: reservar o contato do discador em uma unica operacao (etapa 079) (#375)",
-    "files": [
-     "docs/qa/05-PROGRESSO.md",
-     "src/hooks/__tests__/usePredictiveDialer.coverage.test.tsx",
-     "src/hooks/predictive-dialer/api.ts",
-     "src/hooks/usePredictiveDialer.ts",
-     "src/integrations/supabase/types.ts",
-     "supabase/migrations/20261128150000_claim_next_dialer_contact.sql",
-     "supabase/tests/claim_next_dialer_contact_rls_test.sql"
-    ]
    }
   ],
   "hot_files": [
@@ -130190,7 +130179,7 @@
    ],
    [
     "docs/qa/05-PROGRESSO.md",
-    6
+    4
    ],
    [
     "supabase/functions/__ping-deploy/index.ts",
@@ -130201,8 +130190,12 @@
     2
    ],
    [
-    "src/integrations/supabase/types.ts",
-    2
+    ".github/workflows/contexto.yml",
+    1
+   ],
+   [
+    ".github/workflows/inventario-estado-semanal.yml",
+    1
    ],
    [
     "bun.lock",
@@ -130254,10 +130247,6 @@
    ],
    [
     "supabase/tests/cadence_tick_rls_test.sql",
-    1
-   ],
-   [
-    "supabase/tests/probe_085_cadence_motor_rls_test.sql",
     1
    ]
   ]

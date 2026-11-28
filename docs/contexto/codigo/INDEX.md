@@ -1,7 +1,7 @@
 # Contexto do projeto para agentes de IA
 
 GERADO AUTOMATICAMENTE por scripts/ai-context/gerar.mjs — não editar à mão; será sobrescrito.
-Publicado em `docs/contexto/codigo/` na branch `contexto` (gerada, nunca abra PR dela) a cada push em `main` e a cada 10 minutos pelo workflow `contexto.yml`; índice único das três fontes em `docs/contexto/00-INDEX.md`. Gere local com `node scripts/ai-context/gerar.mjs`. Commit-base: `8cc251a5e3c67fb660424bf7876862827bdd29f3` (2026-11-28T15:35:33-03:00).
+Publicado em `docs/contexto/codigo/` na branch `contexto` (gerada, nunca abra PR dela) a cada push em `main` e a cada 10 minutos pelo workflow `contexto.yml`; índice único das três fontes em `docs/contexto/00-INDEX.md`. Gere local com `node scripts/ai-context/gerar.mjs`. Commit-base: `5fbfe77ba353eb7e60353aaec1c45ff600e342c6` (2026-11-28T15:40:04-03:00).
 
 ## Como usar (leia antes de planejar ou executar qualquer tarefa)
 1. **Tela/rota/menu** → `rotas.json` (url/vista/menu → arquivo → hooks → tabelas → edges; `rotas_http_backend` para APIs) e `modulos.json` (módulo inteiro + dependências entre módulos).
@@ -377,7 +377,7 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 - possiveis_segredos_no_codigo: 3 — ex.: src/lib/__tests__/security-advanced.test.ts:203, src/lib/__tests__/security-advanced.test.ts:208, src/lib/__tests__/security-advanced.test.ts:213
 
 ## Grafo de código (graphify)
-- 10810 nós · 28329 arestas · 874 comunidades · grafo do commit `8cc251a5`
+- 10810 nós · 28329 arestas · 874 comunidades · grafo do commit `5fbfe77b`
 - comunidades maiores: client.ts (335), vitest (279), card.tsx (265), react (205), @tanstack/react-query (187), 5. Em uso por rota (181), buildCorsHeaders (155), CardContent (152), usePageTitle.ts (135), cn (118), protectedRoutes.tsx (109), Onda 4 — Funcionalidades incompletas (151–180, 30 etapas) (107)
 - símbolos mais chamados: cn() (src/lib/utils.ts), usePageTitle() (src/hooks/usePageTitle.ts), safeFormatDatePtBR() (src/lib/safe-date.ts), useAuthContext() (src/contexts/AuthContext.tsx), q() (scripts/supabase_snapshot/snapshot.py), safeFormatDistanceToNow() (src/lib/safe-date.ts), traceHeaders() (src/lib/tracing.ts), withTrace() (src/lib/tracing.ts), safeToLocaleString() (src/lib/safe-date.ts), buildCorsHeaders() (supabase/functions/_shared/cors.ts), .collect() (scripts/supabase_snapshot/test_snapshot.py), formatDuration() (src/lib/utils.ts)
 - consulta local: `graphify query "<pergunta>"`, `graphify path "<A>" "<B>"`, `graphify explain "<X>"`
@@ -385,7 +385,7 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 ## Hotspots (arquivos mais alterados, 90 dias)
 - docs/qa/05-PROGRESSO.md (176)
 - package-lock.json (22)
-- docs/estado/funcionalidades-planejadas.md (17)
+- docs/estado/funcionalidades-planejadas.md (16)
 - src/components/calls/UnifiedSoftphone.tsx (12)
 - src/hooks/useMultiChannelCall.ts (12)
 - .github/workflows/migrations.yml (10)
@@ -439,6 +439,8 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 
 
 ## Últimos commits
+- 2026-11-28 `5fbfe77` chore(deps): bump actions/download-artifact from 7.0.0 to 8.0.2 (#405)
+- 2026-11-28 `7584b14` chore(deps): bump peter-evans/create-pull-request from 8.1.1 to 8.1.3 (#407)
 - 2026-11-28 `8cc251a` chore(deps): bump minimatch, sucrase, @typescript-eslint/eslint-plugin, @typescript-eslint/parser and typescript-eslint 
 - 2026-11-28 `75dedd1` chore(deps): bump vitest from 4.1.10 to 4.1.11 (#414)
 - 2026-11-28 `043d9cb` chore(deps): bump yaml from 2.6.0 to 2.9.1 (#413)
@@ -452,8 +454,6 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 - 2026-11-28 `94dbc8d` fix: reverter zod para 3.x, o major 4 quebrou o type-check (13 erros) e o CI da main (#417)
 - 2026-11-28 `c8eedfd` feat: auditoria de dependencias reprova quando a contagem de vulnerabilidades sobe (etapa 041) (#400)
 - 2026-11-28 `7bc82cd` chore: configurar Dependabot para npm e github-actions (etapa 001) (#391)
-- 2026-11-28 `0c95deb` chore(deps): bump ws from 8.19.0 to 8.23.1 (#402)
-- 2026-11-28 `9895b42` chore(deps): bump source-map-js from 1.2.1 to 1.2.4 (#401)
 
 ## Arquivos deste diretório
 - `docs/contexto/codigo/rotas.json`

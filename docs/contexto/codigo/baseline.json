@@ -2,11 +2,21 @@
  "aviso": "GERADO AUTOMATICAMENTE por scripts/ai-context/gerar.mjs — não editar à mão; será sobrescrito.",
  "format_version": 2,
  "git": {
-  "commit": "8cc251a5e3c67fb660424bf7876862827bdd29f3",
+  "commit": "5fbfe77ba353eb7e60353aaec1c45ff600e342c6",
   "branch": "main",
-  "data_commit": "2026-11-28T15:35:33-03:00",
+  "data_commit": "2026-11-28T15:40:04-03:00",
   "remote": "https://github.com/adm01-debug/Hello_V3",
   "ultimos_commits": [
+   {
+    "sha": "5fbfe77",
+    "data": "2026-11-28",
+    "assunto": "chore(deps): bump actions/download-artifact from 7.0.0 to 8.0.2 (#405)"
+   },
+   {
+    "sha": "7584b14",
+    "data": "2026-11-28",
+    "assunto": "chore(deps): bump peter-evans/create-pull-request from 8.1.1 to 8.1.3 (#407)"
+   },
    {
     "sha": "8cc251a",
     "data": "2026-11-28",
@@ -121,16 +131,6 @@
     "sha": "38ec1e8",
     "data": "2026-11-28",
     "assunto": "chore: remover a sonda __ping-deploy (#387)"
-   },
-   {
-    "sha": "b900b70",
-    "data": "2026-11-28",
-    "assunto": "chore: publicar edge functions pela Management API (destrava o deploy bloqueado) (#386)"
-   },
-   {
-    "sha": "a3c8c8d",
-    "data": "2026-11-28",
-    "assunto": "ci: sondas de RLS rodam sozinhas em PR de banco e toda segunda (#384)"
    }
   ],
   "arquivos_mudados_7d": 1976,
@@ -207,7 +207,7 @@
    },
    {
     "arquivo": "docs/estado/funcionalidades-planejadas.md",
-    "mudancas": 17
+    "mudancas": 16
    },
    {
     "arquivo": "src/components/calls/UnifiedSoftphone.tsx",
@@ -301,11 +301,11 @@
   "autores_30d": [
    {
     "autor": "adm01-debug",
-    "commits": 282
+    "commits": 280
    },
    {
     "autor": "dependabot[bot]",
-    "commits": 18
+    "commits": 20
    }
   ]
  },
