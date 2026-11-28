@@ -7,19 +7,177 @@ project_id = "cfmlmcdyjuotqobjapng"
 # impede que um `supabase functions deploy` sem `--no-verify-jwt` reintroduza
 # o bug; a autorizacao real (comparacao do token em tempo constante) fica no
 # codigo de cada edge.
+
+# ---------------------------------------------------------------------------
+# verify_jwt declarado para as 99 edges (etapa 054).
+#
+# O default implicito (true) e exatamente o que ja custou anos de 401 silencioso:
+# uma edge chamada por pg_cron com bearer opaco ou por webhook de terceiro recebia
+# recusa do gateway ANTES de rodar. Cada valor abaixo foi conferido contra a
+# producao em 28/11/2026 (POST sem Authorization em cada uma das 99):
+#   - as 19 marcadas `false` respondem com a propria resposta (nunca
+#     UNAUTHORIZED_NO_AUTH_HEADER / UNAUTHORIZED_INVALID_JWT_FORMAT);
+#   - as 80 restantes continuam recusando no gateway e permanecem `true`.
+#
+# As `false` tem verificacao propria na edge: HMAC nos webhooks, requireUser nas
+# de painel, comparacao de token do Vault nas de cron. Declarar aqui impede que
+# um `supabase functions deploy` sem `--no-verify-jwt` mude a exposicao por acidente.
+# ---------------------------------------------------------------------------
+
+[functions.analyze-call]
+verify_jwt = true
+
+[functions.analyze-contact-profile]
+verify_jwt = true
+
+[functions.analyze-live-utterance]
+verify_jwt = true
+
+[functions.analyze-sentiment]
+verify_jwt = true
+
+# A edge e chamada por src/hooks/useTalkRatio.ts; o unico caminho de escrita e o invoke com o JWT do usuario do Supabase.
+[functions.analyze-talk-ratio]
+verify_jwt = true
+
+# Link enviado por e-mail, aberto sem sessao.
+[functions.approve-password-reset]
+verify_jwt = false
+
+# Chamada por pg_cron com bearer opaco do Vault (nao e JWT); auth propria na edge.
+[functions.auto-scorecard]
+verify_jwt = false
+
+[functions.bitrix-api]
+verify_jwt = true
+
+# Visitante anonimo do chat do site nao tem JWT; a edge emite o visitor_token.
+[functions.chat-widget-session]
+verify_jwt = false
+
+# A edge exige auth propria (requireUser em index.ts:92) antes de any efeito.
+[functions.chatbot-respond]
+verify_jwt = true
+
+[functions.check-alerts]
+verify_jwt = true
+
+[functions.check-calling-hours]
+verify_jwt = true
+
+[functions.check-contact-alerts]
+verify_jwt = true
+
+[functions.check-dnc]
+verify_jwt = true
+
+[functions.check-goals]
+verify_jwt = true
+
+[functions.check-hold-alerts]
+verify_jwt = true
+
+[functions.check-queue-metrics]
+verify_jwt = true
+
+# Chamada por pg_cron com bearer opaco do Vault (nao e JWT): o gateway recusaria
+# com UNAUTHORIZED_INVALID_JWT_FORMAT, foi por isso que a purga ficou anos em 401.
 [functions.cleanup-lock-conflicts]
 verify_jwt = false
 
+# Chamada por pg_cron com bearer opaco do Vault (nao e JWT); auth propria na edge.
 [functions.cleanup-recordings]
 verify_jwt = false
 
+[functions.compute-account-health]
+verify_jwt = true
+
+[functions.compute-adherence]
+verify_jwt = true
+
+[functions.compute-best-time]
+verify_jwt = true
+
+[functions.compute-deal-health]
+verify_jwt = true
+
+# Chamada por pg_cron com bearer opaco do Vault (nao e JWT); auth propria na edge.
+[functions.data-lake-flush]
+verify_jwt = false
+
+[functions.database-backup]
+verify_jwt = true
+
+[functions.database-cleanup]
+verify_jwt = true
+
+[functions.detect-churn-risk]
+verify_jwt = true
+
+[functions.detect-key-moments]
+verify_jwt = true
+
+# Chamada por pg_cron com bearer opaco do Vault (nao e JWT); auth propria na edge.
 [functions.dialer-pacing-tick]
 verify_jwt = false
 
+[functions.elevenlabs-conversation-token]
+verify_jwt = true
+
+# Webhook do provedor de e-mail: nao tem JWT; assinatura conferida na edge.
+[functions.email-inbound]
+verify_jwt = false
+
+[functions.embed-kb-article]
+verify_jwt = true
+
+[functions.enforce-sla]
+verify_jwt = true
+
+[functions.enroll-voice]
+verify_jwt = true
+
+[functions.export-data-lake]
+verify_jwt = true
+
+[functions.extract-crm-fields]
+verify_jwt = true
+
+[functions.forecast-call-volume]
+verify_jwt = true
+
+[functions.forecast-deals]
+verify_jwt = true
+
+# Harness de teste, chamado por script com bearer opaco; nunca pelo front.
+[functions.fuzz-test-runner]
+verify_jwt = false
+
+[functions.generate-coaching]
+verify_jwt = true
+
+[functions.generate-coaching-plan]
+verify_jwt = true
+
+# Chamada por pg_cron com bearer opaco do Vault (nao e JWT); auth propria na edge.
 [functions.generate-coaching-track]
 verify_jwt = false
 
-[functions.data-lake-flush]
+[functions.generate-meeting-summary]
+verify_jwt = true
+
+[functions.generate-summary]
+verify_jwt = true
+
+[functions.global-load-test]
+verify_jwt = true
+
+# Monitoramento externo sem JWT; so le agregados.
+[functions.health-check]
+verify_jwt = false
+
+# Chamada por agente/servico com bearer proprio; nao usa JWT do Supabase.
+[functions.ldap-sync]
 verify_jwt = false
 
 # Endpoint publico de lockout (usuario deslogado antes de autenticar). A edge
@@ -27,9 +185,163 @@ verify_jwt = false
 [functions.login-attempt]
 verify_jwt = false
 
-# Fila do CRM: o job de 5 min (migration 20261128110000) manda como Bearer o
-# token opaco 'crm_sync_cron_token' lido do Vault, e a edge confere esse valor no
-# banco via public.token_cron_valido(). Sem esta linha o gateway recusa o bearer
-# antes da edge rodar e a fila volta a encher sem consumo.
+[functions.notify-blocked-ip]
+verify_jwt = true
+
+[functions.notify-new-device]
+verify_jwt = true
+
+[functions.ocr-virtual-fax]
+verify_jwt = true
+
+[functions.process-digest]
+verify_jwt = true
+
+[functions.realtime-analysis]
+verify_jwt = true
+
+[functions.record-consent]
+verify_jwt = true
+
+[functions.redact-sensitive-audio]
+verify_jwt = true
+
+# 'Esqueci minha senha' roda sem sessao.
+[functions.request-password-reset]
+verify_jwt = false
+
+[functions.rls-audit]
+verify_jwt = true
+
+[functions.score-call]
+verify_jwt = true
+
+[functions.score-call-attempt]
+verify_jwt = true
+
+[functions.search-calls]
+verify_jwt = true
+
+[functions.send-notification]
+verify_jwt = true
+
+[functions.send-survey]
+verify_jwt = true
+
+[functions.sip-config]
+verify_jwt = true
+
+[functions.suggest-shift-swaps]
+verify_jwt = true
+
+# Fila do CRM: o job de 5 min manda como Bearer o token opaco 'crm_sync_cron_token'
+# lido do Vault, e a edge confere esse valor no banco via public.token_cron_valido().
 [functions.sync-crm-queue]
 verify_jwt = false
+
+[functions.teams-fetch-recordings]
+verify_jwt = true
+
+[functions.transcribe-recording]
+verify_jwt = true
+
+[functions.translate-summary]
+verify_jwt = true
+
+[functions.translate-utterance]
+verify_jwt = true
+
+# A edge e chamada ANTES do login para decidir bloqueio geografico; so le o IP e usa service role. Exigir JWT aqui desliga o bloqueio por pais para usuario deslogado.
+[functions.validate-geo]
+verify_jwt = true
+
+[functions.validate-ip]
+verify_jwt = true
+
+[functions.verify-voice]
+verify_jwt = true
+
+[functions.voice-command]
+verify_jwt = true
+
+[functions.voice-transcribe]
+verify_jwt = true
+
+[functions.voip-anomaly-detector]
+verify_jwt = true
+
+[functions.voip-anomaly-remediation]
+verify_jwt = true
+
+[functions.voip-capacity-forecast]
+verify_jwt = true
+
+[functions.voip-capacity-recommendations]
+verify_jwt = true
+
+[functions.voip-diagnostic-voice-qa]
+verify_jwt = true
+
+[functions.voip-executive-narrative]
+verify_jwt = true
+
+[functions.voip-executive-summary]
+verify_jwt = true
+
+[functions.voip-failover-notifier]
+verify_jwt = true
+
+[functions.voip-load-test]
+verify_jwt = true
+
+[functions.voip-quality-alerts-summary]
+verify_jwt = true
+
+[functions.voip-quality-forecast]
+verify_jwt = true
+
+[functions.voip-quality-heatmap]
+verify_jwt = true
+
+[functions.voip-recommendation-history]
+verify_jwt = true
+
+[functions.voip-recommendation-insights]
+verify_jwt = true
+
+[functions.voip-recommendation-simulate]
+verify_jwt = true
+
+[functions.voip-recommendations]
+verify_jwt = true
+
+[functions.voip-sla-report]
+verify_jwt = true
+
+[functions.voip-trunks-healthcheck]
+verify_jwt = true
+
+[functions.voip-trunks-manage]
+verify_jwt = true
+
+[functions.wavoip-call]
+verify_jwt = true
+
+# Login por passkey, roda sem sessao.
+[functions.webauthn-authenticate]
+verify_jwt = false
+
+# Primeiro passo do login por passkey, roda sem sessao.
+[functions.webauthn-challenge]
+verify_jwt = false
+
+# Webhook generico: nao tem JWT; assinatura HMAC conferida na edge (401 'Invalid signature' sem ela).
+[functions.webhook-handler]
+verify_jwt = false
+
+# Webhook do provedor de WhatsApp: nao tem JWT; assinatura HMAC conferida na edge.
+[functions.whatsapp-inbound]
+verify_jwt = false
+
+[functions.whatsapp-rewrite]
+verify_jwt = true
