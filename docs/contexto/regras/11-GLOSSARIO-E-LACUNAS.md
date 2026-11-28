@@ -1,6 +1,6 @@
 # 11 · GLOSSÁRIO, DADOS DE REFERÊNCIA E LACUNAS
 
-> Gerado automaticamente por AI Context Sync v1.3.2 · commit `e7f0148f5f` · branch `main` · 2026-11-28 16:14 UTC
+> Gerado automaticamente por AI Context Sync v1.3.2 · commit `c8a2dcbd21` · branch `main` · 2026-11-28 16:17 UTC
 > Não edite à mão — regras humanas vão em `manual/`.
 
 ## Glossário do domínio (entidades do sistema)
@@ -30,6 +30,7 @@
 | `blocked_access_logs` | _(sem COMMENT ON TABLE — significado não documentado)_ | 10 colunas | migration |
 | `bot_conversations` | _(sem COMMENT ON TABLE — significado não documentado)_ | 12 colunas | migration |
 | `cadence_enrollments` | _(sem COMMENT ON TABLE — significado não documentado)_ | 12 colunas | migration |
+| `cadence_step_runs` | _(sem COMMENT ON TABLE — significado não documentado)_ | 9 colunas | migration |
 | `cadence_steps` | _(sem COMMENT ON TABLE — significado não documentado)_ | 10 colunas | migration |
 | `cadences` | _(sem COMMENT ON TABLE — significado não documentado)_ | 8 colunas | migration |
 | `call_alerts` | _(sem COMMENT ON TABLE — significado não documentado)_ | 8 colunas | migration |
@@ -326,7 +327,6 @@
 | status | valor `no_matches` para `status` usado no código não existe em nenhum enum do banco/TS | `compara:src/hooks/useRedactionLog.ts` |
 | status | valor `in_negotiation` para `status` usado no código não existe em nenhum enum do banco/TS | `compara:src/hooks/useRenewals.ts` |
 | status | valor `won` para `status` usado no código não existe em nenhum enum do banco/TS | `compara:src/hooks/useRenewals.ts` |
-| status | valor `skipped` para `status` usado no código não existe em nenhum enum do banco/TS | `escreve:src/hooks/predictive-dialer/api.ts`<br>`escreve:supabase/functions/auto-scorecard/index.ts` |
 | status | valor `number` para `status` usado no código não existe em nenhum enum do banco/TS | `compara:src/lib/security-alerts-webhook-history.ts`<br>`compara:supabase/functions/_shared/resilience.ts` |
 | status | valor `implemented` para `status` usado no código não existe em nenhum enum do banco/TS | `compara:src/pages/SecurityReport.tsx`<br>`escreve:src/lib/security-report-data.ts` |
 | status | valor `disponivel` para `status` usado no código não existe em nenhum enum do banco/TS | `escreve:src/pages/Marketplace.tsx` |
@@ -451,8 +451,11 @@
 - `shift_swap_suggestions.status` tem valores ['approved', 'expired', 'pending', 'rejected'] mas nenhum mapa de transições foi encontrado no código — a ordem permitida (ex.: pago → cancelado?) não está declarada.
 - `data_lake_exports.status` tem valores ['completed', 'failed', 'pending', 'processing'] mas nenhum mapa de transições foi encontrado no código — a ordem permitida (ex.: pago → cancelado?) não está declarada.
 - `parked_calls.status` tem valores ['abandoned', 'expired', 'parked', 'retrieved'] mas nenhum mapa de transições foi encontrado no código — a ordem permitida (ex.: pago → cancelado?) não está declarada.
+- `cadence_step_runs.step_order` é uma coluna de status sem enum/CHECK — os valores válidos e as transições permitidas não estão no banco.
+- `cadence_step_runs.step_type` é uma coluna de status sem enum/CHECK — os valores válidos e as transições permitidas não estão no banco.
+- `cadence_step_runs.status` tem valores ['done', 'failed', 'skipped'] mas nenhum mapa de transições foi encontrado no código — a ordem permitida (ex.: pago → cancelado?) não está declarada.
 - `migration_status.status` é uma coluna de status sem enum/CHECK — os valores válidos e as transições permitidas não estão no banco.
-- 172/176 tabelas sem `COMMENT ON TABLE` — o significado de negócio não está no schema: `entity_versions`, `schema_migrations`, `migration_rollbacks`, `contacts`, `call_records`, `queue_items`, `agents`, `call_sessions`, `call_transcriptions`, `call_analyses`, `call_summaries`, `call_alerts` …
+- 173/177 tabelas sem `COMMENT ON TABLE` — o significado de negócio não está no schema: `entity_versions`, `schema_migrations`, `migration_rollbacks`, `contacts`, `call_records`, `queue_items`, `agents`, `call_sessions`, `call_transcriptions`, `call_analyses`, `call_summaries`, `call_alerts` …
 - Há tabelas usadas no código sem migration no repo — o schema real pode ter sido alterado pelo painel.
 
 ## Regras manuais presentes

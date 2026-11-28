@@ -1,7 +1,7 @@
 # Contexto do projeto para agentes de IA
 
 GERADO AUTOMATICAMENTE por scripts/ai-context/gerar.mjs — não editar à mão; será sobrescrito.
-Publicado em `docs/contexto/codigo/` na branch `contexto` (gerada, nunca abra PR dela) a cada push em `main` e a cada 10 minutos pelo workflow `contexto.yml`; índice único das três fontes em `docs/contexto/00-INDEX.md`. Gere local com `node scripts/ai-context/gerar.mjs`. Commit-base: `e7f0148f5fa3328dbda58947009e497f2acedba7` (2026-11-28T13:14:08-03:00).
+Publicado em `docs/contexto/codigo/` na branch `contexto` (gerada, nunca abra PR dela) a cada push em `main` e a cada 10 minutos pelo workflow `contexto.yml`; índice único das três fontes em `docs/contexto/00-INDEX.md`. Gere local com `node scripts/ai-context/gerar.mjs`. Commit-base: `c8a2dcbd21c71171d43aeaed280e8e6e34d135e6` (2026-11-28T13:17:17-03:00).
 
 ## Como usar (leia antes de planejar ou executar qualquer tarefa)
 1. **Tela/rota/menu** → `rotas.json` (url/vista/menu → arquivo → hooks → tabelas → edges; `rotas_http_backend` para APIs) e `modulos.json` (módulo inteiro + dependências entre módulos).
@@ -14,7 +14,7 @@ Publicado em `docs/contexto/codigo/` na branch `contexto` (gerada, nunca abra PR
 Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua tarefa; não carregue tudo.
 
 ## Stack
-- linguagens: TypeScript (1363), SQL (320), Markdown (122), JavaScript (31), JSON (16), Python (5), YAML (5), Shell (2)
+- linguagens: TypeScript (1363), SQL (323), Markdown (122), JavaScript (31), JSON (16), Python (5), YAML (5), Shell (2)
 - linguagem_principal: TypeScript
 - framework: React
 - backend_http: n/d
@@ -34,9 +34,9 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 ## Números
 | item | qtd |
 |---|---|
-| arquivos_total | 1878 |
+| arquivos_total | 1881 |
 | arquivos_codigo | 1398 |
-| linhas_codigo | 186864 |
+| linhas_codigo | 186880 |
 | rotas | 108 |
 | rotas_http_backend | 11 |
 | vistas_por_id | 0 |
@@ -45,10 +45,10 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 | componentes | 456 |
 | hooks | 203 |
 | edge_functions | 99 |
-| tabelas | 172 |
-| migrations | 278 |
-| cron_jobs | 14 |
-| testes | 477 |
+| tabelas | 173 |
+| migrations | 279 |
+| cron_jobs | 15 |
+| testes | 479 |
 | workflows | 5 |
 | scripts | 36 |
 | docs_md | 122 |
@@ -331,6 +331,7 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 - `whatsapp-rewrite` — tabelas: -; chamada por 0 arquivo(s) do front — **ÓRFÃ**
 
 ## Cron jobs (pg_cron / vercel)
+- `cadence-tick` */15 * * * * (20261128100000_cadence_tick_motor.sql)
 - `cleanup-lock-conflicts-weekly` 0 3 * * 0 → edge cleanup-lock-conflicts (20261122220000_lock_conflicts_retention_cron.sql)
 - `cleanup-recordings-daily` 45 3 * * * → edge cleanup-recordings (20261125220000_recordings_retention_cron.sql)
 - `crm-sync-queue` */5 * * * * (20261128123000_crm_sync_queue_cron_guard.sql)
@@ -376,26 +377,26 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 - possiveis_segredos_no_codigo: 3 — ex.: src/lib/__tests__/security-advanced.test.ts:203, src/lib/__tests__/security-advanced.test.ts:208, src/lib/__tests__/security-advanced.test.ts:213
 
 ## Grafo de código (graphify)
-- 10788 nós · 28301 arestas · 864 comunidades · grafo do commit `e7f0148f`
-- comunidades maiores: lucide-react (293), vitest (202), react (187), protectedRoutes.tsx (178), buildCorsHeaders (147), safeFormatDistanceToNow (146), client.ts (136), safe-date.ts (117), logger.ts (112), traceHeaders (110), useAuthContext (110), cn (109)
+- 10800 nós · 28315 arestas · 867 comunidades · grafo do commit `c8a2dcbd`
+- comunidades maiores: card.tsx (278), client.ts (242), vitest (208), react (188), lucide-react (177), usePageTitle (169), getCorrelationId (148), traceHeaders (146), @tanstack/react-query (141), ref_https (128), react-router-dom (125), cn (117)
 - símbolos mais chamados: cn() (src/lib/utils.ts), usePageTitle() (src/hooks/usePageTitle.ts), safeFormatDatePtBR() (src/lib/safe-date.ts), useAuthContext() (src/contexts/AuthContext.tsx), q() (scripts/supabase_snapshot/snapshot.py), safeFormatDistanceToNow() (src/lib/safe-date.ts), traceHeaders() (src/lib/tracing.ts), withTrace() (src/lib/tracing.ts), safeToLocaleString() (src/lib/safe-date.ts), buildCorsHeaders() (supabase/functions/_shared/cors.ts), .collect() (scripts/supabase_snapshot/test_snapshot.py), formatDuration() (src/lib/utils.ts)
 - consulta local: `graphify query "<pergunta>"`, `graphify path "<A>" "<B>"`, `graphify explain "<X>"`
 
 ## Hotspots (arquivos mais alterados, 90 dias)
-- docs/qa/05-PROGRESSO.md (174)
-- docs/estado/funcionalidades-planejadas.md (24)
+- docs/qa/05-PROGRESSO.md (175)
+- docs/estado/funcionalidades-planejadas.md (23)
 - src/hooks/useMultiChannelCall.ts (13)
 - src/components/calls/UnifiedSoftphone.tsx (12)
 - docs/audits/pendencias-2026-07.md (10)
 - src/components/calls/ActiveCallBar.tsx (10)
 - src/integrations/supabase/types.ts (10)
 - .github/workflows/migrations.yml (9)
+- docs/agentes/banco.md (9)
 - docs/qa/03-ACHADOS.md (9)
-- src/components/layout/AppSidebar.tsx (9)
-- src/components/layout/CommandPalette.tsx (9)
 - supabase/functions/data-lake-flush/index.ts (9)
-- docs/agentes/banco.md (8)
 - docs/agentes/mapa-repo.md (8)
+- src/components/layout/AppSidebar.tsx (8)
+- src/components/layout/CommandPalette.tsx (8)
 - src/hooks/useAgentRanking.ts (8)
 
 ## Workflows
@@ -437,6 +438,7 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 
 
 ## Últimos commits
+- 2026-11-28 `c8a2dcb` feat: motor das cadencias (etapa 085) - inscricao deixa de ficar parada na etapa 1 (#370)
 - 2026-11-28 `e7f0148` feat: dar gatilho a fila do CRM (job de 5 min) e corrigir status na tela (etapa 083) (#371)
 - 2026-11-28 `c443721` fix: nao perder lead em silencio quando o Bitrix esta fora (etapa 084) (#372)
 - 2026-11-28 `ca3591a` feat: registra a chamada atendida no Bitrix24 (etapa 081) (#373)
@@ -451,7 +453,6 @@ Os JSONs são grandes: filtre com `grep`/`jq` pelo caminho/arquivo/tabela da sua
 - 2026-11-26 `bdbd99f` docs: reaudita o que foi descartado, arquivo por arquivo (nenhuma perda) (#377)
 - 2026-11-26 `80b9200` chore: registrar a varredura de branches e PRs (nenhum trabalho perdido) (#376)
 - 2026-11-26 `dc142b6` test: recuperar o teste do IP literal que ficou fora da main (resgate da PR 309) (#374)
-- 2026-11-26 `a745026` docs: etapa 122 provada — feriado recorrente ja bloqueia; contrato escrito na funcao (#365)
 
 ## Arquivos deste diretório
 - `docs/contexto/codigo/rotas.json`

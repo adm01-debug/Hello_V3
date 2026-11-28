@@ -8,7 +8,7 @@
   "supabase/migrations",
   "typeorm"
  ],
- "migrations": 278,
+ "migrations": 279,
  "seeds": [],
  "avisos": [
   "29 bloco(s) com DDL dinâmico (EXECUTE format/...) não modelado — policies/colunas criadas dinamicamente podem faltar; confira no banco vivo"
@@ -52,6 +52,7 @@
   "audit_table_change",
   "audit_trigger_func",
   "bridge_voip_alert_to_notification",
+  "cadence_tick",
   "calculate_call_duration",
   "calculate_predictive_pace",
   "can_access_agent_data",
@@ -1014,6 +1015,11 @@
   }
  ],
  "cron_jobs": [
+  {
+   "nome": "cadence-tick",
+   "agenda": "*/15 * * * *",
+   "migration": "20261128100000_cadence_tick_motor.sql"
+  },
   {
    "nome": "cleanup-lock-conflicts-weekly",
    "agenda": "0 3 * * 0",
@@ -3653,6 +3659,100 @@
    ],
    "sem_rls": false,
    "nao_usada": false
+  },
+  "cadence_step_runs": {
+   "colunas": {
+    "cadence_id": {
+     "tipo": "uuid",
+     "nn": true,
+     "pk": false,
+     "default": null,
+     "ref": "cadences"
+    },
+    "created_at": {
+     "tipo": "timestamptz",
+     "nn": true,
+     "pk": false,
+     "default": "now()",
+     "ref": null
+    },
+    "detail": {
+     "tipo": "text",
+     "nn": false,
+     "pk": false,
+     "default": null,
+     "ref": null
+    },
+    "enrollment_id": {
+     "tipo": "uuid",
+     "nn": true,
+     "pk": false,
+     "default": null,
+     "ref": "cadence_enrollments"
+    },
+    "id": {
+     "tipo": "uuid",
+     "nn": false,
+     "pk": true,
+     "default": "gen_random_uuid()",
+     "ref": null
+    },
+    "status": {
+     "tipo": "text",
+     "nn": true,
+     "pk": false,
+     "default": null,
+     "ref": null
+    },
+    "step_id": {
+     "tipo": "uuid",
+     "nn": false,
+     "pk": false,
+     "default": null,
+     "ref": "cadence_steps"
+    },
+    "step_order": {
+     "tipo": "integer",
+     "nn": true,
+     "pk": false,
+     "default": null,
+     "ref": null
+    },
+    "step_type": {
+     "tipo": "text",
+     "nn": true,
+     "pk": false,
+     "default": null,
+     "ref": null
+    }
+   },
+   "rls": true,
+   "policies": [
+    {
+     "nome": "Agents view own cadence runs",
+     "comando": "select",
+     "para": "authenticated",
+     "tipo": "permissive"
+    }
+   ],
+   "indices": [
+    {
+     "nome": "idx_cadence_step_runs_enrollment",
+     "colunas": "enrollment_id, created_at desc",
+     "unico": false
+    }
+   ],
+   "fks": [
+    "cadence_id->cadences",
+    "enrollment_id->cadence_enrollments",
+    "step_id->cadence_steps"
+   ],
+   "criada_em": "20261128100000_cadence_tick_motor.sql",
+   "usada_no_front": 0,
+   "usada_em_edges": [],
+   "triggers": [],
+   "sem_rls": false,
+   "nao_usada": true
   },
   "cadence_steps": {
    "colunas": {

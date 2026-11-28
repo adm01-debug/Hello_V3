@@ -1248,7 +1248,7 @@
     "useCadenceEnrollments",
     "useCadences"
    ],
-   "linhas": 250,
+   "linhas": 254,
    "dominio": "hooks",
    "tabelas": [
     "cadence_enrollments",

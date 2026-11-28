@@ -2,11 +2,16 @@
  "aviso": "GERADO AUTOMATICAMENTE por scripts/ai-context/gerar.mjs — não editar à mão; será sobrescrito.",
  "format_version": 2,
  "git": {
-  "commit": "e7f0148f5fa3328dbda58947009e497f2acedba7",
+  "commit": "c8a2dcbd21c71171d43aeaed280e8e6e34d135e6",
   "branch": "main",
-  "data_commit": "2026-11-28T13:14:08-03:00",
+  "data_commit": "2026-11-28T13:17:17-03:00",
   "remote": "https://github.com/adm01-debug/Hello_V3",
   "ultimos_commits": [
+   {
+    "sha": "c8a2dcb",
+    "data": "2026-11-28",
+    "assunto": "feat: motor das cadencias (etapa 085) - inscricao deixa de ficar parada na etapa 1 (#370)"
+   },
    {
     "sha": "e7f0148",
     "data": "2026-11-28",
@@ -126,14 +131,9 @@
     "sha": "8f07a35",
     "data": "2026-11-26",
     "assunto": "fix: chaves estrangeiras nas colunas com destino unico (etapa 128) (#358)"
-   },
-   {
-    "sha": "91a1fdc",
-    "data": "2026-11-26",
-    "assunto": "fix: policies de 5 tabelas sensiveis restritas a authenticated (etapa 052) (#357)"
    }
   ],
-  "arquivos_mudados_7d": 1969,
+  "arquivos_mudados_7d": 1972,
   "pastas_mais_mudadas_30d": [
    {
     "pasta": "src/hooks/__tests__",
@@ -141,7 +141,7 @@
    },
    {
     "pasta": "docs/qa/05-PROGRESSO.md",
-    "mudancas": 174
+    "mudancas": 175
    },
    {
     "pasta": "src/components/calls",
@@ -172,10 +172,6 @@
     "mudancas": 33
    },
    {
-    "pasta": "src/components/layout",
-    "mudancas": 31
-   },
-   {
     "pasta": "src/components/contacts",
     "mudancas": 30
    },
@@ -194,16 +190,20 @@
    {
     "pasta": "src/components/dialer",
     "mudancas": 29
+   },
+   {
+    "pasta": "src/components/executive",
+    "mudancas": 29
    }
   ],
   "arquivos_mais_mudados_90d": [
    {
     "arquivo": "docs/qa/05-PROGRESSO.md",
-    "mudancas": 174
+    "mudancas": 175
    },
    {
     "arquivo": "docs/estado/funcionalidades-planejadas.md",
-    "mudancas": 24
+    "mudancas": 23
    },
    {
     "arquivo": "src/hooks/useMultiChannelCall.ts",
@@ -230,15 +230,11 @@
     "mudancas": 9
    },
    {
+    "arquivo": "docs/agentes/banco.md",
+    "mudancas": 9
+   },
+   {
     "arquivo": "docs/qa/03-ACHADOS.md",
-    "mudancas": 9
-   },
-   {
-    "arquivo": "src/components/layout/AppSidebar.tsx",
-    "mudancas": 9
-   },
-   {
-    "arquivo": "src/components/layout/CommandPalette.tsx",
     "mudancas": 9
    },
    {
@@ -246,11 +242,15 @@
     "mudancas": 9
    },
    {
-    "arquivo": "docs/agentes/banco.md",
+    "arquivo": "docs/agentes/mapa-repo.md",
     "mudancas": 8
    },
    {
-    "arquivo": "docs/agentes/mapa-repo.md",
+    "arquivo": "src/components/layout/AppSidebar.tsx",
+    "mudancas": 8
+   },
+   {
+    "arquivo": "src/components/layout/CommandPalette.tsx",
     "mudancas": 8
    },
    {
@@ -290,11 +290,11 @@
     "mudancas": 7
    },
    {
-    "arquivo": "src/routes/protectedRoutes.tsx",
+    "arquivo": "supabase/functions/teams-fetch-recordings/index.ts",
     "mudancas": 7
    },
    {
-    "arquivo": "supabase/functions/teams-fetch-recordings/index.ts",
+    "arquivo": "supabase/functions/voip-load-test/index.ts",
     "mudancas": 7
    }
   ],
@@ -306,9 +306,9 @@
   ]
  },
  "contagens": {
-  "arquivos_total": 1878,
+  "arquivos_total": 1881,
   "arquivos_codigo": 1398,
-  "linhas_codigo": 186864,
+  "linhas_codigo": 186880,
   "rotas": 108,
   "rotas_http_backend": 11,
   "vistas_por_id": 0,
@@ -317,10 +317,10 @@
   "componentes": 456,
   "hooks": 203,
   "edge_functions": 99,
-  "tabelas": 172,
-  "migrations": 278,
-  "cron_jobs": 14,
-  "testes": 477,
+  "tabelas": 173,
+  "migrations": 279,
+  "cron_jobs": 15,
+  "testes": 479,
   "workflows": 5,
   "scripts": 36,
   "docs_md": 122
@@ -476,7 +476,7 @@
   },
   "src/components": {
    "arquivos": 388,
-   "linhas": 46060
+   "linhas": 46062
   },
   "src/contexts": {
    "arquivos": 5,
@@ -488,7 +488,7 @@
   },
   "src/hooks": {
    "arquivos": 360,
-   "linhas": 46415
+   "linhas": 46419
   },
   "src/integrations": {
    "arquivos": 3,
@@ -504,7 +504,7 @@
   },
   "src/pages": {
    "arquivos": 161,
-   "linhas": 24707
+   "linhas": 24717
   },
   "src/routes": {
    "arquivos": 4,
@@ -562,7 +562,7 @@
   },
   {
    "arquivo": "src/pages/Cadences.tsx",
-   "linhas": 447
+   "linhas": 457
   },
   {
    "arquivo": "src/hooks/useSipCall.ts",

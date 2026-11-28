@@ -1,15 +1,15 @@
 {
  "meta": {
-  "sha": "e7f0148f5fa3328dbda58947009e497f2acedba7",
+  "sha": "c8a2dcbd21c71171d43aeaed280e8e6e34d135e6",
   "branch": "main",
   "remote": "https://github.com/adm01-debug/Hello_V3",
-  "generated_at": "2026-11-28 16:14 UTC",
-  "files_total": 1924,
-  "code_files": 1719,
-  "code_lines": 210766
+  "generated_at": "2026-11-28 16:17 UTC",
+  "files_total": 1927,
+  "code_files": 1722,
+  "code_lines": 211351
  },
  "version": "1.3.2",
- "facts_hash": "dda25334428ee32f",
+ "facts_hash": "812aa584578f4c7f",
  "stack": {
   "frameworks": [
    "React + Vite",
@@ -170,7 +170,7 @@
   "languages": {
    ".tsx": 687,
    ".ts": 676,
-   ".sql": 320,
+   ".sql": 323,
    ".mjs": 29,
    ".py": 5,
    ".js": 2
@@ -14448,6 +14448,77 @@
     "comment": "Erros nao tratados do navegador (etapa 230 / A-097). Alimentada por src/lib/errorReporter.ts, lida em /admin/client-errors.",
     "origin": "migration"
    },
+   "cadence_step_runs": {
+    "columns": [
+     {
+      "name": "id",
+      "type": "uuid primary key default gen_random_uuid()",
+      "fk": "",
+      "generated": "",
+      "src": "supabase/migrations/20261128100000_cadence_tick_motor.sql"
+     },
+     {
+      "name": "enrollment_id",
+      "type": "uuid not null references public.cadence_enrollments(id) on delete cascade",
+      "fk": "cadence_enrollments.id on delete cascade",
+      "generated": "",
+      "src": "supabase/migrations/20261128100000_cadence_tick_motor.sql"
+     },
+     {
+      "name": "cadence_id",
+      "type": "uuid not null references public.cadences(id) on delete cascade",
+      "fk": "cadences.id on delete cascade",
+      "generated": "",
+      "src": "supabase/migrations/20261128100000_cadence_tick_motor.sql"
+     },
+     {
+      "name": "step_id",
+      "type": "uuid references public.cadence_steps(id) on delete set null",
+      "fk": "cadence_steps.id on delete set null",
+      "generated": "",
+      "src": "supabase/migrations/20261128100000_cadence_tick_motor.sql"
+     },
+     {
+      "name": "step_order",
+      "type": "integer not null",
+      "fk": "",
+      "generated": "",
+      "src": "supabase/migrations/20261128100000_cadence_tick_motor.sql"
+     },
+     {
+      "name": "step_type",
+      "type": "text not null",
+      "fk": "",
+      "generated": "",
+      "src": "supabase/migrations/20261128100000_cadence_tick_motor.sql"
+     },
+     {
+      "name": "status",
+      "type": "text not null check (status in ('done', 'skipped', 'failed'))",
+      "fk": "",
+      "generated": "",
+      "src": "supabase/migrations/20261128100000_cadence_tick_motor.sql"
+     },
+     {
+      "name": "detail",
+      "type": "text",
+      "fk": "",
+      "generated": "",
+      "src": "supabase/migrations/20261128100000_cadence_tick_motor.sql"
+     },
+     {
+      "name": "created_at",
+      "type": "timestamptz not null default now()",
+      "fk": "",
+      "generated": "",
+      "src": "supabase/migrations/20261128100000_cadence_tick_motor.sql"
+     }
+    ],
+    "constraints": [],
+    "src": "supabase/migrations/20261128100000_cadence_tick_motor.sql",
+    "comment": "",
+    "origin": "migration"
+   },
    "esperado_col": {
     "columns": [
      {
@@ -20246,6 +20317,16 @@
     "src": "supabase/migrations/20261127223000_hold_events_agent_writable.sql"
    },
    {
+    "name": "Agents view own cadence runs",
+    "table": "cadence_step_runs",
+    "cmd": "SELECT",
+    "roles": "authenticated",
+    "mode": "permissive",
+    "using": "is_admin_or_supervisor() or exists ( select 1 from public.cadence_enrollments e where e.id = cadence_step_runs.enrollment_id and e.agent_name = get_user_agent_name() )",
+    "check": "",
+    "src": "supabase/migrations/20261128100000_cadence_tick_motor.sql"
+   },
+   {
     "name": "Agente enfileira a propria acao",
     "table": "crm_sync_queue",
     "cmd": "INSERT",
@@ -22836,6 +22917,31 @@
      "agent_weekly_stats",
      "set",
      "v_row"
+    ]
+   },
+   "cadence_tick": {
+    "args": "p_limit integer default 50",
+    "returns": "jsonb",
+    "lang": "plpgsql",
+    "src": "supabase/migrations/20261128100000_cadence_tick_motor.sql",
+    "security_definer": true,
+    "search_path": true,
+    "body": "declare r record; s record; v_prox record; v_destino uuid; v_contato text; v_titulo text; v_mensagem text; v_processadas integer := 0; v_concluidas integer := 0; v_puladas integer := 0; v_falhas integer := 0; v_por_tipo jsonb := '{}'::jsonb; begin if p_limit is null or p_limit < 1 then p_limit := 50; elsif p_limit > 500 then p_limit := 500; end if; for r in select e.id, e.cadence_id, e.contact_id, e.deal_id, e.agent_name, e.current_step, c.name as cadence_name from public.cadence_enrollments e join public.cadences c on c.id = e.cadence_id where e.status = 'active' and e.next_action_at is not null and e.next_action_at <= now() order by e.next_action_at, e.id limit p_limit for update of e skip …",
+    "raises": [],
+    "tables": [
+     "agents",
+     "cadence_enrollments",
+     "cadence_step_runs",
+     "cadence_steps",
+     "cadences",
+     "contacts",
+     "notifications",
+     "of",
+     "s",
+     "user_profiles",
+     "v_contato",
+     "v_destino",
+     "v_prox"
     ]
    },
    "token_cron_valido": {
@@ -26307,6 +26413,14 @@
     "src": "supabase/migrations/20261127230000_unique_conversation_message_id.sql"
    },
    {
+    "name": "idx_cadence_step_runs_enrollment",
+    "table": "cadence_step_runs",
+    "columns": "enrollment_id, created_at desc",
+    "unique": false,
+    "where": "",
+    "src": "supabase/migrations/20261128100000_cadence_tick_motor.sql"
+   },
+   {
     "name": "idx_crm_sync_queue_requested_by",
     "table": "crm_sync_queue",
     "columns": "requested_by",
@@ -26673,12 +26787,14 @@
    "supabase/migrations/20261127260000_increment_weekly_stats_rpc_null_media_fix.sql",
    "supabase/migrations/20261127270000_geo_policies_idempotente.sql",
    "supabase/migrations/20261127280000_is_own_call_session_grants.sql",
+   "supabase/migrations/20261128100000_cadence_tick_motor.sql",
    "supabase/migrations/20261128110000_crm_sync_queue_cron.sql",
    "supabase/migrations/20261128123000_crm_sync_queue_cron_guard.sql",
    "supabase/migrations/20261128130000_crm_sync_queue_enqueue_author.sql",
    "supabase/migrations/20261128140000_call_sessions_bitrix_call_id.sql",
    "supabase/migrations/20261128150000_claim_next_dialer_contact.sql",
    "supabase/tests/add_missing_fks_rls_test.sql",
+   "supabase/tests/cadence_tick_rls_test.sql",
    "supabase/tests/call_sessions_bitrix_call_id_rls_test.sql",
    "supabase/tests/calling_hours_fail_closed_rls_test.sql",
    "supabase/tests/claim_next_dialer_contact_rls_test.sql",
@@ -26706,6 +26822,7 @@
    "supabase/tests/probe_065_101_rls_test.sql",
    "supabase/tests/probe_083_crm_queue_rls_test.sql",
    "supabase/tests/probe_083b_cron_tick_rls_test.sql",
+   "supabase/tests/probe_085_cadence_motor_rls_test.sql",
    "supabase/tests/probe_129_polymorphic_rls_test.sql",
    "supabase/tests/probe_132_lgpd_entity_versions_rls_test.sql",
    "supabase/tests/rate_limit_logs_write_policies_rls_test.sql",
@@ -26886,7 +27003,8 @@
    "parked_calls": "enabled",
    "user_preferences": "enabled",
    "deal_pipeline_snapshots": "enabled",
-   "client_errors": "enabled"
+   "client_errors": "enabled",
+   "cadence_step_runs": "enabled"
   },
   "grants": [
    {
@@ -29184,6 +29302,46 @@
     "objkind": "function",
     "roles": "authenticated, service_role",
     "src": "supabase/migrations/20261127280000_is_own_call_session_grants.sql"
+   },
+   {
+    "kind": "revoke",
+    "privs": "all",
+    "object": "cadence_step_runs",
+    "objkind": "table",
+    "roles": "anon",
+    "src": "supabase/migrations/20261128100000_cadence_tick_motor.sql"
+   },
+   {
+    "kind": "revoke",
+    "privs": "insert, update, delete, truncate, references, trigger",
+    "object": "cadence_step_runs",
+    "objkind": "table",
+    "roles": "authenticated",
+    "src": "supabase/migrations/20261128100000_cadence_tick_motor.sql"
+   },
+   {
+    "kind": "grant",
+    "privs": "select",
+    "object": "cadence_step_runs",
+    "objkind": "table",
+    "roles": "authenticated",
+    "src": "supabase/migrations/20261128100000_cadence_tick_motor.sql"
+   },
+   {
+    "kind": "revoke",
+    "privs": "all",
+    "object": "cadence_tick",
+    "objkind": "function",
+    "roles": "public, anon, authenticated",
+    "src": "supabase/migrations/20261128100000_cadence_tick_motor.sql"
+   },
+   {
+    "kind": "grant",
+    "privs": "execute",
+    "object": "cadence_tick",
+    "objkind": "function",
+    "roles": "postgres, service_role",
+    "src": "supabase/migrations/20261128100000_cadence_tick_motor.sql"
    },
    {
     "kind": "revoke",
@@ -34901,7 +35059,7 @@
   {
    "module": "src/components",
    "files": 388,
-   "lines": 46060,
+   "lines": 46062,
    "tables": [
     "accounts",
     "agent_goals",
@@ -35162,7 +35320,7 @@
   {
    "module": "src/hooks",
    "files": 360,
-   "lines": 46415,
+   "lines": 46419,
    "tables": [
     "account_journey_history",
     "accounts",
@@ -35652,7 +35810,7 @@
   {
    "module": "src/pages",
    "files": 161,
-   "lines": 24707,
+   "lines": 24717,
    "tables": [
     "audit_logs",
     "battle_card_triggers",
@@ -36119,8 +36277,8 @@
   },
   {
    "module": "supabase/migrations",
-   "files": 278,
-   "lines": 17690,
+   "files": 279,
+   "lines": 17994,
    "tables": [],
    "exports": [],
    "docs": [],
@@ -36211,8 +36369,8 @@
   },
   {
    "module": "supabase/tests",
-   "files": 40,
-   "lines": 6001,
+   "files": 42,
+   "lines": 6266,
    "tables": [],
    "exports": [],
    "docs": [],
@@ -36220,6 +36378,7 @@
    "imports_modules": [],
    "file_list": [
     "supabase/tests/add_missing_fks_rls_test.sql",
+    "supabase/tests/cadence_tick_rls_test.sql",
     "supabase/tests/call_sessions_bitrix_call_id_rls_test.sql",
     "supabase/tests/calling_hours_fail_closed_rls_test.sql",
     "supabase/tests/claim_next_dialer_contact_rls_test.sql",
@@ -36247,6 +36406,7 @@
     "supabase/tests/probe_065_101_rls_test.sql",
     "supabase/tests/probe_083_crm_queue_rls_test.sql",
     "supabase/tests/probe_083b_cron_tick_rls_test.sql",
+    "supabase/tests/probe_085_cadence_motor_rls_test.sql",
     "supabase/tests/probe_129_polymorphic_rls_test.sql",
     "supabase/tests/probe_132_lgpd_entity_versions_rls_test.sql",
     "supabase/tests/rate_limit_logs_write_policies_rls_test.sql",
@@ -40423,6 +40583,7 @@
     "contact_alerts",
     "consent_history",
     "cadence_enrollments",
+    "cadence_step_runs",
     "crm_field_suggestions",
     "consent_records",
     "contact_engagement_patterns"
@@ -40463,7 +40624,8 @@
    ],
    "cadences": [
     "cadence_steps",
-    "cadence_enrollments"
+    "cadence_enrollments",
+    "cadence_step_runs"
    ],
    "trackers": [
     "tracker_matches"
@@ -40515,6 +40677,9 @@
    ],
    "call_park_orbits": [
     "parked_calls"
+   ],
+   "cadence_enrollments": [
+    "cadence_step_runs"
    ]
   },
   "tables_only_in_code": [
@@ -40535,6 +40700,7 @@
    "tx"
   ],
   "tables_only_in_schema": [
+   "cadence_step_runs",
    "call_records",
    "deal_revenue_snapshots",
    "email_verification_tokens",
@@ -52319,6 +52485,46 @@
     "rule": "CONSTRAINT client_errors_type_chk CHECK (error_type IN ('error', 'unhandled-rejection', 'react-component', 'network-error'))"
    },
    {
+    "table": "cadence_step_runs",
+    "column": "id",
+    "rule": "PK; default gen_random_uuid()"
+   },
+   {
+    "table": "cadence_step_runs",
+    "column": "enrollment_id",
+    "rule": "obrigatório; FK → cadence_enrollments.id on delete cascade"
+   },
+   {
+    "table": "cadence_step_runs",
+    "column": "cadence_id",
+    "rule": "obrigatório; FK → cadences.id on delete cascade"
+   },
+   {
+    "table": "cadence_step_runs",
+    "column": "step_id",
+    "rule": "FK → cadence_steps.id on delete set null"
+   },
+   {
+    "table": "cadence_step_runs",
+    "column": "step_order",
+    "rule": "obrigatório"
+   },
+   {
+    "table": "cadence_step_runs",
+    "column": "step_type",
+    "rule": "obrigatório"
+   },
+   {
+    "table": "cadence_step_runs",
+    "column": "status",
+    "rule": "obrigatório; CHECK status in ('done', 'skipped', 'failed')"
+   },
+   {
+    "table": "cadence_step_runs",
+    "column": "created_at",
+    "rule": "default now()"
+   },
+   {
     "table": "index_usage",
     "column": "indexname",
     "rule": "obrigatório"
@@ -54685,6 +54891,12 @@
     "kind": "escreve"
    },
    {
+    "file": "src/hooks/useCadences.ts",
+    "field": "status",
+    "value": "active",
+    "kind": "compara"
+   },
+   {
     "file": "src/hooks/useCallAnalytics.ts",
     "field": "status",
     "value": "completed",
@@ -56152,6 +56364,18 @@
     "file": "src/pages/Cadences.tsx",
     "field": "status",
     "value": "paused",
+    "kind": "compara"
+   },
+   {
+    "file": "src/pages/Cadences.tsx",
+    "field": "status",
+    "value": "paused",
+    "kind": "compara"
+   },
+   {
+    "file": "src/pages/Cadences.tsx",
+    "field": "status",
+    "value": "active",
     "kind": "compara"
    },
    {
@@ -81168,6 +81392,16 @@
     "src": "supabase/migrations/20261127223000_hold_events_agent_writable.sql"
    },
    {
+    "name": "Agents view own cadence runs",
+    "table": "cadence_step_runs",
+    "cmd": "SELECT",
+    "roles": "authenticated",
+    "mode": "permissive",
+    "using": "is_admin_or_supervisor() or exists ( select 1 from public.cadence_enrollments e where e.id = cadence_step_runs.enrollment_id and e.agent_name = get_user_agent_name() )",
+    "check": "",
+    "src": "supabase/migrations/20261128100000_cadence_tick_motor.sql"
+   },
+   {
     "name": "Agente enfileira a propria acao",
     "table": "crm_sync_queue",
     "cmd": "INSERT",
@@ -83760,6 +83994,31 @@
      "v_row"
     ]
    },
+   "cadence_tick": {
+    "args": "p_limit integer default 50",
+    "returns": "jsonb",
+    "lang": "plpgsql",
+    "src": "supabase/migrations/20261128100000_cadence_tick_motor.sql",
+    "security_definer": true,
+    "search_path": true,
+    "body": "declare r record; s record; v_prox record; v_destino uuid; v_contato text; v_titulo text; v_mensagem text; v_processadas integer := 0; v_concluidas integer := 0; v_puladas integer := 0; v_falhas integer := 0; v_por_tipo jsonb := '{}'::jsonb; begin if p_limit is null or p_limit < 1 then p_limit := 50; elsif p_limit > 500 then p_limit := 500; end if; for r in select e.id, e.cadence_id, e.contact_id, e.deal_id, e.agent_name, e.current_step, c.name as cadence_name from public.cadence_enrollments e join public.cadences c on c.id = e.cadence_id where e.status = 'active' and e.next_action_at is not null and e.next_action_at <= now() order by e.next_action_at, e.id limit p_limit for update of e skip …",
+    "raises": [],
+    "tables": [
+     "agents",
+     "cadence_enrollments",
+     "cadence_step_runs",
+     "cadence_steps",
+     "cadences",
+     "contacts",
+     "notifications",
+     "of",
+     "s",
+     "user_profiles",
+     "v_contato",
+     "v_destino",
+     "v_prox"
+    ]
+   },
    "token_cron_valido": {
     "args": "p_nome text, p_token text",
     "returns": "boolean",
@@ -84902,6 +85161,34 @@
      "type": "TEXT NOT NULL DEFAULT 'parked'"
     },
     {
+     "table": "cadence_step_runs",
+     "column": "step_order",
+     "enum": "",
+     "allowed": [],
+     "default": "",
+     "type": "integer not null"
+    },
+    {
+     "table": "cadence_step_runs",
+     "column": "step_type",
+     "enum": "",
+     "allowed": [],
+     "default": "",
+     "type": "text not null"
+    },
+    {
+     "table": "cadence_step_runs",
+     "column": "status",
+     "enum": "",
+     "allowed": [
+      "done",
+      "failed",
+      "skipped"
+     ],
+     "default": "",
+     "type": "text not null check (status in ('done', 'skipped', 'failed'))"
+    },
+    {
      "table": "migration_status",
      "column": "status",
      "enum": "",
@@ -85000,6 +85287,7 @@
       "compara:src/components/calls/softphone/ActiveCallDisplay.tsx",
       "compara:src/components/dashboard/RecentCalls.tsx",
       "compara:src/components/dialer/PredictiveDialerPanel.tsx",
+      "compara:src/hooks/useCadences.ts",
       "compara:src/hooks/useMultiChannelCall.ts",
       "compara:src/hooks/useQueueMetrics.ts",
       "compara:src/hooks/useSipCall.ts",
@@ -86366,6 +86654,15 @@
     "DELETE": [
      "public: is_admin_or_supervisor()"
     ]
+   },
+   "cadence_step_runs": {
+    "rls": "enabled",
+    "SELECT": [
+     "authenticated: is_admin_or_supervisor() or exists ( select 1 from public.cadence_enrollments e where e.id = cadence_step_runs.enrollment_id "
+    ],
+    "INSERT": [],
+    "UPDATE": [],
+    "DELETE": []
    },
    "cadence_steps": {
     "rls": "enabled",
@@ -88857,6 +89154,7 @@
    "supabase/migrations/20261127200000_revoke_anon_role_helpers.sql",
    "supabase/migrations/20261127250000_increment_weekly_stats_rpc.sql",
    "supabase/migrations/20261127280000_is_own_call_session_grants.sql",
+   "supabase/migrations/20261128100000_cadence_tick_motor.sql",
    "supabase/migrations/20261128110000_crm_sync_queue_cron.sql",
    "supabase/migrations/20261128130000_crm_sync_queue_enqueue_author.sql",
    "supabase/tests/crm_sync_queue_cron_rls_test.sql",
@@ -88873,6 +89171,7 @@
    "audit_role_change",
    "audit_table_change",
    "bridge_voip_alert_to_notification",
+   "cadence_tick",
    "calculate_predictive_pace",
    "can_access_agent_data",
    "check_all_tables_rls_status",
@@ -91262,6 +91561,46 @@
    {
     "kind": "revoke",
     "privs": "all",
+    "object": "cadence_step_runs",
+    "objkind": "table",
+    "roles": "anon",
+    "src": "supabase/migrations/20261128100000_cadence_tick_motor.sql"
+   },
+   {
+    "kind": "revoke",
+    "privs": "insert, update, delete, truncate, references, trigger",
+    "object": "cadence_step_runs",
+    "objkind": "table",
+    "roles": "authenticated",
+    "src": "supabase/migrations/20261128100000_cadence_tick_motor.sql"
+   },
+   {
+    "kind": "grant",
+    "privs": "select",
+    "object": "cadence_step_runs",
+    "objkind": "table",
+    "roles": "authenticated",
+    "src": "supabase/migrations/20261128100000_cadence_tick_motor.sql"
+   },
+   {
+    "kind": "revoke",
+    "privs": "all",
+    "object": "cadence_tick",
+    "objkind": "function",
+    "roles": "public, anon, authenticated",
+    "src": "supabase/migrations/20261128100000_cadence_tick_motor.sql"
+   },
+   {
+    "kind": "grant",
+    "privs": "execute",
+    "object": "cadence_tick",
+    "objkind": "function",
+    "roles": "postgres, service_role",
+    "src": "supabase/migrations/20261128100000_cadence_tick_motor.sql"
+   },
+   {
+    "kind": "revoke",
+    "privs": "all",
     "object": "token_cron_valido",
     "objkind": "function",
     "roles": "PUBLIC, anon, authenticated",
@@ -92081,6 +92420,9 @@
     "updated_at"
    ],
    "client_errors": [],
+   "cadence_step_runs": [
+    "created_at"
+   ],
    "esperado_col": [],
    "esperado_idx": [],
    "esperado_pol": [],
@@ -92452,14 +92794,6 @@
     "msg": "valor `won` para `status` usado no código não existe em nenhum enum do banco/TS",
     "where": [
      "compara:src/hooks/useRenewals.ts"
-    ]
-   },
-   {
-    "kind": "status",
-    "msg": "valor `skipped` para `status` usado no código não existe em nenhum enum do banco/TS",
-    "where": [
-     "escreve:src/hooks/predictive-dialer/api.ts",
-     "escreve:supabase/functions/auto-scorecard/index.ts"
     ]
    },
    {
@@ -93032,8 +93366,11 @@
    "`shift_swap_suggestions.status` tem valores ['approved', 'expired', 'pending', 'rejected'] mas nenhum mapa de transições foi encontrado no código — a ordem permitida (ex.: pago → cancelado?) não está declarada.",
    "`data_lake_exports.status` tem valores ['completed', 'failed', 'pending', 'processing'] mas nenhum mapa de transições foi encontrado no código — a ordem permitida (ex.: pago → cancelado?) não está declarada.",
    "`parked_calls.status` tem valores ['abandoned', 'expired', 'parked', 'retrieved'] mas nenhum mapa de transições foi encontrado no código — a ordem permitida (ex.: pago → cancelado?) não está declarada.",
+   "`cadence_step_runs.step_order` é uma coluna de status sem enum/CHECK — os valores válidos e as transições permitidas não estão no banco.",
+   "`cadence_step_runs.step_type` é uma coluna de status sem enum/CHECK — os valores válidos e as transições permitidas não estão no banco.",
+   "`cadence_step_runs.status` tem valores ['done', 'failed', 'skipped'] mas nenhum mapa de transições foi encontrado no código — a ordem permitida (ex.: pago → cancelado?) não está declarada.",
    "`migration_status.status` é uma coluna de status sem enum/CHECK — os valores válidos e as transições permitidas não estão no banco.",
-   "172/176 tabelas sem `COMMENT ON TABLE` — o significado de negócio não está no schema: `entity_versions`, `schema_migrations`, `migration_rollbacks`, `contacts`, `call_records`, `queue_items`, `agents`, `call_sessions`, `call_transcriptions`, `call_analyses`, `call_summaries`, `call_alerts` …",
+   "173/177 tabelas sem `COMMENT ON TABLE` — o significado de negócio não está no schema: `entity_versions`, `schema_migrations`, `migration_rollbacks`, `contacts`, `call_records`, `queue_items`, `agents`, `call_sessions`, `call_transcriptions`, `call_analyses`, `call_summaries`, `call_alerts` …",
    "Há tabelas usadas no código sem migration no repo — o schema real pode ter sido alterado pelo painel."
   ]
  },
@@ -98693,7 +99030,7 @@
   },
   "src/components/notification-center/constants.ts": {
    "path": "src/components/notification-center/constants.ts",
-   "lines": 49,
+   "lines": 51,
    "exports": [
     "type NotificationRow",
     "const categoryIcons",
@@ -101604,7 +101941,7 @@
   },
   "src/hooks/useCadences.ts": {
    "path": "src/hooks/useCadences.ts",
-   "lines": 250,
+   "lines": 254,
    "exports": [
     "interface Cadence",
     "interface CadenceStep",
@@ -101701,6 +102038,11 @@
      "field": "status",
      "value": "active",
      "kind": "escreve"
+    },
+    {
+     "field": "status",
+     "value": "active",
+     "kind": "compara"
     }
    ],
    "hooks": [
@@ -116967,7 +117309,7 @@
   },
   "src/pages/Cadences.tsx": {
    "path": "src/pages/Cadences.tsx",
-   "lines": 447,
+   "lines": 457,
    "exports": [
     "function Cadences"
    ],
@@ -116980,6 +117322,16 @@
     {
      "field": "status",
      "value": "paused",
+     "kind": "compara"
+    },
+    {
+     "field": "status",
+     "value": "paused",
+     "kind": "compara"
+    },
+    {
+     "field": "status",
+     "value": "active",
      "kind": "compara"
     },
     {
@@ -129028,6 +129380,11 @@
    "lines": 15,
    "uses_service_role": true
   },
+  "supabase/migrations/20261128100000_cadence_tick_motor.sql": {
+   "path": "supabase/migrations/20261128100000_cadence_tick_motor.sql",
+   "lines": 304,
+   "uses_service_role": true
+  },
   "supabase/migrations/20261128110000_crm_sync_queue_cron.sql": {
    "path": "supabase/migrations/20261128110000_crm_sync_queue_cron.sql",
    "lines": 88,
@@ -129054,6 +129411,21 @@
    "path": "supabase/tests/add_missing_fks_rls_test.sql",
    "lines": 144,
    "is_test": true
+  },
+  "supabase/tests/cadence_tick_rls_test.sql": {
+   "path": "supabase/tests/cadence_tick_rls_test.sql",
+   "lines": 207,
+   "is_test": true,
+   "temporal": [
+    "if v_row.next_action_at is null or v_row.next_action_at < now() + interval '55 minutes' then",
+    "update public.cadence_enrollments set next_action_at = now() - interval '10 years' where id = v_e;",
+    "values (v_cad, v_contato, 'Gate 085 Agente Inexistente', 'active', now() - interval '9 years')",
+    "values (v_cad, v_contato, 'Gate 085 Agente', 'active', now() + interval '1 day')",
+    "values (v_cad, v_contato, 'Gate 085 Agente', 'active', now() - interval '10 years')",
+    "values (v_cad, v_contato, 'Gate 085 Agente', 'cancelled', now() - interval '10 years')",
+    "values (v_cad_tipo, v_contato, 'Gate 085 Agente', 'active', now() - interval '8 years')",
+    "values (v_cad_zero, v_contato, 'Gate 085 Agente', 'active', now() - interval '7 years')"
+   ]
   },
   "supabase/tests/call_sessions_bitrix_call_id_rls_test.sql": {
    "path": "supabase/tests/call_sessions_bitrix_call_id_rls_test.sql",
@@ -129218,6 +129590,11 @@
   "supabase/tests/probe_083b_cron_tick_rls_test.sql": {
    "path": "supabase/tests/probe_083b_cron_tick_rls_test.sql",
    "lines": 48,
+   "is_test": true
+  },
+  "supabase/tests/probe_085_cadence_motor_rls_test.sql": {
+   "path": "supabase/tests/probe_085_cadence_motor_rls_test.sql",
+   "lines": 58,
    "is_test": true
   },
   "supabase/tests/probe_129_polymorphic_rls_test.sql": {
@@ -129467,10 +129844,27 @@
   }
  },
  "git": {
-  "sha": "e7f0148f5fa3328dbda58947009e497f2acedba7",
+  "sha": "c8a2dcbd21c71171d43aeaed280e8e6e34d135e6",
   "branch": "main",
   "remote": "https://github.com/adm01-debug/Hello_V3",
   "commits": [
+   {
+    "sha": "c8a2dcb",
+    "date": "2026-11-28",
+    "author": "adm01-debug",
+    "subject": "feat: motor das cadencias (etapa 085) - inscricao deixa de ficar parada na etapa 1 (#370)",
+    "files": [
+     "docs/agentes/banco.md",
+     "docs/qa/05-PROGRESSO.md",
+     "src/components/notification-center/constants.ts",
+     "src/hooks/useCadences.ts",
+     "src/hooks/useNotifications.ts",
+     "src/pages/Cadences.tsx",
+     "supabase/migrations/20261128100000_cadence_tick_motor.sql",
+     "supabase/tests/cadence_tick_rls_test.sql",
+     "supabase/tests/probe_085_cadence_motor_rls_test.sql"
+    ]
+   },
    {
     "sha": "e7f0148",
     "date": "2026-11-28",
@@ -129831,17 +130225,6 @@
      "supabase/migrations/20261126190000_cron_watchdog_privilegios.sql",
      "supabase/tests/cron_watchdog_rls_test.sql"
     ]
-   },
-   {
-    "sha": "6b5425c",
-    "date": "2026-11-26",
-    "author": "adm01-debug",
-    "subject": "test: sonda permanente da apuracao da LGPD e do ledger (etapa 132) (#369)",
-    "files": [
-     "docs/agentes/banco.md",
-     "docs/qa/05-PROGRESSO.md",
-     "supabase/tests/probe_132_lgpd_entity_versions_rls_test.sql"
-    ]
    }
   ],
   "hot_files": [
@@ -129864,6 +130247,34 @@
    [
     "docs/qa/onda-39-varredura-branches-e-prs.md",
     2
+   ],
+   [
+    "src/components/notification-center/constants.ts",
+    1
+   ],
+   [
+    "src/hooks/useCadences.ts",
+    1
+   ],
+   [
+    "src/hooks/useNotifications.ts",
+    1
+   ],
+   [
+    "src/pages/Cadences.tsx",
+    1
+   ],
+   [
+    "supabase/migrations/20261128100000_cadence_tick_motor.sql",
+    1
+   ],
+   [
+    "supabase/tests/cadence_tick_rls_test.sql",
+    1
+   ],
+   [
+    "supabase/tests/probe_085_cadence_motor_rls_test.sql",
+    1
    ],
    [
     "src/components/settings/BitrixSyncStatus.tsx",
@@ -129895,34 +130306,6 @@
    ],
    [
     "supabase/migrations/20261128110000_crm_sync_queue_cron.sql",
-    1
-   ],
-   [
-    "supabase/migrations/20261128123000_crm_sync_queue_cron_guard.sql",
-    1
-   ],
-   [
-    "supabase/tests/crm_sync_queue_cron_rls_test.sql",
-    1
-   ],
-   [
-    "supabase/tests/probe_083_crm_queue_rls_test.sql",
-    1
-   ],
-   [
-    "supabase/tests/probe_083b_cron_tick_rls_test.sql",
-    1
-   ],
-   [
-    "src/hooks/__tests__/useBitrix.coverage.test.tsx",
-    1
-   ],
-   [
-    "src/hooks/useBitrix.ts",
-    1
-   ],
-   [
-    "supabase/migrations/20261128130000_crm_sync_queue_enqueue_author.sql",
     1
    ]
   ]
